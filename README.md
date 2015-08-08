@@ -1,2 +1,2 @@
-# Portal_Django
+# Portal-Django
 Portal in Django
