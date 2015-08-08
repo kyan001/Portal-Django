@@ -31,7 +31,7 @@ if os.path.isfile(uwsgi_xml):
 else:
     ktk.err("uwsgi config file not found: " + uwsgi_xml)
 #pid file
-pid_file="/tmp/uwsgi_portal_django.pid"
+pid_file="/var/run/uwsgi_portal_django.pid"
 if os.path.exists(pid_file):
     ktk.warn("uwsgi is running @ " + pid_file)
 else:
