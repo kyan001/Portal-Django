@@ -9,4 +9,4 @@ class User(models.Model):
     answer2 = models.CharField(max_length=128, blank=True, null=True)
     tip = models.TextField(blank=True, null=True)
     email = models.EmailField()
-    created = models.DateTimeField(default=timezone.now())
+    created = models.DateTimeField()
