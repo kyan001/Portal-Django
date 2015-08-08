@@ -36,7 +36,7 @@ if os.path.exists(pid_file):
     ktk.warn("uwsgi is running @ " + pid_file)
 else:
     ktk.info("No uwsgi running")
-    #choice
+#choice
 operations=["start","stop","reload"];
 oprtn="";
 if len(sys.argv) != 2:
