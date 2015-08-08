@@ -6,7 +6,7 @@
     <uid>www-data</uid>
     <gid>www-data</gid>
     <pythonpath>/home/kyan001/src/portal_django</pythonpath>
-    <module>portal_django.wsgi:application</module>
+    <module>portal.wsgi:application</module>
     <master/>
     <processes>4</processes>
     <plugins>python34</plugins>
