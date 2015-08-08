@@ -23,7 +23,7 @@ ktk.needPlatform("linux");
 ktk.runCmd("sudo echo ''");
 #--set params-----------------------------------------------------
 uwsgi_xml="./uwsgi.xml"
-pid_file="/tmp/uwsgi_portal.pid"
+pid_file="/tmp/uwsgi_portal_django.pid"
 operations=["start","stop","reload"];
 oprtn="";
 if len(sys.argv) != 2:
