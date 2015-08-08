@@ -74,10 +74,15 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+with open("/home/kyan001/src/portal_django/mysql.pswd", "r") as pswd_file:
+    mysql_pswd = pswd_file.read();
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'portal',
+        'USER': 'portal',
+        'PASSWORD': mysql_pswd.strip(),
+        'HOST': 'localhost',
     }
 }
 
