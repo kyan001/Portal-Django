@@ -1,5 +1,5 @@
 <uwsgi>
-    <socket>/var/run/uwsgi_portal.sock</socket>
+    <socket>/var/run/uwsgi_portal_django.sock</socket>
     <chmod-socket>775</chmod-socket>
     <chown-socket>www-data:www-data</chown-socket>
     <chdir>/home/kyan001/src/portal_django</chdir>
