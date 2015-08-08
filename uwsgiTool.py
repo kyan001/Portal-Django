@@ -8,6 +8,8 @@
 #     DATE    |     AUTHOR     |  VERSION | COMMENT
 #-------------+----------------+----------+-----------------------
 #  2015-01-13 |     YAN Kai    |   V1.0   | Script Creation
+#  2015-04-05 |     YAN Kai    |   V1.1   | detect running
+#  2015-08-07 |     YAN Kai    |   V1.2   | Merge
 #             |                |          |
 #-----------------------------------------------------------------
 #=================================================================
@@ -22,8 +24,19 @@ ktk = KyanToolKit_Py.KyanToolKit_Py()
 ktk.needPlatform("linux");
 ktk.runCmd("sudo echo ''");
 #--set params-----------------------------------------------------
+#config file
 uwsgi_xml="./uwsgi.xml"
+if os.path.isfile(uwsgi_xml):
+    ktk.info("uwsgi config file: " + uwsgi_xml)
+else:
+    ktk.err("uwsgi config file not found: " + uwsgi_xml)
+#pid file
 pid_file="/tmp/uwsgi_portal_django.pid"
+if os.path.exists(pid_file):
+    ktk.warn("uwsgi is running @ " + pid_file)
+else:
+    ktk.info("No uwsgi running")
+    #choice
 operations=["start","stop","reload"];
 oprtn="";
 if len(sys.argv) != 2:
