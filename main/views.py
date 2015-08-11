@@ -36,7 +36,7 @@ def userUser(request):
             kwargs = {colname : request.GET.get(colname)}
             user = User.objects.get(**kwargs);
         else:
-            error_msg = "错误的参数：{0}\n".format(str(request.GET.items()))
+            error_msg = "错误的参数：{0}\n".format(request.GET.urlencode())
             error_msg += "请输入 {0} 中的一种".format(', '.join(searchable_cols))
             return infoMsg(error_msg, title='参数错误');
     except User.DoesNotExist:
