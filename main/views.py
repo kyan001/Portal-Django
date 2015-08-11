@@ -32,9 +32,10 @@ def userUser(request):
         for sc in searchable_cols:
             if request.GET.get(sc):
                 colname = sc;
-        kwargs = {colname : request.GET.get(colname)}
-        user = User.objects.get(**kwargs);
-        if not user:
+        if colname:
+            kwargs = {colname : request.GET.get(colname)}
+            user = User.objects.get(**kwargs);
+        else:
             return infoMsg("请输入 {0}中的一种".format((sc+" ") for sc in searchable_cols));
     except:
         return infoMsg("用户 {0} 不存在！".format(colname))
