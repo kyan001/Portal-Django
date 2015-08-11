@@ -9,6 +9,6 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.index, name='index'),
-    url(r'^user/user/(?P<keyword>[0-9a-zA-Z_.@]+)/$', views.userUser),
+    url(r'^user/user/$', views.userUser),
     url(r'^user/avatar/(?P<email>[0-9a-zA-Z_.@]+)/$', views.userAvatar),
 ]
