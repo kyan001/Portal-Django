@@ -35,7 +35,7 @@ def userUser(request):
             kwargs = {colname : request.GET.get(colname)}
             user = User.objects.get(**kwargs);
         else:
-            return infoMsg("请输入 {0} 中的一种".format(', '.join(searchable_cols));
+            return infoMsg( "请输入 {0} 中的一种".format(', '.join(searchable_cols)) );
     except User.DoesNotExist:
         return infoMsg("用户不存在")
     context['headimg'] = user.getGravatar();
