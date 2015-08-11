@@ -1,0 +1,47 @@
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width:device-width,initial-scale=1.0,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="keywords" content="SuperFarmer,Kyan"/>
+        <meta name="description" content="SuperFarmer.net is a website for Kyan (a.k.a. SuperFarmer)"/>
+        <link rel="icon" href="/static/img/favicon.png" />
+        <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-paper.css">
+        <link rel="stylesheet" href="/static/css/KyanCssUtil.css">
+        <script type="text/javascript" src="/static/js/jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
+        <title>{% block title %}{% endblock %} - SuperFarmer.net</title>
+        <style>
+            #footer-div .footer {
+                background-color: #eeeeee;
+                padding: 1em;
+                text-align: center;
+                font-size: 1em;
+                color: gray;
+            }
+            #footer-div .footer a{
+                text-decoration: none;
+            }
+        </style>
+    {% endblock head %}
+</head>
+<body>
+    <div id='content'>
+        {% block content %}
+        {% endblock content %}
+    </div>
+    <div id='footer-div'>
+        {% block footer %}
+            <div class="footer">
+                <div>
+                    <strong>Be happy.</strong>
+                    <i>Keep Healthy, Keep Happy, Keep Thinking, Keep Cool.</i>
+                </div>
+                <div>
+                    Powered By
+                    <a href="http://www.superfarmer.net">SuperFarmer</a>
+                </div>
+            </div>
+        {% endblock footer %}
+    </div>
+</body>
