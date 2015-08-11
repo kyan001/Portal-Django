@@ -2,7 +2,7 @@
 {% block title %}Welcome 欢迎{% endblock title %}
 
 {% block head %}
-    {{ super() }}
+    {{ block.super }}
     <style>/*背景相关部分*/
         .bg-div, .fg-div { /*隔一个DIV换一个背景图*/
             width: 100% !important;
@@ -622,5 +622,5 @@
 {% endblock content %}
 
 {% block footer %}
-    {{ super() }}
+    {{ block.super }}
 {% endblock footer %}

@@ -2,7 +2,7 @@
 {% block title %}提示信息{% endblock title %}
 
 {% block head %}
-    {{ super() }}
+    {{ block.super }}
     <style type="text/css">
     a {
         color:gray;
@@ -75,5 +75,5 @@
 {% endblock content %}
 
 {% block footer %}
-    {{ super() }}
+    {{ block.super }}
 {% endblock footer %}
