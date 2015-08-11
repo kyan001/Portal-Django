@@ -31,7 +31,7 @@ def userUser(request):
     searchable_cols = ('username','id','email');
     try:
         for sc in searchable_cols:
-            colname = sc if request.has_key(sc) else None
+            colname = sc if sc in request.GET else None
         if colname:
             kwargs = {colname : request.GET.get(colname)}
             user = User.objects.get(**kwargs);
