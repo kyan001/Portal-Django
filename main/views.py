@@ -37,7 +37,7 @@ def userUser(request):
             user = User.objects.get(**kwargs);
         else:
             return infoMsg("请输入 {0}中的一种".format((sc+" ") for sc in searchable_cols));
-    except:
+    except User.DoesNotExist:
         return infoMsg("用户不存在")
     context['headimg'] = user.getGravatar();
     context['user'] = user
