@@ -16,6 +16,15 @@ def infoMsg(content="Hi", url=None, title=None):
 def index(request):
     return render_to_response('index/index.html');
 
+def userAvatar(request, email):
+    context = {}
+    if email:
+        user = User(email=email)
+        context['headimg'] = user.getGravatar()
+    else:
+        return infoMsg("请输入email")
+    return render_to_response('<img src="{{headimg}}">', context)
+
 def userUser(request, keyword):
     context = {}
     searchable_cols = ('username','id','email');
