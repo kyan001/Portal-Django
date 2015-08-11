@@ -32,7 +32,7 @@ def userUser(request):
     try:
         for sc in searchable_cols:
             if sc in request.GET:
-                kwargs = {colname : request.GET.get(colname)}
+                kwargs = {sc : request.GET.get(sc)}
                 user = User.objects.get(**kwargs);
                 context['headimg'] = user.getGravatar();
                 context['user'] = user
