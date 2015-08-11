@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ user.nickname }}{% endblock title %}
+
+{% block content %}
+<div>
+    <span>用户名</span>
+    <span>{{ user.username }}</span>
+</div>
+<div>
+    <span>昵称</span>
+    <span>{{ user.nickname }}</span>
+</div>
+<div>
+    <span>邮箱</span>
+    <span>{{ user.email }}</span>
+</div>
+<div>
+    <span>创建时间</span>
+    <span>{{ user.created }}</span>
+</div>
+{% endblock content %}

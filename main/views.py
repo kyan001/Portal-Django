@@ -17,4 +17,9 @@ def index(request):
     return render_to_response('index/index.html');
 
 def userIndex(request, username):
-    return infoMsg("您的用户名是：" + username)
+    try:
+        user = User.objects.get(username=username);
+        context = { 'user': user }
+    except User.DoesNotExist:
+        return infoMsg("用户 " + username + " 不存在！")
+    return render_to_response('user/index.html', context);

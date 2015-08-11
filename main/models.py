@@ -10,3 +10,5 @@ class User(models.Model):
     tip = models.TextField(blank=True, null=True)
     email = models.EmailField()
     created = models.DateTimeField()
+    def __str__(self): # 用于需要 string 时的处理 python3
+        return self.nickname + "(" + self.username + ")"
