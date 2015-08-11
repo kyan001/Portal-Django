@@ -28,11 +28,12 @@ def userAvatar(request, email):
 def userUser(request):
     context = {}
     searchable_cols = ('username','id','email');
+    colname = "";
     try:
         for sc in searchable_cols:
             if request.GET.get(sc):
                 colname = sc;
-        if colname:
+        if colname != "":
             kwargs = {colname : request.GET.get(colname)}
             user = User.objects.get(**kwargs);
         else:
