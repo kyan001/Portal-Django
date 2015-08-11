@@ -2,6 +2,7 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.template import *
 from main.models import *
+from main import util.*
 
 # Utils
 def infoMsg(content="Hi", url=None, title=None):
@@ -17,9 +18,12 @@ def index(request):
     return render_to_response('index/index.html');
 
 def userIndex(request, username):
+    context = {}
     try:
         user = User.objects.get(username=username);
-        context = { 'user': user }
+        if user.email:
+            context['headimg'] = util.user.getUserGravatar(user.email);
+        context['user'] = user
     except User.DoesNotExist:
         return infoMsg("用户 " + username + " 不存在！")
     return render_to_response('user/index.html', context);
