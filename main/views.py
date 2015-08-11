@@ -42,4 +42,3 @@ def userUser(request):
         return infoMsg(error_msg, title='参数错误');
     except User.DoesNotExist:
         return infoMsg("用户 {0} 不存在".format(json.dumps(dict(request.GET)), title='参数错误')
-
