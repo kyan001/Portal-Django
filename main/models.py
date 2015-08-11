@@ -1,4 +1,6 @@
 from django.db import models
+import util.KyanToolKit_Py
+ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 
 # Create your models here.
 class User(models.Model):
@@ -12,3 +14,7 @@ class User(models.Model):
     created = models.DateTimeField()
     def __str__(self): # 用于需要 string 时的处理 python3
         return self.nickname + "(" + self.username + ")"
+    def getUserGravatar(self):
+        base_src = "https://secure.gravatar.com/avatar/"
+        email_md5 = ktk.md5(self.email) if self.email else "";
+        return base_src + email_md5
