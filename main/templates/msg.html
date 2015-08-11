@@ -62,7 +62,7 @@
             {% else %}
                 <div class="title">提示信息：</div>
             {% endif %}
-            <div class="message">{{ content.replace('\n','<br/>') }}</div>
+            <div class="message">{{ content|escape|linebreaks }}</div>
             <div class="link">
                 {% if url %}
                     <a href="{{url}}" title="{{url}}">点此跳转至 {{url}}</a>
