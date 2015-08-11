@@ -31,12 +31,13 @@ def userUser(request):
     try:
         for sc in searchable_cols:
             if request.GET.get(sc):
-                kwargs = {sc:keyword}
-                user = User.objects.get(**kwargs);
+                colname = sc;
+        kwargs = {colname : request.GET.get(colname)}
+        user = User.objects.get(**kwargs);
         if not user:
             return infoMsg("请输入 {0}中的一种".format((sc+" ") for sc in searchable_cols));
     except:
-        return infoMsg("用户 " + keyword + " 不存在！")
+        return infoMsg("用户 {0} 不存在！".format(colname))
     context['headimg'] = user.getGravatar();
     context['user'] = user
     return render_to_response('user/index.html', context);
