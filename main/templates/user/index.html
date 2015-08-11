@@ -3,22 +3,22 @@
 
 {% block content %}
 <duv>
-    <span>头像</span>
-    <a href="www.gravatar.com" title="注册请翻墙使用"><img src="{{ headimg }}"</a>>
+    <span>头像:</span>
+    <a href="www.gravatar.com" title="注册请翻墙使用"><img src="{{ headimg }}"></a>
 <div>
-    <span>用户名</span>
+    <span>用户名:</span>
     <span>{{ user.username }}</span>
 </div>
 <div>
-    <span>昵称</span>
+    <span>昵称:</span>
     <span>{{ user.nickname }}</span>
 </div>
 <div>
-    <span>邮箱</span>
+    <span>邮箱:</span>
     <span>{{ user.email }}</span>
 </div>
 <div>
-    <span>创建时间</span>
+    <span>创建时间:</span>
     <span>{{ user.created }}</span>
 </div>
 {% endblock content %}
