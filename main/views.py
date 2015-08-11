@@ -29,15 +29,13 @@ def userUser(request):
     context = {}
     searchable_cols = ('username','id','email');
     try:
-        colname = None;
         for sc in searchable_cols:
-            if request.GET.get(sc):
-                colname = sc;
+            colname = sc if request.GET.get(sc) else None
         if colname:
             kwargs = {colname : request.GET.get(colname)}
             user = User.objects.get(**kwargs);
         else:
-            return infoMsg("请输入 {0}中的一种".format((sc+" ") for sc in searchable_cols));
+            return infoMsg("请输入 {0} 中的一种".str(searchable_cols));
     except User.DoesNotExist:
         return infoMsg("用户不存在")
     context['headimg'] = user.getGravatar();
