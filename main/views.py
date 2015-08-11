@@ -31,10 +31,9 @@ def userUser(request, keyword):
     for sc in searchable_cols:
         kwargs = {sc:keyword}
         queryset = User.objects.filter(**kwargs);
-        if(len(queryset)==1){
+        if len(queryset)==1:
             user = queryset[0];
             break;
-        }
     if not user:
         return infoMsg("无法找到用户 " + keyword + " 不存在！")
     context['headimg'] = user.getGravatar();
