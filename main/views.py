@@ -40,7 +40,7 @@ def userUser(request):
             error_msg += "请输入 {0} 中的一种".format(', '.join(searchable_cols))
             return infoMsg(error_msg, title='参数错误');
     except User.DoesNotExist:
-        return infoMsg( "用户 {0} 不存在").format(json.dumps(request.GET)), title='参数错误')
+        return infoMsg("用户 {0} 不存在".format(json.dumps(request.GET)), title='参数错误')
     context['headimg'] = user.getGravatar();
     context['user'] = user
     return render_to_response('user/index.html', context);
