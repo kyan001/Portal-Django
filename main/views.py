@@ -18,13 +18,12 @@ def index(request):
 
 def userAvatar(request, email):
     context = {}
-    tmplt = Template('<img src="{{headimg}}">')
     if email:
         user = User(email=email)
         context['headimg'] = user.getGravatar()
     else:
         return infoMsg("请输入email")
-    return render_to_response(tmplt, context)
+    return render_to_response('user/avatar.html', context)
 
 def userUser(request):
     context = {}
