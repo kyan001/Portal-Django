@@ -10,7 +10,7 @@ def infoMsg(content="Hi", url=None, title=None):
         'content':content,
         'url':url,
     }
-    return render_template("msg.html", context);
+    return render_to_response("msg.html", context);
 
 # Create your views here.
 def index(request):
