@@ -29,6 +29,7 @@ def userUser(request):
     context = {}
     searchable_cols = ('username','id','email');
     try:
+        colname = None;
         for sc in searchable_cols:
             if request.GET.get(sc):
                 colname = sc;
