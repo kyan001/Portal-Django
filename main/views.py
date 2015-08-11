@@ -28,18 +28,17 @@ def userAvatar(request, email):
 def userUser(request):
     context = {}
     searchable_cols = ('username','id','email');
-    colname = "";
     try:
         for sc in searchable_cols:
             if request.GET.get(sc):
                 colname = sc;
-        if colname != "":
+        if colname:
             kwargs = {colname : request.GET.get(colname)}
             user = User.objects.get(**kwargs);
         else:
             return infoMsg("请输入 {0}中的一种".format((sc+" ") for sc in searchable_cols));
     except:
-        return infoMsg("用户 {0} 不存在！".format(colname))
+        return infoMsg("用户不存在")
     context['headimg'] = user.getGravatar();
     context['user'] = user
     return render_to_response('user/index.html', context);
