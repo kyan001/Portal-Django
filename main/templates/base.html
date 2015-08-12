@@ -34,14 +34,17 @@
             #user-bar a {
                 float: right
             }
+            #user-bar .nologinshow {
+                display: none;
+            }
         </style>
     {% endblock head %}
 </head>
 <body>
     {% block userbar %}
     <nav id='user-bar'>
-        <a href="/user/signup" class="btn btn-primary navbar-btn">注册</a>
-        <a href="/user/login" class="btn btn-default navbar-btn">登录</a>
+        <a href="/user/signup" class="btn btn-primary navbar-btn nologinshow">注册</a>
+        <a href="/user/login" class="btn btn-default navbar-btn nologinshow">登录</a>
     </nav>
     {% endblock userbar %}
     <div id='content'>
@@ -64,7 +67,7 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function(){
-            getLoginUser()
+            getLoginUser();
         });
         function getLoginUser(){
             $.ajax({
@@ -74,9 +77,9 @@
                 success: function (data) {
                     var result = JSON.parse(data);
                     if (result['error']) {
-                        alert(result['error'])
+                        alert(result['error']);
                     } else {
-                        $("#user-bar").empty();
+                        $("#user-bar .nologinshow").fadeIn();
                         $("#user-bar").append(
                             "<p class='navbar-text'>" + "Hi, " +
                             "<a href='/user/user?id=" + result.id + ">" +
