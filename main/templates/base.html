@@ -23,13 +23,13 @@
                 text-decoration: none;
             }
             #user-bar {
-                height: 40px;
                 width: 100%;
                 background-color: rgba(255,255,255,0.5);
                 position: fixed;
                 top: 0;
                 left: 0;
                 z-index: 1000;
+                padding-right: 5%;
             }
             #user-bar a {
                 float: right
@@ -38,10 +38,10 @@
     {% endblock head %}
 </head>
 <body>
-    <div id='user-bar'>
-        <a href="/user/login" class="btn btn-primary">登录</a>
-        <a href="/user/signup" class="btn btn-primary">注册</a>
-    </div>
+    <nav id='user-bar'>
+        <a href="/user/signup" class="btn btn-primary navbar-btn">注册</a>
+        <a href="/user/login" class="btn btn-default navbar-btn">登录</a>
+    </nav>
     <div id='content'>
         {% block content %}
         {% endblock content %}
