@@ -76,7 +76,7 @@
                 data: {},
                 success: function (data) {
                     console.log(data);
-                    var result = JSON.parse(data);
+                    var result = jQuery.parseJSON(data);
                     alert(result)
                     // if (result['error'] != "") {
                     //     alert(result['error']);
