@@ -38,10 +38,12 @@
     {% endblock head %}
 </head>
 <body>
+    {% block userbar %}
     <nav id='user-bar'>
         <a href="/user/signup" class="btn btn-primary navbar-btn">注册</a>
         <a href="/user/login" class="btn btn-default navbar-btn">登录</a>
     </nav>
+    {% endblock userbar %}
     <div id='content'>
         {% block content %}
         {% endblock content %}
