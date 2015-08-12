@@ -1,4 +1,14 @@
+from django.shortcuts import render_to_response
+from django.shortcuts import redirect
+from django.http import HttpResponse
+from django.template import *
+from main.models import User
+from util.ctrl import *
+
 import json
+import util.KyanToolKit_Py
+ktk = util.KyanToolKit_Py.KyanToolKit_Py()
+
 def getGravatar(email):
     base_src = "https://secure.gravatar.com/avatar/"
     email_md5 = ktk.md5(email) if email else "";
