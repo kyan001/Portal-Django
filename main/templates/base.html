@@ -62,4 +62,37 @@
             </div>
         {% endblock footer %}
     </div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            getLoginUser()
+        });
+        function getLoginUser(){
+            $.ajax({
+                type: "GET",
+                url: "/user/getlogin/",
+                data: {},
+                success: function (data) {
+                    var result = JSON.parse(data);
+                    if (result['error']) {
+                        alert(result['error'])
+                    } else {
+                        $("#user-bar").empty();
+                        $("#user-bar").append(
+                            "<p class='navbar-text'>" + "Hi, " +
+                            "<a href='/user/user?id=" + result.id + ">" +
+                            "<b>" + result.nickname + "</b>" +
+                            "</a>" +
+                            "</p>"
+                            );
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("Ajax Error, XMLHttpRequest:");
+                    console.log("status: " + XMLHttpRequest.status);
+                    console.log("readyState: " + XMLHttpRequest.readyState);
+                    console.log("textStatus: " + textStatus);
+                },
+            });
+        }
+    </script>
 </body>
