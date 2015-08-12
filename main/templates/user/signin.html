@@ -11,7 +11,7 @@
         <input type="text" name="username" class="form-control" placeholder="请输入用户名" aria-describedby="basic-addon1">
     </div>
     {% if redirect %}
-    <input type="hiddin" value="{{redirect}}">
+    <input type="hidden" name="redirect" value="{{redirect}}">
     {% endif %}
     <div class="input-group">
         <input type="text" name="answer" class="form-control" placeholder="请输入答案" aria-describedby="basic-addon2">
