@@ -29,12 +29,19 @@
                 position: fixed;
                 top: 0;
                 left: 0;
+                z-index: 1000;
+            }
+            #user-bar a {
+                float: right
             }
         </style>
     {% endblock head %}
 </head>
 <body>
-    <div id='user-bar'></div>
+    <div id='user-bar'>
+        <a href="/user/login" class="btn btn-primary">登录</a>
+        <a href="/user/signup" class="btn btn-primary">注册</a>
+    </div>
     <div id='content'>
         {% block content %}
         {% endblock content %}

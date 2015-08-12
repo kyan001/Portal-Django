@@ -53,6 +53,12 @@ def userUser(request):
 
 def userLogin(request):
     context = {}
+    if 'redirect' in request.GET:
+        context['redirect'] = request.GET.get(redirect)
+    return render_to_response('user/login.html', context)
+
+def userCheckLogin(request):
+    context = {}
     username = request.POST.get('username')
     answer = request.POST.get('answer')
     if not username:
