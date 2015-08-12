@@ -31,9 +31,6 @@
                 z-index: 1000;
                 padding-right: 5%;
             }
-            #user-bar a {
-                float: right
-            }
             #user-bar .nologinshow {
                 display: none;
             }
@@ -43,8 +40,8 @@
 <body>
     {% block userbar %}
     <nav id='user-bar'>
-        <a href="/user/signup" class="btn btn-primary navbar-btn nologinshow">注册</a>
-        <a href="/user/login" class="btn btn-default navbar-btn nologinshow">登录</a>
+        <a href="/user/signup" class="btn btn-primary navbar-btn navbar-right nologinshow">注册</a>
+        <a href="/user/login" class="btn btn-default navbar-btn navbar-right nologinshow">登录</a>
     </nav>
     {% endblock userbar %}
     <div id='content'>
@@ -80,10 +77,11 @@
                     var result = data;
                     if (result.error) {
                         alert(result.error);
-                    } else {
+                    } else if (result.nologinuser) {
                         $("#user-bar .nologinshow").fadeIn();
+                    } else {
                         $("#user-bar").append(
-                            "<p class='navbar-text'>" + "Hi, " +
+                            "<p class='navbar-text navbar-right'>" + "Hi, " +
                             "<a href='/user/user?id=" + result.id + ">" +
                             "<b>" + result.nickname + "</b>" +
                             "</a>" +
