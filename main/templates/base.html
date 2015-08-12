@@ -40,13 +40,18 @@
 <body>
     {% block userbar %}
     <nav id='user-bar'>
-        <a href="/user/signup" class="btn btn-primary navbar-btn navbar-right nologinshow">注册</a>
-        <a href="/user/login" class="btn btn-default navbar-btn navbar-right nologinshow">登录</a>
-        <p class='navbar-text navbar-right loginshow'>Hi,
-            <a class="profile-link" href=''>
+        <span class="nologinshow narbar-right">
+            <a href="/user/signup" class="btn btn-primary btn-sm navbar-btn">注册</a>
+            <a href="/user/login" class="btn btn-default btn-sm navbar-btn">登录</a>
+        </span>
+        <span class="loginshow navbar-text navbar-right">
+            <span>Hi, </span>
+            <a class="profile-link navbar-link" href=''>
                 <b class="profile-nikename"></b>
             </a>
-        </p>
+            <span> </span>
+            <a href="/user/login" class="btn btn-default btn-sm navbar-btn">登录</a>
+        </span>
     </nav>
     {% endblock userbar %}
     <div id='content'>
@@ -77,8 +82,6 @@
                 url: "/user/getlogin/",
                 data: {},
                 success: function (data) {
-                    console.log(data);
-                    //var result = JSON.parse(data);
                     var result = data;
                     if (result.error) {
                         alert(result.error);
