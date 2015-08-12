@@ -14,15 +14,16 @@ def getGravatar(email):
     email_md5 = ktk.md5(email) if email else "";
     return base_src + email_md5
 
-def getUserLogin(username, password):
+def getUserLogin(username, answer):
     if not username:
         raise Exception("username 不能为空")
-    if not password:
-        raise Exception("password 不能为空")
+    if not answer:
+        raise Exception("answer 不能为空")
     answer_md5 = ktk.md5(answer)
-    try:
-        user = User.objects.get(username=username, answer=answer_md5)
-    except:
+    user = User.objects.filter(username=username, answer1=answer_md5)
+    if len(user) == 0:
+        user = User.objects.filter(username=username, answer2=answer_md5)
+    if len(user) == 0:
         return None;
     return user
 
