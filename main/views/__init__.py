@@ -6,5 +6,5 @@ from main.models import *
 import util.KyanToolKit_Py
 ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 # add your views here
-from userviews import *
-from genericviews import *
+from .userviews import *
+from .genericviews import *
