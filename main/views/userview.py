@@ -84,7 +84,7 @@ def userCheckLogin(request):
         request.session['loginuser'] = user
     else:
         return infoMsg("等检查用户名与答案组合：username={0},answer={1}".format(username, answer), title="登陆失败")
-    if 'redirect' in request.GET:
-        return redirect(request.GET.get('redirect'))
+    if 'redirect' in request.POST:
+        return redirect(request.POST.get('redirect'))
     else:
         return redirect('/')
