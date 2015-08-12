@@ -2,9 +2,12 @@
 {% block title %}{{ user.nickname }}{% endblock title %}
 
 {% block content %}
-<duv>
+<div>
     <span>头像:</span>
-    <a href="http://www.gravatar.com" title="注册请翻墙使用"><img src="{{ headimg }}"></a>
+    <a href="http://www.gravatar.com" title="注册请翻墙使用">
+        <img src="{{ headimg }}">
+    </a>
+</div>
 <div>
     <span>用户名:</span>
     <span>{{ user.username }}</span>

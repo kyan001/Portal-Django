@@ -1,28 +1,13 @@
-from django.shortcuts import render, render_to_response
-from django.shortcuts import redirect
-from django.http import HttpResponse
-from django.template import *
-from main.models import *
 import json
-
-# Utils
-def infoMsg(content="Hi", url=None, title=None):
-    context = {
-        'title':title,
-        'content':content,
-        'url':url,
-    }
-    return render_to_response("msg.html", context);
-
-# Create your views here.
-def index(request):
-    return render_to_response('index/index.html');
+def getGravatar(email):
+    base_src = "https://secure.gravatar.com/avatar/"
+    email_md5 = ktk.md5(email) if email else "";
+    return base_src + email_md5
 
 def userAvatar(request, email):
     context = {}
     if email:
-        user = User(email=email)
-        context['headimg'] = user.getGravatar()
+        context['headimg'] = getGravatar(email)
     else:
         return infoMsg("请输入email")
     return render_to_response('user/avatar.html', context)
@@ -35,7 +20,7 @@ def userUser(request):
             if sc in request.GET:
                 kwargs = {sc : request.GET.get(sc)}
                 user = User.objects.get(**kwargs);
-                context['headimg'] = user.getGravatar();
+                context['headimg'] = getGravatar(user.email);
                 context['user'] = user
                 return render_to_response('user/index.html', context);
         error_msg = "错误的参数：{0}\n".format(json.dumps(dict(request.GET)))
@@ -46,6 +31,12 @@ def userUser(request):
 
 def userLogin(request):
     context = {}
+    username = request.POST.get('username')
+    answer = request.POST.get('answer')
+    if not username:
+        return infoMsg("用户名不能为空", title="登陆失败")
+    if not answer:
+        return infoMsg("答案不能为空", title="登陆失败")
     if 'redirect' in request.GET:
         return redirect(request.GET.get('redirect'))
     else:
