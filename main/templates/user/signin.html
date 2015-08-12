@@ -7,18 +7,17 @@
         <span class="input-group-addon" id="basic-addon1">
             <span class="glyphicon glyphicon-user"></span>
         </span>
-        <input type="text" class="form-control" name="username" placeholder="请输入用户名" aria-describedby="basic-addon1">
+        <input type="text" name="username" class="form-control" placeholder="请输入用户名" aria-describedby="basic-addon1">
     </div>
     {% if redirect %}
     <input type="hiddin" value="{{redirect}}">
     {% endif %]
     <div class="input-group">
-        <input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
+        <input type="text" name="answer" class="form-control" placeholder="请输入答案" aria-describedby="basic-addon2">
         <span class="input-group-addon" id="basic-addon2">
-            <abbr title="">Tip</abbr>
+            <abbr title="1111">Tip</abbr>
         </span>
     </div>
-<input type="text" name="lname" />
-<input type="submit" value="Submit" />
+    <input type="submit" value="Submit" />
 </form>
 {% endblock content %}
