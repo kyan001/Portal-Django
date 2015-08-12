@@ -26,7 +26,7 @@ def getUserLogin(username, answer):
         user = User.objects.filter(username=username, answer2=answer_md5)
     if len(user) == 0:
         return None;
-    return user
+    return user[0]
 
 def userLogout(request):
     request.session['loginuser'] = None;
@@ -81,7 +81,7 @@ def userCheckLogin(request):
         return infoMsg("答案不能为空", title="登陆失败")
     user = getUserLogin(username, answer)
     if user:
-        request.session['loginuser'] = user
+        request.session['loginuser'] = dict(user)
     else:
         return infoMsg("等检查用户名与答案组合：username={0},answer={1}".format(username, answer), title="登陆失败")
     if 'redirect' in request.POST:
