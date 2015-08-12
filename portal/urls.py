@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^user/user', views.userUser),
     url(r'^user/avatar/(?P<email>[0-9a-zA-Z_.@]+)/$', views.userAvatar),
     url(r'^user/signin/$', views.userSignin),
+    url(r'^user/signup/$', views.userSignup),
     url(r'^user/checklogin/$', views.userCheckLogin),
     url(r'^user/getlogin/$', views.userGetlogin),
     url(r'^user/logout/$', views.userLogout),
