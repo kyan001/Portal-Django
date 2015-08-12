@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import *
+from django.views.decorators.csrf import csrf_exempt
 from main.models import User
 from util.ctrl import *
 
