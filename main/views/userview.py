@@ -51,11 +51,20 @@ def userUser(request):
     except User.DoesNotExist:
         return infoMsg("用户 {0} 不存在".format(json.dumps(dict(request.GET))), title='参数错误')
 
-def userLogin(request):
+def userSignin(request):
     context = {}
     if 'redirect' in request.GET:
         context['redirect'] = request.GET.get(redirect)
-    return render_to_response('user/login.html', context)
+    return render_to_response('user/signin.html', context)
+
+def userGetlogin(request):
+    # AJAX
+    loginuser = request.session.get('loginuser')
+    if loginuser:
+        return returnJson(loginuser)
+    else:
+        return returnJson({'nologinuser':True})
+
 
 def userCheckLogin(request):
     context = {}
