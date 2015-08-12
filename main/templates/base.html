@@ -22,11 +22,18 @@
             #footer-div .footer a{
                 text-decoration: none;
             }
+            #user-bar {
+                height: 40px;
+                background-color: rgba(255,255,255,0.5);
+                position: fixed;
+                top: 0;
+                left: 0;
+            }
         </style>
     {% endblock head %}
 </head>
 <body>
-    <div style="height: 40px; background-color: rgba(255,255,255,0.5)"></div>
+    <div id='user-bar'></div>
     <div id='content'>
         {% block content %}
         {% endblock content %}
