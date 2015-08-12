@@ -62,14 +62,12 @@ def userSignin(request):
         context['redirect'] = request.GET.get(redirect)
     return render_to_response('user/signin.html', context)
 
-def userGetlogin(request):
-    # AJAX
+def userGetlogin(request): # AJAX
     loginuser = request.session.get('loginuser')
     if loginuser:
         return returnJson(loginuser)
     else:
         return returnJson({'nologinuser':True})
-
 
 def userCheckLogin(request):
     context = {}
