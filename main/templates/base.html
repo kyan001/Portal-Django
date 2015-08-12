@@ -78,8 +78,8 @@
                     console.log(data);
                     //var result = JSON.parse(data);
                     var result = data;
-                    if (result['error'] != "") {
-                        alert(result['error']);
+                    if (result.error) {
+                        alert(result.error);
                     } else {
                         $("#user-bar .nologinshow").fadeIn();
                         $("#user-bar").append(
