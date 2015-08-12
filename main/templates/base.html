@@ -30,6 +30,14 @@
                 left: 0;
                 z-index: 1000;
                 padding-right: 5%;
+                padding-left: 5%;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                font-size: 15px;
+            }
+            #user-bar img {
+                max-height: 15px;
+                max-width: 15px;
             }
             #user-bar .nologinshow, #user-bar .loginshow {
                 display: none;
@@ -48,8 +56,10 @@
         </span>
         <span class="loginshow">
             <span>Hi, </span>
-            <a class="profile-link" href=''>
+            <a class="profile-avatarlink" href='' target="_blank">
                 <img class="profile-avatar">
+            </a>
+            <a class="profile-link" href=''>
                 <b class="profile-nikename"></b>
             </a>
             <a href="/user/logout" class="btn btn-default btn-sm">登录</a>
@@ -93,6 +103,7 @@
                         $("#user-bar .nologinshow").fadeIn();
                     } else {
                         $("#user-bar .profile-link").attr('href','/user/user?id='+result.id);
+                        $("#user-bar .profile-avatarlink").attr('href','/user/avatar/'+result.email+"/");
                         $("#user-bar .profile-nikename").text(result.nickname);
                         $("#user-bar .profile-avatar").attr('src',result.avatar);
                         $("#user-bar .loginshow").fadeIn();
