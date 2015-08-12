@@ -14,6 +14,18 @@ def getGravatar(email):
     email_md5 = ktk.md5(email) if email else "";
     return base_src + email_md5
 
+def getUserLogin(username, password):
+    if not username:
+        raise Exception("username 不能为空")
+    if not password:
+        raise Exception("password 不能为空")
+    answer_md5 = ktk.md5(answer)
+    try:
+        user = User.objects.get(username=username, answer=answer_md5)
+    except:
+        return None;
+    return user
+
 def userAvatar(request, email):
     context = {}
     if email:
@@ -47,6 +59,11 @@ def userLogin(request):
         return infoMsg("用户名不能为空", title="登陆失败")
     if not answer:
         return infoMsg("答案不能为空", title="登陆失败")
+    user = getUserLogin(username, answer)
+    if user:
+        request.session['loginuser'] = user
+    else:
+        return infoMsg("等检查用户名与答案组合：username={0},answer={1}".format(username, answer), title="登陆失败")
     if 'redirect' in request.GET:
         return redirect(request.GET.get('redirect'))
     else:
