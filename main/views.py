@@ -1,4 +1,5 @@
 from django.shortcuts import render, render_to_response
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import *
 from main.models import *
@@ -42,3 +43,10 @@ def userUser(request):
         return infoMsg(error_msg, title='参数错误');
     except User.DoesNotExist:
         return infoMsg("用户 {0} 不存在".format(json.dumps(dict(request.GET))), title='参数错误')
+
+def userLogin(request):
+    context = {}
+    if 'redirect' in request.GET:
+        return redirect(request.GET.get('redirect')
+    else:
+        return redirect('/');
