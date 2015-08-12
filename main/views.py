@@ -47,6 +47,6 @@ def userUser(request):
 def userLogin(request):
     context = {}
     if 'redirect' in request.GET:
-        return redirect(request.GET.get('redirect')
+        return redirect(request.GET.get('redirect'))
     else:
-        return redirect('/');
+        return redirect('/')
