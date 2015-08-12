@@ -31,7 +31,7 @@
                 z-index: 1000;
                 padding-right: 5%;
             }
-            #user-bar .nologinshow {
+            #user-bar .nologinshow, #user-bar .loginshow {
                 display: none;
             }
         </style>
@@ -42,6 +42,11 @@
     <nav id='user-bar'>
         <a href="/user/signup" class="btn btn-primary navbar-btn navbar-right nologinshow">注册</a>
         <a href="/user/login" class="btn btn-default navbar-btn navbar-right nologinshow">登录</a>
+        <p class='navbar-text navbar-right loginshow'>Hi,
+            <a class="profile-link" href=''>
+                <b class="profile-nikename"></b>
+            </a>
+        </p>
     </nav>
     {% endblock userbar %}
     <div id='content'>
@@ -80,13 +85,9 @@
                     } else if (result.nologinuser) {
                         $("#user-bar .nologinshow").fadeIn();
                     } else {
-                        $("#user-bar").append(
-                            "<p class='navbar-text navbar-right'>" + "Hi, " +
-                            "<a href='/user/user?id=" + result.id + ">" +
-                            "<b>" + result.nickname + "</b>" +
-                            "</a>" +
-                            "</p>"
-                            );
+                        $("#user-bar .profile-link").attr('href','/user/user?id='+result.id);
+                        $("#user-bar .profile-nikename").text(result.nickname);
+                        $("#user-bar .loginshow").fadeIn();
                     }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
