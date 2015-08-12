@@ -3,7 +3,6 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import *
 from django.views.decorators.csrf import csrf_exempt
-from django.forms.models import model_to_dict
 from main.models import User
 from util.ctrl import *
 
@@ -82,7 +81,7 @@ def userCheckLogin(request):
         return infoMsg("答案不能为空", title="登陆失败")
     user = getUserLogin(username, answer)
     if user:
-        request.session['loginuser'] = model_to_dict(user)
+        request.session['loginuser'] = user.toArray()
     else:
         return infoMsg("等检查用户名与答案组合：username={0},answer={1}".format(username, answer), title="登陆失败")
     if 'redirect' in request.POST:

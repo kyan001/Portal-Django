@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms.models import model_to_dict
 import util.KyanToolKit_Py
 ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 
@@ -14,3 +15,6 @@ class User(models.Model):
     created = models.DateTimeField()
     def __str__(self): # 用于需要 string 时的处理 python3
         return self.nickname + "(" + self.username + ")"
+    def toArray(self):
+        self.created = str(self.created)
+        return model_to_dict(self)
