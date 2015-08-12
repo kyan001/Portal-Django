@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
+from django.core import serializers
 import json
 
 # Utils
@@ -13,6 +14,6 @@ def infoMsg(content="Hi", url=None, title=None):
 
 def returnJson(dict):
     if dict:
-        return HttpResponse(json.dumps(dict), content_type='application/json')
+        return HttpResponse(serializers.serialize("json", dict), content_type='application/json')
     else:
         return HttpResponse(json.dumps({'error':'returnJson() input dict is empty'}), content_type='application/json')
