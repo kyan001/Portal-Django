@@ -27,6 +27,10 @@ def getUserLogin(username, answer):
         return None;
     return user
 
+def userLogout(request):
+    request.session['loginuser'] = None;
+    return infoMsg("您已经成功登出", title="登出成功")
+
 def userAvatar(request, email):
     context = {}
     if email:

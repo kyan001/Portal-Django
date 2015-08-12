@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^user/signin/$', views.userSignin),
     url(r'^user/checklogin/$', views.userCheckLogin),
     url(r'^user/getlogin/$', views.userGetlogin),
+    url(r'^user/logout/$', views.userLogout),
 ]
