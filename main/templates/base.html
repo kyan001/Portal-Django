@@ -76,20 +76,20 @@
                 data: {},
                 success: function (data) {
                     console.log(data);
-                    var result = jQuery.parseJSON(data);
-                    alert(result)
-                    // if (result['error'] != "") {
-                    //     alert(result['error']);
-                    // } else {
-                    //     $("#user-bar .nologinshow").fadeIn();
-                    //     $("#user-bar").append(
-                    //         "<p class='navbar-text'>" + "Hi, " +
-                    //         "<a href='/user/user?id=" + result.id + ">" +
-                    //         "<b>" + result.nickname + "</b>" +
-                    //         "</a>" +
-                    //         "</p>"
-                    //         );
-                    // }
+                    //var result = JSON.parse(data);
+                    var result = data;
+                    if (result['error'] != "") {
+                        alert(result['error']);
+                    } else {
+                        $("#user-bar .nologinshow").fadeIn();
+                        $("#user-bar").append(
+                            "<p class='navbar-text'>" + "Hi, " +
+                            "<a href='/user/user?id=" + result.id + ">" +
+                            "<b>" + result.nickname + "</b>" +
+                            "</a>" +
+                            "</p>"
+                            );
+                    }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("Ajax Error, XMLHttpRequest:");
