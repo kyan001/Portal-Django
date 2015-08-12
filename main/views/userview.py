@@ -69,6 +69,7 @@ def userGetlogin(request): # AJAX
     else:
         return returnJson({'nologinuser':True})
 
+@csrf_exempt
 def userCheckLogin(request):
     context = {}
     username = request.POST.get('username')
