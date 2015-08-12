@@ -66,6 +66,7 @@ def userSignin(request):
 def userGetlogin(request): # AJAX
     loginuser = request.session.get('loginuser')
     if loginuser:
+        loginuser['avatar'] = getGravatar(loginuser['email'])
         return returnJson(loginuser)
     else:
         return returnJson({'nologinuser':True})
