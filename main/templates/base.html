@@ -75,8 +75,9 @@
                 url: "/user/getlogin/",
                 data: {},
                 success: function (data) {
-                    alert(data)
-                    //var result = JSON.parse(data);
+                    console.log(data);
+                    var result = JSON.parse(data);
+                    alert(result)
                     // if (result['error'] != "") {
                     //     alert(result['error']);
                     // } else {
