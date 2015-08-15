@@ -1,28 +1,92 @@
 {% extends "base.html" %}
-{% block userbar %}{% endblock %}
 {% block title %}用户登录{% endblock title %}
 {% block css %}
 <style>
+    .container {
+        height: 100%;
+        width: 100%;
+        background: url('/static/img/user/signin.jpg');
+        background-size: cover !important;/*撑开图片*/
+        background-position: 50% 50% !important;
+        display: table;
+    }
+    #form-div {
+        width: 40%;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    #form-div form {
+        padding: 25px;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .input-group input {
+        color: white;
+    }
+    .input-group-addon {
+        color: silver;
+        font-size: x-large;
+    }
+    .tips {
+        cursor: help;
+    }
+    .submit {
+        margin-top: 10px;
+        width: 100%;
+    }
 </style>
+<script type="text/javascript">
+$(function(){
+    $('.tips').each(function(){
+        $(this).attr('data-toggle',"popover");
+        $(this).attr('data-container',"body");
+        $(this).attr('data-placement',"right");
+        $(this).attr('data-trigger',"hover click");
+        $(this).attr('data-html',true);
+    });
+    $('[data-toggle="popover"]').popover();
+    //$('.input-group').on('mouseover','.tips', function(){$(this).popover('show')});
+    //$('.input-group').on('mouseout','.tips', function(){$(this).popover('hide')});
+});
+</script>
 {% endblock css %}
 
 {% block content %}
-<form action="/user/checklogin/" method="post">
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">
-            <span class="glyphicon glyphicon-user"></span>
-        </span>
-        <input type="text" name="username" class="form-control" placeholder="请输入用户名" aria-describedby="basic-addon1">
+<div class="container">
+    <div id="form-div" class="aligncenter">
+        <form action="/user/checklogin/" method="post">
+            <div class="input-group">
+                <input type="text" name="username" class="form-control" placeholder="用户名 / Username">
+                <span class="input-group-addon tips"
+                    title="用户名 / Username <span class='label label-primary'>必填</span>"
+                    data-content="<li class='text-primary'>请输入注册时的用户名</li>
+                    <li class='text-danger'>用户名只能包含“英文字母”、“数字”和“英文句号 .”</li>
+                    <li>输入结束后，点击其他地方</li>">
+                    ?
+                </span>
+            </div>
+            <div class="input-group">
+                <div style="width:100%">这里是问题
+                </div>
+            </div>
+            <div class="input-group">
+                <input type="text" name="answer" class="form-control" placeholder="答案 / Answer">
+                <span class="input-group-addon tips"
+                    title="答案 / Answer <span class='label label-primary'>必填</span>"
+                    data-content="<li class='text-primary'>注册时您填写的内容</li>
+                    <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登录</li>
+                    <li class='text-success'>中英文、标点、数字均可</li>
+                    ">
+                    ?
+                </span>
+            </div>
+            {% if redirect %}
+            <input type="hidden" value="{{redirect}}">
+            {% endif %}
+            <input type="submit" value="登录 / Login" class="btn btn-success submit" />
+        </form>
     </div>
-    {% if redirect %}
-    <input type="hidden" name="redirect" value="{{redirect}}">
-    {% endif %}
-    <div class="input-group">
-        <input type="text" name="answer" class="form-control" placeholder="请输入答案" aria-describedby="basic-addon2">
-        <span class="input-group-addon" id="basic-addon2">
-            <abbr title="1111">Tip</abbr>
-        </span>
-    </div>
-    <input type="submit" value="Submit" />
-</form>
+</div>
 {% endblock content %}
+
+{% block footer %}{% endblock footer %}
