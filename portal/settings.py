@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-with open("/home/kyan001/src/portal_django/mysql.pswd", "r") as pswd_file:
+with open(BASE_DIR + "/mysql.pswd", "r") as pswd_file:
     mysql_pswd = pswd_file.read();
 DATABASES = {
     'default': {
@@ -87,7 +87,6 @@ DATABASES = {
         'HOST': 'localhost',
     }
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
