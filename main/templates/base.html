@@ -22,27 +22,6 @@
             #footer-div .footer a{
                 text-decoration: none;
             }
-            #user-bar {
-                width: 100%;
-                background-color: rgba(255,255,255,0.5);
-                position: fixed;
-                top: 0;
-                left: 0;
-                z-index: 1000;
-                padding-right: 5%;
-                padding-left: 5%;
-                padding-top: 10px;
-                padding-bottom: 10px;
-                font-size: 15px;
-            }
-            #user-bar img {
-                max-height: 15px;
-                max-width: 15px;
-            }
-            #user-bar .nologinshow, #user-bar .loginshow {
-                display: none;
-                float: right;
-            }
         </style>
     {% endblock head %}
 </head>
@@ -64,28 +43,33 @@
             </a>
             <a href="/user/logout" class="btn btn-default btn-sm">登出</a>
         </span>
-
-
     </nav>
-    {% endblock userbar %}
-    <div id='content'>
-        {% block content %}
-        {% endblock content %}
-    </div>
-    <div id='footer-div'>
-        {% block footer %}
-            <div class="footer">
-                <div>
-                    <strong>Be happy.</strong>
-                    <i>Keep Healthy, Keep Happy, Keep Thinking, Keep Cool.</i>
-                </div>
-                <div>
-                    Powered By
-                    <a href="http://www.superfarmer.net">SuperFarmer</a>
-                </div>
-            </div>
-        {% endblock footer %}
-    </div>
+    <style>
+        #user-bar {
+            width: 40%;
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+            padding-right: 5%;
+            padding-left: 5%;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-size: 15px;
+            border-bottom: silver solid 1px;
+        }
+        #user-bar:hover {
+            background: -webkit-linear-gradient(left, rgba(255,255,255,0), rgba(255,255,255,0.5));
+        }
+        #user-bar img {
+            max-height: 15px;
+            max-width: 15px;
+        }
+        #user-bar .nologinshow, #user-bar .loginshow {
+            display: none;
+            float: right;
+        }
+    </style>
     <script type="text/javascript">
         $(document).ready(function(){
             getLoginUser();
@@ -118,4 +102,23 @@
             });
         }
     </script>
+    {% endblock userbar %}
+    <div id='content'>
+        {% block content %}
+        {% endblock content %}
+    </div>
+    <div id='footer-div'>
+        {% block footer %}
+            <div class="footer">
+                <div>
+                    <strong>Be happy.</strong>
+                    <i>Keep Healthy, Keep Happy, Keep Thinking, Keep Cool.</i>
+                </div>
+                <div>
+                    Powered By
+                    <a href="http://www.superfarmer.net">SuperFarmer</a>
+                </div>
+            </div>
+        {% endblock footer %}
+    </div>
 </body>
