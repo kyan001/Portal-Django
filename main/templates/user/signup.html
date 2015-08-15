@@ -1,24 +1,167 @@
 {% extends "base.html" %}
-{% block userbar %}{% endblock %}
 {% block title %}用户注册{% endblock title %}
+{% block css %}
+<style>
+    .container {
+        height: 100%;
+        width: 100%;
+        background: url('/static/img/user/signup.jpg');
+        background-size: cover !important;/*撑开图片*/
+        background-position: 50% 50% !important;
+        display: table;
+    }
+    #form-div {
+        width: 40%;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    #form-div form {
+        padding: 25px;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .input-group input {
+        color: white;
+    }
+    .input-group-addon {
+        color: silver;
+        font-size: x-large;
+    }
+    .tips {
+        cursor: help;
+    }
+    .submit {
+        margin-top: 10px;
+        width: 100%;
+    }
+</style>
+<script type="text/javascript">
+$(function(){
+    $('.tips').each(function(){
+        $(this).attr('data-toggle',"popover");
+        $(this).attr('data-container',"body");
+        $(this).attr('data-placement',"right");
+        $(this).attr('data-trigger',"hover click");
+        $(this).attr('data-html',true);
+    });
+    $('[data-toggle="popover"]').popover();
+    //$('.input-group').on('mouseover','.tips', function(){$(this).popover('show')});
+    //$('.input-group').on('mouseout','.tips', function(){$(this).popover('hide')});
+});
+</script>
+{% endblock css %}
 
 {% block content %}
-<form action="/user/checklogin/" method="post">
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">
-            <span class="glyphicon glyphicon-user"></span>
-        </span>
-        <input type="text" name="username" class="form-control" placeholder="请输入用户名" aria-describedby="basic-addon1">
+<div class="container">
+    <div id="form-div" class="aligncenter">
+        <form action="/user/newuser/" method="post">
+            <div class="input-group">
+                <input type="text" name="username" class="form-control" placeholder="用户名 / Username">
+                <span class="input-group-addon tips"
+                    title="用户名 / Username <span class='label label-primary'>必填</span>"
+                    data-content="<li class='text-primary'>登录时的凭证之一</li>
+                    <li class='text-danger'>用户名只能包含“英文字母”、“数字”和“英文句号 .”</li>
+                    <li>不能同其他人的用户名重复。</li>">
+                    ?
+                </span>
+            </div>
+            <div class="input-group">
+                <input type="text" name="question" class="form-control" placeholder="问题 / Question">
+                <span class="input-group-addon tips"
+                    title="问题 / Question <span class='label label-primary'>必填</span>"
+                    data-content="<li class='text-primary'>会在登录时进行提问的私密问题</li>
+                    <li class='text-success'>我们用 “问题+回答” 的形式来代替密码。</li>
+                    <li>一些常用的问题包括：</li>
+                    <ul>
+                    <li>“最常用的8位密码”</li>
+                    <li>“最想获得的超能力”</li>
+                    <li>“家里保险柜的数量”</li>
+                    </ul>">
+                    ?
+                </span>
+            </div>
+            <div class="input-group">
+                <input type="text" name="answer1" class="form-control" placeholder="答案 / Answer">
+                <span class="input-group-addon tips"
+                    title="答案 / Answer <span class='label label-primary'>必填</span>"
+                    data-content="<li class='text-primary'>登录时您需要回答的内容</li>
+                    <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登录</li>
+                    <li class='text-success'>一般应与上面的问题相对应。</li>
+                    <li class='text-success'>中英文、标点、数字均可</li>
+                    <li class='text-warning'>任何人（包括管理员）均无法查看您的回答。</li>
+                    <li class=''>加密储存，数据库被攻破时仍能保证安全。</li>
+                    ">
+                    ?
+                </span>
+            </div>
+            <div class="input-group">
+                <input type="text" name="answer2" class="form-control" placeholder="备选答案 / Alternative Answer">
+                <span class="input-group-addon tips"
+                    title="备选答案 / Alternative Answer <span class='label label-success'>选填</span>"
+                    data-content="<li class='text-primary'>同样作为正常答案生效</li>
+                    <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登录</li>
+                    <li class=''>常见的 “答案” 与 “备选答案” 的组合有：</li>
+                    <ul>
+                    <li><span style='color:brown'>中文答案 + 英文答案</span>
+                    <div>（北京 vs. beijing）</div></li>
+                    <li><span style='color:brown'>容易混淆的答案</span>
+                    <div>（8月15日 vs. 08-15）</div></li>
+                    <li><span style='color:brown'>自己也拿不准的答案</span>
+                    <div>（炸鸡 vs. 烧烤）</div></li>
+                    </ul>
+                    ">
+                    ?
+                </span>
+            </div>
+            <div class="input-group">
+                <input type="text" name="tip" class="form-control" placeholder="回答提示 / Tip">
+                <span class="input-group-addon tips"
+                    title="回答提示 / Tip <span class='label label-success'>选填</span>"
+                    data-content="<li class='text-primary'>登录时，问题答案的提示信息</li>
+                    <li class='text-success'>在登录界面您需要时自动显示</li>
+                    <li class='text-warning'>请不要将答案直接放在这里</li>
+                    <li class=''>常见的 “回答提示” 有：</li>
+                    <ul>
+                    <li>答案是2个汉字</li>
+                    <li>答案1块钱一串</li>
+                    <li>答案是正常回答的回文</li>
+                    </ul>
+                    ">
+                    ?
+                </span>
+            </div>
+            <div class="input-group">
+                <input type="text" name="nickname" class="form-control" placeholder="昵称 / Nickname">
+                <span class="input-group-addon tips"
+                    title="昵称 / Nickname <span class='label label-success'>选填</span>"
+                    data-content="<li class='text-primary'>你希望他人看到的名称</li>
+                    <li class='text-danger'>昵称只能是 “汉字” 和 “字母”</li>
+                    <li class='text-danger'>昵称不可与他人重复</li>
+                    <li class='text-success'>昵称可随时修改</li>
+                    <li class=''>昵称为空时，我们将自动帮您生成</li>
+                    ">
+                    ?
+                </span>
+            </div>
+            <div class="input-group">
+                <input type="email" name="email" class="form-control" placeholder="邮箱 / Email">
+                <span class="input-group-addon tips"
+                    title="邮箱 / Email <span class='label label-primary'>必填</span>"
+                    data-content="<li class='text-primary'>用于找回密码</li>
+                    <li class='text-danger'>邮箱验证通过后方可生效</li>
+                    <li class='text-danger'>邮箱验证生效前，无法找回密码</li>
+                    <li class=''>用户头像将显示您邮箱绑定的 Gravatar™</li>
+                    ">
+                    ?
+                </span>
+            </div>
+            {% if redirect %}
+            <input type="hiddin" value="{{redirect}}">
+            {% endif %}
+            <input type="submit" value="提交注册 / Submit" class="btn btn-success submit" />
+        </form>
     </div>
-    {% if redirect %}
-    <input type="hiddin" value="{{redirect}}">
-    {% endif %}
-    <div class="input-group">
-        <input type="text" name="answer" class="form-control" placeholder="请输入答案" aria-describedby="basic-addon2">
-        <span class="input-group-addon" id="basic-addon2">
-            <abbr title="1111">Tip</abbr>
-        </span>
-    </div>
-    <input type="submit" value="Submit" />
-</form>
+</div>
 {% endblock content %}
+
+{% block footer %}{% endblock footer %}

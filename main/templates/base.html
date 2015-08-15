@@ -23,15 +23,23 @@
                 text-decoration: none;
             }
         </style>
+        {% block css %}
+        {% endblock css %}
     {% endblock head %}
 </head>
 <body>
     {% block userbar %}
+    <div id='home-btn'>
+        <a href="/" class="btn btn-info btn-sm">
+            <span class="glyphicon glyphicon-home"></span> Home
+        </a>
+    </div>
     <nav id='user-bar'>
         <span class="nologinshow">
             <a href="/user/signup" class="btn btn-primary btn-sm">注册</a>
             <span> </span>
             <a href="/user/signin" class="btn btn-default btn-sm">登录</a>
+            <span> </span>
         </span>
         <span class="loginshow">
             <span>Hi, </span>
@@ -42,9 +50,26 @@
                 <b class="profile-nikename"></b>
             </a>
             <a href="/user/logout" class="btn btn-default btn-sm">登出</a>
+            <span> </span>
+            <a href="/" class="btn btn-primary">
+                <span class="glyphicon glyphicon-home"></span>
+            </a>
         </span>
+
     </nav>
     <style>
+        #home-btn {
+            width: 10%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding-right: 5%;
+            padding-left: 5%;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-size: 15px;
+        }
         #user-bar {
             width: 40%;
             position: fixed;
@@ -77,7 +102,7 @@
         function getLoginUser(){
             $.ajax({
                 type: "GET",
-                url: "/user/getlogin/",
+                url: "/user/getloginerinfo/",
                 data: {},
                 success: function (data) {
                     var result = data;

@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 import json
+import random
 
 # Utils
 def infoMsg(content="Hi", url=None, title=None):

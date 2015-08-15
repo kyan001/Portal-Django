@@ -1,5 +1,6 @@
 from django.db import models
 from django.forms.models import model_to_dict
+from django.utils import timezone
 import util.KyanToolKit_Py
 ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 
@@ -18,3 +19,5 @@ class User(models.Model):
     def toArray(self):
         self.created = str(self.created)
         return model_to_dict(self)
+    def setCreated(self):
+        self.created = timezone.now()
