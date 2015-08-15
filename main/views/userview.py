@@ -66,7 +66,7 @@ def userSignin(request):
 def userSignup(request):
     context = {}
     if 'redirect' in request.GET:
-        context['redirect'] = request.GET.get(redirect)
+        context['redirect'] = request.META.get('HTTP_REFERER')
     return render_to_response('user/signup.html', context)
 
 def userGetlogin(request): # AJAX
