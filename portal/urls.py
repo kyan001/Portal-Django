@@ -17,4 +17,8 @@ urlpatterns = [
     url(r'^user/getloginerinfo/$', views.userGetloginerInfo),
     url(r'^user/newuser/$', views.userNewUser),
     url(r'^user/logout/$', views.userLogout),
+    url(r'^user/validateusername$', views.userValidateUsername),
+    url(r'^user/validatenickname$', views.userValidateNickname),
+    url(r'^user/validateemail$', views.userValidateEmail),
+    url(r'^user/getquestionandtip/$', views.userGetQuestionAndTip),
 ]

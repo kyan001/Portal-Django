@@ -23,23 +23,33 @@ def getRandomName():
     name = random.choice(yunmu).upper() + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu)
     return name;
 
-def getUserinfo(username, answer):
-    '''通过用户名和答案获得用户信息'''
+def getUser(username):
+    '''通过用户名获得用户'''
     if not username:
         raise Exception("username 不能为空")
+    try:
+        user = User.objects.get(username=username);
+    except User.DoesNotExist:
+        return None;
+    return user;
+
+def checkAnswer(user, answer):
+    '''传入用户对象，返回答案对不对'''
+    if not user:
+        raise Exception("user 不能为空")
     if not answer:
         raise Exception("answer 不能为空")
     answer_md5 = ktk.md5(answer)
-    user = User.objects.filter(username=username, answer1=answer_md5)
-    if len(user) == 0:
-        user = User.objects.filter(username=username, answer2=answer_md5)
-    if len(user) == 0:
-        return None;
-    return user[0]
+    if user.answer1 == answer_md5:
+        return True;
+    if user.answer2 == answer_md5:
+        return True;
+    return False;
+
 
 def userLogout(request):
     request.session['loginuser'] = None;
-    return infoMsg("您已经成功登出", title="登出成功")
+    return infoMsg("您已经成功登出", url="/", title="登出成功")
 
 def userAvatar(request, email):
     context = {}
@@ -65,7 +75,6 @@ def userUser(request):
         return infoMsg(error_msg, title='参数错误');
     except User.DoesNotExist:
         return infoMsg("用户 {0} 不存在".format(json.dumps(dict(request.GET))), title='参数错误')
-
 
 #-Signup-----------------------------------------------
 def userSignup(request):
@@ -125,7 +134,7 @@ def userNewUser(request):
     if 'redirect' in request.POST:
         url = request.POST.get('redirect')
     else:
-        url = '/'
+        url = '/user/signup/'
     return infoMsg("注册成功！\n您是网站第 {0} 位用户".format(str(user.id)), url=url, title="欢迎加入")
 
 #-Signin-----------------------------------------------
@@ -145,15 +154,31 @@ def userCheckLogin(request):
         return infoMsg("用户名不能为空", title="登陆失败")
     if not answer:
         return infoMsg("答案不能为空", title="登陆失败")
-    user = getUserinfo(username, answer)
-    if user:
+    user = getUser(username)
+    if checkAnswer(user, answer):
         request.session['loginuser'] = user.toArray()
     else:
-        return infoMsg("等检查用户名与答案组合：username={0},answer={1}".format(username, answer), title="登陆失败")
+        return infoMsg("用户名/答案不对：\n用户名：{0}\n答案：{1}".format(username, answer), title="登陆失败")
     if 'redirect' in request.POST:
         return redirect(request.POST.get('redirect'))
     else:
         return redirect('/')
+
+def userGetQuestionAndTip(request): #AJAX
+    '''通过用户名得到用户问题'''
+    username = request.GET.get('username')
+    if not username:
+        return returnJsonError('用户名不能为空')
+    user = getUser(username)
+    if user:
+        question = user.question
+        tip = user.tip
+        return returnJson({
+            'question' : question,
+            'tip' : tip,
+        });
+    else:
+        return returnJsonError('用户未找到：{0}'.format(username))
 
 def userGetloginerInfo(request): # AJAX
     '''顶部用户栏获取当前登录用户的信息'''
@@ -162,4 +187,35 @@ def userGetloginerInfo(request): # AJAX
         loginuser['avatar'] = getGravatarUrl(loginuser['email'])
         return returnJson(loginuser)
     else:
-        return returnJson({'nologinuser':True})
+        return returnJsonResult('nologinuser')
+
+#-Validations------------------------------------------
+def userValidateUsername(request): #AJAX
+    '''用户名是否可用'''
+    username = request.GET.get('username');
+    if not username:
+        return returnJsonError('用户名不能为空')
+    if len(User.objects.filter(username=username)) != 0:
+        return returnJsonResult('exist')
+    else:
+        return returnJsonResult('notexist')
+
+def userValidateNickname(request): #AJAX
+    '''昵称是否可用'''
+    nickname = request.GET.get('nickname');
+    if not nickname:
+        return returnJsonError('昵称不能为空')
+    if len(User.objects.filter(nickname=nickname)) != 0:
+        return returnJsonResult('exist')
+    else:
+        return returnJsonResult('notexist')
+
+def userValidateEmail(request): #AJAX
+    '''邮箱是否可用'''
+    email = request.GET.get('email');
+    if not email:
+        return returnJsonError('邮箱不能为空')
+    if len(User.objects.filter(email=email)) != 0:
+        return returnJsonResult('exist')
+    else:
+        return returnJsonResult('notexist')

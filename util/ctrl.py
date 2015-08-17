@@ -17,3 +17,15 @@ def returnJson(dict):
         return HttpResponse(json.dumps(dict), content_type='application/json')
     else:
         return HttpResponse(json.dumps({'error':'returnJson() input dict is empty'}), content_type='application/json')
+
+def returnJsonError(word):
+    if word:
+        return returnJson({'error':word});
+    else:
+        return returnJson({'error':"input of returnJsonError() is empty"})
+
+def returnJsonResult(word):
+    if word:
+        return returnJson({'result':word});
+    else:
+        return returnJson({'result':"input of returnJsonResult() is empty"})

@@ -12,6 +12,9 @@
         <script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
         <title>{% block title %}{% endblock %} - SuperFarmer.net</title>
         <style>
+            #footer-div {
+                width: 100%;
+            }
             #footer-div .footer {
                 background-color: #eeeeee;
                 padding: 1em;
@@ -28,6 +31,45 @@
     {% endblock head %}
 </head>
 <body>
+    {% block alertzone %}
+    <script type="text/javascript">
+    function msgAlert(msg, type) {
+        var html = "<div class='alert alert-" + type + " alert-dismissible fade in' role='alert'>";
+        html += "<button type='button' class='close' data-dismiss='alert'>";
+        html += "<span aria-hidden='true'>×</span>";
+        html += "</button>";
+        html += msg;
+        html += "</div>";
+        var msgItem = $(html);
+        msgItem.delay(10000).slideUp();
+        $('#alert-zone').prepend(msgItem);
+    };
+    $.extend({
+        warning: function(msg) {
+            msgAlert(msg, "warning");
+        },
+        success: function(msg) {
+            msgAlert(msg, "success");
+        },
+        danger: function(msg) {
+            msgAlert(msg, "danger");
+        },
+        info: function(msg) {
+            msgAlert(msg, "info");
+        }
+    });
+    </script>
+    <style>
+        #alert-zone {
+            position: fixed;
+            top: 80px;
+            right: 5%;
+            font-size: 15px;
+        }
+    </style>
+    <div id='alert-zone'>
+    </div>
+    {% endblock alertzone %}
     {% block userbar %}
     <div id='home-btn'>
         <a href="/" class="btn btn-info btn-sm">
@@ -103,7 +145,7 @@
                     var result = data;
                     if (result.error) {
                         alert(result.error);
-                    } else if (result.nologinuser) {
+                    } else if (result.result == 'nologinuser') {
                         $("#user-bar .nologinshow").fadeIn();
                     } else {
                         $("#user-bar .profile-link").attr('href','/user/user?id='+result.id);
