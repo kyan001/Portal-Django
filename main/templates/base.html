@@ -83,13 +83,14 @@
             <a href="/user/signin" class="btn btn-default btn-sm">登录</a>
         </span>
         <span class="loginshow">
-            <span>Hi, </span>
-            <a class="profile-avatarlink" href='' target="_blank">
-                <img class="profile-avatar">
-            </a>
-            <a class="profile-link" href=''>
-                <b class="profile-nikename"></b>
-            </a>
+            <span class="btn btn-default btn-sm">
+                <a class="profile-avatarlink" href='' target="_blank">
+                    <img class="profile-avatar">
+                </a>
+                <a class="profile-link" href=''>
+                    <b class="profile-nikename"></b>
+                </a>
+            </span>
             <a href="/user/logout" class="btn btn-default btn-sm">登出</a>
         </span>
 
@@ -124,8 +125,11 @@
             background: -webkit-linear-gradient(left, rgba(255,255,255,0), rgba(255,255,255,0.5));
         }
         #user-bar img {
-            max-height: 15px;
-            max-width: 15px;
+            max-height: 19px;
+            max-width: 19px;
+        }
+        #user-bar a {
+            text-decoration: none;
         }
         #user-bar .nologinshow, #user-bar .loginshow {
             display: none;

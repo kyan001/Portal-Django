@@ -45,7 +45,15 @@ $(function(){
         $(this).attr('data-html',true);
     });
     $('[data-toggle="popover"]').popover();
+    $('.input-group').on('focus','input', showTips);
+    $('.input-group').on('blur','input', hideTips);
 });
+function showTips(){
+    $(this).siblings('span.tips').popover('show');
+}
+function hideTips(){
+    $(this).siblings('span.tips').popover('hide');
+}
 function clearHasClass(ele){
     ele.removeClass('has-warning');
     ele.removeClass('has-success');

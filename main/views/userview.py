@@ -134,7 +134,7 @@ def userNewUser(request):
     if 'redirect' in request.POST:
         url = request.POST.get('redirect')
     else:
-        url = '/user/signup/'
+        url = '/user/signin/'
     return infoMsg("注册成功！\n您是网站第 {0} 位用户".format(str(user.id)), url=url, title="欢迎加入")
 
 #-Signin-----------------------------------------------
