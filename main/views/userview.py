@@ -61,13 +61,10 @@ def checkAnswer(user, answer):
 def userLogout(request):
     # clean session
     request.session['loginuser'] = None;
-    # render
-    context = {
-        'title':"登出成功",
-        'content':"您已经成功登出",
-        'url':"/",
-    }
-    response = render_to_response("msg.html", context);
+    if 'HTTP_REFERER' in request.META:
+        response = redirect(request.META.get('HTTP_REFERER'))
+    else:
+        response = redirect('/')
     # clean cookie
     response.delete_cookie('user_id')
     response.delete_cookie('user_answer')
