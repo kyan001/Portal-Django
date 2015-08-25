@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}用户登录{% endblock title %}
+{% block title %}用户登入{% endblock title %}
 {% block css %}
 <style>
     .container {
@@ -196,7 +196,7 @@ function submitForm(){
                     <span class="input-group-addon tips"
                         title="答案 / Answer <span class='label label-primary'>必填</span>"
                         data-content="<li class='text-primary'>注册时您填写的内容</li>
-                        <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登录</li>
+                        <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登入</li>
                         <li class='text-success'>中英文、标点、数字均可</li>
                         ">
                         ?
@@ -213,12 +213,12 @@ function submitForm(){
                     data-toggle="popover"
                     data-placement="left"
                     data-title="记住我 / Remember me"
-                    data-content="<li class='text-primary'>2周内免登陆</li><li class='text-danger'>公共电脑请勿勾选此项</li>"
+                    data-content="<li class='text-primary'>2周内免登入</li><li class='text-danger'>公共电脑请勿勾选此项</li>"
                     data-trigger='hover'
                     onclick='clickRememberMe()'
                     checked>
                 <button id="submit-button" class="btn btn-success" onclick="submitForm()" disabled>
-                    登录 / Login
+                    登入 / Login
                 </button>
                 <a id="forget-button" class="btn btn-warning" href="/user/forgetpassword">
                     忘记密码

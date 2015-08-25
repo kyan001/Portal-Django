@@ -102,7 +102,7 @@ def userProfile(request):
     context = {}
     user = request.session.get('loginuser')
     if not user:
-        return infoMsg("您还没有登陆，请先登录", title='请先登录', url='/user/signin');
+        return infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin');
     else:
         context['user'] = user
         context['headimg'] = getGravatarUrl(user['email']);
@@ -174,7 +174,7 @@ def userSignin(request):
     # check if already logged in
     current_user = request.session.get('loginuser');
     if current_user:
-        return infoMsg("您已经以 {0} 的身份登陆了，请勿重复登陆".format(current_user['username']), title="登陆失败")
+        return infoMsg("您已经以 {0} 的身份登入了，请勿重复登入".format(current_user['username']), title="登入失败")
     # render
     context = {}
     if 'HTTP_REFERER' in request.META:
@@ -183,22 +183,22 @@ def userSignin(request):
 
 @csrf_exempt
 def userCheckLogin(request):
-    '''用户点击登陆后，判断用户是否可以登录'''
+    '''用户点击登入后：判断用户是否可以登入'''
     # get posts
     context = {}
     username = request.POST.get('username')
     answer = request.POST.get('answer')
     rememberme = request.POST.get('rememberme')
     if not username:
-        return infoMsg("用户名不能为空", title="登陆失败")
+        return infoMsg("用户名不能为空", title="登入失败")
     if not answer:
-        return infoMsg("答案不能为空", title="登陆失败")
+        return infoMsg("答案不能为空", title="登入失败")
     # check username vs. answer
     user = getUser(username)
     if checkAnswer(user, answer):
         request.session['loginuser'] = user.toArray()
     else:
-        return infoMsg("用户名/答案不对：\n用户名：{0}\n答案：{1}".format(username, answer), title="登陆失败")
+        return infoMsg("用户名/答案不对：\n用户名：{0}\n答案：{1}".format(username, answer), title="登入失败")
     # redirections
     if 'redirect' in request.POST:
         response = redirect(request.POST.get('redirect'))
@@ -212,7 +212,7 @@ def userCheckLogin(request):
     return response
 
 def userGetQuestionAndTip(request): #AJAX
-    '''通过用户名得到用户问题'''
+    '''登入时：通过用户名得到用户问题'''
     username = request.GET.get('username')
     if not username:
         return returnJsonError('用户名不能为空')
@@ -228,7 +228,7 @@ def userGetQuestionAndTip(request): #AJAX
         return returnJsonError('用户未找到：{0}'.format(username))
 
 def userGetloginerInfo(request): # AJAX
-    '''顶部用户栏获取当前登录用户的信息'''
+    '''顶部用户栏：获取当前登入用户的信息'''
     # from session
     loginuser = request.session.get('loginuser')
     # from cookies
@@ -249,7 +249,7 @@ def userGetloginerInfo(request): # AJAX
 
 #-Validations------------------------------------------
 def userValidateUsername(request): #AJAX
-    '''用户名是否可用'''
+    '''注册/登入时：用户名是否可用'''
     username = request.GET.get('username');
     if not username:
         return returnJsonError('用户名不能为空')
@@ -259,7 +259,7 @@ def userValidateUsername(request): #AJAX
         return returnJsonResult('notexist')
 
 def userValidateNickname(request): #AJAX
-    '''昵称是否可用'''
+    '''注册时：昵称是否可用'''
     nickname = request.GET.get('nickname');
     if not nickname:
         return returnJsonError('昵称不能为空')
@@ -269,7 +269,7 @@ def userValidateNickname(request): #AJAX
         return returnJsonResult('notexist')
 
 def userValidateEmail(request): #AJAX
-    '''邮箱是否可用'''
+    '''注册时：邮箱是否可用'''
     email = request.GET.get('email');
     if not email:
         return returnJsonError('邮箱不能为空')
