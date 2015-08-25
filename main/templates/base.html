@@ -33,6 +33,7 @@
     {% endblock head %}
 </head>
 <body>
+    <!-- ############ ALERT ZONE ############-->
     {% block alertzone %}
         <script type="text/javascript">
             function msgAlert(msg, type) {
@@ -172,11 +173,13 @@
         </script>
     {% endblock userbar %}
 
+    <!-- ############ CONTENT ############-->
     <div>
         {% block content %}
         {% endblock content %}
     </div>
 
+    <!-- ############ FOOTER ############-->
     <div id='footer-div'>
         {% block footer %}
             <div class="footer">

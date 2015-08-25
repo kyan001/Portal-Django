@@ -12,8 +12,8 @@ urlpatterns = [
     url(r'^user/user', views.userUser),
     url(r'^user/profile/', views.userProfile),
     url(r'^user/avatar/(?P<email>[0-9a-zA-Z_.@]+)/$', views.userAvatar),
-    url(r'^user/signin/$', views.userSignin),
-    url(r'^user/signup/$', views.userSignup),
+    url(r'^user/signin$', views.userSignin),
+    url(r'^user/signup$', views.userSignup),
     url(r'^user/checklogin/$', views.userCheckLogin),
     url(r'^user/getloginerinfo/$', views.userGetloginerInfo),
     url(r'^user/newuser/$', views.userNewUser),
@@ -21,5 +21,5 @@ urlpatterns = [
     url(r'^user/validateusername$', views.userValidateUsername),
     url(r'^user/validatenickname$', views.userValidateNickname),
     url(r'^user/validateemail$', views.userValidateEmail),
-    url(r'^user/getquestionandtip/$', views.userGetQuestionAndTip),
+    url(r'^user/getquestionandtip$', views.userGetQuestionAndTip),
 ]

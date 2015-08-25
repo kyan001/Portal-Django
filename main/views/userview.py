@@ -114,6 +114,8 @@ def userProfile(request):
 def userSignup(request):
     context = {}
     if 'redirect' in request.GET:
+        context['redirect'] = request.GET.get('redirect')
+    elif 'HTTP_REFERER' in request.META:
         context['redirect'] = request.META.get('HTTP_REFERER')
     return render_to_response('user/signup.html', context)
 
@@ -165,18 +167,14 @@ def userNewUser(request):
     user.save();
 
     # render
-    if 'redirect' in request.POST:
-        url = request.POST.get('redirect')
-    else:
-        url = '/user/signin/'
-    return infoMsg("注册成功！\n您是网站第 {0} 位用户".format(str(user.id)), url=url, title="欢迎加入")
+    return infoMsg("注册成功！\n您是网站第 {0} 位用户".format(str(user.id)), url='/', title="欢迎加入")
 
 #-Signin-----------------------------------------------
 def userSignin(request):
     # check if already logged in
     current_user = request.session.get('loginuser');
     if current_user:
-        return infoMsg("您已经以 {0} 的身份登陆了，请勿重复登陆".format(current_user['username']), title="登陆失败", url=request.META.get('HTTP_REFERER'))
+        return infoMsg("您已经以 {0} 的身份登陆了，请勿重复登陆".format(current_user['username']), title="登陆失败")
     # render
     context = {}
     if 'HTTP_REFERER' in request.META:
@@ -195,15 +193,14 @@ def userCheckLogin(request):
         return infoMsg("用户名不能为空", title="登陆失败")
     if not answer:
         return infoMsg("答案不能为空", title="登陆失败")
+    # check username vs. answer
     user = getUser(username)
     if checkAnswer(user, answer):
         request.session['loginuser'] = user.toArray()
     else:
         return infoMsg("用户名/答案不对：\n用户名：{0}\n答案：{1}".format(username, answer), title="登陆失败")
-    if 'redirect' in request.POST:
-        response = redirect(request.POST.get('redirect'))
-    else:
-        response = redirect('/')
+    response = redirect('/')
+    # set cookie
     if rememberme == 'yes':
         oneweek = 60*60*24*7
         response.set_cookie('user_id', user.id, max_age=oneweek)
