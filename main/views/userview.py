@@ -102,7 +102,7 @@ def userProfile(request):
     context = {}
     user = request.session.get('loginuser')
     if not user:
-        return infoMsg("您还没有登陆，请先登录", title='请先登录', url='/signin');
+        return infoMsg("您还没有登陆，请先登录", title='请先登录', url='/user/signin');
     else:
         context['user'] = user
         context['headimg'] = getGravatarUrl(user['email']);
