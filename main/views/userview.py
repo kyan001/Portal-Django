@@ -199,7 +199,11 @@ def userCheckLogin(request):
         request.session['loginuser'] = user.toArray()
     else:
         return infoMsg("用户名/答案不对：\n用户名：{0}\n答案：{1}".format(username, answer), title="登陆失败")
-    response = redirect('/')
+    # redirections
+    if 'redirect' in request.POST:
+        response = redirect(request.POST.get('redirect'))
+    else:
+        response = redirect('/')
     # set cookie
     if rememberme == 'yes':
         oneweek = 60*60*24*7
