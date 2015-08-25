@@ -33,6 +33,16 @@ def getUser(username):
         return None;
     return user;
 
+def getUserById(user_id):
+    '''通过用户名获得用户'''
+    if not user_id:
+        raise Exception("username 不能为空")
+    try:
+        user = User.objects.get(id=user_id);
+    except User.DoesNotExist:
+        return None;
+    return user;
+
 def checkAnswer(user, answer):
     '''传入用户对象，返回答案对不对'''
     if not user:
@@ -48,8 +58,19 @@ def checkAnswer(user, answer):
 
 
 def userLogout(request):
+    # clean session
     request.session['loginuser'] = None;
-    return infoMsg("您已经成功登出", url="/", title="登出成功")
+    # render
+    context = {
+        'title':"登出成功",
+        'content':"您已经成功登出",
+        'url':"/",
+    }
+    response = render_to_response("msg.html", context);
+    # clean cookie
+    response.delete_cookie('user_id')
+    response.delete_cookie('user_answer')
+    return response;
 
 def userAvatar(request, email):
     context = {}
@@ -150,6 +171,7 @@ def userCheckLogin(request):
     context = {}
     username = request.POST.get('username')
     answer = request.POST.get('answer')
+    rememberme = request.POST.get('rememberme')
     if not username:
         return infoMsg("用户名不能为空", title="登陆失败")
     if not answer:
@@ -160,9 +182,14 @@ def userCheckLogin(request):
     else:
         return infoMsg("用户名/答案不对：\n用户名：{0}\n答案：{1}".format(username, answer), title="登陆失败")
     if 'redirect' in request.POST:
-        return redirect(request.POST.get('redirect'))
+        response = redirect(request.POST.get('redirect'))
     else:
-        return redirect('/')
+        response = redirect('/')
+    if rememberme == 'yes':
+        oneweek = 60*60*24*7
+        response.set_cookie('user_id', user.id, max_age=oneweek)
+        response.set_cookie('user_answer', user.answer1, max_age=oneweek)
+    return response
 
 def userGetQuestionAndTip(request): #AJAX
     '''通过用户名得到用户问题'''
@@ -182,7 +209,18 @@ def userGetQuestionAndTip(request): #AJAX
 
 def userGetloginerInfo(request): # AJAX
     '''顶部用户栏获取当前登录用户的信息'''
+    # from session
     loginuser = request.session.get('loginuser')
+    # from cookies
+    if not loginuser:
+        user_id = request.COOKIES.get('user_id')
+        user_answer = request.COOKIES.get('user_answer')
+        if user_id and user_answer:
+            user = getUserById(user_id)
+            if checkAnswer(user, user_answer):
+                request.session['loginuser'] = user.toArray()
+                loginuser = user;
+    # get user's gravatar
     if loginuser:
         loginuser['avatar'] = getGravatarUrl(loginuser['email'])
         return returnJson(loginuser)

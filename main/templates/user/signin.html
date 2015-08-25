@@ -35,7 +35,8 @@
         width: 100%;
     }
     #submit-button{
-        width: 67%;
+        width: 62%;
+        pointer-events: auto;
     }
     #forget-button {
         width: 30%;
@@ -54,6 +55,7 @@ $(function(){
         $(this).attr('data-trigger',"hover click");
         $(this).attr('data-html',true);
     });
+    $('#rememberme').attr('data-html',true);
     $('[data-toggle="popover"]').popover();
     $('#question-group').hide();
     $('#answer-group').hide();
@@ -146,6 +148,11 @@ function submitForm(){
         $.danger('用户名不能为空')
         return false;
     }
+    if( $('#rememberme').prop('checked') ){
+        $('input[name="rememberme"]').val('yes')
+    } else {
+        $('input[name="rememberme"]').val('')
+    }
     $("#login-form").submit();
 }
 </script>
@@ -196,10 +203,20 @@ function submitForm(){
                     </span>
                 </div>
                 {% if redirect %}
-                <input type="hidden" value="{{redirect}}">
+                <input type="hidden" name='redirect' value="{{redirect}}">
+                <input type="hidden" name="rememberme">
                 {% endif %}
             </form>
             <div id="buttons">
+                <input id="rememberme" type="checkbox"
+                    data-container="body"
+                    data-toggle="popover"
+                    data-placement="left"
+                    data-title="记住我 / Remember me"
+                    data-content="<li class='text-primary'>2周内免登陆</li><li class='text-danger'>公共电脑请勿勾选此项</li>"
+                    data-trigger='hover'
+                    onclick='clickRememberMe()'
+                    checked>
                 <button id="submit-button" class="btn btn-success" onclick="submitForm()" disabled>
                     登录 / Login
                 </button>

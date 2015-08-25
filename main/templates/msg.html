@@ -47,7 +47,11 @@
         </div>
         <div class="panel-footer">
             {% if url %}
-                <a href="{{url}}" class="btn btn-primary">点此跳转至 {{url}}</a>
+                {% ifequal url '/' %}
+                    <a href="/" class="btn btn-primary">回到首页</a>
+                {% else %}
+                    <a href="{{url}}" class="btn btn-primary">点此跳转至 {{url}}</a>
+                {% endifequal %}
             {% else %}
                 <a href="javascript:history.back()" class="btn btn-primary">点此回到上个页面</a>
             {% endif %}
