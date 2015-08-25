@@ -3,6 +3,9 @@ from django.http import HttpResponse
 import json
 import random
 
+import util.KyanToolKit_Py
+ktk = util.KyanToolKit_Py.KyanToolKit_Py()
+
 # Utils
 def infoMsg(content="Hi", url=None, title=None):
     context = {
@@ -29,3 +32,9 @@ def returnJsonResult(word):
         return returnJson({'result':word});
     else:
         return returnJson({'result':"input of returnJsonResult() is empty"})
+
+def salty(word):
+    word_in_str = str(word)
+    word_with_suffix = word_in_str + "superfarmer.net"
+    return ktk.md5(word_with_suffix)
+

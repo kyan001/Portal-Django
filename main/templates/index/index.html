@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Welcome 欢迎{% endblock title %}
 
-{% block head %}
-    {{ block.super }}
+{% block css %}
     <style>/*背景相关部分*/
         .bg-div, .fg-div { /*隔一个DIV换一个背景图*/
             width: 100% !important;
@@ -360,7 +359,7 @@
             max-width: none;
         }
     </style>
-{% endblock head %}
+{% endblock css %}
 
 {% block content %}
     <div class="fg-div div1" onmouseover="$('.div1 .no-see').addClass('entered');">
@@ -565,28 +564,30 @@
 
     <div class="bg-div div6">
     </div>
-
-    <script type="text/javascript">
-        $(function(){
-            toggleMucheng();
-        });
-        function toggleMucheng(){
-            var currentHeight = $('#mucheng').height();
-            if('100' == currentHeight){
-                $('#mucheng').height("100%");
-                $("#down-arrow").hide();
-                $("#up-arrow").show();
-                $("#mucheng-lyrics").css("color","rgba(255,255,255,1)");
-            } else {
-                $('#mucheng').height("100px");
-                $("#down-arrow").show();
-                $("#up-arrow").hide();
-                $("#mucheng-lyrics").css("color","rgba(255,255,255,0)");
-            }
-        }
-    </script>
 {% endblock content %}
 
 {% block footer %}
     {{ block.super }}
 {% endblock footer %}
+
+{% block js %}
+<script type="text/javascript">
+    $(function(){
+        toggleMucheng();
+    });
+    function toggleMucheng(){
+        var currentHeight = $('#mucheng').height();
+        if('100' == currentHeight){
+            $('#mucheng').height("100%");
+            $("#down-arrow").hide();
+            $("#up-arrow").show();
+            $("#mucheng-lyrics").css("color","rgba(255,255,255,1)");
+        } else {
+            $('#mucheng').height("100px");
+            $("#down-arrow").show();
+            $("#up-arrow").hide();
+            $("#mucheng-lyrics").css("color","rgba(255,255,255,0)");
+        }
+    }
+</script>
+{% endblock js %}

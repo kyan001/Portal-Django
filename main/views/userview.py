@@ -49,13 +49,14 @@ def checkAnswer(user, answer):
         raise Exception("user 不能为空")
     if not answer:
         raise Exception("answer 不能为空")
-    answer_md5 = ktk.md5(answer)
+    answer_md5 = salty(answer)
     if user.answer1 == answer_md5:
         return True;
     if user.answer2 == answer_md5:
         return True;
     return False;
 
+#--views-----------------------------------------------
 
 def userLogout(request):
     # clean session
@@ -90,12 +91,24 @@ def userUser(request):
                 user = User.objects.get(**kwargs);
                 context['headimg'] = getGravatarUrl(user.email);
                 context['user'] = user
-                return render_to_response('user/index.html', context);
+                return render_to_response('user/user.html', context);
         error_msg = "错误的参数：{0}\n".format(json.dumps(dict(request.GET)))
         error_msg += "请输入 {0} 中的一种".format(', '.join(searchable_cols))
         return infoMsg(error_msg, title='参数错误');
     except User.DoesNotExist:
         return infoMsg("用户 {0} 不存在".format(json.dumps(dict(request.GET))), title='参数错误')
+
+def userProfile(request):
+    context = {}
+    user = request.session.get('loginuser')
+    if not user:
+        return infoMsg("您还没有登陆，请先登录", title='请先登录', url='/signin');
+    else:
+        context['user'] = user
+        context['headimg'] = getGravatarUrl(user['email']);
+        return render_to_response('user/profile.html', context)
+
+
 
 #-Signup-----------------------------------------------
 def userSignup(request):
@@ -127,8 +140,8 @@ def userNewUser(request):
     # auto fills
     if not nickname:
         nickname = getRandomName();
-    answer1 = ktk.md5(answer1)
-    answer2 = ktk.md5(answer2) if answer2 else None;
+    answer1 = salty(answer1)
+    answer2 = salty(answer2) if answer2 else None;
     if not tip:
         tip = None;
 
@@ -160,6 +173,11 @@ def userNewUser(request):
 
 #-Signin-----------------------------------------------
 def userSignin(request):
+    # check if already logged in
+    current_user = request.session.get('loginuser');
+    if current_user:
+        return infoMsg("您已经以 {0} 的身份登陆了，请勿重复登陆".format(current_user['username']), title="登陆失败", url=request.META.get('HTTP_REFERER'))
+    # render
     context = {}
     if 'HTTP_REFERER' in request.META:
         context['redirect'] = request.META.get('HTTP_REFERER')
@@ -168,6 +186,7 @@ def userSignin(request):
 @csrf_exempt
 def userCheckLogin(request):
     '''用户点击登陆后，判断用户是否可以登录'''
+    # get posts
     context = {}
     username = request.POST.get('username')
     answer = request.POST.get('answer')
