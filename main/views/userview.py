@@ -61,6 +61,7 @@ def checkAnswer(user, answer):
 def userLogout(request):
     # clean session
     request.session['loginuser'] = None;
+    # create response
     if 'HTTP_REFERER' in request.META:
         response = redirect(request.META.get('HTTP_REFERER'))
     else:
