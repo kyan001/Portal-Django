@@ -217,9 +217,9 @@ def userGetloginerInfo(request): # AJAX
         user_answer = request.COOKIES.get('user_answer')
         if user_id and user_answer:
             user = getUserById(user_id)
-            if checkAnswer(user, user_answer):
+            if user.answer1 == user_answer or user.answer2 == user_answer:
                 request.session['loginuser'] = user.toArray()
-                loginuser = user;
+                loginuser = user.toArray();
     # get user's gravatar
     if loginuser:
         loginuser['avatar'] = getGravatarUrl(loginuser['email'])
