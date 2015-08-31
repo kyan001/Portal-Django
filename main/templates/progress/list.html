@@ -2,10 +2,26 @@
 {% block title %}我的进度{% endblock title %}
 
 {% block css %}
+<style>
+    .container {
+        padding-top: 51px;
+    }
+</style>
 {% endblock css %}
 
 {% block js %}
 {% endblock js %}
 
 {% block content %}
+<div class="container">
+    {% for p in list %}
+    <ul>
+        <li>name : {{p.name}}</li>
+        <li>subtitle : {{p.subtitle}}</li>
+        <li>progress : {{p.current}}/{{p.total}}</li>
+        <li>status : {{p.status}}</li>
+        <li>lasttime : {{p.modified}}</li>
+    </ul>
+    {% endfor %}
+</div>
 {% endblock content %}

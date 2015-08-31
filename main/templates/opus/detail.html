@@ -1,11 +1,24 @@
 {% extends "base.html" %}
-{% block title %}作品：{{ opus.name }}{% endblock title %}
+{% block title %}《{{opus.name}}》{% endblock title %}
 
 {% block css %}
+<style>
+    .container {
+        padding-top: 51px;
+    }
+</style>
 {% endblock css %}
 
 {% block js %}
 {% endblock js %}
 
 {% block content %}
+<div class="container">
+    <ul>
+        <li>name: {{ opus.name }}</li>
+        <li>subtitle: {{ opus.subtitle }}</li>
+        <li>total: {{ opus.total }}</li>
+        <li>created: {{ opus.created }}</li>
+    </ul>
+</div>
 {% endblock content %}
