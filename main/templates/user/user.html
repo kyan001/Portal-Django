@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}{{ user.nickname }}{% endblock title %}
+
+{% block css %}
+<style type="text/css">
+    .container {
+        padding-top: 50px;
+        padding-bottom: 80px;
+    }
+</style>
+{% endblock css %}
+
+{% block content %}
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>属性</th>
+                    <th>值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>头像</td>
+                    <td>
+                        <img src="{{ headimg }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>用户名</td>
+                    <td>{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <td>昵称</td>
+                    <td>{{ user.nickname }}</td>
+                </tr>
+                <tr>
+                    <td>创建时间</td>
+                    <td>{{ user.created }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+
+{% block footer %}
+    {{ block.super }}
+    <style>
+    #footer-div {
+        position: fixed;
+        bottom: 0;
+    }
+    </style>
+{% endblock footer %}

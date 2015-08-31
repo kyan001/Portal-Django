@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Welcome 欢迎{% endblock title %}
 
-{% block head %}
-    {{ block.super }}
+{% block css %}
     <style>/*背景相关部分*/
         .bg-div, .fg-div { /*隔一个DIV换一个背景图*/
             width: 100% !important;
@@ -29,14 +28,6 @@
         }
         .div6 {
             background: url('/static/img/index/index_bg_div6.jpg') !important;
-            height: 95%;
-        }
-        .div7 {
-            background: url('') !important;
-            height: 90%;
-        }
-        .div8 {
-            background: url('/static/img/index/index_bg_div8.jpg') !important;
             height: 95%;
         }
         .bg-div {
@@ -347,28 +338,28 @@
         .div5 .carousel-control {
             width: 5%;
         }
-        #carousel-slide7, #carousel-slide5 {
+        #carousel-slide5 {
             position: absolute;
             height: inherit;
             width: 100%;
             overflow: hidden;
         }
-        #carousel-slide7 .carousel-inner, #carousel-slide5 .carousel-inner{
+        #carousel-slide5 .carousel-inner{
             height: 100%;
             width: 100%;
         }
-        #carousel-slide7 .item, #carousel-slide5 .item{
+        #carousel-slide5 .item{
             width: 100%;
             height: 100%;
         }
-        #carousel-slide7 img, #carousel-slide5 img{
+        #carousel-slide5 img{
             min-width: 100%;
             min-height: 100%;
             max-height: none;
             max-width: none;
         }
     </style>
-{% endblock head %}
+{% endblock css %}
 
 {% block content %}
     <div class="fg-div div1" onmouseover="$('.div1 .no-see').addClass('entered');">
@@ -573,53 +564,30 @@
 
     <div class="bg-div div6">
     </div>
-
-    <div class="fg-div div7">
-        <div id="carousel-slide7" class="carousel slide" data-ride="carousel" data-interval="2000" data-pause="hover">
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-                <div class="item active">
-                    <img class="" src="/static/img/index/index_div7_slide1.jpg" alt="index_div7_slide1.jpg">
-                    <div class="carousel-caption">
-                    </div>
-                </div>
-                <div class="item">
-                    <img class="" src="/static/img/index/index_div7_slide2.jpg" alt="index_div7_slide2.jpg">
-                    <div class="carousel-caption">
-                    </div>
-                </div>
-                <div class="item">
-                    <img class="" src="/static/img/index/index_div7_slide3.jpg" alt="index_div7_slide3.jpg">
-                    <div class="carousel-caption">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-div div8">
-    </div>
-    <script type="text/javascript">
-        $(function(){
-            toggleMucheng();
-        });
-        function toggleMucheng(){
-            var currentHeight = $('#mucheng').height();
-            if('100' == currentHeight){
-                $('#mucheng').height("100%");
-                $("#down-arrow").hide();
-                $("#up-arrow").show();
-                $("#mucheng-lyrics").css("color","rgba(255,255,255,1)");
-            } else {
-                $('#mucheng').height("100px");
-                $("#down-arrow").show();
-                $("#up-arrow").hide();
-                $("#mucheng-lyrics").css("color","rgba(255,255,255,0)");
-            }
-        }
-    </script>
 {% endblock content %}
 
 {% block footer %}
     {{ block.super }}
 {% endblock footer %}
+
+{% block js %}
+<script type="text/javascript">
+    $(function(){
+        toggleMucheng();
+    });
+    function toggleMucheng(){
+        var currentHeight = $('#mucheng').height();
+        if('100' == currentHeight){
+            $('#mucheng').height("100%");
+            $("#down-arrow").hide();
+            $("#up-arrow").show();
+            $("#mucheng-lyrics").css("color","rgba(255,255,255,1)");
+        } else {
+            $('#mucheng').height("100px");
+            $("#down-arrow").show();
+            $("#up-arrow").hide();
+            $("#mucheng-lyrics").css("color","rgba(255,255,255,0)");
+        }
+    }
+</script>
+{% endblock js %}

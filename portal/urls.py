@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     #USER
     url(r'^user/user', views.userUser),
+    url(r'^user/profile/', views.userProfile),
     url(r'^user/avatar/(?P<email>[0-9a-zA-Z_.@]+)/$', views.userAvatar),
     url(r'^user/signin/$', views.userSignin),
     url(r'^user/signup/$', views.userSignup),
@@ -18,6 +19,10 @@ urlpatterns = [
     url(r'^user/getloginerinfo/$', views.userGetloginerInfo),
     url(r'^user/newuser/$', views.userNewUser),
     url(r'^user/logout/$', views.userLogout),
+    url(r'^user/validateusername$', views.userValidateUsername),
+    url(r'^user/validatenickname$', views.userValidateNickname),
+    url(r'^user/validateemail$', views.userValidateEmail),
+    url(r'^user/getquestionandtip$', views.userGetQuestionAndTip),
     #PROGRESS
     url(r'^progress/list/$', views.progressList),
     url(r'^opus/mylist/$', views.opusMylist),

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}用户登录{% endblock title %}
+{% block title %}用户登入{% endblock title %}
 {% block css %}
 <style>
     .container {
@@ -10,12 +10,12 @@
         background-position: 50% 50% !important;
         display: table;
     }
-    #form-div {
+    #form-wrap {
         width: 40%;
         display: table-cell;
         vertical-align: middle;
     }
-    #form-div form {
+    #form-div {
         padding: 25px;
         background-color: rgba(0,0,0,0.5);
     }
@@ -30,9 +30,20 @@
     .tips {
         cursor: help;
     }
-    .submit {
+    #buttons {
         margin-top: 10px;
         width: 100%;
+    }
+    #submit-button{
+        width: 62%;
+        pointer-events: auto;
+    }
+    #forget-button {
+        width: 30%;
+        float: right;
+    }
+    #question-content {
+        border-bottom: 0;
     }
 </style>
 <script type="text/javascript">
@@ -44,47 +55,176 @@ $(function(){
         $(this).attr('data-trigger',"hover click");
         $(this).attr('data-html',true);
     });
+    $('#rememberme').attr('data-html',true);
     $('[data-toggle="popover"]').popover();
-    //$('.input-group').on('mouseover','.tips', function(){$(this).popover('show')});
-    //$('.input-group').on('mouseout','.tips', function(){$(this).popover('hide')});
+    $('#question-group').hide();
+    $('#answer-group').hide();
 });
+function clearHasClass(ele){
+    ele.removeClass('has-warning');
+    ele.removeClass('has-success');
+    ele.removeClass('has-error');
+}
+function foldOptions(){
+    $('#question-group').fadeOut();
+    $('#answer-group').fadeOut();
+    $('#submit-button').attr('disabled','');
+}
+
+function unfoldOptions(){
+    $.ajax({
+        type: "GET",
+        url: "/user/getquestionandtip",
+        data: {
+            'username':$('input[name="username"]').val()
+        },
+        success: function (data) {
+            var result = data;
+            if( result.error ){
+                $.danger(result.error);
+            } else {
+                $('#question-content').val(result.question);
+                $('#answer-group input').attr('data-content', result.tip);
+                if(!result.tip){
+                    $('#answer-group input').attr('data-content', '(你不留提示，我也没办法)');
+                }
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Ajax Error, XMLHttpRequest:");
+            console.log("status: " + XMLHttpRequest.status);
+            console.log("readyState: " + XMLHttpRequest.readyState);
+            console.log("textStatus: " + textStatus);
+        },
+    });
+    $('#question-group').fadeIn();
+    $('#answer-group').fadeIn();
+    $('#submit-button').removeAttr('disabled');
+}
+
+function validateUsername(){
+    clearHasClass($('#username-group'));
+    if( $('input[name="username"]').val() == '' ){
+        $('#username-group').addClass('has-warning');
+        foldOptions()
+        return
+    }
+    $.ajax({
+        type: "GET",
+        url: "/user/validateusername",
+        data: {
+            'username':$('input[name="username"]').val()
+        },
+        success: function (data) {
+            var result = data;
+            if (result.result == 'notexist') {
+                $('#username-group').addClass('has-error');
+                $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在');
+                foldOptions();
+            } else if (result.result == 'exist') {
+                $('#username-group').addClass('has-success');
+                unfoldOptions();
+            } else {
+                $.danger(result.error);
+                foldOptions();
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Ajax Error, XMLHttpRequest:");
+            console.log("status: " + XMLHttpRequest.status);
+            console.log("readyState: " + XMLHttpRequest.readyState);
+            console.log("textStatus: " + textStatus);
+        },
+    });
+}
+function submitForm(){
+    if( $('input[name="answer"]').val() == '' ){
+        $('#answer-group').addClass('has-error');
+        $.danger('答案不能为空')
+        return false;
+    }
+    if( $('input[name="username"]').val() == '' ){
+        $('#username-group').addClass('has-error');
+        $.danger('用户名不能为空')
+        return false;
+    }
+    if( $('#rememberme').prop('checked') ){
+        $('input[name="rememberme"]').val('yes')
+    } else {
+        $('input[name="rememberme"]').val('')
+    }
+    $("#login-form").submit();
+}
 </script>
 {% endblock css %}
 
 {% block content %}
 <div class="container">
-    <div id="form-div" class="aligncenter">
-        <form action="/user/checklogin/" method="post">
-            <div class="input-group">
-                <input type="text" name="username" class="form-control" placeholder="用户名 / Username">
-                <span class="input-group-addon tips"
-                    title="用户名 / Username <span class='label label-primary'>必填</span>"
-                    data-content="<li class='text-primary'>请输入注册时的用户名</li>
-                    <li class='text-danger'>用户名只能包含“英文字母”、“数字”和“英文句号 .”</li>
-                    <li>输入结束后，点击其他地方</li>">
-                    ?
-                </span>
-            </div>
-            <div class="input-group">
-                <div style="width:100%">这里是问题
+    <div id="form-wrap" class="aligncenter">
+        <div id="form-div">
+            <form id="login-form" action="/user/checklogin/" method="post">
+                <div class="input-group" id="username-group">
+                    <input type="text" name="username" class="form-control" placeholder="用户名 / Username" autofocus="autofocus" onchange="validateUsername()" oninput="clearHasClass($('#username-group'))"/>
+                    <span class="input-group-addon tips"
+                        title="用户名 / Username <span class='label label-primary'>必填</span>"
+                        data-content="<li class='text-primary'>请输入注册时的用户名</li>
+                        <li class='text-danger'>用户名只能包含“英文字母”、“数字”和“英文句号 .”</li>
+                        <li>输入结束后，点击其他地方</li>">
+                        ?
+                    </span>
                 </div>
+                <div class="input-group" id='question-group'>
+                    <span class="input-group-addon">
+                        <span class='glyphicon glyphicon-comment'></span>
+                    </span>
+                    <input id='question-content' type="question" name='question' class="form-control" value="" readonly/>
+                </div>
+                <div class="input-group" id='answer-group'>
+                    <input type="text"
+                        name="answer"
+                        class="form-control"
+                        placeholder="答案 / Answer"
+                        data-container="body"
+                        data-toggle="popover"
+                        data-placement="bottom"
+                        data-content=""
+                        data-title="提示"
+                        data-delay=2000
+                        data-trigger='focus'
+                        onblur="$(this).popover('hide')"
+                        />
+                    <span class="input-group-addon tips"
+                        title="答案 / Answer <span class='label label-primary'>必填</span>"
+                        data-content="<li class='text-primary'>注册时您填写的内容</li>
+                        <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登入</li>
+                        <li class='text-success'>中英文、标点、数字均可</li>
+                        ">
+                        ?
+                    </span>
+                </div>
+                {% if redirect %}
+                <input type="hidden" name='redirect' value="{{redirect}}">
+                <input type="hidden" name="rememberme">
+                {% endif %}
+            </form>
+            <div id="buttons">
+                <input id="rememberme" type="checkbox"
+                    data-container="body"
+                    data-toggle="popover"
+                    data-placement="left"
+                    data-title="记住我 / Remember me"
+                    data-content="<li class='text-primary'>2周内免登入</li><li class='text-danger'>公共电脑请勿勾选此项</li>"
+                    data-trigger='hover'
+                    onclick='clickRememberMe()'
+                    checked>
+                <button id="submit-button" class="btn btn-success" onclick="submitForm()" disabled>
+                    登入 / Login
+                </button>
+                <a id="forget-button" class="btn btn-warning" href="/user/forgetpassword">
+                    忘记密码
+                </a>
             </div>
-            <div class="input-group">
-                <input type="text" name="answer" class="form-control" placeholder="答案 / Answer">
-                <span class="input-group-addon tips"
-                    title="答案 / Answer <span class='label label-primary'>必填</span>"
-                    data-content="<li class='text-primary'>注册时您填写的内容</li>
-                    <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登录</li>
-                    <li class='text-success'>中英文、标点、数字均可</li>
-                    ">
-                    ?
-                </span>
-            </div>
-            {% if redirect %}
-            <input type="hidden" value="{{redirect}}">
-            {% endif %}
-            <input type="submit" value="登录 / Login" class="btn btn-success submit" />
-        </form>
+        </div>
     </div>
 </div>
 {% endblock content %}

@@ -12,6 +12,9 @@
         <script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
         <title>{% block title %}{% endblock %} - SuperFarmer.net</title>
         <style>
+            #footer-div {
+                width: 100%;
+            }
             #footer-div .footer {
                 background-color: #eeeeee;
                 padding: 1em;
@@ -25,108 +28,158 @@
         </style>
         {% block css %}
         {% endblock css %}
+        {% block js %}
+        {% endblock js %}
     {% endblock head %}
 </head>
 <body>
-    {% block userbar %}
-    <div id='home-btn'>
-        <a href="/" class="btn btn-info btn-sm">
-            <span class="glyphicon glyphicon-home"></span> Home
-        </a>
-    </div>
-    <nav id='user-bar'>
-        <span class="nologinshow">
-            <a href="/user/signup" class="btn btn-primary btn-sm">注册</a>
-            <span> </span>
-            <a href="/user/signin" class="btn btn-default btn-sm">登录</a>
-        </span>
-        <span class="loginshow">
-            <span>Hi, </span>
-            <a class="profile-avatarlink" href='' target="_blank">
-                <img class="profile-avatar">
-            </a>
-            <a class="profile-link" href=''>
-                <b class="profile-nikename"></b>
-            </a>
-            <a href="/user/logout" class="btn btn-default btn-sm">登出</a>
-        </span>
-
-    </nav>
-    <style>
-        #home-btn {
-            width: 10%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            padding-right: 5%;
-            padding-left: 5%;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            font-size: 15px;
-        }
-        #user-bar {
-            width: 40%;
-            position: fixed;
-            top: 0;
-            right: 0;
-            z-index: 1000;
-            padding-right: 5%;
-            padding-left: 5%;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            font-size: 15px;
-            border-bottom: silver solid 1px;
-        }
-        #user-bar:hover {
-            background: -webkit-linear-gradient(left, rgba(255,255,255,0), rgba(255,255,255,0.5));
-        }
-        #user-bar img {
-            max-height: 15px;
-            max-width: 15px;
-        }
-        #user-bar .nologinshow, #user-bar .loginshow {
-            display: none;
-            float: right;
-        }
-    </style>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            getLoginUser();
-        });
-        function getLoginUser(){
-            $.ajax({
-                type: "GET",
-                url: "/user/getloginerinfo/",
-                data: {},
-                success: function (data) {
-                    var result = data;
-                    if (result.error) {
-                        alert(result.error);
-                    } else if (result.nologinuser) {
-                        $("#user-bar .nologinshow").fadeIn();
-                    } else {
-                        $("#user-bar .profile-link").attr('href','/user/user?id='+result.id);
-                        $("#user-bar .profile-avatarlink").attr('href','/user/avatar/'+result.email+"/");
-                        $("#user-bar .profile-nikename").text(result.nickname);
-                        $("#user-bar .profile-avatar").attr('src',result.avatar);
-                        $("#user-bar .loginshow").fadeIn();
-                    }
+    <!-- ############ ALERT ZONE ############-->
+    {% block alertzone %}
+        <script type="text/javascript">
+            function msgAlert(msg, type) {
+                var html = "<div class='alert alert-" + type + " alert-dismissible fade in' role='alert'>";
+                html += "<button type='button' class='close' data-dismiss='alert'>";
+                html += "<span aria-hidden='true'>×</span>";
+                html += "</button>";
+                html += msg;
+                html += "</div>";
+                var msgItem = $(html);
+                msgItem.delay(10000).slideUp();
+                $('#alert-zone').prepend(msgItem);
+            };
+            $.extend({
+                warning: function(msg) {
+                    msgAlert(msg, "warning");
                 },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    console.log("Ajax Error, XMLHttpRequest:");
-                    console.log("status: " + XMLHttpRequest.status);
-                    console.log("readyState: " + XMLHttpRequest.readyState);
-                    console.log("textStatus: " + textStatus);
+                success: function(msg) {
+                    msgAlert(msg, "success");
                 },
+                danger: function(msg) {
+                    msgAlert(msg, "danger");
+                },
+                info: function(msg) {
+                    msgAlert(msg, "info");
+                }
             });
-        }
-    </script>
+        </script>
+        <style>
+            #alert-zone {
+                position: fixed;
+                top: 80px;
+                right: 5%;
+                font-size: 15px;
+            }
+        </style>
+        <div id='alert-zone'>
+        </div>
+    {% endblock alertzone %}
+    <!-- ############ USER BAR ############-->
+    {% block userbar %}
+        <div id='home-btn'>
+            <a href="/" class="btn btn-info btn-sm">
+                <span class="glyphicon glyphicon-home"></span> Home
+            </a>
+        </div>
+        <nav id='user-bar'>
+            <span class="nologinshow">
+                <a href="/user/signup" class="btn btn-primary btn-sm">注册</a>
+                <span> </span>
+                <a href="/user/signin" class="btn btn-default btn-sm">登入</a>
+            </span>
+            <span class="loginshow">
+                <a class="btn btn-default btn-sm profile-link" href='/user/profile'>
+                    <img class="profile-avatar">
+                    <span class="profile-nikename">
+                        用户名
+                    </span>
+                </a>
+                <a href="/user/logout" class="btn btn-default btn-sm">登出</a>
+            </span>
+
+        </nav>
+        <style>
+            #home-btn {
+                width: 10%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1000;
+                padding-right: 5%;
+                padding-left: 5%;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                font-size: 15px;
+            }
+            #user-bar {
+                width: 40%;
+                position: fixed;
+                top: 0;
+                right: 0;
+                z-index: 1000;
+                padding-right: 5%;
+                padding-left: 5%;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                font-size: 15px;
+                border-bottom: silver solid 1px;
+            }
+            #user-bar:hover {
+                background: -webkit-linear-gradient(left, rgba(255,255,255,0), rgba(255,255,255,0.5));
+            }
+            #user-bar img {
+                max-height: 19px;
+                max-width: 19px;
+            }
+            #user-bar a {
+                text-decoration: none;
+            }
+            #user-bar .nologinshow, #user-bar .loginshow {
+                display: none;
+                float: right;
+            }
+            #user-bar .profile-nikename {
+                font-weight: bold;
+            }
+        </style>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                getLoginUser();
+            });
+            function getLoginUser(){
+                $.ajax({
+                    type: "GET",
+                    url: "/user/getloginerinfo/",
+                    data: {},
+                    success: function (data) {
+                        var result = data;
+                        if (result.error) {
+                            alert(result.error);
+                        } else if (result.result == 'nologinuser') {
+                            $("#user-bar .nologinshow").fadeIn();
+                        } else {
+                            $("#user-bar .profile-nikename").text(result.nickname);
+                            $("#user-bar .profile-avatar").attr('src',result.avatar);
+                            $("#user-bar .loginshow").fadeIn();
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log("Ajax Error, XMLHttpRequest:");
+                        console.log("status: " + XMLHttpRequest.status);
+                        console.log("readyState: " + XMLHttpRequest.readyState);
+                        console.log("textStatus: " + textStatus);
+                    },
+                });
+            }
+        </script>
     {% endblock userbar %}
-    <div id='content'>
+
+    <!-- ############ CONTENT ############-->
+    <div>
         {% block content %}
         {% endblock content %}
     </div>
+
+    <!-- ############ FOOTER ############-->
     <div id='footer-div'>
         {% block footer %}
             <div class="footer">
