@@ -46,117 +46,119 @@
         border-bottom: 0;
     }
 </style>
-<script type="text/javascript">
-$(function(){
-    $('.tips').each(function(){
-        $(this).attr('data-toggle',"popover");
-        $(this).attr('data-container',"body");
-        $(this).attr('data-placement',"right");
-        $(this).attr('data-trigger',"hover click");
-        $(this).attr('data-html',true);
-    });
-    $('#rememberme').attr('data-html',true);
-    $('[data-toggle="popover"]').popover();
-    $('#question-group').hide();
-    $('#answer-group').hide();
-});
-function clearHasClass(ele){
-    ele.removeClass('has-warning');
-    ele.removeClass('has-success');
-    ele.removeClass('has-error');
-}
-function foldOptions(){
-    $('#question-group').fadeOut();
-    $('#answer-group').fadeOut();
-    $('#submit-button').attr('disabled','');
-}
-
-function unfoldOptions(){
-    $.ajax({
-        type: "GET",
-        url: "/user/getquestionandtip",
-        data: {
-            'username':$('input[name="username"]').val()
-        },
-        success: function (data) {
-            var result = data;
-            if( result.error ){
-                $.danger(result.error);
-            } else {
-                $('#question-content').val(result.question);
-                $('#answer-group input').attr('data-content', result.tip);
-                if(!result.tip){
-                    $('#answer-group input').attr('data-content', '(你不留提示，我也没办法)');
-                }
-            }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            console.log("Ajax Error, XMLHttpRequest:");
-            console.log("status: " + XMLHttpRequest.status);
-            console.log("readyState: " + XMLHttpRequest.readyState);
-            console.log("textStatus: " + textStatus);
-        },
-    });
-    $('#question-group').fadeIn();
-    $('#answer-group').fadeIn();
-    $('#submit-button').removeAttr('disabled');
-}
-
-function validateUsername(){
-    clearHasClass($('#username-group'));
-    if( $('input[name="username"]').val() == '' ){
-        $('#username-group').addClass('has-warning');
-        foldOptions()
-        return
-    }
-    $.ajax({
-        type: "GET",
-        url: "/user/validateusername",
-        data: {
-            'username':$('input[name="username"]').val()
-        },
-        success: function (data) {
-            var result = data;
-            if (result.result == 'notexist') {
-                $('#username-group').addClass('has-error');
-                $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在');
-                foldOptions();
-            } else if (result.result == 'exist') {
-                $('#username-group').addClass('has-success');
-                unfoldOptions();
-            } else {
-                $.danger(result.error);
-                foldOptions();
-            }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            console.log("Ajax Error, XMLHttpRequest:");
-            console.log("status: " + XMLHttpRequest.status);
-            console.log("readyState: " + XMLHttpRequest.readyState);
-            console.log("textStatus: " + textStatus);
-        },
-    });
-}
-function submitForm(){
-    if( $('input[name="answer"]').val() == '' ){
-        $('#answer-group').addClass('has-error');
-        $.danger('答案不能为空')
-        return false;
-    }
-    if( $('input[name="username"]').val() == '' ){
-        $('#username-group').addClass('has-error');
-        $.danger('用户名不能为空')
-        return false;
-    }
-    if( $('#rememberme').prop('checked') ){
-        $('input[name="rememberme"]').val('yes')
-    } else {
-        $('input[name="rememberme"]').val('')
-    }
-    $("#login-form").submit();
-}
-</script>
 {% endblock css %}
+{% block js %}
+<script type="text/javascript">
+    $(function(){
+        $('.tips').each(function(){
+            $(this).attr('data-toggle',"popover");
+            $(this).attr('data-container',"body");
+            $(this).attr('data-placement',"right");
+            $(this).attr('data-trigger',"hover click");
+            $(this).attr('data-html',true);
+        });
+        $('#rememberme').attr('data-html',true);
+        $('[data-toggle="popover"]').popover();
+        $('#question-group').hide();
+        $('#answer-group').hide();
+    });
+    function clearHasClass(ele){
+        ele.removeClass('has-warning');
+        ele.removeClass('has-success');
+        ele.removeClass('has-error');
+    }
+    function foldOptions(){
+        $('#question-group').fadeOut();
+        $('#answer-group').fadeOut();
+        $('#submit-button').attr('disabled','');
+    }
+
+    function unfoldOptions(){
+        $.ajax({
+            type: "GET",
+            url: "/user/getquestionandtip",
+            data: {
+                'username':$('input[name="username"]').val()
+            },
+            success: function (data) {
+                var result = data;
+                if( result.error ){
+                    $.danger(result.error);
+                } else {
+                    $('#question-content').val(result.question);
+                    $('#answer-group input').attr('data-content', result.tip);
+                    if(!result.tip){
+                        $('#answer-group input').attr('data-content', '(你不留提示，我也没办法)');
+                    }
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Ajax Error, XMLHttpRequest:");
+                console.log("status: " + XMLHttpRequest.status);
+                console.log("readyState: " + XMLHttpRequest.readyState);
+                console.log("textStatus: " + textStatus);
+            },
+        });
+        $('#question-group').fadeIn();
+        $('#answer-group').fadeIn();
+        $('#submit-button').removeAttr('disabled');
+    }
+
+    function validateUsername(){
+        clearHasClass($('#username-group'));
+        if( $('input[name="username"]').val() == '' ){
+            $('#username-group').addClass('has-warning');
+            foldOptions()
+            return
+        }
+        $.ajax({
+            type: "GET",
+            url: "/user/validateusername",
+            data: {
+                'username':$('input[name="username"]').val()
+            },
+            success: function (data) {
+                var result = data;
+                if (result.result == 'notexist') {
+                    $('#username-group').addClass('has-error');
+                    $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在');
+                    foldOptions();
+                } else if (result.result == 'exist') {
+                    $('#username-group').addClass('has-success');
+                    unfoldOptions();
+                } else {
+                    $.danger(result.error);
+                    foldOptions();
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Ajax Error, XMLHttpRequest:");
+                console.log("status: " + XMLHttpRequest.status);
+                console.log("readyState: " + XMLHttpRequest.readyState);
+                console.log("textStatus: " + textStatus);
+            },
+        });
+    }
+    function submitForm(){
+        if( $('input[name="answer"]').val() == '' ){
+            $('#answer-group').addClass('has-error');
+            $.danger('答案不能为空')
+            return false;
+        }
+        if( $('input[name="username"]').val() == '' ){
+            $('#username-group').addClass('has-error');
+            $.danger('用户名不能为空')
+            return false;
+        }
+        if( $('#rememberme').prop('checked') ){
+            $('input[name="rememberme"]').val('yes')
+        } else {
+            $('input[name="rememberme"]').val('')
+        }
+        $("#login-form").submit();
+    }
+</script>
+{% endblock js %}
 
 {% block content %}
 <div class="container">

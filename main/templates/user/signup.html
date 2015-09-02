@@ -35,159 +35,161 @@
         width: 100%;
     }
 </style>
-<script type="text/javascript">
-$(function(){
-    $('.tips').each(function(){
-        $(this).attr('data-toggle',"popover");
-        $(this).attr('data-container',"body");
-        $(this).attr('data-placement',"right");
-        $(this).attr('data-trigger',"hover click");
-        $(this).attr('data-html',true);
-    });
-    $('[data-toggle="popover"]').popover();
-    $('.input-group').on('focus','input', showTips);
-    $('.input-group').on('blur','input', hideTips);
-});
-function showTips(){
-    $(this).siblings('span.tips').popover('show');
-}
-function hideTips(){
-    $(this).siblings('span.tips').popover('hide');
-}
-function clearHasClass(ele){
-    ele.removeClass('has-warning');
-    ele.removeClass('has-success');
-    ele.removeClass('has-error');
-}
-function validateUsername(){
-    clearHasClass($('#username-group'));
-    if( $('input[name="username"]').val() == '' ){
-        $('#username-group').addClass('has-warning');
-        return
-    }
-    $.ajax({
-        type: "GET",
-        url: "/user/validateusername",
-        data: {
-            'username':$('input[name="username"]').val()
-        },
-        success: function (data) {
-            var result = data;
-            if (result.result == 'notexist') {
-                $('#username-group').addClass('has-success');
-                $("#submit-button").removeAttr('disabled');
-            } else if (result.result == 'exist') {
-                $('#username-group').addClass('has-error');
-                $.danger('用户名 “'+ $('input[name="username"]').val() +'” 已存在')
-                $("#submit-button").attr('disabled','');
-            } else {
-                $.danger(result.error);
-            }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            console.log("Ajax Error, XMLHttpRequest:");
-            console.log("status: " + XMLHttpRequest.status);
-            console.log("readyState: " + XMLHttpRequest.readyState);
-            console.log("textStatus: " + textStatus);
-        },
-    });
-}
-function validateNickname(){
-    clearHasClass($('#nickname-group'));
-    if( $('input[name="nickname"]').val() == '' ){
-        $('#nickname-group').addClass('has-warning');
-        return
-    }
-    $.ajax({
-        type: "GET",
-        url: "/user/validatenickname",
-        data: {
-            'nickname':$('input[name="nickname"]').val()
-        },
-        success: function (data) {
-            var result = data;
-            if (result.result == 'notexist') {
-                $('#nickname-group').addClass('has-success');
-                $("#submit-button").removeAttr('disabled');
-            } else if (result.result == 'exist') {
-                $('#nickname-group').addClass('has-error');
-                $.danger('昵称 “'+ $('input[name="nickname"]').val() +'” 已存在')
-                $("#submit-button").attr('disabled','');
-            } else {
-                $.danger(result.error);
-            }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            console.log("Ajax Error, XMLHttpRequest:");
-            console.log("status: " + XMLHttpRequest.status);
-            console.log("readyState: " + XMLHttpRequest.readyState);
-            console.log("textStatus: " + textStatus);
-        },
-    });
-}
-function validateEmail(){
-    clearHasClass($('#email-group'));
-    if( $('input[name="email"]').val() == '' ){
-        $('#email-group').addClass('has-warning');
-        return
-    }
-    $.ajax({
-        type: "GET",
-        url: "/user/validateemail",
-        data: {
-            'email':$('input[name="email"]').val()
-        },
-        success: function (data) {
-            var result = data;
-            if (result.result == 'notexist') {
-                $('#email-group').addClass('has-success');
-                $("#submit-button").removeAttr('disabled');
-            } else if (result.result == 'exist') {
-                $('#email-group').addClass('has-error');
-                $.danger('邮箱 “'+ $('input[name="email"]').val() +'” 已存在')
-                $("#submit-button").attr('disabled','');
-            } else {
-                $.danger(result.error);
-            }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            console.log("Ajax Error, XMLHttpRequest:");
-            console.log("status: " + XMLHttpRequest.status);
-            console.log("readyState: " + XMLHttpRequest.readyState);
-            console.log("textStatus: " + textStatus);
-        },
-    });
-}
-function submitForm(){
-    if( $('input[name="username"]').val() == '' ){
-        $('#username-group').addClass('has-error');
-        $.danger('用户名不能为空')
-        return false;
-    }
-    if( $('input[name="question"]').val() == '' ){
-        $('#question-group').addClass('has-error');
-        $.danger('问题不能为空')
-        return false;
-    }
-    if( $('input[name="answer1"]').val() == '' ){
-        $('#answer1-group').addClass('has-error');
-        $.danger('答案不能为空')
-        return false;
-    }
-    if( $('input[name="nickname"]').val() == '' ){
-        $('#nickname-group').addClass('has-error');
-        $.danger('昵称不能为空')
-        return false;
-    }
-    if( $('input[name="email"]').val() == '' ){
-        $('#email-group').addClass('has-error');
-        $.danger('邮箱不能为空')
-        return false;
-    }
-    $("#the-form").submit();
-}
-</script>
 {% endblock css %}
+{% block js %}
+<script type="text/javascript">
+    $(function(){
+        $('.tips').each(function(){
+            $(this).attr('data-toggle',"popover");
+            $(this).attr('data-container',"body");
+            $(this).attr('data-placement',"right");
+            $(this).attr('data-trigger',"hover click");
+            $(this).attr('data-html',true);
+        });
+        $('[data-toggle="popover"]').popover();
+        $('.input-group').on('focus','input', showTips);
+        $('.input-group').on('blur','input', hideTips);
+    });
+    function showTips(){
+        $(this).siblings('span.tips').popover('show');
+    }
+    function hideTips(){
+        $(this).siblings('span.tips').popover('hide');
+    }
+    function clearHasClass(ele){
+        ele.removeClass('has-warning');
+        ele.removeClass('has-success');
+        ele.removeClass('has-error');
+    }
+    function validateUsername(){
+        clearHasClass($('#username-group'));
+        if( $('input[name="username"]').val() == '' ){
+            $('#username-group').addClass('has-warning');
+            return
+        }
+        $.ajax({
+            type: "GET",
+            url: "/user/validateusername",
+            data: {
+                'username':$('input[name="username"]').val()
+            },
+            success: function (data) {
+                var result = data;
+                if (result.result == 'notexist') {
+                    $('#username-group').addClass('has-success');
+                    $("#submit-button").removeAttr('disabled');
+                } else if (result.result == 'exist') {
+                    $('#username-group').addClass('has-error');
+                    $.danger('用户名 “'+ $('input[name="username"]').val() +'” 已存在')
+                    $("#submit-button").attr('disabled','');
+                } else {
+                    $.danger(result.error);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Ajax Error, XMLHttpRequest:");
+                console.log("status: " + XMLHttpRequest.status);
+                console.log("readyState: " + XMLHttpRequest.readyState);
+                console.log("textStatus: " + textStatus);
+            },
+        });
+    }
+    function validateNickname(){
+        clearHasClass($('#nickname-group'));
+        if( $('input[name="nickname"]').val() == '' ){
+            $('#nickname-group').addClass('has-warning');
+            return
+        }
+        $.ajax({
+            type: "GET",
+            url: "/user/validatenickname",
+            data: {
+                'nickname':$('input[name="nickname"]').val()
+            },
+            success: function (data) {
+                var result = data;
+                if (result.result == 'notexist') {
+                    $('#nickname-group').addClass('has-success');
+                    $("#submit-button").removeAttr('disabled');
+                } else if (result.result == 'exist') {
+                    $('#nickname-group').addClass('has-error');
+                    $.danger('昵称 “'+ $('input[name="nickname"]').val() +'” 已存在')
+                    $("#submit-button").attr('disabled','');
+                } else {
+                    $.danger(result.error);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Ajax Error, XMLHttpRequest:");
+                console.log("status: " + XMLHttpRequest.status);
+                console.log("readyState: " + XMLHttpRequest.readyState);
+                console.log("textStatus: " + textStatus);
+            },
+        });
+    }
+    function validateEmail(){
+        clearHasClass($('#email-group'));
+        if( $('input[name="email"]').val() == '' ){
+            $('#email-group').addClass('has-warning');
+            return
+        }
+        $.ajax({
+            type: "GET",
+            url: "/user/validateemail",
+            data: {
+                'email':$('input[name="email"]').val()
+            },
+            success: function (data) {
+                var result = data;
+                if (result.result == 'notexist') {
+                    $('#email-group').addClass('has-success');
+                    $("#submit-button").removeAttr('disabled');
+                } else if (result.result == 'exist') {
+                    $('#email-group').addClass('has-error');
+                    $.danger('邮箱 “'+ $('input[name="email"]').val() +'” 已存在')
+                    $("#submit-button").attr('disabled','');
+                } else {
+                    $.danger(result.error);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Ajax Error, XMLHttpRequest:");
+                console.log("status: " + XMLHttpRequest.status);
+                console.log("readyState: " + XMLHttpRequest.readyState);
+                console.log("textStatus: " + textStatus);
+            },
+        });
+    }
+    function submitForm(){
+        if( $('input[name="username"]').val() == '' ){
+            $('#username-group').addClass('has-error');
+            $.danger('用户名不能为空')
+            return false;
+        }
+        if( $('input[name="question"]').val() == '' ){
+            $('#question-group').addClass('has-error');
+            $.danger('问题不能为空')
+            return false;
+        }
+        if( $('input[name="answer1"]').val() == '' ){
+            $('#answer1-group').addClass('has-error');
+            $.danger('答案不能为空')
+            return false;
+        }
+        if( $('input[name="nickname"]').val() == '' ){
+            $('#nickname-group').addClass('has-error');
+            $.danger('昵称不能为空')
+            return false;
+        }
+        if( $('input[name="email"]').val() == '' ){
+            $('#email-group').addClass('has-error');
+            $.danger('邮箱不能为空')
+            return false;
+        }
+        $("#the-form").submit();
+    }
+</script>
+{% endblock js %}
 
 {% block content %}
 <div class="container">

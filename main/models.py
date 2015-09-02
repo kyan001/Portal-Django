@@ -28,7 +28,6 @@ class Opus(models.Model):
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     total = models.IntegerField(default=0)
     created = models.DateTimeField()
-    objects = OpusManager();
     def __str__(self):
         subtext = "(" + self.subtitle + ")" if self.subtitle else "";
         return str(self.id) + ': <<{0}>>{1}[{2}]'.format(self.name, subtext, str(self.total))
@@ -37,16 +36,6 @@ class Opus(models.Model):
         return model_to_dict(self)
     def setCreated(self):
         self.created = timezone.now()
-
-class OpusManager(models.Manager):
-    def findfirst(self, opusid):
-        if not opusid:
-            raise Exception("请输入作品 ID")
-        try:
-            opus = self.get(id=opusid)
-        except Opus.DoesNotExist:
-            return infoMsg("未找到 id 为 {0} 的作品".format(str(opusid)))
-        return opus
 
 class Progress(models.Model):
     userid = models.IntegerField(default=0)

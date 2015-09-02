@@ -10,13 +10,6 @@ import json
 import util.KyanToolKit_Py
 ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 
-def getLoginUser():
-    user = request.session.get('loginuser')
-    if not user:
-        return infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin');
-    else:
-        return user;
-
 def getGravatarUrl(email):
     '''获取用户gravatar地址'''
     base_src = "https://secure.gravatar.com/avatar/"
@@ -105,7 +98,9 @@ def userUser(request):
 
 def userProfile(request):
     context = {}
-    user = getLoginUser()
+    user = request.session.get('loginuser')
+    if not user:
+        return infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
     context['user'] = user
     context['headimg'] = getGravatarUrl(user['email']);
     return render_to_response('user/profile.html', context)

@@ -1,5 +1,5 @@
 from django.shortcuts import render_to_response
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import json
 import random
 
@@ -15,11 +15,12 @@ def infoMsg(content="Hi", url=None, title=None):
     }
     return render_to_response("msg.html", context);
 
-def returnJson(dict):
-    if dict:
-        return HttpResponse(json.dumps(dict), content_type='application/json')
+def returnJson(dict_input):
+    if dict_input:
+        #return HttpResponse(json.dumps(dict_input), content_type='application/json')
+        return JsonResponse(dict_input);
     else:
-        return HttpResponse(json.dumps({'error':'returnJson() input dict is empty'}), content_type='application/json')
+        return JsonResponse({'error':'returnJson() input dict_input is empty'})
 
 def returnJsonError(word):
     if word:
@@ -37,4 +38,3 @@ def salty(word):
     word_in_str = str(word)
     word_with_suffix = word_in_str + "superfarmer.net"
     return ktk.md5(word_with_suffix)
-

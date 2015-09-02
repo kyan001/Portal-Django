@@ -6,6 +6,12 @@
     .container {
         padding-top: 51px;
     }
+    .progress-card {
+        display: inline-block;
+        width: 40%;
+        border-radius: 10px;
+        background: silver;
+    }
 </style>
 {% endblock css %}
 
@@ -15,13 +21,13 @@
 {% block content %}
 <div class="container">
     {% for p in list %}
-    <ul>
+    <div class="progress-card">
         <li>name : {{p.name}}</li>
         <li>subtitle : {{p.subtitle}}</li>
         <li>progress : {{p.current}}/{{p.total}}</li>
         <li>status : {{p.status}}</li>
         <li>lasttime : {{p.modified}}</li>
-    </ul>
+    </div>
     {% endfor %}
 </div>
 {% endblock content %}

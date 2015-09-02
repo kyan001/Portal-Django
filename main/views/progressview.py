@@ -5,28 +5,25 @@ from django.template import *
 from django.views.decorators.csrf import csrf_exempt
 from main.models import Progress, Opus
 from util.ctrl import *
+from . import userview
 
 import json
 import util.KyanToolKit_Py
 ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 
-def getProgress(progressid):
-    if not progressid:
-        raise Exception("请输入进度信息 ID")
-    try:
-        opus = Opus.objects.get(id=progressid)
-    except Opus.DoesNotExist:
-        return infoMsg("未找到 id 为 {0} 的进度信息".format(str(progressid)))
-    return opus
-
 def progressList(request):
     context = {}
-    user = getLoginUser();
-    progresses = Progress.objects.filter(userid=user.id);
+    user = request.session.get('loginuser');
+    if not user:
+        return infoMsg("请先登录！", url="/user/signin")
+    progresses = Progress.objects.filter(userid=user['id']);
     progressList = []
-    if not len(progresses):
+    if len(progresses):
         for p in progresses:
-            opus = opusview.getOpus(p.opusid)
+            try:
+                opus = Opus.objects.get(id=p.opusid)
+            except Opus.DoesNotExist:
+                return infoMsg("未找到 id 为 {0} 的作品".format(str(p.opusid)))
             l = {}
             l['name'] = opus.name
             l['subtitle'] = opus.subtitle

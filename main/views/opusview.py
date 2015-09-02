@@ -17,7 +17,10 @@ def opusDetail(request):
     if not opusid:
         return infoMsg("需要一个作品id")
     #获得作品
-    opus = Opus.objects.findFirst(opusid)
+    try:
+        opus = Opus.objects.get(opusid)
+    except Opus.DoesNotExist:
+        return infoMsg("未找到 id 为 {0} 的作品".format(str(opusid)))
     #render
     context = {}
     context['opus'] = opus
