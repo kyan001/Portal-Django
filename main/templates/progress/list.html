@@ -6,28 +6,206 @@
     .container {
         padding-top: 51px;
     }
-    .progress-card {
-        display: inline-block;
-        width: 40%;
-        border-radius: 10px;
-        background: silver;
+    /* progress-card */
+    .progress-card .panel:hover {
+        box-shadow: 4px 4px 4px silver;
+    }
+    .progress-card .panel-heading {
+        cursor: hand;
+    }
+    .progress-card .panel-footer {
+        padding: 0;
+        text-align: right;
+    }
+    .progress-card .progress {
+        height: 21px;
+        margin: 0;
+    }
+    .progress-card .table {
+        margin: 0;
+        font-size: 13px;
+    }
+    .progress-card .subtitle {
+        font-size: 15px;
+    }
+    .progress-card .persent {
+        font-size: 15px;
+    }
+
+    /* page-header */
+    .page-header > h1 > span {
+        font-size: 25px;
+        color: silver;
+    }
+    .page-header h1 {
+        font-size: 30px;
+    }
+    .page-header small {
+        font-size: 26px;
+    }
+    .page-header {
+        padding-bottom: 2px;
+        cursor: hand;
     }
 </style>
 {% endblock css %}
 
 {% block js %}
+<script type="text/javascript">
+    $(function(){
+        $('.progress-card').mouseover(function(){
+            $(this).find('.progress').addClass('active').addClass('progress-striped');
+        });
+        $('.progress-card').mouseout(function(){
+            $(this).find('.progress').removeClass('active').removeClass('progress-striped');
+        });
+        $('.progress-card .panel-heading').click(function(){
+            var progressid = $(this).parent('.panel').parent('.progress-card').attr('progressid');
+            window.location.href="/progress/detail?id=" + progressid;
+        });
+        $('.page-header').mouseover(function(){
+            $(this).find('h1>span').css('color','red');
+        });
+        $('.page-header').mouseout(function(){
+            $(this).find('h1>span').css('color','silver');
+        });
+    });
+</script>
 {% endblock js %}
 
 {% block content %}
 <div class="container">
-    {% for p in list %}
-    <div class="progress-card">
-        <li>name : {{p.name}}</li>
-        <li>subtitle : {{p.subtitle}}</li>
-        <li>progress : {{p.current}}/{{p.total}}</li>
-        <li>status : {{p.status}}</li>
-        <li>lasttime : {{p.modified}}</li>
+    <div class="page-header" data-toggle="collapse" data-target="#list-inprogress">
+        <h1>
+            <span class="glyphicon glyphicon-plus"></span>
+            在读 <small>Inprogress</small>
+        </h1>
     </div>
-    {% endfor %}
+    <div class="row collapse in" id="list-inprogress">
+        {% for p in listinprogress %}
+        <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 progress-card" progressid="{{ p.id }}">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="panel-title">
+                        <span class="persent label label-success">{{ p.persent }}%</span>
+                        <span>《 <b>{{ p.name }}</b> 》</span>
+                        {% if p.subtitle %}
+                        <span class="subtitle label label-default">{{ p.subtitle }}</span>
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="progress">
+                        <div class="progress-bar {{ p.bartype }}" style="width: {{p.persent}}%;">
+                            <b>{{p.current}} / {{p.total}}</b>
+                        </div>
+                    </div>
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <td>开始</td>
+                                <td>{{ p.created }}</td>
+                                <td>上次</td>
+                                <td>{{ p.modified }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="panel-footer">
+                    <a class="btn btn-warning" href="/progress/detail?id={{ p.id }}">更新进度</a>
+                </div>
+            </div>
+        </div><!--col-->
+        {% endfor %}
+    </div><!--row-->
+
+    <div class="page-header" data-toggle="collapse" data-target="#list-done">
+        <h1>
+            <span class="glyphicon glyphicon-plus"></span>
+            已阅 <small>Done</small>
+        </h1>
+    </div>
+    <div class="row collapse" id="list-done">
+        {% for p in listdone %}
+        <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 progress-card" progressid="{{ p.id }}">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="panel-title">
+                        <span class="persent label label-success">{{ p.persent }}%</span>
+                        <span>《 <b>{{ p.name }}</b> 》</span>
+                        {% if p.subtitle %}
+                        <span class="subtitle label label-default">{{ p.subtitle }}</span>
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="progress">
+                        <div class="progress-bar {{ p.bartype }}" style="width: {{p.persent}}%;">
+                            <b>{{p.current}} / {{p.total}}</b>
+                        </div>
+                    </div>
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <td>开始</td>
+                                <td>{{ p.created }}</td>
+                                <td>上次</td>
+                                <td>{{ p.modified }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="panel-footer">
+                    <a class="btn btn-warning" href="/progress/detail?id={{ p.id }}">更新进度</a>
+                </div>
+            </div>
+        </div><!--col-->
+        {% endfor %}
+    </div><!--row-->
+
+    <div class="page-header" data-toggle="collapse" data-target="#list-giveup">
+        <h1>
+            <span class="glyphicon glyphicon-plus"></span>
+            放弃 <small>Giveup</small>
+        </h1>
+    </div>
+    <div class="row collapse" id="list-giveup">
+        {% for p in listgiveup %}
+        <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 progress-card" progressid="{{ p.id }}">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="panel-title">
+                        <span class="persent label label-success">{{ p.persent }}%</span>
+                        <span>《 <b>{{ p.name }}</b> 》</span>
+                        {% if p.subtitle %}
+                        <span class="subtitle label label-default">{{ p.subtitle }}</span>
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="progress">
+                        <div class="progress-bar {{ p.bartype }}" style="width: {{p.persent}}%;">
+                            <b>{{p.current}} / {{p.total}}</b>
+                        </div>
+                    </div>
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <td>开始</td>
+                                <td>{{ p.created }}</td>
+                                <td>上次</td>
+                                <td>{{ p.modified }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="panel-footer">
+                    <a class="btn btn-warning" href="/progress/detail?id={{ p.id }}">更新进度</a>
+                </div>
+            </div>
+        </div><!--col-->
+        {% endfor %}
+    </div><!--row-->
+
 </div>
 {% endblock content %}

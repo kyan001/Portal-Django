@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^user/getquestionandtip$', views.userGetQuestionAndTip),
     #PROGRESS
     url(r'^progress/list/$', views.progressList),
+    url(r'^progress/detail$', views.progressDetail),
     url(r'^opus/mylist/$', views.opusMylist),
     url(r'^opus/detail$', views.opusDetail),
 ]
