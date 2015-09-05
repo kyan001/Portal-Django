@@ -122,7 +122,7 @@
                     $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在');
                     foldOptions();
                 } else if (result.result == 'exist') {
-                    $('#username-group').addClass('has-success');
+                    // $('#username-group').addClass('has-success');
                     unfoldOptions();
                 } else {
                     $.danger(result.error);
