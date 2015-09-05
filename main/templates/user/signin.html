@@ -29,21 +29,20 @@
     .tips {
         cursor: help;
     }
+    #question-content {
+        border-bottom: 0;
+    }
     #buttons {
         margin-top: 10px;
         width: 100%;
     }
     #submit-button{
-        width: 62%;
         pointer-events: auto;
     }
     #forget-button {
-        width: 30%;
-        float: right;
+        /*float: right;*/
     }
-    #question-content {
-        border-bottom: 0;
-    }
+
 </style>
 {% endblock css %}
 {% block js %}
@@ -162,9 +161,20 @@
 {% block content %}
 <div class="container">
     <div id="form-wrap" class="aligncenter row">
-        <div id="form-div" class='col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12'>
+        <div id="form-div" class='col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-xs-12'>
             <form id="login-form" action="/user/checklogin/" method="post">
                 <div class="input-group" id="username-group">
+                    <span class="input-group-addon">
+                        <input id="rememberme" type="checkbox"
+                            data-container="body"
+                            data-toggle="popover"
+                            data-placement="left"
+                            data-title="记住我 / Remember me"
+                            data-content="<li class='text-primary'>2周内免登入</li><li class='text-danger'>公共电脑请勿勾选此项</li>"
+                            data-trigger='hover'
+                            onclick='clickRememberMe()'
+                            checked>
+                    </span>
                     <input type="text" name="username" class="form-control" placeholder="用户名 / Username" autofocus="autofocus" onchange="validateUsername()" oninput="clearHasClass($('#username-group'))"/>
                     <span class="input-group-addon tips"
                         title="用户名 / Username <span class='label label-primary'>必填</span>"
@@ -208,20 +218,11 @@
                 <input type="hidden" name="rememberme">
                 {% endif %}
             </form>
-            <div id="buttons">
-                <input id="rememberme" type="checkbox"
-                    data-container="body"
-                    data-toggle="popover"
-                    data-placement="left"
-                    data-title="记住我 / Remember me"
-                    data-content="<li class='text-primary'>2周内免登入</li><li class='text-danger'>公共电脑请勿勾选此项</li>"
-                    data-trigger='hover'
-                    onclick='clickRememberMe()'
-                    checked>
-                <button id="submit-button" class="btn btn-success" onclick="submitForm()" disabled>
+            <div id="buttons row">
+                <button id="submit-button" class="btn btn-success col-lg-8 col-md-8 col-sm-12 col-xs-12" onclick="submitForm()" disabled>
                     登入 / Login
                 </button>
-                <a id="forget-button" class="btn btn-warning" href="/user/forgetpassword">
+                <a id="forget-button" class="btn btn-warning col-lg-4 col-md-4 col-sm-12 col-xs-12" href="/user/forgetpassword">
                     忘记密码
                 </a>
             </div>
