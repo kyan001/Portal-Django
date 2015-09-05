@@ -366,10 +366,21 @@
             max-width: none;
         }
     </style>
+    <style>
+        .mobile-view {
+            padding-top: 51px;
+            background: url('/static/img/index/index_bg_div6.jpg') !important;
+            min-height: 100%;
+        }
+        .mobile-view .panel {
+            width: 90%;
+            margin: auto;
+        }
+    </style>
 {% endblock css %}
 
 {% block content %}
-<div class="container">
+<div class="container hidden-xs">
     <div class="fg-div div1" onmouseover="$('.div1 .no-see').addClass('entered');">
         <div class="left-half">
             <p id="d1-word1" class="no-see">Life's battle doesn't always go to the stronger or faster man.</p>
@@ -545,7 +556,7 @@
         <div class="fronts row">
             <div class="col-lg-6 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">简单页面列表 Simple Webapps</div>
+                    <div class="panel-heading">页面列表 Webapps</div>
                     <div class="panel-body">
                         <div class="list-group row" id="simple-link-list">
                             <a href="/progress/list" target="_blank"
@@ -583,11 +594,43 @@
     <div class="bg-div div6">
     </div>
 </div>
+<div class="container">
+    <div class="mobile-view bg-div visible-xs-block">
+        <div class="panel panel-primary">
+            <div class="panel-heading">页面列表 Webapps</div>
+            <div class="panel-body">
+                <div class="list-group row" id="simple-link-list">
+                    <a href="/progress/list" target="_blank"
+                        class="list-group-item">
+                        <i class="alignright silver">管理您的进度</i>
+                        <div class="list-group-item-heading">进度追踪</div>
+                        <p class="list-group-item-text darkgray">
+                            添加作品、记录当前阅读进度<br/>
+                        </p>
+                    </a>
+                    <a href="http://www.superfarmer.net/portal/one/timer" target="_blank"
+                        class="list-group-item">
+                        <i class="alignright silver">基于 Raphael.js</i>
+                        <div class="list-group-item-heading">查看当前时间</div>
+                        <p class="list-group-item-text darkgray">
+                            用色彩鲜艳的圆圈显示当前时间的小页面。<br/>
+                        </p>
+                    </a>
+                    <a href="http://www.superfarmer.net/portal/one/dabingtu" target="_blank"
+                        class="list-group-item" >
+                        <i class="alignright silver">基于 Raphael.js</i>
+                        <div class="list-group-item-heading">神奇大饼图</div>
+                        <p class="list-group-item-text darkgray">
+                            当你点击饼图的某一个部分时，此部分会把其他部分逐渐“挤”走。
+                            点起来十分上瘾。<br/>
+                        </p>
+                    </a>
+                </div>
+            </div><!--panel-body-->
+        </div><!--panel-->
+    </div>
+</div>
 {% endblock content %}
-
-{% block footer %}
-    {{ block.super }}
-{% endblock footer %}
 
 {% block js %}
 <script type="text/javascript">

@@ -51,7 +51,7 @@ def progressDetail(request):
     # get progress
     try:
         progress = Progress.objects.get(id=progressid)
-    except Opus.DoesNoteExist:
+    except Opus.DoesNotExist:
         return infoMsg("未找到 id 为 {0} 的进度".format(str(progressid)))
     # check owner
     if progress.userid != user['id']:
@@ -67,3 +67,70 @@ def progressDetail(request):
     context['opus'] = opus
     context['prg'] = progress
     return render_to_response('progress/detail.html', context)
+
+@csrf_exempt
+def progressFastupdate(request):
+    context = {}
+    # get inputs
+    user = request.session.get('loginuser');
+    if not user:
+        return infoMsg("请先登录！", url="/user/signin")
+    progressid = request.POST.get('id')
+    if not progressid:
+        return infoMsg("进度 ID 为空，请联系管理员", title="出错")
+    newcurrent = request.POST.get('newcurrent')
+    if not newcurrent:
+        return infoMsg("请输入进度", title="出错")
+    # get progress
+    try:
+        progress = Progress.objects.get(id=progressid)
+    except Opus.DoesNotExist:
+        return infoMsg("未找到 id 为 {0} 的进度".format(str(progressid)))
+    # check owner
+    if progress.userid != user['id']:
+        return infoMsg("这个进度不属于您，因此您不能更新该进度")
+    # get opus
+    try:
+        opus = Opus.objects.get(id=progress.opusid)
+    except Opus.DoesNotExist:
+        return infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
+    # validation
+    if int(newcurrent) > opus.total:
+        return infoMsg("当前进度 {0} 超过最大值 {1}".format(str(newcurrent), str(opus.total)))
+    # save
+    progress.current = int(newcurrent);
+    if(progress.setStatusAuto()):
+        progress.save()
+    else:
+        return infoMsg("储存进度时失败，可能是状态导致的问题", title="存储 progress 出错")
+    # render
+    return redirect('/progress/detail?id='+str(progress.id));
+
+@csrf_exempt
+def progressDelete(request):
+    context = {}
+    # get inputs
+    user = request.session.get('loginuser');
+    if not user:
+        return infoMsg("请先登录！", url="/user/signin")
+    progressid = request.POST.get('id')
+    if not progressid:
+        return infoMsg("进度 ID 为空，请联系管理员", title="出错")
+    # get progress
+    try:
+        progress = Progress.objects.get(id=progressid)
+    except Opus.DoesNotExist:
+        return infoMsg("未找到 id 为 {0} 的进度".format(str(progressid)))
+    # check owner
+    if progress.userid != user['id']:
+        return infoMsg("这个进度不属于您，因此您不能删除该进度")
+    # get opus
+    try:
+        opus = Opus.objects.get(id=progress.opusid)
+    except Opus.DoesNotExist:
+        return infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
+    # save
+    progress.delete()
+    opus.delete()
+    # render
+    return redirect('/progress/list');

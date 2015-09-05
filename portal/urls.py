@@ -26,6 +26,8 @@ urlpatterns = [
     #PROGRESS
     url(r'^progress/list/$', views.progressList),
     url(r'^progress/detail$', views.progressDetail),
+    url(r'^progress/fastupdate/$', views.progressFastupdate),
+    url(r'^progress/delete/$', views.progressDelete),
     url(r'^opus/mylist/$', views.opusMylist),
     url(r'^opus/detail$', views.opusDetail),
 ]

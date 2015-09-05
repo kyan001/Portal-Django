@@ -10,7 +10,7 @@
     .progress-card .panel:hover {
         box-shadow: 4px 4px 4px silver;
     }
-    .progress-card .panel-heading {
+    .progress-card {
         cursor: hand;
     }
     .progress-card .panel-footer {
@@ -59,8 +59,8 @@
         $('.progress-card').mouseout(function(){
             $(this).find('.progress').removeClass('active').removeClass('progress-striped');
         });
-        $('.progress-card .panel-heading').click(function(){
-            var progressid = $(this).parent('.panel').parent('.progress-card').attr('progressid');
+        $('.progress-card').click(function(){
+            var progressid = $(this).attr('progressid');
             window.location.href="/progress/detail?id=" + progressid;
         });
         $('.page-header').mouseover(function(){

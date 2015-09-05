@@ -96,4 +96,18 @@ class Progress(models.Model):
         else:
             bartype = 'progress-bar-success'
         return bartype
+    def setStatusAuto(self):
+        opus = Opus.objects.get(id=self.opusid)
+        if self.status == 'giveup':
+            return True;
+        if self.current > opus.total:
+            self.setStatus('error')
+            return True;
+        if self.current == opus.total:
+            self.setStatus('done')
+            return True;
+        if self.current < opus.total:
+            self.setStatus('inprogress')
+            return True;
+        return False
 
