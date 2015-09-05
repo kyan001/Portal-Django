@@ -84,4 +84,16 @@ class Progress(models.Model):
         opus = Opus.objects.get(id=self.opusid)
         persent = int(self.current)/int(opus.total)*100
         return int(persent)
+    def getBartype(self):
+        opus = Opus.objects.get(id=self.opusid)
+        persent = int(self.current)/int(opus.total)*100
+        if persent < 25:
+            bartype = 'progress-bar-danger'
+        elif persent < 50:
+            bartype = 'progress-bar-warning'
+        elif persent < 100:
+            bartype = 'progress-bar-primary'
+        else:
+            bartype = 'progress-bar-success'
+        return bartype
 

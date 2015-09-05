@@ -25,30 +25,15 @@ def progressList(request):
     for st in status_pool:
         pList[st] = [];
     if len(progresses):
-        for p in progresses:
+        for prg in progresses:
             try:
-                opus = Opus.objects.get(id=p.opusid)
+                opus = Opus.objects.get(id=prg.opusid)
             except Opus.DoesNotExist:
                 return infoMsg("未找到 id 为 {0} 的作品".format(str(p.opusid)))
             l = {}
-            l['name'] = opus.name
-            l['subtitle'] = opus.subtitle
-            l['total'] = opus.total
-            l['current'] = p.current
-            l['created'] = p.getCreated()
-            l['modified'] = p.getModified()
-            l['id'] = p.id
-            l['persent'] = p.getPersent()
-            if l['persent'] < 20:
-                bartype = 'progress-bar-danger'
-            elif l['persent'] < 50:
-                bartype = 'progress-bar-warning'
-            elif l['persent'] < 100:
-                bartype = 'progress-bar-primary'
-            else:
-                bartype = 'progress-bar-success'
-            l['bartype'] = bartype
-            pList[p.status].append(l)
+            l['opus'] = opus
+            l['prg'] = prg
+            pList[prg.status].append(l)
     for st in status_pool:
         if pList[st]:
             context['list'+st] = pList[st]
@@ -76,13 +61,9 @@ def progressDetail(request):
         opus = Opus.objects.get(id=progress.opusid)
     except Opus.DoesNotExist:
         return infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
-    context['name'] = opus.name
-    context['subtitle'] = opus.subtitle
-    context['total'] = opus.total
-    context['current'] = progress.current
-    context['status'] = progress.status
-    context['created'] = progress.getCreated()
-    context['modified'] = progress.getModified()
-    context['id'] = progress.id
-    context['persent'] = progress.getPersent()
+    # calcs
+
+    # render
+    context['opus'] = opus
+    context['prg'] = progress
     return render_to_response('progress/detail.html', context)

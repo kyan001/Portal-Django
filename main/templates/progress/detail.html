@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ name }}{% endblock title %}
+{% block title %}进度：{{ opus.name }}{% endblock title %}
 
 {% block css %}
 <style type="text/css">
@@ -7,11 +7,93 @@
         padding-top: 50px;
         padding-bottom: 80px;
     }
+    .progress-card .table {
+        margin: 0;
+        font-size: 13px;
+    }
+    .progress-card .subtitle {
+        font-size: 15px;
+    }
+    .progress-card .persent {
+        font-size: 15px;
+    }
+    /* panel */
+    .panel-footer {
+        text-align: right;
+    }
+
+    /* progress bar */
+    .progress-card .progress {
+        height: 26px;
+        margin: 0;
+    }
+    .progress-card .progress b{
+        font-size: 15px;
+    }
 </style>
 {% endblock css %}
 
 {% block content %}
 <div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 progress-card" progressid="{{ prg.id }}">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="panel-title">
+                        <span class="persent label label-success">{{prg.getPersent}}%</span>
+                        <span>《 <b>{{opus.name}}</b> 》</span>
+                        {% if opus.subtitle %}
+                        <span class="subtitle label label-default">{{opus.subtitle}}</span>
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active {{pro.getBartype}}" style="width: {{prg.getPersent}}%;">
+                            <b>{{prg.current}} / {{opus.total}}</b>
+                        </div>
+                    </div>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>开始</td>
+                                <td>{{prg.created}}</td>
+                                <td>上次</td>
+                                <td>{{prg.modified}}</td>
+                            </tr>
+                            <tr>
+                                <td>开始</td>
+                                <td>{{prg.created}}</td>
+                                <td>上次</td>
+                                <td>{{prg.modified}}</td>
+                            </tr>
+                            <tr>
+                                <td>开始</td>
+                                <td>{{prg.created}}</td>
+                                <td>上次</td>
+                                <td>{{prg.modified}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="panel-footer">
+                    <a class="btn btn-warning" href="/progress/detail?id={{prg.id}}">更新进度</a>
+                </div>
+            </div>
+        </div><!--col-->
+    </div><!--row-->
+
+
+
+
+
+
+
     <div class="table-responsive">
         <table class="table table-striped table-bordered">
             <thead>
@@ -64,13 +146,3 @@
     </div>
 </div>
 {% endblock content %}
-
-{% block footer %}
-    {{ block.super }}
-    <style>
-    #footer-div {
-        position: fixed;
-        bottom: 0;
-    }
-    </style>
-{% endblock footer %}

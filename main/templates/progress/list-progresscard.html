@@ -1,0 +1,33 @@
+<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 progress-card" progressid="{{ p.prg.id }}">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <span class="panel-title">
+                <span class="persent label label-success">{{ p.prg.getPersent }}%</span>
+                <span>《 <b>{{ p.opus.name }}</b> 》</span>
+                {% if p.opus.subtitle %}
+                <span class="subtitle label label-default">{{ p.opus.subtitle }}</span>
+                {% endif %}
+            </span>
+        </div>
+        <div class="panel-body">
+            <div class="progress">
+                <div class="progress-bar {{ p.prg.getBartype }}" style="width: {{p.prg.getPersent}}%;">
+                    <b>{{p.prg.current}} / {{p.opus.total}}</b>
+                </div>
+            </div>
+            <table class="table table-condensed">
+                <tbody>
+                    <tr>
+                        <td>开始</td>
+                        <td>{{ p.prg.getCreated }}</td>
+                        <td>上次</td>
+                        <td>{{ p.prg.getModified }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-footer">
+            <a class="btn btn-warning" href="/progress/detail?id={{ p.prg.id }}">更新进度</a>
+        </div>
+    </div>
+</div><!--col-->
