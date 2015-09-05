@@ -44,6 +44,12 @@
     </style>
 
     <style>/*左右半*/
+        .container {
+            padding: 0;
+            margin: 0;
+            border: 0;
+            width: 100%;
+        }
         .left-half {
             width: 50%;
             height: 100%;
@@ -321,7 +327,8 @@
             width: 100%;
             margin-top: 9%;
             margin-bottom: 9%;
-            background-color:rgba(255,255,255,0.5)
+            background-color:rgba(255,255,255,0.5);
+            pointer-events: auto;
         }
         .div5 .panel-heading {
             text-align: center;
@@ -333,8 +340,8 @@
         }
         .div5 .fronts {
             position: relative;
+            pointer-events: none;
         }
-
         .div5 .carousel-control {
             width: 5%;
         }
@@ -362,6 +369,7 @@
 {% endblock css %}
 
 {% block content %}
+<div class="container">
     <div class="fg-div div1" onmouseover="$('.div1 .no-see').addClass('entered');">
         <div class="left-half">
             <p id="d1-word1" class="no-see">Life's battle doesn't always go to the stronger or faster man.</p>
@@ -381,7 +389,7 @@
 
     <div class="fg-div div3" onmouseover="$('.div3 .thumbnail').addClass('entered');">
         <div class="row">
-            <div class="col-sm-3 col-md-3">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                 <div class="thumbnail" id="d3-thumb1">
                     <img src="/static/img/index/div3_name.jpg" alt="My Name">
                     <div class="caption">
@@ -397,14 +405,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3 col-md-3">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                 <div class="thumbnail" id="d3-thumb2">
                     <img src="/static/img/index/div3_music.png" alt="My Music">
                     <div class="caption">
                         <h3>音乐</h3>
                         <p>
                             Guitar, Voice, Piano.<br/>
-                            When Words Fail, Music Speaks.
+                            When Words Fail, Music Speaks
+                        </p>
                         <p>
                             <a href="http://superfarmer.net/thinking/?cat=19" class="btn btn-primary" role="button">My Musics</a>
                             <a href="http://superfarmer.net/thinking/?p=175" class="btn btn-default" role="button">《牧城少年》</a>
@@ -412,7 +421,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3 col-md-3">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                 <div class="thumbnail" id="d3-thumb3">
                     <img src="/static/img/index/div3_products.png" alt="My Products">
                     <div class="caption">
@@ -428,7 +437,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3 col-md-3">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                 <div class="thumbnail" id="d3-thumb4">
                     <img src="/static/img/index/div3_ideas.png" alt="My Thoughts">
                     <div class="caption">
@@ -488,7 +497,7 @@
                         <li>我不害怕，我有妈妈的牵挂</li>
                         <li>陪着我一起出发</li>
                         <li>你会长大，披上最动人的纱</li>
-                        <li>去吧，像盛开的花
+                        <li>去吧，像盛开的花</li>
                     </div>
                     <div id="lyrics-buttom2" class="lyrics buttom buttom2">
                         <li>不必害怕，我有梦想的宝塔</li>
@@ -496,7 +505,6 @@
                         <li>你会长大，盘起最温柔的发</li>
                         <li>去吧，像盛开的花</li>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -534,27 +542,30 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-        <div class="fronts">
-            <div class="right-half">
+        <div class="fronts row">
+            <div class="col-lg-6 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">简单页面列表 Simple Webapps</div>
                     <div class="panel-body">
-                        <div class="list-group" id="simple-link-list">
-                            <a href="/progress/list" class="list-group-item" target="_blank">
+                        <div class="list-group row" id="simple-link-list">
+                            <a href="/progress/list" target="_blank"
+                                class="list-group-item col-lg-12 col-md-12 col-sm-4 col-xs-3">
                                 <i class="alignright silver">管理您的进度</i>
                                 <div class="list-group-item-heading">进度追踪</div>
                                 <p class="list-group-item-text darkgray">
                                     添加作品、记录当前阅读进度<br/>
                                 </p>
                             </a>
-                            <a href="http://www.superfarmer.net/portal/one/timer" class="list-group-item" target="_blank">
+                            <a href="http://www.superfarmer.net/portal/one/timer" target="_blank"
+                                class="list-group-item col-lg-12 col-md-12 col-sm-4 col-xs-3">
                                 <i class="alignright silver">基于 Raphael.js</i>
                                 <div class="list-group-item-heading">查看当前时间</div>
                                 <p class="list-group-item-text darkgray">
                                     用色彩鲜艳的圆圈显示当前时间的小页面。<br/>
                                 </p>
                             </a>
-                            <a href="http://www.superfarmer.net/portal/one/dabingtu" class="list-group-item" target="_blank">
+                            <a href="http://www.superfarmer.net/portal/one/dabingtu" target="_blank"
+                                class="list-group-item col-lg-12 col-md-12 col-sm-4 col-xs-3" >
                                 <i class="alignright silver">基于 Raphael.js</i>
                                 <div class="list-group-item-heading">神奇大饼图</div>
                                 <p class="list-group-item-text darkgray">
@@ -565,12 +576,13 @@
                         </div>
                     </div><!--panel-body-->
                 </div><!--panel-->
-            </div><!--right-half-->
+            </div><!--col-->
         </div><!-- fronts -->
     </div><!--div5-->
 
     <div class="bg-div div6">
     </div>
+</div>
 {% endblock content %}
 
 {% block footer %}
