@@ -61,6 +61,7 @@ class Progress(models.Model):
         self.modified = self.modified.isoformat(' ')
         return model_to_dict(self)
     # created & modified
+
     def setCreated(self):
         self.created = timezone.now()
     def setModified(self):
@@ -81,6 +82,7 @@ class Progress(models.Model):
         if status not in status_pool:
             raise Exception("状态只能为 {0}".format(str(status_pool)))
         self.status = status
+        self.setModified()
     def setStatusAuto(self):
         opus = Opus.objects.get(id=self.opusid)
         if self.status == 'giveup':
@@ -95,6 +97,9 @@ class Progress(models.Model):
             self.setStatus('inprogress')
             return True;
         return False
+    def resetStatus(self):
+        self.setStatus('error')
+        return self.setStatusAuto()
     def getStatus(self):
         if self.status == 'giveup':
             return '弃置';
@@ -105,9 +110,6 @@ class Progress(models.Model):
         if self.status == 'inprogress':
             return '进行中';
         return self.status
-    def resetStatus(self):
-        self.setStatus('error')
-        return self.setStatusAuto()
     # calculations
     def getPersent(self):
         opus = Opus.objects.get(id=self.opusid)

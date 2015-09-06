@@ -89,8 +89,31 @@
         $('.text-primary').removeClass('danger');
         $.warning('已撤销修改');
     }
-    function submitSaveForm(){
-
+    function saveEdit(){
+        var name = $('input[name="name"]').val()
+        var subtitle = $('input[name="subtitle"]').val()
+        var total = $('input[name="total"]').val()
+        var current = $('input[name="current"]').val()
+        if(name == ""){
+            $.danger('名称不能为空')
+            return false;
+        }
+        if(total == ""){
+            $.danger('总页数不能为空、或包含非数字')
+            return false;
+        }
+        if(total == "0"){
+            $.danger('总页数不能为 0')
+            return false;
+        }
+        if(current == ""){
+            $('input[name="current"]').val("0")
+        }
+        if(parseInt(current) > parseInt(total)){
+            $.danger('当前进度不能大于总页数')
+            return false;
+        }
+        $('#saveform').submit();
     }
     function submitUpdateForm(){
         var newcurrent = $('input[name="newcurrent"]').val();
@@ -262,7 +285,7 @@
                                 {% endif %}
                             </div>
                             <span class="editmode">
-                                <a class="btn btn-success" id="save">保存</a>
+                                <a class="btn btn-success" id="save" onclick="saveEdit()">保存</a>
                                 <a class="btn btn-default" id="cancel" onclick="cancelEdit()">取消</a>
                                 <button class="btn btn-danger" id='delete' onclick="confirmDelete()">删除</button>
                             </span>
