@@ -76,18 +76,26 @@
     {% endblock alertzone %}
     <!-- ############ USER BAR ############-->
     {% block userbar %}
-        <div id='home-btn'>
-            <a href="/" class="btn btn-info btn-sm">
-                <span class="glyphicon glyphicon-home"></span> Home
-            </a>
+        <div id='nav-btn'>
+            {% block nav-btn %}{% endblock nav-btn %}
         </div>
         <nav id='user-bar'>
             <span class="nologinshow">
+                <a href="/" class="btn btn-info btn-sm">
+                    <span style="opacity:0">·</span>
+                    <span class="glyphicon glyphicon-home"></span>
+                    <span style="opacity:0">·</span>
+                </a>
                 <a href="/user/signup" class="btn btn-primary btn-sm">注册</a>
                 <span> </span>
                 <a href="/user/signin" class="btn btn-default btn-sm">登入</a>
             </span>
             <span class="loginshow">
+                <a href="/" class="btn btn-info btn-sm">
+                    <span style="opacity:0">·</span>
+                    <span class="glyphicon glyphicon-home"></span>
+                    <span style="opacity:0">·</span>
+                </a>
                 <a class="btn btn-default btn-sm profile-link" href='/user/profile'>
                     <img class="profile-avatar">
                     <span class="profile-nikename">
@@ -99,16 +107,13 @@
 
         </nav>
         <style>
-            #home-btn {
-                width: 10%;
+            #nav-btn {
                 position: fixed;
                 top: 0;
                 left: 0;
                 z-index: 1000;
-                padding-right: 5%;
                 padding-left: 5%;
                 padding-top: 10px;
-                padding-bottom: 10px;
                 font-size: 15px;
             }
             #user-bar {

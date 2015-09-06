@@ -11,6 +11,8 @@
     .text-alignleft { display: inline-block; width: 100%; text-align: left; }
     .text-alignright { display: inline-block; width: 100%; text-align: right; }
     .text-aligncenter { display: inline-block; width: 100%; text-align: center; }
+    .text-right { text-align: right; }
+    .text-center { text-align: center; }
 
 /* blurs */
     .blur, .hover-notblur, .hover-blur:hover{

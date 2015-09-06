@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block title %}进度：{{ opus.name }}{% endblock title %}
+
+{% block css %}
+<style type="text/css">
+    .container {
+        font-family: 'Microsoft YaHei';
+        padding-top: 50px;
+        padding-bottom: 80px;
+    }
+    .panel-body {
+        font-size: 15px;
+    }
+    .panel-footer {
+        padding: 0;
+    }
+    #theform .row {
+        font-size: 15px;
+        padding-bottom: 20px;
+    }
+    .editable {
+        font-size: 15px !important;
+        width: 100%;
+    }
+</style>
+{% endblock css %}
+
+{% block js %}
+<script type="text/javascript">
+    $(function(){
+    });
+    function clearForm(){
+        $('input[name="name"]').val('')
+        $('input[name="subtitle"]').val('')
+        $('input[name="total"]').val('')
+        $('input[name="current"]').val('')
+    }
+    function submitForm(){
+        var name = $('input[name="name"]').val()
+        var subtitle = $('input[name="subtitle"]').val()
+        var total = $('input[name="total"]').val()
+        var current = $('input[name="current"]').val()
+        if(name == ""){
+            $.danger('名称不能为空')
+            return false;
+        }
+        if(total == ""){
+            $.danger('总页数不能为空、或包含非数字')
+            return false;
+        }
+        if(total == "0"){
+            $.danger('总页数不能为 0')
+            return false;
+        }
+        if(current == ""){
+            $('input[name="current"]').val("0")
+        }
+        if(parseInt(current) > parseInt(total)){
+            $.danger('初始进度不能大于总页数')
+            return false;
+        }
+        $('#theform').submit();
+    }
+</script>
+{% endblock js %}
+
+{% block nav-btn %}
+<a href="/progress/list" class="btn btn-warning btn-sm">
+    <span class="glyphicon glyphicon-arrow-left"></span> 回到列表
+</a>
+{% endblock nav-btn %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12" progressid="{{ prg.id }}">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="panel-title">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        新增进度
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <form id="theform" action="/progress/add/" method="post">
+                        <div class="row">
+                            <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-danger ">名称</span>
+                            <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
+                                <input type="text" placeholder="动漫、电视剧、计划、书……" name="name" class="editable">
+                            </span>
+                            <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
+                                <span class="text-danger">*必填</span>（不要加书名号）
+                            </span>
+                        </div>
+                        <div class="clearfix visible-xs-block">
+                            <hr/>
+                        </div>
+                        <div class="row">
+                            <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right">副标题</span>
+                            <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
+                                <input type="text" placeholder="作品的副标题、备注、分类" name="subtitle" class="editable">
+                            </span>
+                            <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
+                                <span class="text-warning">*选填</span>（尽量简短）
+                            </span>
+                        </div>
+                        <div class="clearfix visible-xs-block">
+                            <hr/>
+                        </div>
+                        <div class="row">
+                            <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-danger">总页数</span>
+                            <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
+                                <input type="number" placeholder="一共？卷、集、项、页……" name="total" class="editable">
+                            </span>
+                            <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
+                                <span class="text-danger">*必填</span>（必须为纯数字）
+                            </span>
+                        </div>
+                        <div class="clearfix visible-xs-block">
+                            <hr/>
+                        </div>
+                        <div class="row">
+                            <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right">初始进度</span>
+                            <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
+                                <input type="number" placeholder="当前已读到第？页" name="current" class="editable">
+                            </span>
+                            <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
+                                <span class="text-warning">*选填</span>（必须为纯数字）
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <a class="btn btn-danger" href="javascript:history.back()">
+                                <span class="glyphicon glyphicon-remove"></span> 取消
+                            </a>
+                        </div>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 text-right">
+                            <div class="text-right">
+                                <button class="btn btn-default" onclick="clearForm()">
+                                    <span class="glyphicon glyphicon-trash"></span> 清空
+                                </button>
+                                <button class="btn btn-success" onclick="submitForm()">
+                                        <span class="glyphicon glyphicon-ok"></span> 保存
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--col-->
+    </div><!--row-->
+</div>
+{% endblock content %}

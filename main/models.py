@@ -29,7 +29,7 @@ class User(models.Model):
         return self.created.astimezone(timezone.get_current_timezone()).strftime(time_format)
 
 class Opus(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     total = models.IntegerField(default=0)
     created = models.DateTimeField()
@@ -60,16 +60,11 @@ class Progress(models.Model):
         self.created = self.created.isoformat(' ')
         self.modified = self.modified.isoformat(' ')
         return model_to_dict(self)
+    # created & modified
     def setCreated(self):
         self.created = timezone.now()
-        self.modified = timezone.now()
     def setModified(self):
         self.modified = timezone.now()
-    def setStatus(self, status):
-        status_pool = ('done','inprogress','giveup','error')
-        if status not in status_pool:
-            raise Exception("状态只能为 {0}".format(str(status_pool)))
-        self.status = status
     def getCreated(self):
         time_format = '%m-%d %H:%M %p'
         if self.created.year != timezone.now().year:
@@ -80,6 +75,40 @@ class Progress(models.Model):
         if self.modified.year != timezone.now().year:
             time_format = '%Y-' + time_format
         return self.modified.astimezone(timezone.get_current_timezone()).strftime(time_format)
+    # status
+    def setStatus(self, status):
+        status_pool = ('done','inprogress','giveup','error')
+        if status not in status_pool:
+            raise Exception("状态只能为 {0}".format(str(status_pool)))
+        self.status = status
+    def setStatusAuto(self):
+        opus = Opus.objects.get(id=self.opusid)
+        if self.status == 'giveup':
+            return True;
+        if self.current > opus.total:
+            self.setStatus('error')
+            return True;
+        if self.current == opus.total:
+            self.setStatus('done')
+            return True;
+        if self.current < opus.total:
+            self.setStatus('inprogress')
+            return True;
+        return False
+    def getStatus(self):
+        if self.status == 'giveup':
+            return '弃置';
+        if self.status == 'error':
+            return '出错';
+        if self.status == 'done':
+            return '已完成';
+        if self.status == 'inprogress':
+            return '进行中';
+        return self.status
+    def resetStatus(self):
+        self.setStatus('error')
+        return self.setStatusAuto()
+    # calculations
     def getPersent(self):
         opus = Opus.objects.get(id=self.opusid)
         persent = int(self.current)/int(opus.total)*100
@@ -96,18 +125,5 @@ class Progress(models.Model):
         else:
             bartype = 'progress-bar-success'
         return bartype
-    def setStatusAuto(self):
-        opus = Opus.objects.get(id=self.opusid)
-        if self.status == 'giveup':
-            return True;
-        if self.current > opus.total:
-            self.setStatus('error')
-            return True;
-        if self.current == opus.total:
-            self.setStatus('done')
-            return True;
-        if self.current < opus.total:
-            self.setStatus('inprogress')
-            return True;
-        return False
+
 

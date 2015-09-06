@@ -322,22 +322,6 @@
         }
 
         /* div5 */
-        .div5 .panel {
-            height: 82%;
-            width: 100%;
-            margin-top: 9%;
-            margin-bottom: 9%;
-            background-color:rgba(255,255,255,0.5);
-            pointer-events: auto;
-        }
-        .div5 .panel-heading {
-            text-align: center;
-            font-size: 17px;
-        }
-        .div5 .list-group-item-heading {
-            font-weight: 600;/*normal=400, bold=700*/
-            font-size: 19px;
-        }
         .div5 .fronts {
             position: relative;
             pointer-events: none;
@@ -555,38 +539,7 @@
         </div>
         <div class="fronts row">
             <div class="col-lg-6 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">页面列表 Webapps</div>
-                    <div class="panel-body">
-                        <div class="list-group row" id="simple-link-list">
-                            <a href="/progress/list" target="_blank"
-                                class="list-group-item col-lg-12 col-md-12 col-sm-4 col-xs-3">
-                                <i class="alignright silver">管理您的进度</i>
-                                <div class="list-group-item-heading">进度追踪</div>
-                                <p class="list-group-item-text darkgray">
-                                    添加作品、记录当前阅读进度<br/>
-                                </p>
-                            </a>
-                            <a href="http://www.superfarmer.net/portal/one/timer" target="_blank"
-                                class="list-group-item col-lg-12 col-md-12 col-sm-4 col-xs-3">
-                                <i class="alignright silver">基于 Raphael.js</i>
-                                <div class="list-group-item-heading">查看当前时间</div>
-                                <p class="list-group-item-text darkgray">
-                                    用色彩鲜艳的圆圈显示当前时间的小页面。<br/>
-                                </p>
-                            </a>
-                            <a href="http://www.superfarmer.net/portal/one/dabingtu" target="_blank"
-                                class="list-group-item col-lg-12 col-md-12 col-sm-4 col-xs-3" >
-                                <i class="alignright silver">基于 Raphael.js</i>
-                                <div class="list-group-item-heading">神奇大饼图</div>
-                                <p class="list-group-item-text darkgray">
-                                    当你点击饼图的某一个部分时，此部分会把其他部分逐渐“挤”走。
-                                    点起来十分上瘾。<br/>
-                                </p>
-                            </a>
-                        </div>
-                    </div><!--panel-body-->
-                </div><!--panel-->
+                {% include 'index/index-webapps.html' %}
             </div><!--col-->
         </div><!-- fronts -->
     </div><!--div5-->
@@ -596,38 +549,7 @@
 </div>
 <div class="container">
     <div class="mobile-view bg-div visible-xs-block">
-        <div class="panel panel-primary">
-            <div class="panel-heading">页面列表 Webapps</div>
-            <div class="panel-body">
-                <div class="list-group row" id="simple-link-list">
-                    <a href="/progress/list" target="_blank"
-                        class="list-group-item">
-                        <i class="alignright silver">管理您的进度</i>
-                        <div class="list-group-item-heading">进度追踪</div>
-                        <p class="list-group-item-text darkgray">
-                            添加作品、记录当前阅读进度<br/>
-                        </p>
-                    </a>
-                    <a href="http://www.superfarmer.net/portal/one/timer" target="_blank"
-                        class="list-group-item">
-                        <i class="alignright silver">基于 Raphael.js</i>
-                        <div class="list-group-item-heading">查看当前时间</div>
-                        <p class="list-group-item-text darkgray">
-                            用色彩鲜艳的圆圈显示当前时间的小页面。<br/>
-                        </p>
-                    </a>
-                    <a href="http://www.superfarmer.net/portal/one/dabingtu" target="_blank"
-                        class="list-group-item" >
-                        <i class="alignright silver">基于 Raphael.js</i>
-                        <div class="list-group-item-heading">神奇大饼图</div>
-                        <p class="list-group-item-text darkgray">
-                            当你点击饼图的某一个部分时，此部分会把其他部分逐渐“挤”走。
-                            点起来十分上瘾。<br/>
-                        </p>
-                    </a>
-                </div>
-            </div><!--panel-body-->
-        </div><!--panel-->
+        {% include 'index/index-webapps.html' %}
     </div>
 </div>
 {% endblock content %}

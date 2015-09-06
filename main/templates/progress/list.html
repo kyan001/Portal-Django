@@ -4,6 +4,7 @@
 {% block css %}
 <style>
     .container {
+        font-family: 'Microsoft YaHei';
         padding-top: 51px;
     }
     /* progress-card */
@@ -73,43 +74,74 @@
 </script>
 {% endblock js %}
 
+{% block nav-btn %}
+<a href="/progress/new" class="btn btn-success btn-sm">
+    <span class="glyphicon glyphicon-plus"></span> 新增进度
+</a>
+{% endblock nav-btn %}
+
 {% block content %}
 <div class="container">
     <div class="page-header" data-toggle="collapse" data-target="#list-inprogress">
         <h1>
             <span class="glyphicon glyphicon-plus"></span>
-            在读 <small>Inprogress</small>
+            进行中 <small>Inprogress</small>
         </h1>
     </div>
     <div class="row collapse in" id="list-inprogress">
         {% for p in listinprogress %}
             {% include 'progress/list-progresscard.html' %}
+        {% empty %}
+            <div class="well">
+                您还没有任何进度哦~
+            </div>
         {% endfor %}
     </div><!--row-->
 
     <div class="page-header" data-toggle="collapse" data-target="#list-done">
         <h1>
             <span class="glyphicon glyphicon-plus"></span>
-            已阅 <small>Done</small>
+            已完成 <small>Done</small>
         </h1>
     </div>
     <div class="row collapse" id="list-done">
         {% for p in listdone %}
             {% include 'progress/list-progresscard.html' %}
+        {% empty %}
+            <div class="well">
+                进度完成后，会自动显示在这里~
+            </div>
         {% endfor %}
     </div><!--row-->
 
     <div class="page-header" data-toggle="collapse" data-target="#list-giveup">
         <h1>
             <span class="glyphicon glyphicon-plus"></span>
-            放弃 <small>Giveup</small>
+            弃置 <small>Giveup</small>
         </h1>
     </div>
     <div class="row collapse" id="list-giveup">
         {% for p in listgiveup %}
             {% include 'progress/list-progresscard.html' %}
+        {% empty %}
+            <div class="well">
+                弃置的进度，会自动显示在这里，可以随时再继续阅读。
+            </div>
         {% endfor %}
     </div><!--row-->
 
+    {% if listerror %}
+        <div class="page-header" data-toggle="collapse" data-target="#list-error">
+            <h1>
+                <span class="glyphicon glyphicon-plus"></span>
+                出错 <small>Error</small>
+            </h1>
+        </div>
+        <div class="row collapse in" id="list-giveup">
+            {% for p in listerror %}
+                {% include 'progress/list-progresscard.html' %}
+            {% endfor %}
+        </div><!--row-->
+    {% endif %}
 </div>
 {% endblock content %}

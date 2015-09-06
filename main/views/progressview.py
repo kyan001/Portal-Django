@@ -70,7 +70,6 @@ def progressDetail(request):
 
 @csrf_exempt
 def progressFastupdate(request):
-    context = {}
     # get inputs
     user = request.session.get('loginuser');
     if not user:
@@ -100,6 +99,45 @@ def progressFastupdate(request):
     # save
     progress.current = int(newcurrent);
     if(progress.setStatusAuto()):
+        progress.setModified();
+        progress.save()
+    else:
+        return infoMsg("储存进度时失败，可能是状态导致的问题", title="存储 progress 出错")
+    # render
+    return redirect('/progress/detail?id='+str(progress.id));
+
+@csrf_exempt
+def progressUpdate(request):
+    # get inputs
+    user = request.session.get('loginuser');
+    if not user:
+        return infoMsg("请先登录！", url="/user/signin")
+    progressid = request.POST.get('id')
+    if not progressid:
+        return infoMsg("进度 ID 为空，请联系管理员", title="出错")
+    newcurrent = request.POST.get('newcurrent')
+    if not newcurrent:
+        return infoMsg("请输入进度", title="出错")
+    # get progress
+    try:
+        progress = Progress.objects.get(id=progressid)
+    except Opus.DoesNotExist:
+        return infoMsg("未找到 id 为 {0} 的进度".format(str(progressid)))
+    # check owner
+    if progress.userid != user['id']:
+        return infoMsg("这个进度不属于您，因此您不能更新该进度")
+    # get opus
+    try:
+        opus = Opus.objects.get(id=progress.opusid)
+    except Opus.DoesNotExist:
+        return infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
+    # validation
+    if int(newcurrent) > opus.total:
+        return infoMsg("当前进度 {0} 超过最大值 {1}".format(str(newcurrent), str(opus.total)))
+    # save
+    progress.current = int(newcurrent);
+    if(progress.setStatusAuto()):
+        progress.setModified();
         progress.save()
     else:
         return infoMsg("储存进度时失败，可能是状态导致的问题", title="存储 progress 出错")
@@ -108,7 +146,7 @@ def progressFastupdate(request):
 
 @csrf_exempt
 def progressDelete(request):
-    context = {}
+    'detail 界面点击删除按钮'
     # get inputs
     user = request.session.get('loginuser');
     if not user:
@@ -134,3 +172,101 @@ def progressDelete(request):
     opus.delete()
     # render
     return redirect('/progress/list');
+
+@csrf_exempt
+def progressGiveup(request):
+    'detail 界面点击放弃按钮'
+    # get inputs
+    user = request.session.get('loginuser');
+    if not user:
+        return infoMsg("请先登录！", url="/user/signin")
+    progressid = request.POST.get('id')
+    if not progressid:
+        return infoMsg("进度 ID 为空，请联系管理员", title="出错")
+    # get progress
+    try:
+        progress = Progress.objects.get(id=progressid)
+    except Opus.DoesNotExist:
+        return infoMsg("未找到 id 为 {0} 的进度".format(str(progressid)))
+    # check owner
+    if progress.userid != user['id']:
+        return infoMsg("这个进度不属于您，因此您不能删除该进度")
+    # get opus
+    try:
+        opus = Opus.objects.get(id=progress.opusid)
+    except Opus.DoesNotExist:
+        return infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
+    # save
+    progress.setStatus('giveup')
+    progress.setModified();
+    progress.save()
+    # render
+    return redirect('/progress/detail?id='+str(progress.id));
+
+@csrf_exempt
+def progressReset(request):
+    'detail 界面点击取消弃置按钮'
+    # get inputs
+    user = request.session.get('loginuser');
+    if not user:
+        return infoMsg("请先登录！", url="/user/signin")
+    progressid = request.POST.get('id')
+    if not progressid:
+        return infoMsg("进度 ID 为空，请联系管理员", title="出错")
+    # get progress
+    try:
+        progress = Progress.objects.get(id=progressid)
+    except Opus.DoesNotExist:
+        return infoMsg("未找到 id 为 {0} 的进度".format(str(progressid)))
+    # check owner
+    if progress.userid != user['id']:
+        return infoMsg("这个进度不属于您，因此您不能删除该进度")
+    # get opus
+    try:
+        opus = Opus.objects.get(id=progress.opusid)
+    except Opus.DoesNotExist:
+        return infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
+    # save
+    progress.resetStatus()
+    progress.setModified()
+    progress.save()
+    # render
+    return redirect('/progress/detail?id='+str(progress.id));
+
+def progressNew(request):
+    'list/detail 界面点击新增按钮'
+    context = {}
+    # get inputs
+    user = request.session.get('loginuser');
+    if not user:
+        return infoMsg("请先登录！", url="/user/signin")
+    # render
+    return render_to_response('progress/new.html', context)
+
+@csrf_exempt
+def progressAdd(request):
+    '新增界面点击保存按钮'
+    # get inputs
+    user = request.session.get('loginuser');
+    if not user:
+        return infoMsg("请先登录！", url="/user/signin")
+    name = request.POST.get('name');
+    subtitle = request.POST.get('subtitle');
+    total = request.POST.get('total');
+    current = request.POST.get('current');
+    if not name:
+        return infoMsg("名称（name）不能为空", title="保存失败")
+    if not int(total):
+        return infoMsg("总页数（total）不能为空或 0", title="保存失败")
+    if not current:
+        current = 0;
+    opus = Opus(name=name, subtitle=subtitle, total=int(total))
+    opus.setCreated();
+    opus.save()
+    progress = Progress(current=int(current), opusid=opus.id, userid=user['id'])
+    progress.setCreated();
+    progress.setModified();
+    progress.setStatusAuto();
+    progress.save()
+    # render
+    return redirect('/progress/list')

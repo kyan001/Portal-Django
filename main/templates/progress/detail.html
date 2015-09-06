@@ -4,6 +4,7 @@
 {% block css %}
 <style type="text/css">
     .container {
+        font-family: 'Microsoft YaHei';
         padding-top: 50px;
         padding-bottom: 80px;
     }
@@ -33,8 +34,9 @@
         font-size: 14px;
     }
     .editable {
-        font-size: 14px;
+        font-size: 14px !important;
         width: 100%;
+        border-bottom: 0 !important;
     }
     .editmode {
         display: none;
@@ -42,14 +44,17 @@
     input[name="newcurrent"] {
         text-align: right;
     }
-    .putright {
-        text-align: right;
-    }
     form {
         margin-bottom: 0;
     }
     .form-group {
         margin-bottom: 0;
+    }
+    .panel-footer {
+        padding: 0
+    }
+    .fastupdate-total {
+        padding-left: 0;
     }
 </style>
 {% endblock css %}
@@ -63,13 +68,29 @@
         if(result){
             $("#deleteform").submit();
         } else {
-            $.success("删除操作已取消")
+            $.info("删除操作已取消")
         }
     }
     function enterEdit(){
         $('.viewmode').hide()
         $('.editmode').show()
         $('.editable').removeAttr('readonly')
+        $('.text-primary').addClass('danger');
+        $.success('输入框已解锁');
+    }
+    function cancelEdit(){
+        $('.editable').attr('readonly','');
+        $('.viewmode').show()
+        $('.editmode').hide()
+        $('input[name="name"]').val('{{opus.name}}')
+        $('input[name="subtitle"]').val('{{opus.subtitle}}')
+        $('input[name="total"]').val('{{opus.total}}')
+        $('input[name="current"]').val('{{prg.current}}')
+        $('.text-primary').removeClass('danger');
+        $.warning('已撤销修改');
+    }
+    function submitSaveForm(){
+
     }
     function submitUpdateForm(){
         var newcurrent = $('input[name="newcurrent"]').val();
@@ -114,6 +135,12 @@
 </script>
 {% endblock js %}
 
+{% block nav-btn %}
+<a href="/progress/list" class="btn btn-warning btn-sm">
+    <span class="glyphicon glyphicon-arrow-left"></span> 回到列表
+</a>
+{% endblock nav-btn %}
+
 {% block content %}
 <div class="container">
     <div class="row">
@@ -134,136 +161,133 @@
                             <b>{{prg.current}} / {{opus.total}}</b>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <table class="table table-condensed table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>作品信息</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="text-muted">
-                                        <td>ID</td>
-                                        <td>{{opus.id}}</td>
-                                    </tr>
-                                    <tr class="text-primary">
-                                        <td>名称</td>
-                                        <td>
-                                            <input type="text" placeholder="{{opus.name}}" name="name"
-                                                value="{{opus.name}}" readonly class="editable">
-                                        </td>
-                                    </tr>
-                                    <tr class="text-primary">
-                                        <td>备注</td>
-                                        <td>
-                                            <input type="text" placeholder="{{opus.subtitle}}" name="subtitle"
-                                                value="{{opus.subtitle}}" readonly class="editable">
-                                        </td>
-                                    </tr>
-                                    <tr class="text-primary">
-                                        <td>总页数</td>
-                                        <td>
-                                            <input type="number" placeholder="{{opus.total}}" name="total"
-                                                value="{{opus.total}}" readonly class="editable">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>创建时间</td>
-                                        <td>{{opus.getCreated}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <form id="saveform" action="/progress/update/" method="post">
+                        <input type="hidden" name="id" value="{{prg.id}}">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <table class="table table-condensed table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>作品信息</th>
+                                            <td class="text-muted text-right">Id:{{opus.id}}</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="text-primary">
+                                            <td>名称</td>
+                                            <td>
+                                                <input type="text" placeholder="{{opus.name}}" name="name" value="{{opus.name}}" readonly class="editable">
+                                            </td>
+                                        </tr>
+                                        <tr class="text-primary">
+                                            <td>副标题</td>
+                                            <td>
+                                                <input type="text" placeholder="{{opus.subtitle}}" name="subtitle" value="{{opus.subtitle}}" readonly class="editable">
+                                            </td>
+                                        </tr>
+                                        <tr class="text-primary">
+                                            <td>总页数</td>
+                                            <td>
+                                                <input type="number" placeholder="{{opus.total}}" name="total" value="{{opus.total}}" readonly class="editable">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>创建时间</td>
+                                            <td>{{opus.getCreated}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="clearfix visible-xs-block visible-sm-block">
+                                <hr/>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <table class="table table-condensed table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>进度信息</th>
+                                            <td class="text-muted text-right">
+                                                User:{{prg.userid}} / Opus:{{prg.opusid}} / Id:{{prg.id}}
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>状态</td>
+                                            <td><b>{{prg.getStatus}}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td>阅读百分比</td>
+                                            <td>{{prg.getPersent}}%</td>
+                                        </tr>
+                                        <tr class="text-primary">
+                                            <td>当前进度</td>
+                                            <td>
+                                                <input type="number" placeholder="{{prg.current}}" name="current" value="{{prg.current}}" readonly class="editable">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>开始时间</td>
+                                            <td>{{prg.getCreated}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>上次更新</td>
+                                            <td>{{prg.getModified}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <table class="table table-condensed table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>进度信息</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="text-muted">
-                                        <td>ID</td>
-                                        <td>{{prg.id}}</td>
-                                    </tr>
-                                    <tr class="text-primary">
-                                        <td>当前进度</td>
-                                        <td>
-                                        <input type="number" placeholder="{{prg.current}}" name="current"
-                                                value="{{prg.current}}" readonly class="editable">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>阅读百分比</td>
-                                        <td>{{prg.getPersent}}%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>状态</td>
-                                        <td>{{prg.status}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>创建时间</td>
-                                        <td>{{prg.getCreated}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>修改时间</td>
-                                        <td>{{prg.getModified}}</td>
-                                    </tr>
-                                    <tr class="text-muted">
-                                        <td>用户ID</td>
-                                        <td>{{prg.userid}}</td>
-                                    </tr>
-                                    <tr class="text-muted">
-                                        <td>作品ID</td>
-                                        <td>{{prg.opusid}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="panel-footer">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <span class="viewmode">
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            <form id="deleteform" action="/progress/delete/" method="post">
+                                <input type="hidden" name="id" value="{{prg.id}}">
+                            </form>
+                            <form id="giveupform" action="/progress/giveup/" method="post">
+                                <input type="hidden" name="id" value="{{prg.id}}">
+                            </form>
+                            <form id="resetform" action="/progress/reset/" method="post">
+                                <input type="hidden" name="id" value="{{prg.id}}">
+                            </form>
+                            <div class="viewmode">
+                                <a class="btn btn-success" id='new' href="/progress/new">新增</a>
                                 <a class="btn btn-warning" id='edit' onclick="enterEdit()">进入编辑模式</a>
-                                <form class="form-inline" id="deleteform" action="/progress/delete/" method="post">
-                                    <input type="hidden" name="id" value="{{prg.id}}">
-                                </form>
-                                <a class="btn btn-success" id='new'>新增</a>
-                                <button class="btn btn-danger" id='delete' onclick="confirmDelete()">删除</button>
-                            </span>
+                                {% if prg.status == 'giveup' %}
+                                    <button class="btn btn-danger" id='reset' onclick="$('#resetform').submit()">取消弃置</button>
+                                {% else %}
+                                    <button class="btn btn-danger" id='giveup' onclick="$('#giveupform').submit()">弃置</button>
+                                {% endif %}
+                            </div>
                             <span class="editmode">
                                 <a class="btn btn-success" id="save">保存</a>
                                 <a class="btn btn-default" id="cancel" onclick="cancelEdit()">取消</a>
+                                <button class="btn btn-danger" id='delete' onclick="confirmDelete()">删除</button>
                             </span>
                         </div>
                         <div class="clearfix visible-xs-block visible-sm-block">
                             <hr/>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 putright">
-                            <div class="viewmode putright">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 text-right">
+                            <div class="viewmode text-right">
                                 <form id="updateform" action="/progress/fastupdate/" method="post">
                                     <input type="hidden" name="id" value="{{prg.id}}">
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-btn">
-                                                <div class="btn btn-success " onclick="addOneCurrent()">+1</div>
+                                                <div class="btn btn-primary " onclick="addOneCurrent()">+1</div>
                                             </span>
                                             <input type="number" name="newcurrent" class="form-control"
                                                 placeholder="请输入当前进度" value="{{prg.current}}">
-                                            <span class="input-group-addon">/500</span>
+                                            <span class="input-group-addon fastupdate-total">/{{opus.total}}</span>
                                             <span class="input-group-btn">
                                                 <div class="btn btn-primary" onclick="submitUpdateForm()">更新</div>
                                             </span>
                                         </div>
                                     </div>
                                 </form>
-                                <span class="">
-
-
-                                </span>
                             </div>
                         </div>
                     </div>
