@@ -7,31 +7,6 @@
         font-family: 'Microsoft YaHei';
         padding-top: 51px;
     }
-    /* progress-card */
-    .progress-card .panel:hover {
-        box-shadow: 4px 4px 4px silver;
-    }
-    .progress-card {
-        cursor: hand;
-    }
-    .progress-card .panel-footer {
-        padding: 0;
-        text-align: right;
-    }
-    .progress-card .progress {
-        height: 21px;
-        margin: 0;
-    }
-    .progress-card .table {
-        margin: 0;
-        font-size: 13px;
-    }
-    .progress-card .subtitle {
-        font-size: 15px;
-    }
-    .progress-card .persent {
-        font-size: 15px;
-    }
 
     /* page-header */
     .page-header > h1 > span {
@@ -54,14 +29,14 @@
 {% block js %}
 <script type="text/javascript">
     $(function(){
-        $('.progress-card').mouseover(function(){
+        $('.progress-card .panel').mouseover(function(){
             $(this).find('.progress').addClass('active').addClass('progress-striped');
         });
-        $('.progress-card').mouseout(function(){
+        $('.progress-card .panel').mouseout(function(){
             $(this).find('.progress').removeClass('active').removeClass('progress-striped');
         });
-        $('.progress-card').click(function(){
-            var progressid = $(this).attr('progressid');
+        $('.progress-card .panel').click(function(){
+            var progressid = $(this).parent('.progress-card').attr('progressid');
             window.location.href="/progress/detail?id=" + progressid;
         });
         $('.page-header').mouseover(function(){

@@ -363,6 +363,12 @@
     </style>
 {% endblock css %}
 
+{% block nav-btn %}
+<a href="#webapps" class="btn btn-default btn-sm">
+    <span class="glyphicon glyphicon-list-alt"></span> WebApps
+</a>
+{% endblock nav-btn %}
+
 {% block content %}
 <div class="container hidden-xs">
     <div class="fg-div div1" onmouseover="$('.div1 .no-see').addClass('entered');">
@@ -537,7 +543,7 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-        <div class="fronts row">
+        <div class="fronts row" id="webapps">
             <div class="col-lg-6 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
                 {% include 'index/index-webapps.html' %}
             </div><!--col-->
