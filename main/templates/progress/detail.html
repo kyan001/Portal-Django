@@ -56,6 +56,12 @@
     .fastupdate-total {
         padding-left: 0;
     }
+    .label-persent {
+        background-color: #51ABFF;
+    }
+    .label-subtitle {
+        background-color: #3080BB;
+    }
 </style>
 {% endblock css %}
 
@@ -75,7 +81,7 @@
         $('.viewmode').hide()
         $('.editmode').show()
         $('.editable').removeAttr('readonly')
-        $('.text-primary').addClass('danger');
+        $('.text-primary').addClass('warning');
         $.success('输入框已解锁');
     }
     function cancelEdit(){
@@ -86,7 +92,7 @@
         $('input[name="subtitle"]').val('{{opus.subtitle}}')
         $('input[name="total"]').val('{{opus.total}}')
         $('input[name="current"]').val('{{prg.current}}')
-        $('.text-primary').removeClass('danger');
+        $('.text-primary').removeClass('warning');
         $.warning('已撤销修改');
     }
     function saveEdit(){
@@ -171,10 +177,10 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <span class="panel-title">
-                        <span class="persent label label-success">{{prg.getPersent}}%</span>
+                        <span class="persent label label-persent">{{prg.getPersent}}%</span>
                         <span>《 <b>{{opus.name}}</b> 》</span>
                         {% if opus.subtitle %}
-                        <span class="subtitle label label-default">{{opus.subtitle}}</span>
+                        <span class="subtitle label label-subtitle">{{opus.subtitle}}</span>
                         {% endif %}
                     </span>
                 </div>

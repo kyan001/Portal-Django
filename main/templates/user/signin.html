@@ -168,7 +168,7 @@
                         <input id="rememberme" type="checkbox"
                             data-container="body"
                             data-toggle="popover"
-                            data-placement="left"
+                            data-placement="top"
                             data-title="记住我 / Remember me"
                             data-content="<li class='text-primary'>2周内免登入</li><li class='text-danger'>公共电脑请勿勾选此项</li>"
                             data-trigger='hover'
@@ -176,10 +176,10 @@
                             checked>
                     </span>
                     <input type="text" name="username" class="form-control" placeholder="用户名 / Username" autofocus="autofocus" onchange="validateUsername()" oninput="clearHasClass($('#username-group'))"/>
-                    <span class="input-group-addon tips"
+                    <span class="input-group-addon tips hidden-xs"
                         title="用户名 / Username <span class='label label-primary'>必填</span>"
                         data-content="<li class='text-primary'>请输入注册时的用户名</li>
-                        <li class='text-danger'>用户名只能包含“英文字母”、“数字”和“英文句号 .”</li>
+                        <li class='text-danger'>只能包含“英文字母”、“数字”和“英文句号 .”</li>
                         <li>输入结束后，点击其他地方</li>">
                         ?
                     </span>
@@ -204,7 +204,7 @@
                         data-trigger='focus'
                         onblur="$(this).popover('hide')"
                         />
-                    <span class="input-group-addon tips"
+                    <span class="input-group-addon tips hidden-xs"
                         title="答案 / Answer <span class='label label-primary'>必填</span>"
                         data-content="<li class='text-primary'>注册时您填写的内容</li>
                         <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登入</li>
@@ -222,7 +222,7 @@
                 <button id="submit-button" class="btn btn-success col-lg-8 col-md-8 col-sm-12 col-xs-12" onclick="submitForm()" disabled>
                     登入 / Login
                 </button>
-                <a id="forget-button" class="btn btn-warning col-lg-4 col-md-4 col-sm-12 col-xs-12" href="/user/forgetpassword">
+                <a id="forget-button" class="btn btn-warning col-lg-3 col-md-3 col-lg-offset-1 col-md-offset-1 col-sm-12 col-xs-12" href="/user/forgetpassword">
                     忘记密码
                 </a>
             </div>

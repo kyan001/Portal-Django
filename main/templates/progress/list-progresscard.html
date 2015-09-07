@@ -2,10 +2,10 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             <span class="panel-title">
-                <span class="persent label label-success">{{ p.prg.getPersent }}%</span>
+                <span class="persent label label-persent">{{ p.prg.getPersent }}%</span>
                 <span>《 <b>{{ p.opus.name }}</b> 》</span>
                 {% if p.opus.subtitle %}
-                <span class="subtitle label label-default">{{ p.opus.subtitle }}</span>
+                <span class="subtitle label label-subtitle">{{ p.opus.subtitle }}</span>
                 {% endif %}
             </span>
         </div>
@@ -15,9 +15,6 @@
                     <b>{{p.prg.current}} / {{p.opus.total}}</b>
                 </div>
             </div>
-
-        </div>
-        <div class="panel-footer">
             <table class="table table-condensed">
                 <tbody>
                     <tr>
@@ -31,3 +28,11 @@
         </div>
     </div>
 </div><!--col-->
+<style>
+    .label-persent {
+        background-color: #51ABFF;
+    }
+    .label-subtitle {
+        background-color: #3080BB;
+    }
+</style>
