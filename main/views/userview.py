@@ -176,6 +176,11 @@ def userSignin(request):
         context['redirect'] = request.META.get('HTTP_REFERER')
     return render_to_response('user/signin.html', context)
 
+def userForgetanswer(request):
+    '登入页面点击忘记回答'
+    return render_to_response('user/forgetanswer.html', context)
+
+
 @csrf_exempt
 def userCheckLogin(request):
     '''用户点击登入后：判断用户是否可以登入'''
