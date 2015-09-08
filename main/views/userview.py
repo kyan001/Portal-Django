@@ -178,6 +178,7 @@ def userSignin(request):
 
 def userForgetanswer(request):
     '登入页面点击忘记回答'
+    context = {}
     return render_to_response('user/forgetanswer.html', context)
 
 
