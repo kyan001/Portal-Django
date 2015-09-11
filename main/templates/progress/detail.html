@@ -91,7 +91,7 @@
         $('.viewmode').hide()
         $('.editmode').show()
         $('.viewunlock').attr('disabled','disabled')
-        $('.editunlock').addClass('danger');
+        $('.editunlock').addClass('warning');
         $.success('输入框已解锁');
     }
     function cancelEdit(){
@@ -103,7 +103,7 @@
         $('input[name="subtitle"]').val('{{opus.subtitle}}')
         $('input[name="total"]').val('{{opus.total}}')
         $('input[name="current"]').val('{{prg.current}}')
-        $('.editunlock').removeClass('danger');
+        $('.editunlock').removeClass('warning');
         $.warning('已撤销修改');
     }
     function saveEdit(){
@@ -334,7 +334,7 @@
                                     <button class="btn btn-danger" id='giveup' onclick="$('#giveupform').submit()">弃置</button>
                                 {% endif %}
                                 <a class="btn btn-success" id='new' href="/progress/new">新增</a>
-                                <a class="btn btn-warning" id='edit' onclick="enterEdit()">进入编辑模式</a>
+                                <a class="btn btn-warning" id='edit' onclick="enterEdit()">进入编辑</a>
                             </div>
                             <span class="editmode">
                                 <button class="btn btn-danger" id='delete' onclick="confirmDelete()">删除</button>
