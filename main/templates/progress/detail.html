@@ -41,6 +41,9 @@
     .editmode {
         display: none;
     }
+    .first-panel-body {
+        background-color: #f9f9f9;
+    }
     input[name="newcurrent"] {
         text-align: right;
     }
@@ -51,16 +54,22 @@
         margin-bottom: 0;
     }
     .panel-footer {
-        padding: 0
+        padding: 0 15px;
     }
     .fastupdate-total {
         padding-left: 0;
+    }
+    .fastupdate-div {
+        padding-top: 5px;
     }
     .label-persent {
         background-color: #51ABFF;
     }
     .label-subtitle {
         background-color: #3080BB;
+    }
+    #reset, #giveup, #delete {
+        float: left;
     }
 </style>
 {% endblock css %}
@@ -78,21 +87,23 @@
         }
     }
     function enterEdit(){
+        $('.editable').removeAttr('readonly')
         $('.viewmode').hide()
         $('.editmode').show()
-        $('.editable').removeAttr('readonly')
-        $('.text-primary').addClass('warning');
+        $('.viewunlock').attr('disabled','disabled')
+        $('.editunlock').addClass('danger');
         $.success('输入框已解锁');
     }
     function cancelEdit(){
         $('.editable').attr('readonly','');
         $('.viewmode').show()
         $('.editmode').hide()
+        $('.viewunlock').removeAttr('disabled')
         $('input[name="name"]').val('{{opus.name}}')
         $('input[name="subtitle"]').val('{{opus.subtitle}}')
         $('input[name="total"]').val('{{opus.total}}')
         $('input[name="current"]').val('{{prg.current}}')
-        $('.text-primary').removeClass('warning');
+        $('.editunlock').removeClass('danger');
         $.warning('已撤销修改');
     }
     function saveEdit(){
@@ -141,6 +152,18 @@
         }
         $("#updateform").submit();
     }
+    function focusNewcurrent(){
+        var nc = $('input[name="newcurrent"]');
+        if(nc.val() == '{{prg.current}}'){
+            nc.val('');
+        }
+    }
+    function blurNewcurrent(){
+        var nc = $('input[name="newcurrent"]');
+        if(nc.val() == ''){
+            nc.val('{{prg.current}}');
+        }
+    }
     function addOneCurrent(){
         var newcurrent = $('input[name="newcurrent"]').val();
         var total = $('input[name="total"]').val();
@@ -184,12 +207,35 @@
                         {% endif %}
                     </span>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body first-panel-body">
                     <div class="progress">
                         <div class="progress-bar progress-bar-striped active {{prg.getBartype}}" style="width: {{prg.getPersent}}%;">
                             <b>{{prg.current}} / {{opus.total}}</b>
                         </div>
                     </div>
+                    <div class="row fastupdate-div">
+                        <div class="text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="text-right">
+                                <form id="updateform" action="/progress/fastupdate/" method="post">
+                                    <input type="hidden" name="id" value="{{prg.id}}">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="number" name="newcurrent" class="viewunlock form-control"
+                                                placeholder="当前 {{prg.current}}" value="{{prg.current}}"
+                                                onfocus="focusNewcurrent()" onblur="blurNewcurrent()">
+                                            <span class="input-group-addon fastupdate-total">/{{opus.total}}</span>
+                                            <span class="input-group-btn">
+                                                <div class="viewunlock btn btn-default" onclick="addOneCurrent()">+1</div>
+                                                <div class="viewunlock btn btn-primary" onclick="submitUpdateForm()">更新</div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
                     <form id="saveform" action="/progress/update/" method="post">
                         <input type="hidden" name="id" value="{{prg.id}}">
                         <div class="row">
@@ -202,19 +248,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="text-primary">
+                                        <tr class="text-info editunlock">
                                             <td>名称</td>
                                             <td>
                                                 <input type="text" placeholder="{{opus.name}}" name="name" value="{{opus.name}}" readonly class="editable">
                                             </td>
                                         </tr>
-                                        <tr class="text-primary">
+                                        <tr class="text-info editunlock">
                                             <td>副标题</td>
                                             <td>
                                                 <input type="text" placeholder="{{opus.subtitle}}" name="subtitle" value="{{opus.subtitle}}" readonly class="editable">
                                             </td>
                                         </tr>
-                                        <tr class="text-primary">
+                                        <tr class="text-info editunlock">
                                             <td>总页数</td>
                                             <td>
                                                 <input type="number" placeholder="{{opus.total}}" name="total" value="{{opus.total}}" readonly class="editable">
@@ -241,7 +287,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr class="text-primary">
                                             <td>状态</td>
                                             <td><b>{{prg.getStatus}}</b></td>
                                         </tr>
@@ -249,7 +295,7 @@
                                             <td>阅读百分比</td>
                                             <td>{{prg.getPersent}}%</td>
                                         </tr>
-                                        <tr class="text-primary">
+                                        <tr class="text-info editunlock">
                                             <td>当前进度</td>
                                             <td>
                                                 <input type="number" placeholder="{{prg.current}}" name="current" value="{{prg.current}}" readonly class="editable">
@@ -271,7 +317,7 @@
                 </div>
                 <div class="panel-footer">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
                             <form id="deleteform" action="/progress/delete/" method="post">
                                 <input type="hidden" name="id" value="{{prg.id}}">
                             </form>
@@ -282,42 +328,19 @@
                                 <input type="hidden" name="id" value="{{prg.id}}">
                             </form>
                             <div class="viewmode">
-                                <a class="btn btn-success" id='new' href="/progress/new">新增</a>
-                                <a class="btn btn-warning" id='edit' onclick="enterEdit()">进入编辑模式</a>
                                 {% if prg.status == 'giveup' %}
                                     <button class="btn btn-danger" id='reset' onclick="$('#resetform').submit()">取消弃置</button>
                                 {% else %}
                                     <button class="btn btn-danger" id='giveup' onclick="$('#giveupform').submit()">弃置</button>
                                 {% endif %}
+                                <a class="btn btn-success" id='new' href="/progress/new">新增</a>
+                                <a class="btn btn-warning" id='edit' onclick="enterEdit()">进入编辑模式</a>
                             </div>
                             <span class="editmode">
+                                <button class="btn btn-danger" id='delete' onclick="confirmDelete()">删除</button>
                                 <a class="btn btn-success" id="save" onclick="saveEdit()">保存</a>
                                 <a class="btn btn-default" id="cancel" onclick="cancelEdit()">取消</a>
-                                <button class="btn btn-danger" id='delete' onclick="confirmDelete()">删除</button>
                             </span>
-                        </div>
-                        <div class="clearfix visible-xs-block visible-sm-block">
-                            <hr/>
-                        </div>
-                        <div class="col-xs-9 col-xs-offset-3 col-sm-6 col-sm-offset-6 col-md-5 col-md-offset-0 col-lg-5 text-right">
-                            <div class="viewmode text-right">
-                                <form id="updateform" action="/progress/fastupdate/" method="post">
-                                    <input type="hidden" name="id" value="{{prg.id}}">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-btn">
-                                                <div class="btn btn-primary " onclick="addOneCurrent()">+1</div>
-                                            </span>
-                                            <input type="number" name="newcurrent" class="form-control"
-                                                placeholder="请输入当前进度" value="{{prg.current}}">
-                                            <span class="input-group-addon fastupdate-total">/{{opus.total}}</span>
-                                            <span class="input-group-btn">
-                                                <div class="btn btn-primary" onclick="submitUpdateForm()">更新</div>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>
