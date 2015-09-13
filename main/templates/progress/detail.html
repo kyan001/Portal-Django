@@ -43,6 +43,9 @@
     }
     .first-panel-body {
         background-color: #eeeeee;
+        padding: 0px;
+        padding-bottom: 0px;
+        border-bottom: dashed silver 1px;
     }
     input[name="newcurrent"] {
         text-align: right;
@@ -54,12 +57,13 @@
         margin-bottom: 0;
     }
     .panel-footer {
+        padding: 0;
     }
     .fastupdate-total {
         padding-left: 0;
     }
     .fastupdate-div {
-        padding-top: 2px;
+        padding-top: 1px;
     }
     .label-persent {
         background-color: #51ABFF;
@@ -103,6 +107,7 @@
         $('input[name="total"]').val('{{opus.total}}')
         $('input[name="current"]').val('{{prg.current}}')
         $('.editunlock').removeClass('warning');
+        checkUpdateButtonLock();
         $.warning('已撤销修改');
     }
     function saveEdit(){
@@ -162,7 +167,17 @@
         if(nc.val() == ''){
             nc.val('{{prg.current}}');
         }
+        checkUpdateButtonLock();
     }
+    function checkUpdateButtonLock(){
+        var nc = $('input[name="newcurrent"]');
+        if(nc.val()=='{{prg.current}}'){
+            $('#fastupdate').attr('disabled','disabled');
+        } else {
+            $('#fastupdate').removeAttr('disabled');
+        }
+    }
+
     function addOneCurrent(){
         var newcurrent = $('input[name="newcurrent"]').val();
         var total = $('input[name="total"]').val();
@@ -182,6 +197,7 @@
             return false;
         }
         $('input[name="newcurrent"]').val(parseInt(newcurrent)+1);
+        checkUpdateButtonLock();
     }
 </script>
 {% endblock js %}
@@ -199,6 +215,9 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <span class="panel-title">
+                        {% ifequal prg.status 'giveup' %}
+                        <span class="persent label label-danger">已弃置</span>
+                        {% endifequal %}
                         <span class="persent label label-persent">{{prg.getPersent}}%</span>
                         <span>《 <b>{{opus.name}}</b> 》</span>
                         {% if opus.subtitle %}
@@ -219,13 +238,13 @@
                                     <input type="hidden" name="id" value="{{prg.id}}">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <input type="number" name="newcurrent" class="viewunlock form-control"
+                                            <input type="tel" name="newcurrent" class="viewunlock form-control"
                                                 placeholder="当前 {{prg.current}}" value="{{prg.current}}"
-                                                onfocus="focusNewcurrent()" onblur="blurNewcurrent()">
+                                                onfocus="focusNewcurrent()" onblur="blurNewcurrent()" oninput="checkUpdateButtonLock()">
                                             <span class="input-group-addon fastupdate-total">/{{opus.total}}</span>
                                             <span class="input-group-btn">
                                                 <div class="viewunlock btn btn-default" onclick="addOneCurrent()">+1</div>
-                                                <div class="viewunlock btn btn-primary" onclick="submitUpdateForm()">更新</div>
+                                                <div id='fastupdate' class="viewunlock btn btn-primary" onclick="submitUpdateForm()" disabled='disabled'>更新</div>
                                             </span>
                                         </div>
                                     </div>
@@ -260,7 +279,7 @@
                                             </td>
                                         </tr>
                                         <tr class="text-info editunlock">
-                                            <td>总页数</td>
+                                            <td>总共</td>
                                             <td>
                                                 <input type="number" placeholder="{{opus.total}}" name="total" value="{{opus.total}}" readonly class="editable">
                                             </td>
