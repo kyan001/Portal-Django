@@ -7,7 +7,6 @@
         font-family: 'Microsoft YaHei';
         padding-top: 51px;
     }
-
     /* page-header */
     .page-header > h1 > span {
         font-size: 25px;
@@ -24,7 +23,45 @@
         cursor: hand;
     }
 </style>
-<link rel="stylesheet" href="/static/css/progress/list-progresscard.css">
+<style>/* progress-card */
+    .progress-card .panel:hover {
+        box-shadow: 2px 2px 5px silver;
+    }
+    .progress-card .panel{
+        cursor: hand;
+    }
+    .progress-card .panel-heading{
+        padding: 1px;
+    }
+    .progress-card .panel-body {
+        padding: 0px;
+    }
+    .progress-card .panel-footer {
+        padding: 0;
+        text-align: right;
+    }
+    .progress-card .progress {
+        height: 25px;
+        margin: 0;
+    }
+    .progress-card .div-table {
+        padding: 2px;
+        font-size: 13px;
+    }
+    .progress-card .subtitle {
+        font-size: 15px;
+    }
+    .progress-card .persent {
+        font-size: 15px;
+    }
+    /* progress-card-label */
+    .label-subtitle {
+        background-color: #3080BB;
+    }
+    .label-persent {
+        background-color: #51ABFF;
+    }
+</style>
 {% endblock css %}
 
 {% block js %}
