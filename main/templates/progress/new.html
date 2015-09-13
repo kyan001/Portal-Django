@@ -49,7 +49,7 @@
             $('input[name="current"]').val(current)
         }
         if(total == ""){
-            total = parseInt( (current+1) * 1.2)
+            total = parseInt( parseInt(current) * 1.2 + 1)
             $('input[name="total"]').val(total)
         }
         if(total == "0"){
