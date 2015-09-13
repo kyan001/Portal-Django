@@ -79,7 +79,8 @@ def progressFastupdate(request):
     if not progressid:
         return infoMsg("进度 ID 为空，请联系管理员", title="出错")
     newcurrent = request.POST.get('newcurrent')
-    if not newcurrent:
+    newcurrent = int(newcurrent)
+    if newcurrent <= 0:
         newcurrent = 0;
     # get progress
     try:
@@ -95,10 +96,10 @@ def progressFastupdate(request):
     except Opus.DoesNotExist:
         return infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
     # validation
-    if int(newcurrent) > opus.total:
+    if newcurrent > opus.total:
         return infoMsg("当前进度 {0} 超过最大值 {1}".format(str(newcurrent), str(opus.total)))
     # save
-    progress.current = int(newcurrent);
+    progress.current = newcurrent;
     if(progress.setStatusAuto()):
         progress.setModified();
         progress.save()
@@ -120,14 +121,16 @@ def progressUpdate(request):
     name = request.POST.get('name');
     subtitle = request.POST.get('subtitle');
     total = request.POST.get('total');
+    total = int(total);
     current = request.POST.get('current');
+    current = int(current);
     if not name:
         return infoMsg("名称（name）不能为空", title="保存失败")
-    if not int(total):
+    if not total:
         return infoMsg("总页数（total）不能为空或 0", title="保存失败")
-    if not current:
+    if current <= 0:
         current = 0;
-    if int(current) > int(total):
+    if current > total:
         return infoMsg("初始进度 {0} 不能大于总页数 {1}".format(str(current), str(total)))
     # get progress
     try:
@@ -143,7 +146,7 @@ def progressUpdate(request):
     except Opus.DoesNotExist:
         return infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
     # save
-    progress.current = int(current);
+    progress.current = current;
     opus.name = name;
     opus.subtitle = subtitle;
     opus.total = total;
@@ -262,19 +265,21 @@ def progressAdd(request):
     name = request.POST.get('name');
     subtitle = request.POST.get('subtitle');
     total = request.POST.get('total');
+    total = int(total);
     current = request.POST.get('current');
+    current = int(current);
     if not name:
         return infoMsg("名称（name）不能为空", title="保存失败")
-    if not int(total):
+    if not total:
         return infoMsg("总页数（total）不能为空或 0", title="保存失败")
-    if not current:
+    if current <= 0:
         current = 0;
-    if int(current) > int(total):
+    if current > total:
         return infoMsg("初始进度 {0} 不能大于总页数 {1}".format(str(current), str(total)))
-    opus = Opus(name=name, subtitle=subtitle, total=int(total))
+    opus = Opus(name=name, subtitle=subtitle, total=total)
     opus.setCreated();
     opus.save()
-    progress = Progress(current=int(current), opusid=opus.id, userid=user['id'])
+    progress = Progress(current=current, opusid=opus.id, userid=user['id'])
     progress.setCreated();
     if(progress.setStatusAuto()):
         progress.save()
