@@ -78,41 +78,50 @@
     #reset, #giveup, #delete {
         float: left;
     }
+    .rating-aux {
+        color: silver;
+    }
 </style>
 {% endblock css %}
 
 {% block js %}
 <script type="text/javascript">
     $(function(){
-        getMovieTags()
+        getMovieInfo()
         $('.disableBtn').click(function(){
             $('.btn').attr('disabled','disabled')
         });
     });
-    function getBookTags(){
+    function getBookInfo(){
         var bookname = $("input[name='name']").val()
         var booksub = $("input[name='subtitle']").val()
         if(bookname != ''){
-            $.getBookTags(bookname, function(tags){
-                if(tags.length == 0){
-                    //getMovieTags()
-                } else {
+            $.getBookInfo(bookname, function(title, tags, rating, pages){
+                if(title){
+                    $('#opus-type').addClass('glyphicon-book');
+                    $('#opus-type').attr('title',title);
                     $('#tag-tag').text( tags.join('，') );
-                    $('#dbtype').addClass('glyphicon-book');
+                    $('#rating-av').text(rating);
+                } else {
+                    //getMovieInfo()
+                    $('#tag-tr').hide()
+                    $('#rating-tr').hide()
                 }
             });
         }
     }
-    function getMovieTags(){
+    function getMovieInfo(){
         var moviename = $("input[name='name']").val()
         var moviesub = $("input[name='subtitle']").val()
         if(moviename != ''){
-            $.getMovieTags(moviename, function(tags){
-                if(tags.length == 0){
-                    getBookTags()
-                } else {
+            $.getMovieInfo(moviename, function(title, tags, rating){
+                if(title){
+                    $('#opus-type').addClass('glyphicon-film');
+                    $('#opus-type').attr('title',title);
                     $('#tag-tag').text( tags.join('，') );
-                    $('#dbtype').addClass('glyphicon-film');
+                    $('#rating-av').text(rating);
+                } else {
+                    getBookInfo()
                 }
             });
         }
@@ -299,7 +308,7 @@
                                         <tr>
                                             <th>作品信息</th>
                                             <td class="text-muted text-right">
-                                                <span id="dbtype" class="glyphicon"></span>
+                                                <span id="opus-type" class="glyphicon"></span>
                                                  / Id:{{opus.id}}
                                             </td>
                                         </tr>
@@ -323,9 +332,12 @@
                                                 <input type="number" placeholder="{{opus.total}}" name="total" value="{{opus.total}}" readonly class="editable">
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>创建时间</td>
-                                            <td>{{opus.getCreated}}</td>
+                                        <tr id="rating-tr">
+                                            <td>豆瓣评分</td>
+                                            <td>
+                                                <b id="rating-av"></b>
+                                                <span class="rating-aux"> / 10</span>
+                                            </td>
                                         </tr>
                                         <tr id="tag-tr">
                                             <td id="tag-label">
