@@ -28,6 +28,9 @@
 {% block js %}
 <script type="text/javascript">
     $(function(){
+        $('.disableBtn').click(function(){
+            $('.btn').attr('disabled','disabled')
+        });
     });
     function clearForm(){
         $('input[name="name"]').val('')
@@ -62,6 +65,17 @@
         }
         $('#theform').submit();
     }
+    function getPages(){
+        var bookname = $('input[name="name"]').val()
+        if(bookname != ''){
+            $.getBookPages(bookname, function(pages){
+                pages = parseInt(pages)
+                if(pages > 0){
+                    $('input[name="total"]').val(pages)
+                }
+            });
+        }
+    }
 </script>
 {% endblock js %}
 
@@ -87,7 +101,7 @@
                         <div class="row">
                             <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-danger ">名称</span>
                             <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
-                                <input type="text" placeholder="动漫名、电视剧名、书名" name="name" class="editable">
+                                <input type="text" placeholder="动漫名、电视剧名、书名" name="name" class="editable" onchange="getPages()">
                             </span>
                             <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
                                 <span class="text-danger">*必填</span>（不要加书名号）
@@ -134,7 +148,7 @@
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <a class="btn btn-danger" href="javascript:history.back()">
+                            <a class="btn btn-danger disableBtn" href="javascript:history.back()">
                                 <span class="glyphicon glyphicon-remove"></span> 取消
                             </a>
                         </div>
@@ -143,7 +157,7 @@
                                 <button class="btn btn-default" onclick="clearForm()">
                                     <span class="glyphicon glyphicon-trash"></span> 清空
                                 </button>
-                                <button class="btn btn-success" onclick="submitForm()">
+                                <button class="btn btn-success disableBtn" onclick="submitForm()">
                                         <span class="glyphicon glyphicon-ok"></span> 保存
                                 </button>
                             </div>

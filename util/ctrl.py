@@ -1,6 +1,5 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, JsonResponse
-import json
 import random
 
 import util.KyanToolKit_Py

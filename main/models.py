@@ -2,6 +2,7 @@ from django.db import models
 from django.forms.models import model_to_dict
 from django.utils import timezone
 from util.ctrl import *
+import json
 import util.KyanToolKit_Py
 ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 
@@ -55,7 +56,9 @@ class Progress(models.Model):
     created = models.DateTimeField()
     modified = models.DateTimeField()
     def __str__(self):
-        return str(self.id) + ": usr{0}.ops{1}".format(str(self.userid), str(self.opusid))
+        opus = Opus.objects.get(id=self.opusid)
+        user = User.objects.get(id=self.userid)
+        return str(self.id) + ": {0}({1}) - 《{2}》({3}/{4})".format(user.username, user.nickname, opus.name, str(self.current), str(opus.total))
     def toArray(self):
         self.created = self.created.isoformat(' ')
         self.modified = self.modified.isoformat(' ')

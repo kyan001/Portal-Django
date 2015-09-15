@@ -68,6 +68,10 @@
     .label-persent {
         background-color: #51ABFF;
     }
+    .label-tag {
+        background-color: white;
+        border: silver 1px solid;
+    }
     .label-subtitle {
         background-color: #3080BB;
     }
@@ -80,7 +84,20 @@
 {% block js %}
 <script type="text/javascript">
     $(function(){
+        getTags()
+        getImg()
+        $('.disableBtn').click(function(){
+            $('.btn').attr('disabled','disabled')
+        });
     });
+    function getTags(){
+        var bookname = $("input[name='name']").val()
+        if(bookname != ''){
+            $.getBookTags(bookname, function(tags){
+                $('#tag-tag').text( tags.join(', ') );
+            });
+        }
+    }
     function confirmDelete(){
         var result = confirm("确定删除此进度？")
         if(result){
@@ -244,7 +261,7 @@
                                             <span class="input-group-addon fastupdate-total">/{{opus.total}}</span>
                                             <span class="input-group-btn">
                                                 <div class="viewunlock btn btn-default" onclick="addOneCurrent()">+1</div>
-                                                <div id='fastupdate' class="viewunlock btn btn-primary" onclick="submitUpdateForm()" disabled='disabled'>更新</div>
+                                                <div id='fastupdate' class="viewunlock btn btn-primary disableBtn" onclick="submitUpdateForm()" disabled='disabled'>更新</div>
                                             </span>
                                         </div>
                                     </div>
@@ -288,6 +305,13 @@
                                             <td>创建时间</td>
                                             <td>{{opus.getCreated}}</td>
                                         </tr>
+                                        <tr id="tag-tr">
+                                            <td id="tag-label">
+                                                标签
+                                            </td>
+                                            <td id="tag-tag">
+                                            </td>
+                                        </td>
                                     </tbody>
                                 </table>
                             </div>
@@ -347,16 +371,16 @@
                             </form>
                             <div class="viewmode">
                                 {% if prg.status == 'giveup' %}
-                                    <button class="btn btn-danger" id='reset' onclick="$('#resetform').submit()">取消弃置</button>
+                                    <button class="btn btn-danger disableBtn" id='reset' onclick="$('#resetform').submit()">取消弃置</button>
                                 {% else %}
-                                    <button class="btn btn-danger" id='giveup' onclick="$('#giveupform').submit()">弃置</button>
+                                    <button class="btn btn-danger disableBtn" id='giveup' onclick="$('#giveupform').submit()">弃置</button>
                                 {% endif %}
-                                <a class="btn btn-success" id='new' href="/progress/new">新增</a>
+                                <a class="btn btn-success disableBtn" id='new' href="/progress/new">新增</a>
                                 <a class="btn btn-warning" id='edit' onclick="enterEdit()">进入编辑</a>
                             </div>
                             <span class="editmode">
                                 <button class="btn btn-danger" id='delete' onclick="confirmDelete()">彻底删除</button>
-                                <a class="btn btn-success" id="save" onclick="saveEdit()">保存</a>
+                                <a class="btn btn-success disableBtn" id="save" onclick="saveEdit()">保存</a>
                                 <a class="btn btn-default" id="cancel" onclick="cancelEdit()">取消</a>
                             </span>
                         </div>

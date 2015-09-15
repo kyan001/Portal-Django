@@ -7,6 +7,7 @@
         <meta name="description" content="SuperFarmer.net is a website for Kyan (a.k.a. SuperFarmer)"/>
         <script type="text/javascript" src="/static/js/jquery-2.1.3.min.js"></script>
         <script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
+        <script type="text/javascript" src="/static/js/KyanJsUtil.js"></script>
         <script type="text/javascript">
             var ta_filter = new Array('localhost','127.0.0.1')
             if(!window.location.hostname in ta_filter ){
@@ -36,6 +37,7 @@
         {% endblock css %}
         {% block js %}
         {% endblock js %}
+
     {% endblock head %}
 </head>
 <body>
@@ -65,7 +67,7 @@
                 },
                 info: function(msg) {
                     msgAlert(msg, "info");
-                }
+                },
             });
         </script>
         <style>

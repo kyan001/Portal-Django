@@ -268,6 +268,10 @@ def progressAdd(request):
     total = int(total);
     current = request.POST.get('current');
     current = int(current);
+    tag1 = request.POST.get('tag1');
+    tag2 = request.POST.get('tag2');
+    tag3 = request.POST.get('tag3');
+    tags = (tag1, tag2, tag3)
     if not name:
         return infoMsg("名称（name）不能为空", title="保存失败")
     if not total:
@@ -277,6 +281,9 @@ def progressAdd(request):
     if current > total:
         return infoMsg("初始进度 {0} 不能大于总页数 {1}".format(str(current), str(total)))
     opus = Opus(name=name, subtitle=subtitle, total=total)
+    for t in tags:
+        if(t):
+            opus.addTag(t)
     opus.setCreated();
     opus.save()
     progress = Progress(current=current, opusid=opus.id, userid=user['id'])
