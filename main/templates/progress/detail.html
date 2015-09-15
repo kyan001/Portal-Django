@@ -84,17 +84,36 @@
 {% block js %}
 <script type="text/javascript">
     $(function(){
-        getTags()
-        getImg()
+        getMovieTags()
         $('.disableBtn').click(function(){
             $('.btn').attr('disabled','disabled')
         });
     });
-    function getTags(){
+    function getBookTags(){
         var bookname = $("input[name='name']").val()
+        var booksub = $("input[name='subtitle']").val()
         if(bookname != ''){
             $.getBookTags(bookname, function(tags){
-                $('#tag-tag').text( tags.join(', ') );
+                if(tags.length == 0){
+                    //getMovieTags()
+                } else {
+                    $('#tag-tag').text( tags.join('，') );
+                    $('#dbtype').addClass('glyphicon-book');
+                }
+            });
+        }
+    }
+    function getMovieTags(){
+        var moviename = $("input[name='name']").val()
+        var moviesub = $("input[name='subtitle']").val()
+        if(moviename != ''){
+            $.getMovieTags(moviename, function(tags){
+                if(tags.length == 0){
+                    getBookTags()
+                } else {
+                    $('#tag-tag').text( tags.join('，') );
+                    $('#dbtype').addClass('glyphicon-film');
+                }
             });
         }
     }
@@ -279,7 +298,10 @@
                                     <thead>
                                         <tr>
                                             <th>作品信息</th>
-                                            <td class="text-muted text-right">Id:{{opus.id}}</td>
+                                            <td class="text-muted text-right">
+                                                <span id="dbtype" class="glyphicon"></span>
+                                                 / Id:{{opus.id}}
+                                            </td>
                                         </tr>
                                     </thead>
                                     <tbody>
