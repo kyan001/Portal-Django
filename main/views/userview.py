@@ -162,14 +162,14 @@ def userNewUser(request):
     user.save();
 
     # render
-    return infoMsg("注册成功！\n您是网站第 {0} 位用户".format(str(user.id)), url='/', title="欢迎加入")
+    return infoMsg("注册成功！\n您是网站第 {0} 位用户".format(str(user.id)), url='/user/signin', title="欢迎加入")
 
 #-Signin-----------------------------------------------
 def userSignin(request):
     # check if already logged in
     current_user = request.session.get('loginuser');
     if current_user:
-        return infoMsg("您已经以 {0} 的身份登入了，请勿重复登入".format(current_user['username']), title="登入失败")
+        return infoMsg("您已经以 {0} 的身份登入了，请勿重复登入".format(current_user['username']), title="登入失败", url="/")
     # render
     context = {}
     if 'HTTP_REFERER' in request.META:
