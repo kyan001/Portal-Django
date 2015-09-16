@@ -18,7 +18,6 @@
         padding: 25px;
         background-color: rgba(0,0,0,0.5);
     }
-
     .input-group input {
         color: white;
     }
@@ -42,7 +41,9 @@
     #forget-button {
         /*float: right;*/
     }
-
+    input[name='password'] {
+        display: none;
+    }
 </style>
 {% endblock css %}
 {% block js %}
@@ -184,6 +185,7 @@
                         ?
                     </span>
                 </div>
+                <input type="password" name='password' value="fakepasswordzone">
                 <div class="input-group" id='question-group'>
                     <span class="input-group-addon">
                         <span class='glyphicon glyphicon-comment'></span>
