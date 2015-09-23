@@ -68,10 +68,14 @@
     function getPages(){
         var bookname = $('input[name="name"]').val()
         if(bookname != ''){
-            $.getBookInfo(bookname, function(title, tags, rating, pages){
-                pages = parseInt(pages)
+            $.getBookInfo(bookname, function(info){
+                pages = parseInt(info.pages)
                 if(pages > 0){
                     $('input[name="total"]').val(pages)
+                    var sub = $('input[name="subtitle"]')
+                    if(sub.val() == ''){
+                        sub.val('书')
+                    }
                 }
             });
         }

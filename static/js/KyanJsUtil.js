@@ -45,25 +45,26 @@ $.extend({
         var book_search_api = 'https://api.douban.com/v2/book/search';
         if(name != ''){
             $.get(book_search_api, {'count':'1','q':name}, function(data){
-                var title = '';
-                var rating = '';
-                var pages = '';
-                var tags = new Array()
+                var info = {}
+                info.title = '';
+                info.rating = '';
+                info.pages = '';
+                info.tags = new Array()
                 if( checkHas(name, data.books[0]) ){
-                    title = data.books[0].title
+                    info.title = data.books[0].title
                     if(data.books[0].tags[0]){
-                        tags.push(data.books[0].tags[0].name)
+                        info.tags.push(data.books[0].tags[0].name)
                     }
                     if(data.books[0].tags[1]){
-                        tags.push(data.books[0].tags[1].name)
+                        info.tags.push(data.books[0].tags[1].name)
                     }
                     if(data.books[0].tags[2]){
-                        tags.push(data.books[0].tags[2].name)
+                        info.tags.push(data.books[0].tags[2].name)
                     }
-                    rating = data.books[0].rating.average
-                    pages = data.books[0].pages
+                    info.rating = data.books[0].rating.average
+                    info.pages = data.books[0].pages
                 }
-                callback(title, tags, rating, pages)
+                callback(info)
             }, 'jsonp');
         }
     },
@@ -71,15 +72,16 @@ $.extend({
         var movie_search_api = 'https://api.douban.com/v2/movie/search';
         if(name != ''){
             $.get(movie_search_api, {'count':'1','q':name}, function(data){
-                var title = '';
-                var rating = '';
-                var tags = new Array()
+                var info = {}
+                info.title = '';
+                info.rating = '';
+                info.tags = new Array()
                 if( checkHas(name, data.subjects[0]) ){
-                    title = data.subjects[0].title
-                    tags = data.subjects[0].genres
-                    rating = data.subjects[0].rating.average
+                    info.title = data.subjects[0].title
+                    info.tags = data.subjects[0].genres
+                    info.rating = data.subjects[0].rating.average
                 }
-                callback(title, tags, rating);
+                callback(info);
             }, 'jsonp');
         }
     },

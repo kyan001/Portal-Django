@@ -86,43 +86,88 @@
 
 {% block js %}
 <script type="text/javascript">
+    var bookinfo = {};
+    var movieinfo = {};
     $(function(){
-        getMovieInfo()
+        var sub = $("input[name='subtitle']").val()
+        if(['书','book'].indexOf(sub.toLowerCase()) >= 0){
+            getBookInfo('book')
+        } else if(['动画','电影','movie'].indexOf(sub.toLowerCase()) >= 0) {
+            getMovieInfo('movie')
+        } else {
+            getBookInfo('compare')
+            getMovieInfo('compare')
+        }
         $('.disableBtn').click(function(){
             $('.btn').attr('disabled','disabled')
         });
     });
-    function getBookInfo(){
-        var bookname = $("input[name='name']").val()
-        var booksub = $("input[name='subtitle']").val()
-        if(bookname != ''){
-            $.getBookInfo(bookname, function(title, tags, rating, pages){
-                if(title){
+    function setInfo(setType){
+        var total = $("input[name='total']").val()
+        switch(setType){
+            case 'book':
+                if(bookinfo.title){
                     $('#opus-type').addClass('glyphicon-book');
-                    $('#opus-type').attr('title',title);
-                    $('#tag-tag').text( tags.join('，') );
-                    $('#rating-av').text(rating);
+                    $('#opus-type').attr('title', bookinfo.title);
+                    $('#tag-tag').text( bookinfo.tags.join('，') );
+                    $('#rating-av').text(bookinfo.rating);
                 } else {
-                    //getMovieInfo()
                     $('#tag-tr').hide()
                     $('#rating-tr').hide()
                 }
+                break;
+            case 'movie':
+                if(movieinfo.title){
+                    $('#opus-type').addClass('glyphicon-film');
+                    $('#opus-type').attr('title', movieinfo.title);
+                    $('#tag-tag').text( movieinfo.tags.join('，') );
+                    $('#rating-av').text(movieinfo.rating);
+                } else {
+                    $('#tag-tr').hide()
+                    $('#rating-tr').hide()
+                }
+                break;
+            case 'compare':
+                if(bookinfo.finish && movieinfo.finish){
+                    if(bookinfo.title && !movieinfo.title){
+                        setInfo('book')
+                    } else if(!bookinfo.title && movieinfo.title){
+                        setInfo('movie')
+                    } else if(parseInt(total) == parseInt(bookinfo.pages)){
+                        setInfo('book')
+                    } else {
+                        setInfo('movie')
+                    }
+                }
+                break;
+        }
+    }
+    function getBookInfo(setType){
+        var bookname = $("input[name='name']").val()
+        if(bookname != ''){
+            $.getBookInfo(bookname, function(info){
+                if(info.title){
+                    bookinfo.title = info.title;
+                    bookinfo.tags = info.tags;
+                    bookinfo.rating = info.rating;
+                    bookinfo.pages = info.pages;
+                }
+                bookinfo.finish = true;
+                setInfo(setType)
             });
         }
     }
-    function getMovieInfo(){
+    function getMovieInfo(setType){
         var moviename = $("input[name='name']").val()
-        var moviesub = $("input[name='subtitle']").val()
         if(moviename != ''){
-            $.getMovieInfo(moviename, function(title, tags, rating){
-                if(title){
-                    $('#opus-type').addClass('glyphicon-film');
-                    $('#opus-type').attr('title',title);
-                    $('#tag-tag').text( tags.join('，') );
-                    $('#rating-av').text(rating);
-                } else {
-                    getBookInfo()
+            $.getMovieInfo(moviename, function(info){
+                if(info.title){
+                    movieinfo.title = info.title;
+                    movieinfo.tags = info.tags;
+                    movieinfo.rating = info.rating;
                 }
+                movieinfo.finish = true;
+                setInfo(setType)
             });
         }
     }
