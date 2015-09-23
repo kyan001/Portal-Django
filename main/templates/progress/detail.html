@@ -90,7 +90,7 @@
     var movieinfo = {};
     $(function(){
         var sub = $("input[name='subtitle']").val()
-        if(['书','book'].indexOf(sub.toLowerCase()) >= 0){
+        if(['书','book','pdf'].indexOf(sub.toLowerCase()) >= 0){
             getBookInfo('book')
         } else if(['动画','电影','movie'].indexOf(sub.toLowerCase()) >= 0) {
             getMovieInfo('movie')
