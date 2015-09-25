@@ -85,9 +85,16 @@
                     $.danger(result.error);
                 } else {
                     $('#question-content').val(result.question);
+                    if(result.question.indexOf('密码')>=0){
+                        $('input[name="answer"]').attr('placeholder','密码 / Password')
+                        $('input[name="answer"]').attr('type','password')
+                    } else {
+                        $('input[name="answer"]').attr('placeholder','答案 / Answer')
+                        $('input[name="answer"]').attr('type','text')
+                    }
                     $('#answer-group input').attr('data-content', result.tip);
                     if(!result.tip){
-                        $('#answer-group input').attr('data-content', '(你不留提示，我也没办法)');
+                        $('#answer-group input').attr('data-content', '(没有提示)');
                     }
                 }
             },
