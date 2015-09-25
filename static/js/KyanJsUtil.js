@@ -49,6 +49,7 @@ $.extend({
                 info.title = '';
                 info.rating = '';
                 info.pages = '';
+                info.url = '';
                 info.tags = new Array()
                 if( checkHas(name, data.books[0]) ){
                     info.title = data.books[0].title
@@ -63,6 +64,7 @@ $.extend({
                     }
                     info.rating = data.books[0].rating.average
                     info.pages = data.books[0].pages
+                    info.url = data.books[0].alt
                 }
                 callback(info)
             }, 'jsonp');
@@ -70,16 +72,19 @@ $.extend({
     },
     getMovieInfo: function(name, callback){
         var movie_search_api = 'https://api.douban.com/v2/movie/search';
+        var movie_info_api = 'https://api.douban.com/v2/movie/subject/';
         if(name != ''){
             $.get(movie_search_api, {'count':'1','q':name}, function(data){
                 var info = {}
                 info.title = '';
                 info.rating = '';
+                info.url = '';
                 info.tags = new Array()
                 if( checkHas(name, data.subjects[0]) ){
                     info.title = data.subjects[0].title
                     info.tags = data.subjects[0].genres
                     info.rating = data.subjects[0].rating.average
+                    info.url = data.subjects[0].alt
                 }
                 callback(info);
             }, 'jsonp');

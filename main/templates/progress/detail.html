@@ -82,6 +82,10 @@
     .rating-aux {
         color: silver;
     }
+    #opus-type {
+        color: #bbbbbb;
+        text-decoration: none;
+    }
 </style>
 {% endblock css %}
 
@@ -109,22 +113,30 @@
             case 'book':
                 if(bookinfo.title){
                     $('#opus-type').addClass('glyphicon-book');
+                    $('#opus-type').attr('href', bookinfo.url);
                     $('#opus-type').attr('title', bookinfo.title);
                     $('#tag-tag').text( bookinfo.tags.join('，') );
                     $('#rating-av').text(bookinfo.rating);
-                } else {
+                }
+                if(bookinfo.tags.length == 0){
                     $('#tag-tr').hide()
+                }
+                if(parseInt(bookinfo.rating) == 0){
                     $('#rating-tr').hide()
                 }
                 break;
             case 'movie':
                 if(movieinfo.title){
                     $('#opus-type').addClass('glyphicon-film');
+                    $('#opus-type').attr('href', movieinfo.url);
                     $('#opus-type').attr('title', movieinfo.title);
                     $('#tag-tag').text( movieinfo.tags.join('，') );
                     $('#rating-av').text(movieinfo.rating);
-                } else {
+                }
+                if(movieinfo.tags.length == 0){
                     $('#tag-tr').hide()
+                }
+                if(parseInt(movieinfo.rating) == 0){
                     $('#rating-tr').hide()
                 }
                 break;
@@ -136,7 +148,7 @@
                         setInfo('movie')
                     } else if(parseInt(total) == parseInt(bookinfo.pages)){
                         setInfo('book')
-                    } else {
+                    } else { // default
                         setInfo('movie')
                     }
                 }
@@ -147,12 +159,7 @@
         var bookname = $("input[name='name']").val()
         if(bookname != ''){
             $.getBookInfo(bookname, function(info){
-                if(info.title){
-                    bookinfo.title = info.title;
-                    bookinfo.tags = info.tags;
-                    bookinfo.rating = info.rating;
-                    bookinfo.pages = info.pages;
-                }
+                bookinfo = info;
                 bookinfo.finish = true;
                 setInfo(setType)
             });
@@ -162,11 +169,7 @@
         var moviename = $("input[name='name']").val()
         if(moviename != ''){
             $.getMovieInfo(moviename, function(info){
-                if(info.title){
-                    movieinfo.title = info.title;
-                    movieinfo.tags = info.tags;
-                    movieinfo.rating = info.rating;
-                }
+                movieinfo = info;
                 movieinfo.finish = true;
                 setInfo(setType)
             });
@@ -354,7 +357,7 @@
                                         <tr>
                                             <th>作品信息</th>
                                             <td class="text-muted text-right">
-                                                <span id="opus-type" class="glyphicon"></span>
+                                                <a id="opus-type" class="glyphicon" href="" target="_blank"></a>
                                                  / Id:{{opus.id}}
                                             </td>
                                         </tr>
