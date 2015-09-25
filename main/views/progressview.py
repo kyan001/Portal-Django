@@ -16,7 +16,7 @@ def progressList(request):
     #get user
     user = request.session.get('loginuser');
     if not user:
-        return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
+        return needLogin()
     #get user's progresses
     progresses = Progress.objects.filter(userid=user['id']);
     #init vars
@@ -44,7 +44,7 @@ def progressDetail(request):
     # get inputs
     user = request.session.get('loginuser');
     if not user:
-        return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
+        return needLogin()
     progressid = request.GET.get('id')
     if not progressid:
         return infoMsg("请输入进度 ID")
@@ -74,7 +74,7 @@ def progressFastupdate(request):
     # get inputs
     user = request.session.get('loginuser');
     if not user:
-        return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
+        return needLogin()
     progressid = request.POST.get('id')
     if not progressid:
         return infoMsg("进度 ID 为空，请联系管理员", title="出错")
@@ -114,7 +114,7 @@ def progressUpdate(request):
     # get inputs
     user = request.session.get('loginuser');
     if not user:
-        return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
+        return needLogin()
     progressid = request.POST.get('id')
     if not progressid:
         return infoMsg("进度 ID 为空，请联系管理员", title="出错")
@@ -164,7 +164,7 @@ def progressDelete(request):
     # get inputs
     user = request.session.get('loginuser');
     if not user:
-        return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
+        return needLogin()
     progressid = request.POST.get('id')
     if not progressid:
         return infoMsg("进度 ID 为空，请联系管理员", title="出错")
@@ -193,7 +193,7 @@ def progressGiveup(request):
     # get inputs
     user = request.session.get('loginuser');
     if not user:
-        return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
+        return needLogin()
     progressid = request.POST.get('id')
     if not progressid:
         return infoMsg("进度 ID 为空，请联系管理员", title="出错")
@@ -222,7 +222,7 @@ def progressReset(request):
     # get inputs
     user = request.session.get('loginuser');
     if not user:
-        return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
+        return needLogin()
     progressid = request.POST.get('id')
     if not progressid:
         return infoMsg("进度 ID 为空，请联系管理员", title="出错")
@@ -251,7 +251,7 @@ def progressNew(request):
     # get inputs
     user = request.session.get('loginuser');
     if not user:
-        return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
+        return needLogin()
     # render
     return render_to_response('progress/new.html', context)
 
@@ -261,7 +261,7 @@ def progressAdd(request):
     # get inputs
     user = request.session.get('loginuser');
     if not user:
-        return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
+        return needLogin()
     name = request.POST.get('name');
     subtitle = request.POST.get('subtitle');
     total = request.POST.get('total');
