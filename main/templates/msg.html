@@ -48,7 +48,7 @@
         <div class="panel-footer">
             {% if url %}
                 {% if button %}
-                    <a href="/" class="btn btn-primary">{{ button }}</a>
+                    <a href="{{url}}" class="btn btn-primary">{{ button }}</a>
                 {% else %}
                     <a href="{{url}}" class="btn btn-primary">点此跳转至 {{url}}</a>
                 {% endif %}
