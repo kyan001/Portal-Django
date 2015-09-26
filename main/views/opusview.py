@@ -11,7 +11,7 @@ import util.KyanToolKit_Py
 ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 
 def opusDetail(request):
-    '''获得作品的详情'''
+    '''TODO 获得作品的详情'''
     #获得参数
     opusid = request.GET.get('id')
     if not opusid:
