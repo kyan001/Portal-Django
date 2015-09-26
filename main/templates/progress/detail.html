@@ -94,19 +94,24 @@
     var bookinfo = {};
     var movieinfo = {};
     $(function(){
-        var sub = $("input[name='subtitle']").val()
-        if(['书','book','pdf'].indexOf(sub.toLowerCase()) >= 0){
+        getOpusInfo()
+        $('.disableBtn').click(function(){
+            $('.btn').attr('disabled','disabled')
+        });
+    });
+    function getOpusInfo(){
+        var book_subs = ['书','书籍','book','pdf','漫画','comic','文字','doc','txt']
+        var movie_subs = ['动画','anime','电影','movie','电视剧','tv','show','美剧','英剧','韩剧','av']
+        var sub = $("input[name='subtitle']").val().toLowerCase()
+        if(book_subs.indexOf(sub) >= 0){
             getBookInfo('book')
-        } else if(['动画','电影','movie'].indexOf(sub.toLowerCase()) >= 0) {
+        } else if(movie_subs.indexOf(sub) >= 0) {
             getMovieInfo('movie')
         } else {
             getBookInfo('compare')
             getMovieInfo('compare')
         }
-        $('.disableBtn').click(function(){
-            $('.btn').attr('disabled','disabled')
-        });
-    });
+    }
     function setInfo(setType){
         var total = $("input[name='total']").val()
         switch(setType){
