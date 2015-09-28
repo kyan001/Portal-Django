@@ -25,6 +25,3 @@ def opusDetail(request):
     context = {}
     context['opus'] = opus
     return render_to_response('opus/detail.html', context)
-
-def opusMylist(request):
-    return render_to_response('opus/mylist.html')

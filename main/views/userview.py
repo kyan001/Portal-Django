@@ -101,7 +101,10 @@ def userProfile(request):
     user = request.session.get('loginuser')
     if not user:
         return infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
-    context['user'] = user
+    try:
+        context['user'] = User.objects.get(id=user['id'])
+    except User.DoesNotExist:
+        return infoMsg("您查找的用户id {} 并不存在".format(str(user['id'])));
     context['headimg'] = getGravatarUrl(user['email']);
     return render_to_response('user/profile.html', context)
 
