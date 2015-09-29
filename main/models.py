@@ -47,6 +47,8 @@ class Opus(models.Model):
         if self.created.year != timezone.now().year:
             time_format = '%Y-' + time_format
         return self.created.astimezone(timezone.get_current_timezone()).strftime(time_format)
+    def getProgress(self):
+        return Progress.objects.get(opusid=self.id)
 
 class Progress(models.Model):
     userid = models.IntegerField(default=0)
@@ -56,8 +58,8 @@ class Progress(models.Model):
     created = models.DateTimeField()
     modified = models.DateTimeField()
     def __str__(self):
-        opus = Opus.objects.get(id=self.opusid)
-        user = User.objects.get(id=self.userid)
+        opus = self.getOpus()
+        user = self.getUser()
         return str(self.id) + ": {0}({1}) - 《{2}》({3}/{4})".format(user.username, user.nickname, opus.name, str(self.current), str(opus.total))
     def toArray(self):
         self.created = self.created.isoformat(' ')
@@ -87,7 +89,7 @@ class Progress(models.Model):
         self.status = status
         self.setModified()
     def setStatusAuto(self):
-        opus = Opus.objects.get(id=self.opusid)
+        opus = self.getOpus()
         if self.status == 'giveup':
             return True;
         if self.current > opus.total:
@@ -115,11 +117,11 @@ class Progress(models.Model):
         return self.status
     # calculations
     def getPersent(self):
-        opus = Opus.objects.get(id=self.opusid)
+        opus = self.getOpus()
         persent = int(self.current)/int(opus.total)*100
         return int(persent)
     def getBartype(self):
-        opus = Opus.objects.get(id=self.opusid)
+        opus = self.getOpus()
         persent = int(self.current)/int(opus.total)*100
         if persent < 33:
             bartype = 'progress-bar-danger'
@@ -130,5 +132,8 @@ class Progress(models.Model):
         else:
             bartype = 'progress-bar-primary'
         return bartype
-
+    def getOpus(self):
+        return Opus.objects.get(id=self.opusid)
+    def getUser(self):
+        return User.objects.get(id=self.userid)
 

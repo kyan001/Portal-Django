@@ -12,6 +12,7 @@ ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 
 def opusDetail(request):
     '''TODO 获得作品的详情'''
+    context = {}
     #获得参数
     opusid = request.GET.get('id')
     if not opusid:
@@ -21,7 +22,18 @@ def opusDetail(request):
         opus = Opus.objects.get(id=opusid)
     except Opus.DoesNotExist:
         return infoMsg("未找到 id 为 {0} 的作品".format(str(opusid)))
+    #获得进度
+    try:
+        progress = opus.getProgress()
+    except Progress.DoesNotExist:
+        return infoMsg("未找到 opusid 为 {0} 的进度".format(str(opusid)))
+    #获得用户
+    try:
+        user = progress.getUser()
+    except User.DoesNotExist:
+        return infoMsg("未找到 id 为 {0} 的进度".format(str(progress.userid)))
     #render
-    context = {}
     context['opus'] = opus
+    context['progress'] = progress
+    context['user'] = user
     return render_to_response('opus/detail.html', context)
