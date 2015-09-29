@@ -18,7 +18,7 @@ def opusDetail(request):
         return infoMsg("需要一个作品id")
     #获得作品
     try:
-        opus = Opus.objects.get(opusid)
+        opus = Opus.objects.get(id=opusid)
     except Opus.DoesNotExist:
         return infoMsg("未找到 id 为 {0} 的作品".format(str(opusid)))
     #render
