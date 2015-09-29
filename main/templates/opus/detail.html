@@ -26,11 +26,31 @@
         </thead>
         <tbody>
             <tr>
-              <td>{{ opus.name }}</td>
-              <td>{{ opus.subtitle }}</td>
-              <td>{{ opus.total }}</td>
-              <td>{{ opus.getCreated }}</td>
+                <td>{{ opus.name }}</td>
+                <td>{{ opus.subtitle }}</td>
+                <td>{{ opus.total }}</td>
+                <td>{{ opus.getCreated }}</td>
             </tr>
+        </tbody>
+    </table>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>用户名</th>
+                <th>当前进度</th>
+                <th>开始时间</th>
+                <th>上次访问</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in itemlist %}
+            <tr>
+                <td>{{ item.user.nickname }}({{ item.user.username }})</td>
+                <td>{{ item.progress.current }} / {{ opus.total }}</td>
+                <td>{{ item.progress.getCreated }}</td>
+                <td>{{ item.progress.getModified }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>
