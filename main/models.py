@@ -66,16 +66,15 @@ class Progress(models.Model):
         self.modified = self.modified.isoformat(' ')
         return model_to_dict(self)
     # created & modified
-
     def setCreated(self):
         self.created = timezone.now()
-    def setModified(self):
-        self.modified = timezone.now()
     def getCreated(self):
         time_format = '%m-%d %H:%M %p'
         if self.created.year != timezone.now().year:
             time_format = '%Y-' + time_format
         return self.created.astimezone(timezone.get_current_timezone()).strftime(time_format)
+    def setModified(self):
+        self.modified = timezone.now()
     def getModified(self):
         time_format = '%m-%d %H:%M %p'
         if self.modified.year != timezone.now().year:
