@@ -86,6 +86,9 @@
         color: #bbbbbb;
         text-decoration: none;
     }
+    a#opustitle {
+        text-decoration: none;
+    }
 </style>
 {% endblock css %}
 
@@ -317,7 +320,7 @@
                         <span class="persent label label-danger">已弃置</span>
                         {% endifequal %}
                         <span class="persent label label-persent">{{prg.getPersent}}%</span>
-                        <span>《 <b>{{opus.name}}</b> 》</span>
+                        <a id="opustitle" href="/opus/detail?id={{opus.id}}">《 <b>{{opus.name}}</b> 》</a>
                         {% if opus.subtitle %}
                         <span class="subtitle label label-subtitle">{{opus.subtitle}}</span>
                         {% endif %}
