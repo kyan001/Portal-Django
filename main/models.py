@@ -65,6 +65,7 @@ class Progress(models.Model):
         self.created = self.created.isoformat(' ')
         self.modified = self.modified.isoformat(' ')
         return model_to_dict(self)
+
     # created & modified
     def setCreated(self):
         self.created = timezone.now()
@@ -80,6 +81,7 @@ class Progress(models.Model):
         if self.modified.year != timezone.now().year:
             time_format = '%Y-' + time_format
         return self.modified.astimezone(timezone.get_current_timezone()).strftime(time_format)
+
     # status
     def setStatus(self, status):
         status_pool = ('done','inprogress','giveup','error')
@@ -114,6 +116,7 @@ class Progress(models.Model):
         if self.status == 'inprogress':
             return '进行中';
         return self.status
+
     # calculations
     def getPersent(self):
         opus = self.getOpus()
