@@ -112,6 +112,15 @@
             getMovieInfo('compare')
         }
     }
+    function checkTagRating(info){
+        if(info.tags.length == 0){
+            $('#tag-tr').hide()
+        }
+        if(parseInt(info.rating) == 0 || info.rating == ""){
+            $('#rating-tr').hide()
+        }
+    }
+
     function setInfo(setType){
         var total = $("input[name='total']").val()
         switch(setType){
@@ -123,12 +132,7 @@
                     $('#tag-tag').text( bookinfo.tags.join('，') );
                     $('#rating-av').text(bookinfo.rating);
                 }
-                if(bookinfo.tags.length == 0){
-                    $('#tag-tr').hide()
-                }
-                if(parseInt(bookinfo.rating) == 0){
-                    $('#rating-tr').hide()
-                }
+                checkTagRating(bookinfo)
                 break;
             case 'movie':
                 if(movieinfo.title){
@@ -138,12 +142,7 @@
                     $('#tag-tag').text( movieinfo.tags.join('，') );
                     $('#rating-av').text(movieinfo.rating);
                 }
-                if(movieinfo.tags.length == 0){
-                    $('#tag-tr').hide()
-                }
-                if(parseInt(movieinfo.rating) == 0){
-                    $('#rating-tr').hide()
-                }
+                checkTagRating(movieinfo)
                 break;
             case 'compare':
                 if(bookinfo.finish && movieinfo.finish){
