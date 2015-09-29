@@ -46,7 +46,7 @@
             {% for item in itemlist %}
             <tr>
                 <td>{{ item.user.nickname }}({{ item.user.username }})</td>
-                <td>{{ item.progress.current }} / {{ opus.total }}</td>
+                <td>{{ item.progress.current }} / {{ item.opus.total }}</td>
                 <td>{{ item.progress.getCreated }}</td>
                 <td>{{ item.progress.getModified }}</td>
             </tr>
