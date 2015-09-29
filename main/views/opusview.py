@@ -36,7 +36,7 @@ def opusDetail(request):
             user = progress.getUser()
         except User.DoesNotExist:
             return infoMsg("未找到 id 为 {0} 的进度".format(str(progress.userid)))
-        item_list.append({'progress':progress, 'user':user})
+        item_list.append({'progress':progress, 'user':user, 'opus':opuslet})
     #render
     context['opus'] = opus
     context['itemlist'] = item_list
