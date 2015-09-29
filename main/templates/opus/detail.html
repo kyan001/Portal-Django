@@ -10,15 +10,28 @@
 {% endblock css %}
 
 {% block js %}
+<script type="text/javascript"></script>
 {% endblock js %}
 
 {% block content %}
 <div class="container">
-    <ul>
-        <li>name: {{ opus.name }}</li>
-        <li>subtitle: {{ opus.subtitle }}</li>
-        <li>total: {{ opus.total }}</li>
-        <li>created: {{ opus.created }}</li>
-    </ul>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>名称: </th>
+                <th>副标题: </th>
+                <th>总共: </th>
+                <th>创建时间: </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>{{ opus.name }}</td>
+              <td>{{ opus.subtitle }}</td>
+              <td>{{ opus.total }}</td>
+              <td>{{ opus.getCreated }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 {% endblock content %}
