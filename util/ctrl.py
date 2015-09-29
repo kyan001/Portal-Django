@@ -12,17 +12,18 @@ def infoMsg(content="Hi", url=None, title=None):
         'content':content,
         'url':url,
     }
-    if url == '/':
-        button_text = '回到主页'
-    elif '/user/signin' in url:
-        button_text = '前往「登入」页面'
-    elif '/user/signup' in url:
-        button_text = '前往「注册」页面'
-    elif '/progress/list' in url:
-        button_text = '前往「我的进度-列表」页面'
-    else:
-        button_text = None
-    context['button'] = button_text
+    if url:
+        if url == '/':
+            button_text = '回到主页'
+        elif '/user/signin' in url:
+            button_text = '前往「登入」页面'
+        elif '/user/signup' in url:
+            button_text = '前往「注册」页面'
+        elif '/progress/list' in url:
+            button_text = '前往「我的进度-列表」页面'
+        else:
+            button_text = None
+        context['button'] = button_text
     return render_to_response("msg.html", context);
 
 def returnJson(dict_input):
