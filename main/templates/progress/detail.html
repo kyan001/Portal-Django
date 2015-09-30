@@ -311,6 +311,34 @@
 
 {% block content %}
 <div class="container">
+    <div class='row'>
+        <div class="col-lg-4 col-lg-offset-2 col-md-4 col-md-offset-2 col-sm-12 col-xs-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">快速更新</div>
+                <div class="row fastupdate-div">
+                    <div class="text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="text-right">
+                            <form id="updateform" action="/progress/fastupdate/" method="post">
+                                <input type="hidden" name="id" value="{{prg.id}}">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="tel" name="newcurrent" class="viewunlock form-control"
+                                            placeholder="当前 {{prg.current}}" value="{{prg.current}}"
+                                            onfocus="focusNewcurrent()" onblur="blurNewcurrent()" oninput="checkUpdateButtonLock()">
+                                        <span class="input-group-addon fastupdate-total">/{{opus.total}}</span>
+                                        <span class="input-group-btn">
+                                            <div class="viewunlock btn btn-default" onclick="addOneCurrent()">+1</div>
+                                            <div id='fastupdate' class="viewunlock btn btn-primary disableBtn" onclick="submitUpdateForm()" disabled='disabled'>更新</div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 progress-card" progressid="{{ prg.id }}">
             <div class="panel panel-primary">
@@ -330,27 +358,6 @@
                     <div class="progress">
                         <div class="progress-bar progress-bar-striped active {{prg.getBartype}}" style="width: {{prg.getPersent}}%;">
                             <b>{{prg.current}} / {{opus.total}}</b>
-                        </div>
-                    </div>
-                    <div class="row fastupdate-div">
-                        <div class="text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="text-right">
-                                <form id="updateform" action="/progress/fastupdate/" method="post">
-                                    <input type="hidden" name="id" value="{{prg.id}}">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="tel" name="newcurrent" class="viewunlock form-control"
-                                                placeholder="当前 {{prg.current}}" value="{{prg.current}}"
-                                                onfocus="focusNewcurrent()" onblur="blurNewcurrent()" oninput="checkUpdateButtonLock()">
-                                            <span class="input-group-addon fastupdate-total">/{{opus.total}}</span>
-                                            <span class="input-group-btn">
-                                                <div class="viewunlock btn btn-default" onclick="addOneCurrent()">+1</div>
-                                                <div id='fastupdate' class="viewunlock btn btn-primary disableBtn" onclick="submitUpdateForm()" disabled='disabled'>更新</div>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>
