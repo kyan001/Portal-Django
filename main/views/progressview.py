@@ -18,7 +18,7 @@ def progressList(request):
     if not user:
         return needLogin()
     #get user's progresses
-    progresses = Progress.objects.filter(userid=user['id']);
+    progresses = Progress.objects.filter(userid=user['id']).order_by('-modified');
     #init vars
     status_pool = ('done','inprogress','giveup','error')
     pList = {}
