@@ -114,7 +114,7 @@
             getMovieInfo('compare')
         }
     }
-    function checkTagRating(info){
+    function checkTagAndRating(info){
         if(info.tags.length == 0){
             $('#tag-tr').hide()
         }
@@ -125,6 +125,19 @@
             $("#douban-info-panel").hide()
         }
     }
+    function showInfo(info){
+        if(info.type == 'book'){//book
+            $('#opus-type').addClass('glyphicon-book');
+        } else {//movie
+            $('#opus-type').addClass('glyphicon-film');
+        }
+        $('#opus-type').attr('title', info.title);
+        $('#opus-type').attr('href', info.api);
+        $('#title-link').attr('href', info.url);
+        $('#title-link').text(info.title);
+        $('#tag-tag').text( info.tags.join('，') );
+        $('#rating-av').text(info.rating);
+    }
 
     function setInfo(setType){
         var total = $("input[name='total']").val()
@@ -134,25 +147,15 @@
         switch(setType){
             case 'book':
                 if(bookinfo.title){
-                    $('#opus-type').addClass('glyphicon-book');
-                    $('#opus-type').attr('title', bookinfo.title);
-                    $('#title-link').attr('href', bookinfo.url);
-                    $('#title-link').text(bookinfo.title);
-                    $('#tag-tag').text( bookinfo.tags.join('，') );
-                    $('#rating-av').text(bookinfo.rating);
+                    showInfo(bookinfo)
                 }
-                checkTagRating(bookinfo)
+                checkTagAndRating(bookinfo)
                 break;
             case 'movie':
                 if(movieinfo.title){
-                    $('#opus-type').addClass('glyphicon-film');
-                    $('#opus-type').attr('title', movieinfo.title);
-                    $('#title-link').attr('href', movieinfo.url);
-                    $('#title-link').text(movieinfo.title);
-                    $('#tag-tag').text( movieinfo.tags.join('，') );
-                    $('#rating-av').text(movieinfo.rating);
+                    showInfo(movieinfo)
                 }
-                checkTagRating(movieinfo)
+                checkTagAndRating(movieinfo)
                 break;
             case 'compare':
                 if(bookinfo.finish && movieinfo.finish){
@@ -385,9 +388,9 @@
 
                                             <span class="input-group-addon fastupdate-total">
                                                 {% ifequal opus.total 0 %}
-                                                /∞
+                                                    /∞
                                                 {% else %}
-                                                /{{opus.total}}
+                                                    /{{opus.total}}
                                                 {% endifequal %}
                                             </span>
                                             <span class="input-group-btn">
@@ -401,13 +404,13 @@
                             <div class="panel panel-primary" id="douban-info-panel">
                                 <div class="panel-heading">
                                     <span><b>作品信息</b></span>
+                                    <a id="opus-type" href="" target="_blank" class="glyphicon float-right text-primary-dark"></a>
                                 </div>
                                 <div class="panel-body">
                                     <table class="table table-condensed table-hover">
                                         <tr id="title-tr">
                                             <td>作品名称</td>
                                             <td>
-                                                <span id="opus-type" class="glyphicon"></span>
                                                 《<a href="" id="title-link" target="_blank"></a>》
                                             </td>
                                         </tr>
