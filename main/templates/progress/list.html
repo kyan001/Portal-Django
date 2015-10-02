@@ -22,7 +22,7 @@
     }
     .page-header {
         padding-bottom: 2px;
-        cursor: hand;
+        cursor: pointer;
     }
 </style>
 <style>/* progress-card */
@@ -30,7 +30,7 @@
         box-shadow: 2px 2px 5px silver;
     }
     .progress-card .panel{
-        cursor: hand;
+        cursor: pointer;
     }
     .progress-card .panel-heading{
         padding: 1px;
@@ -121,6 +121,22 @@
         {% empty %}
             <div class="well">
                 您还没有任何进度哦~
+            </div>
+        {% endfor %}
+    </div><!--row-->
+
+    <div class="page-header" data-toggle="collapse" data-target="#list-follow">
+        <h1>
+            <span class="glyphicon glyphicon glyphicon-chevron-down"></span>
+            追剧中 <small>Follow</small>
+        </h1>
+    </div>
+    <div class="row collapse" id="list-follow">
+        {% for p in listfollow %}
+            {% include 'progress/list-progresscard.html' %}
+        {% empty %}
+            <div class="well">
+                您没有在追剧的进度哦~
             </div>
         {% endfor %}
     </div><!--row-->

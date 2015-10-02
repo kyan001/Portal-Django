@@ -2,11 +2,7 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             <span class="panel-title">
-                {% ifnotequal p.prg.current p.opus.total %}
                 <span class="persent label label-persent">{{ p.prg.getPersent }}%</span>
-                {% else %}
-                <span class="persent label label-persent">{{p.prg.current}}/{{p.opus.total}}</span>
-                {% endifnotequal %}
                 <span>《 <b>{{ p.opus.name }}</b> 》</span>
                 {% if p.opus.subtitle %}
                 <span class="subtitle label label-subtitle">{{ p.opus.subtitle }}</span>
@@ -14,13 +10,17 @@
             </span>
         </div>
         <div class="panel-body">
-            {% ifnotequal p.prg.current p.opus.total %}
+
             <div class="progress">
                 <div class="progress-bar {{ p.prg.getBartype }}" style="width: {{p.prg.getPersent}}%;">
+                {% ifnotequal p.opus.total 0 %}
                     <b>{{p.prg.current}} / {{p.opus.total}}</b>
+                {% else %}
+                    <b>{{p.prg.current}} / ∞</b>
+                {% endifnotequal %}
                 </div>
             </div>
-            {% endifnotequal %}
+
             <div class="div-table">
                 <div class='row'>
                     {% ifequal p.prg.current p.opus.total %}
