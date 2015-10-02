@@ -11,6 +11,8 @@ $.extend({
                 info.tags = new Array();
                 info.images = {};
                 info.image = '';
+                info.api = book_search_api + '?count=1&q=' + name
+                info.type = 'book'
                 if( checkHas(name, data.books[0]) ){
                     info.title = data.books[0].title
                     if(data.books[0].tags[0]){
@@ -48,6 +50,8 @@ $.extend({
                 info.tags = new Array();
                 info.images = {};
                 info.image = '';
+                info.api = movie_search_api + '?count=1&q=' + name
+                info.type = 'movie'
                 if( checkHas(name, data.subjects[0]) ){
                     info.title = data.subjects[0].title
                     info.tags = data.subjects[0].genres
