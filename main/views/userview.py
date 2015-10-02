@@ -204,10 +204,22 @@ def userCheckLogin(request):
     else:
         return infoMsg("用户名/答案不对：\n用户名：{0}\n答案：{1}".format(username, answer), title="登入失败")
     # redirections
-    if 'redirect' in request.POST:
-        response = redirect(request.POST.get('redirect'))
+    redirect_url = request.POST.get('redirect')
+    redirect_to_home = (
+        '/user/newuser',
+        '/user/newuser/',
+        '/user/signin',
+        '/user/signin/',
+        '/user/signup',
+        '/user/signup/'
+        )
+    if redirect_url:
+        response = redirect(redirect_url)
     else:
         response = redirect('/')
+    for urllet in redirect_to_home:
+        if urllet in redirect_url:
+            response = redirect('/')
     # set cookie
     if rememberme == 'yes':
         oneweek = 60*60*24*7

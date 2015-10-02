@@ -110,7 +110,7 @@
         $('#submit-button').removeAttr('disabled');
     }
 
-    function validateUsername(){
+    function validateUsername(isOnChange){
         clearHasClass($('#username-group'));
         if( $('input[name="username"]').val() == '' ){
             $('#username-group').addClass('has-warning');
@@ -126,8 +126,10 @@
             success: function (data) {
                 var result = data;
                 if (result.result == 'notexist') {
-                    $('#username-group').addClass('has-error');
-                    $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在');
+                    if(isOnChange=='onblur' || isOnChange=='onchange'){
+                        $('#username-group').addClass('has-error');
+                        $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在');
+                    }
                     foldOptions();
                 } else if (result.result == 'exist') {
                     // $('#username-group').addClass('has-success');
@@ -183,7 +185,7 @@
                             onclick='clickRememberMe()'
                             checked>
                     </span>
-                    <input type="text" name="username" class="form-control" placeholder="用户名 / Username" autofocus="autofocus" onchange="validateUsername()" oninput="clearHasClass($('#username-group'))"/>
+                    <input type="text" name="username" class="form-control" placeholder="用户名 / Username" autofocus="autofocus" onblur="validateUsername('onblur')" oninput="validateUsername('oninput')"/>
                     <span class="input-group-addon tips hidden-xs"
                         title="用户名 / Username <span class='label label-primary'>必填</span>"
                         data-content="<li class='text-primary'>请输入注册时的用户名</li>

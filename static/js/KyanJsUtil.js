@@ -66,24 +66,31 @@ $.extend({
     },
 });
 
-function checkHas(keyword, bookOrMovie){
+function checkHas(keywords, bookOrMovie){
     if(!bookOrMovie){
         return false;
     }
-    if(keyword){
-        keyword = keyword.toLowerCase()
-    } else {
+    if(!keywords){
         return false;
     }
-    if(bookOrMovie.title){
-        if(bookOrMovie.title.toLowerCase().indexOf(keyword) >= 0){
-            return true
-        }
-    }
+    kw = keywords.toLowerCase().split(' ')
+    var isInOriginalTitle = true;
+    var isInTitle = true;
     if(bookOrMovie.original_title){
-        if(bookOrMovie.original_title.toLowerCase().indexOf(keyword) >= 0){
-            return true
+        for(var i in kw){
+            if(bookOrMovie.original_title.toLowerCase().indexOf(kw[i]) < 0){
+                isInOriginalTitle = false
+                break
+            }
         }
     }
-    return false
+    if(bookOrMovie.title){
+        for(var i in kw){
+            if(bookOrMovie.title.toLowerCase().indexOf($.trim(kw[i])) < 0){
+                isInTitle = false
+                break
+            }
+        }
+    }
+    return isInOriginalTitle || isInTitle
 }

@@ -53,16 +53,14 @@
             $('input[name="current"]').val(current)
         }
         if(total == ""){
-            total = parseInt( parseInt(current) * 1.2 + 1)
+            total = 0
             $('input[name="total"]').val(total)
         }
-        if(total == "0"){
-            $.danger('总页数不能为 0')
-            return false;
-        }
-        if(parseInt(current) > parseInt(total)){
-            $.danger('初始进度不能大于总页数')
-            return false;
+        if(total!=0){
+            if(parseInt(current) > parseInt(total)){
+                $.danger('初始进度不能大于总页数')
+                return false;
+            }
         }
         $('#theform').submit();
     }
@@ -102,46 +100,46 @@
                         <div class="row">
                             <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-danger ">名称</span>
                             <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
-                                <input type="text" placeholder="动漫名、电视剧名、书名" name="name" class="editable" onchange="getPages()">
+                                <input type="text" placeholder="必填（不要加书名号）" name="name" class="editable" onchange="getPages()">
                             </span>
                             <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                <span class="text-danger">*必填</span>（不要加书名号）
+                                <span class="text-danger">动漫名、电视剧名、书名</span>
                             </span>
                         </div>
                         <div class="clearfix visible-xs-block">
                             <hr/>
                         </div>
                         <div class="row">
-                            <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right">副标题</span>
+                            <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-warning">副标题</span>
                             <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
-                                <input type="text" placeholder="作品的副标题、备注、分类" name="subtitle" class="editable">
+                                <input type="text" placeholder="选填（尽量简短）" name="subtitle" class="editable">
                             </span>
                             <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                <span class="text-warning">*可不填</span>（尽量简短）
+                                <span>作品的副标题、备注、分类</span>
                             </span>
                         </div>
                         <div class="clearfix visible-xs-block">
                             <hr/>
                         </div>
                         <div class="row">
-                            <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right">总共</span>
+                            <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-warning">总共</span>
                             <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
-                                <input type="number" placeholder="总共几页、总共几集？" name="total" class="editable">
+                                <input type="number" placeholder="选填（纯数字，追剧请填 0）" name="total" class="editable">
                             </span>
                             <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                <span class="text-warning">*可不填</span>（必须为纯数字）
+                                <span>总共几页、总共几集？</span>
                             </span>
                         </div>
                         <div class="clearfix visible-xs-block">
                             <hr/>
                         </div>
                         <div class="row">
-                            <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right">当前进度</span>
+                            <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-warning">当前进度</span>
                             <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
-                                <input type="number" placeholder="已看到第几集" name="current" class="editable">
+                                <input type="number" placeholder="选填（必须为纯数字）" name="current" class="editable">
                             </span>
                             <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                <span class="text-warning">*可不填</span>（必须为纯数字）
+                                <span>已看到第几集</span>
                             </span>
                         </div>
                     </form>
