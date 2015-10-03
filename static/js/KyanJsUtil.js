@@ -80,21 +80,25 @@ function checkHas(keywords, bookOrMovie){
     kw = keywords.toLowerCase().split(' ')
     var isInOriginalTitle = true;
     var isInTitle = true;
-    if(bookOrMovie.original_title){
+    if(bookOrMovie.original_title){//有英文名
         for(var i in kw){
             if(bookOrMovie.original_title.toLowerCase().indexOf(kw[i]) < 0){
-                isInOriginalTitle = false
+                isInOriginalTitle = false //只要有一个词不在title内，则判定失败
                 break
             }
         }
+    } else {//无英文名
+        isInOriginalTitle = false;
     }
-    if(bookOrMovie.title){
+    if(bookOrMovie.title){ //如果有title
         for(var i in kw){
-            if(bookOrMovie.title.toLowerCase().indexOf($.trim(kw[i])) < 0){
-                isInTitle = false
+            if(bookOrMovie.title.toLowerCase().indexOf(kw[i]) < 0){
+                isInTitle = false //只要有一个词不在title内，则判定失败
                 break
             }
         }
+    } else { //没有title
+        isInTitle = false
     }
     return isInOriginalTitle || isInTitle
 }
