@@ -120,7 +120,7 @@
         } else if(!info.match){//作品未精确匹配，
             return false
         } else  {//作品存在且精确匹配
-            $('#title-tr').popover('destory')
+            $('#title-tr').popover('destroy')
             $("#douban-info-panel").fadeIn()
             if(info.tags.length != 0){//作品无tag
                 $('#tag-tr').show()
