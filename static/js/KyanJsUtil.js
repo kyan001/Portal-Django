@@ -4,17 +4,12 @@ $.extend({
         if(name != ''){
             $.get(book_search_api, {'count':'1','q':name}, function(data){
                 var info = {}
-                info.title = '';
-                info.rating = '';
-                info.pages = '';
-                info.url = '';
-                info.tags = new Array();
-                info.images = {};
-                info.image = '';
-                info.api = book_search_api + '?count=1&q=' + name
-                info.type = 'book'
-                if( checkHas(name, data.books[0]) ){
-                    info.title = data.books[0].title
+                if(data.books[0]){
+                    info.title = data.books[0].title;
+                    info.rating = data.books[0].rating.average;
+                    info.pages = data.books[0].pages;
+                    info.url = data.books[0].alt;
+                    info.tags = new Array();
                     if(data.books[0].tags[0]){
                         info.tags.push(data.books[0].tags[0].name)
                     }
@@ -24,9 +19,7 @@ $.extend({
                     if(data.books[0].tags[2]){
                         info.tags.push(data.books[0].tags[2].name)
                     }
-                    info.rating = data.books[0].rating.average
-                    info.pages = data.books[0].pages
-                    info.url = data.books[0].alt
+                    info.images = {};
                     if(data.books[0].images){
                         info.images.small = data.books[0].images.small
                         info.images.medium = data.books[0].images.medium
@@ -34,6 +27,10 @@ $.extend({
                     }
                     info.image = data.books[0].image
                 }
+                info.api = book_search_api + '?count=1&q=' + name
+                info.type = 'book'
+                info.match = checkHas(name, data.books[0])
+                info.exist = data.books[0]?true:false
                 callback(info)
             }, 'jsonp');
         }
@@ -44,26 +41,24 @@ $.extend({
         if(name != ''){
             $.get(movie_search_api, {'count':'1','q':name}, function(data){
                 var info = {}
-                info.title = '';
-                info.rating = '';
-                info.url = '';
-                info.tags = new Array();
-                info.images = {};
-                info.image = '';
-                info.api = movie_search_api + '?count=1&q=' + name
-                info.type = 'movie'
-                if( checkHas(name, data.subjects[0]) ){
-                    info.title = data.subjects[0].title
-                    info.tags = data.subjects[0].genres
-                    info.rating = data.subjects[0].rating.average
-                    info.url = data.subjects[0].alt
+                if( data.subjects[0] ){
+                    info.title = data.subjects[0].title;
+                    info.rating = data.subjects[0].rating.average;
+                    info.url = data.subjects[0].alt;
+                    info.tags = new Array(data.subjects[0].genres);
+                    info.subtype = data.subjects[0].subtype
                     if(data.subjects[0].images){
+                        info.images = {};
                         info.images.small = data.subjects[0].images.small
                         info.images.medium = data.subjects[0].images.medium
                         info.images.large = data.subjects[0].images.large
                         info.image = data.subjects[0].images.medium
                     }
                 }
+                info.api = movie_search_api + '?count=1&q=' + name
+                info.type = 'movie'
+                info.match = checkHas(name, data.subjects[0])
+                info.exist = data.subjects[0]?true:false
                 callback(info);
             }, 'jsonp');
         }
