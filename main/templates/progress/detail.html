@@ -190,6 +190,10 @@
                         setInfo('book')
                     } else if(!bookinfo.exist && movieinfo.exist){
                         setInfo('movie')
+                    } else if(bookinfo.match && !movieinfo.match){
+                        setInfo('book')
+                    } else if(!bookinfo.match && movieinfo.match){
+                        setInfo('movie')
                     } else if(parseInt(total) == 0){//follow
                         setInfo('movie')
                     } else if(parseInt(total) == parseInt(bookinfo.pages)){
