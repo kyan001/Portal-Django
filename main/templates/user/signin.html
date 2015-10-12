@@ -80,7 +80,7 @@
         $('#question-group').fadeOut();
         $('#tip-group').fadeOut();
         $('#answer-group').fadeOut();
-        $('#submit-button').attr('disabled','');
+        $('#submit-button').attr('disabled','disabled');
     }
 
     function unfoldOptions(option){
@@ -147,18 +147,18 @@
                     foldOptions();
                     return
                 }
-                if (!result.exist) {
-                    if(option=='onblur' || option=='onchange'){
-                        $('#username-group').addClass('has-error');
-                        $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在');
-                    }
-                    foldOptions();
-                } else {
+                if (result.exist) {
                     if(result.unique){
                         unfoldOptions('unique')
                     } else {
                         unfoldOptions('normal');
                     }
+                } else {
+                    if(option=='onblur' || option=='onchange'){
+                        $('#username-group').addClass('has-error');
+                        $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在');
+                    }
+                    foldOptions();
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
