@@ -82,7 +82,6 @@
         $('#answer-group').fadeOut();
         $('#submit-button').attr('disabled','disabled');
     }
-
     function unfoldOptions(option){
         $.ajax({
             type: "GET",
@@ -187,6 +186,12 @@
         }
         $("#login-form").submit();
     }
+    function keydownAnswer(){
+        if(event.keyCode==13){
+            $('#submit-button').click();
+            return false;
+        }
+    }
 </script>
 {% endblock js %}
 
@@ -234,6 +239,7 @@
                         name="answer"
                         class="form-control"
                         placeholder="答案 / Answer"
+                        onkeydown="keydownAnswer()"
                         />
                     <span class="input-group-addon tips hidden-xs"
                         title="答案 / Answer <span class='label label-primary'>必填</span>"
