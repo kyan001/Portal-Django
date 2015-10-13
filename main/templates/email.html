@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <style>
+            #heading {
+                text-align: center;
+                font-size: 1.5em;
+                padding: 0.5em;
+                font-weight: bolder;
+                border-bottom: silver solid 1px;
+            }
+            #content {
+                padding: 1em;
+            }
+            #footer-div {
+                width: 100%;
+            }
+            #footer-div .footer {
+                background-color: #eeeeee;
+                padding: 1em;
+                text-align: center;
+                font-size: 1em;
+                color: gray;
+            }
+            #footer-div .footer a{
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id='heading'>{{ subject }}</div>
+        <div id='content'>
+            {% autoescape off %}{{ content }}{% endautoescape %}
+        </div>
+        <div id='footer-div'>
+            <div class="footer">
+                <div>
+                    <strong>Be happy.</strong>
+                    <i>Keep Healthy, Keep Happy, Keep Thinking, Keep Cool.</i>
+                </div>
+                <div>
+                    Sent By
+                    <a href="http://www.superfarmer.net">SuperFarmer</a>
+                </div>
+            </div>
+    </div>
+    </body>
+</html>

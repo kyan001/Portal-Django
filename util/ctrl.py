@@ -1,5 +1,8 @@
 from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse, JsonResponse
+from django.core.mail import EmailMessage
+from django.template import loader
+from django.conf import settings
 import random
 
 import util.KyanToolKit_Py
@@ -53,3 +56,20 @@ def salty(word):
 def needLogin():
     return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
     # return redirect('/user/signin');
+
+def sendEmail(word, to_email, subject='一封来自SuperFarmer网站的邮件'):
+    if not word:
+        return False;
+    if not to_email or to_email.find('@') <= 0:
+        return False;
+    subject = subject
+    content = loader.render_to_string('email.html', {'subject':subject.strip(), 'content':word.strip()})
+    msg = EmailMessage(
+        subject.strip()+' - superfarmer.net', #subject
+        content, #content
+        settings.EMAIL_HOST_USER, #from email
+        [settings.EMAIL_HOST_USER, to_email.strip()] #recipients
+        )
+    msg.content_subtype = 'html'
+    msg.send()
+    return True

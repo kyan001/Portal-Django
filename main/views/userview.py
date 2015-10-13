@@ -185,6 +185,16 @@ def userSignin(request):
 def userForgetanswer(request):
     '登入页面点击忘记回答'
     context = {}
+    content = '''
+        <li>您在 <a href='http://superfarmer.net' target='_blank'>superfarmer.net</a> 申请了“忘记答案/密码”</li>
+        <li>请点击下面的连接重置答案/密码</li>
+        <li>下面的连接有效期只有 60 分钟。</li>
+        <li>如果连接无法打开，请在复制后在浏览器中打开：</li>
+        <a href='http://portal.superfarmer.net/user/resetanswer/'>http://portal.superfarmer.net/user/resetanswer/</a>
+    '''
+    result = sendEmail(content, 'kai@superfarmer.net', subject='忘记密码找回注册')
+    if not result:
+        return infoMsg("发送邮件失败："+ json.dumps(result), title="发送失败")
     return render_to_response('user/forgetanswer.html', context)
 
 
