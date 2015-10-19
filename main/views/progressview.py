@@ -77,10 +77,12 @@ def progressFastupdate(request):
     progressid = request.POST.get('id')
     if not progressid:
         return infoMsg("进度 ID 为空，请联系管理员", title="出错")
-    newcurrent = request.POST.get('newcurrent')
-    newcurrent = int(newcurrent)
-    if newcurrent <= 0:
-        newcurrent = 0;
+    quick_current = request.POST.get('quick_current')
+    if quick_current == '':
+        return infoMsg("快速更新的当前进度不能为空" + quick_current, title="快速更新出错")
+    quick_current = int(quick_current)
+    if quick_current <= 0:
+        quick_current = 0;
     # get progress
     try:
         progress = Progress.objects.get(id=progressid)
@@ -95,10 +97,10 @@ def progressFastupdate(request):
     except Opus.DoesNotExist:
         return infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
     # validation
-    if opus.total > 0 and newcurrent > opus.total:
-        return infoMsg("当前进度 {0} 超过最大值 {1}".format(str(newcurrent), str(opus.total)))
+    if opus.total > 0 and quick_current > opus.total:
+        return infoMsg("当前进度 {0} 超过最大值 {1}".format(str(quick_current), str(opus.total)))
     # save
-    progress.current = newcurrent;
+    progress.current = quick_current;
     if(progress.setStatusAuto()):
         progress.setModified();
         progress.save()

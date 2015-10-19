@@ -48,7 +48,7 @@
         padding-bottom: 0px;
         border-bottom: dashed silver 1px;
     }
-    input[name="newcurrent"] {
+    input[name="quick_current"] {
         text-align: right;
     }
     form {
@@ -278,44 +278,44 @@
         $('#saveform').submit();
     }
     function submitFastupdateForm(){
-        var newcurrent = $('input[name="newcurrent"]').val();
+        var quick_current = $('input[name="quick_current"]').val();
         var total = $('input[name="total"]').val();
         if(total == ""){
             total == 0;
         }
-        if( isNaN(newcurrent) ){
-            $('input[name="newcurrent"]').parent().addClass('has-error');
-            $.danger('输入的更新的进度 '+newcurrent+' 必须是纯数字！')
+        if( isNaN(quick_current) ){
+            $('input[name="quick_current"]').parent().addClass('has-error');
+            $.danger('输入的更新的进度 '+quick_current+' 必须是纯数字！')
             return false;
         }
-        if( newcurrent == '' ){
-            $('input[name="newcurrent"]').parent().addClass('has-error');
+        if( quick_current == '' ){
+            $('input[name="quick_current"]').parent().addClass('has-error');
             $.danger('当前的更新进度为空 或 存在特殊字符')
             return false;
         }
-        if( parseInt(total) > 0 && parseInt(newcurrent) > parseInt(total) ){
-             $('input[name="newcurrent"]').parent().addClass('has-error');
-            $.danger('当前进度 '+newcurrent+' 超过最大值 '+total);
+        if( parseInt(total) > 0 && parseInt(quick_current) > parseInt(total) ){
+             $('input[name="quick_current"]').parent().addClass('has-error');
+            $.danger('当前进度 '+quick_current+' 超过最大值 '+total);
             return false;
         }
         disableBtn()
         $("#fastupdateform").submit();
     }
-    function focusNewcurrent(){
-        var nc = $('input[name="newcurrent"]');
+    function focusQuickCurrent(){
+        var nc = $('input[name="quick_current"]');
         if(nc.val() == '{{prg.current}}'){
             nc.val('');
         }
     }
-    function blurNewcurrent(){
-        var nc = $('input[name="newcurrent"]');
+    function blurQuickCurrent(){
+        var nc = $('input[name="quick_current"]');
         if(nc.val() == ''){
             nc.val('{{prg.current}}');
         }
         checkUpdateButtonLock();
     }
     function checkUpdateButtonLock(){
-        var nc = $('input[name="newcurrent"]');
+        var nc = $('input[name="quick_current"]');
         if(nc.val()=='{{prg.current}}'){
             $('#fastupdate').attr('disabled','disabled');
         } else {
@@ -323,27 +323,27 @@
         }
     }
     function addOneCurrent(){
-        var newcurrent = $('input[name="newcurrent"]').val();
+        var quick_current = $('input[name="quick_current"]').val();
         var total = $('input[name="total"]').val();
         if(total == '∞' || total == ""){
             total = 0;
         }
-        if( isNaN(newcurrent) ){
-            $('input[name="newcurrent"]').parent().addClass('has-error');
-            $.danger('当前的更新进度 '+newcurrent+' 必须是纯数字！')
+        if( isNaN(quick_current) ){
+            $('input[name="quick_current"]').parent().addClass('has-error');
+            $.danger('当前的更新进度 '+quick_current+' 必须是纯数字！')
             return false;
         }
-        if( newcurrent == '' ){
-            $('input[name="newcurrent"]').parent().addClass('has-error');
+        if( quick_current == '' ){
+            $('input[name="quick_current"]').parent().addClass('has-error');
             $.danger('当前的更新进度为空 或 存在特殊字符')
             return false;
         }
-        if( parseInt(total) > 0 && parseInt(newcurrent) >= parseInt(total) ){
-             $('input[name="newcurrent"]').parent().addClass('has-error');
+        if( parseInt(total) > 0 && parseInt(quick_current) >= parseInt(total) ){
+             $('input[name="quick_current"]').parent().addClass('has-error');
             $.warning('进度已达到最大值');
             return false;
         }
-        $('input[name="newcurrent"]').val(parseInt(newcurrent)+1);
+        $('input[name="quick_current"]').val(parseInt(quick_current)+1);
         checkUpdateButtonLock();
     }
 </script>
@@ -399,13 +399,14 @@
                                                 <div class="btn btn-danger disableBtn" id='giveup' onclick="$('#giveupform').submit()">弃置进度</div>
                                             {% endif %}
                                             </span>
-                                            <input type="tel" name="newcurrent"
+                                            <input type="tel" name="quick_current"
                                                 class="viewunlock form-control"
                                                 placeholder="当前 {{prg.current}}"
                                                 value="{{prg.current}}"
-                                                onfocus="focusNewcurrent()"
-                                                onblur="blurNewcurrent()"
-                                                oninput="checkUpdateButtonLock()">
+                                                onfocus="focusQuickCurrent()"
+                                                onblur="blurQuickCurrent()"
+                                                oninput="checkUpdateButtonLock()"
+                                                onkeydown="keydownFastUpdate()">
 
                                             <span class="input-group-addon fastupdate-total">
                                                 {% ifequal opus.total 0 %}
