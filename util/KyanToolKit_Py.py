@@ -10,7 +10,7 @@ import urllib.request, hashlib, json
 import threading, queue
 
 class KyanToolKit_Py(object):
-    version = '2.8'
+    version = '2.9'
     def __init__(self,trace_file="trace.xml"):
         self.trace_file = trace_file
         self.q = {
@@ -141,12 +141,14 @@ class KyanToolKit_Py(object):
 
     def ajax(self, url, param={}, method='get'):
         param = urllib.parse.urlencode(param)
-        if method == 'get':
+        if method.lower() == 'get':
             req = urllib.request.Request(url + '?' + param)
-        elif method == 'post':
+        elif method.lower() == 'post':
+            param = param.encode('utf-8')
             req = urllib.request.Request(url, data=param)
-        if req:
-            rsp = urllib.request.urlopen(req)
+        else:
+            raise Exception( "Method '{0}' is invalid. (GET/POST)".format(method) )
+        rsp = urllib.request.urlopen(req)
         if rsp:
             rsp_json = rsp.read().decode('utf-8')
             rsp_dict = json.loads(rsp_json)
