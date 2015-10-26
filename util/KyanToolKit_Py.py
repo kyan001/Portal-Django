@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 ##################################################################
-# Version 2.5
+# Version 2.6
 ##################################################################
 import os, sys
 import time, types
 import getpass
 import subprocess, shlex
-import urllib.request, hashlib
+import urllib.request, hashlib, json
 import threading, queue
 
 class KyanToolKit_Py(object):
@@ -137,6 +137,20 @@ class KyanToolKit_Py(object):
         else:
             self.err("Please enter a valid choice");
             return self.getChoice(choices_);
+
+    def ajax(self, url, param={}, method='get'):
+        param = urllib.parse.urlencode(param)
+        if method == 'get':
+            req = urllib.request.Request(url + '?' + param)
+        elif method == 'post':
+            req = urllib.request.Request(url, data=param)
+        if req:
+            rsp = urllib.request.urlopen(req)
+        if rsp:
+            rsp_json = rsp.read().decode('utf-8')
+            rsp_dict = json.loads(rsp_json)
+            return rsp_dict
+        return None
 
 #--Pre-checks---------------------------------------------------
     def needPlatform(self, expect_platform):
