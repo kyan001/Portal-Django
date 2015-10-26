@@ -74,5 +74,3 @@ def sendEmail(word, to_email, subject='一封来自SuperFarmer网站的邮件'):
     msg.send()
     return True
 
-if __name__=='__main__':
-    ktk.update()
