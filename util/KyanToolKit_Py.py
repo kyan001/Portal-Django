@@ -52,7 +52,7 @@ class KyanToolKit_Py(object):
             @wraps(input_func)
             def callInputFunc(*args, **kwargs):
                 self = args[0]
-                print(self.banner(str(decorator_param)));
+                print("\n" + self.banner(str(decorator_param)));
                 result = input_func(*args, **kwargs)
                 print("============ " + str(decorator_param) + " : end   ============\n");
                 return result
