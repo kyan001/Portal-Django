@@ -51,9 +51,10 @@ class KyanToolKit_Py(object):
         def get_func(input_func):
             @wraps(input_func)
             def callInputFunc(*args, **kwargs):
-                print("\n============ " + str(decorator_param) + " : start ============");
+                self = args[0]
+                print(self.banner(str(decorator_param)));
                 result = input_func(*args, **kwargs)
-                print("============ " + str(decorator_param) + " : end   ============");
+                print("============ " + str(decorator_param) + " : end   ============\n");
                 return result
             return callInputFunc
         return get_func
