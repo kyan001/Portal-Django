@@ -8,10 +8,11 @@ import getpass
 import subprocess, shlex
 import urllib.request, hashlib, json
 import threading, queue
+from functools import wraps
 
 class KyanToolKit_Py(object):
-    version = '2.9'
-    def __init__(self,trace_file="trace.xml"):
+    version = '3.1'
+    def __init__(self, trace_file="trace.xml"):
         self.trace_file = trace_file
         self.q = {
             'stdout' : queue.Queue()
@@ -26,6 +27,7 @@ class KyanToolKit_Py(object):
 #--Decorators-----------------------------------------------------
     def lockStdout(input_func): #decorator
         '使函数占住stdout，执行期间不让其他线程打印'
+        @wraps(input_func)
         def callInputFunc(*args, **kwargs):
             self = args[0]
             mutex = self.mutex.get('stdout')
@@ -38,14 +40,35 @@ class KyanToolKit_Py(object):
 
     def async(input_func): #decorator
         '使函数单开一个线程执行'
+        @wraps(input_func)
         def callInputFunc(*args, **kwargs):
             t = threading.Thread(target=input_func, args=args, kwargs=kwargs)
             return t.start()
         return callInputFunc
 
+    def printStartAndEnd(decorator_param="function"):#decorator
+        '使函数执行前和执行完毕后打印start/end'
+        def get_func(input_func):
+            @wraps(input_func)
+            def callInputFunc(*args, **kwargs):
+                print("\n============ " + str(decorator_param) + " : start ============");
+                result = input_func(*args, **kwargs)
+                print("============ " + str(decorator_param) + " : end   ============");
+                return result
+            return callInputFunc
+        return get_func
+
+    def inTrace(self, func): #decorator
+        @wraps(func)
+        def call(*args, **kwargs):
+            self.TRACE("Enter " + func.__qualname__ + "()")
+            result = func(*args,**kwargs)
+            self.TRACE("Leave " + func.__qualname__ + "()")
+            return result
+        return call
 
 #--Text Process---------------------------------------------------
-    def banner(self,content_="Well Come"):
+    def banner(self, content_="Well Come"):
         # char def
         self.special_char = "#"
         self.space_char = " "
@@ -88,22 +111,20 @@ class KyanToolKit_Py(object):
             self.err("No clearScreen for " + sys.platform)
 
     @lockStdout
-    def pressToContinue(self,input_="\nPress Enter to Continue...\n"):
+    def pressToContinue(self, input_="\nPress Enter to Continue...\n"):
         #PY2# raw_input(input_)
         input(input_)
 
-    def byeBye(self,input_="See you later"): #BWC
+    def byeBye(self, input_="See you later"): #BWC
         self.bye(input_)
 
     def bye(self, input_='See you later'):
         exit(input_)
 
+    @printStartAndEnd('Run Command')
     def runCmd(self, cmd):
         'run command and show if success or failed'
-        if len(cmd) > 80:
-            print(self.breakCommands(cmd));
-        else:
-            print(self.banner(cmd));
+        self.info("CMD: " + cmd);
         result = os.system(cmd);
         self.checkResult(result);
 
@@ -115,19 +136,19 @@ class KyanToolKit_Py(object):
 
 #--Get Information------------------------------------------------
     @lockStdout
-    def getInput(self,question='',prompt='> '):
+    def getInput(self, question='', prompt='> '):
         if '' != question:
             print(question)
         #PY2# return raw_input(prompt_).strip()
         return str(input(prompt)).strip()
 
-    def getChoice(self,choices_):
-        out_print = ""
+    def getChoice(self, choices_):
+        assemble_print = ""
         index = 1
         for item in choices_:
-            out_print += "\n" + str(index) + " - " + str(item)
+            assemble_print += "\n" + str(index) + " - " + str(item)
             index += 1
-        user_choice = self.getInput(out_print);
+        user_choice = self.getInput(assemble_print);
         if user_choice in choices_:
             return user_choice;
         elif user_choice.isdigit():
@@ -156,24 +177,26 @@ class KyanToolKit_Py(object):
         return None
 
 #--Pre-checks---------------------------------------------------
+    @printStartAndEnd("Checking Platform")
     def needPlatform(self, expect_platform):
-        self.info("Platform Require: " + expect_platform + ', Current: ' + sys.platform);
+        self.info("Platform Require: " + expect_platform)
+        self.info("Current: " + sys.platform)
         if not expect_platform in sys.platform:
             self.byeBye("Wrong Platform.");
         else:
-            self.info("Done\n");
+            self.info("Done");
 
+    @printStartAndEnd("Checking User")
     def needUser(self, expect_user):
-        print("============ Checking User ============");
         self.info("Required User: " + expect_user);
         self.info("Current User: " + self.getUser());
         if self.getUser() != expect_user:
             self.byeBye("Bye");
         else:
-            self.info("Done\n");
+            self.info("Done");
 
 #--Debug---------------------------------------------------------
-    def TRACE(self,input_,trace_type='INFO'):
+    def TRACE(self, input_, trace_type='INFO'):
         trace_content = ''.join(input_)
         current_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
         current_function = sys._getframe().f_back
@@ -213,14 +236,9 @@ class KyanToolKit_Py(object):
 #--Internal Uses-------------------------------------------------
     def checkResult(self, result):
         if 0 == result:
-            self.info("Done\n")
+            self.info("Done")
         else:
-            self.warn("Failed\n")
-
-    def breakCommands(self, cmd):
-        formatted_cmd = cmd.replace(' -','\n# \t-');
-        formatted_cmd = "##########################.\n# " + formatted_cmd + "\n##########################.";
-        return formatted_cmd;
+            self.warn("Failed")
 
     def getUser(self):
         return getpass.getuser();
