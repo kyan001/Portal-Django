@@ -2,6 +2,8 @@
 {% block title %}进度：{{ opus.name }}{% endblock title %}
 {% block icon %}<link rel="icon" href="/static/img/Logo_List.png" />{% endblock icon %}
 
+{% load isurl %}
+
 {% block css %}
 <style type="text/css">
     .container {
@@ -15,6 +17,9 @@
     }
     .progress-card .subtitle {
         font-size: 15px;
+    }
+    .progress-card .subtitle-is-link {
+        color: white;
     }
     .progress-card .persent {
         font-size: 15px;
@@ -368,7 +373,15 @@
                         <span class="persent label label-persent">{{prg.getPersent}}%</span>
                         <a id="opustitle" href="/opus/detail?id={{opus.id}}">《 <b>{{opus.name}}</b> 》</a>
                         {% if opus.subtitle %}
-                        <span class="subtitle label label-subtitle">{{opus.subtitle}}</span>
+                        <span class="subtitle label label-subtitle">
+                            {% if opus.subtitle|isurl %}
+                                <a href="{{ opus.subtitle }}" title="{{ opus.subtitle }}" class="subtitle-is-link">
+                                    <span class="glyphicon glyphicon-link"></span>
+                                </a>
+                            {% else %}
+                                {{ opus.subtitle }}
+                            {% endif %}
+                        </span>
                         {% endif %}
                     </span>
                 </div>

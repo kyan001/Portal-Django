@@ -1,3 +1,5 @@
+{% load isurl %}
+
 <div class="col-lg-5 col-md-6 col-sm-8 col-xs-12 progress-card" progressid="{{ p.prg.id }}">
     <div class="panel panel-primary beveryfast">
         <div class="panel-heading">
@@ -5,7 +7,15 @@
                 <span class="persent label label-persent">{{ p.prg.getPersent }}%</span>
                 <span>《 <b>{{ p.opus.name }}</b> 》</span>
                 {% if p.opus.subtitle %}
-                <span class="subtitle label label-subtitle">{{ p.opus.subtitle }}</span>
+                <span class="subtitle label label-subtitle">
+                    {% if p.opus.subtitle|isurl %}
+                        <a href="{{ p.opus.subtitle }}" title="{{ p.opus.subtitle }}" class="subtitle-is-link">
+                            <span class="glyphicon glyphicon-link"></span>
+                        </a>
+                    {% else %}
+                        {{ p.opus.subtitle }}
+                    {% endif %}
+                </span>
                 {% endif %}
             </span>
         </div>
