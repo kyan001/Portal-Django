@@ -9,4 +9,3 @@ def isurl(value):
         if input_string.startswith(p + '://'):
             return True
     return False
-
