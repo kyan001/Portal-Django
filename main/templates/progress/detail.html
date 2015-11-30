@@ -18,8 +18,14 @@
     .progress-card .subtitle, .progress-card .persent, .progress-card .weblink {
         font-size: 15px;
     }
-    .progress-card .weblink {
-        float: right;
+    .progress-card .panel-heading {
+        overflow-x: auto;
+        overflow-y: hidden;
+        word-break: keep-all;
+        white-space: nowrap;
+    }
+    .progress-card .weblink:hover {
+        color: black;
     }
 
     /* progress bar */
@@ -376,7 +382,7 @@
                         </span>
                         {% endif %}
                         {% if prg.weblink and prg.weblink|isurl %}
-                        <a class="weblink btn btn-primary" href="{{prg.weblink}}" title="{{prg.weblink}}">
+                        <a class="weblink label label-weblink" href="{{prg.weblink}}" title="{{prg.weblink}}">
                             <span class="glyphicon glyphicon-link"></span>
                         </a>
                         {% endif %}
