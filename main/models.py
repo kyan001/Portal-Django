@@ -56,6 +56,7 @@ class Progress(models.Model):
     opusid = models.IntegerField(default=0)
     current = models.IntegerField(default=0)
     status = models.CharField(max_length=50)
+    weblink = models.URLField(max_length=2083, blank=True, default="")
     created = models.DateTimeField()
     modified = models.DateTimeField()
     status_pool = ('done','inprogress','giveup','error','follow')

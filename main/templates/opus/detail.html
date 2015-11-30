@@ -14,6 +14,9 @@
         padding: 0;
     }
     /* item-panel */
+    .item-panel .panel-body {
+        padding: 0 1px;
+    }
     .item-panel td {
         text-align: right;
     }
@@ -90,6 +93,18 @@
                             <tr>
                                 <td>上次访问</td>
                                 <th>{{ item.progress.getModified }}</th>
+                            </tr>
+                            {% if item.progress.weblink %}
+                            <tr>
+                                <td>链接</td>
+                                <th>
+                                    {{ item.progress.weblink|urlizetrunc:15 }}
+                                </th>
+                            </tr>
+                            {% endif %}
+                            <tr>
+                                <td>状态</td>
+                                <th>{{ item.progress.getStatus }}</th>
                             </tr>
                         </tbody>
                     </table>

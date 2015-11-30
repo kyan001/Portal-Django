@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 import sys
-if 'win' in sys.platform:
+if 'win' in sys.platform: #测试环境下
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

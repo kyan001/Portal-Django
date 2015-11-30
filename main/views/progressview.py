@@ -121,12 +121,15 @@ def progressUpdate(request):
         return infoMsg("进度 ID 为空，请联系管理员", title="出错")
     name = request.POST.get('name');
     subtitle = request.POST.get('subtitle');
+    weblink = request.POST.get('weblink');
     total = request.POST.get('total');
     total = int(total) if total else 0;
     current = request.POST.get('current');
     current = int(current);
     if not name:
         return infoMsg("名称（name）不能为空", title="保存失败")
+    if not weblink:
+        weblink = "";
     if current <= 0:
         current = 0;
     if total > 0 and current > total:
@@ -148,6 +151,7 @@ def progressUpdate(request):
     progress.current = current;
     opus.name = name;
     opus.subtitle = subtitle;
+    progress.weblink = weblink;
     opus.total = total;
     opus.save()
     if(progress.setStatusAuto()):
@@ -263,6 +267,9 @@ def progressAdd(request):
         return needLogin()
     name = request.POST.get('name');
     subtitle = request.POST.get('subtitle');
+    weblink = request.POST.get('weblink');
+    if not weblink:
+        weblink = "";
     total = request.POST.get('total');
     total = int(total) if total else 0;
     current = request.POST.get('current');
@@ -283,7 +290,7 @@ def progressAdd(request):
             opus.addTag(t)
     opus.setCreated();
     opus.save()
-    progress = Progress(current=current, opusid=opus.id, userid=user['id'])
+    progress = Progress(current=current, opusid=opus.id, userid=user['id'], weblink=weblink)
     progress.setCreated();
     if(progress.setStatusAuto()):
         progress.save()

@@ -8,14 +8,13 @@
                 <span>《 <b>{{ p.opus.name }}</b> 》</span>
                 {% if p.opus.subtitle %}
                 <span class="subtitle label label-subtitle">
-                    {% if p.opus.subtitle|isurl %}
-                        <a href="{{ p.opus.subtitle }}" title="{{ p.opus.subtitle }}" class="subtitle-is-link">
+                    {{ p.opus.subtitle }}
+                </span>
+                {% endif %}
+                {% if p.prg.weblink and p.prg.weblink|isurl %}
+                <a class="weblink btn btn-primary" href="{{p.prg.weblink}}" title="{{p.prg.weblink}}">
                             <span class="glyphicon glyphicon-link"></span>
                         </a>
-                    {% else %}
-                        {{ p.opus.subtitle }}
-                    {% endif %}
-                </span>
                 {% endif %}
             </span>
         </div>

@@ -15,14 +15,11 @@
         margin: 0;
         font-size: 13px;
     }
-    .progress-card .subtitle {
+    .progress-card .subtitle, .progress-card .persent, .progress-card .weblink {
         font-size: 15px;
     }
-    .progress-card .subtitle-is-link {
-        color: white;
-    }
-    .progress-card .persent {
-        font-size: 15px;
+    .progress-card .weblink {
+        float: right;
     }
 
     /* progress bar */
@@ -68,12 +65,12 @@
     .fastupdate-total {
         padding-left: 0;
     }
-    .label-persent {
-        background-color: #51ABFF;
-    }
     .label-tag {
         background-color: white;
         border: silver 1px solid;
+    }
+    .label-persent {
+        background-color: #51ABFF;
     }
     .label-subtitle {
         background-color: #3080BB;
@@ -85,7 +82,6 @@
         color: silver;
     }
     #opus-type, a#opustitle {
-        text-decoration: none;
     }
     a#title-link {
         color: black;
@@ -253,6 +249,7 @@
         $('.viewunlock').removeAttr('disabled')
         $('input[name="name"]').val('{{opus.name}}')
         $('input[name="subtitle"]').val('{{opus.subtitle}}')
+        $('input[name="weblink"]').val('{{prg.weblink}}')
         $('input[name="total"]').val('{{opus.total}}')
         $('input[name="current"]').val('{{prg.current}}')
         $('.editunlock').removeClass('warning');
@@ -262,6 +259,7 @@
     function saveEdit(){
         var name = $('input[name="name"]').val()
         var subtitle = $('input[name="subtitle"]').val()
+        var weblink = $('input[name="weblink"]').val()
         var total = $('input[name="total"]').val()
         var current = $('input[name="current"]').val()
         if(name == ""){
@@ -371,17 +369,16 @@
                         <span class="persent label label-danger">已弃置</span>
                         {% endifequal %}
                         <span class="persent label label-persent">{{prg.getPersent}}%</span>
-                        <a id="opustitle" href="/opus/detail?id={{opus.id}}">《 <b>{{opus.name}}</b> 》</a>
+                        《 <a id="opustitle" href="/opus/detail?id={{opus.id}}"><b>{{opus.name}}</b></a> 》
                         {% if opus.subtitle %}
                         <span class="subtitle label label-subtitle">
-                            {% if opus.subtitle|isurl %}
-                                <a href="{{ opus.subtitle }}" title="{{ opus.subtitle }}" class="subtitle-is-link">
-                                    <span class="glyphicon glyphicon-link"></span>
-                                </a>
-                            {% else %}
-                                {{ opus.subtitle }}
-                            {% endif %}
+                            {{ opus.subtitle }}
                         </span>
+                        {% endif %}
+                        {% if prg.weblink and prg.weblink|isurl %}
+                        <a class="weblink btn btn-primary" href="{{prg.weblink}}" title="{{prg.weblink}}">
+                            <span class="glyphicon glyphicon-link"></span>
+                        </a>
                         {% endif %}
                     </span>
                 </div>
@@ -490,6 +487,12 @@
                                                 <td>副标题</td>
                                                 <td>
                                                     <input type="text" placeholder="{{opus.subtitle}}" name="subtitle" value="{{opus.subtitle}}" readonly class="editable">
+                                                </td>
+                                            </tr>
+                                            <tr class="text-info editunlock">
+                                                <td>链接</td>
+                                                <td>
+                                                    <input type="text" placeholder="{{prg.weblink}}" name="weblink" value="{{prg.weblink}}" readonly class="editable">
                                                 </td>
                                             </tr>
                                             <tr class="text-info editunlock">
