@@ -32,8 +32,12 @@
     .progress-card .panel{
         cursor: pointer;
     }
-    .progress-card .panel-heading{
+    .progress-card .panel-heading {
         padding: 5px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        word-break: keep-all;
+        white-space: nowrap;
     }
     .progress-card .panel-body {
         padding: 0px;
@@ -53,8 +57,8 @@
     .progress-card .persent, .progress-card .subtitle, .progress-card .weblink {
         font-size: 15px;
     }
-    .progress-card .weblink {
-        float: right;
+    .progress-card .weblink:hover {
+        color: black;
     }
     /* progress-card-label */
     .label-persent {
