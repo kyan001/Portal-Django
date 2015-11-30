@@ -1,6 +1,3 @@
-* This will become a table of contents (this text will be scraped).
-{:toc}
-
 # 介绍 Intro
 - 个人维护的网站，逐渐完善并增加新功能
 - 以做出优质而简单的应用为目标
