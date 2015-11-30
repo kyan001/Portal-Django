@@ -24,6 +24,9 @@
         word-break: keep-all;
         white-space: nowrap;
     }
+    .progress-card .weblink {
+        border: 0;
+    }
     .progress-card .weblink:hover {
         color: black;
     }
@@ -382,7 +385,7 @@
                         </span>
                         {% endif %}
                         {% if prg.weblink and prg.weblink|isurl %}
-                        <a class="weblink label label-weblink" href="{{prg.weblink}}" title="{{prg.weblink}}">
+                        <a class="weblink btn btn-link" href="{{prg.weblink}}" title="{{prg.weblink}}">
                             <span class="glyphicon glyphicon-link"></span>
                         </a>
                         {% endif %}
