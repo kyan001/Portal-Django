@@ -1,7 +1,7 @@
 from django.db import models
 from django.forms.models import model_to_dict
+import util.ctrl
 from django.utils import timezone
-from util.ctrl import *
 import json
 import util.KyanToolKit_Py
 ktk = util.KyanToolKit_Py.KyanToolKit_Py()
@@ -24,10 +24,7 @@ class User(models.Model):
     def setCreated(self):
         self.created = timezone.now()
     def getCreated(self):
-        time_format = '%m-%d %H:%M %p'
-        if self.created.year != timezone.now().year:
-            time_format = '%Y-' + time_format
-        return self.created.astimezone(timezone.get_current_timezone()).strftime(time_format)
+        return util.ctrl.formatDate(self.created)
 
 class Opus(models.Model):
     name = models.CharField(max_length=255)
@@ -44,10 +41,7 @@ class Opus(models.Model):
     def setCreated(self):
         self.created = timezone.now()
     def getCreated(self):
-        time_format = '%m-%d %H:%M %p'
-        if self.created.year != timezone.now().year:
-            time_format = '%Y-' + time_format
-        return self.created.astimezone(timezone.get_current_timezone()).strftime(time_format)
+        return util.ctrl.formatDate(self.created)
     def getProgress(self):
         return Progress.objects.get(opusid=self.id)
 
@@ -73,17 +67,11 @@ class Progress(models.Model):
     def setCreated(self):
         self.created = timezone.now()
     def getCreated(self):
-        time_format = '%m-%d %H:%M %p'
-        if self.created.year != timezone.now().year:
-            time_format = '%Y-' + time_format
-        return self.created.astimezone(timezone.get_current_timezone()).strftime(time_format)
+        return util.ctrl.formatDate(self.created)
     def setModified(self):
         self.modified = timezone.now()
     def getModified(self):
-        time_format = '%m-%d %H:%M %p'
-        if self.modified.year != timezone.now().year:
-            time_format = '%Y-' + time_format
-        return self.modified.astimezone(timezone.get_current_timezone()).strftime(time_format)
+        return util.ctrl.formatDate(self.modified)
 
     # status
     def setStatus(self, status):

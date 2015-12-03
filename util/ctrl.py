@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.core.mail import EmailMessage
 from django.template import loader
 from django.conf import settings
+from django.utils import timezone
 import random
 
 import util.KyanToolKit_Py
@@ -74,3 +75,15 @@ def sendEmail(word, to_email, subject='一封来自SuperFarmer网站的邮件'):
     msg.send()
     return True
 
+def formatDate(dt, option="optimize"):
+    if option == 'optimize':
+        time_format = '%m-%d %H:%M %p'
+        if dt.year != timezone.now().year:
+            time_format = '%Y-' + time_format
+    elif option == 'dateonly':
+        time_format = '%m-%d';
+    elif option == 'fulldateonly':
+        time_format = '%Y-%m-%d';
+    else:
+        time_format = '%Y-%m-%d %H:%M %p'
+    return dt.astimezone(timezone.get_current_timezone()).strftime(time_format)

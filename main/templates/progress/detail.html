@@ -532,6 +532,12 @@
                                                 <td>上次更新</td>
                                                 <td>{{prg.getModified}}</td>
                                             </tr>
+                                            {% if aux.estmt_fnsh_dt %}
+                                            <tr>
+                                                <td>预计完成</td>
+                                                <td>{{ aux.estmt_fnsh_dt }}</td>
+                                            </tr>
+                                            {% endif %}
                                         </table>
                                     </div><!--.panel-body-->
                                 </div><!--.panel-->
