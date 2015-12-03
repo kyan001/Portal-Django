@@ -529,7 +529,11 @@
                                                 <td>{{prg.getCreated}}</td>
                                             </tr>
                                             <tr>
+                                                {% ifequal prg.status "done" %}
+                                                <td>完成时间</td>
+                                                {% else %}
                                                 <td>上次更新</td>
+                                                {% endifequal %}
                                                 <td>{{prg.getModified}}</td>
                                             </tr>
                                             {% if aux.estmt_fnsh_dt %}
