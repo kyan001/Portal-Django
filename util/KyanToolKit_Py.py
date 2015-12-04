@@ -104,7 +104,7 @@ class KyanToolKit_Py(object):
         return hashlib.md5(words).hexdigest();
 
 #--Image Process--------------------------------------------------
-    def imageToColor(self, url, scale=200):
+    def imageToColor(self, url, scale=200, mode='rgb'):
         '将url指向的图片提纯为一个颜色'
         from PIL import Image
         import colorsys
@@ -128,7 +128,12 @@ class KyanToolKit_Py(object):
                     int(statistics['g']/statistics['coef']),
                     int(statistics['b']/statistics['coef'])
                 )
-            return color
+            if mode.lower() == 'rgb':
+                return color
+            elif mode.lower() == 'hex':
+                return "#%0.2X%0.2X%0.2X" % color
+            else:
+                return color
         else:
             return False;
 
