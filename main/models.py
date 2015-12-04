@@ -53,7 +53,7 @@ class Progress(models.Model):
     weblink = models.URLField(max_length=2083, blank=True, default="")
     created = models.DateTimeField()
     modified = models.DateTimeField()
-    status_pool = ('done','inprogress','giveup','error','follow')
+    status_pool = ('done','inprogress','giveup','error','follow','todo')
     def __str__(self):
         opus = self.getOpus()
         user = self.getUser()
@@ -83,6 +83,9 @@ class Progress(models.Model):
         opus = self.getOpus()
         if self.status == 'giveup':
             return True;
+        if self.current == 0:
+            self.setStatus('todo')
+            return True;
         if opus.total == 0:
             self.setStatus('follow')
             return True;
@@ -110,6 +113,8 @@ class Progress(models.Model):
             return '进行中';
         if self.status == 'follow':
             return '追剧中';
+        if self.status == 'todo':
+            return '待阅读';
         return self.status
 
     # calculations
