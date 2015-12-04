@@ -63,6 +63,26 @@ $.extend({
             }, 'jsonp');
         }
     },
+    getImageColor: function(url, callback){
+        $.ajax({
+            type: "GET",
+            url: "/progress/imagecolor",
+            data: {
+                'url':url,
+            },
+            async: true,
+            dataType: 'json',
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Ajax Error, XMLHttpRequest:");
+                console.log("status: "+XMLHttpRequest.status);
+                console.log("readyState: "+XMLHttpRequest.readyState);
+                console.log("textStatus: "+textStatus);
+            },
+            success: function(result) {
+                callback(result.color)
+            }
+        });
+    },
 });
 
 function checkHas(keywords, bookOrMovie){

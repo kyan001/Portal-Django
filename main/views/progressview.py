@@ -106,6 +106,20 @@ def progressDetail(request):
     context['aux'] = aux
     return render_to_response('progress/detail.html', context)
 
+def progressImagecolor(request): #AJAX
+    '''异步获取一个url的颜色'''
+    url = request.GET.get('url')
+    try:
+        if url:
+            color = ktk.imageToColor(url)
+            return util.ctrl.returnJson({
+                'color': color
+            })
+        else:
+            return util.ctrl.returnJsonError('传入的 url 为空')
+    except Exception as e:
+        return util.ctrl.returnJsonError(str(e))
+
 @csrf_exempt
 def progressFastupdate(request):
     'detail界面右下角的快捷更新'

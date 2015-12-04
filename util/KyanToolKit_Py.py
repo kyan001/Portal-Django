@@ -6,12 +6,12 @@ import os, sys
 import time, types
 import getpass
 import subprocess, shlex
-import urllib.request, hashlib, json
+import urllib.request, hashlib, json, io
 import threading, queue
 from functools import wraps
 
 class KyanToolKit_Py(object):
-    version = '3.1'
+    version = '3.3'
     def __init__(self, trace_file="trace.xml"):
         self.trace_file = trace_file
         self.q = {
@@ -60,6 +60,7 @@ class KyanToolKit_Py(object):
         return get_func
 
     def inTrace(self, func): #decorator
+        '将被修饰函数的进入和退出写入日志'
         @wraps(func)
         def call(*args, **kwargs):
             self.TRACE("Enter " + func.__qualname__ + "()")
@@ -70,6 +71,7 @@ class KyanToolKit_Py(object):
 
 #--Text Process---------------------------------------------------
     def banner(self, content_="Well Come"):
+        '生成占3行的字符串'
         # char def
         self.special_char = "#"
         self.space_char = " "
@@ -101,6 +103,34 @@ class KyanToolKit_Py(object):
             words = str(words).encode()
         return hashlib.md5(words).hexdigest();
 
+#--Image Process--------------------------------------------------
+    def imageToColor(self, url, scale=200):
+        '将url指向的图片提纯为一个颜色'
+        from PIL import Image
+        import colorsys
+        if url:
+            response = urllib.request.urlopen(url)
+            img_buffer = io.BytesIO(response.read())
+            img = Image.open(img_buffer)
+            img = img.convert('RGBA')
+            img.thumbnail((scale,scale))
+            statistics = { 'r':0,'g':0,'b':0,'coef':0}
+            for count, (r, g, b, a) in img.getcolors(img.size[0] * img.size[1]):
+                hsv = colorsys.rgb_to_hsv(r/255,g/255,b/255)
+                saturation = hsv[1]*255
+                coefficient = (saturation * count * a) + 0.01 #避免出现 0
+                statistics['r'] += coefficient * r
+                statistics['g'] += coefficient * g
+                statistics['b'] += coefficient * b
+                statistics['coef'] += coefficient
+                color = (
+                    int(statistics['r']/statistics['coef']),
+                    int(statistics['g']/statistics['coef']),
+                    int(statistics['b']/statistics['coef'])
+                )
+            return color
+        else:
+            return False;
 
 #--System Fucntions-----------------------------------------------
     def clearScreen(self):

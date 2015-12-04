@@ -159,6 +159,14 @@
             },
         });
     }
+    function showImageColor(url){
+        $.getImageColor(url, function(color){
+            var r = color[0];
+            var g = color[1];
+            var b = color[2];
+            $('#main-panel').css('border-left', '5px solid rgb('+r+','+g+','+b+')');
+        });
+    }
     function showInfo(info){
         $('#title-link').attr('href', info.url);
         $('#title-link').text(info.title);
@@ -171,6 +179,7 @@
         }
         $('#opus-type').attr('title', info.title);
         $('#opus-type').attr('href', info.api);
+        showImageColor(info.images.small);
         checkInfoVisibility(info)
     }
 
@@ -377,7 +386,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 progress-card" progressid="{{ prg.id }}">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" id="main-panel">
                 <div class="panel-heading">
                     <span class="panel-title">
                         {% ifequal prg.status 'giveup' %}
