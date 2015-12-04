@@ -3,113 +3,24 @@
 {% block icon %}<link rel="icon" href="/static/img/Logo_List.png" />{% endblock icon %}
 
 {% block css %}
-
-<style>
-    .container {
-        font-family: 'Microsoft YaHei';
-        padding-top: 51px;
-    }
-    /* page-header */
-    .page-header > h1 > span {
-        font-size: 25px;
-        color: silver;
-    }
-    .page-header h1 {
-        font-size: 30px;
-    }
-    .page-header small {
-        font-size: 26px;
-    }
-    .page-header {
-        padding-bottom: 2px;
-        cursor: pointer;
-    }
-</style>
-<style>/* progress-card */
-    .progress-card .panel:hover {
-        box-shadow: 0px 0px 5px 2px silver;
-    }
-    .progress-card .panel{
-        cursor: pointer;
-    }
-    .progress-card .panel-heading {
-        padding: 5px;
-        overflow-x: auto;
-        overflow-y: hidden;
-        word-break: keep-all;
-        white-space: nowrap;
-    }
-    .progress-card .panel-body {
-        padding: 0px;
-    }
-    .progress-card .panel-footer {
-        padding: 0;
-        text-align: right;
-    }
-    .progress-card .progress {
-        height: 25px;
-        margin: 0;
-    }
-    .progress-card .div-table {
-        padding: 2px;
-        font-size: 13px;
-    }
-    .progress-card .persent, .progress-card .subtitle, .progress-card .weblink {
-        font-size: 15px;
-    }
-    .progress-card .weblink:hover {
-        color: black;
-    }
-    /* progress-card-label */
-    .label-persent {
-        background-color: #51ABFF;
-    }
-    .label-subtitle {
-        background-color: #3080BB;
-    }
-</style>
+<link rel="stylesheet" href="/static/css/progress/list_common.css">
 {% endblock css %}
 
 {% block js %}
-<script type="text/javascript">
-    $(function(){
-        $('.progress-card .panel').mouseover(function(){
-            $(this).find('.progress').addClass('active').addClass('progress-striped');
-        });
-        $('.progress-card .panel').mouseout(function(){
-            $(this).find('.progress').removeClass('active').removeClass('progress-striped');
-        });
-        $('.progress-card .panel').click(function(){
-            var progressid = $(this).parent('.progress-card').attr('progressid');
-            window.location.href="/progress/detail?id=" + progressid;
-        });
-        $('.page-header').mouseover(function(){
-            $(this).find('h1>span').css('color','red');
-        });
-        $('.page-header').mouseout(function(){
-            $(this).find('h1>span').css('color','silver');
-        });
-        $('.page-header').click(function(){
-            var ele = $(this).find('h1>span');
-            var whenOpen = 'glyphicon-chevron-up';
-            var whenClose = 'glyphicon-chevron-down';
-            if(ele.hasClass(whenOpen)){
-                ele.removeClass(whenOpen)
-                ele.addClass(whenClose)
-            } else {
-                ele.removeClass(whenClose)
-                ele.addClass(whenOpen)
-            }
-        });
-    });
-</script>
+<script src="/static/js/progress/list_common.js"></script>
 {% endblock js %}
 
 {% block nav-btn %}
+<a href="/progress/archive" class="btn btn-warning btn-sm">
+    进度存档 <span class="glyphicon glyphicon-arrow-right"></span>
+</a>
+{% endblock nav-btn %}
+
+{% block function-btn %}
 <a href="/progress/new" class="btn btn-success btn-sm">
     <span class="glyphicon glyphicon-plus"></span> 新增进度
 </a>
-{% endblock nav-btn %}
+{% endblock function-btn %}
 
 {% block content %}
 <div class="container">
@@ -157,38 +68,6 @@
         {% empty %}
             <div class="well">
                 您没有尚未开始的进度哦~
-            </div>
-        {% endfor %}
-    </div><!--row-->
-
-    <div class="page-header" data-toggle="collapse" data-target="#list-done">
-        <h1>
-            <span class="glyphicon glyphicon-chevron-down"></span>
-            已完成 <small>Done</small>
-        </h1>
-    </div>
-    <div class="row collapse" id="list-done">
-        {% for p in listdone %}
-            {% include 'progress/list-progresscard.html' %}
-        {% empty %}
-            <div class="well">
-                进度完成后，会自动显示在这里~
-            </div>
-        {% endfor %}
-    </div><!--row-->
-
-    <div class="page-header" data-toggle="collapse" data-target="#list-giveup">
-        <h1>
-            <span class="glyphicon glyphicon-chevron-down"></span>
-            弃置 <small>Giveup</small>
-        </h1>
-    </div>
-    <div class="row collapse" id="list-giveup">
-        {% for p in listgiveup %}
-            {% include 'progress/list-progresscard.html' %}
-        {% empty %}
-            <div class="well">
-                弃置的进度，会自动显示在这里，可以随时再继续阅读。
             </div>
         {% endfor %}
     </div><!--row-->

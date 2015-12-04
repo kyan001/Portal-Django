@@ -53,7 +53,11 @@ class Progress(models.Model):
     weblink = models.URLField(max_length=2083, blank=True, default="")
     created = models.DateTimeField()
     modified = models.DateTimeField()
-    status_pool = ('done','inprogress','giveup','error','follow','todo')
+    status_pool = {
+        'all' : ('inprogress','follow','todo','done','giveup','error'),
+        'active' : ('inprogress','follow','todo','error'),
+        'archive' : ('done','giveup'),
+    }
     def __str__(self):
         opus = self.getOpus()
         user = self.getUser()
@@ -75,8 +79,8 @@ class Progress(models.Model):
 
     # status
     def setStatus(self, status):
-        if status not in self.status_pool:
-            raise Exception("状态只能为 {0}".format(str(status_pool)))
+        if status not in self.status_pool.get('all'):
+            raise Exception("状态只能为 {0}".format( str(status_pool.get('all')) ))
         self.status = status
         self.setModified()
     def setStatusAuto(self):

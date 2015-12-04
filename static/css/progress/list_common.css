@@ -1,0 +1,62 @@
+.container {
+    font-family: 'Microsoft YaHei';
+    padding-top: 51px;
+}
+/* page-header */
+.page-header > h1 > span {
+    font-size: 25px;
+    color: silver;
+}
+.page-header h1 {
+    font-size: 30px;
+}
+.page-header small {
+    font-size: 26px;
+}
+.page-header {
+    padding-bottom: 2px;
+    cursor: pointer;
+}
+
+/* progress-card */
+.progress-card .panel:hover {
+    box-shadow: 0px 0px 5px 2px silver;
+}
+.progress-card .panel{
+    cursor: pointer;
+}
+.progress-card .panel-heading {
+    padding: 5px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    word-break: keep-all;
+    white-space: nowrap;
+}
+.progress-card .panel-body {
+    padding: 0px;
+}
+.progress-card .panel-footer {
+    padding: 0;
+    text-align: right;
+}
+.progress-card .progress {
+    height: 25px;
+    margin: 0;
+}
+.progress-card .div-table {
+    padding: 2px;
+    font-size: 13px;
+}
+.progress-card .persent, .progress-card .subtitle, .progress-card .weblink {
+    font-size: 15px;
+}
+.progress-card .weblink:hover {
+    color: black;
+}
+/* progress-card-label */
+.label-persent {
+    background-color: #51ABFF;
+}
+.label-subtitle {
+    background-color: #3080BB;
+}

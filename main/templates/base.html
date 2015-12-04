@@ -89,11 +89,40 @@
         <div id='alert-zone'>
         </div>
     {% endblock alertzone %}
+    <!-- ############ NAVIGATIONS ############-->
+    <div id='nav-btn'>
+        {% block nav-btn %}{% endblock nav-btn %}
+        <span id="function-btn">
+            {% block function-btn %}{% endblock function-btn %}
+        </span>
+    </div>
+    <style>
+        #nav-btn {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 800;
+            padding-left: 5%;
+            padding-top: 10px;
+            font-size: 15px;
+        }
+        @media (max-width: 768px) {
+            #function-btn {
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                z-index: 800;
+                padding-right: 5%;
+                padding-bottom: 66px;
+                font-size: 15px;
+            }
+            #function-btn .btn {
+                box-shadow: 0 2px 2px 1px rgba(0,0,0,0.3);
+            }
+        }
+    </style>
     <!-- ############ USER BAR ############-->
     {% block userbar %}
-        <div id='nav-btn'>
-            {% block nav-btn %}{% endblock nav-btn %}
-        </div>
         <nav id='user-bar'>
             <span class="nologinshow">
                 <a href="/" class="btn btn-info btn-sm">
@@ -119,18 +148,8 @@
                 </a>
                 <a href="/user/logout" class="btn btn-default btn-sm">登出</a>
             </span>
-
         </nav>
         <style>
-            #nav-btn {
-                position: fixed;
-                top: 0;
-                left: 0;
-                z-index: 1000;
-                padding-left: 5%;
-                padding-top: 10px;
-                font-size: 15px;
-            }
             #user-bar {
                 min-width: 40%;
                 max-width: 80%;
@@ -196,7 +215,6 @@
             }
         </script>
     {% endblock userbar %}
-
     <!-- ############ CONTENT ############-->
     <div>
         {% block content %}

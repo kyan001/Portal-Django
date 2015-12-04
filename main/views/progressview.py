@@ -19,24 +19,57 @@ def progressList(request):
         return util.ctrl.needLogin()
     #get user's progresses
     progresses = Progress.objects.filter(userid=user['id']).order_by('-modified');
-    #init vars
-    pList = {}
-    for st in Progress.status_pool:
-        pList[st] = [];
     if len(progresses):
+        #init vars
+        pList = {}
+        for st in Progress.status_pool.get('active'):
+            pList[st] = [];
+        #put progress items
         for prg in progresses:
-            try:
-                opus = Opus.objects.get(id=prg.opusid)
-            except Opus.DoesNotExist:
-                return infoMsg("未找到 id 为 {0} 的作品".format(str(p.opusid)))
-            l = {}
-            l['opus'] = opus
-            l['prg'] = prg
-            pList[prg.status].append(l)
-    for st in Progress.status_pool:
-        if pList[st]:
-            context['list'+st] = pList[st]
+            if prg.status in Progress.status_pool.get('active'):
+                try:
+                    opus = Opus.objects.get(id=prg.opusid)
+                except Opus.DoesNotExist:
+                    return infoMsg("未找到 id 为 {0} 的作品".format(str(p.opusid)))
+                l = {}
+                l['opus'] = opus
+                l['prg'] = prg
+                pList[prg.status].append(l)
+        #put into context
+        for st in Progress.status_pool.get('active'):
+            if pList[st]:
+                context['list'+st] = pList[st]
     return render_to_response('progress/list.html', context)
+
+def progressArchive(request):
+    context = {}
+    #get user
+    user = request.session.get('loginuser');
+    if not user:
+        return util.ctrl.needLogin()
+    #get user's progresses
+    progresses = Progress.objects.filter(userid=user['id']).order_by('-modified');
+    if len(progresses):
+        #init vars
+        pList = {}
+        for st in Progress.status_pool.get('archive'):
+            pList[st] = [];
+        #put progress items
+        for prg in progresses:
+            if prg.status in Progress.status_pool.get('archive'):
+                try:
+                    opus = Opus.objects.get(id=prg.opusid)
+                except Opus.DoesNotExist:
+                    return infoMsg("未找到 id 为 {0} 的作品".format(str(p.opusid)))
+                l = {}
+                l['opus'] = opus
+                l['prg'] = prg
+                pList[prg.status].append(l)
+        #put into context
+        for st in Progress.status_pool.get('archive'):
+            if pList[st]:
+                context['list'+st] = pList[st]
+    return render_to_response('progress/archive.html', context)
 
 def progressDetail(request):
     context = {}
