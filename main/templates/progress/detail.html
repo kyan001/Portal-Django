@@ -367,6 +367,12 @@
 </a>
 {% endblock nav-btn %}
 
+{% block function-btn %}
+<a href="/progress/new" class="btn btn-success btn-sm">
+    <span class="glyphicon glyphicon-plus"></span> 新增进度
+</a>
+{% endblock function-btn %}
+
 {% block content %}
 <div class="container">
     <div class="row">
@@ -413,9 +419,13 @@
                                         <div class="input-group">
                                             <span class="input-group-btn">
                                             {% if prg.status == 'giveup' %}
-                                                <div class="btn btn-danger disableBtn" id='reset' onclick="$('#resetform').submit()">取消弃置</div>
+                                                <div class="btn btn-warning disableBtn" id='reset' onclick="$('#resetform').submit()">
+                                                    <span class="glyphicon glyphicon-ok-circle"></span> 取消弃置
+                                                </div>
                                             {% else %}
-                                                <div class="btn btn-danger disableBtn" id='giveup' onclick="$('#giveupform').submit()">弃置进度</div>
+                                                <div class="btn btn-warning disableBtn" id='giveup' onclick="$('#giveupform').submit()">
+                                                    <span class="glyphicon glyphicon-ban-circle"></span> 弃置进度
+                                                </div>
                                             {% endif %}
                                             </span>
                                             <input type="tel" name="quick_current"
@@ -561,14 +571,21 @@
                             <form id="resetform" action="/progress/reset/" method="post">
                                 <input type="hidden" name="id" value="{{prg.id}}">
                             </form>
-                            <button class="btn btn-danger" id='delete' onclick="confirmDelete()">彻底删除</button>
+                            <button class="btn btn-danger" id='delete' onclick="confirmDelete()">
+                                <span class="glyphicon glyphicon-trash"></span> 彻底删除
+                            </button>
                             <div class="viewmode">
-                                <a class="btn btn-success disableBtn" id='new' href="/progress/new">新增</a>
-                                <a class="btn btn-warning" id='edit' onclick="enterEdit()">进入编辑</a>
+                                <a class="btn btn-success" id='edit' onclick="enterEdit()">
+                                    <span class="glyphicon glyphicon-pencil"></span> 进入编辑
+                                </a>
                             </div>
                             <span class="editmode">
-                                <a class="btn btn-success disableBtn" id="save" onclick="saveEdit()">保存</a>
-                                <a class="btn btn-default" id="cancel" onclick="cancelEdit()">取消编辑</a>
+                                <a class="btn btn-success disableBtn" id="save" onclick="saveEdit()">
+                                    <span class="glyphicon glyphicon-ok"></span> 保存
+                                </a>
+                                <a class="btn btn-default" id="cancel" onclick="cancelEdit()">
+                                    <span class="glyphicon glyphicon-remove"></span> 取消编辑
+                                </a>
                             </span>
                         </div>
                     </div>
