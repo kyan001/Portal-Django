@@ -112,7 +112,7 @@
                     <span style="opacity:0">·</span>
                 </a>
                 <a class="btn btn-default btn-sm profile-link" href='/user/profile'>
-                    <img class="profile-avatar">
+                    <span>Hi,</span>
                     <span class="profile-nikename">
                         用户名
                     </span>
@@ -162,6 +162,9 @@
             #user-bar .profile-nikename {
                 font-weight: bold;
             }
+            #user-bar .profile-link {
+                text-transform: none;
+            }
         </style>
         <script type="text/javascript">
             $(document).ready(function(){
@@ -180,7 +183,6 @@
                             $("#user-bar .nologinshow").fadeIn();
                         } else {
                             $("#user-bar .profile-nikename").text(result.nickname);
-                            $("#user-bar .profile-avatar").attr('src',result.avatar);
                             $("#user-bar .loginshow").fadeIn();
                         }
                     },

@@ -145,13 +145,13 @@
         {% endfor %}
     </div><!--row-->
 
-    <div class="page-header" data-toggle="collapse" data-target="#list-follow">
+    <div class="page-header" data-toggle="collapse" data-target="#list-todo">
         <h1>
-            <span class="glyphicon glyphicon glyphicon-chevron-up"></span>
+            <span class="glyphicon glyphicon glyphicon-chevron-down"></span>
             待阅读 <small>Todo</small>
         </h1>
     </div>
-    <div class="row collapse in" id="list-follow">
+    <div class="row collapse" id="list-todo">
         {% for p in listtodo %}
             {% include 'progress/list-progresscard.html' %}
         {% empty %}
