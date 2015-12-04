@@ -159,8 +159,8 @@
             },
         });
     }
-    function showImageColor(url){
-        $.getImageColor(url, function(color){
+    function showImageColor(info){
+        $.getImageColor(info.images.small, function(color){
             var r = color[0];
             var g = color[1];
             var b = color[2];
@@ -179,7 +179,7 @@
         }
         $('#opus-type').attr('title', info.title);
         $('#opus-type').attr('href', info.api);
-        showImageColor(info.images.small);
+        showImageColor(info);
         checkInfoVisibility(info)
     }
 
