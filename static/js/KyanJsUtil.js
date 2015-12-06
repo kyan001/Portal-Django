@@ -63,6 +63,12 @@ $.extend({
             }, 'jsonp');
         }
     },
+    /**
+     * get image's primary color
+     * @param  {[string]}   url      [image url, if url=="", only read cache]
+     * @param  {[string]}   name     [the opus's title which contains the image]
+     * @param  {Function}   callback [call this function after got the data]
+     */
     getImageColor: function(url, name, callback){
         var request_data = {}
         if(url==""){
