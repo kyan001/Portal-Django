@@ -79,7 +79,7 @@ $.extend({
                 console.log("textStatus: "+textStatus);
             },
             success: function(result) {
-                callback(result.color)
+                callback(result)
             }
         });
     },
