@@ -87,12 +87,3 @@ def formatDate(dt, option="optimize"):
     else:
         time_format = '%Y-%m-%d %H:%M %p'
     return dt.astimezone(timezone.get_current_timezone()).strftime(time_format)
-
-def imageToColor(url, mode="rgb"):
-    if not url:
-        return False;
-    try:
-        color = ktk.imageToColor(url)
-        return color;
-    except Exception as e:
-        return False
