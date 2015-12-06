@@ -14,7 +14,7 @@
         <script type="text/javascript" src="/static/js/KyanJsUtil.js"></script>
         <script type="text/javascript">
             var ta_filter = new Array('localhost','127.0.0.1','local.superfarmer.net')
-            if( !(window.location.hostname in ta_filter) ){
+            if( ta_filter.indexOf(window.location.hostname)<0 ){
                 jQuery.getScript('http://tajs.qq.com/stats?sId=50871665')
             }
         </script>
