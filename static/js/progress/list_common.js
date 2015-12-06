@@ -27,4 +27,12 @@ $(function(){
             ele.addClass(whenOpen)
         }
     });
+    $('.progress-card').each(function(){
+        var ele = $(this)
+        $.getImageColor("", ele.attr('progressname'), function(result){
+            if( result.color ){
+                ele.find('.panel').css('border-left', '2px solid' + result.color);
+            }
+        });
+    });
 });
