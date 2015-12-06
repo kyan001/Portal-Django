@@ -31,7 +31,7 @@ $(function(){
         var ele = $(this)
         $.getImageColor("", ele.attr('progressname'), function(result){
             if( result.color ){
-                ele.find('.panel .panel-heading').css('border-left', '15px solid' + result.color);
+                ele.find('.panel .panel-footer').css('border-left', '15px solid' + result.color);
             }
         });
     });

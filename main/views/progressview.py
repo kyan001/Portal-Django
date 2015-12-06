@@ -113,7 +113,7 @@ def progressImagecolor(request): #AJAX
     name = request.GET.get('name')
     if not name:
         return util.ctrl.returnJsonError('传入的 name 为空')
-    cache_key = 'progress:' + name + ':imagecolor'
+    cache_key = 'progress:' + name.replace(' ','') + ':imagecolor'
     cache_timeout = 60*60*24 # one day
     cached_color = cache.get(cache_key)
     result = {}
