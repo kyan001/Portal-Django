@@ -63,13 +63,22 @@ $.extend({
             }, 'jsonp');
         }
     },
-    getImageColor: function(url, callback){
+    getImageColor: function(url, name, callback){
+        var request_data = {}
+        if(url==""){
+            request_data = {
+                'name': name
+            };
+        } else {
+            request_data = {
+                'url': url,
+                'name': name,
+            };
+        }
         $.ajax({
             type: "GET",
             url: "/progress/imagecolor",
-            data: {
-                'url':url,
-            },
+            data: request_data,
             async: true,
             dataType: 'json',
             error: function(XMLHttpRequest, textStatus, errorThrown) {

@@ -160,7 +160,7 @@
         });
     }
     function showImageColor(info){
-        $.getImageColor(info.images.small, function(result){
+        $.getImageColor(info.images.small, info.title, function(result){
             $('#main-panel').css('border-left', '5px solid' + result.color);
             console.info(result);
         });
