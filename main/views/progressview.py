@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.template import *
 from django.views.decorators.csrf import csrf_exempt
 from main.models import Progress, Opus
+from django.core.cache import cache
 import util.ctrl
 
 import json
@@ -111,9 +112,18 @@ def progressImagecolor(request): #AJAX
     url = request.GET.get('url')
     try:
         if url:
-            color = ktk.imageToColor(url)
+            key = 'progress:imagecolor:'+url
+            cached_color = cache.get(key)
+            if cached_color:
+                color = cached_color
+                is_cached = True;
+            else:
+                is_cached = False;
+                color = ktk.imageToColor(url, mode='hex')
+                cache.set(key, color, 60*60*24)
             return util.ctrl.returnJson({
-                'color': color
+                'color': color,
+                'is_cached': is_cached,
             })
         else:
             return util.ctrl.returnJsonError('传入的 url 为空')
