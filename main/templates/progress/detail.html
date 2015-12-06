@@ -162,6 +162,7 @@
     function showImageColor(info){
         $.getImageColor(info.images.small, info.title, function(result){
             $('#main-panel').css('border-left', '2px solid' + result.color);
+            $('#main-panel').css('border-right', '2px solid' + result.color);
             console.info(result);
         });
     }
