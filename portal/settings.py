@@ -85,6 +85,11 @@ if 'win' in sys.platform: #测试环境下
             'HOST': 'localhost',
         }
     }
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
 else:
     with open(os.path.join(BASE_DIR, "mysql.pswd"), "r") as pswd_file:
         mysql_pswd = pswd_file.read();
@@ -95,6 +100,12 @@ else:
             'USER': 'portal',
             'PASSWORD': mysql_pswd.strip(),
             'HOST': 'localhost',
+        }
+    }
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
         }
     }
 
