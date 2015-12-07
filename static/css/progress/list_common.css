@@ -20,7 +20,10 @@
 
 /* progress-card */
 .progress-card .panel:hover {
-    box-shadow: 0px 0px 5px 2px silver;
+    box-shadow: 0px 0px 7px 2px silver;
+}
+.progress-card .panel:active {
+    transform: scale(1.04, 1.04);
 }
 .progress-card .panel{
     cursor: pointer;
@@ -46,12 +49,14 @@
 .progress-card .div-table {
     padding: 2px;
     font-size: 13px;
+    color: white;
+    background-color: #2196f3;
 }
 .progress-card .persent, .progress-card .subtitle, .progress-card .weblink {
     font-size: 15px;
 }
 .progress-card .weblink:hover {
-    color: black;
+    color: indigo;
 }
 /* progress-card-label */
 .label-persent {
