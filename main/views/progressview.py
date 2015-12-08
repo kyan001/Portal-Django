@@ -111,25 +111,27 @@ def progressImagecolor(request): #AJAX
     '''异步获取一个url的颜色'''
     url = request.GET.get('url')
     name = request.GET.get('name')
-    if not name:
-        return util.ctrl.returnJsonError('传入的 name 为空')
-    cache_key = 'progress:' + name.replace(' ','') + ':imagecolor'
-    cache_timeout = 60*60*24*7*2 # 2 weeks
-    cached_color = cache.get(cache_key)
     result = {}
-    if cached_color:
-        result['is_cached'] = True;
-        result['color'] = cached_color
-    else:
-        result['is_cached'] = False;
-        if url:
-            try:
-                color = ktk.imageToColor(url, mode='hex')
-                cache.set(cache_key, color, cache_timeout)
-                result['color'] = color
-            except Exception as e:
-                return util.ctrl.returnJsonError(str(e))
+    if name:# has-name
+        cache_key = 'progress:' + name.replace(' ','') + ':imagecolor'
+        cache_timeout = 60*60*24*7*2 # 2 weeks
+        cached_color = cache.get(cache_key)
+        if cached_color: # has-name & cached
+            result['is_cached'] = True;
+            result['color'] = cached_color
+            return util.ctrl.returnJson(result)
+        else:# has-name & not-cached
+            result['is_cached'] = False;
+    if url: # no-name or not-cached
+        try:
+            color = ktk.imageToColor(url, mode='hex')
+        except Exception as e:
+            return util.ctrl.returnJsonError(str(e))
+        result['color'] = color
+        if cache_key:
+            cache.set(cache_key, color, cache_timeout)
     return util.ctrl.returnJson(result)
+
 
 @csrf_exempt
 def progressFastupdate(request):
