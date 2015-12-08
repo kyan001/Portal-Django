@@ -128,7 +128,7 @@ def progressImagecolor(request): #AJAX
         except Exception as e:
             return util.ctrl.returnJsonError(str(e))
         result['color'] = color
-        if cache_key:
+        if name:
             cache.set(cache_key, color, cache_timeout)
     return util.ctrl.returnJson(result)
 
