@@ -192,9 +192,10 @@ def userForgetanswer(request):
         <li>如果连接无法打开，请在复制后在浏览器中打开：</li>
         <a href='http://portal.superfarmer.net/user/resetanswer/'>http://portal.superfarmer.net/user/resetanswer/</a>
     '''
-    result = sendEmail(content, 'kai@superfarmer.net', subject='忘记密码找回注册')
-    if not result:
-        return infoMsg("发送邮件失败："+ json.dumps(result), title="发送失败")
+    # TODO: Not worked on Server
+    # result = sendEmail(content, 'kai@superfarmer.net', subject='忘记密码找回注册')
+    # if not result:
+    #     return infoMsg("发送邮件失败："+ json.dumps(result), title="发送失败")
     return render_to_response('user/forgetanswer.html', context)
 
 
