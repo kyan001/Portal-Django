@@ -13,6 +13,7 @@ import util.KyanToolKit_Py
 ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 
 def progressList(request):
+    '''进度列表：显示所有进行中、待开始、追剧中的进度'''
     context = {}
     #get user
     user = request.session.get('loginuser');
@@ -46,6 +47,7 @@ def progressList(request):
     return render_to_response('progress/list.html', context)
 
 def progressArchive(request):
+    '''进度存档：显示所有已完成、已弃置的进度'''
     context = {}
     #get user
     user = request.session.get('loginuser');
@@ -79,6 +81,7 @@ def progressArchive(request):
     return render_to_response('progress/archive.html', context)
 
 def progressDetail(request):
+    '''进度详情页'''
     context = {}
     # get inputs
     user = request.session.get('loginuser');
@@ -116,7 +119,7 @@ def progressDetail(request):
     context['aux'] = aux
     return render_to_response('progress/detail.html', context)
 
-def progressImagecolor(request): #AJAX
+def progressImagecolor(request): #AJAX #PUBLIC
     '''异步获取一个url的颜色'''
     url = request.GET.get('url')
     name = request.GET.get('name')
@@ -144,7 +147,7 @@ def progressImagecolor(request): #AJAX
 
 @csrf_exempt
 def progressFastupdate(request):
-    'detail界面右下角的快捷更新'
+    '''detail界面右下角的快捷更新'''
     # get inputs
     user = request.session.get('loginuser');
     if not user:
@@ -189,7 +192,7 @@ def progressFastupdate(request):
 
 @csrf_exempt
 def progressUpdate(request):
-    'detail页面，编辑模式的保存'
+    '''detail页面，编辑模式的保存'''
     # get inputs
     user = request.session.get('loginuser');
     if not user:
@@ -244,7 +247,7 @@ def progressUpdate(request):
 
 @csrf_exempt
 def progressDelete(request):
-    'detail 界面点击删除按钮'
+    '''detail 界面点击删除按钮'''
     # get inputs
     user = request.session.get('loginuser');
     if not user:
@@ -276,7 +279,7 @@ def progressDelete(request):
 
 @csrf_exempt
 def progressGiveup(request):
-    'detail 界面点击弃置按钮'
+    '''detail 界面点击弃置按钮'''
     # get inputs
     user = request.session.get('loginuser');
     if not user:
@@ -308,7 +311,7 @@ def progressGiveup(request):
 
 @csrf_exempt
 def progressReset(request):
-    'detail 界面点击取消弃置按钮'
+    '''detail 界面点击取消弃置按钮'''
     # get inputs
     user = request.session.get('loginuser');
     if not user:
@@ -339,7 +342,7 @@ def progressReset(request):
     return redirect('/progress/detail?id='+str(progress.id));
 
 def progressNew(request):
-    'list/detail 界面点击新增按钮'
+    '''list/detail 界面点击新增按钮'''
     context = {}
     # get inputs
     user = request.session.get('loginuser');
@@ -353,7 +356,7 @@ def progressNew(request):
 
 @csrf_exempt
 def progressAdd(request):
-    '新增界面点击保存按钮'
+    '''新增界面点击保存按钮'''
     # get inputs
     user = request.session.get('loginuser');
     if not user:

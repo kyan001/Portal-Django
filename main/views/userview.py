@@ -62,6 +62,7 @@ def checkAnswer(user, answer):
 #--views-----------------------------------------------
 
 def userLogout(request):
+    '''用户点击登出'''
     # clean session
     request.session['loginuser'] = None;
     # create response
@@ -74,7 +75,8 @@ def userLogout(request):
     response.delete_cookie('user_answer')
     return response;
 
-def userAvatar(request, email):
+def userAvatar(request, email): # public
+    '''通过 email 取回 gravatar'''
     context = {}
     if email:
         context['headimg'] = getGravatarUrl(email)
@@ -83,6 +85,7 @@ def userAvatar(request, email):
     return render_to_response('user/avatar.html', context)
 
 def userExphistory(request):
+    '''用户的所有/某类活跃列表，由 profile 进入'''
     # user check
     user = request.session.get('loginuser')
     if not user:
@@ -102,9 +105,10 @@ def userExphistory(request):
     context['exphistorys'] = exphistorys
     return render_to_response('user/exphistory.html', context)
 
-def userUser(request):
+def userUser(request): # public
+    '''通过 email/id/nickname 查看用户公开信息'''
     context = {}
-    searchable_cols = ('username','id','email');
+    searchable_cols = ('nickname','id','email');
     try:
         for sc in searchable_cols:
             if sc in request.GET:
@@ -120,6 +124,7 @@ def userUser(request):
         return infoMsg("用户 {0} 不存在".format(json.dumps(dict(request.GET))), title='参数错误')
 
 def userProfile(request):
+    '''查看当前用户的个人信息，点击右上角昵称进入'''
     context = {}
     user = request.session.get('loginuser')
     if not user:
@@ -138,6 +143,7 @@ def userProfile(request):
 
 #-Signup-----------------------------------------------
 def userSignup(request):
+    '''点击注册按钮后页面'''
     context = {}
     if 'redirect' in request.GET:
         context['redirect'] = request.GET.get('redirect')
@@ -147,7 +153,7 @@ def userSignup(request):
 
 @csrf_exempt
 def userNewUser(request):
-    '''新用户点击提交注册后'''
+    '''新用户点击提交注册按钮后'''
     username = request.POST.get('username')
     question = request.POST.get('question')
     answer1 = request.POST.get('answer1')
@@ -201,6 +207,7 @@ def userNewUser(request):
 
 #-Signin-----------------------------------------------
 def userSignin(request):
+    '''点击登入后的页面，供输入用户名/密码'''
     # check if already logged in
     current_user = request.session.get('loginuser');
     if current_user:
