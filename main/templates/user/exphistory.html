@@ -15,6 +15,12 @@
 </style>
 {% endblock css %}
 
+{% block nav-btn %}
+    <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
+        <span class="glyphicon glyphicon-arrow-left"></span> 回到上一页
+    </a>
+{% endblock nav-btn %}
+
 {% block content %}
 <div class="container">
     <table class="table table-condensed table-bordered table-striped table-hover">
