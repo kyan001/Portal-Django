@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.utils import timezone
 from django.template import *
 from django.views.decorators.csrf import csrf_exempt
-from main.models import Progress, Opus
+from main.models import Progress, Opus, UserExp
 from django.core.cache import cache
 import util.ctrl
 
@@ -18,6 +18,9 @@ def progressList(request):
     user = request.session.get('loginuser');
     if not user:
         return util.ctrl.needLogin()
+    else:
+        userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+        userexp.addExp(1, '访问进度列表页面')
     #get user's progresses
     progresses = Progress.objects.filter(userid=user['id']).order_by('-modified');
     if len(progresses):
@@ -48,6 +51,9 @@ def progressArchive(request):
     user = request.session.get('loginuser');
     if not user:
         return util.ctrl.needLogin()
+    else:
+        userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+        userexp.addExp(1, '访问进度存档页面')
     #get user's progresses
     progresses = Progress.objects.filter(userid=user['id']).order_by('-modified');
     if len(progresses):
@@ -94,6 +100,9 @@ def progressDetail(request):
         opus = Opus.objects.get(id=progress.opusid)
     except Opus.DoesNotExist:
         return infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
+    # add exp
+    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp.addExp(1, '查看进度《{0}》的详情'.format(opus.name))
     # calcs
     aux = {};
     if progress.current != 0 and opus.total != 0 and progress.status!='done':
@@ -165,6 +174,9 @@ def progressFastupdate(request):
     # validation
     if opus.total > 0 and quick_current > opus.total:
         return util.ctrl.infoMsg("当前进度 {0} 超过最大值 {1}".format(str(quick_current), str(opus.total)))
+    # add exp
+    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp.addExp(2, '快捷更新进度《{0}》'.format(opus.name))
     # save
     progress.current = quick_current;
     if(progress.setStatusAuto()):
@@ -213,6 +225,9 @@ def progressUpdate(request):
         opus = Opus.objects.get(id=progress.opusid)
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
+    # add exp
+    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp.addExp(2, '编辑进度《{0}》成功'.format(opus.name))
     # save
     progress.current = current;
     opus.name = name;
@@ -250,6 +265,9 @@ def progressDelete(request):
         opus = Opus.objects.get(id=progress.opusid)
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
+    # add exp
+    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp.addExp(2, '删除进度《{0}》'.format(opus.name))
     # save
     progress.delete()
     opus.delete()
@@ -258,7 +276,7 @@ def progressDelete(request):
 
 @csrf_exempt
 def progressGiveup(request):
-    'detail 界面点击放弃按钮'
+    'detail 界面点击弃置按钮'
     # get inputs
     user = request.session.get('loginuser');
     if not user:
@@ -279,6 +297,9 @@ def progressGiveup(request):
         opus = Opus.objects.get(id=progress.opusid)
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
+    # add exp
+    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp.addExp(2, '弃置进度《{0}》'.format(opus.name))
     # save
     progress.setStatus('giveup')
     progress.save()
@@ -308,6 +329,9 @@ def progressReset(request):
         opus = Opus.objects.get(id=progress.opusid)
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
+    # add exp
+    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp.addExp(2, '恢复已弃置的进度《{0}》'.format(opus.name))
     # save
     progress.resetStatus()
     progress.save()
@@ -321,6 +345,9 @@ def progressNew(request):
     user = request.session.get('loginuser');
     if not user:
         return util.ctrl.needLogin()
+    # add exp
+    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp.addExp(2, '尝试新增进度')
     # render
     return render_to_response('progress/new.html', context)
 
@@ -340,20 +367,18 @@ def progressAdd(request):
     total = int(total) if total else 0;
     current = request.POST.get('current');
     current = int(current);
-    tag1 = request.POST.get('tag1');
-    tag2 = request.POST.get('tag2');
-    tag3 = request.POST.get('tag3');
-    tags = (tag1, tag2, tag3)
     if not name:
         return util.ctrl.infoMsg("名称（name）不能为空", title="保存失败")
+    # validate
     if current <= 0:
         current = 0;
     if total > 0 and current > total:
         return util.ctrl.infoMsg("初始进度 {0} 不能大于总页数 {1}".format(str(current), str(total)))
+    # add exp
+    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp.addExp(2, '新增进度《{0}》成功'.format(name))
+    # save
     opus = Opus(name=name, subtitle=subtitle, total=total)
-    for t in tags:
-        if(t):
-            opus.addTag(t)
     opus.setCreated();
     opus.save()
     progress = Progress(current=current, opusid=opus.id, userid=user['id'], weblink=weblink)
