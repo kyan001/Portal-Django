@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ userexp.getCategory }}{% endblock title %}
+
+{% block css %}
+<style>
+    .container {
+        font-family: "微软雅黑","Microsoft Yahei","Helvetica Neue",Helvetica,"Hiragino Sans GB","Segoe UI",Tahoma,Arial,STHeiti,sans-serif !important;
+        padding-top: 50px;
+        padding-bottom: 75px;
+    }
+    .table {
+        margin-bottom: 0;
+        font-size: 15px;
+    }
+</style>
+{% endblock css %}
+
+{% block content %}
+<div class="container">
+    <table class="table table-condensed table-bordered table-striped table-hover">
+    {% for eh in exphistorys %}
+        <tr>
+            <td>
+                {% ifchanged eh.getCreated %}
+                    {{ eh.getCreated }}
+                {% endifchanged %}
+            </td>
+            <th>+{{ eh.change }}</th>
+            <td>{{ eh.operation }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock content %}
+
+{% block footer %}
+    {{ block.super }}
+    <style>
+    #footer-div {
+        position: fixed;
+        bottom: 0;
+    }
+    </style>
+{% endblock footer %}

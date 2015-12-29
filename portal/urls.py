@@ -13,6 +13,7 @@ urlpatterns = [
     # USER
     url(r'^user/user', views.userUser),
     url(r'^user/profile/', views.userProfile),
+    url(r'^user/exphistory$', views.userExphistory),
     url(r'^user/avatar/(?P<email>[0-9a-zA-Z_.@]+)/$', views.userAvatar),
     url(r'^user/signin/$', views.userSignin),
     url(r'^user/signup/$', views.userSignup),

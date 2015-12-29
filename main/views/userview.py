@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import *
 from django.views.decorators.csrf import csrf_exempt
-from main.models import User
+from main.models import User, UserExp, ExpHistory
 from util.ctrl import *
 
 import json
@@ -82,6 +82,26 @@ def userAvatar(request, email):
         return infoMsg("请输入email")
     return render_to_response('user/avatar.html', context)
 
+def userExphistory(request):
+    # user check
+    user = request.session.get('loginuser')
+    if not user:
+        return infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
+    user = User.objects.get(id=user['id'])
+    # get inputs
+    context = {}
+    category = request.GET.get('category')
+    if category:
+        if category not in UserExp.category_pool.get('all'):
+            return infoMsg("请求的分类（{0}）不存在".format(category), title='访问错误')
+        userexp = user.getUserExp(category)
+        exphistorys = userexp.getExpHistory()
+    # render
+    context['user'] = user
+    context['userexp'] = userexp
+    context['exphistorys'] = exphistorys
+    return render_to_response('user/exphistory.html', context)
+
 def userUser(request):
     context = {}
     searchable_cols = ('username','id','email');
@@ -106,9 +126,14 @@ def userProfile(request):
         return infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
     try:
         context['user'] = User.objects.get(id=user['id'])
+        context['userexps'] = context['user'].getUserExp()
     except User.DoesNotExist:
         return infoMsg("您查找的用户id {} 并不存在".format(str(user['id'])));
     context['headimg'] = getGravatarUrl(user['email']);
+    # add exp
+    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='user')
+    userexp.addExp(1, '查看用户私人信息')
+    # render
     return render_to_response('user/profile.html', context)
 
 #-Signup-----------------------------------------------
@@ -166,6 +191,10 @@ def userNewUser(request):
     user = User(username=username, question=question, answer1=answer1, answer2=answer2, tip=tip, nickname=nickname, email=email)
     user.setCreated();
     user.save();
+
+    # add exp
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
+    userexp.addExp(1, '注册成功')
 
     # render
     return infoMsg(" {0} 注册成功！\n您是网站第 {1} 位用户。\n请登入以便我们记住您！".format(username, str(user.id)), url='/user/signin', title="欢迎加入")
@@ -234,6 +263,9 @@ def userCheckLogin(request):
     for urllet in redirect_to_home:
         if urllet in redirect_url:
             response = redirect('/')
+    # add exp
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
+    userexp.addExp(1, '登陆成功')
     # set cookie
     if rememberme == 'yes':
         oneweek = 60*60*24*7
