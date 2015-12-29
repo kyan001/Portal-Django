@@ -17,7 +17,7 @@ class User(models.Model):
     email = models.EmailField()
     created = models.DateTimeField(default=timezone.now, blank=True)
     def __str__(self): # 用于需要 string 时的处理 python3
-        return str(self.id) + ":" + self.nickname + "(" + self.username + ")"
+        return "{0}: {1} - @{2} - {3}".format(str(self.id), self.getCreated(), self.username, self.nickname)
     def toArray(self):
         self.created = self.created.isoformat(' ')
         return model_to_dict(self)
@@ -42,7 +42,7 @@ class UserExp(models.Model):
     }
     def __str__(self):
         user = self.getUser()
-        return str(self.id) + " |{0} |{1}: {2} |lv{3}".format(user.nickname, self.getCategory(), str(self.exp), str(self.getLevel()))
+        return str(self.id) + ": @{0} - {1}: {2} - lv{3}".format(user.nickname, self.getCategory(), str(self.exp), str(self.getLevel()))
     # Category
     def setCategory(self, category):
         if category not in self.category_pool.get('all'):
@@ -101,7 +101,7 @@ class ExpHistory(models.Model):
     def __str__(self):
         userexp = self.getUserexp()
         user = userexp.getUser()
-        return str(self.id) + " |{0} |{1}: [{2}] {3} +{4}".format(
+        return str(self.id) + ": {0} - @{1}: [{2}] {3} +{4}".format(
             self.getCreated(), user.nickname, userexp.getCategory(), self.operation, str(self.change)
         )
     def getUserexp(self):
@@ -120,7 +120,7 @@ class Opus(models.Model):
     def __str__(self):
         subtext = "(" + self.subtitle + ")" if self.subtitle else "";
         total = self.total if self.total else '∞'
-        return str(self.id) + ': <<{0}>>{1}[{2}]'.format(self.name, subtext, str(total))
+        return str(self.id) + ': {0} {1} [{2}]'.format(self.name, subtext, str(total))
     def toArray(self):
         self.created = self.created.isoformat(' ')
         return model_to_dict(self)
@@ -147,7 +147,7 @@ class Progress(models.Model):
     def __str__(self):
         opus = self.getOpus()
         user = self.getUser()
-        return str(self.id) + ": {0}({1}) - 《{2}》({3}/{4})".format(user.username, user.nickname, opus.name, str(self.current), str(opus.total))
+        return str(self.id) + ": @{0} - {1} ({2}/{3})".format(user.nickname, opus.name, str(self.current), str(opus.total))
     def toArray(self):
         self.created = self.created.isoformat(' ')
         self.modified = self.modified.isoformat(' ')
