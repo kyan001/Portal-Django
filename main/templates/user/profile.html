@@ -11,7 +11,7 @@
     #headimg {
         width: 100%;
     }
-    /* personal-info */
+    /* main-info */
 
     /* exp-info */
     .progress {
@@ -30,16 +30,49 @@
 {% block content %}
 <div class="container">
     <div class='row'>
-        <div class='col-xs-12 col-sm-4 col-md-3'>
-            <a href="/user/avatar/{{user.email}}" title="from gravatar.com">
-                <img id="headimg" src="{{ headimg }}">
-            </a>
+        <div class='hidden-xs col-sm-4 col-md-3 col-md-offset-1' id='gravatar'>
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <a href="/user/avatar/{{user.email}}" title="from gravatar.com">
+                        <img id="headimg" src="{{ headimg }}">
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class='col-xs-12 col-sm-8 col-md-8'>
+        <div class='col-xs-12 col-sm-8 col-md-7' id='exp-info'>
+            <div class="panel panel-primary">
+                <div class="panel-heading">活跃度</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        {% for exp in userexps %}
+                        <a class="list-group-item" href="/user/exphistory?category={{exp.category}}">
+                            <span class="category">{{ exp.getCategory }}</span>
+                            <span class="badge"><b>Lv.{{ exp.getLevel }}</b></span>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {{ exp.getPersent }}%;">
+                                    <b>{{ exp.exp }} / {{ exp.getLevelupExp }}</b>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div><!--.col-->
+    </div><!--.row-->
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1" id='main-info'>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab">个人信息</a></li>
-                <li role="presentation"><a href="#register-info" aria-controls="register-info" role="tab" data-toggle="tab">注册信息</a></li>
+                <li role="presentation" class="active">
+                    <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab">个人信息</a>
+                </li>
+                <li role="presentation">
+                    <a href="#register-info" aria-controls="register-info" role="tab" data-toggle="tab">注册信息</a>
+                </li>
+                <li role="presentation">
+                    <a href="#progress-info" aria-controls="progress-info" role="tab" data-toggle="tab">进度信息</a>
+                </li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
@@ -107,30 +140,11 @@
                         </tr>
                     </table>
                 </div>
-            </div>
-        </div><!--.col-->
-    </div><!--.row-->
-    <div class="row">
-        <div id="exp-info" class="col-xs-12 col-sm-10 col-md-8">
-            <div class="panel panel-primary" id="info-panel">
-                <div class="panel-heading">活跃度</div>
-                <div class="panel-body">
-                    <ul class="list-group col-xs-12">
-                        {% for exp in userexps %}
-                        <a class="list-group-item" href="/user/exphistory?category={{exp.category}}">
-                            <span class="category">{{ exp.getCategory }}</span>
-                            <span class="badge"><b>Lv.{{ exp.getLevel }}</b></span>
-                            <div class="progress">
-                                <div class="progress-bar" style="width: {{ exp.getPersent }}%;">
-                                    <b>{{ exp.exp }} / {{ exp.getLevelupExp }}</b>
-                                </div>
-                            </div>
-                        </a>
-                        {% endfor %}
-                    </ul>
+                <div role="tabpanel" class="tab-pane" id="progress-info">
+                    施工中 ...
                 </div>
             </div>
-        </div><!--.col#exp-info-->
+        </div><!--.col-->
     </div><!--.row-->
 </div><!--.container-->
 {% endblock content %}
