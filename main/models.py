@@ -42,7 +42,7 @@ class UserExp(models.Model):
     }
     def __str__(self):
         user = self.getUser()
-        return str(self.id) + "| {0}({1}) | {2}: {3} | lv{4}".format(user.username, user.nickname, self.getCategory(), str(self.exp), str(self.getLevel()))
+        return str(self.id) + " |{0} |{1}: {2} |lv{3}".format(user.nickname, self.getCategory(), str(self.exp), str(self.getLevel()))
     # Category
     def setCategory(self, category):
         if category not in self.category_pool.get('all'):
@@ -101,8 +101,8 @@ class ExpHistory(models.Model):
     def __str__(self):
         userexp = self.getUserexp()
         user = userexp.getUser()
-        return str(self.id) + "|{0} |{1}({2}): [{3}] {4} +{5}".format(
-            self.getCreated(), user.username, user.nickname, userexp.getCategory(), self.operation, str(self.change)
+        return str(self.id) + " |{0} |{1}: [{2}] {3} +{4}".format(
+            self.getCreated(), user.nickname, userexp.getCategory(), self.operation, str(self.change)
         )
     def getUserexp(self):
         return UserExp.objects.get(id=self.userexpid)
