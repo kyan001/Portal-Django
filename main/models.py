@@ -77,9 +77,8 @@ class UserExp(models.Model):
         self.save()
         history.save()
     # calculations
-    def getLevel(self, exp=None):
-        exp = exp or self.exp
-        exp = int(exp)
+    def getLevel(self):
+        exp = int(self.exp)
         level = int(exp ** 0.5)
         return level
     def getLevelupExp(self):
@@ -90,8 +89,11 @@ class UserExp(models.Model):
         return int(persent)
     def getUser(self):
         return User.objects.get(id=self.userid)
-    def getExpHistory(self):
-        return ExpHistory.objects.filter(userexpid=self.id).order_by('-created')
+    def getExpHistory(self, count=0):
+        result = ExpHistory.objects.filter(userexpid=self.id).order_by('-created')
+        if isinstance(count,int) and count>0:
+            return result[0:count]
+        return result
 
 class ExpHistory(models.Model):
     userexpid = models.IntegerField(default=0, blank=False, null=False)
