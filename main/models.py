@@ -167,7 +167,6 @@ class Progress(models.Model):
         'todo': '待阅读',
         'follow': '追剧中',
     }
-
     objects = ProgressManager()
     def __str__(self):
         opus = self.getOpus()
