@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import *
 from django.views.decorators.csrf import csrf_exempt
-from main.models import User, UserExp, ExpHistory
+from main.models import User, UserExp, Progress
 from util.ctrl import *
 
 import json
@@ -126,19 +126,35 @@ def userUser(request): # public
 def userProfile(request):
     '''查看当前用户的个人信息，点击右上角昵称进入'''
     context = {}
-    user = request.session.get('loginuser')
-    if not user:
+    loginuser = request.session.get('loginuser')
+    if not loginuser:
         return infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
+    # get user
     try:
-        context['user'] = User.objects.get(id=user['id'])
-        context['userexps'] = context['user'].getUserExp()
+        user = User.objects.get(id=loginuser['id'])
     except User.DoesNotExist:
-        return infoMsg("您查找的用户id {} 并不存在".format(str(user['id'])));
-    context['headimg'] = getGravatarUrl(user['email']);
+        return infoMsg("您查找的用户id {} 并不存在".format(str(loginuser['id'])));
+    # get user exps
+    userexps = user.getUserExp()
+    exps = []
+    for ue in userexps:
+        explet = (ue, ue.getExpHistory(5))
+        exps.append(explet)
+    # get user progress counts
+    progress_counts = user.getProgressCounts();
+    progress_counts_group = []
+    print(progress_counts)
+    for (k, v) in progress_counts.items():
+        item = (Progress.objects.getStatusName(k), v)
+        progress_counts_group.append(item)
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='user')
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
     userexp.addExp(1, '查看用户私人信息')
     # render
+    context['user'] = user
+    context['headimg'] = getGravatarUrl(user.email);
+    context['prgcounts'] = progress_counts_group
+    context['exps'] = exps
     return render_to_response('user/profile.html', context)
 
 #-Signup-----------------------------------------------
