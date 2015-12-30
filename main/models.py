@@ -140,18 +140,9 @@ class Opus(models.Model):
 
 class ProgressManager(models.Manager):
     def getStatusName(self, status):
-        if status == 'giveup':
-            return '弃置';
-        if status == 'error':
-            return '出错';
-        if status == 'done':
-            return '已完成';
-        if status == 'inprogress':
-            return '进行中';
-        if status == 'follow':
-            return '追剧中';
-        if status == 'todo':
-            return '待阅读';
+        status_name = Progress.status_name.get(status)
+        if status_name:
+            return status_name;
         return status
 
 class Progress(models.Model):
@@ -167,6 +158,16 @@ class Progress(models.Model):
         'active' : ('inprogress','follow','todo','error'),
         'archive' : ('done','giveup'),
     }
+    status_name = {
+        'done': '已完成',
+        'inprogress': '进行中',
+        'giveup': '弃置',
+        'done': '已完成',
+        'error': '出错',
+        'todo': '待阅读',
+        'follow': '追剧中',
+    }
+
     objects = ProgressManager()
     def __str__(self):
         opus = self.getOpus()
@@ -215,7 +216,10 @@ class Progress(models.Model):
         self.setStatus('error')
         return self.setStatusAuto()
     def getStatus(self):
-        return ProgressManager.getStatusName(self.status)
+        status_name = self.status_name.get(self.status)
+        if status_name:
+            return status_name;
+        return self.status
     # calculations
     def getPersent(self):
         opus = self.getOpus()
