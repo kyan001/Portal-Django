@@ -143,7 +143,6 @@ def userProfile(request):
     # get user progress counts
     progress_counts = user.getProgressCounts();
     progress_counts_group = []
-    print(progress_counts)
     for (k, v) in progress_counts.items():
         item = (Progress.objects.getStatusName(k), v)
         progress_counts_group.append(item)
