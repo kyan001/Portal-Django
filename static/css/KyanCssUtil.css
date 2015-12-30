@@ -11,12 +11,11 @@
     .text-alignleft { display: inline-block; width: 100%; text-align: left; }
     .text-alignright { display: inline-block; width: 100%; text-align: right; }
     .text-aligncenter { display: inline-block; width: 100%; text-align: center; }
-    .text-right { text-align: right; }
-    .text-center { text-align: center; }
     .text-primary-dark { color: LightSkyBlue; }
 
 /* Float */
     .float-right { float: right; }
+    a.no-decoration { text-decoration: none; }
 
 /* blurs */
     .blur, .hover-notblur, .hover-blur:hover{
@@ -36,28 +35,28 @@
 
 /* animations */
     .beveryfast {
-        transition: all 0.2s linear;
-        -moz-transition: all 0.2s linear;
-        -webkit-transition: all 0.2s linear;
-        -o-transition: all 0.2s linear;
+        transition: all 0.2s ease;
+        -moz-transition: all 0.2s ease;
+        -webkit-transition: all 0.2s ease;
+        -o-transition: all 0.2s ease;
     }
     .befast {
-        transition: all 0.5s linear;
-        -moz-transition: all 0.5s linear;
-        -webkit-transition: all 0.5s linear;
-        -o-transition: all 0.5s linear;
+        transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -webkit-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
     }
     .benormal {
-        transition: all 1s linear;
-        -moz-transition: all 1s linear;
-        -webkit-transition: all 1s linear;
-        -o-transition: all 1s linear;
+        transition: all 1s ease;
+        -moz-transition: all 1s ease;
+        -webkit-transition: all 1s ease;
+        -o-transition: all 1s ease;
     }
     .beslow {
-        transition: all 2s linear;
-        -moz-transition: all 2s linear;
-        -webkit-transition: all 2s linear;
-        -o-transition: all 2s linear;
+        transition: all 2s ease;
+        -moz-transition: all 2s ease;
+        -webkit-transition: all 2s ease;
+        -o-transition: all 2s ease;
     }
 
 /* colors */
