@@ -11,17 +11,26 @@
     #headimg {
         width: 100%;
     }
+    .table {
+        margin-bottom: 0;
+    }
     /* main-info */
-
+    .progress-status {
+        width: 30%;
+    }
     /* exp-info */
     .progress {
-        height: 25px;
         margin: 0;
+    }
+    .panel:hover {
+        box-shadow: 0px 0px 5px 2px silver;
+    }
+    .panel:hover .progress {
+        height: 25px;
     }
     #exp-info .category {
         font-size: 15px;
         font-weight: bold;
-        margin-right: 5px;
     }
 
 </style>
@@ -39,29 +48,7 @@
                 </div>
             </div>
         </div>
-        <div class='col-xs-12 col-sm-8 col-md-7' id='exp-info'>
-            <div class="panel panel-primary">
-                <div class="panel-heading">活跃度</div>
-                <div class="panel-body">
-                    <ul class="list-group">
-                        {% for exp in userexps %}
-                        <a class="list-group-item" href="/user/exphistory?category={{exp.category}}">
-                            <span class="category">{{ exp.getCategory }}</span>
-                            <span class="badge"><b>Lv.{{ exp.getLevel }}</b></span>
-                            <div class="progress">
-                                <div class="progress-bar" style="width: {{ exp.getPersent }}%;">
-                                    <b>{{ exp.exp }} / {{ exp.getLevelupExp }}</b>
-                                </div>
-                            </div>
-                        </a>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div><!--.col-->
-    </div><!--.row-->
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1" id='main-info'>
+        <div class='col-xs-12 col-sm-8 col-md-7' id='main-info'>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
@@ -95,14 +82,14 @@
                             <td>{{ user.email }}</td>
                         </tr>
                     </table>
-                    <div class="well">
-                        <a href="/user/user?id={{ user.id }}" class="btn btn-success">
+                    <tr>
+                        <a href="/user/user?nickname={{ user.nickname }}" class="btn btn-success">
                             我的公开信息
                         </a>
                         <a href="/user/avatar/{{ user.email }}" class="btn btn-warning">
                             我的头像地址
                         </a>
-                    </div>
+                    </tr>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="register-info">
                     <table class="table table-condensed table-hover">
@@ -141,9 +128,50 @@
                     </table>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="progress-info">
-                    施工中 ...
+                     <table class="table table-condensed table-hover">
+                    {% for name, count in prgcounts %}
+                        {% if name != '出错' %}
+                        <tr>
+                            <th class="progress-status">{{ name }}:</th>
+                            <td>{{ count }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </table>
                 </div>
             </div>
+        </div><!--.col-->
+    </div><!--.row-->
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-0" id='exp-info'>
+            {% for exp, exphistory in exps %}
+            <div class="col-xs-12 col-sm-12 col-md-4">
+                <a class="no-decoration" href="/user/exphistory?category={{exp.category}}">
+                    <div class="panel panel-primary befast">
+                        <div class="panel-heading">
+                            <span>{{ exp.getCategory }}</span>
+                            <span class="pull-right">Lv.<b>{{ exp.getLevel }}</b></span>
+                        </div>
+                        <div class="panel-body">
+                            <div class="progress progress-striped beveryfast">
+                                <div class="progress-bar" style="width: {{ exp.getPersent }}%;">
+                                    {{ exp.exp }} / {{ exp.getLevelupExp }}
+                                </div>
+                            </div>
+                            <table class="table table-condensed">
+                            {% for eh in exphistory %}
+                                <tr>
+                                    <th>+{{ eh.change }}</th>
+                                    <td>{{ eh.operation }}</td>
+                                </tr>
+                            {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
         </div><!--.col-->
     </div><!--.row-->
 </div><!--.container-->
@@ -162,11 +190,11 @@
 {% block js %}
 <script type="text/javascript">
 $(function(){
-    $('#exp-info .list-group-item').mouseover(function(){
-        $(this).find('.progress').addClass('active').addClass('progress-striped');
+    $('#exp-info .panel').mouseover(function(){
+        $(this).find('.progress').addClass('active');
     });
-    $('#exp-info .list-group-item').mouseout(function(){
-        $(this).find('.progress').removeClass('active').removeClass('progress-striped');
+    $('#exp-info .panel').mouseout(function(){
+        $(this).find('.progress').removeClass('active');
     });
 })
 </script>
