@@ -30,6 +30,11 @@ class User(models.Model):
             return UserExp.objects.get_or_create(userid=self.id, category=category)[0]
         else:
             return UserExp.objects.filter(userid=self.id)
+    def getProgressCounts(self):
+        countResult = {}
+        for st in Progress.status_pool.get('all'):
+            countResult[st] = Progress.objects.filter(userid=self.id, status=st).count()
+        return countResult
 
 class UserExp(models.Model):
     userid = models.IntegerField(default=0, blank=False, null=False)
