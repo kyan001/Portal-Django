@@ -6,10 +6,8 @@
     .container {
         font-family: "微软雅黑","Microsoft Yahei","Helvetica Neue",Helvetica,"Hiragino Sans GB","Segoe UI",Tahoma,Arial,STHeiti,sans-serif !important;
         padding-top: 50px;
-        padding-bottom: 75px;
     }
     .table {
-        margin-bottom: 0;
         font-size: 15px;
     }
 </style>
@@ -21,10 +19,26 @@
     </a>
 {% endblock nav-btn %}
 
+{% block function-btn %}
+{% if view != "full" %}
+<a class="btn btn-info btn-sm" href="exphistory?category={{userexp.category}}&view=full" title="查看完整记录">
+    <span class="glyphicon glyphicon-resize-full"></span> 完整记录
+</a>
+{% else %}
+<a class="btn btn-info btn-sm" href="exphistory?category={{userexp.category}}" title="查看近期记录">
+    <span class="glyphicon glyphicon-resize-small"></span> 近期记录
+</a>
+{% endif %}
+{% endblock function-btn %}
+
+
 {% block content %}
 <div class="container">
     <div class="page-header">
-        <h3>{{ userexp.getCategory }} <small>@{{ user.nickname }}</small></h3>
+        <h3>
+            {{ userexp.getCategory }}
+            <small>@{{ user.nickname }}</small>
+        </h3>
     </div>
     <table class="table table-condensed table-bordered table-striped table-hover">
     {% for eh in exphistorys %}
@@ -43,11 +57,4 @@
 {% endblock content %}
 
 {% block footer %}
-    {{ block.super }}
-    <style>
-    #footer-div {
-        position: fixed;
-        bottom: 0;
-    }
-    </style>
 {% endblock footer %}

@@ -94,15 +94,22 @@ def userExphistory(request):
     # get inputs
     context = {}
     category = request.GET.get('category')
+    view = request.GET.get('view')
     if category:
         if category not in UserExp.category_pool.get('all'):
             return infoMsg("请求的分类（{0}）不存在".format(category), title='访问错误')
         userexp = user.getUserExp(category)
-        exphistorys = userexp.getExpHistory()
+        if view == 'full':
+            exphistorys = userexp.getExpHistory()
+        else:
+            exphistorys = userexp.getExpHistory(22)
+    else:
+        return infoMsg("请输入请求的分类，可用的分类为 {0}".format(str(UserExp.category_pool.get('all'))), title='访问错误')
     # render
     context['user'] = user
     context['userexp'] = userexp
     context['exphistorys'] = exphistorys
+    context['view'] = view
     return render_to_response('user/exphistory.html', context)
 
 def userUser(request): # public
