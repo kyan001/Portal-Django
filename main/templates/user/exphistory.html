@@ -6,9 +6,14 @@
     .container {
         font-family: "微软雅黑","Microsoft Yahei","Helvetica Neue",Helvetica,"Hiragino Sans GB","Segoe UI",Tahoma,Arial,STHeiti,sans-serif !important;
         padding-top: 50px;
+        padding-bottom: 25px;
     }
     .table {
         font-size: 15px;
+        margin-bottom: 1px;
+    }
+    .view-full-btn {
+        width: 100%;
     }
 </style>
 {% endblock css %}
@@ -19,40 +24,37 @@
     </a>
 {% endblock nav-btn %}
 
-{% block function-btn %}
-{% if view != "full" %}
-<a class="btn btn-info btn-sm" href="exphistory?category={{userexp.category}}&view=full" title="查看完整记录">
-    <span class="glyphicon glyphicon-resize-full"></span> 完整记录
-</a>
-{% else %}
-<a class="btn btn-info btn-sm" href="exphistory?category={{userexp.category}}" title="查看近期记录">
-    <span class="glyphicon glyphicon-resize-small"></span> 近期记录
-</a>
-{% endif %}
-{% endblock function-btn %}
-
-
 {% block content %}
 <div class="container">
-    <div class="page-header">
-        <h3>
-            {{ userexp.getCategory }}
-            <small>@{{ user.nickname }}</small>
-        </h3>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1">
+            <div class="page-header">
+                <h3>
+                    {{ userexp.getCategory }}
+                    <small>@{{ user.nickname }}</small>
+                </h3>
+            </div>
+            <table class="table table-condensed table-striped table-hover">
+            {% for eh in exphistorys %}
+                <tr>
+                    <td>#{{ forloop.counter }}</td>
+                    <td>
+                        {% ifchanged eh.getCreated %}
+                            {{ eh.getCreated }}
+                        {% endifchanged %}
+                    </td>
+                    <th>+{{ eh.change }}</th>
+                    <td>{{ eh.operation }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+            {% if view != "full" %}
+            <a class="btn btn-default view-full-btn" href="exphistory?category={{userexp.category}}&view=full" title="查看完整记录">
+                <span class="glyphicon glyphicon-resize-full"></span> 查看完整记录
+            </a>
+            {% endif %}
+        </div>
     </div>
-    <table class="table table-condensed table-bordered table-striped table-hover">
-    {% for eh in exphistorys %}
-        <tr>
-            <td>
-                {% ifchanged eh.getCreated %}
-                    {{ eh.getCreated }}
-                {% endifchanged %}
-            </td>
-            <th>+{{ eh.change }}</th>
-            <td>{{ eh.operation }}</td>
-        </tr>
-    {% endfor %}
-    </table>
 </div>
 {% endblock content %}
 
