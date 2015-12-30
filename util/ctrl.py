@@ -54,6 +54,11 @@ def salty(word):
     word_with_suffix = word_in_str + "superfarmer.net"
     return ktk.md5(word_with_suffix)
 
+def calcLevel(exp):
+    if isinstance(exp, int):
+        return int(exp**0.5)
+    return None
+
 def needLogin():
     return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
     # return redirect('/user/signin');

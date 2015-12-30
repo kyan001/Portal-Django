@@ -35,6 +35,10 @@ class User(models.Model):
         for st in Progress.status_pool.get('all'):
             countResult[st] = Progress.objects.filter(userid=self.id, status=st).count()
         return countResult
+    def getLevel(self):
+        userexps = self.getUserExp()
+        total_exp = sum(ue.exp for ue in userexps)
+        return util.ctrl.calcLevel(total_exp)
 
 class UserExp(models.Model):
     userid = models.IntegerField(default=0, blank=False, null=False)
@@ -45,6 +49,11 @@ class UserExp(models.Model):
     category_pool = {
         'all' : ('progress','user','error'),
     }
+    category_name = {
+        'progress': '进度活跃度',
+        'user': '用户活跃度',
+        'error': '错误类别',
+    }
     def __str__(self):
         user = self.getUser()
         return str(self.id) + ": @{0} - {1}: {2} - lv{3}".format(user.nickname, self.getCategory(), str(self.exp), str(self.getLevel()))
@@ -54,15 +63,11 @@ class UserExp(models.Model):
             raise Exception("分类只能为 {0}".format( str(category_pool.get('all')) ))
         self.category = category
         self.setModified()
-    def getCategory(self, category=None):
-        category = category or self.category
-        if category == 'progress':
-            return '进度活跃度';
-        if category == 'user':
-            return '用户活跃度';
-        if category == 'error':
-            return '错误类别';
-        return category
+    def getCategory(self):
+        category_name = self.category_name.get(self.category)
+        if category_name:
+            return category_name
+        return self.category
     # Created & Modified
     def setCreated(self):
         self.created = timezone.now()
@@ -83,9 +88,7 @@ class UserExp(models.Model):
         history.save()
     # calculations
     def getLevel(self):
-        exp = int(self.exp)
-        level = int(exp ** 0.5)
-        return level
+        return util.ctrl.calcLevel(self.exp)
     def getLevelupExp(self):
         level = self.getLevel()
         return (level+1) ** 2
