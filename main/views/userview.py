@@ -326,7 +326,9 @@ def userGetloginerInfo(request): # AJAX
                 loginuser = user.toArray();
     # get user's gravatar
     if loginuser:
+        user = getUserById(loginuser['id'])
         loginuser['avatar'] = getGravatarUrl(loginuser['email'])
+        loginuser['level'] = user.getLevel()
         return returnJson(loginuser)
     else:
         return returnJsonResult('nologinuser')

@@ -135,7 +135,7 @@
                 <a href="/user/signin" class="btn btn-default btn-sm">登入</a>
             </span>
             <span class="loginshow">
-                <a href="/" class="btn btn-info btn-sm">
+                <a href="/" class="btn btn-info btn-sm" title="主页">
                     <span style="opacity:0">·</span>
                     <span class="glyphicon glyphicon-home"></span>
                     <span style="opacity:0">·</span>
@@ -202,6 +202,7 @@
                             $("#user-bar .nologinshow").fadeIn();
                         } else {
                             $("#user-bar .profile-nikename").text(result.nickname);
+                            $("#user-bar .profile-link").attr('title',"活跃等级 Lv."+result.level);
                             $("#user-bar .loginshow").fadeIn();
                         }
                     },

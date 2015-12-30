@@ -76,21 +76,23 @@
                         </tr>
                         <tr>
                             <th>昵称</th>
-                            <td>{{ user.nickname }}</td>
+                            <td>
+                                <a href="/user/user?nickname={{ user.nickname }}">
+                                    <abbr title="我的公开信息">{{ user.nickname }}</abbr>
+                                </a>
+                            </td>
                         </tr>
                         <tr>
                             <th>邮箱</th>
                             <td>{{ user.email }}</td>
                         </tr>
+                        <tr>
+                            <th>活跃等级</th>
+                            <td>
+                                <abbr title="根据“总活跃度”计算">Lv.{{ user.getLevel }}</abbr>
+                            </td>
+                        </tr>
                     </table>
-                    <tr>
-                        <a href="/user/user?nickname={{ user.nickname }}" class="btn btn-success">
-                            我的公开信息
-                        </a>
-                        <a href="/user/avatar/{{ user.email }}" class="btn btn-warning">
-                            我的头像地址
-                        </a>
-                    </tr>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="register-info">
                     <table class="table table-condensed table-hover">
