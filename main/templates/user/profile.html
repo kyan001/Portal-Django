@@ -4,8 +4,6 @@
 {% block css %}
 <style type="text/css">
     .container {
-        padding-top: 50px;
-        padding-bottom: 80px;
         font-family: "微软雅黑","Microsoft Yahei","Helvetica Neue",Helvetica,"Hiragino Sans GB","Segoe UI",Tahoma,Arial,STHeiti,sans-serif !important;
     }
     #headimg {
@@ -179,16 +177,6 @@
 </div><!--.container-->
 {% endblock content %}
 
-{% block footer %}
-    {{ block.super }}
-    <style>
-    #footer-div {
-        position: fixed;
-        bottom: 0;
-    }
-    </style>
-{% endblock footer %}
-
 {% block js %}
 <script type="text/javascript">
 $(function(){
@@ -198,6 +186,9 @@ $(function(){
     $('#exp-info .panel').mouseout(function(){
         $(this).find('.progress').removeClass('active');
     });
+    {% for category, oldlv, newlv in lvnotice %}
+        $.success("「{{category}}」从 Lv.{{oldlv}} 升级到 Lv.{{newlv}}！")
+    {% endfor %}
 })
 </script>
 {% endblock js %}

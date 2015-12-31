@@ -8,8 +8,6 @@
 <style type="text/css">
     .container {
         font-family: 'Microsoft YaHei';
-        padding-top: 50px;
-        padding-bottom: 80px;
     }
     .progress-card .table {
         margin: 0;
@@ -387,21 +385,21 @@
             <div class="panel panel-primary" id="main-panel">
                 <div class="panel-heading">
                     <span class="panel-title">
-                        {% ifequal prg.status 'giveup' %}
+                    {% ifequal prg.status 'giveup' %}
                         <span class="persent label label-danger">已弃置</span>
-                        {% endifequal %}
+                    {% endifequal %}
                         <span class="persent label label-persent">{{prg.getPersent}}%</span>
-                        《 <a id="opustitle" href="/opus/detail?id={{opus.id}}"><b>{{opus.name}}</b></a> 》
-                        {% if opus.subtitle %}
+                        《 <a id="opustitle" title="看看还有谁在看这本书" href="/opus/detail?id={{opus.id}}"><b>{{opus.name}}</b></a> 》
+                    {% if opus.subtitle %}
                         <span class="subtitle label label-subtitle">
                             {{ opus.subtitle }}
                         </span>
-                        {% endif %}
-                        {% if prg.weblink and prg.weblink|isurl %}
+                    {% endif %}
+                    {% if prg.weblink and prg.weblink|isurl %}
                         <a class="weblink btn btn-link" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
                             <span class="glyphicon glyphicon-link"></span>
                         </a>
-                        {% endif %}
+                    {% endif %}
                     </span>
                 </div>
                 <div class="panel-body first-panel-body">

@@ -132,6 +132,9 @@
             </span>
         </nav>
         <style>
+            .container {
+                padding-top: 51px;
+            }
             #user-bar {
                 min-width: 40%;
                 max-width: 80%;
@@ -206,31 +209,41 @@
 
     <!-- ############ FOOTER ############-->
     {% block footer %}
-    <div id='footer-div' class="befast">
-        <div class="footer hidden-xs">
-            <div>
+    <div id='footer-div'>
+        <blockquote class="footer hidden-xs blockquote-reverse">
+            <div id="behappy" class="benormal">
                 <strong>Be happy.</strong>
                 <i>Keep Healthy, Keep Happy, Keep Thinking, Keep Cool.</i>
             </div>
-            <div>
-                Powered By
-                <a href="http://www.superfarmer.net">SuperFarmer</a>
-            </div>
-        </div>
+            <footer>
+                <span class="moveable-area">
+                    Powered By
+                    <a href="http://www.superfarmer.net" class="no-decoration">Kyan</a>
+                </span>
+            </footer>
+        </blockquote>
     </div>
     <style>
         #footer-div {
-            width: 100%;
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            pointer-events: none;
         }
         #footer-div .footer {
-            background-color: #eeeeee;
-            padding: 1em;
-            text-align: center;
-            font-size: 1em;
-            color: gray;
+            margin-bottom: 0;
         }
-        #footer-div .footer a{
-            text-decoration: none;
+        #footer-div #behappy {
+            opacity: 0;
+        }
+        #footer-div:hover #behappy {
+            opacity: 1;
+        }
+        #footer-div .moveable-area {
+            pointer-events: auto;
+        }
+        .container {
+            padding-bottom: 40px;
         }
     </style>
     {% endblock footer %}
