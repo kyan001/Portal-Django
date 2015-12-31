@@ -10,7 +10,7 @@
         <script type="text/javascript" src="/static/js/KyanJsUtil.js"></script>
         <script type="text/javascript">
             var ta_filter = new Array('localhost','127.0.0.1')
-            if(!window.location.hostname in ta_filter ){
+            if( !(window.location.hostname in ta_filter) ){
                 jQuery.getScript('http://tajs.qq.com/stats?sId=50871665')
             }
         </script>
@@ -77,6 +77,9 @@
                 right: 5%;
                 font-size: 15px;
                 z-index: 1001;
+            }
+            #alert-zone .alert {
+                opacity: 0.9;
             }
         </style>
         <div id='alert-zone'>

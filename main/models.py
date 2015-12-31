@@ -36,7 +36,8 @@ class Opus(models.Model):
     created = models.DateTimeField()
     def __str__(self):
         subtext = "(" + self.subtitle + ")" if self.subtitle else "";
-        return str(self.id) + ': <<{0}>>{1}[{2}]'.format(self.name, subtext, str(self.total))
+        total = self.total if self.total else '∞'
+        return str(self.id) + ': <<{0}>>{1}[{2}]'.format(self.name, subtext, str(total))
     def toArray(self):
         self.created = self.created.isoformat(' ')
         return model_to_dict(self)
@@ -57,6 +58,7 @@ class Progress(models.Model):
     status = models.CharField(max_length=50)
     created = models.DateTimeField()
     modified = models.DateTimeField()
+    status_pool = ('done','inprogress','giveup','error','follow')
     def __str__(self):
         opus = self.getOpus()
         user = self.getUser()
@@ -84,14 +86,16 @@ class Progress(models.Model):
 
     # status
     def setStatus(self, status):
-        status_pool = ('done','inprogress','giveup','error')
-        if status not in status_pool:
+        if status not in self.status_pool:
             raise Exception("状态只能为 {0}".format(str(status_pool)))
         self.status = status
         self.setModified()
     def setStatusAuto(self):
         opus = self.getOpus()
         if self.status == 'giveup':
+            return True;
+        if opus.total == 0:
+            self.setStatus('follow')
             return True;
         if self.current > opus.total:
             self.setStatus('error')
@@ -115,16 +119,21 @@ class Progress(models.Model):
             return '已完成';
         if self.status == 'inprogress':
             return '进行中';
+        if self.status == 'follow':
+            return '追剧中';
         return self.status
 
     # calculations
     def getPersent(self):
         opus = self.getOpus()
-        persent = int(self.current)/int(opus.total)*100
+        if opus.total == 0:
+            total = int(self.current)+1
+        else:
+            total = int(opus.total)
+        persent = int(self.current)/total*100
         return int(persent)
     def getBartype(self):
-        opus = self.getOpus()
-        persent = int(self.current)/int(opus.total)*100
+        persent = self.getPersent()
         if persent < 33:
             bartype = 'progress-bar-danger'
         elif persent < 66:

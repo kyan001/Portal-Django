@@ -18,6 +18,9 @@
         padding: 25px;
         background-color: rgba(0,0,0,0.5);
     }
+    .input-group {
+        width: 100%;
+    }
     .input-group input {
         color: white;
     }
@@ -31,15 +34,18 @@
     #question-content {
         border-bottom: 0;
     }
+    #tip-content {
+        border-bottom: 0;
+        color: silver;
+        text-align: right;
+        font-size: small;
+    }
     #buttons {
         margin-top: 10px;
         width: 100%;
     }
     #submit-button{
         pointer-events: auto;
-    }
-    #forget-button {
-        /*float: right;*/
     }
     input[name='password'] {
         display: none;
@@ -60,6 +66,7 @@
         $('[data-toggle="popover"]').popover();
         $('#question-group').hide();
         $('#answer-group').hide();
+        $('#tip-group').hide();
     });
     function clearHasClass(ele){
         ele.removeClass('has-warning');
@@ -67,12 +74,15 @@
         ele.removeClass('has-error');
     }
     function foldOptions(){
+        $('#question-content').val('')
+        $('#tip-content').val('')
+        $('input[name="answer"]').val('')
         $('#question-group').fadeOut();
+        $('#tip-group').fadeOut();
         $('#answer-group').fadeOut();
-        $('#submit-button').attr('disabled','');
+        $('#submit-button').attr('disabled','disabled');
     }
-
-    function unfoldOptions(){
+    function unfoldOptions(option){
         $.ajax({
             type: "GET",
             url: "/user/getquestionandtip",
@@ -92,9 +102,18 @@
                         $('input[name="answer"]').attr('placeholder','答案 / Answer')
                         $('input[name="answer"]').attr('type','text')
                     }
-                    $('#answer-group input').attr('data-content', result.tip);
-                    if(!result.tip){
-                        $('#answer-group input').attr('data-content', '(没有提示)');
+                    $('#question-group').fadeIn();
+                    $('#answer-group').fadeIn();
+                    if(result.tip){
+                        $('#tip-content').val('提示：'+result.tip);
+                        $('#tip-group').fadeIn();
+                    } else {
+                        $('#tip-content').val('');
+                        $('#tip-group').fadeOut();
+                    }
+                    $('#submit-button').removeAttr('disabled');
+                    if(option == 'unique'){
+                        $('input[name="answer"]').focus();
                     }
                 }
             },
@@ -105,12 +124,9 @@
                 console.log("textStatus: " + textStatus);
             },
         });
-        $('#question-group').fadeIn();
-        $('#answer-group').fadeIn();
-        $('#submit-button').removeAttr('disabled');
     }
 
-    function validateUsername(){
+    function validateUsername(option){
         clearHasClass($('#username-group'));
         if( $('input[name="username"]').val() == '' ){
             $('#username-group').addClass('has-warning');
@@ -125,15 +141,22 @@
             },
             success: function (data) {
                 var result = data;
-                if (result.result == 'notexist') {
-                    $('#username-group').addClass('has-error');
-                    $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在');
-                    foldOptions();
-                } else if (result.result == 'exist') {
-                    // $('#username-group').addClass('has-success');
-                    unfoldOptions();
-                } else {
+                if(result.error){
                     $.danger(result.error);
+                    foldOptions();
+                    return
+                }
+                if (result.exist) {
+                    if(result.unique){
+                        unfoldOptions('unique')
+                    } else {
+                        unfoldOptions('normal');
+                    }
+                } else {
+                    if(option=='onblur' || option=='onchange'){
+                        $('#username-group').addClass('has-error');
+                        $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在');
+                    }
                     foldOptions();
                 }
             },
@@ -163,8 +186,20 @@
         }
         $("#login-form").submit();
     }
+    function keydownAnswer(){
+        if(event.keyCode==13){
+            $('#submit-button').click();
+            return false;
+        }
+    }
 </script>
 {% endblock js %}
+
+{% block nav-btn %}
+<a href="/user/forgetanswer" class="btn btn-warning btn-sm">
+    <span class="glyphicon glyphicon-exclamation-sign"></span> 忘记密码/答案
+</a>
+{% endblock nav-btn %}
 
 {% block content %}
 <div class="container">
@@ -183,7 +218,7 @@
                             onclick='clickRememberMe()'
                             checked>
                     </span>
-                    <input type="text" name="username" class="form-control" placeholder="用户名 / Username" autofocus="autofocus" onchange="validateUsername()" oninput="clearHasClass($('#username-group'))"/>
+                    <input type="text" name="username" class="form-control" placeholder="用户名 / Username" autofocus="autofocus" onblur="validateUsername('onblur')" oninput="validateUsername('oninput')"/>
                     <span class="input-group-addon tips hidden-xs"
                         title="用户名 / Username <span class='label label-primary'>必填</span>"
                         data-content="<li class='text-primary'>请输入注册时的用户名</li>
@@ -204,14 +239,7 @@
                         name="answer"
                         class="form-control"
                         placeholder="答案 / Answer"
-                        data-container="body"
-                        data-toggle="popover"
-                        data-placement="bottom"
-                        data-content=""
-                        data-title="提示"
-                        data-delay=2000
-                        data-trigger='focus'
-                        onblur="$(this).popover('hide')"
+                        onkeydown="keydownAnswer()"
                         />
                     <span class="input-group-addon tips hidden-xs"
                         title="答案 / Answer <span class='label label-primary'>必填</span>"
@@ -222,18 +250,18 @@
                         ?
                     </span>
                 </div>
+                <div class="input-group" id="tip-group">
+                    <input id='tip-content' type='tip' name='tip' class="form-control" value="" readonly>
+                </div>
                 {% if redirect %}
                 <input type="hidden" name='redirect' value="{{redirect}}">
                 <input type="hidden" name="rememberme">
                 {% endif %}
             </form>
             <div id="buttons row">
-                <button id="submit-button" class="btn btn-success col-lg-8 col-md-8 col-sm-12 col-xs-12" onclick="submitForm()" disabled>
+                <button id="submit-button" class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12" onclick="submitForm()" disabled>
                     登入 / Login
                 </button>
-                <a id="forget-button" class="btn btn-warning col-lg-3 col-md-3 col-lg-offset-1 col-md-offset-1 col-sm-12 col-xs-12" href="/user/forgetanswer">
-                    忘记回答
-                </a>
             </div>
         </div>
     </div>

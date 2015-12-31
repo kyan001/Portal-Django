@@ -13,6 +13,10 @@
     .text-aligncenter { display: inline-block; width: 100%; text-align: center; }
     .text-right { text-align: right; }
     .text-center { text-align: center; }
+    .text-primary-dark { color: LightSkyBlue; }
+
+/* Float */
+    .float-right { float: right; }
 
 /* blurs */
     .blur, .hover-notblur, .hover-blur:hover{

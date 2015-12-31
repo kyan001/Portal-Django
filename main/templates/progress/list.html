@@ -22,7 +22,7 @@
     }
     .page-header {
         padding-bottom: 2px;
-        cursor: hand;
+        cursor: pointer;
     }
 </style>
 <style>/* progress-card */
@@ -30,7 +30,7 @@
         box-shadow: 2px 2px 5px silver;
     }
     .progress-card .panel{
-        cursor: hand;
+        cursor: pointer;
     }
     .progress-card .panel-heading{
         padding: 1px;
@@ -85,6 +85,18 @@
         $('.page-header').mouseout(function(){
             $(this).find('h1>span').css('color','silver');
         });
+        $('.page-header').click(function(){
+            var ele = $(this).find('h1>span');
+            var whenOpen = 'glyphicon-chevron-up';
+            var whenClose = 'glyphicon-chevron-down';
+            if(ele.hasClass(whenOpen)){
+                ele.removeClass(whenOpen)
+                ele.addClass(whenClose)
+            } else {
+                ele.removeClass(whenClose)
+                ele.addClass(whenOpen)
+            }
+        });
     });
 </script>
 {% endblock js %}
@@ -99,7 +111,7 @@
 <div class="container">
     <div class="page-header" data-toggle="collapse" data-target="#list-inprogress">
         <h1>
-            <span class="glyphicon glyphicon-plus"></span>
+            <span class="glyphicon glyphicon glyphicon-chevron-up"></span>
             进行中 <small>Inprogress</small>
         </h1>
     </div>
@@ -113,9 +125,25 @@
         {% endfor %}
     </div><!--row-->
 
+    <div class="page-header" data-toggle="collapse" data-target="#list-follow">
+        <h1>
+            <span class="glyphicon glyphicon glyphicon-chevron-up"></span>
+            追剧中 <small>Follow</small>
+        </h1>
+    </div>
+    <div class="row collapse in" id="list-follow">
+        {% for p in listfollow %}
+            {% include 'progress/list-progresscard.html' %}
+        {% empty %}
+            <div class="well">
+                您没有在追剧的进度哦~
+            </div>
+        {% endfor %}
+    </div><!--row-->
+
     <div class="page-header" data-toggle="collapse" data-target="#list-done">
         <h1>
-            <span class="glyphicon glyphicon-plus"></span>
+            <span class="glyphicon glyphicon-chevron-down"></span>
             已完成 <small>Done</small>
         </h1>
     </div>
@@ -131,7 +159,7 @@
 
     <div class="page-header" data-toggle="collapse" data-target="#list-giveup">
         <h1>
-            <span class="glyphicon glyphicon-plus"></span>
+            <span class="glyphicon glyphicon-chevron-down"></span>
             弃置 <small>Giveup</small>
         </h1>
     </div>

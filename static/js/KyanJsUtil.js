@@ -1,58 +1,15 @@
 $.extend({
-    getBookImg: function(name, size, callback) {
-        size = size?size:'m';  // s,m,l
-        if(!name){
-            return ''
-        }
-        var book_search_api = 'https://api.douban.com/v2/book/search';
-        $.ajax({
-            type: 'GET',
-            url: book_search_api,
-            data: {
-                'count':'1',
-                'q':name
-            },
-            async: false,
-            dataType: 'jsonp',
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Ajax Error, XMLHttpRequest:");
-                console.log("status: "+XMLHttpRequest.status);
-                console.log("readyState: "+XMLHttpRequest.readyState);
-                console.log("textStatus: "+textStatus);
-            },
-            success: function(data){
-                var imgurl = "";
-                if( checkHas(name, data.books[0]) ){
-                    switch(size){
-                        case 's':
-                            imgurl = data.books[0].images.small;
-                            break;
-                        case 'm':
-                            imgurl = data.books[0].images.medium;
-                            break;
-                        case 'l':
-                            imgurl = data.books[0].images.large;
-                            break;
-                        default:
-                            imgurl = data.books[0].images.medium;
-                    }
-                }
-                callback(imgurl);
-            }
-        });
-    },
     getBookInfo: function(name, callback){
         var book_search_api = 'https://api.douban.com/v2/book/search';
         if(name != ''){
             $.get(book_search_api, {'count':'1','q':name}, function(data){
                 var info = {}
-                info.title = '';
-                info.rating = '';
-                info.pages = '';
-                info.url = '';
-                info.tags = new Array()
-                if( checkHas(name, data.books[0]) ){
-                    info.title = data.books[0].title
+                if(data.books[0]){
+                    info.title = data.books[0].title;
+                    info.rating = data.books[0].rating.average;
+                    info.pages = data.books[0].pages;
+                    info.url = data.books[0].alt;
+                    info.tags = new Array();
                     if(data.books[0].tags[0]){
                         info.tags.push(data.books[0].tags[0].name)
                     }
@@ -62,10 +19,18 @@ $.extend({
                     if(data.books[0].tags[2]){
                         info.tags.push(data.books[0].tags[2].name)
                     }
-                    info.rating = data.books[0].rating.average
-                    info.pages = data.books[0].pages
-                    info.url = data.books[0].alt
+                    info.images = {};
+                    if(data.books[0].images){
+                        info.images.small = data.books[0].images.small
+                        info.images.medium = data.books[0].images.medium
+                        info.images.large = data.books[0].images.large
+                    }
+                    info.image = data.books[0].image
                 }
+                info.api = book_search_api + '?count=1&q=' + name
+                info.type = 'book'
+                info.match = checkHas(name, data.books[0])
+                info.exist = data.books[0]?true:false
                 callback(info)
             }, 'jsonp');
         }
@@ -76,40 +41,59 @@ $.extend({
         if(name != ''){
             $.get(movie_search_api, {'count':'1','q':name}, function(data){
                 var info = {}
-                info.title = '';
-                info.rating = '';
-                info.url = '';
-                info.tags = new Array()
-                if( checkHas(name, data.subjects[0]) ){
-                    info.title = data.subjects[0].title
-                    info.tags = data.subjects[0].genres
-                    info.rating = data.subjects[0].rating.average
-                    info.url = data.subjects[0].alt
+                if( data.subjects[0] ){
+                    info.title = data.subjects[0].title;
+                    info.rating = data.subjects[0].rating.average;
+                    info.url = data.subjects[0].alt;
+                    info.tags = new Array(data.subjects[0].genres);
+                    info.subtype = data.subjects[0].subtype
+                    if(data.subjects[0].images){
+                        info.images = {};
+                        info.images.small = data.subjects[0].images.small
+                        info.images.medium = data.subjects[0].images.medium
+                        info.images.large = data.subjects[0].images.large
+                        info.image = data.subjects[0].images.medium
+                    }
                 }
+                info.api = movie_search_api + '?count=1&q=' + name
+                info.type = 'movie'
+                info.match = checkHas(name, data.subjects[0])
+                info.exist = data.subjects[0]?true:false
                 callback(info);
             }, 'jsonp');
         }
     },
 });
 
-function checkHas(keyword, bookOrMovie){
+function checkHas(keywords, bookOrMovie){
     if(!bookOrMovie){
         return false;
     }
-    if(keyword){
-        keyword = keyword.toLowerCase()
-    } else {
+    if(!keywords){
         return false;
     }
-    if(bookOrMovie.title){
-        if(bookOrMovie.title.toLowerCase().indexOf(keyword) >= 0){
-            return true
+    kw = keywords.toLowerCase().split(' ')
+    var isInOriginalTitle = true;
+    var isInTitle = true;
+    if(bookOrMovie.original_title){//有英文名
+        for(var i in kw){
+            if(bookOrMovie.original_title.toLowerCase().indexOf(kw[i]) < 0){
+                isInOriginalTitle = false //只要有一个词不在title内，则判定失败
+                break
+            }
         }
+    } else {//无英文名
+        isInOriginalTitle = false;
     }
-    if(bookOrMovie.original_title){
-        if(bookOrMovie.original_title.toLowerCase().indexOf(keyword) >= 0){
-            return true
+    if(bookOrMovie.title){ //如果有title
+        for(var i in kw){
+            if(bookOrMovie.title.toLowerCase().indexOf(kw[i]) < 0){
+                isInTitle = false //只要有一个词不在title内，则判定失败
+                break
+            }
         }
+    } else { //没有title
+        isInTitle = false
     }
-    return false
+    return isInOriginalTitle || isInTitle
 }

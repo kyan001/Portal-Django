@@ -8,8 +8,9 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    # INDEX
     url(r'^$', views.index, name='index'),
-    #USER
+    # USER
     url(r'^user/user', views.userUser),
     url(r'^user/profile/', views.userProfile),
     url(r'^user/avatar/(?P<email>[0-9a-zA-Z_.@]+)/$', views.userAvatar),
@@ -24,7 +25,7 @@ urlpatterns = [
     url(r'^user/validatenickname$', views.userValidateNickname),
     url(r'^user/validateemail$', views.userValidateEmail),
     url(r'^user/getquestionandtip$', views.userGetQuestionAndTip),
-    #PROGRESS
+    # PROGRESS
     url(r'^progress/list/$', views.progressList),
     url(r'^progress/detail$', views.progressDetail),
     url(r'^progress/fastupdate/$', views.progressFastupdate),
@@ -34,5 +35,6 @@ urlpatterns = [
     url(r'^progress/delete/$', views.progressDelete),
     url(r'^progress/giveup/$', views.progressGiveup),
     url(r'^progress/reset/$', views.progressReset),
+    # OPUS
     url(r'^opus/detail$', views.opusDetail),
 ]

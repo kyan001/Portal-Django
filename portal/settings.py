@@ -121,3 +121,11 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# Emails
+with open(os.path.join(BASE_DIR, "email.pswd"), "r") as pswd_file:
+        email_pswd = pswd_file.read();
+EMAIL_HOST_USER = 'superfarmernet@tom.com'
+EMAIL_HOST_PASSWORD = email_pswd.strip()
+EMAIL_HOST = 'smtp.tom.com'
+EMAIL_PORT = 25

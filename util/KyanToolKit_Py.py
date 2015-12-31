@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 ##################################################################
-# Version 2.5
+# By Kyan
 ##################################################################
 import os, sys
 import time, types
 import getpass
 import subprocess, shlex
-import urllib.request, hashlib
+import urllib.request, hashlib, json
 import threading, queue
 
 class KyanToolKit_Py(object):
+    version = '2.9'
     def __init__(self,trace_file="trace.xml"):
         self.trace_file = trace_file
         self.q = {
@@ -58,8 +59,8 @@ class KyanToolKit_Py(object):
                         + itsays \
                         + str(self.space_char * int(effective_length/self.GOLDENSECTION*(1-self.GOLDENSECTION)/2)) \
                         + self.special_char
-        content_line_lenght = len(content_line)
-        banner_border = self.special_char * content_line_lenght
+        content_line_length = len(content_line)
+        banner_border = self.special_char * content_line_length
         return banner_border + '\n' + content_line + '\n' + banner_border
 
     def info(self, words):
@@ -138,6 +139,22 @@ class KyanToolKit_Py(object):
             self.err("Please enter a valid choice");
             return self.getChoice(choices_);
 
+    def ajax(self, url, param={}, method='get'):
+        param = urllib.parse.urlencode(param)
+        if method.lower() == 'get':
+            req = urllib.request.Request(url + '?' + param)
+        elif method.lower() == 'post':
+            param = param.encode('utf-8')
+            req = urllib.request.Request(url, data=param)
+        else:
+            raise Exception( "Method '{0}' is invalid. (GET/POST)".format(method) )
+        rsp = urllib.request.urlopen(req)
+        if rsp:
+            rsp_json = rsp.read().decode('utf-8')
+            rsp_dict = json.loads(rsp_json)
+            return rsp_dict
+        return None
+
 #--Pre-checks---------------------------------------------------
     def needPlatform(self, expect_platform):
         self.info("Platform Require: " + expect_platform + ', Current: ' + sys.platform);
@@ -174,6 +191,7 @@ class KyanToolKit_Py(object):
     @async
     def update(self):
         ktk_url = "https://raw.githubusercontent.com/kyan001/KyanToolKit_Unix/master/KyanToolKit_Py.py"
+        version_old = self.version
         try:
             ktk_req = urllib.request.urlopen(ktk_url)
             ktk_codes = ktk_req.read()
@@ -183,12 +201,14 @@ class KyanToolKit_Py(object):
             if ktk_codes_md5 != ktk_file_md5:
                 with open("KyanToolKit_Py.py", "wb") as ktk_file:
                     ktk_file.write(ktk_codes);
-                self.asyncPrint("\n\n[KyanToolKit_Py.py] Updated \n({0} => {1})\n\n".format(ktk_codes_md5, ktk_file_md5))
+                self.asyncPrint("\n\n[KyanToolKit_Py.py] Updated \n(From Version: {0})\n\n".format(version_old))
             else:
-                self.asyncPrint("\n\n[KyanToolKit_Py.py] No Need Update \n({0})\n\n".format(ktk_codes_md5, ktk_file_md5))
+                self.asyncPrint("\n\n[KyanToolKit_Py.py] No Need Update \n(Version: {0})\n\n".format(version_old))
+            return True
         except Exception as e:
             self.asyncPrint("\n\n[KyanToolKit_Py.py] Update Failed ({0})\n\n".format(str(e)))
             self.asyncPrint("\n")
+            return False
 
 #--Internal Uses-------------------------------------------------
     def checkResult(self, result):
@@ -219,3 +239,7 @@ class KyanToolKit_Py(object):
         q = self.q.get('stdout')
         while not q.empty():
             print(q.get())
+
+if __name__ == '__main__':
+    ktk = KyanToolKit_Py()
+    ktk.update()

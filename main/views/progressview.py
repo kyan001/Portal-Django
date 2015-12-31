@@ -20,9 +20,8 @@ def progressList(request):
     #get user's progresses
     progresses = Progress.objects.filter(userid=user['id']).order_by('-modified');
     #init vars
-    status_pool = ('done','inprogress','giveup','error')
     pList = {}
-    for st in status_pool:
+    for st in Progress.status_pool:
         pList[st] = [];
     if len(progresses):
         for prg in progresses:
@@ -34,7 +33,7 @@ def progressList(request):
             l['opus'] = opus
             l['prg'] = prg
             pList[prg.status].append(l)
-    for st in status_pool:
+    for st in Progress.status_pool:
         if pList[st]:
             context['list'+st] = pList[st]
     return render_to_response('progress/list.html', context)
@@ -55,7 +54,7 @@ def progressDetail(request):
         return infoMsg("未找到 id 为 {0} 的进度".format(str(progressid)))
     # check owner
     if progress.userid != user['id']:
-        return infoMsg("这个进度不属于您，因此您不能查看该进度")
+        return infoMsg("这个进度不属于您，因此您不能查看该进度", url='/progress/list')
     # get opus
     try:
         opus = Opus.objects.get(id=progress.opusid)
@@ -78,10 +77,12 @@ def progressFastupdate(request):
     progressid = request.POST.get('id')
     if not progressid:
         return infoMsg("进度 ID 为空，请联系管理员", title="出错")
-    newcurrent = request.POST.get('newcurrent')
-    newcurrent = int(newcurrent)
-    if newcurrent <= 0:
-        newcurrent = 0;
+    quick_current = request.POST.get('quick_current')
+    if quick_current == '':
+        return infoMsg("快速更新的当前进度不能为空" + quick_current, title="快速更新出错")
+    quick_current = int(quick_current)
+    if quick_current <= 0:
+        quick_current = 0;
     # get progress
     try:
         progress = Progress.objects.get(id=progressid)
@@ -96,10 +97,10 @@ def progressFastupdate(request):
     except Opus.DoesNotExist:
         return infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
     # validation
-    if newcurrent > opus.total:
-        return infoMsg("当前进度 {0} 超过最大值 {1}".format(str(newcurrent), str(opus.total)))
+    if opus.total > 0 and quick_current > opus.total:
+        return infoMsg("当前进度 {0} 超过最大值 {1}".format(str(quick_current), str(opus.total)))
     # save
-    progress.current = newcurrent;
+    progress.current = quick_current;
     if(progress.setStatusAuto()):
         progress.setModified();
         progress.save()
@@ -121,16 +122,14 @@ def progressUpdate(request):
     name = request.POST.get('name');
     subtitle = request.POST.get('subtitle');
     total = request.POST.get('total');
-    total = int(total);
+    total = int(total) if total else 0;
     current = request.POST.get('current');
     current = int(current);
     if not name:
         return infoMsg("名称（name）不能为空", title="保存失败")
-    if not total:
-        return infoMsg("总页数（total）不能为空或 0", title="保存失败")
     if current <= 0:
         current = 0;
-    if current > total:
+    if total > 0 and current > total:
         return infoMsg("初始进度 {0} 不能大于总页数 {1}".format(str(current), str(total)))
     # get progress
     try:
@@ -265,7 +264,7 @@ def progressAdd(request):
     name = request.POST.get('name');
     subtitle = request.POST.get('subtitle');
     total = request.POST.get('total');
-    total = int(total);
+    total = int(total) if total else 0;
     current = request.POST.get('current');
     current = int(current);
     tag1 = request.POST.get('tag1');
@@ -274,11 +273,9 @@ def progressAdd(request):
     tags = (tag1, tag2, tag3)
     if not name:
         return infoMsg("名称（name）不能为空", title="保存失败")
-    if not total:
-        return infoMsg("总页数（total）不能为空或 0", title="保存失败")
     if current <= 0:
         current = 0;
-    if current > total:
+    if total > 0 and current > total:
         return infoMsg("初始进度 {0} 不能大于总页数 {1}".format(str(current), str(total)))
     opus = Opus(name=name, subtitle=subtitle, total=total)
     for t in tags:

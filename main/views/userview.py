@@ -20,8 +20,11 @@ def getRandomName():
     '''生成用户昵称'''
     shengmu = ['a','i','u','e','o']
     yunmu = ['s','k','m','n','r','g','h','p','b','z','t','d']
-    name = random.choice(yunmu).upper() + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu)
-    return name;
+    nickname = random.choice(yunmu).upper() + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu)
+    users = User.objects.filter(nickname=nickname)
+    if len(users) > 0:
+        return getRandomName()
+    return nickname;
 
 def getUser(username):
     '''通过用户名获得用户'''
@@ -165,7 +168,7 @@ def userNewUser(request):
     user.save();
 
     # render
-    return infoMsg("注册成功！\n您是网站第 {0} 位用户".format(str(user.id)), url='/user/signin', title="欢迎加入")
+    return infoMsg(" {0} 注册成功！\n您是网站第 {1} 位用户。\n请登入以便我们记住您！".format(username, str(user.id)), url='/user/signin', title="欢迎加入")
 
 #-Signin-----------------------------------------------
 def userSignin(request):
@@ -182,6 +185,16 @@ def userSignin(request):
 def userForgetanswer(request):
     '登入页面点击忘记回答'
     context = {}
+    content = '''
+        <li>您在 <a href='http://superfarmer.net' target='_blank'>superfarmer.net</a> 申请了“忘记答案/密码”</li>
+        <li>请点击下面的连接重置答案/密码</li>
+        <li>下面的连接有效期只有 60 分钟。</li>
+        <li>如果连接无法打开，请在复制后在浏览器中打开：</li>
+        <a href='http://portal.superfarmer.net/user/resetanswer/'>http://portal.superfarmer.net/user/resetanswer/</a>
+    '''
+    result = sendEmail(content, 'kai@superfarmer.net', subject='忘记密码找回注册')
+    if not result:
+        return infoMsg("发送邮件失败："+ json.dumps(result), title="发送失败")
     return render_to_response('user/forgetanswer.html', context)
 
 
@@ -202,12 +215,24 @@ def userCheckLogin(request):
     if checkAnswer(user, answer):
         request.session['loginuser'] = user.toArray()
     else:
-        return infoMsg("用户名/答案不对：\n用户名：{0}\n答案：{1}".format(username, answer), title="登入失败")
+        return infoMsg("用户名/答案不对：\n用户名：{0}\n输入的答案/密码：{1}".format(username, answer), title="登入失败")
     # redirections
-    if 'redirect' in request.POST:
-        response = redirect(request.POST.get('redirect'))
+    redirect_url = request.POST.get('redirect')
+    redirect_to_home = (
+        '/user/newuser',
+        '/user/newuser/',
+        '/user/signin',
+        '/user/signin/',
+        '/user/signup',
+        '/user/signup/'
+        )
+    if redirect_url:
+        response = redirect(redirect_url)
     else:
         response = redirect('/')
+    for urllet in redirect_to_home:
+        if urllet in redirect_url:
+            response = redirect('/')
     # set cookie
     if rememberme == 'yes':
         oneweek = 60*60*24*7
@@ -255,29 +280,43 @@ def userGetloginerInfo(request): # AJAX
 def userValidateUsername(request): #AJAX
     '''注册/登入时：用户名是否可用'''
     username = request.GET.get('username');
+    result = {}
     if not username:
         return returnJsonError('用户名不能为空')
-    if len(User.objects.filter(username=username)) != 0:
-        return returnJsonResult('exist')
+    users = User.objects.filter(username=username);
+    if len(users) == 1:
+        result['exist'] = True
+        potential_users = User.objects.filter(username__startswith=username)
+        if len(potential_users) == 1:
+            result['unique'] = True
+        else:
+            result['unique'] = False
     else:
-        return returnJsonResult('notexist')
+        result['exist'] = False
+    return returnJson(result)
 
 def userValidateNickname(request): #AJAX
     '''注册时：昵称是否可用'''
     nickname = request.GET.get('nickname');
+    result = {}
     if not nickname:
         return returnJsonError('昵称不能为空')
-    if len(User.objects.filter(nickname=nickname)) != 0:
-        return returnJsonResult('exist')
+    users = User.objects.filter(nickname=nickname);
+    if len(users) != 0:
+        result['exist'] = True
     else:
-        return returnJsonResult('notexist')
+        result['exist'] = False
+    return returnJson(result)
 
 def userValidateEmail(request): #AJAX
     '''注册时：邮箱是否可用'''
     email = request.GET.get('email');
+    result = {}
     if not email:
         return returnJsonError('邮箱不能为空')
-    if len(User.objects.filter(email=email)) != 0:
-        return returnJsonResult('exist')
+    users = User.objects.filter(email=email)
+    if len(users) != 0:
+        result['exist'] = True
     else:
-        return returnJsonResult('notexist')
+        result['exist'] = False
+    return returnJson(result)
