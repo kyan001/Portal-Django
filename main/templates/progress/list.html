@@ -31,14 +31,18 @@
         </h1>
     </div>
     <div class="row collapse in" id="list-inprogress">
-        {% for p in listinprogress %}
-            {% include 'progress/list-progresscard.html' %}
-        {% empty %}
-            <div class="well">
-                您还没有任何进度哦~
-            </div>
-        {% endfor %}
-    </div><!--row-->
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
+            <div class="row">
+                {% for p in listinprogress %}
+                    {% include 'progress/list-progresscard.html' %}
+                {% empty %}
+                    <div class="well">
+                        您还没有任何进度哦~
+                    </div>
+                {% endfor %}
+            </div><!--row-->
+        </div><!--.col-->
+    </div><!--.row-->
 
     <div class="page-header" data-toggle="collapse" data-target="#list-follow">
         <h1>
@@ -47,13 +51,17 @@
         </h1>
     </div>
     <div class="row collapse in" id="list-follow">
-        {% for p in listfollow %}
-            {% include 'progress/list-progresscard.html' %}
-        {% empty %}
-            <div class="well">
-                您没有在追剧的进度哦~
-            </div>
-        {% endfor %}
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
+            <div class="row">
+            {% for p in listfollow %}
+                {% include 'progress/list-progresscard.html' %}
+            {% empty %}
+                <div class="well">
+                    您没有在追剧的进度哦~
+                </div>
+            {% endfor %}
+            </div><!--row-->
+        </div><!--.col-->
     </div><!--row-->
 
     <div class="page-header" data-toggle="collapse" data-target="#list-todo">
@@ -63,27 +71,36 @@
         </h1>
     </div>
     <div class="row collapse" id="list-todo">
-        {% for p in listtodo %}
-            {% include 'progress/list-progresscard.html' %}
-        {% empty %}
-            <div class="well">
-                您没有尚未开始的进度哦~
-            </div>
-        {% endfor %}
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
+            <div class="row">
+            {% for p in listtodo %}
+                {% include 'progress/list-progresscard.html' %}
+            {% empty %}
+                <div class="well">
+                    您没有尚未开始的进度哦~
+                </div>
+            {% endfor %}
+            </div><!--row-->
+        </div><!--.col-->
     </div><!--row-->
 
     {% if listerror %}
-        <div class="page-header" data-toggle="collapse" data-target="#list-error">
-            <h1>
-                <span class="glyphicon glyphicon-plus"></span>
-                出错 <small>Error</small>
-            </h1>
-        </div>
-        <div class="row collapse in" id="list-giveup">
+    <div class="page-header" data-toggle="collapse" data-target="#list-error">
+        <h1>
+            <span class="glyphicon glyphicon-plus"></span>
+            出错 <small>Error</small>
+        </h1>
+    </div>
+    <div class="row collapse in" id="list-giveup">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
+            <div class="row">
             {% for p in listerror %}
                 {% include 'progress/list-progresscard.html' %}
             {% endfor %}
-        </div><!--row-->
+            </div><!--row-->
+        </div><!--.col-->
+    </div><!--row-->
     {% endif %}
-</div>
+
+</div><!--.container-->
 {% endblock content %}
