@@ -112,7 +112,7 @@ def userExphistory(request):
     context['view'] = view
     return render_to_response('user/exphistory.html', context)
 
-def userUser(request): # public
+def userPublic(request): # public
     '''通过 email/id/nickname 查看用户公开信息'''
     context = {}
     searchable_cols = ('nickname','id','email');
@@ -123,7 +123,7 @@ def userUser(request): # public
                 user = User.objects.get(**kwargs);
                 context['headimg'] = getGravatarUrl(user.email);
                 context['user'] = user
-                return render_to_response('user/user.html', context);
+                return render_to_response('user/public.html', context);
         error_msg = "错误的参数：{0}\n".format(json.dumps(dict(request.GET)))
         error_msg += "请输入 {0} 中的一种".format(', '.join(searchable_cols))
         return infoMsg(error_msg, title='参数错误');
