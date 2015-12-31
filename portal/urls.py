@@ -11,7 +11,7 @@ urlpatterns = [
     # INDEX
     url(r'^$', views.index, name='index'),
     # USER
-    url(r'^user/user', views.userUser),
+    url(r'^user/public$', views.userPublic),
     url(r'^user/profile/', views.userProfile),
     url(r'^user/exphistory$', views.userExphistory),
     url(r'^user/avatar/(?P<email>[0-9a-zA-Z_.@]+)/$', views.userAvatar),
