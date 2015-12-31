@@ -1,44 +1,102 @@
 {% extends "base.html" %}
-{% block title %}{{ user.nickname }}{% endblock title %}
+{% block title %}@{{ user.nickname }}的公开页{% endblock title %}
 
 {% block css %}
 <style type="text/css">
     .container {
         padding-top: 50px;
         padding-bottom: 80px;
+        font-family: "微软雅黑","Microsoft Yahei","Helvetica Neue",Helvetica,"Hiragino Sans GB","Segoe UI",Tahoma,Arial,STHeiti,sans-serif !important;
     }
+    #headimg {
+        width: 100%;
+    }
+    .table {
+        margin-bottom: 0;
+        font-size: 15px;
+    }
+    /* main-info */
+    .progress-status {
+        width: 30%;
+    }
+    /* exp-info */
+    .progress {
+        margin: 0;
+    }
+    .panel:hover {
+        box-shadow: 0px 0px 5px 2px silver;
+    }
+    .panel:hover .progress {
+        height: 25px;
+    }
+    #exp-info .category {
+        font-size: 15px;
+        font-weight: bold;
+    }
+
 </style>
 {% endblock css %}
 
 {% block content %}
 <div class="container">
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>属性</th>
-                    <th>值</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>头像</td>
-                    <td>
-                        <img src="{{ headimg }}">
-                    </td>
-                </tr>
-                <tr>
-                    <td>昵称</td>
-                    <td>{{ user.nickname }}</td>
-                </tr>
-                <tr>
-                    <td>创建时间</td>
-                    <td>{{ user.created }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+    <div class='row'>
+        <div class='hidden-xs col-sm-4 col-md-3 col-md-offset-1' id='gravatar'>
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <a href="/user/avatar/{{user.email}}" title="from gravatar.com">
+                        <img id="headimg" src="{{ headimg }}">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class='col-xs-12 col-sm-8 col-md-7' id='main-info'>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab">个人信息</a>
+                </li>
+                <li role="presentation">
+                    <a href="#progress-info" aria-controls="progress-info" role="tab" data-toggle="tab">进度信息</a>
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="personal-info">
+                    <table class="table table-condensed table-hover">
+                        <tr>
+                            <th>昵称</th>
+                            <td>
+                                {{ user.nickname }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>活跃等级</th>
+                            <td>
+                                Lv.{{ user.getLevel }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>创建时间</th>
+                            <td>{{ user.getCreated }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="progress-info">
+                     <table class="table table-condensed table-hover">
+                    {% for name, count in prgcounts %}
+                        {% if name != '出错' %}
+                        <tr>
+                            <th class="progress-status">{{ name }}:</th>
+                            <td>{{ count }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div><!--.col-->
+    </div><!--.row-->
+</div><!--.container-->
 {% endblock content %}
 
 {% block footer %}
@@ -46,7 +104,20 @@
     <style>
     #footer-div {
         position: fixed;
-        bottom: 0;
+        bottom: 0px;
     }
     </style>
 {% endblock footer %}
+
+{% block js %}
+<script type="text/javascript">
+$(function(){
+    $('#exp-info .panel').mouseover(function(){
+        $(this).find('.progress').addClass('active');
+    });
+    $('#exp-info .panel').mouseout(function(){
+        $(this).find('.progress').removeClass('active');
+    });
+})
+</script>
+{% endblock js %}

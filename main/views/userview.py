@@ -115,20 +115,27 @@ def userExphistory(request):
 def userPublic(request): # public
     '''通过 email/id/nickname 查看用户公开信息'''
     context = {}
-    searchable_cols = ('nickname','id','email');
+    nickname = request.GET.get('nickname')
+    if not nickname:
+        return infoMsg("被查看用户的昵称不在参数中", title='参数错误')
     try:
-        for sc in searchable_cols:
-            if sc in request.GET:
-                kwargs = {sc : request.GET.get(sc)}
-                user = User.objects.get(**kwargs);
-                context['headimg'] = getGravatarUrl(user.email);
-                context['user'] = user
-                return render_to_response('user/public.html', context);
-        error_msg = "错误的参数：{0}\n".format(json.dumps(dict(request.GET)))
-        error_msg += "请输入 {0} 中的一种".format(', '.join(searchable_cols))
-        return infoMsg(error_msg, title='参数错误');
+        user = User.objects.get(nickname=nickname);
     except User.DoesNotExist:
-        return infoMsg("用户 {0} 不存在".format(json.dumps(dict(request.GET))), title='参数错误')
+        return infoMsg("用户 {0} 不存在".format(nickname), title='找不到用户')
+    # get user progress counts
+    progress_counts = user.getProgressCounts();
+    progress_counts_group = []
+    for (k, v) in progress_counts.items():
+        item = (Progress.objects.getStatusName(k), v)
+        progress_counts_group.append(item)
+    # add exp to 被查看人
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
+    userexp.addExp(1, '友人到访你的公开页')
+    # render
+    context['user'] = user
+    context['headimg'] = getGravatarUrl(user.email);
+    context['prgcounts'] = progress_counts_group
+    return render_to_response('user/public.html', context);
 
 def userProfile(request):
     '''查看当前用户的个人信息，点击右上角昵称进入'''
@@ -140,7 +147,7 @@ def userProfile(request):
     try:
         user = User.objects.get(id=loginuser['id'])
     except User.DoesNotExist:
-        return infoMsg("您查找的用户id {} 并不存在".format(str(loginuser['id'])));
+        return infoMsg("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
     # get user exps
     userexps = user.getUserExp()
     exps = []
