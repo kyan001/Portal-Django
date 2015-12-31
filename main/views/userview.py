@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.template import *
 from django.views.decorators.csrf import csrf_exempt
 from main.models import User, UserExp, Progress
+from django.core.cache import cache
 from util.ctrl import *
 
 import json
@@ -149,11 +150,21 @@ def userProfile(request):
     except User.DoesNotExist:
         return infoMsg("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
     # get user exps
-    userexps = user.getUserExp()
     exps = []
+    level_notice = []
+    userexps = user.getUserExp()
     for ue in userexps:
         explet = (ue, ue.getExpHistory(5))
         exps.append(explet)
+        cache_key = 'userexp:{0}:{1}:level'.format(str(ue.id), ue.category)
+        cache_timeout = 60*60*24*7*2 # 2 weeks
+        cached_level = cache.get(cache_key)
+        if cached_level: # has cached progress:level
+            new_level = ue.getLevel()
+            if new_level > cached_level:
+                level_noticelet = (ue.getCategory(), cached_level, new_level)
+                level_notice.append(level_noticelet)
+        cache.set(cache_key, ue.getLevel(), cache_timeout)
     # get user progress counts
     progress_counts = user.getProgressCounts();
     progress_counts_group = []
@@ -168,6 +179,7 @@ def userProfile(request):
     context['headimg'] = getGravatarUrl(user.email);
     context['prgcounts'] = progress_counts_group
     context['exps'] = exps
+    context['levelnotice'] = level_notice
     return render_to_response('user/profile.html', context)
 
 #-Signup-----------------------------------------------

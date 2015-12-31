@@ -186,6 +186,9 @@ $(function(){
     $('#exp-info .panel').mouseout(function(){
         $(this).find('.progress').removeClass('active');
     });
+    {% for category, oldlevel, newlevel in levelnotice %}
+        $.success("{{category}} 从 {{oldlevel}} 升级到 {{newlevel}}！")
+    {% endfor %}
 })
 </script>
 {% endblock js %}
