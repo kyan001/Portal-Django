@@ -22,26 +22,8 @@
         <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-paper.min.css">
         <link rel="stylesheet" href="/static/css/KyanCssUtil.css">
         <title>{% block title %}{% endblock %} - SuperFarmer.net</title>
-        <style>
-            #footer-div {
-                width: 100%;
-            }
-            #footer-div .footer {
-                background-color: #eeeeee;
-                padding: 1em;
-                text-align: center;
-                font-size: 1em;
-                color: gray;
-            }
-            #footer-div .footer a{
-                text-decoration: none;
-            }
-        </style>
-        {% block css %}
-        {% endblock css %}
-        {% block js %}
-        {% endblock js %}
-
+        {% block css %}{% endblock %}
+        {% block js %}{% endblock %}
     {% endblock head %}
 </head>
 <body>
@@ -223,18 +205,33 @@
     </div>
 
     <!-- ############ FOOTER ############-->
-    <div id='footer-div'>
-        {% block footer %}
-            <div class="footer hidden-xs">
-                <div>
-                    <strong>Be happy.</strong>
-                    <i>Keep Healthy, Keep Happy, Keep Thinking, Keep Cool.</i>
-                </div>
-                <div>
-                    Powered By
-                    <a href="http://www.superfarmer.net">SuperFarmer</a>
-                </div>
+    {% block footer %}
+    <div id='footer-div' class="befast">
+        <div class="footer hidden-xs">
+            <div>
+                <strong>Be happy.</strong>
+                <i>Keep Healthy, Keep Happy, Keep Thinking, Keep Cool.</i>
             </div>
-        {% endblock footer %}
+            <div>
+                Powered By
+                <a href="http://www.superfarmer.net">SuperFarmer</a>
+            </div>
+        </div>
     </div>
+    <style>
+        #footer-div {
+            width: 100%;
+        }
+        #footer-div .footer {
+            background-color: #eeeeee;
+            padding: 1em;
+            text-align: center;
+            font-size: 1em;
+            color: gray;
+        }
+        #footer-div .footer a{
+            text-decoration: none;
+        }
+    </style>
+    {% endblock footer %}
 </body>

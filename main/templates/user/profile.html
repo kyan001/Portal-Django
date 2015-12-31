@@ -78,7 +78,7 @@
                             <th>昵称</th>
                             <td>
                                 <a href="/user/public?nickname={{ user.nickname }}">
-                                    <abbr title="我的公开信息">{{ user.nickname }}</abbr>
+                                    <abbr title="我的公开页，任何人都可以查看">{{ user.nickname }}</abbr>
                                 </a>
                             </td>
                         </tr>
@@ -146,7 +146,6 @@
         </div><!--.col-->
     </div><!--.row-->
     <div class="row">
-
         <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-0" id='exp-info'>
             {% for exp, exphistory in exps %}
             <div class="col-xs-12 col-sm-12 col-md-4">
