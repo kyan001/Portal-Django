@@ -77,12 +77,17 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 import sys
-if 'win' in sys.platform:
+if 'win' in sys.platform: #测试环境下
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'test.sqlite3'),
             'HOST': 'localhost',
+        }
+    }
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }
     }
 else:
@@ -95,6 +100,12 @@ else:
             'USER': 'portal',
             'PASSWORD': mysql_pswd.strip(),
             'HOST': 'localhost',
+        }
+    }
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
         }
     }
 

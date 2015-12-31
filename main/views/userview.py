@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import *
 from django.views.decorators.csrf import csrf_exempt
-from main.models import User
+from main.models import User, UserExp, Progress
 from util.ctrl import *
 
 import json
@@ -62,6 +62,7 @@ def checkAnswer(user, answer):
 #--views-----------------------------------------------
 
 def userLogout(request):
+    '''用户点击登出'''
     # clean session
     request.session['loginuser'] = None;
     # create response
@@ -74,7 +75,8 @@ def userLogout(request):
     response.delete_cookie('user_answer')
     return response;
 
-def userAvatar(request, email):
+def userAvatar(request, email): # public
+    '''通过 email 取回 gravatar'''
     context = {}
     if email:
         context['headimg'] = getGravatarUrl(email)
@@ -82,9 +84,38 @@ def userAvatar(request, email):
         return infoMsg("请输入email")
     return render_to_response('user/avatar.html', context)
 
-def userUser(request):
+def userExphistory(request):
+    '''用户的所有/某类活跃列表，由 profile 进入'''
+    # user check
+    user = request.session.get('loginuser')
+    if not user:
+        return infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
+    user = User.objects.get(id=user['id'])
+    # get inputs
     context = {}
-    searchable_cols = ('username','id','email');
+    category = request.GET.get('category')
+    view = request.GET.get('view')
+    if category:
+        if category not in UserExp.category_pool.get('all'):
+            return infoMsg("请求的分类（{0}）不存在".format(category), title='访问错误')
+        userexp = user.getUserExp(category)
+        if view == 'full':
+            exphistorys = userexp.getExpHistory()
+        else:
+            exphistorys = userexp.getExpHistory(22)
+    else:
+        return infoMsg("请输入请求的分类，可用的分类为 {0}".format(str(UserExp.category_pool.get('all'))), title='访问错误')
+    # render
+    context['user'] = user
+    context['userexp'] = userexp
+    context['exphistorys'] = exphistorys
+    context['view'] = view
+    return render_to_response('user/exphistory.html', context)
+
+def userUser(request): # public
+    '''通过 email/id/nickname 查看用户公开信息'''
+    context = {}
+    searchable_cols = ('nickname','id','email');
     try:
         for sc in searchable_cols:
             if sc in request.GET:
@@ -100,19 +131,41 @@ def userUser(request):
         return infoMsg("用户 {0} 不存在".format(json.dumps(dict(request.GET))), title='参数错误')
 
 def userProfile(request):
+    '''查看当前用户的个人信息，点击右上角昵称进入'''
     context = {}
-    user = request.session.get('loginuser')
-    if not user:
+    loginuser = request.session.get('loginuser')
+    if not loginuser:
         return infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
+    # get user
     try:
-        context['user'] = User.objects.get(id=user['id'])
+        user = User.objects.get(id=loginuser['id'])
     except User.DoesNotExist:
-        return infoMsg("您查找的用户id {} 并不存在".format(str(user['id'])));
-    context['headimg'] = getGravatarUrl(user['email']);
+        return infoMsg("您查找的用户id {} 并不存在".format(str(loginuser['id'])));
+    # get user exps
+    userexps = user.getUserExp()
+    exps = []
+    for ue in userexps:
+        explet = (ue, ue.getExpHistory(5))
+        exps.append(explet)
+    # get user progress counts
+    progress_counts = user.getProgressCounts();
+    progress_counts_group = []
+    for (k, v) in progress_counts.items():
+        item = (Progress.objects.getStatusName(k), v)
+        progress_counts_group.append(item)
+    # add exp
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
+    userexp.addExp(1, '查看用户私人信息')
+    # render
+    context['user'] = user
+    context['headimg'] = getGravatarUrl(user.email);
+    context['prgcounts'] = progress_counts_group
+    context['exps'] = exps
     return render_to_response('user/profile.html', context)
 
 #-Signup-----------------------------------------------
 def userSignup(request):
+    '''点击注册按钮后页面'''
     context = {}
     if 'redirect' in request.GET:
         context['redirect'] = request.GET.get('redirect')
@@ -122,7 +175,7 @@ def userSignup(request):
 
 @csrf_exempt
 def userNewUser(request):
-    '''新用户点击提交注册后'''
+    '''新用户点击提交注册按钮后'''
     username = request.POST.get('username')
     question = request.POST.get('question')
     answer1 = request.POST.get('answer1')
@@ -167,11 +220,16 @@ def userNewUser(request):
     user.setCreated();
     user.save();
 
+    # add exp
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
+    userexp.addExp(1, '注册成功')
+
     # render
     return infoMsg(" {0} 注册成功！\n您是网站第 {1} 位用户。\n请登入以便我们记住您！".format(username, str(user.id)), url='/user/signin', title="欢迎加入")
 
 #-Signin-----------------------------------------------
 def userSignin(request):
+    '''点击登入后的页面，供输入用户名/密码'''
     # check if already logged in
     current_user = request.session.get('loginuser');
     if current_user:
@@ -192,9 +250,10 @@ def userForgetanswer(request):
         <li>如果连接无法打开，请在复制后在浏览器中打开：</li>
         <a href='http://portal.superfarmer.net/user/resetanswer/'>http://portal.superfarmer.net/user/resetanswer/</a>
     '''
-    result = sendEmail(content, 'kai@superfarmer.net', subject='忘记密码找回注册')
-    if not result:
-        return infoMsg("发送邮件失败："+ json.dumps(result), title="发送失败")
+    # TODO: Not worked on Server
+    # result = sendEmail(content, 'kai@superfarmer.net', subject='忘记密码找回注册')
+    # if not result:
+    #     return infoMsg("发送邮件失败："+ json.dumps(result), title="发送失败")
     return render_to_response('user/forgetanswer.html', context)
 
 
@@ -233,6 +292,9 @@ def userCheckLogin(request):
     for urllet in redirect_to_home:
         if urllet in redirect_url:
             response = redirect('/')
+    # add exp
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
+    userexp.addExp(1, '登陆成功')
     # set cookie
     if rememberme == 'yes':
         oneweek = 60*60*24*7
@@ -271,7 +333,9 @@ def userGetloginerInfo(request): # AJAX
                 loginuser = user.toArray();
     # get user's gravatar
     if loginuser:
+        user = getUserById(loginuser['id'])
         loginuser['avatar'] = getGravatarUrl(loginuser['email'])
+        loginuser['level'] = user.getLevel()
         return returnJson(loginuser)
     else:
         return returnJsonResult('nologinuser')

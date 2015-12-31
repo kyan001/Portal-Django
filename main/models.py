@@ -1,7 +1,7 @@
 from django.db import models
 from django.forms.models import model_to_dict
+import util.ctrl
 from django.utils import timezone
-from util.ctrl import *
 import json
 import util.KyanToolKit_Py
 ktk = util.KyanToolKit_Py.KyanToolKit_Py()
@@ -15,84 +15,191 @@ class User(models.Model):
     answer2 = models.CharField(max_length=128, blank=True, null=True)
     tip = models.TextField(blank=True, null=True)
     email = models.EmailField()
-    created = models.DateTimeField()
+    created = models.DateTimeField(default=timezone.now, blank=True)
     def __str__(self): # 用于需要 string 时的处理 python3
-        return str(self.id) + ":" + self.nickname + "(" + self.username + ")"
+        return "{0}: {1} - @{2} - {3}".format(str(self.id), self.getCreated(), self.username, self.nickname)
     def toArray(self):
         self.created = self.created.isoformat(' ')
         return model_to_dict(self)
     def setCreated(self):
         self.created = timezone.now()
     def getCreated(self):
-        time_format = '%m-%d %H:%M %p'
-        if self.created.year != timezone.now().year:
-            time_format = '%Y-' + time_format
-        return self.created.astimezone(timezone.get_current_timezone()).strftime(time_format)
+        return util.ctrl.formatDate(self.created)
+    def getUserExp(self, category=None):
+        if category:
+            return UserExp.objects.get_or_create(userid=self.id, category=category)[0]
+        else:
+            return UserExp.objects.filter(userid=self.id)
+    def getProgressCounts(self):
+        countResult = {}
+        for st in Progress.status_pool.get('all'):
+            countResult[st] = Progress.objects.filter(userid=self.id, status=st).count()
+        return countResult
+    def getLevel(self):
+        userexps = self.getUserExp()
+        total_exp = sum(ue.exp for ue in userexps)
+        return util.ctrl.calcLevel(total_exp)
+
+class UserExp(models.Model):
+    userid = models.IntegerField(default=0, blank=False, null=False)
+    category = models.CharField(max_length=255, blank=False, null=False)
+    exp = models.IntegerField(default=0, blank=False, null=False)
+    modified = models.DateTimeField(default=timezone.now, blank=True)
+    created = models.DateTimeField(default=timezone.now, blank=True)
+    category_pool = {
+        'all' : ('progress','user','error'),
+    }
+    category_name = {
+        'progress': '进度活跃度',
+        'user': '用户活跃度',
+        'error': '错误类别',
+    }
+    def __str__(self):
+        user = self.getUser()
+        return str(self.id) + ": @{0} - {1}: {2} - lv{3}".format(user.nickname, self.getCategory(), str(self.exp), str(self.getLevel()))
+    # Category
+    def setCategory(self, category):
+        if category not in self.category_pool.get('all'):
+            raise Exception("分类只能为 {0}".format( str(category_pool.get('all')) ))
+        self.category = category
+        self.setModified()
+    def getCategory(self):
+        category_name = self.category_name.get(self.category)
+        if category_name:
+            return category_name
+        return self.category
+    # Created & Modified
+    def setCreated(self):
+        self.created = timezone.now()
+    def getCreated(self):
+        return util.ctrl.formatDate(self.created)
+    def setModified(self):
+        self.modified = timezone.now()
+    def getModified(self):
+        return util.ctrl.formatDate(self.modified)
+    # Exp
+    def setExp(self, exp):
+        self.exp = exp
+        self.setModified()
+    def addExp(self, exp, operation):
+        self.setExp(self.exp + exp)
+        history = ExpHistory(userexpid=self.id, operation=operation, change=exp)
+        self.save()
+        history.save()
+    # calculations
+    def getLevel(self):
+        return util.ctrl.calcLevel(self.exp)
+    def getLevelupExp(self):
+        level = self.getLevel()
+        return (level+1) ** 2
+    def getPersent(self):
+        persent = self.exp / self.getLevelupExp() * 100
+        return int(persent)
+    def getUser(self):
+        return User.objects.get(id=self.userid)
+    def getExpHistory(self, count=0):
+        result = ExpHistory.objects.filter(userexpid=self.id).order_by('-created')
+        if isinstance(count,int) and count>0:
+            return result[0:count]
+        return result
+
+class ExpHistory(models.Model):
+    userexpid = models.IntegerField(default=0, blank=False, null=False)
+    operation = models.TextField()
+    change = models.IntegerField(default=0, blank=False, null=False)
+    created = models.DateTimeField(default=timezone.now, blank=True)
+    def __str__(self):
+        userexp = self.getUserexp()
+        user = userexp.getUser()
+        return str(self.id) + ": {0} - @{1}: [{2}] {3} +{4}".format(
+            self.getCreated(), user.nickname, userexp.getCategory(), self.operation, str(self.change)
+        )
+    def getUserexp(self):
+        return UserExp.objects.get(id=self.userexpid)
+    # Created & Modified
+    def setCreated(self):
+        self.created = timezone.now()
+    def getCreated(self):
+        return util.ctrl.formatDate(self.created)
 
 class Opus(models.Model):
     name = models.CharField(max_length=255)
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     total = models.IntegerField(default=0)
-    created = models.DateTimeField()
+    created = models.DateTimeField(default=timezone.now, blank=True)
     def __str__(self):
         subtext = "(" + self.subtitle + ")" if self.subtitle else "";
         total = self.total if self.total else '∞'
-        return str(self.id) + ': <<{0}>>{1}[{2}]'.format(self.name, subtext, str(total))
+        return str(self.id) + ': {0} {1} [{2}]'.format(self.name, subtext, str(total))
     def toArray(self):
         self.created = self.created.isoformat(' ')
         return model_to_dict(self)
     def setCreated(self):
         self.created = timezone.now()
     def getCreated(self):
-        time_format = '%m-%d %H:%M %p'
-        if self.created.year != timezone.now().year:
-            time_format = '%Y-' + time_format
-        return self.created.astimezone(timezone.get_current_timezone()).strftime(time_format)
+        return util.ctrl.formatDate(self.created)
     def getProgress(self):
         return Progress.objects.get(opusid=self.id)
+
+class ProgressManager(models.Manager):
+    def getStatusName(self, status):
+        status_name = Progress.status_name.get(status)
+        if status_name:
+            return status_name;
+        return status
 
 class Progress(models.Model):
     userid = models.IntegerField(default=0)
     opusid = models.IntegerField(default=0)
     current = models.IntegerField(default=0)
     status = models.CharField(max_length=50)
-    created = models.DateTimeField()
-    modified = models.DateTimeField()
-    status_pool = ('done','inprogress','giveup','error','follow')
+    weblink = models.URLField(max_length=2083, blank=True, default="")
+    created = models.DateTimeField(default=timezone.now, blank=True)
+    modified = models.DateTimeField(default=timezone.now, blank=True)
+    status_pool = {
+        'all' : ('inprogress','follow','todo','done','giveup','error'),
+        'active' : ('inprogress','follow','todo','error'),
+        'archive' : ('done','giveup'),
+    }
+    status_name = {
+        'done': '已完成',
+        'inprogress': '进行中',
+        'giveup': '弃置',
+        'done': '已完成',
+        'error': '出错',
+        'todo': '待阅读',
+        'follow': '追剧中',
+    }
+    objects = ProgressManager()
     def __str__(self):
         opus = self.getOpus()
         user = self.getUser()
-        return str(self.id) + ": {0}({1}) - 《{2}》({3}/{4})".format(user.username, user.nickname, opus.name, str(self.current), str(opus.total))
+        return str(self.id) + ": @{0} - {1} ({2}/{3})".format(user.nickname, opus.name, str(self.current), str(opus.total))
     def toArray(self):
         self.created = self.created.isoformat(' ')
         self.modified = self.modified.isoformat(' ')
         return model_to_dict(self)
-
     # created & modified
     def setCreated(self):
         self.created = timezone.now()
     def getCreated(self):
-        time_format = '%m-%d %H:%M %p'
-        if self.created.year != timezone.now().year:
-            time_format = '%Y-' + time_format
-        return self.created.astimezone(timezone.get_current_timezone()).strftime(time_format)
+        return util.ctrl.formatDate(self.created)
     def setModified(self):
         self.modified = timezone.now()
     def getModified(self):
-        time_format = '%m-%d %H:%M %p'
-        if self.modified.year != timezone.now().year:
-            time_format = '%Y-' + time_format
-        return self.modified.astimezone(timezone.get_current_timezone()).strftime(time_format)
-
+        return util.ctrl.formatDate(self.modified)
     # status
     def setStatus(self, status):
-        if status not in self.status_pool:
-            raise Exception("状态只能为 {0}".format(str(status_pool)))
+        if status not in self.status_pool.get('all'):
+            raise Exception("状态只能为 {0}".format( str(status_pool.get('all')) ))
         self.status = status
         self.setModified()
     def setStatusAuto(self):
         opus = self.getOpus()
         if self.status == 'giveup':
+            return True;
+        if self.current == 0:
+            self.setStatus('todo')
             return True;
         if opus.total == 0:
             self.setStatus('follow')
@@ -111,18 +218,10 @@ class Progress(models.Model):
         self.setStatus('error')
         return self.setStatusAuto()
     def getStatus(self):
-        if self.status == 'giveup':
-            return '弃置';
-        if self.status == 'error':
-            return '出错';
-        if self.status == 'done':
-            return '已完成';
-        if self.status == 'inprogress':
-            return '进行中';
-        if self.status == 'follow':
-            return '追剧中';
+        status_name = self.status_name.get(self.status)
+        if status_name:
+            return status_name;
         return self.status
-
     # calculations
     def getPersent(self):
         opus = self.getOpus()

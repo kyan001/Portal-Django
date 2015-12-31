@@ -63,6 +63,41 @@ $.extend({
             }, 'jsonp');
         }
     },
+    /**
+     * get image's primary color
+     * @param  {[string]}   url      [image url, if url=="", only read cache]
+     * @param  {[string]}   name     [the opus's title which contains the image]
+     * @param  {Function}   callback [call this function after got the data]
+     */
+    getImageColor: function(url, name, callback){
+        var request_data = {}
+        if(url==""){
+            request_data = {
+                'name': name
+            };
+        } else {
+            request_data = {
+                'url': url,
+                'name': name,
+            };
+        }
+        $.ajax({
+            type: "GET",
+            url: "/progress/imagecolor",
+            data: request_data,
+            async: true,
+            dataType: 'json',
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Ajax Error, XMLHttpRequest:");
+                console.log("status: "+XMLHttpRequest.status);
+                console.log("readyState: "+XMLHttpRequest.readyState);
+                console.log("textStatus: "+textStatus);
+            },
+            success: function(result) {
+                callback(result)
+            }
+        });
+    },
 });
 
 function checkHas(keywords, bookOrMovie){

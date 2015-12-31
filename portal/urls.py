@@ -13,6 +13,7 @@ urlpatterns = [
     # USER
     url(r'^user/user', views.userUser),
     url(r'^user/profile/', views.userProfile),
+    url(r'^user/exphistory$', views.userExphistory),
     url(r'^user/avatar/(?P<email>[0-9a-zA-Z_.@]+)/$', views.userAvatar),
     url(r'^user/signin/$', views.userSignin),
     url(r'^user/signup/$', views.userSignup),
@@ -27,7 +28,9 @@ urlpatterns = [
     url(r'^user/getquestionandtip$', views.userGetQuestionAndTip),
     # PROGRESS
     url(r'^progress/list/$', views.progressList),
+    url(r'^progress/archive/$', views.progressArchive),
     url(r'^progress/detail$', views.progressDetail),
+    url(r'^progress/imagecolor$', views.progressImagecolor),
     url(r'^progress/fastupdate/$', views.progressFastupdate),
     url(r'^progress/new/$', views.progressNew),
     url(r'^progress/add/$', views.progressAdd),

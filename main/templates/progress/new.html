@@ -23,6 +23,9 @@
         font-size: 15px !important;
         width: 100%;
     }
+    .extra-info {
+        display: none;
+    }
 </style>
 {% endblock css %}
 
@@ -75,6 +78,11 @@
             });
         }
     }
+    function showExtraInfo(){
+        $('#show-extra-info-div').slideUp();
+        $('.extra-info').slideDown();
+        $('.extra-info.clearfix').addClass('visible-xs-block');
+    }
 </script>
 {% endblock js %}
 
@@ -106,13 +114,13 @@
                                 <span class="text-danger">动漫名、电视剧名、书名</span>
                             </span>
                         </div>
-                        <div class="clearfix visible-xs-block">
+                        <div class="extra-info clearfix">
                             <hr/>
                         </div>
-                        <div class="row">
-                            <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-warning">副标题</span>
-                            <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
-                                <input type="text" placeholder="选填（尽量简短）" name="subtitle" class="editable">
+                        <div class="extra-info row">
+                            <span class="col-sm-2 col-xs-4 text-right text-warning">副标题</span>
+                            <span class="col-sm-6 col-xs-8">
+                                <input type="text" placeholder="可不填（尽量简短）" name="subtitle" class="editable">
                             </span>
                             <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
                                 <span>作品的副标题、备注、分类</span>
@@ -124,7 +132,7 @@
                         <div class="row">
                             <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-warning">总共</span>
                             <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
-                                <input type="number" placeholder="选填（纯数字，追剧请填 0）" name="total" class="editable">
+                                <input type="number" placeholder="可不填（纯数字，追剧请填 0）" name="total" class="editable">
                             </span>
                             <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
                                 <span>总共几页、总共几集？</span>
@@ -133,13 +141,28 @@
                         <div class="clearfix visible-xs-block">
                             <hr/>
                         </div>
-                        <div class="row">
+                        <div class="row" id="show-extra-info-div">
+                            <div class="btn btn-default col-sm-8 col-sm-offset-2 col-xs-12" id="show-extra-info-btn" onclick="showExtraInfo()">更多信息</div>
+                        </div>
+                        <div class="extra-info row">
                             <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-warning">当前进度</span>
                             <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
-                                <input type="number" placeholder="选填（必须为纯数字）" name="current" class="editable">
+                                <input type="number" placeholder="可不填（必须为纯数字）" name="current" class="editable">
                             </span>
                             <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
                                 <span>已看到第几集</span>
+                            </span>
+                        </div>
+                        <div class="extra-info clearfix">
+                            <hr/>
+                        </div>
+                        <div class="extra-info row">
+                            <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-warning">链接</span>
+                            <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
+                                <input type="text" placeholder="可不填（须以 http:// 开头）" name="weblink" class="editable">
+                            </span>
+                            <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
+                                <span>作品的链接地址</span>
                             </span>
                         </div>
                     </form>
@@ -147,14 +170,14 @@
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <a class="btn btn-danger disableBtn" href="javascript:history.back()">
+                            <a class="btn btn-default disableBtn" href="javascript:history.back()">
                                 <span class="glyphicon glyphicon-remove"></span> 取消
                             </a>
                         </div>
                         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 text-right">
                             <div class="text-right">
-                                <button class="btn btn-default" onclick="clearForm()">
-                                    <span class="glyphicon glyphicon-trash"></span> 清空
+                                <button class="btn btn-warning" onclick="clearForm()">
+                                    <span class="glyphicon glyphicon-refresh"></span> 清空
                                 </button>
                                 <button class="btn btn-success disableBtn" onclick="submitForm()">
                                         <span class="glyphicon glyphicon-ok"></span> 保存
