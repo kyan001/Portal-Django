@@ -64,6 +64,8 @@ class User(models.Model):
         return Chat.objects.filter(receiverid=self.id).order_by('-created')
     def getSentChats(self):
         return Chat.objects.filter(senderid=self.id).order_by('-created')
+    def getUnreadCount(self):
+        return Chat.objects.filter(receiverid=self.id, isread=False).count()
 
 class UserPermissionManager(models.Manager):
     def getCategoryName(self, category):

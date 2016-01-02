@@ -360,6 +360,7 @@ def userGetloginerInfo(request): # AJAX
         user = getUserById(loginuser['id'])
         loginuser['avatar'] = getGravatarUrl(loginuser['email'])
         loginuser['level'] = user.getLevel()
+        loginuser['unreadcount'] = user.getUnreadCount()
         return returnJson(loginuser)
     else:
         return returnJsonResult('nologinuser')

@@ -128,6 +128,10 @@
                         用户名
                     </span>
                 </a>
+                <a href="/chat/inbox" class="btn btn-default btn-sm" title="Inbox">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                    <span id="unread-count">0</span>
+                </a>
                 <a href="/user/logout" class="btn btn-default btn-sm">登出</a>
             </span>
         </nav>
@@ -188,6 +192,7 @@
                         } else {
                             $("#user-bar .profile-nikename").text(result.nickname);
                             $("#user-bar .profile-link").attr('title',"活跃等级 Lv."+result.level);
+                            $("#user-bar #unread-count").text(result.unreadcount);
                             $("#user-bar .loginshow").fadeIn();
                         }
                     },
