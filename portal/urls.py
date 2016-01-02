@@ -42,4 +42,5 @@ urlpatterns = [
     url(r'^opus/detail$', views.opusDetail),
     # CHAT
     url(r'^chat/inbox$', views.chatInbox),
+    url(r'^chat/markread$', views.chatMarkread),
 ]
