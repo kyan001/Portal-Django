@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import *
 from django.views.decorators.csrf import csrf_exempt
-from main.models import User, UserExp, Progress
+from main.models import *
 from django.core.cache import cache
 from util.ctrl import *
 
@@ -183,7 +183,7 @@ def userProfile(request):
     return render_to_response('user/profile.html', context)
 
 #-Signup-----------------------------------------------
-def userSignup(request):
+def userSignup(request): # PUBLIC
     '''点击注册按钮后页面'''
     context = {}
     if 'redirect' in request.GET:
@@ -290,6 +290,8 @@ def userCheckLogin(request):
         return infoMsg("答案不能为空", title="登入失败")
     # check username vs. answer
     user = getUser(username)
+    if user.getUserpermission('signin')==False:
+        return infoMsg('您已被禁止{0}，请联系管理员'.format(UserPermission.objects.getCategoryName('signin')))
     if checkAnswer(user, answer):
         request.session['loginuser'] = user.toArray()
     else:
@@ -314,6 +316,9 @@ def userCheckLogin(request):
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
     userexp.addExp(1, '登陆成功')
+    # send chat
+    chat_content = '欢迎您归来，<br>访问 <a href="/progress/list">我的进度</a> 开始您的网站之旅吧！'
+    Chat.objects.sendBySys(user, title='欢迎您的到来，{0}'.format(user.nickname), content=chat_content)
     # set cookie
     if rememberme == 'yes':
         oneweek = 60*60*24*7
