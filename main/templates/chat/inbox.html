@@ -1,9 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}inbox{% endblock title %}
 
-</body>
-</html>
+{% block css %}
+{% endblock css %}
+
+{% block js %}
+<script type="text/javascript"></script>
+{% endblock js %}
+
+
+{% block content %}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <div class="panel-title">
+            系统消息
+        </div>
+    </div>
+    <div class="panel-body">
+        信件内容
+    </div>
+    <div class="panel-footer">
+        注释
+    </div>
+</div>
+
+{% endblock content %}
