@@ -247,3 +247,23 @@ class Progress(models.Model):
     def getUser(self):
         return User.objects.get(id=self.userid)
 
+class Chat(models.Model):
+    senderid = models.IntegerField(default=0, blank=False, null=False)
+    receiverid = models.IntegerField(default=0, blank=False, null=False)
+    title = models.TextField(blank=True, null=True)
+    content = models.TextField(blank=True, null=True)
+    isread = models.BooleanField(default=False)
+    created = models.DateTimeField(default=timezone.now, blank=False)
+    def __str__(self):
+        sender = self.getSender()
+        receiver = self.getReceiver()
+        return "{0}: @{1} -> @{2}: {3}".format(str(self.id), sender.nickname, receiver.nickname, self.getCreated)
+    # util
+    def getSender(self):
+        return User.objects.get(id=self.senderid)
+    def getReceiver(self):
+        return User.objects.get(id=self.receiverid)
+    def setCreated(self):
+        self.created = timezone.now()
+    def getCreated(self):
+        return util.ctrl.formatDate(self.created)
