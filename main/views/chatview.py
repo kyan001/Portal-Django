@@ -12,6 +12,6 @@ import util.KyanToolKit_Py
 ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 
 def chatInbox(request):
-    '''用户查看自己的inbox'''
+    '''用户查看自己的 inbox'''
     context = {}
-    return render_to_response('user/avatar.html', context)
+    return render_to_response('chat/inbox.html', context)
