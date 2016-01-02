@@ -16,12 +16,12 @@ def chatInbox(request):
     context = {}
     loginuser = request.session.get('loginuser')
     if not loginuser:
-        return infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
+        return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
     # get user
     try:
         user = User.objects.get(id=loginuser['id'])
     except User.DoesNotExist:
-        return infoMsg("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
+        return util.ctrl.infoMsg("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
     # get chats
     chats = user.getReceivedChats()
     # render
@@ -33,7 +33,7 @@ def chatMarkread(request): # AJAX
     context = {}
     loginuser = request.session.get('loginuser')
     if not loginuser:
-        return returnJsonError("您还没有登入，请先登入")
+        return util.ctrl.returnJsonError("您还没有登入，请先登入")
     # get user
     try:
         user = User.objects.get(id=loginuser['id'])

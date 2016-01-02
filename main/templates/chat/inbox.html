@@ -71,6 +71,10 @@
                         <div class="panel-footer">{{ c.getCreated }}</div>
                     </div>
                 </div>
+                {% empty %}
+                <div class="well">
+                    你还没有收到任何消息
+                </div>
                 {% endfor %}
             </div><!--.panel-group-->
         </div><!--.col-->
