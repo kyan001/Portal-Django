@@ -40,4 +40,6 @@ urlpatterns = [
     url(r'^progress/reset/$', views.progressReset),
     # OPUS
     url(r'^opus/detail$', views.opusDetail),
+    # CHAT
+    url(r'^chat/inbox$', views.chatInbox)，
 ]
