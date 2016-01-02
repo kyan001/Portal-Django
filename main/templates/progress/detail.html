@@ -386,7 +386,7 @@
                 <div class="panel-heading">
                     <span class="panel-title">
                     {% ifequal prg.status 'giveup' %}
-                        <span class="persent label label-danger">已弃置</span>
+                        <span class="persent label label-danger">已冻结</span>
                     {% endifequal %}
                         <span class="persent label label-persent">{{prg.getPersent}}%</span>
                         《 <a id="opustitle" title="看看还有谁在看这本书" href="/opus/detail?id={{opus.id}}"><b>{{opus.name}}</b></a> 》
@@ -425,11 +425,11 @@
                                             <span class="input-group-btn">
                                             {% if prg.status == 'giveup' %}
                                                 <div class="btn btn-warning disableBtn" id='reset' onclick="$('#resetform').submit()">
-                                                    <span class="glyphicon glyphicon-ok-circle"></span> 取消弃置
+                                                    <span class="glyphicon glyphicon-ok-circle"></span> 激活进度
                                                 </div>
                                             {% else %}
                                                 <div class="btn btn-warning disableBtn" id='giveup' onclick="$('#giveupform').submit()">
-                                                    <span class="glyphicon glyphicon-ban-circle"></span> 弃置进度
+                                                    <span class="glyphicon glyphicon-ban-circle"></span> 冻结进度
                                                 </div>
                                             {% endif %}
                                             </span>

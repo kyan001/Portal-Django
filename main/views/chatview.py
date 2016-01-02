@@ -1,15 +1,8 @@
 from django.shortcuts import render_to_response
 from django.shortcuts import redirect
-from django.http import HttpResponse
 from django.template import *
-from django.views.decorators.csrf import csrf_exempt
-from main.models import Chat, User
-from django.core.cache import cache
+from main.models import *
 import util.ctrl
-
-import json
-import util.KyanToolKit_Py
-ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 
 def chatInbox(request):
     '''用户查看自己的 inbox'''
@@ -22,10 +15,19 @@ def chatInbox(request):
         user = User.objects.get(id=loginuser['id'])
     except User.DoesNotExist:
         return util.ctrl.infoMsg("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
+    # get inputs
+    chat_type = request.GET.get('type')
     # get chats
-    chats = user.getReceivedChats()
+    if chat_type == 'unread':
+        chats = user.getUnreadChats()
+    else:
+        chats = user.getReceivedChats()
+    # add exps
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
+    userexp.addExp(1, '查看收件箱')
     # render
     context['chats'] = chats
+    context['user'] = user
     return render_to_response('chat/inbox.html', context)
 
 def chatMarkread(request): # AJAX
@@ -47,6 +49,9 @@ def chatMarkread(request): # AJAX
         return util.ctrl.returnJsonError("您查找的消息 id: {0} 并不存在".format(str(chatid)))
     if chat.receiverid != user.id:
         return util.ctrl.returnJsonError('你没有权限修改 id: {0} 的消息'.format(str(chat.id)))
+    # add exps
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
+    userexp.addExp(1, '阅读消息')
     # markread
     isSuccessed = chat.markRead()
     return util.ctrl.returnJsonResult(True)

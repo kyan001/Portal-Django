@@ -43,7 +43,7 @@
     <div class="page-header" data-toggle="collapse" data-target="#list-giveup">
         <h1>
             <span class="glyphicon glyphicon-chevron-down"></span>
-            弃置 <small>Giveup</small>
+            冻结中 <small>Giveup</small>
         </h1>
     </div>
     <div class="row collapse" id="list-giveup">
@@ -51,7 +51,7 @@
             {% include 'progress/list-progresscard.html' %}
         {% empty %}
             <div class="well">
-                弃置的进度，会自动显示在这里，可以随时再继续阅读。
+                冻结中的进度，会自动显示在这里，可以随时再继续阅读。
             </div>
         {% endfor %}
     </div><!--row-->

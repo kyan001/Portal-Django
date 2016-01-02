@@ -315,10 +315,14 @@ def userCheckLogin(request):
             response = redirect('/')
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
-    userexp.addExp(1, '登陆成功')
+    userexp.addExp(1, '登入成功')
     # send chat
-    chat_content = '欢迎您归来，<br>访问 <a href="/progress/list">我的进度</a> 开始您的网站之旅吧！'
-    Chat.objects.sendBySys(user, title='欢迎您的到来，{0}'.format(user.nickname), content=chat_content)
+    chat_content = '''
+        欢迎您归来，开始您的网站之旅吧！<br/>
+        访问 <a href="/progress/list">我的进度</a> 查看您的进度<br/>
+        访问 <a href="/user/profile">我的账号信息</a> 查看您的活跃度
+    '''
+    Chat.objects.sendBySys(user, title='Hi, @{0}'.format(user.nickname), content=chat_content)
     # set cookie
     if rememberme == 'yes':
         oneweek = 60*60*24*7
@@ -360,7 +364,7 @@ def userGetloginerInfo(request): # AJAX
         user = getUserById(loginuser['id'])
         loginuser['avatar'] = getGravatarUrl(loginuser['email'])
         loginuser['level'] = user.getLevel()
-        loginuser['unreadcount'] = user.getUnreadCount()
+        loginuser['unreadcount'] = user.getUnreadChats().count()
         return returnJson(loginuser)
     else:
         return returnJsonResult('nologinuser')

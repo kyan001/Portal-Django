@@ -147,12 +147,6 @@
                     enableSubmit()
                 }
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Ajax Error, XMLHttpRequest:");
-                console.log("status: " + XMLHttpRequest.status);
-                console.log("readyState: " + XMLHttpRequest.readyState);
-                console.log("textStatus: " + textStatus);
-            },
         });
     }
     function validateNickname(){
@@ -182,12 +176,6 @@
                     enableSubmit()
                 }
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Ajax Error, XMLHttpRequest:");
-                console.log("status: " + XMLHttpRequest.status);
-                console.log("readyState: " + XMLHttpRequest.readyState);
-                console.log("textStatus: " + textStatus);
-            },
         });
     }
     function validateEmail(){
@@ -216,12 +204,6 @@
                     $('#email-group').addClass('has-success');
                     enableSubmit()
                 }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Ajax Error, XMLHttpRequest:");
-                console.log("status: " + XMLHttpRequest.status);
-                console.log("readyState: " + XMLHttpRequest.readyState);
-                console.log("textStatus: " + textStatus);
             },
         });
     }

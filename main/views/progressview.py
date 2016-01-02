@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.utils import timezone
 from django.template import *
 from django.views.decorators.csrf import csrf_exempt
-from main.models import Progress, Opus, UserExp
+from main.models import *
 from django.core.cache import cache
 import util.ctrl
 
@@ -16,14 +16,15 @@ def progressList(request):
     '''进度列表：显示所有进行中、待开始、追剧中的进度'''
     context = {}
     #get user
-    user = request.session.get('loginuser');
-    if not user:
+    loginuser = request.session.get('loginuser');
+    if not loginuser:
         return util.ctrl.needLogin()
-    else:
-        userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
-        userexp.addExp(1, '访问进度列表页面')
+    try:
+        user = User.objects.get(id=loginuser['id'])
+    except User.DoesNotExist:
+        return infoMsg("用户 id:{0} 不存在".format(str(loginuser['id'])), title='找不到用户')
     #get user's progresses
-    progresses = Progress.objects.filter(userid=user['id']).order_by('-modified');
+    progresses = Progress.objects.filter(userid=user.id).order_by('-modified');
     if len(progresses):
         #init vars
         pList = {}
@@ -44,20 +45,33 @@ def progressList(request):
         for st in Progress.status_pool.get('active'):
             if pList[st]:
                 context['list'+st] = pList[st]
+    else:
+        chat_content = '''
+            欢迎您使用「我的进度」<br/>
+            请点击 “<a href="/progress/new">新建进度</a>” 按钮添加新的进度，<br/>
+            “已完成”和“冻结中”的进度会存放在 <a href="/progress/archive">进度存档</a> 页面。<br/>
+            最后，祝您使用愉快！
+        '''
+        Chat.objects.sendBySys(user, title='欢迎使用「我的进度」系统', content=chat_content)
+    # add exps
+    userexp, created = UserExp.objects.get_or_create(userid=loginuser['id'], category='progress')
+    userexp.addExp(1, '访问进度列表页面')
+    # render
     return render_to_response('progress/list.html', context)
 
 def progressArchive(request):
-    '''进度存档：显示所有已完成、已弃置的进度'''
+    '''进度存档：显示所有已完成、已冻结的进度'''
     context = {}
     #get user
-    user = request.session.get('loginuser');
-    if not user:
+    loginuser = request.session.get('loginuser');
+    if not loginuser:
         return util.ctrl.needLogin()
-    else:
-        userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
-        userexp.addExp(1, '访问进度存档页面')
+    try:
+        user = User.objects.get(id=loginuser['id'])
+    except User.DoesNotExist:
+        return infoMsg("用户 id:{0} 不存在".format(str(loginuser['id'])), title='找不到用户')
     #get user's progresses
-    progresses = Progress.objects.filter(userid=user['id']).order_by('-modified');
+    progresses = Progress.objects.filter(userid=loginuser['id']).order_by('-modified');
     if len(progresses):
         #init vars
         pList = {}
@@ -78,6 +92,10 @@ def progressArchive(request):
         for st in Progress.status_pool.get('archive'):
             if pList[st]:
                 context['list'+st] = pList[st]
+    # add exps
+    userexp, created = UserExp.objects.get_or_create(userid=loginuser['id'], category='progress')
+    userexp.addExp(1, '访问进度存档页面')
+    # render
     return render_to_response('progress/archive.html', context)
 
 def progressDetail(request):
@@ -279,7 +297,7 @@ def progressDelete(request):
 
 @csrf_exempt
 def progressGiveup(request):
-    '''detail 界面点击弃置按钮'''
+    '''detail 界面点击冻结按钮'''
     # get inputs
     user = request.session.get('loginuser');
     if not user:
@@ -302,7 +320,7 @@ def progressGiveup(request):
         return util.ctrl.infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
-    userexp.addExp(2, '弃置进度《{0}》'.format(opus.name))
+    userexp.addExp(2, '冻结进度《{0}》'.format(opus.name))
     # save
     progress.setStatus('giveup')
     progress.save()
@@ -311,7 +329,7 @@ def progressGiveup(request):
 
 @csrf_exempt
 def progressReset(request):
-    '''detail 界面点击取消弃置按钮'''
+    '''detail 界面点击激活进度按钮'''
     # get inputs
     user = request.session.get('loginuser');
     if not user:
@@ -334,7 +352,7 @@ def progressReset(request):
         return util.ctrl.infoMsg("未找到 id 为 {0} 的作品".format(str(progress.opusid)))
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
-    userexp.addExp(2, '恢复已弃置的进度《{0}》'.format(opus.name))
+    userexp.addExp(2, '恢复已冻结的进度《{0}》'.format(opus.name))
     # save
     progress.resetStatus()
     progress.save()

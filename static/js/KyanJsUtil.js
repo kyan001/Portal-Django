@@ -87,12 +87,6 @@ $.extend({
             data: request_data,
             async: true,
             dataType: 'json',
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Ajax Error, XMLHttpRequest:");
-                console.log("status: "+XMLHttpRequest.status);
-                console.log("readyState: "+XMLHttpRequest.readyState);
-                console.log("textStatus: "+textStatus);
-            },
             success: function(result) {
                 callback(result)
             }

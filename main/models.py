@@ -64,8 +64,8 @@ class User(models.Model):
         return Chat.objects.filter(receiverid=self.id).order_by('-created')
     def getSentChats(self):
         return Chat.objects.filter(senderid=self.id).order_by('-created')
-    def getUnreadCount(self):
-        return Chat.objects.filter(receiverid=self.id, isread=False).count()
+    def getUnreadChats(self):
+        return Chat.objects.filter(receiverid=self.id, isread=False)
 
 class UserPermissionManager(models.Manager):
     def getCategoryName(self, category):
@@ -103,11 +103,12 @@ class UserExp(models.Model):
     modified = models.DateTimeField(default=timezone.now, blank=True)
     created = models.DateTimeField(default=timezone.now, blank=True)
     category_pool = {
-        'all' : ('progress','user','error'),
+        'all' : ('progress','user','chat','error'),
     }
     category_name = {
         'progress': '进度活跃度',
         'user': '用户活跃度',
+        'chat': '消息活跃度',
         'error': '错误类别',
     }
     def __str__(self):
@@ -220,7 +221,7 @@ class Progress(models.Model):
     status_name = {
         'done': '已完成',
         'inprogress': '进行中',
-        'giveup': '弃置',
+        'giveup': '冻结中',
         'done': '已完成',
         'error': '出错',
         'todo': '待阅读',
@@ -332,7 +333,7 @@ class Chat(models.Model):
         receiver = self.getReceiver()
         result = "{0}: @{1} -> @{2} |{3} |{4}".format(str(self.id), sender.nickname, receiver.nickname, self.getCreated(), self.content)
         if not self.isread:
-            result += " unread"
+            result += " [unread]"
         return result
     # send / receive / isread
     def markRead(self):

@@ -117,12 +117,6 @@
                     }
                 }
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Ajax Error, XMLHttpRequest:");
-                console.log("status: " + XMLHttpRequest.status);
-                console.log("readyState: " + XMLHttpRequest.readyState);
-                console.log("textStatus: " + textStatus);
-            },
         });
     }
 
@@ -159,12 +153,6 @@
                     }
                     foldOptions();
                 }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Ajax Error, XMLHttpRequest:");
-                console.log("status: " + XMLHttpRequest.status);
-                console.log("readyState: " + XMLHttpRequest.readyState);
-                console.log("textStatus: " + textStatus);
             },
         });
     }

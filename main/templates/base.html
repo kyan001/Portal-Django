@@ -18,6 +18,13 @@
                 jQuery.getScript('http://tajs.qq.com/stats?sId=50871665')
             }
         </script>
+        <script type="text/javascript">
+            $( document ).ajaxError(function(event, jqxhr, settings, exception) {
+                console.log("Ajax Error, " + settings.url);
+                console.log("status: " + jqxhr.status);
+                console.log("readyState: " + jqxhr.readyState);
+            });
+        </script>
         {% block icon %}<link rel="icon" href="/static/img/favicon.png" /> {% endblock icon %}
         <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-paper.min.css">
         <link rel="stylesheet" href="/static/css/KyanCssUtil.css">
@@ -114,16 +121,15 @@
                 </a>
                 <a href="/user/signup" class="btn btn-primary btn-sm">注册</a>
                 <span> </span>
-                <a href="/user/signin" class="btn btn-default btn-sm">登入</a>
+                <a href="/user/signin" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-log-in"></span> 登入
+                </a>
             </span>
             <span class="loginshow">
                 <a href="/" class="btn btn-info btn-sm" title="主页">
-                    <span style="opacity:0">·</span>
-                    <span class="glyphicon glyphicon-home"></span>
-                    <span style="opacity:0">·</span>
+                    <span class="glyphicon glyphicon-home"></span><span style="opacity:0">'</span>
                 </a>
                 <a class="btn btn-default btn-sm profile-link" href='/user/profile'>
-                    <span>Hi,</span>
                     <span class="profile-nikename">
                         用户名
                     </span>
@@ -132,11 +138,13 @@
                     <span class="glyphicon glyphicon-envelope"></span>
                     <span id="unread-count">0</span>
                 </a>
-                <a href="/user/logout" class="btn btn-default btn-sm">登出</a>
             </span>
         </nav>
         <style>
             .container {
+                padding-top: 51px;
+            }
+            .container-fluid {
                 padding-top: 51px;
             }
             #user-bar {
@@ -167,9 +175,6 @@
                 display: none;
                 float: right;
             }
-            #user-bar .profile-nikename {
-                font-weight: bold;
-            }
             #user-bar .profile-link {
                 text-transform: none;
             }
@@ -190,17 +195,11 @@
                         } else if (result.result == 'nologinuser') {
                             $("#user-bar .nologinshow").fadeIn();
                         } else {
-                            $("#user-bar .profile-nikename").text(result.nickname);
+                            $("#user-bar .profile-nikename").text("@").append("<b>"+result.nickname+"</b>");
                             $("#user-bar .profile-link").attr('title',"活跃等级 Lv."+result.level);
                             $("#user-bar #unread-count").text(result.unreadcount);
                             $("#user-bar .loginshow").fadeIn();
                         }
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        console.log("Ajax Error, XMLHttpRequest:");
-                        console.log("status: " + XMLHttpRequest.status);
-                        console.log("readyState: " + XMLHttpRequest.readyState);
-                        console.log("textStatus: " + textStatus);
                     },
                 });
             }
@@ -248,6 +247,9 @@
             pointer-events: auto;
         }
         .container {
+            padding-bottom: 40px;
+        }
+        .container-fluid {
             padding-bottom: 40px;
         }
     </style>
