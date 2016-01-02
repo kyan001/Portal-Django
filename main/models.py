@@ -25,20 +25,76 @@ class User(models.Model):
         self.created = timezone.now()
     def getCreated(self):
         return util.ctrl.formatDate(self.created)
+    # permission related
+    def getUserpermission(self, category):
+        try:
+            up = UserPermission.objects.get(userid=self.id, category=category)
+            return up.isallowed
+        except UserPermission.DoesNotExist:
+            return None;
+    def setUserpermission(self, category, isallowed):
+        up = UserPermission.objects.update_or_create(userid=self.id, category=category,
+            defaults={
+                'isallowed': isallowed
+            }
+        )
+    # exps related
     def getUserExp(self, category=None):
         if category:
             return UserExp.objects.get_or_create(userid=self.id, category=category)[0]
         else:
             return UserExp.objects.filter(userid=self.id)
+    def getLevel(self):
+        userexps = self.getUserExp()
+        total_exp = sum(ue.exp for ue in userexps)
+        return util.ctrl.calcLevel(total_exp)
+    # progress related
     def getProgressCounts(self):
         countResult = {}
         for st in Progress.status_pool.get('all'):
             countResult[st] = Progress.objects.filter(userid=self.id, status=st).count()
         return countResult
-    def getLevel(self):
-        userexps = self.getUserExp()
-        total_exp = sum(ue.exp for ue in userexps)
-        return util.ctrl.calcLevel(total_exp)
+    # chat related
+    def sendChat(self, receiver, title="", content=""):
+        new_chat = Chat(senderid=self.id, receiverid=receiver.id, title=title, content=content);
+        new_chat.setCreated()
+        new_chat.save()
+        return True
+    def getReceivedChats(self):
+        return Chat.objects.filter(receiverid=self.id).order_by('-created')
+    def getSentChats(self):
+        return Chat.objects.filter(senderid=self.id).order_by('-created')
+    def getUnreadCount(self):
+        return Chat.objects.filter(receiverid=self.id, isread=False).count()
+
+class UserPermissionManager(models.Manager):
+    def getCategoryName(self, category):
+        category_name = UserPermission.category_name.get(category)
+        if category_name:
+            return category_name;
+        return category
+
+class UserPermission(models.Model):
+    userid = models.IntegerField(default=0, blank=False, null=False)
+    category = models.CharField(max_length=128, blank=False, null=False)
+    isallowed = models.BooleanField()
+    objects = UserPermissionManager()
+    category_pool = {
+        'all': ('signin'),
+    }
+    category_name = {
+        'signin': '登入',
+    }
+    def __str__(self):
+        user = self.getUser()
+        return "{0}: @{1} - {2}: {3}".format(str(self.id), user.nickname, self.getCategoryName(), self.isallowed)
+    def getUser(self):
+        return User.objects.get(id=self.userid)
+    def getCategoryName(self):
+        category_name = self.category_name.get(self.category)
+        if category_name:
+            return category_name;
+        return self.category
 
 class UserExp(models.Model):
     userid = models.IntegerField(default=0, blank=False, null=False)
@@ -247,3 +303,52 @@ class Progress(models.Model):
     def getUser(self):
         return User.objects.get(id=self.userid)
 
+class ChatManager(models.Manager):
+    def sendBySys(self, receiver, title="", content=""):
+        if not receiver:
+            return False
+        sysuser, iscreated = User.objects.get_or_create(nickname='系统消息',
+            defaults={
+                'username': 'syschat',
+                'question': 'syschat cannot be signined',
+                'answer1': 'iknow',
+                'email': 'syschat@superfarmer.net',
+            }
+        )
+        if iscreated:
+            sysuser.setUserpermission('signin', False)
+        return sysuser.sendChat(receiver, title, content)
+
+class Chat(models.Model):
+    senderid = models.IntegerField(default=0, blank=False, null=False)
+    receiverid = models.IntegerField(default=0, blank=False, null=False)
+    title = models.TextField(blank=True, null=True)
+    content = models.TextField(blank=True, null=True)
+    isread = models.BooleanField(default=False)
+    created = models.DateTimeField(default=timezone.now, blank=False)
+    objects = ChatManager();
+    def __str__(self):
+        sender = self.getSender()
+        receiver = self.getReceiver()
+        result = "{0}: @{1} -> @{2} |{3} |{4}".format(str(self.id), sender.nickname, receiver.nickname, self.getCreated(), self.content)
+        if not self.isread:
+            result += " unread"
+        return result
+    # send / receive / isread
+    def markRead(self):
+        self.isread = True;
+        self.save()
+        return True;
+    def markUnread(self):
+        self.isread = False;
+        self.save()
+        return True;
+    # util
+    def getSender(self):
+        return User.objects.get(id=self.senderid)
+    def getReceiver(self):
+        return User.objects.get(id=self.receiverid)
+    def setCreated(self):
+        self.created = timezone.now()
+    def getCreated(self):
+        return util.ctrl.formatDate(self.created)

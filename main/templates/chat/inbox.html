@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Inbox{% endblock title %}
+
+{% block css %}
+<style>
+    .panel-heading {
+        cursor: pointer;
+    }
+</style>
+{% endblock css %}
+
+{% block js %}
+<script type="text/javascript">
+    function markread(chatid){
+        if(chatid<0){
+            return false;
+        }
+        $.ajax({
+            type: "GET",
+            url: "/chat/markread",
+            data: {'chatid': chatid},
+            async: true,
+            dataType: 'json',
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Ajax Error, XMLHttpRequest:");
+                console.log("status: "+XMLHttpRequest.status);
+                console.log("readyState: "+XMLHttpRequest.readyState);
+                console.log("textStatus: "+textStatus);
+            },
+            success: function(result) {
+                if(result.error){
+                    alert(result.error)
+                } else {
+                    $("div[chatid="+chatid+"]").find('.unread-icon').remove()
+                }
+            }
+        });
+    }
+</script>
+{% endblock js %}
+
+{% block content %}
+<div class='container'>
+    <div class='row'>
+        <div class='col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12'>
+            <div class="panel-group" id="msg-group" role="tablist" aria-multiselectable="true">
+                {% for c in chats %}
+                <div class="panel panel-default" chatid="{{c.id}}">
+                    <div class="panel-heading" onclick="markread({{c.id}})"
+                        data-toggle="collapse" data-target="#chat-{{c.id}}" data-parent="#msg-group">
+                        <div>
+                            {% if not c.isread %}
+                                <span class="glyphicon glyphicon-envelope unread-icon"></span>
+                            {% endif %}
+                            {% ifequal c.getSender.username 'syschat' %}
+                                <span class="text-danger">
+                                    @{{ c.getSender.nickname }}
+                                </span>
+                            {% else %}
+                                <span class="text-primary">
+                                    @{{ c.getSender.nickname }}
+                                </span>
+                            {% endifequal %}
+                            | {{ c.title }}
+                        </div>
+                    </div>
+                    <div id="chat-{{c.id}}" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            {{ c.content|safe }}
+                        </div>
+                        <div class="panel-footer">{{ c.getCreated }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div><!--.panel-group-->
+        </div><!--.col-->
+    </div><!--.row-->
+</div><!--.container-->
+
+{% endblock content %}
