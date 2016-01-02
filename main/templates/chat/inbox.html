@@ -2,6 +2,11 @@
 {% block title %}inbox{% endblock title %}
 
 {% block css %}
+<style>
+    .panel-heading {
+        cursor: pointer;
+    }
+</style>
 {% endblock css %}
 
 {% block js %}
@@ -10,18 +15,54 @@
 
 
 {% block content %}
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <div class="panel-title">
-            系统消息
-        </div>
-    </div>
-    <div class="panel-body">
-        信件内容
-    </div>
-    <div class="panel-footer">
-        注释
-    </div>
-</div>
+<div class='container'>
+    <div class='row'>
+        <div class='col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12'>
+            <div class="panel-group" id="msg-group" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" data-toggle="collapse" data-target="#msg-1" data-parent="#msg-group">
+                        <div class="panel-title">
+                            系统消息
+                        </div>
+                    </div>
+                    <div id="msg-1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading1">
+                        <div class="panel-body">
+                            内容
+                        </div>
+                        <div class="panel-footer">注释</div>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading" data-toggle="collapse" data-target="#msg-2" data-parent="#msg-group">
+                        <div class="panel-title">
+                            系统消息
+                        </div>
+                    </div>
+                    <div id="msg-2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
+                        <div class="panel-body">
+                            内容
+                        </div>
+                        <div class="panel-footer">注释</div>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading" data-toggle="collapse" data-target="#msg-3" data-parent="#msg-group">
+                        <div class="panel-title">
+                            系统消息
+                        </div>
+                    </div>
+                    <div id="msg-3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading3">
+                        <div class="panel-body">
+                            内容
+                        </div>
+                        <div class="panel-footer">注释</div>
+                    </div>
+                </div>
+            </div><!--.panel-group-->
+        </div><!--.col-->
+    </div><!--.row-->
+</div><!--.container-->
 
 {% endblock content %}
