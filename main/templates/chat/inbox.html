@@ -10,7 +10,29 @@
 {% endblock css %}
 
 {% block js %}
-<script type="text/javascript"></script>
+<script type="text/javascript">
+    function markread(chatid){
+        if(!chatid){
+            return false;
+        }
+        $.ajax({
+            type: "GET",
+            url: "/chat/markread",
+            data: {'chatid': chatid},
+            async: true,
+            dataType: 'json',
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Ajax Error, XMLHttpRequest:");
+                console.log("status: "+XMLHttpRequest.status);
+                console.log("readyState: "+XMLHttpRequest.readyState);
+                console.log("textStatus: "+textStatus);
+            },
+            success: function(result) {
+                alert(result)
+            }
+        });
+    }
+</script>
 {% endblock js %}
 
 
