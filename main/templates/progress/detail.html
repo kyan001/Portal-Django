@@ -2,22 +2,31 @@
 {% block title %}进度：{{ opus.name }}{% endblock title %}
 {% block icon %}<link rel="icon" href="/static/img/Logo_List.png" />{% endblock icon %}
 
+{% load tags_url %}
+
 {% block css %}
 <style type="text/css">
     .container {
         font-family: 'Microsoft YaHei';
-        padding-top: 50px;
-        padding-bottom: 80px;
     }
     .progress-card .table {
         margin: 0;
         font-size: 13px;
     }
-    .progress-card .subtitle {
+    .progress-card .subtitle, .progress-card .persent, .progress-card .weblink {
         font-size: 15px;
     }
-    .progress-card .persent {
-        font-size: 15px;
+    .progress-card .panel-heading {
+        overflow-x: auto;
+        overflow-y: hidden;
+        word-break: keep-all;
+        white-space: nowrap;
+    }
+    .progress-card .weblink {
+        border: 0;
+    }
+    .progress-card .weblink:hover {
+        color: black;
     }
 
     /* progress bar */
@@ -28,7 +37,7 @@
     .progress-card .progress b{
         font-size: 15px;
     }
-    #updateform, #deleteform {
+    #fastupdateform, #deleteform {
         display: inline-block;
     }
     table td{
@@ -48,7 +57,7 @@
         padding-bottom: 0px;
         border-bottom: dashed silver 1px;
     }
-    input[name="newcurrent"] {
+    input[name="quick_current"] {
         text-align: right;
     }
     form {
@@ -63,15 +72,12 @@
     .fastupdate-total {
         padding-left: 0;
     }
-    .fastupdate-div {
-        padding-top: 1px;
-    }
-    .label-persent {
-        background-color: #51ABFF;
-    }
     .label-tag {
         background-color: white;
         border: silver 1px solid;
+    }
+    .label-persent {
+        background-color: #51ABFF;
     }
     .label-subtitle {
         background-color: #3080BB;
@@ -82,12 +88,13 @@
     .rating-aux {
         color: silver;
     }
-    #opus-type {
-        color: #bbbbbb;
-        text-decoration: none;
+    #opus-type, a#opustitle {
     }
-    a#opustitle {
-        text-decoration: none;
+    a#title-link {
+        color: black;
+    }
+    #title-tr, #rating-tr, #tag-tr, #douban-info-panel {
+        display: none;
     }
 </style>
 {% endblock css %}
@@ -98,13 +105,13 @@
     var movieinfo = {};
     $(function(){
         getOpusInfo()
-        $('.disableBtn').click(function(){
-            $('.btn').attr('disabled','disabled')
-        });
     });
+    function disableBtn(){
+        $('.btn').attr('disabled','disabled')
+    }
     function getOpusInfo(){
         var book_subs = ['书','书籍','book','pdf','漫画','comic','文字','doc','txt']
-        var movie_subs = ['动画','anime','电影','movie','电视剧','tv','show','美剧','英剧','韩剧']
+        var movie_subs = ['动画','anime','电影','movie','电视剧','tv','show','美剧','英剧','韩剧','日剧']
         var sub = $("input[name='subtitle']").val().toLowerCase()
         if(book_subs.indexOf(sub) >= 0){
             getBookInfo('book')
@@ -115,43 +122,94 @@
             getMovieInfo('compare')
         }
     }
-    function checkTagRating(info){
-        if(info.tags.length == 0){
-            $('#tag-tr').hide()
+    function checkInfoVisibility(info){
+        if(!info.exist){//作品不存在，不显示整个面板
+            return false
+        } else if(!info.match){//作品未精确匹配，
+            return false
+        } else  {//作品存在且精确匹配
+            $('#title-tr').popover('destroy')
+            $("#douban-info-panel").fadeIn()
+            if(info.tags.length != 0){//作品无tag
+                $('#tag-tr').show()
+            }
+            if(info.rating && parseInt(info.rating) > 0){//作品评分 > 0
+                $('#rating-tr').show()
+            }
+            if(info.title){
+                $('#title-tr').show()
+            }
+            return true
         }
-        if(parseInt(info.rating) == 0 || info.rating == ""){
-            $('#rating-tr').hide()
+    }
+    function showGuess(info){
+        var title_a = '<a href="' + info.url + '" target="_blank">' + info.title + '</a>'
+        var content_html = '您是否再找《' + title_a + '》'
+        if(info.subtype){
+            content_html += "（" + info.subtype.toUpperCase() + "）"
         }
+        $('#name-tr').popover({
+            delay: {'show':1000, 'hide':1000},
+            html: true,
+            trigger: 'hover focus',
+            content: function(){
+                return content_html
+            },
+        });
+    }
+    function showImageColor(info){
+        $.getImageColor(info.images.small, '{{opus.name}}', function(result){
+            $('#main-panel .second-panel-body').css('border-left', '5px solid' + result.color);
+            console.info(result);
+        });
+    }
+    function showInfo(info){
+        $('#title-link').attr('href', info.url);
+        $('#title-link').text(info.title);
+        $('#tag-tag').text( info.tags.join('，') );
+        $('#rating-av').text(info.rating);
+        if(info.type == 'book'){
+            $('#opus-type').addClass('glyphicon-book');
+        } else if(info.type == 'movie'){
+            $('#opus-type').addClass('glyphicon-film');
+        }
+        $('#opus-type').attr('title', info.title);
+        $('#opus-type').attr('href', info.api);
+        showImageColor(info);
+        checkInfoVisibility(info)
     }
 
     function setInfo(setType){
         var total = $("input[name='total']").val()
+        if(total == ""){
+            total = 0;
+        }
         switch(setType){
             case 'book':
-                if(bookinfo.title){
-                    $('#opus-type').addClass('glyphicon-book');
-                    $('#opus-type').attr('href', bookinfo.url);
-                    $('#opus-type').attr('title', bookinfo.title);
-                    $('#tag-tag').text( bookinfo.tags.join('，') );
-                    $('#rating-av').text(bookinfo.rating);
+                if(bookinfo.exist && bookinfo.match){
+                    showInfo(bookinfo)
+                } else if(bookinfo.exist){
+                    showGuess(bookinfo)
                 }
-                checkTagRating(bookinfo)
                 break;
             case 'movie':
-                if(movieinfo.title){
-                    $('#opus-type').addClass('glyphicon-film');
-                    $('#opus-type').attr('href', movieinfo.url);
-                    $('#opus-type').attr('title', movieinfo.title);
-                    $('#tag-tag').text( movieinfo.tags.join('，') );
-                    $('#rating-av').text(movieinfo.rating);
+                if(movieinfo.exist && movieinfo.match){
+                    showInfo(movieinfo)
+                } else if(movieinfo.exist){
+                    showGuess(movieinfo)
                 }
-                checkTagRating(movieinfo)
                 break;
             case 'compare':
                 if(bookinfo.finish && movieinfo.finish){
-                    if(bookinfo.title && !movieinfo.title){
+                    if(bookinfo.exist && !movieinfo.exist){
                         setInfo('book')
-                    } else if(!bookinfo.title && movieinfo.title){
+                    } else if(!bookinfo.exist && movieinfo.exist){
+                        setInfo('movie')
+                    } else if(bookinfo.match && !movieinfo.match){
+                        setInfo('book')
+                    } else if(!bookinfo.match && movieinfo.match){
+                        setInfo('movie')
+                    } else if(parseInt(total) == 0){//follow
                         setInfo('movie')
                     } else if(parseInt(total) == parseInt(bookinfo.pages)){
                         setInfo('book')
@@ -183,7 +241,7 @@
         }
     }
     function confirmDelete(){
-        var result = confirm("确定删除此进度？")
+        var result = confirm("确定删除此进度？\n（删除操作不可恢复）")
         if(result){
             $("#deleteform").submit();
         } else {
@@ -205,6 +263,7 @@
         $('.viewunlock').removeAttr('disabled')
         $('input[name="name"]').val('{{opus.name}}')
         $('input[name="subtitle"]').val('{{opus.subtitle}}')
+        $('input[name="weblink"]').val('{{prg.weblink}}')
         $('input[name="total"]').val('{{opus.total}}')
         $('input[name="current"]').val('{{prg.current}}')
         $('.editunlock').removeClass('warning');
@@ -214,6 +273,7 @@
     function saveEdit(){
         var name = $('input[name="name"]').val()
         var subtitle = $('input[name="subtitle"]').val()
+        var weblink = $('input[name="weblink"]').val()
         var total = $('input[name="total"]').val()
         var current = $('input[name="current"]').val()
         if(name == ""){
@@ -221,83 +281,86 @@
             return false;
         }
         if(total == ""){
-            $.danger('总页数不能为空、或包含非数字')
-            return false;
-        }
-        if(total == "0"){
-            $.danger('总页数不能为 0')
-            return false;
+            total = 0;
+            $('input[name="total"]').val(total)
         }
         if(current == ""){
             $('input[name="current"]').val("0")
         }
-        if(parseInt(current) > parseInt(total)){
-            $.danger('当前进度不能大于总页数')
+        if(parseInt(total) > 0 && parseInt(current) > parseInt(total)){
+            $.danger('错误：当前进度 ' + current + ' 大于总页数 ' + total)
             return false;
         }
+        disableBtn()
         $('#saveform').submit();
     }
-    function submitUpdateForm(){
-        var newcurrent = $('input[name="newcurrent"]').val();
+    function submitFastupdateForm(){
+        var quick_current = $('input[name="quick_current"]').val();
         var total = $('input[name="total"]').val();
-        if( isNaN(newcurrent) ){
-            $('input[name="newcurrent"]').parent().addClass('has-error');
-            $.danger('输入的更新的进度 '+newcurrent+' 必须是纯数字！')
+        if(total == ""){
+            total == 0;
+        }
+        if( isNaN(quick_current) ){
+            $('input[name="quick_current"]').parent().addClass('has-error');
+            $.danger('输入的更新的进度 '+quick_current+' 必须是纯数字！')
             return false;
         }
-        if( newcurrent == '' ){
-            $('input[name="newcurrent"]').parent().addClass('has-error');
+        if( quick_current == '' ){
+            $('input[name="quick_current"]').parent().addClass('has-error');
             $.danger('当前的更新进度为空 或 存在特殊字符')
             return false;
         }
-        if( parseInt(newcurrent) > parseInt(total) ){
-             $('input[name="newcurrent"]').parent().addClass('has-error');
-            $.danger('当前进度 '+newcurrent+' 超过最大值 '+total);
+        if( parseInt(total) > 0 && parseInt(quick_current) > parseInt(total) ){
+             $('input[name="quick_current"]').parent().addClass('has-error');
+            $.danger('当前进度 '+quick_current+' 超过最大值 '+total);
             return false;
         }
-        $("#updateform").submit();
+        disableBtn()
+        $("#fastupdateform").submit();
     }
-    function focusNewcurrent(){
-        var nc = $('input[name="newcurrent"]');
+    function focusQuickCurrent(){
+        var nc = $('input[name="quick_current"]');
         if(nc.val() == '{{prg.current}}'){
             nc.val('');
         }
     }
-    function blurNewcurrent(){
-        var nc = $('input[name="newcurrent"]');
+    function blurQuickCurrent(){
+        var nc = $('input[name="quick_current"]');
         if(nc.val() == ''){
             nc.val('{{prg.current}}');
         }
         checkUpdateButtonLock();
     }
     function checkUpdateButtonLock(){
-        var nc = $('input[name="newcurrent"]');
+        var nc = $('input[name="quick_current"]');
         if(nc.val()=='{{prg.current}}'){
             $('#fastupdate').attr('disabled','disabled');
         } else {
             $('#fastupdate').removeAttr('disabled');
         }
     }
-
     function addOneCurrent(){
-        var newcurrent = $('input[name="newcurrent"]').val();
+        var quick_current = $('input[name="quick_current"]').val();
         var total = $('input[name="total"]').val();
-        if( isNaN(newcurrent) ){
-            $('input[name="newcurrent"]').parent().addClass('has-error');
-            $.danger('当前的更新进度 '+newcurrent+' 必须是纯数字！')
+        if(total == '∞' || total == ""){
+            total = 0;
+        }
+        if( isNaN(quick_current) ){
+            $('input[name="quick_current"]').parent().addClass('has-error');
+            $.danger('当前的更新进度 '+quick_current+' 必须是纯数字！')
             return false;
         }
-        if( newcurrent == '' ){
-            $('input[name="newcurrent"]').parent().addClass('has-error');
+        if( quick_current == '' ){
+            $('input[name="quick_current"]').parent().addClass('has-error');
             $.danger('当前的更新进度为空 或 存在特殊字符')
             return false;
         }
-        if( parseInt(newcurrent) >= parseInt(total) ){
-             $('input[name="newcurrent"]').parent().addClass('has-error');
+        if( parseInt(total) > 0 && parseInt(quick_current) >= parseInt(total) ){
+             $('input[name="quick_current"]').parent().addClass('has-error');
             $.warning('进度已达到最大值');
             return false;
         }
-        $('input[name="newcurrent"]').val(parseInt(newcurrent)+1);
+        $('input[name="quick_current"]').val(parseInt(quick_current)+1);
         checkUpdateButtonLock();
     }
 </script>
@@ -309,83 +372,102 @@
 </a>
 {% endblock nav-btn %}
 
+{% block function-btn %}
+<a href="/progress/new" class="btn btn-success btn-sm">
+    <span class="glyphicon glyphicon-plus"></span> 新增进度
+</a>
+{% endblock function-btn %}
+
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 progress-card" progressid="{{ prg.id }}">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" id="main-panel">
                 <div class="panel-heading">
                     <span class="panel-title">
-                        {% ifequal prg.status 'giveup' %}
-                        <span class="persent label label-danger">已弃置</span>
-                        {% endifequal %}
+                    {% ifequal prg.status 'giveup' %}
+                        <span class="persent label label-danger">已冻结</span>
+                    {% endifequal %}
                         <span class="persent label label-persent">{{prg.getPersent}}%</span>
-                        <a id="opustitle" href="/opus/detail?id={{opus.id}}">《 <b>{{opus.name}}</b> 》</a>
-                        {% if opus.subtitle %}
-                        <span class="subtitle label label-subtitle">{{opus.subtitle}}</span>
-                        {% endif %}
+                        《 <a id="opustitle" title="看看还有谁在看这本书" href="/opus/detail?id={{opus.id}}"><b>{{opus.name}}</b></a> 》
+                    {% if opus.subtitle %}
+                        <span class="subtitle label label-subtitle">
+                            {{ opus.subtitle }}
+                        </span>
+                    {% endif %}
+                    {% if prg.weblink and prg.weblink|isurl %}
+                        <a class="weblink btn btn-link" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
+                            <span class="glyphicon glyphicon-link"></span>
+                        </a>
+                    {% endif %}
                     </span>
                 </div>
                 <div class="panel-body first-panel-body">
                     <div class="progress">
                         <div class="progress-bar progress-bar-striped active {{prg.getBartype}}" style="width: {{prg.getPersent}}%;">
+                            {% ifequal opus.total 0 %}
+                            <b>{{prg.current}} / ∞</b>
+                            {% else %}
                             <b>{{prg.current}} / {{opus.total}}</b>
+                            {% endifequal %}
                         </div>
                     </div>
-                    <div class="row fastupdate-div">
-                        <div class="text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="text-right">
-                                <form id="updateform" action="/progress/fastupdate/" method="post">
+                </div>
+                <div class="panel-body second-panel-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading"><b>快速更新</b></div>
+                                <form id="fastupdateform" action="/progress/fastupdate/" method="post">
                                     <input type="hidden" name="id" value="{{prg.id}}">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <input type="tel" name="newcurrent" class="viewunlock form-control"
-                                                placeholder="当前 {{prg.current}}" value="{{prg.current}}"
-                                                onfocus="focusNewcurrent()" onblur="blurNewcurrent()" oninput="checkUpdateButtonLock()">
-                                            <span class="input-group-addon fastupdate-total">/{{opus.total}}</span>
+                                            <span class="input-group-btn">
+                                            {% if prg.status == 'giveup' %}
+                                                <div class="btn btn-warning disableBtn" id='reset' onclick="$('#resetform').submit()">
+                                                    <span class="glyphicon glyphicon-ok-circle"></span> 激活进度
+                                                </div>
+                                            {% else %}
+                                                <div class="btn btn-warning disableBtn" id='giveup' onclick="$('#giveupform').submit()">
+                                                    <span class="glyphicon glyphicon-ban-circle"></span> 冻结进度
+                                                </div>
+                                            {% endif %}
+                                            </span>
+                                            <input type="tel" name="quick_current"
+                                                class="viewunlock form-control"
+                                                placeholder="当前 {{prg.current}}"
+                                                value="{{prg.current}}"
+                                                onfocus="focusQuickCurrent()"
+                                                onblur="blurQuickCurrent()"
+                                                oninput="checkUpdateButtonLock()"
+                                                onkeydown="keydownFastUpdate()">
+
+                                            <span class="input-group-addon fastupdate-total">
+                                                {% ifequal opus.total 0 %}
+                                                    /∞
+                                                {% else %}
+                                                    /{{opus.total}}
+                                                {% endifequal %}
+                                            </span>
                                             <span class="input-group-btn">
                                                 <div class="viewunlock btn btn-default" onclick="addOneCurrent()">+1</div>
-                                                <div id='fastupdate' class="viewunlock btn btn-primary disableBtn" onclick="submitUpdateForm()" disabled='disabled'>更新</div>
+                                                <div id='fastupdate' class="viewunlock btn btn-success disableBtn" onclick="submitFastupdateForm()" disabled='disabled'>保存</div>
                                             </span>
                                         </div>
                                     </div>
                                 </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <form id="saveform" action="/progress/update/" method="post">
-                        <input type="hidden" name="id" value="{{prg.id}}">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <table class="table table-condensed table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>作品信息</th>
-                                            <td class="text-muted text-right">
-                                                <a id="opus-type" class="glyphicon" href="" target="_blank"></a>
-                                                 / Id:{{opus.id}}
-                                            </td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="text-info editunlock">
-                                            <td>名称</td>
+                            </div><!--.panel-->
+                            <div class="panel panel-primary" id="douban-info-panel">
+                                <div class="panel-heading">
+                                    <span><b>作品信息</b></span>
+                                    <a id="opus-type" href="" target="_blank" class="glyphicon pull-right text-primary-dark"></a>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-condensed table-hover">
+                                        <tr id="title-tr">
+                                            <td>作品名称</td>
                                             <td>
-                                                <input type="text" placeholder="{{opus.name}}" name="name" value="{{opus.name}}" readonly class="editable">
-                                            </td>
-                                        </tr>
-                                        <tr class="text-info editunlock">
-                                            <td>副标题</td>
-                                            <td>
-                                                <input type="text" placeholder="{{opus.subtitle}}" name="subtitle" value="{{opus.subtitle}}" readonly class="editable">
-                                            </td>
-                                        </tr>
-                                        <tr class="text-info editunlock">
-                                            <td>总共</td>
-                                            <td>
-                                                <input type="number" placeholder="{{opus.total}}" name="total" value="{{opus.total}}" readonly class="editable">
+                                                《<a href="" id="title-link" target="_blank"></a>》
                                             </td>
                                         </tr>
                                         <tr id="rating-tr">
@@ -396,56 +478,91 @@
                                             </td>
                                         </tr>
                                         <tr id="tag-tr">
-                                            <td id="tag-label">
-                                                标签
-                                            </td>
-                                            <td id="tag-tag">
-                                            </td>
-                                        </td>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="clearfix visible-xs-block visible-sm-block">
-                                <hr/>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <table class="table table-condensed table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>进度信息</th>
-                                            <td class="text-muted text-right">
-                                                User:{{prg.userid}} / Opus:{{prg.opusid}} / Id:{{prg.id}}
-                                            </td>
+                                            <td id="tag-label">标签</td>
+                                            <td id="tag-tag"></td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="text-primary">
-                                            <td>状态</td>
-                                            <td><b>{{prg.getStatus}}</b></td>
-                                        </tr>
-                                        <tr>
-                                            <td>阅读百分比</td>
-                                            <td>{{prg.getPersent}}%</td>
-                                        </tr>
-                                        <tr class="text-info editunlock">
-                                            <td>当前进度</td>
-                                            <td>
-                                                <input type="number" placeholder="{{prg.current}}" name="current" value="{{prg.current}}" readonly class="editable">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>开始时间</td>
-                                            <td>{{prg.getCreated}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>上次更新</td>
-                                            <td>{{prg.getModified}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </form>
+                                    </table>
+                                </div><!--.panel-body-->
+                            </div><!--.panel-->
+                        </div><!--.col-->
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <form id="saveform" action="/progress/update/" method="post">
+                                <input type="hidden" name="id" value="{{prg.id}}">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <span><b>进度信息</b></span>
+                                        <span class="text-primary-dark pull-right">
+                                            User:{{prg.userid}} / Opus:{{prg.opusid}} / Progress:{{prg.id}}
+                                        </span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table table-condensed table-hover">
+                                            <tr class="text-primary">
+                                                <td>状态</td>
+                                                <td><b>{{prg.getStatus}}</b></td>
+                                            </tr>
+                                            <tr class="text-info editunlock" id='name-tr' data-toggle="popover" data-placement='top' data-container='body'>
+                                                <td>名称</td>
+                                                <td>
+                                                    <input type="text" placeholder="{{opus.name}}" name="name" value="{{opus.name}}" readonly class="editable">
+                                                </td>
+                                            </tr>
+                                            <tr class="text-info editunlock">
+                                                <td>副标题</td>
+                                                <td>
+                                                    <input type="text" placeholder="{{opus.subtitle}}" name="subtitle" value="{{opus.subtitle}}" readonly class="editable">
+                                                </td>
+                                            </tr>
+                                            <tr class="text-info editunlock">
+                                                <td>总共</td>
+                                                <td>
+                                                    <input type="number"
+                                                        name="total"
+                                                        placeholder="{{opus.total}}"
+                                                        value="{{opus.total}}"
+                                                        readonly class="editable">
+                                                </td>
+                                            </tr>
+                                            <tr class="text-info editunlock">
+                                                <td>当前进度</td>
+                                                <td>
+                                                    <input type="number" placeholder="{{prg.current}}" name="current" value="{{prg.current}}" readonly class="editable">
+                                                </td>
+                                            </tr>
+                                            <tr class="text-info editunlock" title="{{prg.weblink}}">
+                                                <td>链接</td>
+                                                <td>
+                                                    <input type="text" placeholder="{{prg.weblink}}" name="weblink" value="{{prg.weblink}}" readonly class="editable">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>阅读百分比</td>
+                                                <td>{{prg.getPersent}}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>开始时间</td>
+                                                <td>{{prg.getCreated}}</td>
+                                            </tr>
+                                            <tr>
+                                                {% ifequal prg.status "done" %}
+                                                <td>完成时间</td>
+                                                {% else %}
+                                                <td>上次更新</td>
+                                                {% endifequal %}
+                                                <td>{{prg.getModified}}</td>
+                                            </tr>
+                                            {% if aux.estmt_fnsh_dt %}
+                                            <tr>
+                                                <td>预计完成</td>
+                                                <td>{{ aux.estmt_fnsh_dt }}</td>
+                                            </tr>
+                                            {% endif %}
+                                        </table>
+                                    </div><!--.panel-body-->
+                                </div><!--.panel-->
+                            </form>
+                        </div><!--.col-->
+                    </div><!--.row-->
                 </div>
                 <div class="panel-footer">
                     <div class="row">
@@ -459,19 +576,21 @@
                             <form id="resetform" action="/progress/reset/" method="post">
                                 <input type="hidden" name="id" value="{{prg.id}}">
                             </form>
+                            <button class="btn btn-danger" id='delete' onclick="confirmDelete()">
+                                <span class="glyphicon glyphicon-trash"></span> 彻底删除
+                            </button>
                             <div class="viewmode">
-                                {% if prg.status == 'giveup' %}
-                                    <button class="btn btn-danger disableBtn" id='reset' onclick="$('#resetform').submit()">取消弃置</button>
-                                {% else %}
-                                    <button class="btn btn-danger disableBtn" id='giveup' onclick="$('#giveupform').submit()">弃置</button>
-                                {% endif %}
-                                <a class="btn btn-success disableBtn" id='new' href="/progress/new">新增</a>
-                                <a class="btn btn-warning" id='edit' onclick="enterEdit()">进入编辑</a>
+                                <a class="btn btn-primary" id='edit' onclick="enterEdit()">
+                                    <span class="glyphicon glyphicon-pencil"></span> 进入编辑
+                                </a>
                             </div>
                             <span class="editmode">
-                                <button class="btn btn-danger" id='delete' onclick="confirmDelete()">彻底删除</button>
-                                <a class="btn btn-success disableBtn" id="save" onclick="saveEdit()">保存</a>
-                                <a class="btn btn-default" id="cancel" onclick="cancelEdit()">取消</a>
+                                <a class="btn btn-success disableBtn" id="save" onclick="saveEdit()">
+                                    <span class="glyphicon glyphicon-ok"></span> 保存
+                                </a>
+                                <a class="btn btn-default" id="cancel" onclick="cancelEdit()">
+                                    <span class="glyphicon glyphicon-remove"></span> 取消编辑
+                                </a>
                             </span>
                         </div>
                     </div>

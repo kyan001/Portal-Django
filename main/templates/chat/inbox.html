@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Inbox{% endblock title %}
+
+{% block css %}
+<style>
+    .container {
+        font-family: "微软雅黑","Microsoft Yahei","Helvetica Neue",Helvetica,"Hiragino Sans GB","Segoe UI",Tahoma,Arial,STHeiti,sans-serif !important;
+    }
+    .panel-heading {
+        cursor: pointer;
+    }
+    .panel.unread .panel-heading {
+        font-weight: bold;
+    }
+</style>
+{% endblock css %}
+
+{% block js %}
+<script type="text/javascript">
+    function markread(ele){
+        chatid = $(ele).attr('chatid')
+        if(chatid<0){
+            return;
+        }
+        if(!$(ele).hasClass("unread")){
+            return;
+        }
+        $.ajax({
+            type: "GET",
+            url: "/chat/markread",
+            data: {'chatid': chatid},
+            async: true,
+            dataType: 'json',
+            success: function(result) {
+                if(result.error){
+                    alert(result.error)
+                } else {
+                    $("div[chatid="+chatid+"]").removeClass('unread')
+                }
+            }
+        });
+    }
+</script>
+{% endblock js %}
+
+{% block nav-btn %}
+    <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
+        <span class="glyphicon glyphicon-arrow-left"></span> 回到上一页
+    </a>
+{% endblock nav-btn %}
+
+{% block content %}
+<div class='container'>
+    <div class='row'>
+        <div class='col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12'>
+            <div class="page-header">
+                <h3>
+                    收信箱
+                    <small>@{{ user.nickname }}</small>
+                </h3>
+            </div>
+            <div class="panel-group" id="msg-group" role="tablist" aria-multiselectable="true">
+                {% for c in chats %}
+                <div class="panel panel-default {% if not c.isread %}unread{% endif %}" chatid="{{c.id}}" onclick="markread(this)">
+                    <div class="panel-heading befast" data-toggle="collapse" data-target="#chat-{{c.id}}" data-parent="#msg-group">
+                        {% if c.getSender.username == 'syschat' %}
+                            <span class="text-danger">
+                                @{{ c.getSender.nickname }}
+                            </span>
+                        {% else %}
+                            <span class="text-primary">
+                                @{{ c.getSender.nickname }}
+                            </span>
+                        {% endif %}
+                        ：
+                        {% if c.title %}
+                            {{ c.title }}
+                        {% else %}
+                            {{ c.content|truncatechars:12 }}
+                        {% endif %}
+                        <div class="pull-right text-muted">{{ c.getCreated }}</div>
+                    </div>
+                    <div id="chat-{{c.id}}" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            {% if c.getSender.username == 'syschat' %}
+                                {{ c.content|safe }}
+                            {% else %}
+                                {{ c.content }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="well">
+                    你还没有收到任何消息
+                </div>
+                {% endfor %}
+            </div><!--.panel-group-->
+        </div><!--.col-->
+    </div><!--.row-->
+</div><!--.container-->
+
+{% endblock content %}

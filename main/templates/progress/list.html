@@ -3,160 +3,104 @@
 {% block icon %}<link rel="icon" href="/static/img/Logo_List.png" />{% endblock icon %}
 
 {% block css %}
-
-<style>
-    .container {
-        font-family: 'Microsoft YaHei';
-        padding-top: 51px;
-    }
-    /* page-header */
-    .page-header > h1 > span {
-        font-size: 25px;
-        color: silver;
-    }
-    .page-header h1 {
-        font-size: 30px;
-    }
-    .page-header small {
-        font-size: 26px;
-    }
-    .page-header {
-        padding-bottom: 2px;
-        cursor: hand;
-    }
-</style>
-<style>/* progress-card */
-    .progress-card .panel:hover {
-        box-shadow: 2px 2px 5px silver;
-    }
-    .progress-card .panel{
-        cursor: hand;
-    }
-    .progress-card .panel-heading{
-        padding: 1px;
-    }
-    .progress-card .panel-body {
-        padding: 0px;
-    }
-    .progress-card .panel-footer {
-        padding: 0;
-        text-align: right;
-    }
-    .progress-card .progress {
-        height: 25px;
-        margin: 0;
-    }
-    .progress-card .div-table {
-        padding: 2px;
-        font-size: 13px;
-    }
-    .progress-card .subtitle {
-        font-size: 15px;
-    }
-    .progress-card .persent {
-        font-size: 15px;
-    }
-    /* progress-card-label */
-    .label-subtitle {
-        background-color: #3080BB;
-    }
-    .label-persent {
-        background-color: #51ABFF;
-    }
-</style>
+<link rel="stylesheet" href="/static/css/progress/list_common.css">
 {% endblock css %}
 
 {% block js %}
-<script type="text/javascript">
-    $(function(){
-        $('.progress-card .panel').mouseover(function(){
-            $(this).find('.progress').addClass('active').addClass('progress-striped');
-        });
-        $('.progress-card .panel').mouseout(function(){
-            $(this).find('.progress').removeClass('active').removeClass('progress-striped');
-        });
-        $('.progress-card .panel').click(function(){
-            var progressid = $(this).parent('.progress-card').attr('progressid');
-            window.location.href="/progress/detail?id=" + progressid;
-        });
-        $('.page-header').mouseover(function(){
-            $(this).find('h1>span').css('color','red');
-        });
-        $('.page-header').mouseout(function(){
-            $(this).find('h1>span').css('color','silver');
-        });
-    });
-</script>
+<script src="/static/js/progress/list_common.js"></script>
 {% endblock js %}
 
 {% block nav-btn %}
+<a href="/progress/archive" class="btn btn-warning btn-sm">
+    进度存档 <span class="glyphicon glyphicon-arrow-right"></span>
+</a>
+{% endblock nav-btn %}
+
+{% block function-btn %}
 <a href="/progress/new" class="btn btn-success btn-sm">
     <span class="glyphicon glyphicon-plus"></span> 新增进度
 </a>
-{% endblock nav-btn %}
+{% endblock function-btn %}
 
 {% block content %}
 <div class="container">
     <div class="page-header" data-toggle="collapse" data-target="#list-inprogress">
         <h1>
-            <span class="glyphicon glyphicon-plus"></span>
+            <span class="glyphicon glyphicon glyphicon-chevron-up"></span>
             进行中 <small>Inprogress</small>
         </h1>
     </div>
     <div class="row collapse in" id="list-inprogress">
-        {% for p in listinprogress %}
-            {% include 'progress/list-progresscard.html' %}
-        {% empty %}
-            <div class="well">
-                您还没有任何进度哦~
-            </div>
-        {% endfor %}
-    </div><!--row-->
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
+            <div class="row">
+                {% for p in listinprogress %}
+                    {% include 'progress/list-progresscard.html' %}
+                {% empty %}
+                    <div class="well">
+                        您还没有任何进度哦~
+                    </div>
+                {% endfor %}
+            </div><!--row-->
+        </div><!--.col-->
+    </div><!--.row-->
 
-    <div class="page-header" data-toggle="collapse" data-target="#list-done">
+    <div class="page-header" data-toggle="collapse" data-target="#list-follow">
         <h1>
-            <span class="glyphicon glyphicon-plus"></span>
-            已完成 <small>Done</small>
+            <span class="glyphicon glyphicon glyphicon-chevron-up"></span>
+            追剧中 <small>Follow</small>
         </h1>
     </div>
-    <div class="row collapse" id="list-done">
-        {% for p in listdone %}
-            {% include 'progress/list-progresscard.html' %}
-        {% empty %}
-            <div class="well">
-                进度完成后，会自动显示在这里~
-            </div>
-        {% endfor %}
+    <div class="row collapse in" id="list-follow">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
+            <div class="row">
+            {% for p in listfollow %}
+                {% include 'progress/list-progresscard.html' %}
+            {% empty %}
+                <div class="well">
+                    您没有在追剧的进度哦~
+                </div>
+            {% endfor %}
+            </div><!--row-->
+        </div><!--.col-->
     </div><!--row-->
 
-    <div class="page-header" data-toggle="collapse" data-target="#list-giveup">
+    <div class="page-header" data-toggle="collapse" data-target="#list-todo">
         <h1>
-            <span class="glyphicon glyphicon-plus"></span>
-            弃置 <small>Giveup</small>
+            <span class="glyphicon glyphicon glyphicon-chevron-down"></span>
+            待阅读 <small>Todo</small>
         </h1>
     </div>
-    <div class="row collapse" id="list-giveup">
-        {% for p in listgiveup %}
-            {% include 'progress/list-progresscard.html' %}
-        {% empty %}
-            <div class="well">
-                弃置的进度，会自动显示在这里，可以随时再继续阅读。
-            </div>
-        {% endfor %}
+    <div class="row collapse in" id="list-todo">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
+            <div class="row">
+            {% for p in listtodo %}
+                {% include 'progress/list-progresscard.html' %}
+            {% empty %}
+                <div class="well">
+                    您没有尚未开始的进度哦~
+                </div>
+            {% endfor %}
+            </div><!--row-->
+        </div><!--.col-->
     </div><!--row-->
 
     {% if listerror %}
-        <div class="page-header" data-toggle="collapse" data-target="#list-error">
-            <h1>
-                <span class="glyphicon glyphicon-plus"></span>
-                出错 <small>Error</small>
-            </h1>
-        </div>
-        <div class="row collapse in" id="list-giveup">
+    <div class="page-header" data-toggle="collapse" data-target="#list-error">
+        <h1>
+            <span class="glyphicon glyphicon-plus"></span>
+            出错 <small>Error</small>
+        </h1>
+    </div>
+    <div class="row collapse in" id="list-giveup">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
+            <div class="row">
             {% for p in listerror %}
                 {% include 'progress/list-progresscard.html' %}
             {% endfor %}
-        </div><!--row-->
+            </div><!--row-->
+        </div><!--.col-->
+    </div><!--row-->
     {% endif %}
-</div>
+
+</div><!--.container-->
 {% endblock content %}

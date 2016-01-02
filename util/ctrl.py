@@ -1,5 +1,9 @@
 from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse, JsonResponse
+from django.core.mail import EmailMessage
+from django.template import loader
+from django.conf import settings
+from django.utils import timezone
 import random
 
 import util.KyanToolKit_Py
@@ -50,6 +54,41 @@ def salty(word):
     word_with_suffix = word_in_str + "superfarmer.net"
     return ktk.md5(word_with_suffix)
 
+def calcLevel(exp):
+    if isinstance(exp, int):
+        return int(exp**0.5)
+    return None
+
 def needLogin():
     return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
     # return redirect('/user/signin');
+
+def sendEmail(word, to_email, subject='一封来自SuperFarmer网站的邮件'):
+    if not word:
+        return False;
+    if not to_email or to_email.find('@') <= 0:
+        return False;
+    subject = subject
+    content = loader.render_to_string('email.html', {'subject':subject.strip(), 'content':word.strip()})
+    msg = EmailMessage(
+        subject.strip()+' - superfarmer.net', #subject
+        content, #content
+        settings.EMAIL_HOST_USER, #from email
+        [settings.EMAIL_HOST_USER, to_email.strip()] #recipients
+        )
+    msg.content_subtype = 'html'
+    msg.send()
+    return True
+
+def formatDate(dt, option="optimize"):
+    if option == 'optimize':
+        time_format = '%m-%d %H:%M %p'
+        if dt.year != timezone.now().year:
+            time_format = '%Y-' + time_format
+    elif option == 'dateonly':
+        time_format = '%m-%d';
+    elif option == 'fulldateonly':
+        time_format = '%Y-%m-%d';
+    else:
+        time_format = '%Y-%m-%d %H:%M %p'
+    return dt.astimezone(timezone.get_current_timezone()).strftime(time_format)

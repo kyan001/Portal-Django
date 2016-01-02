@@ -11,6 +11,9 @@
         display: table;
         padding-top: 51px;
     }
+    body {
+        background-color: gray;
+    }
     #form-wrap {
         display: table-cell;
         vertical-align: middle;
@@ -50,31 +53,51 @@
             $(this).attr('data-trigger',"hover click");
             $(this).attr('data-html',true);
         });
+        $('.input-group').on('input','.needverify', disableSubmit)
         $('[data-toggle="popover"]').popover();
         $('.input-group').on('focus','input', showTips);
         $('.input-group').on('blur','input', hideTips);
-        $('.oldmode').hide()
-        $.info("若想以传统的 <b>用户名+密码</b> 注册，请点击左上角「切换模式」")
+        $('.oldmode').show()
+        $('.newmode').hide()
+        modeToggle('old')
+        disableSubmit()
     });
-    function modeToggle(){
-        if( $('#mode-toggle').attr('mode') =='new' ){
-            $('#mode-toggle').attr('mode','old');
-            $('#mode-toggle-text').text('问答');
-            $('.oldmode').fadeIn()
-            $('.newmode').fadeOut()
-            $('input[name="question"]').val('请输入密码');
-            $('input[name="tip"]').val('请输入您注册时的密码')
-            $('input[name="answer1"]').attr('placeholder','密码 / Password')
-            $('input[name="answer1"]').attr('type','password')
-        } else {
-            $('#mode-toggle').attr('mode','new');
-            $('#mode-toggle-text').text('传统');
-            $('input[name="question"]').val('');
-            $('input[name="tip"]').val('')
-            $('input[name="answer1"]').attr('placeholder','答案 / Answer')
-            $('input[name="answer1"]').attr('type','text')
-            $('.oldmode').fadeOut()
-            $('.newmode').fadeIn()
+    function disableSubmit(){
+        $("#submit-button").attr('disabled','disabled');
+        $('#submit-button').css('pointer-events','none');
+    }
+    function enableSubmit(){
+        $("#submit-button").removeAttr('disabled');
+        $('#submit-button').css('pointer-events','auto');
+    }
+    function modeToggle(mode){
+        switch(mode){
+            case 'old':
+                $('#mode-toggle').attr('mode','old');
+                $('#mode-toggle-text').text('问答');
+                $('.oldmode').fadeIn()
+                $('.newmode').fadeOut()
+                $('input[name="question"]').val('请输入密码');
+                $('input[name="tip"]').val('')
+                $('input[name="answer1"]').attr('placeholder','密码 / Password')
+                $('input[name="answer1"]').attr('type','password')
+                break;
+            case 'new':
+                $('#mode-toggle').attr('mode','new');
+                $('#mode-toggle-text').text('传统');
+                $('input[name="question"]').val('');
+                $('input[name="tip"]').val('')
+                $('input[name="answer1"]').attr('placeholder','答案 / Answer')
+                $('input[name="answer1"]').attr('type','text')
+                $('.oldmode').fadeOut()
+                $('.newmode').fadeIn()
+                break;
+            default:
+                if( $('#mode-toggle').attr('mode') =='new' ){
+                    modeToggle('old')
+                } else {
+                    modeToggle('new')
+                }
         }
     }
 
@@ -111,29 +134,25 @@
             },
             success: function (data) {
                 var result = data;
-                if (result.result == 'notexist') {
-                    $('#username-group').addClass('has-success');
-                    $("#submit-button").removeAttr('disabled');
-                } else if (result.result == 'exist') {
+                if(result.error){
+                    $.danger(result.error);
+                    return
+                }
+                if (result.exist) {
                     $('#username-group').addClass('has-error');
                     $.danger('用户名 “'+ $('input[name="username"]').val() +'” 已存在')
-                    $("#submit-button").attr('disabled','');
+                    disableSubmit()
                 } else {
-                    $.danger(result.error);
+                    $('#username-group').addClass('has-success');
+                    enableSubmit()
                 }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Ajax Error, XMLHttpRequest:");
-                console.log("status: " + XMLHttpRequest.status);
-                console.log("readyState: " + XMLHttpRequest.readyState);
-                console.log("textStatus: " + textStatus);
             },
         });
     }
     function validateNickname(){
         clearHasClass($('#nickname-group'));
         if( $('input[name="nickname"]').val() == '' ){
-            $('#nickname-group').addClass('has-warning');
+            enableSubmit()
             return
         }
         $.ajax({
@@ -144,22 +163,18 @@
             },
             success: function (data) {
                 var result = data;
-                if (result.result == 'notexist') {
-                    $('#nickname-group').addClass('has-success');
-                    $("#submit-button").removeAttr('disabled');
-                } else if (result.result == 'exist') {
+                if(result.error){
+                    $.danger(result.error);
+                    return
+                }
+                if (result.exist) {
                     $('#nickname-group').addClass('has-error');
                     $.danger('昵称 “'+ $('input[name="nickname"]').val() +'” 已存在')
-                    $("#submit-button").attr('disabled','');
+                    disableSubmit()
                 } else {
-                    $.danger(result.error);
+                    $('#nickname-group').addClass('has-success');
+                    enableSubmit()
                 }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Ajax Error, XMLHttpRequest:");
-                console.log("status: " + XMLHttpRequest.status);
-                console.log("readyState: " + XMLHttpRequest.readyState);
-                console.log("textStatus: " + textStatus);
             },
         });
     }
@@ -177,22 +192,18 @@
             },
             success: function (data) {
                 var result = data;
-                if (result.result == 'notexist') {
-                    $('#email-group').addClass('has-success');
-                    $("#submit-button").removeAttr('disabled');
-                } else if (result.result == 'exist') {
+                if(result.error){
+                    $.danger(result.error);
+                    return
+                }
+                if (result.exist) {
                     $('#email-group').addClass('has-error');
                     $.danger('邮箱 “'+ $('input[name="email"]').val() +'” 已存在')
-                    $("#submit-button").attr('disabled','');
+                    disableSubmit()
                 } else {
-                    $.danger(result.error);
+                    $('#email-group').addClass('has-success');
+                    enableSubmit()
                 }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Ajax Error, XMLHttpRequest:");
-                console.log("status: " + XMLHttpRequest.status);
-                console.log("readyState: " + XMLHttpRequest.readyState);
-                console.log("textStatus: " + textStatus);
             },
         });
     }
@@ -217,14 +228,15 @@
             $.danger('邮箱不能为空')
             return false;
         }
+        $(".btn").attr('disabled','disabled')
         $("#the-form").submit();
     }
 </script>
 {% endblock js %}
 
 {% block nav-btn %}
-<div id="mode-toggle" class="btn btn-warning btn-sm" mode="new" onclick='modeToggle()'>
-    <span class="glyphicon glyphicon-retweet"></span> 切换到「<b id="mode-toggle-text">传统</b>」模式
+<div id="mode-toggle" class="btn btn-warning btn-sm" mode="old" onclick='modeToggle()'>
+    <span class="glyphicon glyphicon-retweet"></span> 切换到「<b id="mode-toggle-text">问答</b>」模式
 </div>
 {% endblock nav-btn %}
 
@@ -234,7 +246,7 @@
         <div id="form-div" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-xs-12">
             <form action="/user/newuser/" method="post" id="the-form">
                 <div class="input-group" id='username-group'>
-                    <input type="text" name="username" class="form-control" placeholder="用户名 / Username" autofocus="autofocus" oninput="clearHasClass($('#username-group'))" onchange='validateUsername()'>
+                    <input type="text" name="username" class="form-control needverify" placeholder="用户名 / Username" autofocus="autofocus" oninput="clearHasClass($('#username-group'))" onblur='validateUsername()'>
                     <span class="input-group-addon tips hidden-xs"
                         title="用户名 / Username <span class='label label-primary'>必填</span>"
                         data-content="<li class='text-primary'>登入时的凭证之一</li>
@@ -374,15 +386,14 @@
                     </span>
                 </div>
                 <div class="input-group" id="nickname-group">
-                    <input type="text" name="nickname" class="form-control" placeholder="昵称 / Nickname" oninput="clearHasClass($('#nickname-group'))" onchange='validateNickname()'>
+                    <input type="text" name="nickname" class="form-control needverify" placeholder="昵称 / Nickname" oninput="clearHasClass($('#nickname-group'))" onblur='validateNickname()'>
                     <span class="input-group-addon tips hidden-xs"
                         title="昵称 / Nickname <span class='label label-success'>选填</span>"
                         data-content="<li class='text-primary'>你希望他人看到的名称</li>
                         <li class='text-danger'>昵称只能是 “汉字” 和 “字母”</li>
                         <li class='text-danger'>昵称不可与他人重复</li>
                         <li class='text-success'>昵称可随时修改</li>
-                        <li class=''>昵称为空时，我们将自动帮您生成</li>
-                        ">
+                        <li class=''>昵称为空时，我们将自动帮您生成</li>">
                         ?
                     </span>
                     <span class="xs-tips">
@@ -394,14 +405,13 @@
                     </span>
                 </div>
                 <div class="input-group" id="email-group">
-                    <input type="email" name="email" class="form-control" placeholder="邮箱 / Email" oninput="clearHasClass($('#email-group'))" onchange='validateEmail()'>
+                    <input type="email" name="email" class="form-control needverify" placeholder="邮箱 / Email" oninput="clearHasClass($('#email-group'));" onblur='validateEmail()'>
                     <span class="input-group-addon tips hidden-xs"
                         title="邮箱 / Email <span class='label label-primary'>必填</span>"
                         data-content="<li class='text-primary'>用于找回密码</li>
                         <li class='text-danger'>邮箱验证通过后方可生效</li>
                         <li class='text-danger'>邮箱验证生效前，无法找回密码</li>
-                        <li class=''>用户头像将显示您邮箱绑定的 Gravatar™</li>
-                        ">
+                        <li class=''>用户头像将显示您邮箱绑定的 Gravatar™</li>">
                         ?
                     </span>
                     <span class="xs-tips">

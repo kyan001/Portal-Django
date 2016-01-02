@@ -1,37 +1,43 @@
-<div class="col-lg-5 col-md-6 col-sm-8 col-xs-12 progress-card" progressid="{{ p.prg.id }}">
-    <div class="panel panel-primary">
+{% load tags_url %}
+
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 progress-card" progressid="{{ p.prg.id }}" progressname="{{ p.opus.name }}">
+    <div class="panel panel-primary beveryfast">
         <div class="panel-heading">
             <span class="panel-title">
-                {% ifnotequal p.prg.current p.opus.total %}
                 <span class="persent label label-persent">{{ p.prg.getPersent }}%</span>
-                {% else %}
-                <span class="persent label label-persent">{{p.prg.current}}/{{p.opus.total}}</span>
-                {% endifnotequal %}
                 <span>《 <b>{{ p.opus.name }}</b> 》</span>
                 {% if p.opus.subtitle %}
-                <span class="subtitle label label-subtitle">{{ p.opus.subtitle }}</span>
+                <span class="subtitle label label-subtitle">
+                    {{ p.opus.subtitle }}
+                </span>
+                {% endif %}
+                {% if p.prg.weblink and p.prg.weblink|isurl %}
+                <a class="weblink label label-weblink" href="{{p.prg.weblink}}" title="{{p.prg.weblink}}" target="_blank">
+                    <span class="glyphicon glyphicon-link"></span>
+                </a>
                 {% endif %}
             </span>
         </div>
         <div class="panel-body">
-            {% ifnotequal p.prg.current p.opus.total %}
-            <div class="progress">
-                <div class="progress-bar {{ p.prg.getBartype }}" style="width: {{p.prg.getPersent}}%;">
-                    <b>{{p.prg.current}} / {{p.opus.total}}</b>
-                </div>
-            </div>
-            {% endifnotequal %}
-            <div class="div-table">
+            <div class="div-table hidden-xs">
                 <div class='row'>
                     {% ifequal p.prg.current p.opus.total %}
                     <div class="text-right col-xs-3 col-sm-2 col-md-2 col-lg-2">完成：</div>
                     <div class="col-xs-9 col-sm-4 col-md-4 col-lg-4">{{ p.prg.getModified }}</div>
                     {% else %}
-                    <div class="text-right col-xs-3 col-sm-2 col-md-2 col-lg-2">开始：</div>
-                    <div class="col-xs-9 col-sm-4 col-md-4 col-lg-4">{{ p.prg.getCreated }}</div>
-                    <div class="text-right col-xs-3 col-sm-2 col-md-2 col-lg-2">上次：</div>
-                    <div class="col-xs-9 col-sm-4 col-md-4 col-lg-4">{{ p.prg.getModified }}</div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">开始：{{ p.prg.getCreated }}</div>
+                    <div class="text-right col-xs-12 col-sm-6 col-md-6 col-lg-6">上次：{{ p.prg.getModified }}</div>
                     {% endifequal %}
+                </div>
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar {{ p.prg.getBartype }}" style="width: {{p.prg.getPersent}}%;">
+                {% ifnotequal p.opus.total 0 %}
+                    <b>{{p.prg.current}} / {{p.opus.total}}</b>
+                {% else %}
+                    <b>{{p.prg.current}} / ∞</b>
+                {% endifnotequal %}
                 </div>
             </div>
         </div>

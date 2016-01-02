@@ -77,12 +77,17 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 import sys
-if 'win' in sys.platform:
+if 'win' in sys.platform: #测试环境下
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'test.sqlite3'),
             'HOST': 'localhost',
+        }
+    }
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }
     }
 else:
@@ -95,6 +100,12 @@ else:
             'USER': 'portal',
             'PASSWORD': mysql_pswd.strip(),
             'HOST': 'localhost',
+        }
+    }
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
         }
     }
 
@@ -121,3 +132,11 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# Emails
+with open(os.path.join(BASE_DIR, "email.pswd"), "r") as pswd_file:
+        email_pswd = pswd_file.read();
+EMAIL_HOST_USER = 'superfarmernet@tom.com'
+EMAIL_HOST_PASSWORD = email_pswd.strip()
+EMAIL_HOST = 'smtp.tom.com'
+EMAIL_PORT = 25

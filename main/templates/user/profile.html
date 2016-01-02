@@ -4,51 +4,113 @@
 {% block css %}
 <style type="text/css">
     .container {
-        padding-top: 50px;
-        padding-bottom: 80px;
+        font-family: "微软雅黑","Microsoft Yahei","Helvetica Neue",Helvetica,"Hiragino Sans GB","Segoe UI",Tahoma,Arial,STHeiti,sans-serif !important;
     }
     #headimg {
         width: 100%;
     }
+    .table {
+        font-size: 15px;
+    }
+    /* main-info */
+    .progress-status {
+        width: 30%;
+    }
+    /* exp-info */
+    .progress {
+        margin: 0;
+    }
+    .panel:hover {
+        box-shadow: 0px 0px 5px 2px silver;
+    }
+    .panel:hover .progress {
+        height: 25px;
+    }
+    #exp-info .category {
+        font-size: 15px;
+        font-weight: bold;
+    }
+
 </style>
 {% endblock css %}
 
+{% block function-btn %}
+<a href="/user/logout" class="btn btn-danger btn-sm">
+    <span class="glyphicon glyphicon-log-out"></span> 登出
+</a>
+{% endblock function-btn %}
+
+{% block nav-btn %}
+<a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
+    <span class="glyphicon glyphicon-arrow-left"></span> 回到上一页
+</a>
+{% endblock nav-btn %}
+
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-sm-3">
-            <a href="/user/avatar/{{user.email}}" title="from gravatar.com">
-                <img id="headimg" src="{{ headimg }}">
-            </a>
+    <div class='row'>
+        <div class='hidden-xs col-sm-4 col-md-3 col-md-offset-1' id='gravatar'>
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <a href="/user/avatar/{{user.email}}" title="from gravatar.com">
+                        <img id="headimg" src="{{ headimg }}">
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-9">
-            <div class="table-responsive">
-                <table class="table table-striped table-condensed table-hover">
-                    <thead>
+        <div class='col-xs-12 col-sm-8 col-md-7' id='main-info'>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab">个人信息</a>
+                </li>
+                <li role="presentation">
+                    <a href="#register-info" aria-controls="register-info" role="tab" data-toggle="tab">注册信息</a>
+                </li>
+                <li role="presentation">
+                    <a href="#progress-info" aria-controls="progress-info" role="tab" data-toggle="tab">进度信息</a>
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="personal-info">
+                    <table class="table table-condensed table-hover">
                         <tr>
-                            <th>用户信息</th>
-                            <th>Id:{{user.id}}</th>
+                            <th>id</th>
+                            <td>{{ user.id }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
                         <tr>
-                            <td>用户名</td>
+                            <th>用户名</th>
                             <td>{{ user.username }}</td>
                         </tr>
                         <tr>
-                            <td>昵称</td>
-                            <td>{{ user.nickname }}</td>
+                            <th>昵称</th>
+                            <td>
+                                <a href="/user/public?nickname={{ user.nickname }}">
+                                    <abbr title="我的公开页，任何人都可以查看">{{ user.nickname }}</abbr>
+                                </a>
+                            </td>
                         </tr>
                         <tr>
-                            <td>邮箱</td>
+                            <th>邮箱</th>
                             <td>{{ user.email }}</td>
                         </tr>
                         <tr>
-                            <td>问题</td>
+                            <th>活跃等级</th>
+                            <td>
+                                <abbr title="根据“总活跃度”计算">Lv.{{ user.getLevel }}</abbr>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="register-info">
+                    <table class="table table-condensed table-hover">
+                        <tr>
+                            <th>问题</th>
                             <td>{{ user.question }}</td>
                         </tr>
                         <tr>
-                            <td>答案1</td>
+                            <th>答案1</th>
                             {% if user.answer1 %}
                             <td><i>[已加密]</i></td>
                             {% else %}
@@ -56,15 +118,15 @@
                             {% endif %}
                         </tr>
                         <tr>
-                            <td>答案2</td>
+                            <th>答案2</th>
                             {% if user.answer2 %}
-                            <td>[已加密]</td>
+                            <td><i>[已加密]</i></td>
                             {% else %}
                             <td>无</td>
                             {% endif %}
                         </tr>
                         <tr>
-                            <td>提示</td>
+                            <th>提示</th>
                             {% if user.tip %}
                             <td>{{ user.tip }}</td>
                             {% else %}
@@ -72,34 +134,72 @@
                             {% endif %}
                         </tr>
                         <tr>
-                            <td>创建时间</td>
+                            <th>创建时间</th>
                             <td>{{ user.getCreated }}</td>
                         </tr>
+                    </table>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="progress-info">
+                     <table class="table table-condensed table-hover">
+                    {% for name, count in prgcounts %}
+                        {% if name != '出错' %}
                         <tr>
-                            <td>操作</td>
-                            <td>
-                                <a href="/user/user?id={{ user.id }}" class="btn btn-success">
-                                    我的公开信息
-                                </a>
-                                <a href="/user/avatar/{{ user.email }}" class="btn btn-warning">
-                                    我的头像地址
-                                </a>
-                            </td>
+                            <th class="progress-status">{{ name }}:</th>
+                            <td>{{ count }}</td>
                         </tr>
-                    </tbody>
-                </table>
+                        {% endif %}
+                    {% endfor %}
+                    </table>
+                </div>
             </div>
+        </div><!--.col-->
+    </div><!--.row-->
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-0" id='exp-info'>
+            {% for exp, exphistory in exps %}
+            <div class="col-xs-12 col-sm-12 col-md-4">
+                <a class="no-decoration" href="/user/exphistory?category={{exp.category}}">
+                    <div class="panel panel-primary befast">
+                        <div class="panel-heading">
+                            <span>{{ exp.getCategory }}</span>
+                            <span class="pull-right">Lv.<b>{{ exp.getLevel }}</b></span>
+                        </div>
+                        <div class="panel-body">
+                            <div class="progress progress-striped beveryfast">
+                                <div class="progress-bar" style="width: {{ exp.getPersent }}%;">
+                                    {{ exp.exp }} / {{ exp.getLevelupExp }}
+                                </div>
+                            </div>
+                            <table class="table table-condensed">
+                            {% for eh in exphistory %}
+                                <tr>
+                                    <th>+{{ eh.change }}</th>
+                                    <td>{{ eh.operation }}</td>
+                                </tr>
+                            {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
         </div><!--.col-->
     </div><!--.row-->
 </div><!--.container-->
 {% endblock content %}
 
-{% block footer %}
-    {{ block.super }}
-    <style>
-    #footer-div {
-        position: fixed;
-        bottom: 0;
-    }
-    </style>
-{% endblock footer %}
+{% block js %}
+<script type="text/javascript">
+$(function(){
+    $('#exp-info .panel').mouseover(function(){
+        $(this).find('.progress').addClass('active');
+    });
+    $('#exp-info .panel').mouseout(function(){
+        $(this).find('.progress').removeClass('active');
+    });
+    {% for category, oldlv, newlv in lvnotice %}
+        $.success("「{{category}}」从 Lv.{{oldlv}} 升级到 Lv.{{newlv}}！")
+    {% endfor %}
+})
+</script>
+{% endblock js %}

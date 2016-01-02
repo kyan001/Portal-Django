@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}{{ userexp.getCategory }}{% endblock title %}
+
+{% block css %}
+<style>
+    .container {
+        font-family: "微软雅黑","Microsoft Yahei","Helvetica Neue",Helvetica,"Hiragino Sans GB","Segoe UI",Tahoma,Arial,STHeiti,sans-serif !important;
+    }
+    .table {
+        font-size: 15px;
+        margin-bottom: 1px;
+    }
+    .view-full-btn {
+        width: 100%;
+    }
+    .page-header {
+        margin: 0;
+    }
+</style>
+{% endblock css %}
+
+{% block nav-btn %}
+    <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
+        <span class="glyphicon glyphicon-arrow-left"></span> 回到上一页
+    </a>
+{% endblock nav-btn %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1">
+            <div class="page-header">
+                <h3>
+                    {{ userexp.getCategory }}
+                    <small>@{{ user.nickname }}</small>
+                </h3>
+            </div>
+            <table class="table table-condensed table-striped table-hover">
+            {% for eh in exphistorys %}
+                <tr>
+                    <td>#{{ forloop.counter }}</td>
+                    <td>
+                        {% ifchanged eh.getCreated %}
+                            {{ eh.getCreated }}
+                        {% endifchanged %}
+                    </td>
+                    <th>+{{ eh.change }}</th>
+                    <td>{{ eh.operation }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+            {% if view != "full" %}
+            <a class="btn btn-default view-full-btn" href="exphistory?category={{userexp.category}}&view=full" title="查看完整记录">
+                <span class="glyphicon glyphicon-resize-full"></span> 查看完整记录
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
