@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.template import *
 from main.models import *
 from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
 import util.ctrl
 
 def chatInbox(request):
@@ -92,8 +93,38 @@ def chatConversation(request):
     context['user'] = user
     return render_to_response('chat/conversation.html', context);
 
+@csrf_exempt
 def chatSend(request):
-    pass
+    '''点击对话界面中的发送按钮后'''
+    context = {}
+    loginuser = request.session.get('loginuser')
+    if not loginuser:
+        return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
+    # get user
+    try:
+        user = User.objects.get(id=loginuser['id'])
+    except User.DoesNotExist:
+        return util.ctrl.infoMsg("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
+    # get inputs
+    title = request.POST.get('title')
+    content = request.POST.get('content')
+    receiver_nickname = request.POST.get('receiver')
+    if not receiver_nickname:
+        return util.ctrl.infoMsg("您输入的网址不完整，缺少参数 receiver_nickname");
+    # get receiver
+    try:
+        receiver = User.objects.get(nickname=receiver_nickname)
+    except User.DoesNotExist:
+        return util.ctrl.infoMsg("您查找的用户 @{0} 并不存在".format(str(receiver_nickname)));
+    # send chat
+    isSuccessed = user.sendChat(receiver, title=title, content=content)
+    if not isSuccessed:
+        return util.ctrl.infoMsg("发送失败，未知原因");
+    # add exps
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
+    userexp.addExp(2, '向 @{0} 发送消息'.format(receiver.nickname))
+    # render
+    return redirect('/chat/conversation?receiver={0}'.format(receiver.nickname));
 
 def chatMarkread(request): # AJAX
     '''用户标记自己的 chat 消息为已读'''
