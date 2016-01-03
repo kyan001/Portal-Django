@@ -43,4 +43,7 @@ urlpatterns = [
     # CHAT
     url(r'^chat/inbox$', views.chatInbox),
     url(r'^chat/markread$', views.chatMarkread),
+    url(r'^chat/delete$', views.chatDelete),
+    url(r'^chat/send$', views.chatSend),
+    url(r'^chat/conversation$', views.chatConversation),
 ]

@@ -67,10 +67,7 @@ def userLogout(request):
     # clean session
     request.session['loginuser'] = None;
     # create response
-    if 'HTTP_REFERER' in request.META:
-        response = redirect(request.META.get('HTTP_REFERER'))
-    else:
-        response = redirect('/')
+    response = redirect('/')
     # clean cookie
     response.delete_cookie('user_id')
     response.delete_cookie('user_answer')

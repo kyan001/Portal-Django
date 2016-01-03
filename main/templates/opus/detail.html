@@ -71,7 +71,7 @@
             <div class="row">
                 {% for item in itemlist %}
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                    <a href="/user/public?nickname={{ item.user.nickname }}" title="查看 @{{ item.user.nickname }} 的公共页">
+                    <a class="no-decoration" href="/user/public?nickname={{ item.user.nickname }}" title="查看 @{{ item.user.nickname }} 的公共页">
                         <div class="panel panel-primary item-panel">
                             <div class="panel-heading">
                                 <b>@{{ item.user.nickname }}</b>
