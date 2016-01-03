@@ -16,6 +16,9 @@
     .panel.unread .panel-heading {
         font-weight: bold;
     }
+    .chat-content {
+        word-break: break-all;
+    }
 </style>
 {% endblock css %}
 
@@ -44,6 +47,22 @@
             }
         });
     }
+    function submitSend(){
+        $('#send-btn').addClass('disabled')
+        var content = $('textarea[name="content"]').val()
+        var title = $('input[name="title"]').val()
+        if(content=='' && title!=''){
+            content = title
+            $('textarea[name="content"]').val(content)
+        }
+        if(content=='') {
+            $.danger('发送内容不能为空')
+            $('textarea[name="content"]').focus()
+            $('#send-btn').removeClass('disabled')
+            return
+        }
+        $('#form-send').submit()
+    }
 </script>
 {% endblock js %}
 
@@ -63,6 +82,30 @@
                     <small><span class="glyphicon glyphicon-resize-horizontal"></span> @{{ user.nickname }}</small>
                 </h3>
             </div>
+
+
+            <form id='form-send' action="/chat/send" method="post">
+                <input type='hidden' name='receiver' value="{{receiver.nickname}}">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">@{{user.nickname}}:</div>
+                                    <input type="text" name='title' class="form-control" id="input-title" placeholder="标题">
+                                    <span class="input-group-btn">
+                                        <button id='send-btn' class="btn btn-primary" name='receiver' type="button" onclick="submitSend()">发送</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <textarea name='content' class="form-control" rows="2" placeholder="请输入内容"></textarea>
+                    </div>
+                </div>
+            </form>
+
             <div class="panel-group">
                 {% for c in chats %}
                 <div class="panel panel-default {% if not c.isread %}unread{% endif %}" chatid="{{c.id}}"
@@ -89,11 +132,13 @@
                     </div>
                     <div id="chat-{{c.id}}" class="panel-collapse collapse in" role="tabpanel">
                         <div class="panel-body">
-                            {% if c.getSender.username == 'syschat' %}
-                                {{ c.content|safe }}
-                            {% else %}
-                                {{ c.content }}
-                            {% endif %}
+                            <div class='chat-content'>
+                                {% if c.getSender.username == 'syschat' %}
+                                    {{ c.content|safe }}
+                                {% else %}
+                                    {{ c.content }}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
