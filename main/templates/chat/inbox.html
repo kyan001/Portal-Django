@@ -16,6 +16,9 @@
     .panel.unread .panel-heading {
         font-weight: bold;
     }
+    .chat-content {
+        word-break: break-all;
+    }
 </style>
 {% endblock css %}
 
@@ -86,11 +89,13 @@
                     </div>
                     <div id="chat-{{c.id}}" class="panel-collapse collapse" role="tabpanel">
                         <div class="panel-body">
+                            <div class='chat-content'>
                             {% if c.getSender.username == 'syschat' %}
                                 {{ c.content|safe }}
                             {% else %}
                                 {{ c.content }}
                             {% endif %}
+                            </div>
                             <a class="pull-right btn btn-default btn-sm" href="/chat/delete?id={{c.id}}">
                                 <span class="glyphicon glyphicon-remove"></span> 删除
                             </a>
