@@ -53,6 +53,10 @@ def chatDelete(request):
     if user.id != chat.receiverid:
         return util.ctrl.infoMsg("只有消息的接收者可以删除消息")
     chat.delete()
+    # add exps
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
+    userexp.addExp(1, '删除了一条来自 @{0} 的消息'.format(chat.getSender().nickname))
+    # render
     return redirect('/chat/inbox');
 
 def chatConversation(request):
@@ -79,6 +83,9 @@ def chatConversation(request):
     condition1 = Q(receiverid=receiver.id) & Q(senderid=user.id)
     condition2 = Q(senderid=receiver.id) & Q(receiverid=user.id)
     chats = Chat.objects.filter(condition1 | condition2).order_by('-created')[0:10]
+    # add exps
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
+    userexp.addExp(1, '查看与 @{0} 的对话'.format(receiver.nickname))
     # render
     context['chats'] = chats
     context['receiver'] = receiver
@@ -109,7 +116,7 @@ def chatMarkread(request): # AJAX
         return util.ctrl.returnJsonError('你没有权限修改 id: {0} 的消息'.format(str(chat.id)))
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
-    userexp.addExp(1, '阅读消息')
+    userexp.addExp(2, '阅读来自 @{0} 的消息'.format(chat.getSender().nickname))
     # markread
     isSuccessed = chat.markRead()
     return util.ctrl.returnJsonResult(True)
