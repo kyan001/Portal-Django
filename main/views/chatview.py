@@ -108,6 +108,7 @@ def chatSend(request):
     # get inputs
     title = request.POST.get('title')
     content = request.POST.get('content')
+    content = content.replace("\n", "&#10");
     receiver_nickname = request.POST.get('receiver')
     if not receiver_nickname:
         return util.ctrl.infoMsg("您输入的网址不完整，缺少参数 receiver_nickname");
