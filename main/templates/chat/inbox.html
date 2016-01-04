@@ -72,7 +72,7 @@
             </div>
             <div class="panel-group" id="msg-group" role="tablist" aria-multiselectable="true">
                 {% for c in chats %}
-                <div class="panel panel-default {% if not c.isread %}unread{% endif %}" chatid="{{c.id}}" onclick="markread(this)">
+                <div class="panel panel-default {% if not c.isread %}unread{% endif %} beveryfast hover-shadow" chatid="{{c.id}}" onclick="markread(this)">
                     <div class="panel-heading befast" data-toggle="collapse" data-target="#chat-{{c.id}}" data-parent="#msg-group">
                         {% if c.getSender.username == 'syschat' %}
                             <span class="text-danger">

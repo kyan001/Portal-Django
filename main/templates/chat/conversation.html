@@ -49,11 +49,10 @@
     }
     function submitSend(){
         $('#send-btn').addClass('disabled')
-        var content = $('textarea[name="content"]').val()
-        var title = $('input[name="title"]').val()
+        var content = $.trim($('textarea[name="content"]').val())
+        var title = $.trim($('input[name="title"]').val())
         if(content=='' && title!=''){
             content = title
-            $('textarea[name="content"]').val(content)
         }
         if(content=='') {
             $.danger('发送内容不能为空')
@@ -61,6 +60,8 @@
             $('#send-btn').removeClass('disabled')
             return
         }
+        $('input[name="title"]').val(title)
+        $('textarea[name="content"]').val(content)
         $('#form-send').submit()
     }
 </script>
@@ -89,7 +90,6 @@
                         <div class="panel-title">
                             <div class="input-group">
                                 <input type='hidden' name='receiver' value="{{receiver.nickname}}">
-                                <div class="input-group-addon">@{{user.nickname}}:</div>
                                 <input type="text" name='title' class="form-control" id="input-title" placeholder="标题">
                                 <span class="input-group-btn">
                                     <button id='send-btn' class="btn btn-primary" name='receiver' type="button" onclick="submitSend()">发送</button>
@@ -103,9 +103,11 @@
                 </div>
             </form>
 
+            <hr/>
+
             <div class="panel-group">
                 {% for c in chats %}
-                <div class="panel panel-default {% if not c.isread %}unread{% endif %} chat-record" chatid="{{c.id}}"
+                <div class="panel panel-default {% if not c.isread %}unread{% endif %} chat-record beveryfast hover-shadow" chatid="{{c.id}}"
                     {% if c.receiverid == user.id %}
                         onclick="markread(this)"
                     {% endif %}>

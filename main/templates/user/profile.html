@@ -167,7 +167,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="progress progress-striped beveryfast">
-                                <div class="progress-bar" style="width: {{ exp.getPersent }}%;">
+                                <div class="progress-bar active" style="width: {{ exp.getPersent }}%;">
                                     {{ exp.exp }} / {{ exp.getLevelupExp }}
                                 </div>
                             </div>
@@ -192,12 +192,6 @@
 {% block js %}
 <script type="text/javascript">
 $(function(){
-    $('#exp-info .panel').mouseover(function(){
-        $(this).find('.progress').addClass('active');
-    });
-    $('#exp-info .panel').mouseout(function(){
-        $(this).find('.progress').removeClass('active');
-    });
     {% for category, oldlv, newlv in lvnotice %}
         $.success("「{{category}}」从 Lv.{{oldlv}} 升级到 Lv.{{newlv}}！")
     {% endfor %}

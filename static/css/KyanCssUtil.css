@@ -15,6 +15,9 @@
 
 /* Float */
     a.no-decoration { text-decoration: none; }
+    .hover-shadow:hover {
+        box-shadow: 0 5px 9px rgba(0, 0, 0, 0.16), 0 2px 5px rgba(0, 0, 0, 0.26);
+    }
 
 /* blurs */
     .blur, .hover-notblur, .hover-blur:hover{

@@ -59,6 +59,11 @@ def calcLevel(exp):
         return int(exp**0.5)
     return None
 
+def calcExp(level):
+    if isinstance(level, int):
+        return int(level**2)
+    return None
+
 def needLogin():
     return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
     # return redirect('/user/signin');
