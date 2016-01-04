@@ -97,7 +97,7 @@
                             {% if c.getSender.username == 'syschat' %}
                                 {{ c.content|safe }}
                             {% else %}
-                                {{ c.content }}
+                                {{ c.content|linebreaks }}
                             {% endif %}
                             </div>
                             <a class="pull-right btn btn-default btn-sm" href="/chat/delete?id={{c.id}}">

@@ -202,7 +202,7 @@
                         } else {
                             $("#user-bar .profile-nikename").text("@").append("<b>"+result.nickname+"</b>");
                             $("#user-bar .profile-link").attr('title',"活跃等级 Lv."+result.level);
-                            $('[data-toggle="tooltip"]').tooltip();
+                            $('#user-bar [data-toggle="tooltip"]').tooltip();
                             $("#user-bar #unread-count").text(result.unreadcount);
                             $("#user-bar .loginshow").fadeIn();
                         }
