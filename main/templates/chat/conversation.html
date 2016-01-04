@@ -10,6 +10,9 @@
     .page-header {
         margin: 0px;
     }
+    .form-group {
+        margin: 0;
+    }
     .panel-heading {
         cursor: pointer;
     }
@@ -83,16 +86,15 @@
                 </h3>
             </div>
 
-
             <form id='form-send' action="/chat/send" method="post">
-                <input type='hidden' name='receiver' value="{{receiver.nickname}}">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             <div class="form-group">
                                 <div class="input-group">
+                                    <input type='hidden' name='receiver' value="{{receiver.nickname}}">
                                     <div class="input-group-addon">@{{user.nickname}}:</div>
-                                    <input type="text" name='title' class="form-control" id="input-title" placeholder="标题">
+                                    <input type="text" name='title' autofocus="autofocus" class="form-control" id="input-title" placeholder="标题">
                                     <span class="input-group-btn">
                                         <button id='send-btn' class="btn btn-primary" name='receiver' type="button" onclick="submitSend()">发送</button>
                                     </span>
@@ -101,7 +103,7 @@
                         </h3>
                     </div>
                     <div class="panel-body">
-                        <textarea name='content' class="form-control" rows="2" placeholder="请输入内容"></textarea>
+                        <textarea name='content' class="form-control" rows="2" placeholder="请输入内容" autocomplete="off"></textarea>
                     </div>
                 </div>
             </form>
