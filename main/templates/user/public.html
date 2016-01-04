@@ -21,9 +21,6 @@
     .progress {
         margin: 0;
     }
-    .panel:hover {
-        box-shadow: 0px 0px 5px 2px silver;
-    }
     .panel:hover .progress {
         height: 25px;
     }
@@ -45,7 +42,7 @@
 <div class="container">
     <div class='row'>
         <div class='hidden-xs col-sm-4 col-md-3 col-md-offset-1' id='gravatar'>
-            <div class="panel panel-primary">
+            <div class="panel panel-primary beveryfast hover-shadow">
                 <div class="panel-body">
                     <a href="/user/avatar/{{user.email}}" title="from gravatar.com">
                         <img id="headimg" src="{{ headimg }}">
@@ -105,16 +102,3 @@
     </div><!--.row-->
 </div><!--.container-->
 {% endblock content %}
-
-{% block js %}
-<script type="text/javascript">
-$(function(){
-    $('#exp-info .panel').mouseover(function(){
-        $(this).find('.progress').addClass('active');
-    });
-    $('#exp-info .panel').mouseout(function(){
-        $(this).find('.progress').removeClass('active');
-    });
-})
-</script>
-{% endblock js %}
