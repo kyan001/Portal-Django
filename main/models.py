@@ -148,9 +148,14 @@ class UserExp(models.Model):
         return util.ctrl.calcLevel(self.exp)
     def getLevelupExp(self):
         level = self.getLevel()
-        return (level+1) ** 2
+        return util.ctrl.calcExp(level+1)
     def getPersent(self):
-        persent = self.exp / self.getLevelupExp() * 100
+        level = self.getLevel()
+        prev_exp = util.ctrl.calcExp(level)
+        next_exp = self.getLevelupExp()
+        exp_need = next_exp - prev_exp
+        exp_have = self.exp - prev_exp
+        persent = exp_have / exp_need * 100
         return int(persent)
     def getUser(self):
         return User.objects.get(id=self.userid)

@@ -119,10 +119,8 @@
     {% block userbar %}
         <nav id='user-bar'>
             <span class="nologinshow">
-                <a href="/" class="btn btn-info btn-sm">
-                    <span style="opacity:0">·</span>
-                    <span class="glyphicon glyphicon-home"></span>
-                    <span style="opacity:0">·</span>
+                <a href="/" class="btn btn-info btn-sm" title="Home Page" data-toggle="tooltip" data-placement="left">
+                    <span class="glyphicon glyphicon-home"></span><span style="opacity:0">'</span>
                 </a>
                 <a href="/user/signup" class="btn btn-primary btn-sm">注册</a>
                 <span> </span>
@@ -131,7 +129,7 @@
                 </a>
             </span>
             <span class="loginshow">
-                <a href="/" class="btn btn-info btn-sm" title="主页">
+                <a href="/" class="btn btn-info btn-sm" title="Home Page" data-toggle="tooltip" data-placement="left">
                     <span class="glyphicon glyphicon-home"></span><span style="opacity:0">'</span>
                 </a>
                 <a class="btn btn-default btn-sm profile-link" href='/user/profile' data-toggle="tooltip" data-placement="bottom">
@@ -164,7 +162,6 @@
                 padding-top: 10px;
                 padding-bottom: 10px;
                 font-size: 15px;
-                border-bottom: silver solid 1px;
             }
             #user-bar:hover {
                 background: -webkit-linear-gradient(left, rgba(255,255,255,0), rgba(255,255,255,0.5));
@@ -198,13 +195,13 @@
                         if (result.error) {
                             alert(result.error);
                         } else if (result.result == 'nologinuser') {
-                            $("#user-bar .nologinshow").fadeIn();
+                            $("#user-bar .nologinshow").show();
                         } else {
                             $("#user-bar .profile-nikename").text("@").append("<b>"+result.nickname+"</b>");
                             $("#user-bar .profile-link").attr('title',"活跃等级 Lv."+result.level);
-                            $('[data-toggle="tooltip"]').tooltip();
+                            $('#user-bar [data-toggle="tooltip"]').tooltip();
                             $("#user-bar #unread-count").text(result.unreadcount);
-                            $("#user-bar .loginshow").fadeIn();
+                            $("#user-bar .loginshow").show();
                         }
                     },
                 });

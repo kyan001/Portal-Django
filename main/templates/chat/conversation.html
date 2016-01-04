@@ -10,10 +10,7 @@
     .page-header {
         margin: 0px;
     }
-    .form-group {
-        margin: 0;
-    }
-    .panel-heading {
+    .chat-record .panel-heading {
         cursor: pointer;
     }
     .panel.unread .panel-heading {
@@ -52,11 +49,10 @@
     }
     function submitSend(){
         $('#send-btn').addClass('disabled')
-        var content = $('textarea[name="content"]').val()
-        var title = $('input[name="title"]').val()
+        var content = $.trim($('textarea[name="content"]').val())
+        var title = $.trim($('input[name="title"]').val())
         if(content=='' && title!=''){
             content = title
-            $('textarea[name="content"]').val(content)
         }
         if(content=='') {
             $.danger('发送内容不能为空')
@@ -64,6 +60,8 @@
             $('#send-btn').removeClass('disabled')
             return
         }
+        $('input[name="title"]').val(title)
+        $('textarea[name="content"]').val(content)
         $('#form-send').submit()
     }
 </script>
@@ -80,37 +78,36 @@
     <div class='row'>
         <div class='col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12'>
             <div class="page-header">
-                <h3>
-                    @{{ receiver.nickname }}
+                <h4>
+                    <a href="/user/public?nickname={{ receiver.nickname }}">@{{ receiver.nickname }}</a>
                     <small><span class="glyphicon glyphicon-resize-horizontal"></span> @{{ user.nickname }}</small>
-                </h3>
+                </h4>
             </div>
 
             <form id='form-send' action="/chat/send" method="post">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type='hidden' name='receiver' value="{{receiver.nickname}}">
-                                    <div class="input-group-addon">@{{user.nickname}}:</div>
-                                    <input type="text" name='title' autofocus="autofocus" class="form-control" id="input-title" placeholder="标题">
-                                    <span class="input-group-btn">
-                                        <button id='send-btn' class="btn btn-primary" name='receiver' type="button" onclick="submitSend()">发送</button>
-                                    </span>
-                                </div>
+                        <div class="panel-title">
+                            <div class="input-group">
+                                <input type='hidden' name='receiver' value="{{receiver.nickname}}">
+                                <input type="text" name='title' class="form-control" id="input-title" placeholder="标题">
+                                <span class="input-group-btn">
+                                    <button id='send-btn' class="btn btn-primary" name='receiver' type="button" onclick="submitSend()">发送</button>
+                                </span>
                             </div>
-                        </h3>
+                        </div>
                     </div>
                     <div class="panel-body">
-                        <textarea name='content' class="form-control" rows="2" placeholder="请输入内容" autocomplete="off"></textarea>
+                        <textarea name='content' autofocus="autofocus" class="form-control" rows="2" placeholder="请输入内容" autocomplete="off"></textarea>
                     </div>
                 </div>
             </form>
 
+            <hr/>
+
             <div class="panel-group">
                 {% for c in chats %}
-                <div class="panel panel-default {% if not c.isread %}unread{% endif %}" chatid="{{c.id}}"
+                <div class="panel panel-default {% if not c.isread %}unread{% endif %} chat-record beveryfast hover-shadow" chatid="{{c.id}}"
                     {% if c.receiverid == user.id %}
                         onclick="markread(this)"
                     {% endif %}>
@@ -138,7 +135,7 @@
                                 {% if c.getSender.username == 'syschat' %}
                                     {{ c.content|safe }}
                                 {% else %}
-                                    {{ c.content }}
+                                    {{ c.content|linebreaks }}
                                 {% endif %}
                             </div>
                         </div>
