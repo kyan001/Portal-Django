@@ -85,7 +85,7 @@
                             <th>昵称</th>
                             <td>
                                 <a href="/user/public?nickname={{ user.nickname }}">
-                                    @<abbr title="我的公开页，任何人都可以查看">{{ user.nickname }}</abbr>
+                                    @<abbr title="我的公开页，任何人都可以查看" data-toggle="tooltip" data-placement="right">{{ user.nickname }}</abbr>
                                 </a>
                             </td>
                         </tr>
@@ -96,7 +96,7 @@
                         <tr>
                             <th>活跃等级</th>
                             <td>
-                                <abbr title="根据“总活跃度”计算">Lv.{{ user.getLevel }}</abbr>
+                                <abbr title="根据“总活跃度”计算" data-toggle="tooltip" data-placement="right">Lv.{{ user.getLevel }}</abbr>
                             </td>
                         </tr>
                     </table>
@@ -164,7 +164,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="progress progress-striped beveryfast">
-                                <div class="progress-bar active" style="width: {{ exp.getPersent }}%;">
+                                <div class="progress-bar active" style="width: {{ exp.getPersent }}%; min-width:5em;">
                                     {{ exp.exp }} / {{ exp.getLevelupExp }}
                                 </div>
                             </div>
@@ -192,6 +192,7 @@ $(function(){
     {% for category, oldlv, newlv in lvnotice %}
         $.success("「{{category}}」从 Lv.{{oldlv}} 升级到 Lv.{{newlv}}！")
     {% endfor %}
+    $("[data-toggle='tooltip']").tooltip()
 })
 </script>
 {% endblock js %}
