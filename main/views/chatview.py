@@ -87,7 +87,8 @@ def chatConversation(request):
         context['receiver'] = receiver
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
-    userexp.addExp(1, '查看与 @{0} 的对话'.format(receiver.nickname))
+    if receiver_nickname:
+        userexp.addExp(1, '查看与 @{0} 的对话'.format(receiver.nickname))
     # render
     context['user'] = user
     return render_to_response('chat/conversation.html', context);
