@@ -72,6 +72,9 @@ def chatConversation(request):
     except User.DoesNotExist:
         return util.ctrl.infoMsg("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
     # get inputs
+    mode = request.GET.get('mode')
+    if mode == 'quicknote':
+        return redirect('/chat/conversation?receiver={0}'.format(user.nickname));
     receiver_nickname = request.GET.get('receiver')
     if receiver_nickname:
         # get receiver
@@ -82,7 +85,7 @@ def chatConversation(request):
         # get history
         condition1 = Q(receiverid=receiver.id) & Q(senderid=user.id)
         condition2 = Q(senderid=receiver.id) & Q(receiverid=user.id)
-        chats = Chat.objects.filter(condition1 | condition2).order_by('-created')[0:10]
+        chats = Chat.objects.filter(condition1 | condition2).order_by('-created')#[0:10]
         context['chats'] = chats
         context['receiver'] = receiver
     # add exps
