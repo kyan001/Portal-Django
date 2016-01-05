@@ -120,92 +120,104 @@
         ele.removeClass('has-success');
         ele.removeClass('has-error');
     }
+    var timer_vUn
     function validateUsername(){
         clearHasClass($('#username-group'));
         if( $('input[name="username"]').val() == '' ){
             $('#username-group').addClass('has-warning');
             return
         }
-        $.ajax({
-            type: "GET",
-            url: "/user/validateusername",
-            data: {
-                'username':$('input[name="username"]').val()
-            },
-            success: function (data) {
-                var result = data;
-                if(result.error){
-                    $.danger(result.error);
-                    return
-                }
-                if (result.exist) {
-                    $('#username-group').addClass('has-error');
-                    $.danger('用户名 “'+ $('input[name="username"]').val() +'” 已存在')
-                    disableSubmit()
-                } else {
-                    $('#username-group').addClass('has-success');
-                    enableSubmit()
-                }
-            },
-        });
+        clearTimeout(timer_vUn)
+        timer_vUn = setTimeout(function(){
+            $.ajax({
+                type: "GET",
+                url: "/user/validateusername",
+                data: {
+                    'username':$('input[name="username"]').val()
+                },
+                success: function (data) {
+                    var result = data;
+                    if(result.error){
+                        $.danger(result.error);
+                        return
+                    }
+                    if (result.exist) {
+                        $('#username-group').addClass('has-error');
+                        $.danger('用户名 “'+ $('input[name="username"]').val() +'” 已存在')
+                        disableSubmit()
+                    } else {
+                        $('#username-group').addClass('has-success');
+                        enableSubmit()
+                    }
+                },
+            });
+        }, 500)
     }
+    var timer_vNn
     function validateNickname(){
         clearHasClass($('#nickname-group'));
         if( $('input[name="nickname"]').val() == '' ){
             enableSubmit()
             return
         }
-        $.ajax({
-            type: "GET",
-            url: "/user/validatenickname",
-            data: {
-                'nickname':$('input[name="nickname"]').val()
-            },
-            success: function (data) {
-                var result = data;
-                if(result.error){
-                    $.danger(result.error);
-                    return
-                }
-                if (result.exist) {
-                    $('#nickname-group').addClass('has-error');
-                    $.danger('昵称 “'+ $('input[name="nickname"]').val() +'” 已存在')
-                    disableSubmit()
-                } else {
-                    $('#nickname-group').addClass('has-success');
-                    enableSubmit()
-                }
-            },
-        });
+        clearTimeout(timer_vUn)
+        timer_vNn = setTimeout(function(){
+            $.ajax({
+                type: "GET",
+                url: "/user/validatenickname",
+                data: {
+                    'nickname':$('input[name="nickname"]').val()
+                },
+                success: function (data) {
+                    var result = data;
+                    if(result.error){
+                        $.danger(result.error);
+                        return
+                    }
+                    if (result.exist) {
+                        $('#nickname-group').addClass('has-error');
+                        $.danger('昵称 “'+ $('input[name="nickname"]').val() +'” 已存在')
+                        disableSubmit()
+                    } else {
+                        $('#nickname-group').addClass('has-success');
+                        enableSubmit()
+                    }
+                },
+            });
+        }, 500);
     }
+    var timer_vE
     function validateEmail(){
         clearHasClass($('#email-group'));
         if( $('input[name="email"]').val() == '' ){
             $('#email-group').addClass('has-warning');
             return
         }
-        $.ajax({
-            type: "GET",
-            url: "/user/validateemail",
-            data: {
-                'email':$('input[name="email"]').val()
-            },
-            success: function (data) {
-                var result = data;
-                if(result.error){
-                    $.danger(result.error);
-                    return
-                }
-                if (result.exist) {
-                    $('#email-group').addClass('has-error');
-                    $.danger('邮箱 “'+ $('input[name="email"]').val() +'” 已存在')
-                    disableSubmit()
-                } else {
-                    $('#email-group').addClass('has-success');
-                    enableSubmit()
-                }
-            },
-        });
+        clearTimeout(timer_vE)
+        timer_vE = setTimeout(function(){
+            $.ajax({
+                type: "GET",
+                url: "/user/validateemail",
+                data: {
+                    'email':$('input[name="email"]').val()
+                },
+                success: function (data) {
+                    var result = data;
+                    if(result.error){
+                        $.danger(result.error);
+                        return
+                    }
+                    if (result.exist) {
+                        $('#email-group').addClass('has-error');
+                        $.danger('邮箱 “'+ $('input[name="email"]').val() +'” 已存在')
+                        disableSubmit()
+                    } else {
+                        $('#email-group').addClass('has-success');
+                        enableSubmit()
+                    }
+                },
+            });
+        }, 500)
     }
     function submitForm(){
         if( $('input[name="username"]').val() == '' ){

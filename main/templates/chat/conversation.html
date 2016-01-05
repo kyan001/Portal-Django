@@ -19,11 +19,15 @@
     .chat-content {
         word-break: break-all;
     }
+    #nickname-group .input-group-addon {
+        padding-right: 1px;
+    }
 </style>
 {% endblock css %}
 
 {% block js %}
 <script>
+    $(function(){})
     function markread(ele){
         chatid = $(ele).attr('chatid')
         if(chatid<0){
@@ -47,8 +51,40 @@
             }
         });
     }
+    var timer_vNn
+    function validateNickname(){
+        ele = $("input[name='receiver']")
+        hasClassEle = $('#nickname-group')
+        clearTimeout(timer_vNn);
+        hasClassEle.removeClass('has-success').removeClass('has-error')
+        timer_vNn = setTimeout(function(){
+            var nickname = $(ele).val()
+            if(!nickname){
+                return
+            }
+            $.ajax({
+                type: "GET",
+                url: "/user/validatenickname",
+                data: {'nickname': nickname},
+                async: true,
+                dataType: 'json',
+                success: function(result) {
+                    if(result.error){
+                        alert(result.error)
+                        return
+                    }
+                    if(result.exist == true){
+                        hasClassEle.addClass('has-success')
+                        $('#send-btn').removeAttr('disabled')
+                    } else if(result.exist == false){
+                        hasClassEle.addClass('has-error')
+                    }
+                }
+            });
+        }, 500);
+    }
     function submitSend(){
-        $('#send-btn').addClass('disabled')
+        $('#send-btn').attr('disabled','disabled')
         var content = $.trim($('textarea[name="content"]').val())
         var title = $.trim($('input[name="title"]').val())
         if(content=='' && title!=''){
@@ -57,7 +93,7 @@
         if(content=='') {
             $.danger('发送内容不能为空')
             $('textarea[name="content"]').focus()
-            $('#send-btn').removeClass('disabled')
+            $('#send-btn').removeAttr('disabled')
             return
         }
         $('input[name="title"]').val(title)
@@ -79,8 +115,12 @@
         <div class='col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12'>
             <div class="page-header">
                 <h4>
+                    {% if receiver %}
                     <a href="/user/public?nickname={{ receiver.nickname }}">@{{ receiver.nickname }}</a>
                     <small><span class="glyphicon glyphicon-resize-horizontal"></span> @{{ user.nickname }}</small>
+                    {% else %}
+                    <span>发送消息</span>
+                    {% endif %}
                 </h4>
             </div>
 
@@ -88,17 +128,28 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <div class="input-group">
-                                <input type='hidden' name='receiver' value="{{receiver.nickname}}">
-                                <input type="text" name='title' class="form-control" id="input-title" placeholder="标题">
-                                <span class="input-group-btn">
-                                    <button id='send-btn' class="btn btn-primary" name='receiver' type="button" onclick="submitSend()">发送</button>
-                                </span>
+                            <div class="row">
+                                <div class="col-md-3 col-sm-4 col-xs-12">
+                                    <div class="input-group" id="nickname-group">
+                                        <div class="input-group-addon">@</div>
+                                        <input type='text' name='receiver' class="form-control" value="{{receiver.nickname}}" placeholder="用户"
+                                            {% if receiver %}readonly{%else%}autofocus{% endif %} oninput="validateNickname(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                    <div class="input-group">
+                                        <input type="text" name='title' class="form-control" id="input-title" placeholder="标题">
+                                        <span class="input-group-btn">
+                                            <a id='send-btn' class="btn btn-primary" onclick="submitSend()" {% if not receiver %}disabled{%endif%}>发送</a>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="panel-body">
-                        <textarea name='content' autofocus="autofocus" class="form-control" rows="2" placeholder="请输入内容" autocomplete="off"></textarea>
+                        <textarea name='content' class="form-control" rows="2" placeholder="请输入内容" autocomplete="off"
+                            {%if receiver%}autofocus{%endif%}></textarea>
                     </div>
                 </div>
             </form>
@@ -143,12 +194,11 @@
                 </div>
                 {% empty %}
                 <div class="well">
-                    你与 @{{receiver.nickname}} 还没有说过话
+                    消息的历史记录会显示在这里
                 </div>
                 {% endfor %}
             </div><!--.panel-group-->
         </div><!--.col-->
     </div><!--.row-->
 </div><!--.container-->
-
 {% endblock content %}
