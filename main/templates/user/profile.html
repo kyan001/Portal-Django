@@ -3,7 +3,7 @@
 
 {% block css %}
 <meta http-equiv=Cache-Control content=no-cache />
-<style type="text/css">
+<style>
     .container {
         font-family: "微软雅黑","Microsoft Yahei","Helvetica Neue",Helvetica,"Hiragino Sans GB","Segoe UI",Tahoma,Arial,STHeiti,sans-serif !important;
     }
@@ -187,7 +187,7 @@
 {% endblock content %}
 
 {% block js %}
-<script type="text/javascript">
+<script>
 $(function(){
     {% for category, oldlv, newlv in lvnotice %}
         $.success("「{{category}}」从 Lv.{{oldlv}} 升级到 Lv.{{newlv}}！")

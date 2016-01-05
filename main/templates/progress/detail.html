@@ -5,7 +5,7 @@
 {% load tags_url %}
 
 {% block css %}
-<style type="text/css">
+<style>
     .container {
         font-family: 'Microsoft YaHei';
     }
@@ -100,7 +100,7 @@
 {% endblock css %}
 
 {% block js %}
-<script type="text/javascript">
+<script>
     var bookinfo = {};
     var movieinfo = {};
     $(function(){
@@ -144,12 +144,12 @@
     }
     function showGuess(info){
         var title_a = '<a href="' + info.url + '" target="_blank">' + info.title + '</a>'
-        var content_html = '您是否再找《' + title_a + '》'
+        var content_html = '您是否在找《' + title_a + '》'
         if(info.subtype){
             content_html += "（" + info.subtype.toUpperCase() + "）"
         }
         $('#name-tr').popover({
-            delay: {'show':1000, 'hide':1000},
+            delay: {'show':500, 'hide':1000},
             html: true,
             trigger: 'hover focus',
             content: function(){

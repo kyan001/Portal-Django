@@ -23,7 +23,7 @@
 {% endblock css %}
 
 {% block js %}
-<script type="text/javascript">
+<script>
     function markread(ele){
         chatid = $(ele).attr('chatid')
         if(chatid<0){
@@ -57,7 +57,9 @@
 {% endblock nav-btn %}
 
 {% block function-btn %}
-
+    <a href="javascript:void(0)" class="btn btn-success btn-sm" onclick="history.back()">
+        <span class="glyphicon glyphicon-plus"></span> 发新消息
+    </a>
 {% endblock function-btn %}
 
 {% block content %}
