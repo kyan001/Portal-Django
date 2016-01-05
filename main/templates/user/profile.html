@@ -138,16 +138,23 @@
                     </table>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="progress-info">
-                     <table class="table table-condensed table-hover">
-                    {% for name, count in prgcounts %}
-                        {% if name != '出错' %}
-                        <tr>
-                            <th class="progress-status">{{ name }}:</th>
-                            <td>{{ count }}</td>
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                    </table>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <table class="table table-condensed table-hover">
+                            {% for name, count in prgcounts %}
+                                {% if name != '出错' %}
+                                <tr>
+                                    <th class="progress-status">{{ name }}:</th>
+                                    <td>{{ count }}</td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </table>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <canvas id="progressChart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div><!--.col-->
@@ -187,12 +194,40 @@
 {% endblock content %}
 
 {% block js %}
+<script src="/static/js/Chart.min.js"></script>
 <script>
 $(function(){
     {% for category, oldlv, newlv in lvnotice %}
         $.success("「{{category}}」从 Lv.{{oldlv}} 升级到 Lv.{{newlv}}！")
     {% endfor %}
     $("[data-toggle='tooltip']").tooltip()
+    // init chart
+    $("#progressChart").attr('height', $("#progressChart").innerWidth)
+    var ctx = $("#progressChart").get(0).getContext("2d");
+    var progressChart = new Chart(ctx)
+    var pChartData = [
+        {% for name, count in prgcounts %}
+            {% if name != '出错' %}
+                {
+                    value: {{ count }},
+                    color: "#eee",
+                    highlight: "#DDD",
+                    label: "{{ name }}"
+                },
+            {% endif %}
+        {% endfor %}
+    ]
+    var pChartOptions = {
+        segmentShowStroke : true,
+        segmentStrokeColor : "#fff",
+        segmentStrokeWidth : 1,
+        percentageInnerCutout : 25,
+        animationSteps : 100,
+        animationEasing : "easeOutBounce",
+        animateRotate : true,
+        animateScale : false,
+    }
+    progressChart.Pie(pChartData, pChartOptions);
 })
 </script>
 {% endblock js %}
