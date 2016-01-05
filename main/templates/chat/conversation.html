@@ -88,12 +88,22 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <div class="input-group">
-                                <input type='hidden' name='receiver' value="{{receiver.nickname}}">
-                                <input type="text" name='title' class="form-control" id="input-title" placeholder="标题">
-                                <span class="input-group-btn">
-                                    <button id='send-btn' class="btn btn-primary" name='receiver' type="button" onclick="submitSend()">发送</button>
-                                </span>
+                            <div class="row">
+                                <div class="col-md-3 col-sm-4 col-xs-12">
+                                    <div class="input-group">
+                                        <div class="text-primary input-group-addon">@</div>
+                                        <input type='text' name='receiver' class="form-control"  value="{{receiver.nickname}}" placeholder="用户"
+                                            {% if receiver.nickname %}readonly{% endif %}>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                    <div class="input-group">
+                                        <input type="text" name='title' class="form-control" id="input-title" placeholder="标题">
+                                        <span class="input-group-btn">
+                                            <button id='send-btn' class="btn btn-primary" name='receiver' type="button" onclick="submitSend()">发送</button>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -143,7 +153,7 @@
                 </div>
                 {% empty %}
                 <div class="well">
-                    你与 @{{receiver.nickname}} 还没有说过话
+                    消息的历史记录会显示在这里
                 </div>
                 {% endfor %}
             </div><!--.panel-group-->
