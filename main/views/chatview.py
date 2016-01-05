@@ -73,23 +73,22 @@ def chatConversation(request):
         return util.ctrl.infoMsg("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
     # get inputs
     receiver_nickname = request.GET.get('receiver')
-    if not receiver_nickname:
-        return util.ctrl.infoMsg("您输入的网址不完整，缺少参数 receiver_nickname");
-    # get receiver
-    try:
-        receiver = User.objects.get(nickname=receiver_nickname)
-    except User.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的用户 @{0} 并不存在".format(str(receiver_nickname)));
-    # get history
-    condition1 = Q(receiverid=receiver.id) & Q(senderid=user.id)
-    condition2 = Q(senderid=receiver.id) & Q(receiverid=user.id)
-    chats = Chat.objects.filter(condition1 | condition2).order_by('-created')[0:10]
+    if receiver_nickname:
+        # get receiver
+        try:
+            receiver = User.objects.get(nickname=receiver_nickname)
+        except User.DoesNotExist:
+            return util.ctrl.infoMsg("您查找的用户 @{0} 并不存在".format(str(receiver_nickname)));
+        # get history
+        condition1 = Q(receiverid=receiver.id) & Q(senderid=user.id)
+        condition2 = Q(senderid=receiver.id) & Q(receiverid=user.id)
+        chats = Chat.objects.filter(condition1 | condition2).order_by('-created')[0:10]
+        context['chats'] = chats
+        context['receiver'] = receiver
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
     userexp.addExp(1, '查看与 @{0} 的对话'.format(receiver.nickname))
     # render
-    context['chats'] = chats
-    context['receiver'] = receiver
     context['user'] = user
     return render_to_response('chat/conversation.html', context);
 
