@@ -25,10 +25,10 @@
 {% block content %}
 <div class="container">
     <div class="page-header" data-toggle="collapse" data-target="#list-done">
-        <h1>
-            <span class="glyphicon glyphicon-chevron-up"></span>
+        <h4>
+            <span class="glyphicon glyphicon-chevron-up text-muted"></span>
             已完成 <small>Done</small>
-        </h1>
+        </h4>
     </div>
     <div class="row collapse in" id="list-done">
         {% for p in listdone %}
@@ -41,10 +41,10 @@
     </div><!--row-->
 
     <div class="page-header" data-toggle="collapse" data-target="#list-giveup">
-        <h1>
-            <span class="glyphicon glyphicon-chevron-down"></span>
+        <h4>
+            <span class="glyphicon glyphicon-chevron-down text-muted"></span>
             冻结中 <small>Giveup</small>
-        </h1>
+        </h4>
     </div>
     <div class="row collapse" id="list-giveup">
         {% for p in listgiveup %}

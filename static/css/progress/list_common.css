@@ -2,15 +2,8 @@
     font-family: 'Microsoft YaHei';
 }
 /* page-header */
-.page-header > h1 > span {
-    font-size: 25px;
-    color: silver;
-}
-.page-header h1 {
-    font-size: 30px;
-}
-.page-header small {
-    font-size: 26px;
+.page-header:hover span.glyphicon {
+    color: red;
 }
 .page-header {
     padding-bottom: 2px;
@@ -18,9 +11,9 @@
 }
 
 /* progress-card */
-.progress-card .panel{
+/*.progress-card .panel{
     cursor: pointer;
-}
+}*/
 .progress-card .panel-heading {
     overflow-x: auto;
     overflow-y: hidden;
@@ -40,16 +33,8 @@
     color: white;
     background-color: #2196f3;
 }
-.progress-card .persent, .progress-card .subtitle, .progress-card .weblink {
+.progress-card .persent,
+.progress-card .subtitle,
+.progress-card .weblink {
     font-size: 15px;
-}
-.progress-card .weblink:hover {
-    color: indigo;
-}
-/* progress-card-label */
-.label-persent {
-    background-color: #51ABFF;
-}
-.label-subtitle {
-    background-color: #3080BB;
 }

@@ -11,7 +11,6 @@
     .text-alignleft { display: inline-block; width: 100%; text-align: left; }
     .text-alignright { display: inline-block; width: 100%; text-align: right; }
     .text-aligncenter { display: inline-block; width: 100%; text-align: center; }
-    .text-primary-dark { color: LightSkyBlue; }
 
 /* Float */
     a.no-decoration { text-decoration: none; }
@@ -20,45 +19,47 @@
     }
 
 /* blurs */
-    .blur, .hover-notblur, .hover-blur:hover{
+    .blur,
+    .hover-notblur,
+    .hover-blur:hover{
         -webkit-filter: blur(2px);
-        -moz-filter: blur(2px);
-        -o-filter: blur(2px);
-        -ms-filter: blur(2px);
-        filter: blur(2px);
+           -moz-filter: blur(2px);
+             -o-filter: blur(2px);
+            -ms-filter: blur(2px);
+                filter: blur(2px);
     }
     .hover-notblur:hover{
         -webkit-filter:  blur(0);
-        -moz-filter:  blur(0);
-        -o-filter:  blur(0);
-        -ms-filter:  blur(0);
-        filter:  blur(0);
+           -moz-filter:  blur(0);
+             -o-filter:  blur(0);
+            -ms-filter:  blur(0);
+                filter:  blur(0);
     }
 
 /* animations */
     .beveryfast {
-        transition: all 0.2s ease;
-        -moz-transition: all 0.2s ease;
+                transition: all 0.2s ease;
+           -moz-transition: all 0.2s ease;
         -webkit-transition: all 0.2s ease;
-        -o-transition: all 0.2s ease;
+             -o-transition: all 0.2s ease;
     }
     .befast {
-        transition: all 0.5s ease;
-        -moz-transition: all 0.5s ease;
+                transition: all 0.5s ease;
+           -moz-transition: all 0.5s ease;
         -webkit-transition: all 0.5s ease;
-        -o-transition: all 0.5s ease;
+             -o-transition: all 0.5s ease;
     }
     .benormal {
-        transition: all 1s ease;
-        -moz-transition: all 1s ease;
+                transition: all 1s ease;
+           -moz-transition: all 1s ease;
         -webkit-transition: all 1s ease;
-        -o-transition: all 1s ease;
+             -o-transition: all 1s ease;
     }
     .beslow {
-        transition: all 2s ease;
-        -moz-transition: all 2s ease;
+                transition: all 2s ease;
+           -moz-transition: all 2s ease;
         -webkit-transition: all 2s ease;
-        -o-transition: all 2s ease;
+             -o-transition: all 2s ease;
     }
 
 /* colors */
