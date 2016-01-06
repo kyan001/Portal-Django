@@ -29,7 +29,7 @@
                 });
             </script>
             {% block icon %}<link rel="icon" href="/static/img/favicon.png"> {% endblock icon %}
-            <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-paper.min.css">
+            <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-paper.css">
             <link rel="stylesheet" href="/static/css/KyanCssUtil.css">
             <title>{% block title %}{% endblock %} - SuperFarmer.net</title>
             <style>
@@ -38,10 +38,6 @@
             }
             .glyphicon {
                 vertical-align: baseline;
-            }
-            .btn:disabled {
-                cursor: not-allowed;
-                pointer-events: all !important;
             }
             </style>
             {% block css %}{% endblock %}
@@ -146,15 +142,40 @@
                     <a href="/" class="btn btn-info btn-sm" title="Home Page" data-toggle="tooltip" data-placement="left">
                         <span class="glyphicon glyphicon-home"></span><span style="opacity:0">'</span>
                     </a>
-                    <a class="btn btn-default btn-sm profile-link" href='/user/profile' data-toggle="tooltip" data-placement="bottom">
-                        <span class="profile-nikename">
-                            用户名
-                        </span>
-                    </a>
                     <a href="/chat/inbox" class="btn btn-default btn-sm" title="Inbox">
                         <span class="glyphicon glyphicon-envelope"></span>
                         <span id="unread-count">0</span>
                     </a>
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm profile-link" href='/user/profile'>
+                            <span class="profile-nikename">
+                                用户名
+                            </span>
+                        </a>
+                        <a type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="dropdown-header" id="dropdown-header-level"></li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="/progress/list">
+                                    <span class="glyphicon glyphicon-th-list"></span> 我的进度
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/chat/conversation?mode=quicknote">
+                                    <span class="glyphicon glyphicon-list-alt"></span> 临时笔记
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="/user/logout">
+                                    <span class="glyphicon glyphicon-log-out"></span> 登出
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </span>
             </nav>
             <style>
@@ -212,7 +233,7 @@
                                 $("#user-bar .nologinshow").show();
                             } else {
                                 $("#user-bar .profile-nikename").text("@").append("<b>"+result.nickname+"</b>");
-                                $("#user-bar .profile-link").attr('title',"活跃等级 Lv."+result.level);
+                                $("#user-bar #dropdown-header-level").text("Lv. "+result.level);
                                 $('#user-bar [data-toggle="tooltip"]').tooltip();
                                 $("#user-bar #unread-count").text(result.unreadcount);
                                 $("#user-bar .loginshow").show();

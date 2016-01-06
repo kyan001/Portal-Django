@@ -1,0 +1,55 @@
+<div class="panel panel-default {% if not c.isread %}unread{% endif %} chat-record beveryfast hover-shadow" chatid="{{c.id}}" {%if c.receiverid == user.id%}onclick="markread(this)"{%endif%}>
+    <div class="panel-heading befast" data-toggle="collapse" data-target="#chat-{{c.id}}" data-parent="#msg-group">
+        {% if c.getSender.username == 'syschat' %}
+            <span class="text-danger">
+                <span class="glyphicon glyphicon-flag"></span>
+                @{{ c.getSender.nickname }}
+            </span>
+        {% elif c.getSender.username == user.username and c.receiverid == user.id %}
+            <span class="glyphicon glyphicon-list-alt"></span>
+            <span class="text-muted">
+                临时笔记
+            </span>
+        {% elif c.getSender.username == user.username %}
+            <span class="text-primary">
+                我
+            </span>
+        {% else %}
+            <span class="text-primary">
+                <span class="glyphicon glyphicon-comment"></span>
+                @{{ c.getSender.nickname }}
+            </span>
+        {% endif %}
+        ：
+        {% if c.title %}
+            {{ c.title }}
+        {% else %}
+            {{ c.content|truncatechars:12 }}
+        {% endif %}
+        <div class="pull-right text-muted hidden-xs">{{ c.getCreated }}</div>
+    </div>
+    <div id="chat-{{c.id}}" class="panel-collapse collapse {%if receiver%}in{%endif%}" role="tabpanel">
+        <div class="panel-body">
+            <div class='chat-content'>
+                {% if c.getSender.username == 'syschat' %}
+                    {{ c.content|safe }}
+                {% else %}
+                    {{ c.content|linebreaks }}
+                {% endif %}
+            </div>
+            <div class="pull-right">
+                {% if not receiver %}
+                    <a class="btn btn-primary btn-sm" href="/chat/conversation?receiver={{c.getSender.nickname}}">
+                        <span class="glyphicon glyphicon-envelope"></span> 回复
+                    </a>
+                {% endif %}
+                {% if c.receiverid == user.id %}
+                    <a class="btn btn-default btn-sm" href="/chat/delete?id={{c.id}}">
+                        <span class="glyphicon glyphicon-remove"></span> 删除
+                    </a>
+                {% endif %}
+            </div>
+            <div class="text-muted visible-xs-block">{{ c.getCreated }}</div>
+        </div>
+    </div>
+</div>
