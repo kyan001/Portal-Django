@@ -39,7 +39,7 @@
                 <h4>
                     {% if receiver %}
                     <a href="/user/public?nickname={{ receiver.nickname }}">@{{ receiver.nickname }}</a>
-                    <small><span class="glyphicon glyphicon-resize-horizontal"></span> @{{ user.nickname }}</small>
+                    <small><span class="glyphicon glyphicon-transfer"></span> @{{ user.nickname }}</small>
                     {% else %}
                     <span>发送消息</span>
                     {% endif %}
@@ -54,7 +54,7 @@
                                 <div class="col-md-3 col-sm-4 col-xs-12">
                                     <div class="input-group" id="nickname-group">
                                         <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-comment"></span>
+                                            <span class="glyphicon glyphicon-share-alt"></span>
                                             @
                                         </div>
                                         <input type='text' name='receiver' class="form-control" value="{{receiver.nickname}}" placeholder="用户" {% if receiver %}readonly{%else%}autofocus{% endif %} oninput="validateNickname()" tabindex="1">

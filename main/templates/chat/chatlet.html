@@ -5,10 +5,14 @@
                 <span class="glyphicon glyphicon-flag"></span>
                 @{{ c.getSender.nickname }}
             </span>
-        {% elif c.getSender.username == user.username %}
+        {% elif c.getSender.username == user.username and c.receiverid == user.id %}
             <span class="glyphicon glyphicon-list-alt"></span>
             <span class="text-muted">
                 临时笔记
+            </span>
+        {% elif c.getSender.username == user.username %}
+            <span class="text-primary">
+                我
             </span>
         {% else %}
             <span class="text-primary">
