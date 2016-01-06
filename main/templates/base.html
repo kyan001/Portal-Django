@@ -30,6 +30,9 @@
             </script>
             {% block icon %}<link rel="icon" href="/static/img/favicon.png"> {% endblock icon %}
             <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-paper.css">
+            {% if request.COOKIES.theme %}
+                <link class="bootswatcher" rel="stylesheet" href="//bootswatch.com/{{request.COOKIES.theme}}/bootstrap.min.css">
+            {% endif %}
             <link rel="stylesheet" href="/static/css/KyanCssUtil.css">
             <title>{% block title %}{% endblock %} - SuperFarmer.net</title>
             <style>
@@ -127,6 +130,44 @@
         </style>
         <!-- ############ USER BAR ############-->
         {% block userbar %}
+            <style>
+                .container {
+                    padding-top: 51px;
+                }
+                .container-fluid {
+                    padding-top: 51px;
+                }
+                #user-bar {
+                    min-width: 40%;
+                    max-width: 80%;
+                    position: fixed;
+                    top: 0;
+                    right: 0;
+                    z-index: 1000;
+                    padding-right: 5%;
+                    padding-left: 5%;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                    font-size: 15px;
+                }
+                #user-bar:hover {
+                    background: -webkit-linear-gradient(left, rgba(255,255,255,0), rgba(255,255,255,0.5));
+                }
+                #user-bar img {
+                    max-height: 19px;
+                    max-width: 19px;
+                }
+                #user-bar a {
+                    text-decoration: none;
+                }
+                #user-bar .nologinshow, #user-bar .loginshow {
+                    display: none;
+                    float: right;
+                }
+                #user-bar .profile-link {
+                    text-transform: none;
+                }
+            </style>
             <nav id='user-bar'>
                 <span class="nologinshow">
                     <a href="/" class="btn btn-info btn-sm" title="Home Page" data-toggle="tooltip" data-placement="left">
@@ -169,6 +210,19 @@
                                 </a>
                             </li>
                             <li role="separator" class="divider"></li>
+                            {% if request.COOKIES.theme %}
+                                <li>
+                                    <a href="/index/settheme">
+                                        <span class="glyphicon glyphicon-repeat"></span> 恢复默认主题
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li data-toggle="tooltip" data-placement="top" title="切换主题目前还是实验功能，可能会导致访问变慢、界面异常等现象">
+                                    <a href="javascript:void(0)" onclick="$('.bootswatch-btn').fadeIn()">
+                                        <span class="glyphicon glyphicon-leaf"></span> 切换主题
+                                    </a>
+                                </li>
+                            {% endif %}
                             <li>
                                 <a href="/user/logout">
                                     <span class="glyphicon glyphicon-log-out"></span> 登出
@@ -176,46 +230,40 @@
                             </li>
                         </ul>
                     </div>
+                    {% if not request.COOKIES.theme %}
+                    <div class="btn-group bootswatch-btn" style="display:none;">
+                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            选择主题
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="/index/settheme?name=cerulean">Cerulean</a></li>
+                            <li><a href="/index/settheme?name=cosmo">Cosmo</a></li>
+                            <li><a href="/index/settheme?name=cyborg">Cyborg</a></li>
+                            <li><a href="/index/settheme?name=darkly">Darkly</a></li>
+                            <li><a href="/index/settheme?name=flatly">Flatly</a></li>
+                            <li><a href="/index/settheme?name=journal">Journal</a></li>
+                            <li><a href="/index/settheme?name=lumen">Lumen</a></li>
+                            <li><a href="/index/settheme?name=paper">Paper</a></li>
+                            <li><a href="/index/settheme?name=readable">Readable</a></li>
+                            <li><a href="/index/settheme?name=sandstone">Sandstone</a></li>
+                            <li><a href="/index/settheme?name=simplex">Simplex</a></li>
+                            <li><a href="/index/settheme?name=slate">Slate</a></li>
+                            <li><a href="/index/settheme?name=spacelab">Spacelab</a></li>
+                            <li><a href="/index/settheme?name=superhero">Superhero</a></li>
+                            <li><a href="/index/settheme?name=united">United</a></li>
+                            <li><a href="/index/settheme?name=yeti">Yeti</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="/index/settheme">
+                                    <span class="glyphicon glyphicon-repeat"></span> 恢复默认主题
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
                 </span>
             </nav>
-            <style>
-                .container {
-                    padding-top: 51px;
-                }
-                .container-fluid {
-                    padding-top: 51px;
-                }
-                #user-bar {
-                    min-width: 40%;
-                    max-width: 80%;
-                    position: fixed;
-                    top: 0;
-                    right: 0;
-                    z-index: 1000;
-                    padding-right: 5%;
-                    padding-left: 5%;
-                    padding-top: 10px;
-                    padding-bottom: 10px;
-                    font-size: 15px;
-                }
-                #user-bar:hover {
-                    background: -webkit-linear-gradient(left, rgba(255,255,255,0), rgba(255,255,255,0.5));
-                }
-                #user-bar img {
-                    max-height: 19px;
-                    max-width: 19px;
-                }
-                #user-bar a {
-                    text-decoration: none;
-                }
-                #user-bar .nologinshow, #user-bar .loginshow {
-                    display: none;
-                    float: right;
-                }
-                #user-bar .profile-link {
-                    text-transform: none;
-                }
-            </style>
             <script>
                 $(document).ready(function(){
                     getLoginUser();

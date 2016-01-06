@@ -11,7 +11,6 @@
     }
     .progress-card .table {
         margin: 0;
-        font-size: 13px;
     }
     .progress-card .subtitle, .progress-card .persent, .progress-card .weblink {
         font-size: 15px;
@@ -22,23 +21,11 @@
         word-break: keep-all;
         white-space: nowrap;
     }
-    .progress-card .weblink {
-        border: 0;
-    }
-    .progress-card .weblink:hover {
-        color: black;
-    }
 
     /* progress bar */
     .progress-card .progress {
-        height: 26px;
+        height: 23px;
         margin: 0;
-    }
-    .progress-card .progress b{
-        font-size: 15px;
-    }
-    #fastupdateform, #deleteform {
-        display: inline-block;
     }
     table td{
         font-size: 14px;
@@ -66,38 +53,250 @@
     .form-group {
         margin-bottom: 0;
     }
-    .panel-footer {
-        padding: 0;
-    }
     .fastupdate-total {
         padding-left: 0;
-    }
-    .label-tag {
-        background-color: white;
-        border: silver 1px solid;
-    }
-    .label-persent {
-        background-color: #51ABFF;
-    }
-    .label-subtitle {
-        background-color: #3080BB;
-    }
-    #reset, #giveup, #delete {
-        float: left;
-    }
-    .rating-aux {
-        color: silver;
-    }
-    #opus-type, a#opustitle {
-    }
-    a#title-link {
-        color: black;
     }
     #title-tr, #rating-tr, #tag-tr, #douban-info-panel {
         display: none;
     }
 </style>
 {% endblock css %}
+
+{% block nav-btn %}
+<a href="/progress/list" class="btn btn-warning btn-sm">
+    <span class="glyphicon glyphicon-arrow-left"></span> 回到列表
+</a>
+{% endblock nav-btn %}
+
+{% block function-btn %}
+<a href="/progress/new" class="btn btn-success btn-sm">
+    <span class="glyphicon glyphicon-plus"></span> 新增进度
+</a>
+{% endblock function-btn %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 progress-card" progressid="{{ prg.id }}">
+            <div class="panel panel-primary" id="main-panel">
+                <div class="panel-heading">
+                    <span class="panel-title">
+                    {% ifequal prg.status 'giveup' %}
+                        <span class="persent label label-danger">已冻结</span>
+                    {% endifequal %}
+                        <span class="persent badge">{{prg.getPersent}}%</span>
+                        《 <a id="opustitle" title="看看还有谁在看这本书" href="/opus/detail?id={{opus.id}}"><b>{{opus.name}}</b></a> 》
+                    {% if opus.subtitle %}
+                        <span class="subtitle label label-info">
+                            {{ opus.subtitle }}
+                        </span>
+                    {% endif %}
+                    {% if prg.weblink and prg.weblink|isurl %}
+                        <a class="weblink label btn-link" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
+                            <span class="glyphicon glyphicon-link"></span>
+                        </a>
+                    {% endif %}
+                    </span>
+                </div>
+                <div class="panel-body first-panel-body">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active {{prg.getBartype}}" style="width: {{prg.getPersent}}%; min-width: 5em;">
+                            {% ifequal opus.total 0 %}
+                            <b>{{prg.current}} / ∞</b>
+                            {% else %}
+                            <b>{{prg.current}} / {{opus.total}}</b>
+                            {% endifequal %}
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body second-panel-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading"><b>快速更新</b></div>
+                                <form id="fastupdateform" action="/progress/fastupdate/" method="post">
+                                    <input type="hidden" name="id" value="{{prg.id}}">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                            {% if prg.status == 'giveup' %}
+                                                <div class="btn btn-warning disableBtn pull-left" id='reset' onclick="$('#resetform').submit()">
+                                                    <span class="glyphicon glyphicon-ok-circle"></span> 激活进度
+                                                </div>
+                                            {% else %}
+                                                <div class="btn btn-warning disableBtn pull-left" id='giveup' onclick="$('#giveupform').submit()">
+                                                    <span class="glyphicon glyphicon-ban-circle"></span> 冻结进度
+                                                </div>
+                                            {% endif %}
+                                            </span>
+                                            <input type="tel" name="quick_current"
+                                                class="viewunlock form-control"
+                                                placeholder="当前 {{prg.current}}"
+                                                value="{{prg.current}}"
+                                                onfocus="focusQuickCurrent()"
+                                                autocomplete="off"
+                                                onblur="blurQuickCurrent()"
+                                                oninput="checkUpdateButtonLock()"
+                                                onkeydown="keydownFastUpdate()">
+
+                                            <span class="input-group-addon fastupdate-total">
+                                                {% ifequal opus.total 0 %}
+                                                    /∞
+                                                {% else %}
+                                                    /{{opus.total}}
+                                                {% endifequal %}
+                                            </span>
+                                            <span class="input-group-btn">
+                                                <div class="viewunlock btn btn-default" onclick="addOneCurrent()">+1</div>
+                                                <div id='fastupdate' class="viewunlock btn btn-success disableBtn" onclick="submitFastupdateForm()" disabled='disabled'>保存</div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div><!--.panel-->
+                            <div class="panel panel-primary" id="douban-info-panel">
+                                <div class="panel-heading">
+                                    <span><b>作品信息</b></span>
+                                    <a class="glyphicon" id="opus-type" href="" target="_blank" ></a>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-condensed table-hover">
+                                        <tr id="title-tr">
+                                            <td>作品名称</td>
+                                            <td>
+                                                《<a href="" id="title-link" target="_blank"></a>》
+                                            </td>
+                                        </tr>
+                                        <tr id="rating-tr">
+                                            <td>豆瓣评分</td>
+                                            <td>
+                                                <b id="rating-av"></b>
+                                                <span class="text-muted rating-aux"> / 10</span>
+                                            </td>
+                                        </tr>
+                                        <tr id="tag-tr">
+                                            <td id="tag-label">标签</td>
+                                            <td id="tag-tag"></td>
+                                        </tr>
+                                    </table>
+                                </div><!--.panel-body-->
+                            </div><!--.panel-->
+                        </div><!--.col-->
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <form id="saveform" action="/progress/update/" method="post">
+                                <input name="id" type="hidden" value="{{prg.id}}">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <span><b>进度信息</b></span>
+                                        <span class="text-primary-dark pull-right">
+                                            User:{{prg.userid}} / Opus:{{prg.opusid}} / Progress:{{prg.id}}
+                                        </span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table table-condensed table-hover">
+                                            <tr class="text-primary">
+                                                <td>状态</td>
+                                                <td><b>{{prg.getStatus}}</b></td>
+                                            </tr>
+                                            <tr class="text-info editunlock" id='name-tr' data-toggle="popover" data-placement='top' data-container='body'>
+                                                <td>名称</td>
+                                                <td>
+                                                    <input class="editable" name="name" type="text" value="{{opus.name}}" autocomplete="off" readonly placeholder="{{opus.name}}">
+                                                </td>
+                                            </tr>
+                                            <tr class="text-info editunlock">
+                                                <td>副标题</td>
+                                                <td>
+                                                    <input class="editable" name="subtitle" type="text" value="{{opus.subtitle}}" placeholder="{{opus.subtitle}}" readonly autocomplete="off">
+                                                </td>
+                                            </tr>
+                                            <tr class="text-info editunlock">
+                                                <td>总共</td>
+                                                <td>
+                                                    <input class="editable"
+                                                        name="total"
+                                                        type="number"
+                                                        placeholder="{{opus.total}}"
+                                                        value="{{opus.total}}"
+                                                        readonly
+                                                        autocomplete="off">
+                                                </td>
+                                            </tr>
+                                            <tr class="text-info editunlock">
+                                                <td>当前进度</td>
+                                                <td>
+                                                    <input class="editable" name="current" type="number" value="{{prg.current}}" readonly placeholder="{{prg.current}}">
+                                                </td>
+                                            </tr>
+                                            <tr class="text-info editunlock" title="{{prg.weblink}}">
+                                                <td>链接</td>
+                                                <td>
+                                                    <input class="editable" name="weblink" type="text" value="{{prg.weblink}}" readonly placeholder="{{prg.weblink}}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>阅读百分比</td>
+                                                <td>{{prg.getPersent}}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>开始时间</td>
+                                                <td>{{prg.getCreated}}</td>
+                                            </tr>
+                                            <tr>
+                                                {% ifequal prg.status "done" %}
+                                                <td>完成时间</td>
+                                                {% else %}
+                                                <td>上次更新</td>
+                                                {% endifequal %}
+                                                <td>{{prg.getModified}}</td>
+                                            </tr>
+                                            {% if aux.estmt_fnsh_dt %}
+                                            <tr>
+                                                <td>预计完成</td>
+                                                <td>{{ aux.estmt_fnsh_dt }}</td>
+                                            </tr>
+                                            {% endif %}
+                                        </table>
+                                    </div><!--.panel-body-->
+                                </div><!--.panel-->
+                            </form>
+                        </div><!--.col-->
+                    </div><!--.row-->
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                        <form id="deleteform" action="/progress/delete/" method="post">
+                            <input name="id" type="hidden" value="{{prg.id}}">
+                        </form>
+                        <form id="giveupform" action="/progress/giveup/" method="post">
+                            <input name="id" type="hidden" value="{{prg.id}}">
+                        </form>
+                        <form id="resetform" action="/progress/reset/" method="post">
+                            <input name="id" type="hidden" value="{{prg.id}}">
+                        </form>
+                        <button class="btn btn-danger pull-left" id='delete' onclick="confirmDelete()">
+                            <span class="glyphicon glyphicon-trash"></span> 彻底删除
+                        </button>
+                        <div class="viewmode">
+                            <a class="btn btn-primary" id='edit' onclick="enterEdit()">
+                                <span class="glyphicon glyphicon-pencil"></span> 进入编辑
+                            </a>
+                        </div>
+                        <span class="editmode">
+                            <a class="btn btn-success disableBtn" id="save" onclick="saveEdit()">
+                                <span class="glyphicon glyphicon-ok"></span> 保存
+                            </a>
+                            <a class="btn btn-default" id="cancel" onclick="cancelEdit()">
+                                <span class="glyphicon glyphicon-remove"></span> 取消编辑
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div><!--col-->
+    </div><!--row-->
+</div>
+{% endblock content %}
 
 {% block js %}
 <script>
@@ -295,6 +494,9 @@
         $('#saveform').submit();
     }
     function submitFastupdateForm(){
+        if($('#fastupdate').attr('disabled')){
+            return false
+        }
         var quick_current = $('input[name="quick_current"]').val();
         var total = $('input[name="total"]').val();
         if(total == ""){
@@ -365,238 +567,3 @@
     }
 </script>
 {% endblock js %}
-
-{% block nav-btn %}
-<a href="/progress/list" class="btn btn-warning btn-sm">
-    <span class="glyphicon glyphicon-arrow-left"></span> 回到列表
-</a>
-{% endblock nav-btn %}
-
-{% block function-btn %}
-<a href="/progress/new" class="btn btn-success btn-sm">
-    <span class="glyphicon glyphicon-plus"></span> 新增进度
-</a>
-{% endblock function-btn %}
-
-{% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 progress-card" progressid="{{ prg.id }}">
-            <div class="panel panel-primary" id="main-panel">
-                <div class="panel-heading">
-                    <span class="panel-title">
-                    {% ifequal prg.status 'giveup' %}
-                        <span class="persent label label-danger">已冻结</span>
-                    {% endifequal %}
-                        <span class="persent label label-persent">{{prg.getPersent}}%</span>
-                        《 <a id="opustitle" title="看看还有谁在看这本书" href="/opus/detail?id={{opus.id}}"><b>{{opus.name}}</b></a> 》
-                    {% if opus.subtitle %}
-                        <span class="subtitle label label-subtitle">
-                            {{ opus.subtitle }}
-                        </span>
-                    {% endif %}
-                    {% if prg.weblink and prg.weblink|isurl %}
-                        <a class="weblink btn btn-link" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
-                            <span class="glyphicon glyphicon-link"></span>
-                        </a>
-                    {% endif %}
-                    </span>
-                </div>
-                <div class="panel-body first-panel-body">
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped active {{prg.getBartype}}" style="width: {{prg.getPersent}}%;">
-                            {% ifequal opus.total 0 %}
-                            <b>{{prg.current}} / ∞</b>
-                            {% else %}
-                            <b>{{prg.current}} / {{opus.total}}</b>
-                            {% endifequal %}
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body second-panel-body">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading"><b>快速更新</b></div>
-                                <form id="fastupdateform" action="/progress/fastupdate/" method="post">
-                                    <input type="hidden" name="id" value="{{prg.id}}">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-btn">
-                                            {% if prg.status == 'giveup' %}
-                                                <div class="btn btn-warning disableBtn" id='reset' onclick="$('#resetform').submit()">
-                                                    <span class="glyphicon glyphicon-ok-circle"></span> 激活进度
-                                                </div>
-                                            {% else %}
-                                                <div class="btn btn-warning disableBtn" id='giveup' onclick="$('#giveupform').submit()">
-                                                    <span class="glyphicon glyphicon-ban-circle"></span> 冻结进度
-                                                </div>
-                                            {% endif %}
-                                            </span>
-                                            <input type="tel" name="quick_current"
-                                                class="viewunlock form-control"
-                                                placeholder="当前 {{prg.current}}"
-                                                value="{{prg.current}}"
-                                                onfocus="focusQuickCurrent()"
-                                                onblur="blurQuickCurrent()"
-                                                oninput="checkUpdateButtonLock()"
-                                                onkeydown="keydownFastUpdate()">
-
-                                            <span class="input-group-addon fastupdate-total">
-                                                {% ifequal opus.total 0 %}
-                                                    /∞
-                                                {% else %}
-                                                    /{{opus.total}}
-                                                {% endifequal %}
-                                            </span>
-                                            <span class="input-group-btn">
-                                                <div class="viewunlock btn btn-default" onclick="addOneCurrent()">+1</div>
-                                                <div id='fastupdate' class="viewunlock btn btn-success disableBtn" onclick="submitFastupdateForm()" disabled='disabled'>保存</div>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div><!--.panel-->
-                            <div class="panel panel-primary" id="douban-info-panel">
-                                <div class="panel-heading">
-                                    <span><b>作品信息</b></span>
-                                    <a id="opus-type" href="" target="_blank" class="glyphicon pull-right text-primary-dark"></a>
-                                </div>
-                                <div class="panel-body">
-                                    <table class="table table-condensed table-hover">
-                                        <tr id="title-tr">
-                                            <td>作品名称</td>
-                                            <td>
-                                                《<a href="" id="title-link" target="_blank"></a>》
-                                            </td>
-                                        </tr>
-                                        <tr id="rating-tr">
-                                            <td>豆瓣评分</td>
-                                            <td>
-                                                <b id="rating-av"></b>
-                                                <span class="rating-aux"> / 10</span>
-                                            </td>
-                                        </tr>
-                                        <tr id="tag-tr">
-                                            <td id="tag-label">标签</td>
-                                            <td id="tag-tag"></td>
-                                        </tr>
-                                    </table>
-                                </div><!--.panel-body-->
-                            </div><!--.panel-->
-                        </div><!--.col-->
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <form id="saveform" action="/progress/update/" method="post">
-                                <input type="hidden" name="id" value="{{prg.id}}">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        <span><b>进度信息</b></span>
-                                        <span class="text-primary-dark pull-right">
-                                            User:{{prg.userid}} / Opus:{{prg.opusid}} / Progress:{{prg.id}}
-                                        </span>
-                                    </div>
-                                    <div class="panel-body">
-                                        <table class="table table-condensed table-hover">
-                                            <tr class="text-primary">
-                                                <td>状态</td>
-                                                <td><b>{{prg.getStatus}}</b></td>
-                                            </tr>
-                                            <tr class="text-info editunlock" id='name-tr' data-toggle="popover" data-placement='top' data-container='body'>
-                                                <td>名称</td>
-                                                <td>
-                                                    <input type="text" placeholder="{{opus.name}}" name="name" value="{{opus.name}}" readonly class="editable">
-                                                </td>
-                                            </tr>
-                                            <tr class="text-info editunlock">
-                                                <td>副标题</td>
-                                                <td>
-                                                    <input type="text" placeholder="{{opus.subtitle}}" name="subtitle" value="{{opus.subtitle}}" readonly class="editable">
-                                                </td>
-                                            </tr>
-                                            <tr class="text-info editunlock">
-                                                <td>总共</td>
-                                                <td>
-                                                    <input type="number"
-                                                        name="total"
-                                                        placeholder="{{opus.total}}"
-                                                        value="{{opus.total}}"
-                                                        readonly class="editable">
-                                                </td>
-                                            </tr>
-                                            <tr class="text-info editunlock">
-                                                <td>当前进度</td>
-                                                <td>
-                                                    <input type="number" placeholder="{{prg.current}}" name="current" value="{{prg.current}}" readonly class="editable">
-                                                </td>
-                                            </tr>
-                                            <tr class="text-info editunlock" title="{{prg.weblink}}">
-                                                <td>链接</td>
-                                                <td>
-                                                    <input type="text" placeholder="{{prg.weblink}}" name="weblink" value="{{prg.weblink}}" readonly class="editable">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>阅读百分比</td>
-                                                <td>{{prg.getPersent}}%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>开始时间</td>
-                                                <td>{{prg.getCreated}}</td>
-                                            </tr>
-                                            <tr>
-                                                {% ifequal prg.status "done" %}
-                                                <td>完成时间</td>
-                                                {% else %}
-                                                <td>上次更新</td>
-                                                {% endifequal %}
-                                                <td>{{prg.getModified}}</td>
-                                            </tr>
-                                            {% if aux.estmt_fnsh_dt %}
-                                            <tr>
-                                                <td>预计完成</td>
-                                                <td>{{ aux.estmt_fnsh_dt }}</td>
-                                            </tr>
-                                            {% endif %}
-                                        </table>
-                                    </div><!--.panel-body-->
-                                </div><!--.panel-->
-                            </form>
-                        </div><!--.col-->
-                    </div><!--.row-->
-                </div>
-                <div class="panel-footer">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
-                            <form id="deleteform" action="/progress/delete/" method="post">
-                                <input type="hidden" name="id" value="{{prg.id}}">
-                            </form>
-                            <form id="giveupform" action="/progress/giveup/" method="post">
-                                <input type="hidden" name="id" value="{{prg.id}}">
-                            </form>
-                            <form id="resetform" action="/progress/reset/" method="post">
-                                <input type="hidden" name="id" value="{{prg.id}}">
-                            </form>
-                            <button class="btn btn-danger" id='delete' onclick="confirmDelete()">
-                                <span class="glyphicon glyphicon-trash"></span> 彻底删除
-                            </button>
-                            <div class="viewmode">
-                                <a class="btn btn-primary" id='edit' onclick="enterEdit()">
-                                    <span class="glyphicon glyphicon-pencil"></span> 进入编辑
-                                </a>
-                            </div>
-                            <span class="editmode">
-                                <a class="btn btn-success disableBtn" id="save" onclick="saveEdit()">
-                                    <span class="glyphicon glyphicon-ok"></span> 保存
-                                </a>
-                                <a class="btn btn-default" id="cancel" onclick="cancelEdit()">
-                                    <span class="glyphicon glyphicon-remove"></span> 取消编辑
-                                </a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!--col-->
-    </div><!--row-->
-</div>
-{% endblock content %}

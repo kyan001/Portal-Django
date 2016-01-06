@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     # INDEX
     url(r'^$', views.index, name='index'),
+    url(r'^index/settheme$', views.indexSettheme),
     # USER
     url(r'^user/public$', views.userPublic),
     url(r'^user/profile/', views.userProfile),

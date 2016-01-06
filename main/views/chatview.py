@@ -8,7 +8,7 @@ import util.ctrl
 
 def chatInbox(request):
     '''用户查看自己的 inbox'''
-    context = {}
+    context = {'request': request}
     loginuser = request.session.get('loginuser')
     if not loginuser:
         return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
@@ -62,7 +62,7 @@ def chatDelete(request):
 
 def chatConversation(request):
     '''进入一对一聊天页面'''
-    context = {}
+    context = {'request': request}
     loginuser = request.session.get('loginuser')
     if not loginuser:
         return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
@@ -99,7 +99,7 @@ def chatConversation(request):
 @csrf_exempt
 def chatSend(request):
     '''点击对话界面中的发送按钮后'''
-    context = {}
+    context = {'request': request}
     loginuser = request.session.get('loginuser')
     if not loginuser:
         return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
@@ -131,7 +131,7 @@ def chatSend(request):
 
 def chatMarkread(request): # AJAX
     '''用户标记自己的 chat 消息为已读'''
-    context = {}
+    context = {'request': request}
     loginuser = request.session.get('loginuser')
     if not loginuser:
         return util.ctrl.returnJsonError("您还没有登入，请先登入")
