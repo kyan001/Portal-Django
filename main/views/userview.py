@@ -75,7 +75,7 @@ def userLogout(request):
 
 def userAvatar(request, email): # public
     '''通过 email 取回 gravatar'''
-    context = {}
+    context = {'request': request}
     if email:
         context['headimg'] = getGravatarUrl(email)
     else:
@@ -90,7 +90,7 @@ def userExphistory(request):
         return infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
     user = User.objects.get(id=user['id'])
     # get inputs
-    context = {}
+    context = {'request': request}
     category = request.GET.get('category')
     view = request.GET.get('view')
     if category:
@@ -112,7 +112,7 @@ def userExphistory(request):
 
 def userPublic(request): # public
     '''通过 email/id/nickname 查看用户公开信息'''
-    context = {}
+    context = {'request': request}
     nickname = request.GET.get('nickname')
     if not nickname:
         return infoMsg("被查看用户的昵称不在参数中", title='参数错误')
@@ -137,7 +137,7 @@ def userPublic(request): # public
 
 def userProfile(request):
     '''查看当前用户的个人信息，点击右上角昵称进入'''
-    context = {}
+    context = {'request': request}
     loginuser = request.session.get('loginuser')
     if not loginuser:
         return infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
@@ -182,7 +182,7 @@ def userProfile(request):
 #-Signup-----------------------------------------------
 def userSignup(request): # PUBLIC
     '''点击注册按钮后页面'''
-    context = {}
+    context = {'request': request}
     if 'redirect' in request.GET:
         context['redirect'] = request.GET.get('redirect')
     elif 'HTTP_REFERER' in request.META:
@@ -251,14 +251,14 @@ def userSignin(request):
     if current_user:
         return infoMsg("您已经以 {0} 的身份登入了，请勿重复登入".format(current_user['username']), title="登入失败", url="/")
     # render
-    context = {}
+    context = {'request': request}
     if 'HTTP_REFERER' in request.META:
         context['redirect'] = request.META.get('HTTP_REFERER')
     return render_to_response('user/signin.html', context)
 
 def userForgetanswer(request):
     '登入页面点击忘记回答'
-    context = {}
+    context = {'request': request}
     content = '''
         <li>您在 <a href='http://superfarmer.net' target='_blank'>superfarmer.net</a> 申请了“忘记答案/密码”</li>
         <li>请点击下面的连接重置答案/密码</li>
@@ -277,7 +277,7 @@ def userForgetanswer(request):
 def userCheckLogin(request):
     '''用户点击登入后：判断用户是否可以登入'''
     # get posts
-    context = {}
+    context = {'request': request}
     username = request.POST.get('username')
     answer = request.POST.get('answer')
     rememberme = request.POST.get('rememberme')
@@ -318,6 +318,7 @@ def userCheckLogin(request):
         欢迎您归来，开始您的网站之旅吧！<br/>
         访问 <a href="/progress/list">我的进度</a> 查看您的进度<br/>
         访问 <a href="/user/profile">我的账号信息</a> 查看您的活跃度
+        访问 <a href="/chat/conversation?mode=quicknote">临时笔记</a> 随手记录您的想法
     '''
     Chat.objects.sendBySys(user, title='Hi, @{0}'.format(user.nickname), content=chat_content)
     # set cookie

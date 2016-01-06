@@ -14,7 +14,7 @@ ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 
 def progressList(request):
     '''进度列表：显示所有进行中、待开始、追剧中的进度'''
-    context = {}
+    context = {'request': request}
     #get user
     loginuser = request.session.get('loginuser');
     if not loginuser:
@@ -61,7 +61,7 @@ def progressList(request):
 
 def progressArchive(request):
     '''进度存档：显示所有已完成、已冻结的进度'''
-    context = {}
+    context = {'request': request}
     #get user
     loginuser = request.session.get('loginuser');
     if not loginuser:
@@ -100,7 +100,7 @@ def progressArchive(request):
 
 def progressDetail(request):
     '''进度详情页'''
-    context = {}
+    context = {'request': request}
     # get inputs
     user = request.session.get('loginuser');
     if not user:
@@ -361,7 +361,7 @@ def progressReset(request):
 
 def progressNew(request):
     '''list/detail 界面点击新增按钮'''
-    context = {}
+    context = {'request': request}
     # get inputs
     user = request.session.get('loginuser');
     if not user:
