@@ -36,45 +36,43 @@
     <div class='row'>
         <div class='col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12'>
             <div class="page-header">
-                <h4>
+                <h3>
                     {% if receiver %}
                     <a href="/user/public?nickname={{ receiver.nickname }}">@{{ receiver.nickname }}</a>
                     <small><span class="glyphicon glyphicon-transfer"></span> @{{ user.nickname }}</small>
                     {% else %}
                     <span>发送消息</span>
+                    <small><span class="text-muted">From:</span> @{{ user.nickname }}</small>
                     {% endif %}
-                </h4>
+                </h3>
             </div>
 
             <form id='form-send' action="/chat/send" method="post">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="panel-title">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-                                    <div class="input-group" id="nickname-group">
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-share-alt"></span>
-                                            @
-                                        </div>
-                                        <input type='text' name='receiver' class="form-control" value="{{receiver.nickname}}" placeholder="用户" {% if receiver %}readonly{%else%}autofocus{% endif %} oninput="validateNickname()" tabindex="1">
+                    <div class="panel-body">
+                        <textarea name='content' class="form-control" rows="2" placeholder="请输入内容" autocomplete="off" {%if receiver%}autofocus{%endif%} oninput="validateContent()" tabindex="2"></textarea>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <div class="input-group" id="nickname-group">
+                                    <div class="input-group-addon">
+                                        <span class="text-muted">To:</span> @
                                     </div>
+                                    <input type='text' name='receiver' class="form-control" value="{{receiver.nickname}}" placeholder="用户" {% if receiver %}readonly{%else%}autofocus{% endif %} oninput="validateNickname()" tabindex="1">
                                 </div>
-                                <div class="col-md-9 col-sm-8 col-xs-12">
-                                    <div class="input-group">
-                                        <input type="text" name='title' class="form-control" id="input-title" autocomplete="off" placeholder="标题（选填）" tabindex="3">
-                                        <span class="input-group-btn">
-                                            <a id='send-btn' class="btn btn-primary" onclick="submitSend()" disabled tabindex="4">
-                                                发送
-                                            </a>
-                                        </span>
-                                    </div>
+                            </div>
+                            <div class="col-md-9 col-sm-8 col-xs-12">
+                                <div class="input-group">
+                                    <input type="text" name='title' class="form-control" id="input-title" autocomplete="off" placeholder="标题（选填）" tabindex="3">
+                                    <span class="input-group-btn">
+                                        <a id='send-btn' class="btn btn-primary" onclick="submitSend()" disabled tabindex="4">
+                                            发送
+                                        </a>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel-body">
-                        <textarea name='content' class="form-control" rows="2" placeholder="请输入内容" autocomplete="off" {%if receiver%}autofocus{%endif%} oninput="validateContent()" tabindex="2"></textarea>
                     </div>
                 </div>
             </form>
