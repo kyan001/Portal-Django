@@ -126,3 +126,11 @@ function checkHas(keywords, bookOrMovie){
     }
     return isInOriginalTitle || isInTitle
 }
+
+function disableAllBtn(){
+    // submit() 前应禁用所有按钮。
+    $('.btn').attr('disabled','disabled')
+    $('.btn').click(function(){
+        return false;
+    })
+}
