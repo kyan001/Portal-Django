@@ -180,7 +180,7 @@
             <nav id='user-bar'>
                 <span class="nologinshow">
                     <a href="/" class="btn btn-info btn-sm" title="Home Page" data-toggle="tooltip" data-placement="left">
-                        <span class="glyphicon glyphicon-home"></span><span style="opacity:0">'</span>
+                        <span class="glyphicon glyphicon-home"></span>
                     </a>
                     <a href="/user/signup" class="btn btn-primary btn-sm">注册</a>
                     <span> </span>
@@ -190,11 +190,11 @@
                 </span>
                 <span class="loginshow">
                     <a href="/" class="btn btn-info btn-sm hidden-xs" title="Home Page" data-toggle="tooltip" data-placement="left">
-                        <span class="glyphicon glyphicon-home"></span><span style="opacity:0">'</span>
+                        <span class="glyphicon glyphicon-home"></span>
                     </a>
                     <a href="/chat/inbox" class="btn btn-default btn-sm" title="Inbox">
                         <span class="glyphicon glyphicon-envelope"></span>
-                        <span id="unread-count">0</span>
+                        <b id="unread-count"></b>
                     </a>
                     <div class="btn-group">
                         <a class="btn btn-default btn-sm profile-link" href='/user/profile'>
@@ -224,7 +224,7 @@
                                 </a>
                             </li>
                             <li role="separator" class="divider"></li>
-                            <li data-toggle="tooltip" data-placement="top" title="切换主题目前还是实验功能，可能会导致访问变慢、界面异常等现象">
+                            <li data-toggle="tooltip" data-placement="top" data-container='body' title="实验功能。可能会导致访问变慢、界面异常等现象">
                                 <a href="javascript:void(0)" onclick="$('.bootswatch-btn').fadeIn()">
                                     <span class="glyphicon glyphicon-leaf"></span> 切换主题
                                 </a>
@@ -291,7 +291,9 @@
                                 $("#user-bar .profile-nikename").text("@").append("<b>"+result.nickname+"</b>");
                                 $("#user-bar #dropdown-header-level").text("Lv. "+result.level);
                                 $('#user-bar [data-toggle="tooltip"]').tooltip();
-                                $("#user-bar #unread-count").text(result.unreadcount);
+                                if(result.unreadcount>0){
+                                    $("#user-bar #unread-count").text(result.unreadcount);
+                                }
                                 $("#user-bar .loginshow").show();
                             }
                         },
