@@ -121,11 +121,11 @@
                                             <span class="input-group-btn">
                                             {% if prg.status == 'giveup' %}
                                                 <div class="btn btn-warning disableBtn pull-left" id='reset' onclick="$('#resetform').submit()">
-                                                    <span class="glyphicon glyphicon-ok-circle"></span> 激活进度
+                                                    <span class="glyphicon glyphicon-ok-circle"></span> 激活
                                                 </div>
                                             {% else %}
                                                 <div class="btn btn-warning disableBtn pull-left" id='giveup' onclick="$('#giveupform').submit()">
-                                                    <span class="glyphicon glyphicon-ban-circle"></span> 冻结进度
+                                                    <span class="glyphicon glyphicon-ban-circle"></span> 冻结
                                                 </div>
                                             {% endif %}
                                             </span>
@@ -137,7 +137,7 @@
                                                 autocomplete="off"
                                                 onblur="blurQuickCurrent()"
                                                 oninput="checkUpdateButtonLock()"
-                                                onkeydown="keydownFastUpdate()">
+                                                >
 
                                             <span class="input-group-addon fastupdate-total">
                                                 {% ifequal opus.total 0 %}
@@ -148,7 +148,9 @@
                                             </span>
                                             <span class="input-group-btn">
                                                 <div class="viewunlock btn btn-default" onclick="addOneCurrent()">+1</div>
-                                                <div id='fastupdate' class="viewunlock btn btn-success disableBtn" onclick="submitFastupdateForm()" disabled='disabled'>保存</div>
+                                                <div id='fastupdate' class="viewunlock btn btn-success disableBtn" onclick="submitFastupdateForm()" disabled='disabled'>
+                                                    <span class="glyphicon glyphicon-ok"></span> 保存
+                                                </div>
                                             </span>
                                         </div>
                                     </div>
@@ -195,23 +197,23 @@
                                     <div class="panel-body">
                                         <table class="table table-condensed table-hover">
                                             <tr class="text-primary">
-                                                <td>状态</td>
-                                                <td><b>{{prg.getStatus}}</b></td>
+                                                <td><b>状态</b></td>
+                                                <td>{{prg.getStatus}}</td>
                                             </tr>
                                             <tr class="text-info editunlock" id='name-tr' data-toggle="popover" data-placement='top' data-container='body'>
-                                                <td>名称</td>
+                                                <td><b>名称</b></td>
                                                 <td class="text-info">
                                                     <input class="editable" name="name" type="text" value="{{opus.name}}" autocomplete="off" readonly placeholder="{{opus.name}}">
                                                 </td>
                                             </tr>
                                             <tr class="text-info editunlock">
-                                                <td>副标题</td>
+                                                <td><b>副标题</b></td>
                                                 <td class="text-info">
                                                     <input class="editable" name="subtitle" type="text" value="{{opus.subtitle}}" placeholder="{{opus.subtitle}}" readonly autocomplete="off">
                                                 </td>
                                             </tr>
                                             <tr class="text-info editunlock">
-                                                <td>总共</td>
+                                                <td><b>总共</b></td>
                                                 <td class="text-info">
                                                     <input class="editable"
                                                         name="total"
@@ -223,36 +225,36 @@
                                                 </td>
                                             </tr>
                                             <tr class="text-info editunlock">
-                                                <td>当前进度</td>
+                                                <td><b>当前进度</b></td>
                                                 <td class="text-info">
                                                     <input class="editable" name="current" type="number" value="{{prg.current}}" readonly placeholder="{{prg.current}}">
                                                 </td>
                                             </tr>
                                             <tr class="text-info editunlock" title="{{prg.weblink}}">
-                                                <td>链接</td>
+                                                <td><b>链接</b></td>
                                                 <td class="text-info">
                                                     <input class="editable" name="weblink" type="text" value="{{prg.weblink}}" readonly placeholder="{{prg.weblink}}">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>阅读百分比</td>
+                                                <td><b>阅读百分比</b></td>
                                                 <td>{{prg.getPersent}}%</td>
                                             </tr>
                                             <tr>
-                                                <td>开始时间</td>
+                                                <td><b>开始时间</b></td>
                                                 <td>{{prg.getCreated}}</td>
                                             </tr>
                                             <tr>
                                                 {% ifequal prg.status "done" %}
-                                                <td>完成时间</td>
+                                                <td><b>完成时间</b></td>
                                                 {% else %}
-                                                <td>上次更新</td>
+                                                <td><b>上次更新</b></td>
                                                 {% endifequal %}
                                                 <td>{{prg.getModified}}</td>
                                             </tr>
                                             {% if aux.estmt_fnsh_dt %}
                                             <tr>
-                                                <td>预计完成</td>
+                                                <td><b>预计完成</b></td>
                                                 <td>{{ aux.estmt_fnsh_dt }}</td>
                                             </tr>
                                             {% endif %}
@@ -305,9 +307,6 @@
     $(function(){
         getOpusInfo()
     });
-    function disableBtn(){
-        $('.btn').attr('disabled','disabled')
-    }
     function getOpusInfo(){
         var book_subs = ['书','书籍','book','pdf','漫画','comic','文字','doc','txt']
         var movie_subs = ['动画','anime','电影','movie','电视剧','tv','show','美剧','英剧','韩剧','日剧']
