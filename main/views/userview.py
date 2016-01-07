@@ -128,7 +128,7 @@ def userPublic(request): # public
         progress_counts_group.append(item)
     # add exp to 被查看人
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
-    userexp.addExp(1, '友人到访你的公开页')
+    userexp.addExp(1, '公开页被访问')
     # render
     context['user'] = user
     context['headimg'] = getGravatarUrl(user.email);
