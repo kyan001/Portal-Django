@@ -97,14 +97,14 @@
             </div>
         {% endblock alertzone %}
         <!-- ############ NAVIGATIONS ############-->
-        <div id='nav-btn'>
+        <div id='nav-btn-zone'>
             {% block nav-btn %}{% endblock nav-btn %}
-            <span id="function-btn">
-                {% block function-btn %}{% endblock function-btn %}
+            <span id="function-btn-zone">
+                {% block function-btn %}{% endblock %}
             </span>
         </div>
         <style>
-            #nav-btn {
+            #nav-btn-zone {
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -113,8 +113,16 @@
                 padding-top: 10px;
                 font-size: 15px;
             }
+            #nav-btn-zone,
+            #function-btn-zone {
+                pointer-events: none;
+            }
+            #nav-btn-zone .btn,
+            #function-btn-zone .btn {
+                pointer-events: auto;
+            }
             @media (max-width: 768px) {
-                #function-btn {
+                #function-btn-zone {
                     position: fixed;
                     bottom: 0;
                     right: 0;
@@ -123,7 +131,7 @@
                     padding-bottom: 66px;
                     font-size: 15px;
                 }
-                #function-btn .btn {
+                #function-btn-zone .btn {
                     box-shadow: 0 2px 2px 1px rgba(0,0,0,0.3);
                 }
             }
@@ -179,7 +187,7 @@
                     </a>
                 </span>
                 <span class="loginshow">
-                    <a href="/" class="btn btn-info btn-sm" title="Home Page" data-toggle="tooltip" data-placement="left">
+                    <a href="/" class="btn btn-info btn-sm hidden-xs" title="Home Page" data-toggle="tooltip" data-placement="left">
                         <span class="glyphicon glyphicon-home"></span><span style="opacity:0">'</span>
                     </a>
                     <a href="/chat/inbox" class="btn btn-default btn-sm" title="Inbox">
@@ -198,6 +206,11 @@
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li class="dropdown-header" id="dropdown-header-level"></li>
                             <li role="separator" class="divider"></li>
+                            <li class="visible-xs-block">
+                                <a href="/progress/list">
+                                    <span class="glyphicon glyphicon-home"></span> 首页
+                                </a>
+                            </li>
                             <li>
                                 <a href="/progress/list">
                                     <span class="glyphicon glyphicon-th-list"></span> 我的进度
