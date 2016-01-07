@@ -442,6 +442,7 @@
     function confirmDelete(){
         var result = confirm("确定删除此进度？\n（删除操作不可恢复）")
         if(result){
+            disableAllBtn()
             $("#deleteform").submit();
         } else {
             $.info("删除操作已取消")
@@ -490,7 +491,7 @@
             $.danger('错误：当前进度 ' + current + ' 大于总页数 ' + total)
             return false;
         }
-        disableBtn()
+        disableAllBtn()
         $('#saveform').submit();
     }
     function submitFastupdateForm(){
@@ -517,7 +518,7 @@
             $.danger('当前进度 '+quick_current+' 超过最大值 '+total);
             return false;
         }
-        disableBtn()
+        disableAllBtn()
         $("#fastupdateform").submit();
     }
     function focusQuickCurrent(){
