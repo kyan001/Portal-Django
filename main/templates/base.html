@@ -30,9 +30,11 @@
             </script>
             {% block icon %}<link rel="icon" href="/static/img/favicon.png"> {% endblock icon %}
             <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-paper.css">
-            {% if request.COOKIES.theme %}
-                <link class="bootswatcher" rel="stylesheet" href="//bootswatch.com/{{request.COOKIES.theme}}/bootstrap.min.css">
-            {% endif %}
+            {% block theme %}
+                {% if request.COOKIES.theme %}
+                    <link class="bootswatcher" rel="stylesheet" href="//bootswatch.com/{{request.COOKIES.theme}}/bootstrap.min.css">
+                {% endif %}
+            {% endblock theme %}
             <link rel="stylesheet" href="/static/css/KyanCssUtil.css">
             <title>{% block title %}{% endblock %} - SuperFarmer.net</title>
             <style>

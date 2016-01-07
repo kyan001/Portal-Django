@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block title %}用户登入{% endblock title %}
+
+{% block theme %}{% endblock %}
+
 {% block css %}
 <style>
     .container {
@@ -206,7 +209,7 @@
                             onclick='clickRememberMe()'
                             checked>
                     </span>
-                    <input type="text" name="username" class="form-control" placeholder="用户名 / Username" autofocus="autofocus" onblur="validateUsername('onblur')" oninput="validateUsername('oninput')"/>
+                    <input type="text" name="username" class="form-control" placeholder="用户名 / Username" autofocus="autofocus" onblur="validateUsername('onblur')" oninput="validateUsername('oninput')" autocomplete="off"/>
                     <span class="input-group-addon tips hidden-xs"
                         title="用户名 / Username <span class='label label-primary'>必填</span>"
                         data-content="<li class='text-primary'>请输入注册时的用户名</li>
@@ -228,6 +231,7 @@
                         class="form-control"
                         placeholder="答案 / Answer"
                         onkeydown="keydownAnswer()"
+                        autocomplete="off"
                         />
                     <span class="input-group-addon tips hidden-xs"
                         title="答案 / Answer <span class='label label-primary'>必填</span>"
@@ -239,7 +243,7 @@
                     </span>
                 </div>
                 <div class="input-group" id="tip-group">
-                    <input id='tip-content' type='tip' name='tip' class="form-control" value="" readonly>
+                    <input id='tip-content' type='tip' name='tip' class="form-control" value="" readonly autocomplete="off">
                 </div>
                 {% if redirect %}
                 <input type="hidden" name='redirect' value="{{redirect}}">
