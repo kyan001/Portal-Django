@@ -37,6 +37,12 @@ def chatDelete(request):
     loginuser = request.session.get('loginuser')
     if not loginuser:
         return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
+    # get history.back
+    if 'HTTP_REFERER' in request.META:
+        href_back = request.META.get('HTTP_REFERER')
+        response = redirect(href_back)
+    else:
+        response = redirect('/chat/inbox')
     # get user
     try:
         user = User.objects.get(id=loginuser['id'])
@@ -58,7 +64,7 @@ def chatDelete(request):
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
     userexp.addExp(1, '删除了一条来自 @{0} 的消息'.format(chat.getSender().nickname))
     # render
-    return redirect('/chat/inbox');
+    return response;
 
 def chatConversation(request):
     '''进入一对一聊天页面'''
