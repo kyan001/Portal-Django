@@ -223,15 +223,14 @@
                     </div>
                     <div class="btn-group bootswatch-btn" style="display:none;">
                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            试试不同主题
+                            {% if request.COOKIES.theme %}
+                                当前主题：{{ request.COOKIES.theme }}
+                            {% else %}
+                                当前是默认主题
+                            {$ endif %}
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            {% if request.COOKIES.theme %}
-                                <li class="drapdown-header">当前主题：{{ request.COOKIES.theme }}</li>
-                            {% else %}
-                                <li class="drapdown-header">当前是默认主题</li>
-                            {$ endif %}
                             <li><a href="/index/settheme?name=cerulean">蔚蓝 Cerulean</a></li>
                             <li><a href="/index/settheme?name=cosmo">宇宙 Cosmo</a></li>
                             <li><a href="/index/settheme?name=cyborg">半机械 Cyborg</a></li>
