@@ -3,7 +3,7 @@
 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 progress-card" progressid="{{ p.prg.id }}" progressname="{{ p.opus.name }}">
     <a href="/progress/detail?id={{p.prg.id}}" class="no-decoration">
         <div class="panel panel-primary beveryfast hover-shadow">
-            <div class="panel-heading">
+            <div class="panel-heading progress-title">
                 <span class="panel-title">
                     <span class="persent badge">{{ p.prg.getPersent }}%</span>
                     <span>《 <b>{{ p.opus.name|truncatechars:15 }}</b> 》</span>
@@ -19,19 +19,18 @@
                     {% endif %}
                 </span>
             </div>
-            <div class="panel-body">
-                <div class="div-table hidden-xs">
-                    <div class='row'>
-                        {% if p.prg.current == p.opus.total and p.prg.current != 0 %}
-                        <div class="text-right col-xs-3 col-sm-2 col-md-2 col-lg-2">完成：</div>
-                        <div class="col-xs-9 col-sm-4 col-md-4 col-lg-4">{{ p.prg.getModified }}</div>
-                        {% else %}
-                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">开始：{{ p.prg.getCreated }}</div>
-                        <div class="text-right col-xs-12 col-sm-6 col-md-6 col-lg-6">上次：{{ p.prg.getModified }}</div>
-                        {% endif %}
-                    </div>
+            <div class="div-table panel-heading hidden-xs">
+                <div class='row'>
+                    {% if p.prg.current == p.opus.total and p.prg.current != 0 %}
+                    <div class="text-right col-xs-3 col-sm-2 col-md-2 col-lg-2">完成：</div>
+                    <div class="col-xs-9 col-sm-4 col-md-4 col-lg-4">{{ p.prg.getModified }}</div>
+                    {% else %}
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">开始：{{ p.prg.getCreated }}</div>
+                    <div class="text-right col-xs-12 col-sm-6 col-md-6 col-lg-6">上次：{{ p.prg.getModified }}</div>
+                    {% endif %}
                 </div>
-
+            </div>
+            <div class="panel-body">
                 <div class="progress">
                     <div class="progress-bar {{ p.prg.getBartype }}" style="width: {{p.prg.getPersent}}%; min-width: 5em;">
                     {% ifnotequal p.opus.total 0 %}

@@ -14,7 +14,7 @@
 /*.progress-card .panel{
     cursor: pointer;
 }*/
-.progress-card .panel-heading {
+.progress-card .panel-heading.progress-title {
     overflow-x: auto;
     overflow-y: hidden;
     word-break: keep-all;
@@ -31,7 +31,7 @@
     padding: 2px;
     font-size: 12.9px;
     color: white;
-    background-color: #2196f3;
+    border-radius: 0;
 }
 .progress-card .persent,
 .progress-card .subtitle,
