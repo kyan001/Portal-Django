@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 from django.shortcuts import redirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import *
 from main.models import *
 from django.db.models import Q
@@ -21,9 +22,20 @@ def chatInbox(request):
     chat_type = request.GET.get('type')
     # get chats
     if chat_type == 'unread':
-        chats = user.getUnreadChats()
+        chat_list = user.getUnreadChats()
     else:
-        chats = user.getReceivedChats()
+        chat_list = user.getReceivedChats()
+    # paginator
+    paginator = Paginator(chat_list, per_page=15)
+    page = request.GET.get('page')
+    try:
+        chats = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        chats = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        chats = paginator.page(paginator.num_pages)
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
     userexp.addExp(1, '查看收件箱')
