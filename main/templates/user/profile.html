@@ -155,7 +155,7 @@
             {% for exp, exphistory in exps %}
             <div class="col-xs-12 col-sm-12 col-md-4">
                 <a class="no-decoration" href="/user/exphistory?category={{exp.category}}">
-                    <div class="panel panel-primary befast hover-shadow">
+                    <div class="panel panel-primary beveryfast hover-shadow">
                         <div class="panel-heading">
                             <span>
                                 <b>{{ exp.getCategory }}</b>: {{ exp.exp }}
@@ -190,7 +190,7 @@
 <script>
 $(function(){
     {% for category, oldlv, newlv in lvnotice %}
-        $.success("「{{category}}」从 Lv.{{oldlv}} 升级到 Lv.{{newlv}}！")
+        $.success("恭喜升级！「{{category}}」从 Lv.{{oldlv}} 升级到 Lv.{{newlv}}！")
     {% endfor %}
     $("[data-toggle='tooltip']").tooltip()
 })
