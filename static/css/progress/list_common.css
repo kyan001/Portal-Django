@@ -25,7 +25,11 @@
 }
 .progress-card .progress {
     height: 25px;
+    line-height: 25px;
     margin: 0;
+}
+.progress-card .progress .progress-bar {
+    line-height: inherit;
 }
 .progress-card .div-table {
     padding: 2px;
