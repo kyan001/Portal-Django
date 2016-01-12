@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 {% block title %}对话：@{{ receiver.nickname }}{% endblock title %}
 
+{% block head %}
+    {{ block.super }}
+    <meta http-equiv=Cache-Control content=no-cache />
+{% endblock head %}
+
 {% block css %}
-<meta http-equiv=Cache-Control content=no-cache />
 <style>
     .container {
         font-family: "微软雅黑","Microsoft Yahei","Helvetica Neue",Helvetica,"Hiragino Sans GB","Segoe UI",Tahoma,Arial,STHeiti,sans-serif !important;
