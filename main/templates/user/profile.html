@@ -157,13 +157,15 @@
                 <a class="no-decoration" href="/user/exphistory?category={{exp.category}}">
                     <div class="panel panel-primary befast hover-shadow">
                         <div class="panel-heading">
-                            <span>{{ exp.getCategory }}</span>
+                            <span>
+                                <b>{{ exp.getCategory }}</b>: {{ exp.exp }}
+                            </span>
                             <span class="pull-right">Lv.<b>{{ exp.getLevel }}</b></span>
                         </div>
                         <div class="panel-body">
                             <div class="progress progress-striped beveryfast">
-                                <div class="progress-bar active" style="width: {{ exp.getPersent }}%; min-width:5em;">
-                                    {{ exp.exp }} / {{ exp.getLevelupExp }}
+                                <div class="progress-bar active" style="width: {{exp.getPersent}}%; min-width:5em;">
+                                    {{exp.getPersent}}%
                                 </div>
                             </div>
                             <table class="table table-condensed">

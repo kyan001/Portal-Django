@@ -146,13 +146,10 @@ class UserExp(models.Model):
     # calculations
     def getLevel(self):
         return util.ctrl.calcLevel(self.exp)
-    def getLevelupExp(self):
-        level = self.getLevel()
-        return util.ctrl.calcExp(level+1)
     def getPersent(self):
         level = self.getLevel()
         prev_exp = util.ctrl.calcExp(level)
-        next_exp = self.getLevelupExp()
+        next_exp = util.ctrl.calcExp(level+1)
         exp_need = next_exp - prev_exp
         exp_have = self.exp - prev_exp
         persent = exp_have / exp_need * 100
@@ -336,7 +333,8 @@ class Chat(models.Model):
     def __str__(self):
         sender = self.getSender()
         receiver = self.getReceiver()
-        result = "{0}: @{1} -> @{2} |{3} |{4}".format(str(self.id), sender.nickname, receiver.nickname, self.getCreated(), self.content)
+        content = (self.content[:40] + '..') if len(self.content)>40 else self.content
+        result = "{0}: {1} - @{2}→@{3} : {4}".format(str(self.id), self.getCreated(), sender.nickname, receiver.nickname, content)
         if not self.isread:
             result += " [unread]"
         return result
