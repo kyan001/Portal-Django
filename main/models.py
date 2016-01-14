@@ -80,10 +80,11 @@ class UserPermission(models.Model):
     isallowed = models.BooleanField()
     objects = UserPermissionManager()
     category_pool = {
-        'all': ('signin'),
+        'all': ('signin', 'superuser'),
     }
     category_name = {
         'signin': '登入',
+        'superuser': '超级管理员',
     }
     def __str__(self):
         user = self.getUser()

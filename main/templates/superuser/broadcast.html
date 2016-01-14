@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block title %}超级用户：广播系统消息{% endblock title %}
+
+{% block css %}
+<style>
+    .container {
+        font-family: "微软雅黑","Microsoft Yahei","Helvetica Neue",Helvetica,"Hiragino Sans GB","Segoe UI",Tahoma,Arial,STHeiti,sans-serif !important;
+    }
+    .page-header {
+        margin: 0px;
+    }
+    .chat-record .panel-heading {
+        cursor: pointer;
+    }
+    .panel.unread .panel-heading {
+        font-weight: bold;
+    }
+    .chat-content {
+        word-break: break-all;
+    }
+    #nickname-group .input-group-addon {
+        padding-right: 1px;
+    }
+</style>
+{% endblock css %}
+
+{% block nav-btn %}
+    <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
+        <span class="glyphicon glyphicon-arrow-left"></span> 回到上一页
+    </a>
+{% endblock nav-btn %}
+
+{% block content %}
+<div class='container'>
+    <div class='row'>
+        <div class='col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12'>
+            <div class="page-header">
+                <h3>
+                    所有人
+                    <small><span class="glyphicon glyphicon-transfer"></span> @系统消息</small>
+                </h3>
+            </div>
+
+            <form id='form-send' action="/superuser/sendbroadcast" method="post">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <textarea name='content' class="form-control" rows="6" placeholder="请输入内容" autocomplete="off" oninput="validateContent()" tabindex="2"></textarea>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <div class="input-group" id="nickname-group">
+                                    <div class="input-group-addon">
+                                        <span class="text-muted">To:</span> @
+                                    </div>
+                                    <input type='text' name='receiver' class="form-control" value="所有人" placeholder="用户" readonly oninput="validateNickname()" tabindex="1">
+                                </div>
+                            </div>
+                            <div class="col-md-9 col-sm-8 col-xs-12">
+                                <div class="input-group">
+                                    <input type="text" name='title' class="form-control" id="input-title" autocomplete="off" placeholder="标题" tabindex="3">
+                                    <span class="input-group-btn">
+                                        <a id='send-btn' class="btn btn-primary" onclick="submitSend()" disabled tabindex="4">
+                                            发送
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <hr/>
+
+            <div class="panel-group">
+                {% for c in chats %}
+                    {% include 'chat/chatlet.html' %}
+                {% empty %}
+                    <div class="well">
+                        @系统消息 尚未收到任何消息
+                    </div>
+                {% endfor %}
+            </div><!--.panel-group-->
+        </div><!--.col-->
+    </div><!--.row-->
+</div><!--.container-->
+{% endblock content %}
+
+{% block js %}
+<script>
+    var isContentOk = false
+    function markread(ele){
+        chatid = $(ele).attr('chatid')
+        if(chatid<0){
+            return;
+        }
+        if(!$(ele).hasClass("unread")){
+            return;
+        }
+        $.ajax({
+            type: "GET",
+            url: "/chat/markread",
+            data: {'chatid': chatid},
+            async: true,
+            dataType: 'json',
+            success: function(result) {
+                if(result.error){
+                    alert(result.error)
+                } else {
+                    $("div[chatid="+chatid+"]").removeClass('unread')
+                }
+            }
+        });
+    }
+    function validateContent(){
+        isContentOk = false
+        var content = $.trim($('textarea[name="content"]').val())
+        if(content==""){
+            isContentOk = false
+        } else {
+            isContentOk = true
+        }
+        isSendOk()
+        return isContentOk
+    }
+
+    function isSendOk(){
+        if(isContentOk){
+            $('#send-btn').removeAttr('disabled')
+            return true
+        } else {
+            $('#send-btn').attr('disabled','disabled')
+            return false
+        }
+    }
+
+    function submitSend(){
+        $('#send-btn').attr('disabled','disabled')
+        var content = $.trim($('textarea[name="content"]').val())
+        var title = $.trim($('input[name="title"]').val())
+        if(!isContentOk) {
+            $.danger('错误：发送内容尚未填写')
+            $('textarea[name="content"]').focus()
+            return
+        }
+        $('input[name="title"]').val(title)
+        $('textarea[name="content"]').val(content)
+        disableAllBtn()
+        $('#form-send').submit()
+    }
+</script>
+{% endblock js %}

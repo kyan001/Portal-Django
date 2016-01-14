@@ -47,4 +47,9 @@ urlpatterns = [
     url(r'^chat/delete$', views.chatDelete),
     url(r'^chat/send$', views.chatSend),
     url(r'^chat/conversation$', views.chatConversation),
+    # SUPERUSER
+    url(r'^superuser/index$', views.superuserIndex),
+    url(r'^superuser/broadcast$', views.superuserBroadcast),
+    url(r'^superuser/sendbroadcast$', views.superuserSendbroadcast),
+
 ]

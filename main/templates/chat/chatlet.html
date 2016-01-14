@@ -35,13 +35,13 @@
         <div class="panel-body">
             <div class='chat-content'>
                 {% if c.getSender.username == 'syschat' %}
-                    {{ c.content|safe }}
+                    <p>{{ c.content|safe }}</p>
                 {% else %}
                     {{ c.content|linebreaks }}
                 {% endif %}
                 {% if c.content|extractnickname %}
-                    <li>
-                        <span class="text-warning">提到了：</span>
+                    <li style="border-top: 1px dashed silver;">
+                        <span class="text-warning">提到了</span>：
                         {% for at in c.content|extractnickname %}
                             {{ at|safe }}
                             {% if not forloop.last %}, {% endif %}

@@ -69,7 +69,7 @@ def chatDelete(request):
         chat = Chat.objects.get(id=chat_id)
     except Chat.DoesNotExist:
         return util.ctrl.infoMsg("您查找的消息 id：{id} 并不存在".format(id=str(chat_id)));
-    if user.id != chat.receiverid:
+    if user.id != chat.receiverid and (not user.getUserpermission('superuser')):
         return util.ctrl.infoMsg("只有消息的接收者可以删除消息")
     chat.delete()
     # add exps
@@ -168,7 +168,7 @@ def chatMarkread(request): # AJAX
         chat = Chat.objects.get(id=chatid)
     except Chat.DoesNotExist:
         return util.ctrl.returnJsonError("您查找的消息 id: {id} 并不存在".format(id=str(chatid)))
-    if chat.receiverid != user.id:
+    if chat.receiverid != user.id and (not user.getUserpermission('superuser')):
         return util.ctrl.returnJsonError('你没有权限修改 id: {chat.id} 的消息'.format(chat=chat))
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
