@@ -40,18 +40,18 @@
                     {{ c.content|linebreaks }}
                 {% endif %}
                 {% if c.content|extractnickname %}
-                    <p>
+                    <li>
                         <span class="text-warning">提到了：</span>
                         {% for at in c.content|extractnickname %}
                             {{ at|safe }}
                             {% if not forloop.last %}, {% endif %}
                         {% endfor %}
-                    </p>
+                    </li>
                 {% endif %}
             </div>
             <div class="pull-right">
                 {% if not receiver %}
-                    <a class="btn btn-primary btn-sm" href="/chat/conversation?receiver={{c.getSender.nickname}}{%if c.title%}&reply={{c.title|truncatechars:12}}{%endif%}">
+                    <a class="btn btn-primary btn-sm" href="/chat/conversation?receiver={{c.getSender.nickname}}&title=回复：{{c.content|truncatechars:12}}">
                         <span class="glyphicon glyphicon-envelope"></span> 回复
                     </a>
                 {% endif %}
