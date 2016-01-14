@@ -1,3 +1,6 @@
+
+{% load nickname_link %}
+
 <div class="panel panel-default {% if not c.isread %}unread{% endif %} chat-record beveryfast hover-shadow" chatid="{{c.id}}" {%if c.receiverid == user.id%}onclick="markread(this)"{%endif%}>
     <div class="panel-heading beveryfast" data-toggle="collapse" data-target="#chat-{{c.id}}" data-parent="#msg-group">
         {% if c.getSender.username == 'syschat' %}
@@ -36,10 +39,19 @@
                 {% else %}
                     {{ c.content|linebreaks }}
                 {% endif %}
+                {% if c.content|extractnickname %}
+                    <p>
+                        <span class="text-warning">提到了：</span>
+                        {% for at in c.content|extractnickname %}
+                            {{ at|safe }}
+                            {% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                {% endif %}
             </div>
             <div class="pull-right">
                 {% if not receiver %}
-                    <a class="btn btn-primary btn-sm" href="/chat/conversation?receiver={{c.getSender.nickname}}">
+                    <a class="btn btn-primary btn-sm" href="/chat/conversation?receiver={{c.getSender.nickname}}{%if c.title%}&reply={{c.title|truncatechars:12}}{%endif%}">
                         <span class="glyphicon glyphicon-envelope"></span> 回复
                     </a>
                 {% endif %}

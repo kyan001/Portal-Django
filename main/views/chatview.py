@@ -106,12 +106,15 @@ def chatConversation(request):
         chats = Chat.objects.filter(condition1 | condition2).order_by('-created')#[0:10]
         context['chats'] = chats
         context['receiver'] = receiver
+    reply = request.GET.get('reply')
+    title = '回复：{}'.format(reply) if reply else ''
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
     if receiver_nickname:
         userexp.addExp(1, '查看与 @{receiver.nickname} 的对话'.format(receiver=receiver))
     # render
     context['user'] = user
+    context['title'] = title
     return render_to_response('chat/conversation.html', context);
 
 @csrf_exempt
