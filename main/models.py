@@ -117,7 +117,7 @@ class UserExp(models.Model):
     # Category
     def setCategory(self, category):
         if category not in self.category_pool.get('all'):
-            raise Exception("分类只能为 {0}".format( str(category_pool.get('all')) ))
+            raise Exception("分类只能为 {pool}".format(pool=str(category_pool.get('all'))))
         self.category = category
         self.setModified()
     def getCategory(self):
@@ -248,7 +248,7 @@ class Progress(models.Model):
     # status
     def setStatus(self, status):
         if status not in self.status_pool.get('all'):
-            raise Exception("状态只能为 {pool}".format(pool=status_pool.get('all')))
+            raise Exception("状态只能为 {pool}".format(pool=str(status_pool.get('all'))))
         self.status = status
         self.setModified()
     def setStatusAuto(self):

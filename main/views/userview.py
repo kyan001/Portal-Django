@@ -95,14 +95,14 @@ def userExphistory(request):
     view = request.GET.get('view')
     if category:
         if category not in UserExp.category_pool.get('all'):
-            return infoMsg("请求的分类（{0}）不存在".format(category), title='访问错误')
+            return infoMsg("请求的分类（{category}）不存在".format(category=category), title='访问错误')
         userexp = user.getUserExp(category)
         if view == 'full':
             exphistorys = userexp.getExpHistory()
         else:
             exphistorys = userexp.getExpHistory(22)
     else:
-        return infoMsg("请输入请求的分类，可用的分类为 {0}".format(str(UserExp.category_pool.get('all'))), title='访问错误')
+        return infoMsg("请输入请求的分类，可用的分类为 {pool}".format(pool=str(UserExp.category_pool.get('all'))), title='访问错误')
     # render
     context['user'] = user
     context['userexp'] = userexp
@@ -119,7 +119,7 @@ def userPublic(request): # public
     try:
         user = User.objects.get(nickname=nickname);
     except User.DoesNotExist:
-        return infoMsg("用户 {0} 不存在".format(nickname), title='找不到用户')
+        return infoMsg("用户 @{nickname} 不存在".format(nickname=nickname), title='找不到用户')
     # get user progress counts
     progress_counts = user.getProgressCounts();
     progress_counts_group = []
@@ -145,7 +145,7 @@ def userProfile(request):
     try:
         user = User.objects.get(id=loginuser['id'])
     except User.DoesNotExist:
-        return infoMsg("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
+        return infoMsg("您查找的用户 id：{id} 并不存在".format(id=str(loginuser['id'])));
     # get user exps
     exps = []
     lv_notice = []
@@ -153,7 +153,7 @@ def userProfile(request):
     for ue in userexps:
         explet = (ue, ue.getExpHistory(5))
         exps.append(explet)
-        cache_key = 'userexp:{0}:{1}:level'.format(str(ue.id), ue.category)
+        cache_key = 'userexp:{ue.id}:{ue.category}:level'.format(ue=ue)
         cache_timeout = 60*60*24*7*2 # 2 weeks
         cached_lv = cache.get(cache_key)
         if cached_lv: # has cached category:level
@@ -219,17 +219,17 @@ def userNewUser(request):
 
     # check conflicts
     if len(User.objects.filter(username=username)) != 0:
-        return infoMsg("用户名 '{0}' 已存在！".format(username), title="注册失败")
+        return infoMsg("用户名 '{username}' 已存在！".format(username=username), title="注册失败")
     if len(User.objects.filter(nickname=nickname)) != 0:
-        return infoMsg("昵称 '{0}' 已存在！".format(nickname), title="注册失败")
+        return infoMsg("昵称 '{nickname}' 已存在！".format(nickname=nickname), title="注册失败")
     if len(User.objects.filter(email=email)) != 0:
-        return infoMsg("邮箱 '{0}' 已存在！".format(email), title="注册失败")
+        return infoMsg("邮箱 '{email}' 已存在！".format(email=email), title="注册失败")
 
     # check literally
     if " " in username:
-        return infoMsg("用户名 '{0}' 只应包含数字、字母、和英文句号！".format(username), title="注册失败")
+        return infoMsg("用户名 '{username}' 只应包含数字、字母、和英文句号！".format(username=username), title="注册失败")
     if " " in nickname:
-        return infoMsg("昵称 '{0}' 只应包含字母和汉字！".format(nickname), title="注册失败")
+        return infoMsg("昵称 '{nickname}' 只应包含字母和汉字！".format(nickname=nickname), title="注册失败")
 
     # create into db
     user = User(username=username, question=question, answer1=answer1, answer2=answer2, tip=tip, nickname=nickname, email=email)
@@ -241,7 +241,7 @@ def userNewUser(request):
     userexp.addExp(1, '注册成功')
 
     # render
-    return infoMsg(" {0} 注册成功！\n您是网站第 {1} 位用户。\n请登入以便我们记住您！".format(username, str(user.id)), url='/user/signin', title="欢迎加入")
+    return infoMsg(" {user.username} 注册成功！\n您是网站第 {user.id} 位用户。\n请登入以便我们记住您！".format(user=user), url='/user/signin', title="欢迎加入")
 
 #-Signin-----------------------------------------------
 def userSignin(request):
@@ -249,7 +249,7 @@ def userSignin(request):
     # check if already logged in
     current_user = request.session.get('loginuser');
     if current_user:
-        return infoMsg("您已经以 {0} 的身份登入了，请勿重复登入".format(current_user['username']), title="登入失败", url="/")
+        return infoMsg("您已经以 {username} 的身份登入了，请勿重复登入".format(username=current_user['username']), title="登入失败", url="/")
     # render
     context = {'request': request}
     if 'HTTP_REFERER' in request.META:
@@ -288,11 +288,11 @@ def userCheckLogin(request):
     # check username vs. answer
     user = getUser(username)
     if user.getUserpermission('signin')==False:
-        return infoMsg('您已被禁止{0}，请联系管理员'.format(UserPermission.objects.getCategoryName('signin')))
+        return infoMsg('您已被禁止{category_name}，请联系管理员'.format(category_name=UserPermission.objects.getCategoryName('signin')))
     if checkAnswer(user, answer):
         request.session['loginuser'] = user.toArray()
     else:
-        return infoMsg("用户名/答案不对：\n用户名：{0}\n输入的答案/密码：{1}".format(username, answer), title="登入失败")
+        return infoMsg("用户名/答案不对：\n用户名：{username}\n输入的答案/密码：{answer}".format(username=username, answer=answer), title="登入失败")
     # redirections
     redirect_url = request.POST.get('redirect')
     redirect_to_home = (
@@ -320,7 +320,7 @@ def userCheckLogin(request):
         <li>访问 <a href="/user/profile">我的账号信息</a> 查看您的活跃度</li>
         <li>访问 <a href="/chat/conversation?mode=quicknote">临时笔记</a> 随手记录您的想法</li>
     '''
-    Chat.objects.sendBySys(user, title='Hi, @{0}'.format(user.nickname), content=chat_content)
+    Chat.objects.sendBySys(user, title='Hi, @{user.nickname}'.format(user=user), content=chat_content)
     # set cookie
     if rememberme == 'yes':
         oneweek = 60*60*24*7
@@ -342,7 +342,7 @@ def userGetQuestionAndTip(request): #AJAX
             'tip' : tip,
         });
     else:
-        return returnJsonError('用户未找到：{0}'.format(username))
+        return returnJsonError('用户未找到：{username}'.format(username=username))
 
 def userGetloginerInfo(request): # AJAX
     '''顶部用户栏：获取当前登入用户的信息'''

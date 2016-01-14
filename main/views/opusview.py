@@ -21,7 +21,7 @@ def opusDetail(request):
     try:
         opus = Opus.objects.get(id=opusid)
     except Opus.DoesNotExist:
-        return infoMsg("未找到 id 为 {0} 的作品".format(str(opusid)))
+        return infoMsg("未找到 id 为 {id} 的作品".format(id=str(opusid)))
     #获得进度列表
     opus_list = Opus.objects.filter(name=opus.name)
     item_list = []
@@ -30,12 +30,12 @@ def opusDetail(request):
         try:
             progress = opuslet.getProgress()
         except Progress.DoesNotExist:
-            return infoMsg("未找到 opusid 为 {0} 的进度".format(str(opusid)))
+            return infoMsg("未找到 opusid 为 {id} 的进度".format(id=str(opusid)))
         #获得用户
         try:
             user = progress.getUser()
         except User.DoesNotExist:
-            return infoMsg("未找到 id 为 {0} 的进度".format(str(progress.userid)))
+            return infoMsg("未找到 id 为 {progress.userid} 的进度".format(progress=progress))
         item_list.append({'progress':progress, 'user':user, 'opus':opuslet})
     #render
     context['opus'] = opus

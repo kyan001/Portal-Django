@@ -14,7 +14,7 @@ def indexSettheme(request):
         try:
             user = User.objects.get(id=loginuser['id'])
         except User.DoesNotExist:
-            return infoMsg("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
+            return infoMsg("您查找的用户 id：{id} 并不存在".format(id=str(loginuser['id'])));
     # get history.back
     if 'HTTP_REFERER' in request.META:
         href_back = request.META.get('HTTP_REFERER')
@@ -31,12 +31,12 @@ def indexSettheme(request):
     else: # 设置主题
         theme_name = theme_name.lower()
         if theme_name not in theme_name_pool:
-            return infoMsg("您请求的主题：{0} 不存在".format(theme_name), title="设置主题失败")
+            return infoMsg("您请求的主题：{theme_name} 不存在".format(theme_name=theme_name), title="设置主题失败")
         oneweek = 60*60*24*7
         response.set_cookie(theme_key, theme_name, max_age=oneweek)
     # add exp if logged in.
     if user:
-        exp_name = theme_name or '默认主题'
+        theme_name_smart = theme_name or '默认主题'
         userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
-        userexp.addExp(2, '尝试主题：{0}'.format(exp_name.title()))
+        userexp.addExp(2, '尝试主题：{theme_name}'.format(theme_name=theme_name_smart.title()))
     return response

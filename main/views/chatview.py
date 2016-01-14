@@ -17,7 +17,7 @@ def chatInbox(request):
     try:
         user = User.objects.get(id=loginuser['id'])
     except User.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
+        return util.ctrl.infoMsg("您查找的用户 id：{id} 并不存在".format(id=str(loginuser['id'])));
     # get inputs
     chat_type = request.GET.get('type')
     # get chats
@@ -59,7 +59,7 @@ def chatDelete(request):
     try:
         user = User.objects.get(id=loginuser['id'])
     except User.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
+        return util.ctrl.infoMsg("您查找的用户 id：{id} 并不存在".format(id=str(loginuser['id'])));
     # get inputs
     chat_id = request.GET.get('id')
     if not chat_id:
@@ -68,13 +68,13 @@ def chatDelete(request):
     try:
         chat = Chat.objects.get(id=chat_id)
     except Chat.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的消息 id：{0} 并不存在".format(str(chat_id)));
+        return util.ctrl.infoMsg("您查找的消息 id：{id} 并不存在".format(id=str(chat_id)));
     if user.id != chat.receiverid:
         return util.ctrl.infoMsg("只有消息的接收者可以删除消息")
     chat.delete()
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
-    userexp.addExp(1, '删除了一条来自 @{0} 的消息'.format(chat.getSender().nickname))
+    userexp.addExp(1, '删除了一条来自 @{sender.nickname} 的消息'.format(sender=chat.getSender()))
     # render
     return response;
 
@@ -88,18 +88,18 @@ def chatConversation(request):
     try:
         user = User.objects.get(id=loginuser['id'])
     except User.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
+        return util.ctrl.infoMsg("您查找的用户 id：{id} 并不存在".format(id=str(loginuser['id'])));
     # get inputs
     mode = request.GET.get('mode')
     if mode == 'quicknote':
-        return redirect('/chat/conversation?receiver={0}'.format(user.nickname));
+        return redirect('/chat/conversation?receiver={user.nickname}'.format(user=user));
     receiver_nickname = request.GET.get('receiver')
     if receiver_nickname:
         # get receiver
         try:
             receiver = User.objects.get(nickname=receiver_nickname)
         except User.DoesNotExist:
-            return util.ctrl.infoMsg("您查找的用户 @{0} 并不存在".format(str(receiver_nickname)));
+            return util.ctrl.infoMsg("您查找的用户 @{nickname} 并不存在".format(nickname=str(receiver_nickname)));
         # get history
         condition1 = Q(receiverid=receiver.id) & Q(senderid=user.id)
         condition2 = Q(senderid=receiver.id) & Q(receiverid=user.id)
@@ -109,7 +109,7 @@ def chatConversation(request):
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
     if receiver_nickname:
-        userexp.addExp(1, '查看与 @{0} 的对话'.format(receiver.nickname))
+        userexp.addExp(1, '查看与 @{receiver.nickname} 的对话'.format(receiver=receiver))
     # render
     context['user'] = user
     return render_to_response('chat/conversation.html', context);
@@ -125,7 +125,7 @@ def chatSend(request):
     try:
         user = User.objects.get(id=loginuser['id'])
     except User.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
+        return util.ctrl.infoMsg("您查找的用户 id：{id} 并不存在".format(id=str(loginuser['id'])));
     # get inputs
     title = request.POST.get('title')
     content = request.POST.get('content')
@@ -136,16 +136,16 @@ def chatSend(request):
     try:
         receiver = User.objects.get(nickname=receiver_nickname)
     except User.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的用户 @{0} 并不存在".format(str(receiver_nickname)));
+        return util.ctrl.infoMsg("您查找的用户 @{nickname} 并不存在".format(nickname=str(receiver_nickname)));
     # send chat
     isSuccessed = user.sendChat(receiver, title=title, content=content)
     if not isSuccessed:
         return util.ctrl.infoMsg("发送失败，未知原因");
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
-    userexp.addExp(2, '向 @{0} 发送消息'.format(receiver.nickname))
+    userexp.addExp(2, '向 @{receiver.nickname} 发送消息'.format(receiver=receiver))
     # render
-    return redirect('/chat/conversation?receiver={0}'.format(receiver.nickname));
+    return redirect('/chat/conversation?receiver={receiver.nickname}'.format(receiver=receiver));
 
 def chatMarkread(request): # AJAX
     '''用户标记自己的 chat 消息为已读'''
@@ -157,18 +157,18 @@ def chatMarkread(request): # AJAX
     try:
         user = User.objects.get(id=loginuser['id'])
     except User.DoesNotExist:
-        return util.ctrl.returnJsonError("您查找的用户 id：{0} 并不存在".format(str(loginuser['id'])));
+        return util.ctrl.returnJsonError("您查找的用户 id：{id} 并不存在".format(id=str(loginuser['id'])));
     # get chat
     chatid = request.GET.get('chatid');
     try:
         chat = Chat.objects.get(id=chatid)
     except Chat.DoesNotExist:
-        return util.ctrl.returnJsonError("您查找的消息 id: {0} 并不存在".format(str(chatid)))
+        return util.ctrl.returnJsonError("您查找的消息 id: {id} 并不存在".format(id=str(chatid)))
     if chat.receiverid != user.id:
-        return util.ctrl.returnJsonError('你没有权限修改 id: {0} 的消息'.format(str(chat.id)))
+        return util.ctrl.returnJsonError('你没有权限修改 id: {chat.id} 的消息'.format(chat=chat))
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
-    userexp.addExp(2, '阅读来自 @{0} 的消息'.format(chat.getSender().nickname))
+    userexp.addExp(2, '阅读来自 @{sender.nickname} 的消息'.format(sender=chat.getSender()))
     # markread
     isSuccessed = chat.markRead()
     return util.ctrl.returnJsonResult(True)
