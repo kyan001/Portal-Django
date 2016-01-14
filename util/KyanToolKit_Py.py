@@ -11,7 +11,7 @@ import threading, queue
 from functools import wraps
 
 class KyanToolKit_Py(object):
-    version = '3.3'
+    version = '3.4'
     def __init__(self, trace_file="trace.xml"):
         self.trace_file = trace_file
         self.q = {
@@ -204,7 +204,7 @@ class KyanToolKit_Py(object):
             param = param.encode('utf-8')
             req = urllib.request.Request(url, data=param)
         else:
-            raise Exception( "Method '{0}' is invalid. (GET/POST)".format(method) )
+            raise Exception( "Method '{method}' is invalid. (GET/POST)".format(method=method) )
         rsp = urllib.request.urlopen(req)
         if rsp:
             rsp_json = rsp.read().decode('utf-8')
@@ -260,12 +260,12 @@ class KyanToolKit_Py(object):
             if ktk_codes_md5 != ktk_file_md5:
                 with open("KyanToolKit_Py.py", "wb") as ktk_file:
                     ktk_file.write(ktk_codes);
-                self.asyncPrint("\n\n[KyanToolKit_Py.py] Updated \n(From Version: {0})\n\n".format(version_old))
+                self.asyncPrint("\n\n[KyanToolKit_Py.py] Updated \n(From Version: {version})\n\n".format(version=version_old))
             else:
-                self.asyncPrint("\n\n[KyanToolKit_Py.py] No Need Update \n(Version: {0})\n\n".format(version_old))
+                self.asyncPrint("\n\n[KyanToolKit_Py.py] No Need Update \n(Version: {version})\n\n".format(version=version_old))
             return True
         except Exception as e:
-            self.asyncPrint("\n\n[KyanToolKit_Py.py] Update Failed ({0})\n\n".format(str(e)))
+            self.asyncPrint("\n\n[KyanToolKit_Py.py] Update Failed ({err})\n\n".format(err=str(e)))
             self.asyncPrint("\n")
             return False
 
