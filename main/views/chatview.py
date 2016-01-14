@@ -106,8 +106,7 @@ def chatConversation(request):
         chats = Chat.objects.filter(condition1 | condition2).order_by('-created')#[0:10]
         context['chats'] = chats
         context['receiver'] = receiver
-    reply = request.GET.get('reply')
-    title = '回复：{}'.format(reply) if reply else ''
+    title = request.GET.get('title')
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
     if receiver_nickname:
@@ -132,6 +131,8 @@ def chatSend(request):
     # get inputs
     title = request.POST.get('title')
     content = request.POST.get('content')
+    if not content:
+        return util.ctrl.infoMsg("请填写发送的内容，缺少参数 content");
     receiver_nickname = request.POST.get('receiver')
     if not receiver_nickname:
         return util.ctrl.infoMsg("您输入的网址不完整，缺少参数 receiver_nickname");

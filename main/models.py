@@ -56,7 +56,7 @@ class User(models.Model):
         return countResult
     # chat related
     def sendChat(self, receiver, title="", content=""):
-        new_chat = Chat(senderid=self.id, receiverid=receiver.id, title=title, content=content);
+        new_chat = Chat(senderid=self.id, receiverid=receiver.id, title=title, content=content.strip());
         new_chat.setCreated()
         new_chat.save()
         return True
