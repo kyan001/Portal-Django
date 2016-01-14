@@ -410,4 +410,4 @@ def progressAdd(request):
         return util.ctrl.infoMsg("储存进度时失败，可能是状态导致的问题", title="存储 progress 出错")
     progress.save()
     # render
-    return redirect('/progress/list')
+    return redirect('/progress/detail?id={progress.id}'.format(progress=progress))
