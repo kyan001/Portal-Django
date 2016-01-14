@@ -27,7 +27,9 @@
     <div class="page-header" data-toggle="collapse" data-target="#list-done">
         <h4>
             <span class="glyphicon glyphicon-chevron-up text-muted"></span>
-            已完成 <small>Done</small>
+            已完成
+            <small>Done</small>
+            <small>({{ listdone|length }})</small>
         </h4>
     </div>
     <div class="row collapse in" id="list-done">
@@ -43,7 +45,9 @@
     <div class="page-header" data-toggle="collapse" data-target="#list-giveup">
         <h4>
             <span class="glyphicon glyphicon-chevron-down text-muted"></span>
-            冻结中 <small>Giveup</small>
+            冻结中
+            <small>Giveup</small>
+            <small>({{ listgiveup|length }})</small>
         </h4>
     </div>
     <div class="row collapse" id="list-giveup">

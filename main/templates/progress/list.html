@@ -27,7 +27,9 @@
     <div class="page-header" data-toggle="collapse" data-target="#list-inprogress">
         <h4>
             <span class="glyphicon glyphicon glyphicon-chevron-up text-muted"></span>
-            进行中 <small>Inprogress</small>
+            进行中
+            <small>Inprogress</small>
+            <small>({{ listinprogress|length }})</small>
         </h4>
     </div>
     <div class="row collapse in" id="list-inprogress">
@@ -47,7 +49,9 @@
     <div class="page-header" data-toggle="collapse" data-target="#list-follow">
         <h4>
             <span class="glyphicon glyphicon-chevron-up text-muted"></span>
-            追剧中 <small>Follow</small>
+            追剧中
+            <small>Follow</small>
+            <small>({{ listfollow|length }})</small>
         </h4>
     </div>
     <div class="row collapse in" id="list-follow">
@@ -67,7 +71,9 @@
     <div class="page-header" data-toggle="collapse" data-target="#list-todo">
         <h4>
             <span class="glyphicon glyphicon-chevron-up text-muted"></span>
-            待阅读 <small>Todo</small>
+            待阅读
+            <small>Todo</small>
+            <small>({{ listtodo|length }})</small>
         </h4>
     </div>
     <div class="row collapse in" id="list-todo">
@@ -88,7 +94,9 @@
     <div class="page-header" data-toggle="collapse" data-target="#list-error">
         <h4>
             <span class="glyphicon glyphicon-plus text-muted"></span>
-            出错 <small>Error</small>
+            出错
+            <small>Error</small>
+            <small>({{ listerror|length }})</small>
         </h4>
     </div>
     <div class="row collapse in" id="list-giveup">
