@@ -17,7 +17,7 @@ class User(models.Model):
     email = models.EmailField()
     created = models.DateTimeField(default=timezone.now, blank=True)
     def __str__(self): # 用于需要 string 时的处理 python3
-        return "{0}: {1} - @{2} - {3}".format(str(self.id), self.getCreated(), self.username, self.nickname)
+        return "{self.id}: {created} - @{self.nickname} : {self.username}".format(self=self, created=self.getCreated())
     def toArray(self):
         self.created = self.created.isoformat(' ')
         return model_to_dict(self)
@@ -87,7 +87,7 @@ class UserPermission(models.Model):
     }
     def __str__(self):
         user = self.getUser()
-        return "{0}: @{1} - {2}: {3}".format(str(self.id), user.nickname, self.getCategoryName(), self.isallowed)
+        return "{self.id}: @{user.nickname} - {category_name} {self.category} : {self.isallowed}".format(self=self, user=user, category_name=self.getCategoryName())
     def getUser(self):
         return User.objects.get(id=self.userid)
     def getCategoryName(self):
@@ -113,7 +113,7 @@ class UserExp(models.Model):
     }
     def __str__(self):
         user = self.getUser()
-        return str(self.id) + ": @{0} - {1}: {2} - lv{3}".format(user.nickname, self.getCategory(), str(self.exp), str(self.getLevel()))
+        return "{self.id}: @{user.nickname} - {category_name}: {self.exp} - Lv.{level}".format(self=self, user=user, category_name=self.getCategory(), level=self.getLevel())
     # Category
     def setCategory(self, category):
         if category not in self.category_pool.get('all'):
@@ -170,9 +170,7 @@ class ExpHistory(models.Model):
     def __str__(self):
         userexp = self.getUserexp()
         user = userexp.getUser()
-        return str(self.id) + ": {0} - @{1}: [{2}] {3} +{4}".format(
-            self.getCreated(), user.nickname, userexp.getCategory(), self.operation, str(self.change)
-        )
+        return "{self.id}: {created} - @{user.nickname}: [{category_name}] {self.operation} +{self.change}".format(self=self, user=user, created=self.getCreated(), category_name=userexp.getCategory())
     def getUserexp(self):
         return UserExp.objects.get(id=self.userexpid)
     # Created & Modified
@@ -187,9 +185,9 @@ class Opus(models.Model):
     total = models.IntegerField(default=0)
     created = models.DateTimeField(default=timezone.now, blank=True)
     def __str__(self):
-        subtext = "(" + self.subtitle + ")" if self.subtitle else "";
+        subtext = "({self.subtitle})".format(self=self) if self.subtitle else "";
         total = self.total if self.total else '∞'
-        return str(self.id) + ': {0} {1} [{2}]'.format(self.name, subtext, str(total))
+        return "{self.id}: 《 {self.name} 》 {subtext} [{total}]".format(self=self, subtext=subtext, total=total)
     def toArray(self):
         self.created = self.created.isoformat(' ')
         return model_to_dict(self)
@@ -233,7 +231,7 @@ class Progress(models.Model):
     def __str__(self):
         opus = self.getOpus()
         user = self.getUser()
-        return str(self.id) + ": @{0} - {1} ({2}/{3})".format(user.nickname, opus.name, str(self.current), str(opus.total))
+        return "{self.id}: @{user.nickname} -《 {opus.name} 》 ({self.current}/{opus.total})".format(self=self, user=user, opus=opus)
     def toArray(self):
         self.created = self.created.isoformat(' ')
         self.modified = self.modified.isoformat(' ')
@@ -250,7 +248,7 @@ class Progress(models.Model):
     # status
     def setStatus(self, status):
         if status not in self.status_pool.get('all'):
-            raise Exception("状态只能为 {0}".format( str(status_pool.get('all')) ))
+            raise Exception("状态只能为 {pool}".format(pool=status_pool.get('all')))
         self.status = status
         self.setModified()
     def setStatusAuto(self):
@@ -333,11 +331,9 @@ class Chat(models.Model):
     def __str__(self):
         sender = self.getSender()
         receiver = self.getReceiver()
+        unread = "" if self.isread else "[unread]"
         content = (self.content[:40] + '..') if len(self.content)>40 else self.content
-        result = "{0}: {1} - @{2}→@{3} : {4}".format(str(self.id), self.getCreated(), sender.nickname, receiver.nickname, content)
-        if not self.isread:
-            result += " [unread]"
-        return result
+        return "{self.id}: {created} - @{sender.nickname}→@{receiver.nickname} : {unread} {content}".format(self=self, created=self.getCreated(), sender=sender, receiver=receiver, content=content, unread=unread)
     # send / receive / isread
     def markRead(self):
         self.isread = True;
