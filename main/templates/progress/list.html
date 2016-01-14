@@ -29,7 +29,7 @@
             <span class="glyphicon glyphicon glyphicon-chevron-up text-muted"></span>
             进行中
             <small>Inprogress</small>
-            <small>({{ listinprogress|length }})</small>
+            <small class="prg-counts">({{ listinprogress|length }})</small>
         </h4>
     </div>
     <div class="row collapse in" id="list-inprogress">
@@ -51,7 +51,7 @@
             <span class="glyphicon glyphicon-chevron-up text-muted"></span>
             追剧中
             <small>Follow</small>
-            <small>({{ listfollow|length }})</small>
+            <small class="prg-counts">({{ listfollow|length }})</small>
         </h4>
     </div>
     <div class="row collapse in" id="list-follow">
@@ -73,7 +73,7 @@
             <span class="glyphicon glyphicon-chevron-up text-muted"></span>
             待阅读
             <small>Todo</small>
-            <small>({{ listtodo|length }})</small>
+            <small class="prg-counts">({{ listtodo|length }})</small>
         </h4>
     </div>
     <div class="row collapse in" id="list-todo">
@@ -96,7 +96,7 @@
             <span class="glyphicon glyphicon-plus text-muted"></span>
             出错
             <small>Error</small>
-            <small>({{ listerror|length }})</small>
+            <small class="prg-counts">({{ listerror|length }})</small>
         </h4>
     </div>
     <div class="row collapse in" id="list-giveup">

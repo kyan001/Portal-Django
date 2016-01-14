@@ -9,6 +9,9 @@
     padding-bottom: 2px;
     cursor: pointer;
 }
+.prg-counts {
+    color: inherit;
+}
 
 /* progress-card */
 /*.progress-card .panel{
