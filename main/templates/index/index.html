@@ -4,6 +4,8 @@
 {% block head %}
     {{ block.super }}
     <script src="/static/js/jquery.lazyload.min.js"></script>
+    <script src="/static/swiper/swiper-3.2.7.jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/swiper/swiper-3.2.7.min.css">
 {% endblock head %}
 
 {% block css %}
@@ -14,19 +16,25 @@
         #div1 {
             height: 97%;
         }
+        #div-apps {
+            height: 90%;
+        }
+        @media (max-width: 768px){
+            #div-apps {
+                min-height: 100%;
+            }
+        }
         #div2 {
             height: 97%;
         }
-        #div3 {
+        #div-card {
             height: auto;
         }
-        #div4 {
+        #div-song {
             height: 97%;
         }
-        #div5 {
-            height: 90%;
-        }
-        #div6 {
+
+        #div-last {
             height: 100%;
         }
         .bg-div {
@@ -92,14 +100,6 @@
         #div1 .left-half, #div1 .right-half {
             padding-top: 100px;
         }
-
-        /* div5 */
-        #div5 .right-half {
-            width: 40%;
-            padding-left: 0;
-            padding-right: 0;
-            margin-right: 10%;
-        }
     </style>
     <style>
         /* div1 */
@@ -157,56 +157,56 @@
             -o-transition-delay: 6s; /* Opera */
         }
 
-        /* div3 */
-        #div3 {
+        /* div-card */
+        #div-card {
             padding-left: 5%;
             padding-right: 5%;
             padding-top: 166px;
             padding-bottom: 166px;
             height: auto;
         }
-        #div3 .thumbnail {
+        #div-card .thumbnail {
             background-color: rgba(255,255,255,0.6);
             opacity: 0;
             position: relative;
             top: 0;
         }
-        #div3 .thumbnail.entered {
+        #div-card .thumbnail.entered {
             opacity: 1;
             transition: all 1s linear;
             -moz-transition: all 1s linear; /* Firefox 4 */
             -webkit-transition: all 1s linear; /* Safari 和 Chrome */
             -o-transition: all 1s linear; /* Opera */
         }
-        #div3 #d3-thumb2 {
+        #div-card #d3-thumb2 {
             transition-delay: 0.5s;
             -moz-transition-delay: 0.5s; /* Firefox 4 */
             -webkit-transition-delay: 0.5s; /* Safari 和 Chrome */
             -o-transition-delay: 0.5s; /* Opera */
         }
-        #div3 #d3-thumb3 {
+        #div-card #d3-thumb3 {
             transition-delay: 1s;
             -moz-transition-delay: 1s; /* Firefox 4 */
             -webkit-transition-delay: 1s; /* Safari 和 Chrome */
             -o-transition-delay: 1s; /* Opera */
         }
-        #div3 #d3-thumb4 {
+        #div-card #d3-thumb4 {
             transition-delay: 1.5s;
             -moz-transition-delay: 1.5s; /* Firefox 4 */
             -webkit-transition-delay: 1.5s; /* Safari 和 Chrome */
             -o-transition-delay: 1.5s; /* Opera */
         }
-        #div3 .thumbnail > img{
+        #div-card .thumbnail > img{
             width: 100%;
             opacity: 0.9;
         }
 
-        /* div4 */
-        #div4 {
+        /* div-song */
+        #div-song {
             padding-top: 125px;
             padding-bottom: 125px;
         }
-        #div4 #mucheng {
+        #div-song #mucheng {
             background-color: rgba(0,0,0,0.5);
             margin: auto;
             height: 100%;
@@ -220,7 +220,7 @@
             -o-transition: all 0.5s ease; /* Opera */
             overflow: hidden;
         }
-        #div4 #mucheng-title {
+        #div-song #mucheng-title {
             width: 40%;
             height: 75px;
             line-height: 75px;
@@ -230,12 +230,12 @@
             text-align: center;
         }
 
-        #div4 #mucheng-author {
+        #div-song #mucheng-author {
             font-size: large;
             color: rgba(255,255,255,0.8);
         }
 
-        #div4 #mucheng-player {
+        #div-song #mucheng-player {
             float: right;
             width: 59%;
             height: 75px;
@@ -243,18 +243,18 @@
             top: 50%;
         }
 
-        #div4 #mucheng-player audio{
+        #div-song #mucheng-player audio{
             width: 100%;
             margin: auto;
             margin-top: 22.5px;
         }
 
-        #div4 #mucheng-holder {
+        #div-song #mucheng-holder {
             width: 100%;
             height: 75px;
             border-bottom: solid 1px silver;
         }
-        #div4 #mucheng-arrow {
+        #div-song #mucheng-arrow {
             cursor: pointer;
             height: 25px;
             text-align: center;
@@ -262,7 +262,7 @@
             font-size: 17px;
             padding-top: 2.5px;
         }
-        #div4 #mucheng-lyrics {
+        #div-song #mucheng-lyrics {
             transition: all 1s ease;
             -moz-transition: all 1s ease; /* Firefox 4 */
             -webkit-transition: all 1s ease; /* Safari 和 Chrome */
@@ -270,109 +270,68 @@
             overflow: hidden;
             height: 79%;
         }
-        #div4 #mucheng-lyrics li{
+        #div-song #mucheng-lyrics li{
             vertical-align: middle;
             display: block;
             list-style:none;
             height: 22%;
         }
-        #div4 .lyrics {
+        #div-song .lyrics {
             font-size: 16px;
             padding-top: 15px;
         }
-        #div4 .lyrics.top {
+        #div-song .lyrics.top {
             width: 100%;
             height: 50%;
         }
-        #div4 .lyrics.top.top1 {
+        #div-song .lyrics.top.top1 {
             width: 50%;
             height: 100%;
             float: left;
             text-align: right;
             padding-right: 5%;
         }
-        #div4 .lyrics.top.top2 {
+        #div-song .lyrics.top.top2 {
             width: 50%;
             height: 100%;
             float: right;
             text-align: left;
             padding-left: 5%;
         }
-        #div4 .lyrics.buttom {
+        #div-song .lyrics.buttom {
             width: 100%;
             height: 50%;
         }
-        #div4 .lyrics.buttom.buttom1 {
+        #div-song .lyrics.buttom.buttom1 {
             width: 30%;
             float: left;
             text-align: right;
             height: 100%;
         }
-        #div4 .lyrics.buttom.buttom2 {
+        #div-song .lyrics.buttom.buttom2 {
             width: 30%;
             margin: auto;
             text-align: center;
             height: 100%;
         }
-        #div4 .lyrics.buttom.buttom3 {
+        #div-song .lyrics.buttom.buttom3 {
             width: 30%;
             float: right;
             text-align: left;
             height: 100%;
         }
-
-        /* div5 */
-        #div5 .fronts {
-            position: relative;
-            pointer-events: none;
-            width: 100%;
-        }
-        #div5 .carousel-control {
-            width: 5%;
-        }
-        #carousel-slide5 {
-            position: absolute;
-            height: inherit;
-            width: 100%;
-            overflow: hidden;
-        }
-        #carousel-slide5 .carousel-inner{
-            height: 100%;
-            width: 100%;
-        }
-        #carousel-slide5 .item{
-            width: 100%;
-            height: 100%;
-        }
-        #carousel-slide5 img{
-            min-width: 100%;
-            min-height: 100%;
-            max-height: none;
-            max-width: none;
-        }
-    </style>
-    <style>
-        .mobile-view {
-            padding-top: 51px;
-            background: url('/static/img/index/index_bg_div6.jpg') !important;
-            min-height: 100%;
-        }
-        .mobile-view .panel {
-            width: 90%;
-            margin: auto;
-        }
     </style>
 {% endblock css %}
 
 {% block nav-btn %}
-<a href="#webapps" class="btn btn-default btn-sm">
+<a href="#div-apps" class="btn btn-default btn-sm">
     <span class="glyphicon glyphicon-list-alt"></span> WebApps
 </a>
 {% endblock nav-btn %}
 
 {% block content %}
-<div class="container hidden-xs">
-    <div class="fg-div lazyload" id="div1" data-original='/static/img/index/index_bg_div1.jpg' onmouseover="$('#div1 .no-see').addClass('entered');">
+<div class="container">
+    <div class="fg-div lazyload hidden-xs" id="div1" data-original='/static/img/index/div1_bg.jpg' onmouseover="$('#div1 .no-see').addClass('entered');">
         <div class="left-half">
             <p id="d1-word1" class="no-see">Life's battle doesn't always go to the stronger or faster man.</p>
             <p id="d1-word2" class="no-see">But sooner or later, the man who wins,</p>
@@ -386,14 +345,24 @@
         </div>
     </div><!--#div1-->
 
-    <div class="bg-div lazyload" id="div2" data-original='/static/img/index/index_bg_div2.jpg'>
+    <div class="fg-div" id="div-apps">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">slider1</div>
+                <div class="swiper-slide">slider2</div>
+                <div class="swiper-slide">slider3</div>
+            </div>
+        </div>
+    </div><!--#div-apps-->
+
+    <div class="bg-div lazyload hidden-xs" id="div2" data-original='/static/img/index/index_bg_div2.jpg'>
     </div><!--#div2-->
 
-    <div class="fg-div lazyload" id="div3" data-original='/static/img/index/index_bg_div3.jpg' onmouseover="$('#div3 .thumbnail').addClass('entered');">
+    <div class="fg-div lazyload hidden-xs" id="div-card" data-original='/static/img/index/div_card_bg.jpg' onmouseover="$('#div-card .thumbnail').addClass('entered');">
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                 <div class="thumbnail" id="d3-thumb1">
-                    <img src="/static/img/index/div3_name.jpg" alt="My Name">
+                    <img src="/static/img/index/div_card_name.jpg" alt="My Name">
                     <div class="caption">
                         <h3>Kyan</h3>
                         <p>
@@ -409,7 +378,7 @@
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                 <div class="thumbnail" id="d3-thumb2">
-                    <img src="/static/img/index/div3_music.png" alt="My Music">
+                    <img src="/static/img/index/div_card_music.png" alt="My Music">
                     <div class="caption">
                         <h3>音乐</h3>
                         <p>
@@ -425,7 +394,7 @@
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                 <div class="thumbnail" id="d3-thumb3">
-                    <img src="/static/img/index/div3_products.png" alt="My Products">
+                    <img src="/static/img/index/div_card_products.png" alt="My Products">
                     <div class="caption">
                         <h3>成就</h3>
                         <p>
@@ -441,7 +410,7 @@
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                 <div class="thumbnail" id="d3-thumb4">
-                    <img src="/static/img/index/div3_ideas.png" alt="My Thoughts">
+                    <img src="/static/img/index/div_card_ideas.png" alt="My Thoughts">
                     <div class="caption">
                         <h3>想法</h3>
                         <p>
@@ -456,9 +425,9 @@
                 </div>
             </div>
         </div>
-    </div><!--#div3-->
+    </div><!--#div-card-->
 
-    <div class="bg-div lazyload" id="div4" data-original='/static/img/index/index_bg_div4.jpg'>
+    <div class="bg-div lazyload hidden-xs" id="div-song" data-original='/static/img/index/div_song_bg.jpg'>
         <div id="mucheng">
             <div id="mucheng-title" class="mucheng-top">
                 <span>《牧城少年》</span>
@@ -510,53 +479,9 @@
                 </div>
             </div>
         </div>
-    </div><!--#div4-->
+    </div><!--#div-song-->
 
-    <div class="fg-div" id="div5">
-        <div id="carousel-slide5" class="carousel slide" data-ride="carousel" data-interval="4000">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#carousel-slide5" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-slide5" data-slide-to="1"></li>
-                <li data-target="#carousel-slide5" data-slide-to="2"></li>
-            </ol>
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-                <div class="item active">
-                    <img class="hover-notblur beveryfast" src="/static/img/index/index_div5_slide1.jpg" alt="index_div5_slide1.jpg">
-                </div>
-                <div class="item">
-                    <img class="hover-notblur beveryfast" src="/static/img/index/index_div5_slide2.jpg" alt="index_div5_slide2.jpg">
-                </div>
-                <div class="item">
-                    <img class="hover-notblur beveryfast" src="/static/img/index/index_div5_slide3.jpg" alt="index_div5_slide3.jpg">
-                </div>
-            </div>
-
-            <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-slide5" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#carousel-slide5" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-        <div class="fronts row" id="webapps">
-            <div class="col-lg-6 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-                {% include 'index/index-webapps.html' %}
-            </div><!--col-->
-        </div><!-- fronts -->
-    </div><!--#div5-->
-
-    <div class="bg-div lazyload" id="div6" data-original='/static/img/index/index_bg_div6.jpg'>
-    </div>
-</div>
-<div class="container">
-    <div class="mobile-view bg-div visible-xs-block">
-        {% include 'index/index-webapps.html' %}
+    <div class="bg-div lazyload hidden-xs" id="div-last" data-original='/static/img/index/div_last_bg.jpg'>
     </div>
 </div>
 {% endblock content %}
@@ -565,10 +490,31 @@
 <script>
     $(function(){
         toggleMucheng();
+        initSwiper();
         $('.lazyload').lazyload({
             effect: 'fadeIn'
         })
     });
+    function initSwiper(){
+        var swiper = new Swiper('.swiper-container', {
+            //effect: 'coverflow',
+            autoplay: 3000,
+            speed: 1000,
+            slidesPerView: 1,
+            centeredSlides: false,
+            paginationClickable: true,
+            prevButton:'.swiper-button-prev',
+            nextButton:'.swiper-button-next',
+            loop: true,
+            shortSwipes: true,
+            grabCursor: true,
+            breakpoints: {
+                768: {
+                    slidesPerView: 1,
+                },
+            },
+        });
+    }
     function toggleMucheng(){
         var currentHeight = $('#mucheng').height();
         if('100' == currentHeight){
