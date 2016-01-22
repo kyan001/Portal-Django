@@ -1,33 +1,32 @@
 {% extends "base.html" %}
 {% block title %}Welcome 欢迎{% endblock title %}
 
+{% block head %}
+    {{ block.super }}
+    <script src="/static/js/jquery.lazyload.min.js"></script>
+{% endblock head %}
+
 {% block css %}
     <style>/*背景相关部分*/
         .bg-div, .fg-div { /*隔一个DIV换一个背景图*/
             width: 100% !important;
         }
-        .div1 {
-            background: url('/static/img/index/index_bg_div1.jpg') !important;
+        #div1 {
             height: 97%;
         }
-        .div2 {
-            background: url('/static/img/index/index_bg_div2.jpg') !important;
+        #div2 {
             height: 97%;
         }
-        .div3 {
-            background: url('/static/img/index/index_bg_div3.jpg') !important;
+        #div3 {
             height: auto;
         }
-        .div4 {
-            background: url('/static/img/index/index_bg_div4.jpg') !important;
+        #div4 {
             height: 97%;
         }
-        .div5 {
-            background: url('') !important;
+        #div5 {
             height: 90%;
         }
-        .div6 {
-            background: url('/static/img/index/index_bg_div6.jpg') !important;
+        #div6 {
             height: 100%;
         }
         .bg-div {
@@ -80,24 +79,24 @@
         }
 
         /*div1*/
-        .div1 .left-half {
+        #div1 .left-half {
             border-right: 1px solid white;
             width: 61%;
             color: white;
             background-color: transparent;
         }
-        .div1 .right-half {
+        #div1 .right-half {
             width: 39%;
             padding-left: 3%;
             color: white;
             background-color: rgba(0,0,0,0.2);
         }
-        .div1 .left-half, .div1 .right-half {
+        #div1 .left-half, #div1 .right-half {
             padding-top: 100px;
         }
 
         /* div5 */
-        .div5 .right-half {
+        #div5 .right-half {
             width: 40%;
             padding-left: 0;
             padding-right: 0;
@@ -106,22 +105,22 @@
     </style>
     <style>
         /* div1 */
-        .div1 {
+        #div1 {
             padding-top: 7%;
             padding-bottom: 7%;
         }
 
-        .div1 p{
+        #div1 p{
             font-size: 29px;
         }
-        .div1 h1{
+        #div1 h1{
             font-size: 65px;
             color: white;
         }
-        .div1 #d1-word4 {
+        #div1 #d1-word4 {
             text-align: center;
         }
-        .div1 .no-see {
+        #div1 .no-see {
             color: rgba(255,255,255,0.5); /*white*/
             -webkit-filter: blur(9px);
             -moz-filter: blur(9px);
@@ -129,7 +128,7 @@
             -ms-filter: blur(9px);
             filter: blur(9px);
         }
-        .div1 .no-see.entered {
+        #div1 .no-see.entered {
             color: rgba(255,255,255,1); /*white*/
             -webkit-filter: blur(0);
             -moz-filter: blur(0);
@@ -141,19 +140,19 @@
             -webkit-transition: all 2.5s ease; /* Safari 和 Chrome */
             -o-transition: all 2.5s ease; /* Opera */
         }
-        .div1 #d1-word2.entered {
+        #div1 #d1-word2.entered {
             transition-delay: 2.5s;
             -moz-transition-delay: 2.5s; /* Firefox 4 */
             -webkit-transition-delay: 2.5s; /* Safari 和 Chrome */
             -o-transition-delay: 2.5s; /* Opera */
         }
-        .div1 #d1-word3.entered {
+        #div1 #d1-word3.entered {
             transition-delay: 5s;
             -moz-transition-delay: 5s; /* Firefox 4 */
             -webkit-transition-delay: 5s; /* Safari 和 Chrome */
             -o-transition-delay: 5s; /* Opera */
         }
-        .div1 #d1-word4.entered {
+        #div1 #d1-word4.entered {
             transition-delay: 6s;
             -moz-transition-delay: 6s; /* Firefox 4 */
             -webkit-transition-delay: 6s; /* Safari 和 Chrome */
@@ -161,55 +160,55 @@
         }
 
         /* div3 */
-        .div3 {
+        #div3 {
             padding-left: 5%;
             padding-right: 5%;
             padding-top: 166px;
             padding-bottom: 166px;
             height: auto;
         }
-        .div3 .thumbnail {
+        #div3 .thumbnail {
             background-color: rgba(255,255,255,0.6);
             opacity: 0;
             position: relative;
             top: 0;
         }
-        .div3 .thumbnail.entered {
+        #div3 .thumbnail.entered {
             opacity: 1;
             transition: all 1s linear;
             -moz-transition: all 1s linear; /* Firefox 4 */
             -webkit-transition: all 1s linear; /* Safari 和 Chrome */
             -o-transition: all 1s linear; /* Opera */
         }
-        .div3 #d3-thumb2 {
+        #div3 #d3-thumb2 {
             transition-delay: 0.5s;
             -moz-transition-delay: 0.5s; /* Firefox 4 */
             -webkit-transition-delay: 0.5s; /* Safari 和 Chrome */
             -o-transition-delay: 0.5s; /* Opera */
         }
-        .div3 #d3-thumb3 {
+        #div3 #d3-thumb3 {
             transition-delay: 1s;
             -moz-transition-delay: 1s; /* Firefox 4 */
             -webkit-transition-delay: 1s; /* Safari 和 Chrome */
             -o-transition-delay: 1s; /* Opera */
         }
-        .div3 #d3-thumb4 {
+        #div3 #d3-thumb4 {
             transition-delay: 1.5s;
             -moz-transition-delay: 1.5s; /* Firefox 4 */
             -webkit-transition-delay: 1.5s; /* Safari 和 Chrome */
             -o-transition-delay: 1.5s; /* Opera */
         }
-        .div3 .thumbnail > img{
+        #div3 .thumbnail > img{
             width: 100%;
             opacity: 0.9;
         }
 
         /* div4 */
-        .div4 {
+        #div4 {
             padding-top: 125px;
             padding-bottom: 125px;
         }
-        .div4 #mucheng {
+        #div4 #mucheng {
             background-color: rgba(0,0,0,0.5);
             margin: auto;
             height: 100%;
@@ -223,7 +222,7 @@
             -o-transition: all 0.5s ease; /* Opera */
             overflow: hidden;
         }
-        .div4 #mucheng-title {
+        #div4 #mucheng-title {
             width: 40%;
             height: 75px;
             line-height: 75px;
@@ -233,12 +232,12 @@
             text-align: center;
         }
 
-        .div4 #mucheng-author {
+        #div4 #mucheng-author {
             font-size: large;
             color: rgba(255,255,255,0.8);
         }
 
-        .div4 #mucheng-player {
+        #div4 #mucheng-player {
             float: right;
             width: 59%;
             height: 75px;
@@ -246,18 +245,18 @@
             top: 50%;
         }
 
-        .div4 #mucheng-player audio{
+        #div4 #mucheng-player audio{
             width: 100%;
             margin: auto;
             margin-top: 22.5px;
         }
 
-        .div4 #mucheng-holder {
+        #div4 #mucheng-holder {
             width: 100%;
             height: 75px;
             border-bottom: solid 1px silver;
         }
-        .div4 #mucheng-arrow {
+        #div4 #mucheng-arrow {
             cursor: pointer;
             height: 25px;
             text-align: center;
@@ -265,7 +264,7 @@
             font-size: 17px;
             padding-top: 2.5px;
         }
-        .div4 #mucheng-lyrics {
+        #div4 #mucheng-lyrics {
             transition: all 1s ease;
             -moz-transition: all 1s ease; /* Firefox 4 */
             -webkit-transition: all 1s ease; /* Safari 和 Chrome */
@@ -273,51 +272,51 @@
             overflow: hidden;
             height: 79%;
         }
-        .div4 #mucheng-lyrics li{
+        #div4 #mucheng-lyrics li{
             vertical-align: middle;
             display: block;
             list-style:none;
             height: 22%;
         }
-        .div4 .lyrics {
+        #div4 .lyrics {
             font-size: 16px;
             padding-top: 15px;
         }
-        .div4 .lyrics.top {
+        #div4 .lyrics.top {
             width: 100%;
             height: 50%;
         }
-        .div4 .lyrics.top.top1 {
+        #div4 .lyrics.top.top1 {
             width: 50%;
             height: 100%;
             float: left;
             text-align: right;
             padding-right: 5%;
         }
-        .div4 .lyrics.top.top2 {
+        #div4 .lyrics.top.top2 {
             width: 50%;
             height: 100%;
             float: right;
             text-align: left;
             padding-left: 5%;
         }
-        .div4 .lyrics.buttom {
+        #div4 .lyrics.buttom {
             width: 100%;
             height: 50%;
         }
-        .div4 .lyrics.buttom.buttom1 {
+        #div4 .lyrics.buttom.buttom1 {
             width: 30%;
             float: left;
             text-align: right;
             height: 100%;
         }
-        .div4 .lyrics.buttom.buttom2 {
+        #div4 .lyrics.buttom.buttom2 {
             width: 30%;
             margin: auto;
             text-align: center;
             height: 100%;
         }
-        .div4 .lyrics.buttom.buttom3 {
+        #div4 .lyrics.buttom.buttom3 {
             width: 30%;
             float: right;
             text-align: left;
@@ -325,12 +324,12 @@
         }
 
         /* div5 */
-        .div5 .fronts {
+        #div5 .fronts {
             position: relative;
             pointer-events: none;
             width: 100%;
         }
-        .div5 .carousel-control {
+        #div5 .carousel-control {
             width: 5%;
         }
         #carousel-slide5 {
@@ -375,7 +374,7 @@
 
 {% block content %}
 <div class="container hidden-xs">
-    <div class="fg-div div1" onmouseover="$('.div1 .no-see').addClass('entered');">
+    <div class="fg-div lazyload" id="div1" data-original='/static/img/index/index_bg_div1.jpg' onmouseover="$('#div1 .no-see').addClass('entered');">
         <div class="left-half">
             <p id="d1-word1" class="no-see">Life's battle doesn't always go to the stronger or faster man.</p>
             <p id="d1-word2" class="no-see">But sooner or later, the man who wins,</p>
@@ -387,12 +386,12 @@
             <p>Welcome to <b>SuperFarmer.net</b></p>
             <p><a class="btn btn-primary btn-lg" href="http://www.superfarmer.net/thinking" role="button">Visit My Blog</a></p>
         </div>
-    </div><!--div1-->
+    </div><!--#div1-->
 
-    <div class="bg-div div2">
-    </div><!--div2-->
+    <div class="bg-div lazyload" id="div2" data-original='/static/img/index/index_bg_div2.jpg'>
+    </div><!--#div2-->
 
-    <div class="fg-div div3" onmouseover="$('.div3 .thumbnail').addClass('entered');">
+    <div class="fg-div lazyload" id="div3" data-original='/static/img/index/index_bg_div3.jpg' onmouseover="$('#div3 .thumbnail').addClass('entered');">
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                 <div class="thumbnail" id="d3-thumb1">
@@ -459,9 +458,9 @@
                 </div>
             </div>
         </div>
-    </div><!--div1-->
+    </div><!--#div3-->
 
-    <div class="bg-div div4">
+    <div class="bg-div lazyload" id="div4" data-original='/static/img/index/index_bg_div4.jpg'>
         <div id="mucheng">
             <div id="mucheng-title" class="mucheng-top">
                 <span>《牧城少年》</span>
@@ -513,9 +512,9 @@
                 </div>
             </div>
         </div>
-    </div><!--div4-->
+    </div><!--#div4-->
 
-    <div class="fg-div div5">
+    <div class="fg-div" id="div5">
         <div id="carousel-slide5" class="carousel slide" data-ride="carousel" data-interval="4000">
             <!-- Indicators -->
             <ol class="carousel-indicators">
@@ -552,9 +551,9 @@
                 {% include 'index/index-webapps.html' %}
             </div><!--col-->
         </div><!-- fronts -->
-    </div><!--div5-->
+    </div><!--#div5-->
 
-    <div class="bg-div div6">
+    <div class="bg-div lazyload" id="div6" data-original='/static/img/index/index_bg_div6.jpg'>
     </div>
 </div>
 <div class="container">
@@ -568,6 +567,9 @@
 <script>
     $(function(){
         toggleMucheng();
+        $('.lazyload').lazyload({
+            effect: 'fadeIn'
+        })
     });
     function toggleMucheng(){
         var currentHeight = $('#mucheng').height();

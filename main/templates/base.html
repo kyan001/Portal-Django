@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head>
-        {% block head %}
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-            <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-            <meta name="apple-mobile-web-app-capable" content="yes">
-            <meta name="keywords" content="SuperFarmer,Kyan">
-            <meta name="description" content="SuperFarmer.net is a website for Kyan (a.k.a. SuperFarmer)">
-            {% block icon %}
-                <link rel="icon" href="/static/img/favicon.png">
-            {% endblock icon %}
-            <title>{% block title %}{% endblock %} - SuperFarmer.net</title>
-            <script src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
-            <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-            <script src="/static/js/KyanJsUtil.js"></script>
-            <!--<script src="/static/js/jquery-2.1.3.min.js"></script>
-            <script src="/static/bootstrap/js/bootstrap.js"></script>-->
-            <script>
-                // 本地测试不加载腾讯分析
-                var ta_filter = new Array('localhost','127.0.0.1','local.superfarmer.net')
-                if( ta_filter.indexOf(window.location.hostname)<0 ){
-                    jQuery.getScript('http://tajs.qq.com/stats?sId=50871665')
-                }
-                // 所有 ajax 错误打印在 console 中
-                $( document ).ajaxError(function(event, jqxhr, settings, exception) {
-                    console.log("Ajax Error, " + settings.url);
-                    console.log("status: " + jqxhr.status);
-                    console.log("readyState: " + jqxhr.readyState);
-                });
-            </script>
-            <link rel="stylesheet" href="/static/css/KyanCssUtil.css">
-            <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-paper.css">
-            {% block theme %}
-                {% if request.COOKIES.theme %}
-                    <link class="bootswatcher" rel="stylesheet" href="//bootswatch.com/{{request.COOKIES.theme}}/bootstrap.min.css">
-                {% endif %}
-            {% endblock theme %}
-            <style>
-                html, body, .container, .container-fluid {
-                    height: 100%;
-                }
-                .glyphicon {
-                    vertical-align: baseline;
-                }
-            </style>
-            {% block css %}{% endblock %}
-            {% block js %}{% endblock %}
-        {% endblock head %}
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="keywords" content="SuperFarmer,Kyan">
+        <meta name="description" content="SuperFarmer.net is a website for Kyan (a.k.a. SuperFarmer)">
+        {% block icon %}
+            <link rel="icon" href="/static/img/favicon.png">
+        {% endblock icon %}
+        <title>{% block title %}{% endblock %} - SuperFarmer.net</title>
+        <script src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="/static/js/KyanJsUtil.js"></script>
+        {% block head %}{% endblock head %}
+        <!--<script src="/static/js/jquery-2.1.3.min.js"></script>
+        <script src="/static/bootstrap/js/bootstrap.js"></script>-->
+        <script>
+            // 本地测试不加载腾讯分析
+            var ta_filter = new Array('localhost','127.0.0.1','local.superfarmer.net')
+            if( ta_filter.indexOf(window.location.hostname)<0 ){
+                jQuery.getScript('http://tajs.qq.com/stats?sId=50871665')
+            }
+            // 所有 ajax 错误打印在 console 中
+            $( document ).ajaxError(function(event, jqxhr, settings, exception) {
+                console.log("Ajax Error, " + settings.url);
+                console.log("status: " + jqxhr.status);
+                console.log("readyState: " + jqxhr.readyState);
+            });
+        </script>
+        <link rel="stylesheet" href="/static/css/KyanCssUtil.css">
+        <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-paper.css">
+        {% block theme %}
+            {% if request.COOKIES.theme %}
+                <link class="bootswatcher" rel="stylesheet" href="//bootswatch.com/{{request.COOKIES.theme}}/bootstrap.min.css">
+            {% endif %}
+        {% endblock theme %}
+        <style>
+            html, body, .container, .container-fluid {
+                height: 100%;
+            }
+            .glyphicon {
+                vertical-align: baseline;
+            }
+        </style>
+        {% block css %}{% endblock %}
+        {% block js %}{% endblock %}
     </head>
     <body>
         <!-- ############ ALERT ZONE ############-->
