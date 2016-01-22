@@ -127,7 +127,7 @@ def progressDetail(request):
     # calcs
     aux = {};
     if progress.current != 0 and opus.total != 0 and progress.status!='done':
-        time_spend = progress.modified - progress.created
+        time_spend = timezone.now() - progress.created
         estimate_finish_time = time_spend * (opus.total / progress.current)
         estimate_finish_date = progress.created + estimate_finish_time
         aux['estmt_fnsh_dt'] = util.ctrl.formatDate(estimate_finish_date, 'fulldateonly')

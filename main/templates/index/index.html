@@ -10,19 +10,15 @@
 
 {% block css %}
     <style>/*背景相关部分*/
-        .bg-div, .fg-div { /*隔一个DIV换一个背景图*/
+        .bg-div,
+        .fg-div { /*隔一个DIV换一个背景图*/
             width: 100% !important;
         }
         #div1 {
             height: 97%;
         }
         #div-apps {
-            height: 90%;
-        }
-        @media (max-width: 768px){
-            #div-apps {
-                min-height: 100%;
-            }
+            overflow: hidden;
         }
         #div2 {
             height: 97%;
@@ -42,6 +38,7 @@
             background-size: cover !important;
             background-position: 50% 50% !important;
         }
+        .swiper-slide,
         .fg-div {
             background-size: cover !important;
             background-position: 50% 50% !important;
@@ -155,6 +152,14 @@
             -moz-transition-delay: 6s; /* Firefox 4 */
             -webkit-transition-delay: 6s; /* Safari 和 Chrome */
             -o-transition-delay: 6s; /* Opera */
+        }
+
+        /* div-apps */
+        .swiper-slide {
+            padding-top: 25px;
+        }
+        #slide-1 {
+            background-image: url('/static/img/index/slide1.jpg');
         }
 
         /* div-card */
@@ -348,10 +353,50 @@
     <div class="fg-div" id="div-apps">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">slider1</div>
-                <div class="swiper-slide">slider2</div>
-                <div class="swiper-slide">slider3</div>
+                <div class="swiper-slide" id='slide-1'>
+                    <div class="row">
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-7">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4>「我的进度」<small>管理您的进度</small></h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-xs-6 col-sm-6">
+                                            <div class="thumbnail">
+                                                <img src="/static/img/index/div_song_bg.jpg" alt="...">
+                                                <div class="caption">
+                                                    <h5>你想要记录...</h5>
+                                                    <li><b>《纸牌屋》</b>昨天更新到了第三季第 5 季</li>
+                                                    <li>今天<b>《笑傲江湖》</b>读到了第 510 页</li>
+                                                    <li>下周想重温一遍<b>《海贼王》</b></li>
+                                                    <h5>我可以帮你...</h5>
+                                                    <li>自动填写书籍总页数</li>
+                                                    <li>查看作品评分、短评、演员表</li>
+                                                    <li>自动更新</li>
+                                                    <li></li>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-4">
+                                            <div class="thumbnail">
+                                                <img src="/static/img/index/div_song_bg.jpg" alt="...">
+                                                <div class="caption">
+                                                    <h5>更新进度</h5>
+                                                    <li>轻点快速更新</li>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!--.panel-body-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide" id='slide-2'>slider2</div>
+                <div class="swiper-slide" id='slide-3'>slider3</div>
             </div>
+            <div class="swiper-pagination"></div>
         </div>
     </div><!--#div-apps-->
 
@@ -497,17 +542,20 @@
     });
     function initSwiper(){
         var swiper = new Swiper('.swiper-container', {
-            //effect: 'coverflow',
-            autoplay: 3000,
+            // basic
+            shortSwipes: true,
+            grabCursor: true,
             speed: 1000,
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            effect: 'cube',
+            autoplay: 100000,
             slidesPerView: 1,
             centeredSlides: false,
-            paginationClickable: true,
             prevButton:'.swiper-button-prev',
             nextButton:'.swiper-button-next',
             loop: true,
-            shortSwipes: true,
-            grabCursor: true,
+
             breakpoints: {
                 768: {
                     slidesPerView: 1,
