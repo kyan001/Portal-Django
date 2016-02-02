@@ -31,9 +31,6 @@
     .progress-card .progress .progress-bar {
         line-height: inherit;
     }
-    table td{
-        font-size: 14px;
-    }
     .editable {
         font-size: 14px !important;
         width: 100%;
@@ -115,9 +112,9 @@
                 </div>
                 <div class="panel-body second-panel-body">
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div id='left-half-panel' class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="panel panel-primary">
-                                <div class="panel-heading"><b>快速更新</b></div>
+                                <div class="panel-heading">快速更新</div>
                                 <form id="fastupdateform" action="/progress/fastupdate/" method="post">
                                     <input type="hidden" name="id" value="{{prg.id}}">
                                     <div class="form-group">
@@ -160,6 +157,100 @@
                                     </div>
                                 </form>
                             </div><!--.panel-->
+                            <form id="saveform" action="/progress/update/" method="post">
+                                <input name="id" type="hidden" value="{{prg.id}}">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <span>进度信息</span>
+                                        <span class="text-muted pull-right">
+                                            User:{{prg.userid}} / Opus:{{prg.opusid}} / Prog:{{prg.id}}
+                                        </span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table table-condensed table-hover">
+                                            <tr class="text-primary">
+                                                <th>状态</th>
+                                                <td>{{prg.getStatus}}</td>
+                                            </tr>
+                                            <tr class="text-info editunlock" id='name-tr' data-toggle="popover" data-placement='top' data-container='body'>
+                                                <th>名称</th>
+                                                <td class="text-info">
+                                                    <input class="editable" name="name" type="text" value="{{opus.name}}" autocomplete="off" readonly placeholder="{{opus.name}}">
+                                                </td>
+                                            </tr>
+                                            <tr class="text-info editunlock">
+                                                <th>副标题</th>
+                                                <td class="text-info">
+                                                    <input class="editable" name="subtitle" type="text" value="{{opus.subtitle}}" placeholder="{{opus.subtitle}}" readonly autocomplete="off">
+                                                </td>
+                                            </tr>
+                                            <tr class="text-info editunlock">
+                                                <th>总共</th>
+                                                <td class="text-info">
+                                                    <input class="editable"
+                                                        name="total"
+                                                        type="number"
+                                                        placeholder="{{opus.total}}"
+                                                        value="{{opus.total}}"
+                                                        readonly
+                                                        autocomplete="off">
+                                                </td>
+                                            </tr>
+                                            <tr class="text-info editunlock">
+                                                <th>当前进度</th>
+                                                <td class="text-info">
+                                                    <input class="editable" name="current" type="number" value="{{prg.current}}" readonly placeholder="{{prg.current}}">
+                                                </td>
+                                            </tr>
+                                            <tr class="text-info editunlock" title="{{prg.weblink}}">
+                                                <th>链接</th>
+                                                <td class="text-info">
+                                                    <input class="editable" name="weblink" type="text" value="{{prg.weblink}}" readonly placeholder="{{prg.weblink}}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>阅读百分比</th>
+                                                <td>{{prg.getPersent}}%</td>
+                                            </tr>
+                                        </table>
+                                    </div><!--.panel-body-->
+                                </div><!--.panel-->
+                            </form>
+                        </div><!--.col#left-half-panel-->
+                        <div id='right-half-panel' class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <span>时间信息</span>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-condensed table-hover">
+                                        <tr>
+                                            <th>开始时间</th>
+                                            <td>{{prg.getCreated}}</td>
+                                        </tr>
+                                        <tr>
+                                            {% ifequal prg.status "done" %}
+                                            <th>完成时间</th>
+                                            {% else %}
+                                            <th>上次更新</th>
+                                            {% endifequal %}
+                                            <td>{{prg.getModified}}</td>
+                                        </tr>
+                                        {% if aux.estmt_fnsh_dt %}
+                                        <tr class="text-success">
+                                            <th>预计完成</th>
+                                            <td>{{ aux.estmt_fnsh_dt }}</td>
+                                        </tr>
+                                        {% endif %}
+                                        {% if aux.time_spent %}
+                                        <tr class="text-success">
+                                            <th>用时</th>
+                                            <td>{{ aux.time_spent }}</td>
+                                        </tr>
+                                        {% endif %}
+                                    </table>
+                                </div><!--.panel-body-->
+                            </div><!--.panel-->
                             <div class="panel panel-primary" id="douban-info-panel">
                                 <div class="panel-heading">
                                     <span><b>作品信息</b></span>
@@ -187,86 +278,7 @@
                                     </table>
                                 </div><!--.panel-body-->
                             </div><!--.panel-->
-                        </div><!--.col-->
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <form id="saveform" action="/progress/update/" method="post">
-                                <input name="id" type="hidden" value="{{prg.id}}">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        <span><b>进度信息</b></span>
-                                        <span class="text-muted pull-right">
-                                            User:{{prg.userid}} / Opus:{{prg.opusid}} / Prog:{{prg.id}}
-                                        </span>
-                                    </div>
-                                    <div class="panel-body">
-                                        <table class="table table-condensed table-hover">
-                                            <tr class="text-primary">
-                                                <td><b>状态</b></td>
-                                                <td>{{prg.getStatus}}</td>
-                                            </tr>
-                                            <tr class="text-info editunlock" id='name-tr' data-toggle="popover" data-placement='top' data-container='body'>
-                                                <td><b>名称</b></td>
-                                                <td class="text-info">
-                                                    <input class="editable" name="name" type="text" value="{{opus.name}}" autocomplete="off" readonly placeholder="{{opus.name}}">
-                                                </td>
-                                            </tr>
-                                            <tr class="text-info editunlock">
-                                                <td><b>副标题</b></td>
-                                                <td class="text-info">
-                                                    <input class="editable" name="subtitle" type="text" value="{{opus.subtitle}}" placeholder="{{opus.subtitle}}" readonly autocomplete="off">
-                                                </td>
-                                            </tr>
-                                            <tr class="text-info editunlock">
-                                                <td><b>总共</b></td>
-                                                <td class="text-info">
-                                                    <input class="editable"
-                                                        name="total"
-                                                        type="number"
-                                                        placeholder="{{opus.total}}"
-                                                        value="{{opus.total}}"
-                                                        readonly
-                                                        autocomplete="off">
-                                                </td>
-                                            </tr>
-                                            <tr class="text-info editunlock">
-                                                <td><b>当前进度</b></td>
-                                                <td class="text-info">
-                                                    <input class="editable" name="current" type="number" value="{{prg.current}}" readonly placeholder="{{prg.current}}">
-                                                </td>
-                                            </tr>
-                                            <tr class="text-info editunlock" title="{{prg.weblink}}">
-                                                <td><b>链接</b></td>
-                                                <td class="text-info">
-                                                    <input class="editable" name="weblink" type="text" value="{{prg.weblink}}" readonly placeholder="{{prg.weblink}}">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>阅读百分比</b></td>
-                                                <td>{{prg.getPersent}}%</td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>开始时间</b></td>
-                                                <td>{{prg.getCreated}}</td>
-                                            </tr>
-                                            <tr>
-                                                {% ifequal prg.status "done" %}
-                                                <td><b>完成时间</b></td>
-                                                {% else %}
-                                                <td><b>上次更新</b></td>
-                                                {% endifequal %}
-                                                <td>{{prg.getModified}}</td>
-                                            </tr>
-                                            {% if aux.estmt_fnsh_dt %}
-                                            <tr>
-                                                <td><b>预计完成</b></td>
-                                                <td>{{ aux.estmt_fnsh_dt }}</td>
-                                            </tr>
-                                            {% endif %}
-                                        </table>
-                                    </div><!--.panel-body-->
-                                </div><!--.panel-->
-                            </form>
-                        </div><!--.col-->
+                        </div><!--.col#right-half-panel-->
                     </div><!--.row-->
                 </div>
                 <div class="row">

@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.utils import timezone
 from django.template import *
+import datetime
 from django.views.decorators.csrf import csrf_exempt
 from main.models import *
 from django.core.cache import cache
@@ -126,11 +127,17 @@ def progressDetail(request):
     userexp.addExp(1, '查看进度《{opus.name}》的详情'.format(opus=opus))
     # calcs
     aux = {};
-    if progress.current != 0 and opus.total != 0 and progress.status!='done':
-        time_spend = timezone.now() - progress.created
-        estimate_finish_time = time_spend * (opus.total / progress.current)
-        estimate_finish_date = progress.created + estimate_finish_time
-        aux['estmt_fnsh_dt'] = util.ctrl.formatDate(estimate_finish_date, 'fulldateonly')
+    if progress.status == 'done':
+        time_spent = progress.modified - progress.created
+        aux['time_spent'] = util.ctrl.formatTimedelta(time_spent)
+    elif progress.current != 0 and opus.total != 0:
+        time_spent_so_far = timezone.now() - progress.created
+        estimate_finish_time = time_spent_so_far * (opus.total / progress.current)
+        if estimate_finish_time < datetime.timedelta(days=7):
+            aux['estmt_fnsh_dt'] = util.ctrl.formatTimedelta(estimate_finish_time, 'dayandhour')
+        else:
+            estimate_finish_date = progress.created + estimate_finish_time
+            aux['estmt_fnsh_dt'] = util.ctrl.formatDate(estimate_finish_date, 'fulldateonly')
     # render
     context['opus'] = opus
     context['prg'] = progress
