@@ -122,7 +122,7 @@
             },
         });
     }
-
+    var timer_vUn
     function validateUsername(option){
         clearHasClass($('#username-group'));
         if( $('input[name="username"]').val() == '' ){
@@ -130,34 +130,37 @@
             foldOptions()
             return
         }
-        $.ajax({
-            type: "GET",
-            url: "/user/validateusername",
-            data: {
-                'username':$('input[name="username"]').val()
-            },
-            success: function (data) {
-                var result = data;
-                if(result.error){
-                    $.danger(result.error);
-                    foldOptions();
-                    return
-                }
-                if (result.exist) {
-                    if(result.unique){
-                        unfoldOptions('unique')
+        clearTimeout(timer_vUn);
+        timer_vUn = setTimeout(function(){
+            $.ajax({
+                type: "GET",
+                url: "/user/validateusername",
+                data: {
+                    'username':$('input[name="username"]').val()
+                },
+                success: function (data) {
+                    var result = data;
+                    if(result.error){
+                        $.danger(result.error);
+                        foldOptions();
+                        return
+                    }
+                    if (result.exist) {
+                        if(result.unique){
+                            unfoldOptions('unique')
+                        } else {
+                            unfoldOptions('normal');
+                        }
                     } else {
-                        unfoldOptions('normal');
+                        if(option=='onblur' || option=='onchange'){
+                            $('#username-group').addClass('has-error');
+                            $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在');
+                        }
+                        foldOptions();
                     }
-                } else {
-                    if(option=='onblur' || option=='onchange'){
-                        $('#username-group').addClass('has-error');
-                        $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在');
-                    }
-                    foldOptions();
-                }
-            },
-        });
+                },
+            });
+        }, 500);
     }
     function submitForm(){
         if( $('input[name="answer"]').val() == '' ){
