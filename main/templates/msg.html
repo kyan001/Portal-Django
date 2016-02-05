@@ -2,62 +2,53 @@
 {% block userbar %}{% endblock userbar %}
 {% block title %}提示信息{% endblock title %}
 
-{% block head %}
-    {{ block.super }}
+{% block css %}
     <style>
-        .panel-wrap {
-            min-width: 200px;
-            width: 40%;
-            margin: auto;
-            margin-top: 100px;
-        }
-        .panel {
-            display: none;
+        .container {
+            padding-top: 100px;
         }
         .panel-body {
             min-height: 140px;
-            font-size: 15px;
-        }
-        .panel-footer {
-            text-align: right;
-            padding: 0;
         }
     </style>
-    <script>
-    $(function(){
-        $('.panel').slideDown()
-    });
-    </script>
-{% endblock head %}
+{% endblock css %}
+{% block js %}
+{% endblock js %}
 
 {% block content %}
-<div class="panel-wrap">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="title panel-title">
-            {% if title %}
-                {{title}}
-            {% else %}
-                提示信息：
-            {% endif %}
-            </h3>
-        </div>
-        <div class="panel-body">
-            {{ content|escape|linebreaks }}
-        </div>
-        <div class="panel-footer">
-            {% if url %}
-                <a href="{{url}}" class="btn btn-primary">
-                {% if button %}
-                    {{ button }}
-                {% else %}
-                    点此跳转至 {{url}}
-                {% endif %}
-                </a>
-            {% else %}
-                <a href="javascript:history.back()" class="btn btn-primary">点此回到上个页面</a>
-            {% endif %}
-        </div>
-    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        {% if title %}
+                            {{title}}
+                        {% else %}
+                            提示信息：
+                        {% endif %}
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    {{ content|safe|linebreaks }}
+                </div>
+                <div class="panel-footer text-right">
+                    {% if url %}
+                        <a href="{{url}}" class="btn btn-primary">
+                            {% if button %}
+                                {{ button }}
+                            {% else %}
+                                点此跳转至 {{url}}
+                            {% endif %}
+                        </a>
+                    {% else %}
+                        <a href="javascript:history.back()" class="btn btn-primary">
+                            点此回到上个页面
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div><!--.col-->
+    </div><!--.row-->
 </div>
 {% endblock content %}
