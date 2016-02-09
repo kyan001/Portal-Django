@@ -33,6 +33,7 @@
     </div>
     <div id="chat-{{c.id}}" class="panel-collapse collapse {%if receiver%}in{%endif%}" role="tabpanel">
         <div class="panel-body">
+            <div class="text-muted visible-xs-block">{{ c.getCreated }}</div>
             <div class='chat-content pull-left'>
                 {% if c.getSender.username == 'syschat' %}
                     <p>{{ c.content|safe }}</p>
@@ -61,7 +62,6 @@
                     </a>
                 {% endif %}
             </div>
-            <div class="text-muted visible-xs-block">{{ c.getCreated }}</div>
         </div>
     </div>
 </div>
