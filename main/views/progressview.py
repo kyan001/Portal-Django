@@ -132,7 +132,7 @@ def progressDetail(request):
         aux['time_spent'] = util.ctrl.formatTimedelta(time_spent)
     elif progress.current != 0 and opus.total != 0:
         time_spent_so_far = timezone.now() - progress.created
-        estimate_finish_time = time_spent_so_far * (opus.total / progress.current)
+        estimate_finish_time = time_spent_so_far / progress.current * (opus.total - progress.current)
         if estimate_finish_time < datetime.timedelta(days=7):
             aux['estmt_fnsh_dt'] = util.ctrl.formatTimedelta(estimate_finish_time, 'dayandhour')
         else:
