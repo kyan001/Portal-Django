@@ -2,7 +2,7 @@ from django.db import models
 from django.forms.models import model_to_dict
 import util.ctrl
 from django.utils import timezone
-import json
+import json, datetime
 import util.KyanToolKit_Py
 ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 
@@ -49,11 +49,13 @@ class User(models.Model):
         total_exp = sum(ue.exp for ue in userexps)
         return util.ctrl.calcLevel(total_exp)
     # progress related
-    def getProgressCounts(self):
-        countResult = {}
+    def getProgressStatics(self):
+        result = {}
         for st in Progress.status_pool.get('all'):
-            countResult[st] = Progress.objects.filter(userid=self.id, status=st).count()
-        return countResult
+            result[st] = Progress.objects.getProgressStatics(userid=self.id, status=st)
+            result[st]['name'] = Progress.objects.getStatusName(st)
+        return result
+
     # chat related
     def sendChat(self, receiver, title="", content=""):
         new_chat = Chat(senderid=self.id, receiverid=receiver.id, title=title, content=content.strip());
@@ -205,6 +207,23 @@ class ProgressManager(models.Manager):
         if status_name:
             return status_name;
         return status
+    def getProgressStatics(self, status, userid):
+        result = {}
+        if status in Progress.status_pool.get('all'):
+            records = Progress.objects.filter(userid=userid, status=status)
+            # count
+            count = records.count()
+            result['count'] = count
+            # average time spent
+            temp_c2m_total = temp_c2n_total = temp_m2n_total = datetime.timedelta()
+            for r in records:
+                temp_c2m_total += r.getTimedelta('c2m')
+                temp_c2n_total += r.getTimedelta('c2n')
+                temp_m2n_total += r.getTimedelta('m2n')
+            result['average_created_modified'] = util.ctrl.formatTimedelta(temp_c2m_total/count, '%d %H %M') if count else 0
+            result['average_created_now'] = util.ctrl.formatTimedelta(temp_c2n_total/count, '%d %H %M') if count else 0
+            result['average_modified_now'] = util.ctrl.formatTimedelta(temp_m2n_total/count, '%d %H %M') if count else 0
+        return result
 
 class Progress(models.Model):
     userid = models.IntegerField(default=0)
@@ -246,6 +265,16 @@ class Progress(models.Model):
         self.modified = timezone.now()
     def getModified(self):
         return util.ctrl.formatDate(self.modified)
+    # time spent
+    def getTimedelta(self, mode='default'):
+        if mode == 'c2m':
+            return self.modified - self.created
+        elif mode == 'c2n':
+            return timezone.now() - self.created
+        elif mode == 'm2n':
+            return timezone.now() - self.modified
+        else:
+            return datetime.timedelta()
     # status
     def setStatus(self, status):
         if status not in self.status_pool.get('all'):

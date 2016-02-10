@@ -121,18 +121,18 @@ def userPublic(request): # public
     except User.DoesNotExist:
         return infoMsg("用户 @{nickname} 不存在".format(nickname=nickname), title='找不到用户')
     # get user progress counts
-    progress_counts = user.getProgressCounts();
-    progress_counts_group = []
-    for (k, v) in progress_counts.items():
-        item = (Progress.objects.getStatusName(k), v)
-        progress_counts_group.append(item)
+    progress_statics = user.getProgressStatics();
+    progress_statics_group = []
+    for (k, v) in progress_statics.items():
+        item = (Progress.objects.getStatusName(k), v['count'])
+        progress_statics_group.append(item)
     # add exp to 被查看人
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
     userexp.addExp(1, '公开页被访问')
     # render
     context['user'] = user
     context['headimg'] = getGravatarUrl(user.email);
-    context['prgcounts'] = progress_counts_group
+    context['prgcounts'] = progress_statics_group
     return render_to_response('user/public.html', context);
 
 def userProfile(request):
@@ -163,18 +163,14 @@ def userProfile(request):
                 lv_notice.append(lv_noticelet)
         cache.set(cache_key, ue.getLevel(), cache_timeout)
     # get user progress counts
-    progress_counts = user.getProgressCounts();
-    progress_counts_group = []
-    for (k, v) in progress_counts.items():
-        item = (Progress.objects.getStatusName(k), v)
-        progress_counts_group.append(item)
+    progress_statics = user.getProgressStatics();
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
     userexp.addExp(1, '查看用户私人信息')
     # render
     context['user'] = user
     context['headimg'] = getGravatarUrl(user.email);
-    context['prgcounts'] = progress_counts_group
+    context['prgstatics'] = progress_statics.values()
     context['exps'] = exps
     context['lvnotice'] = lv_notice
     return render_to_response('user/profile.html', context)

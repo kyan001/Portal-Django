@@ -134,7 +134,7 @@ def progressDetail(request):
         time_spent_so_far = timezone.now() - progress.created
         estimate_finish_time = time_spent_so_far / progress.current * (opus.total - progress.current)
         if estimate_finish_time < datetime.timedelta(days=7):
-            aux['estmt_fnsh_dt'] = util.ctrl.formatTimedelta(estimate_finish_time, 'dayandhour')
+            aux['estmt_fnsh_dt'] = util.ctrl.formatTimedelta(estimate_finish_time, '%d %H %M')
         else:
             estimate_finish_date = progress.created + estimate_finish_time
             aux['estmt_fnsh_dt'] = util.ctrl.formatDate(estimate_finish_date, 'fulldateonly')

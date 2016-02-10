@@ -18,9 +18,6 @@
         font-size: 15px;
     }
     /* main-info */
-    .progress-status {
-        width: 30%;
-    }
     /* exp-info */
     .progress {
         margin: 0;
@@ -36,7 +33,6 @@
         font-size: 15px;
         font-weight: bold;
     }
-
 </style>
 {% endblock css %}
 
@@ -76,15 +72,15 @@
                 <div role="tabpanel" class="tab-pane active" id="personal-info">
                     <table class="table table-condensed table-hover">
                         <tr>
-                            <th>id</th>
+                            <th>id：</th>
                             <td>{{ user.id }}</td>
                         </tr>
                         <tr>
-                            <th>用户名</th>
+                            <th>用户名：</th>
                             <td>{{ user.username }}</td>
                         </tr>
                         <tr>
-                            <th>昵称</th>
+                            <th>昵称：</th>
                             <td>
                                 <a href="/user/public?nickname={{ user.nickname }}">
                                     @<abbr title="我的公开页，任何人都可以查看" data-toggle="tooltip" data-placement="right">{{ user.nickname }}</abbr>
@@ -92,11 +88,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>邮箱</th>
+                            <th>邮箱：</th>
                             <td>{{ user.email }}</td>
                         </tr>
                         <tr>
-                            <th>活跃等级</th>
+                            <th>活跃等级：</th>
                             <td>
                                 <abbr title="根据“总活跃度”计算" data-toggle="tooltip" data-placement="right">Lv.{{ user.getLevel }}</abbr>
                             </td>
@@ -106,11 +102,11 @@
                 <div role="tabpanel" class="tab-pane" id="register-info">
                     <table class="table table-condensed table-hover">
                         <tr>
-                            <th>问题</th>
+                            <th>问题：</th>
                             <td>{{ user.question }}</td>
                         </tr>
                         <tr>
-                            <th>答案1</th>
+                            <th>答案1：</th>
                             {% if user.answer1 %}
                             <td><i>[已加密]</i></td>
                             {% else %}
@@ -118,7 +114,7 @@
                             {% endif %}
                         </tr>
                         <tr>
-                            <th>答案2</th>
+                            <th>答案2：</th>
                             {% if user.answer2 %}
                             <td><i>[已加密]</i></td>
                             {% else %}
@@ -126,7 +122,7 @@
                             {% endif %}
                         </tr>
                         <tr>
-                            <th>提示</th>
+                            <th>提示：</th>
                             {% if user.tip %}
                             <td>{{ user.tip }}</td>
                             {% else %}
@@ -134,18 +130,38 @@
                             {% endif %}
                         </tr>
                         <tr>
-                            <th>创建时间</th>
+                            <th>创建时间：</th>
                             <td>{{ user.getCreated }}</td>
                         </tr>
                     </table>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="progress-info">
                     <table class="table table-condensed table-hover">
-                    {% for name, count in prgcounts %}
-                        {% if name != '出错' %}
+                    {% for p in prgstatics %}
+                        {% if p.name != '出错' %}
                         <tr>
-                            <th class="progress-status">{{ name }}:</th>
-                            <td>{{ count }}</td>
+                            <th class='text-right'>{{ p.name }}：</th>
+                            <td>{{ p.count }}</td>
+                            {% if p.name == '已完成' %}
+                            <th class='text-right'>平均花费：</th>
+                            <td class=''>{{ p.average_created_modified }}</td>
+                            {% endif %}
+                            {% if p.name == '冻结中' %}
+                            <th class='text-right'>平均尝试：</th>
+                            <td class=''>{{ p.average_created_modified }}</td>
+                            {% endif %}
+                            {% if p.name == '进行中' %}
+                            <th class='text-right'>平均已用：</th>
+                            <td class=''>{{ p.average_created_modified }}</td>
+                            {% endif %}
+                            {% if p.name == '待阅读' %}
+                            <th class='text-right'>平均等待：</th>
+                            <td class=''>{{ p.average_created_now }}</td>
+                            {% endif %}
+                            {% if p.name == '追剧中' %}
+                            <th class='text-right'>平均待更：</th>
+                            <td class=''>{{ p.average_modified_now }}</td>
+                            {% endif %}
                         </tr>
                         {% endif %}
                     {% endfor %}

@@ -85,34 +85,37 @@ def sendEmail(word, to_email, subject='一封来自SuperFarmer网站的邮件'):
     msg.send()
     return True
 
-def formatDate(dt, option="optimize"):
-    if option == 'optimize': #[2015-]12-05 11:25 am
+def formatDate(dt, mode="optimize"):
+    if mode == 'optimize': #[2015-]12-05 11:25 am
         time_format = '%m-%d %H:%M %p'
         if dt.year != timezone.now().year:
             time_format = '%Y-' + time_format
-    elif option == 'dateonly': #12-05
+    elif mode == 'dateonly': #12-05
         time_format = '%m-%d';
-    elif option == 'fulldateonly': #2015-12-05
+    elif mode == 'fulldateonly': #2015-12-05
         time_format = '%Y-%m-%d';
-    elif option == 'timeonly':
+    elif mode == 'timeonly':
         time_format = '%H:%M:%S'
     else:
         time_format = '%Y-%m-%d %H:%M %p'
     return dt.astimezone(timezone.get_current_timezone()).strftime(time_format)
 
-def formatTimedelta(td, option="optimize"):
+def formatTimedelta(td, mode="full"):
+    # get data
     d = td.days
     h = td.seconds // (60*60)
     m = td.seconds % (60*60) // 60
     s = td.seconds % 60
-    if option == 'optimize': #1天 11小时 7分 22秒
-        formated_td = "{h}小时 {m}分 {s}秒".format(h=h, m=m, s=s)
-        if d:
-            formated_td = '{d}天 '.format(d=d) + formated_td
-    elif option == 'dayandhour':
-        formated_td = "{h}小时".format(h=h)
-        if d:
-            formated_td = '{d}天 '.format(d=d) + formated_td
-    else:
-        formated_td = str(td)
-    return formated_td
+    days = '{d}天'.format(d=d)
+    hours = '{h}小时'.format(h=h)
+    minutes = '{m}分'.format(m=m)
+    seconds = '{s}秒'.format(s=s)
+    # parse mode
+    if mode == 'full': #1天 11小时 7分 22秒
+        mode = '%d %H %M %S'
+    result = mode
+    result = result.replace('%d', days if d else '').replace('%H', hours).replace('%M', minutes).replace('%S', seconds).strip()
+    # return
+    if not result:
+        result = str(td)
+    return result
