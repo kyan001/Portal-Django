@@ -239,7 +239,10 @@
                                         {% if aux.estmt_fnsh_dt %}
                                         <tr class="text-success">
                                             <th>预计完成</th>
-                                            <td>{{ aux.estmt_fnsh_dt }}<br/>({{ aux.estmt_fnsh_tm }})</td>
+                                            <td>
+                                                <span>{{ aux.estmt_fnsh_dt }}</span>
+                                                <div class="text-muted">{{ aux.estmt_fnsh_tm }}</div>
+                                            </td>
                                         </tr>
                                         {% endif %}
                                         {% if aux.time_spent %}
