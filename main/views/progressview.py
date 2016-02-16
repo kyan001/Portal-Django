@@ -133,11 +133,9 @@ def progressDetail(request):
     elif progress.current != 0 and opus.total != 0:
         time_spent_so_far = timezone.now() - progress.created
         estimate_finish_time = time_spent_so_far / progress.current * (opus.total - progress.current)
-        if estimate_finish_time < datetime.timedelta(days=7):
-            aux['estmt_fnsh_dt'] = util.ctrl.formatTimedelta(estimate_finish_time, '%d %H %M')
-        else:
-            estimate_finish_date = progress.modified + estimate_finish_time
-            aux['estmt_fnsh_dt'] = util.ctrl.formatDate(estimate_finish_date, 'fulldateonly')
+        aux['estmt_fnsh_tm'] = util.ctrl.formatTimedelta(estimate_finish_time, '%d %H %M')
+        estimate_finish_date = progress.modified + estimate_finish_time
+        aux['estmt_fnsh_dt'] = util.ctrl.formatDate(estimate_finish_date, 'fulldateonly')
     # render
     context['opus'] = opus
     context['prg'] = progress
