@@ -273,6 +273,8 @@ class Progress(models.Model):
             return timezone.now() - self.created
         elif mode == 'm2n':
             return timezone.now() - self.modified
+        elif mode == 'speed':
+            return (self.getTimedelta('c2m') / self.current) if self.current else None
         else:
             return datetime.timedelta()
     # status

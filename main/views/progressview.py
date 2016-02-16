@@ -128,14 +128,21 @@ def progressDetail(request):
     # calcs
     aux = {};
     if progress.status == 'done':
-        time_spent = progress.modified - progress.created
+        time_spent = progress.getTimedelta('c2m')
         aux['time_spent'] = util.ctrl.formatTimedelta(time_spent)
-    elif progress.current != 0 and opus.total != 0:
-        time_spent_so_far = timezone.now() - progress.created
-        estimate_finish_time = time_spent_so_far / progress.current * (opus.total - progress.current)
-        aux['estmt_fnsh_tm'] = util.ctrl.formatTimedelta(estimate_finish_time, '%d %H %M')
-        estimate_finish_date = progress.modified + estimate_finish_time
-        aux['estmt_fnsh_dt'] = util.ctrl.formatDate(estimate_finish_date, 'fulldateonly')
+    else:
+        time_untouch = progress.getTimedelta('m2n')
+        aux['time_untouch'] = util.ctrl.formatTimedelta(time_untouch, 'largest')
+        if opus.total and progress.current: # 非追剧中、非待开始有预计完成时间
+            time_spent_so_far = progress.getTimedelta('c2n')
+            estimate_finish_time = time_spent_so_far / progress.current * (opus.total - progress.current)
+            aux['estmt_fnsh_tm'] = util.ctrl.formatTimedelta(estimate_finish_time, 'largest')
+            estimate_finish_date = progress.modified + estimate_finish_time
+            aux['estmt_fnsh_dt'] = util.ctrl.formatDate(estimate_finish_date, 'fulldateonly')
+    if progress.current: # 平均阅读速度
+        speed = progress.getTimedelta('speed')
+        if speed:
+            aux['speed'] = util.ctrl.formatTimedelta(speed)
     # render
     context['opus'] = opus
     context['prg'] = progress

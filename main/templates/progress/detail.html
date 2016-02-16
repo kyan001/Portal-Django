@@ -86,14 +86,16 @@
                         <span class="persent label label-danger">已冻结</span>
                     {% endifequal %}
                         <span class="persent badge">{{prg.getPersent}}%</span>
-                        《 <a id="opustitle" title="看看还有谁在看这本书" href="/opus/detail?id={{opus.id}}"><b>{{opus.name}}</b></a> 》
+                        《 <a id="opustitle" data-toggle="tooltip" data-placement="top" href="/opus/detail?id={{opus.id}}" title="看看还有谁在看这本书">
+                            <b>{{opus.name}}</b>
+                        </a> 》
                     {% if opus.subtitle %}
                         <span class="subtitle label label-info">
                             {{ opus.subtitle }}
                         </span>
                     {% endif %}
                     {% if prg.weblink and prg.weblink|isurl %}
-                        <a class="weblink label btn-link" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
+                        <a class="weblink label btn-link" data-toggle="tooltip" data-placement="top" href="{{prg.weblink}}" title="在新窗口打开链接" target="_blank">
                             <span class="glyphicon glyphicon-link"></span>
                         </a>
                     {% endif %}
@@ -121,11 +123,11 @@
                                         <div class="input-group">
                                             <span class="input-group-btn">
                                             {% if prg.status == 'giveup' %}
-                                                <div class="btn btn-warning disableBtn pull-left" id='reset' onclick="$('#resetform').submit()">
+                                                <div id='reset' class="btn btn-warning disableBtn pull-left" onclick="$('#resetform').submit()">
                                                     <span class="glyphicon glyphicon-ok-circle"></span> 激活
                                                 </div>
                                             {% else %}
-                                                <div class="btn btn-warning disableBtn pull-left" id='giveup' onclick="$('#giveupform').submit()">
+                                                <div id='giveup' class="btn btn-warning disableBtn pull-left" onclick="$('#giveupform').submit()">
                                                     <span class="glyphicon glyphicon-ban-circle"></span> 冻结
                                                 </div>
                                             {% endif %}
@@ -168,9 +170,12 @@
                                     </div>
                                     <div class="panel-body">
                                         <table class="table table-condensed table-hover">
-                                            <tr class="text-primary">
+                                            <tr>
                                                 <th>状态</th>
-                                                <td>{{prg.getStatus}}</td>
+                                                <td>
+                                                    {{prg.getStatus}}
+                                                    <span class="text-muted text-capitalize">{{prg.status}}</span>
+                                                </td>
                                             </tr>
                                             <tr class="text-info editunlock" id='name-tr' data-toggle="popover" data-placement='top' data-container='body'>
                                                 <th>名称</th>
@@ -234,20 +239,34 @@
                                             {% else %}
                                             <th>上次更新</th>
                                             {% endifequal %}
-                                            <td>{{prg.getModified}}</td>
+                                            <td>
+                                                <span>{{prg.getModified}}</span>
+                                                {% if aux.time_untouch %}
+                                                    <span class="text-muted">{{aux.time_untouch}}前</span>
+                                                {% endif %}
+                                            </td>
                                         </tr>
+                                        {% if aux.speed %}
+                                        <tr class="text-success">
+                                            <td>平均速度</td>
+                                            <td>
+                                                {{ aux.speed }}
+                                            <span id="speed-unit" class="text-muted">/1</span>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
                                         {% if aux.estmt_fnsh_dt %}
                                         <tr class="text-success">
-                                            <th>预计完成</th>
+                                            <td>预计完成</td>
                                             <td>
                                                 <span>{{ aux.estmt_fnsh_dt }}</span>
-                                                <div class="text-muted">{{ aux.estmt_fnsh_tm }}</div>
+                                                <span class="text-muted">{{ aux.estmt_fnsh_tm }}后</span>
                                             </td>
                                         </tr>
                                         {% endif %}
                                         {% if aux.time_spent %}
                                         <tr class="text-success">
-                                            <th>用时</th>
+                                            <td>用时</td>
                                             <td>{{ aux.time_spent }}</td>
                                         </tr>
                                         {% endif %}
@@ -264,7 +283,7 @@
                                         <tr id="title-tr">
                                             <td>作品名称</td>
                                             <td>
-                                                《<a href="" id="title-link" target="_blank"></a>》
+                                                《<a id="title-link" data-toggle="tooltip" data-placement="top" href="" title="作品详细信息" target="_blank"></a>》
                                             </td>
                                         </tr>
                                         <tr id="rating-tr">
@@ -325,6 +344,7 @@
     var movieinfo = {};
     $(function(){
         getOpusInfo()
+        $('[data-toggle="tooltip"]').tooltip();
     });
     function getOpusInfo(){
         var book_subs = ['书','书籍','book','pdf','漫画','comic','文字','doc','txt']
@@ -387,8 +407,10 @@
         $('#rating-av').text(info.rating);
         if(info.type == 'book'){
             $('#opus-type').addClass('glyphicon-book');
+            $('#speed-unit').text('每页')
         } else if(info.type == 'movie'){
             $('#opus-type').addClass('glyphicon-film');
+            $('#speed-unit').text('每集')
         }
         $('#opus-type').attr('title', info.title);
         $('#opus-type').attr('href', info.api);

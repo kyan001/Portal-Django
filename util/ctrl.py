@@ -113,8 +113,10 @@ def formatTimedelta(td, mode="full"):
     # parse mode
     if mode == 'full': #1天 11小时 7分 22秒
         mode = '%d %H %M %S'
+    elif mode == 'largest':
+        mode = '%d' if d else ('%H' if h else ('%M' if m else '%S'))
     result = mode
-    result = result.replace('%d', days if d else '').replace('%H', hours).replace('%M', minutes).replace('%S', seconds).strip()
+    result = result.replace('%d', days if d else '').replace('%H', hours if h else '').replace('%M', minutes).replace('%S', seconds).strip()
     # return
     if not result:
         result = str(td)
