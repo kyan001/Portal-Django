@@ -136,7 +136,7 @@ def progressDetail(request):
         if estimate_finish_time < datetime.timedelta(days=7):
             aux['estmt_fnsh_dt'] = util.ctrl.formatTimedelta(estimate_finish_time, '%d %H %M')
         else:
-            estimate_finish_date = progress.created + estimate_finish_time
+            estimate_finish_date = progress.modified + estimate_finish_time
             aux['estmt_fnsh_dt'] = util.ctrl.formatDate(estimate_finish_date, 'fulldateonly')
     # render
     context['opus'] = opus
