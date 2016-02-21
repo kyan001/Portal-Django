@@ -17,7 +17,7 @@
         {% block inhead %}{% endblock %}
         <script>
             // 本地测试不加载腾讯分析
-            var ta_filter = new Array('localhost','127.0.0.1','local.superfarmer.net')
+            var ta_filter = new Array('localhost','127.0.0.1','local.')
             if( ta_filter.indexOf(window.location.hostname)<0 ){
                 jQuery.getScript('http://tajs.qq.com/stats?sId=50871665')
             }
