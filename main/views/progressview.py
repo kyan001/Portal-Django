@@ -103,7 +103,7 @@ def progressDetail(request):
     '''进度详情页'''
     context = {'request': request}
     # get inputs
-    user = request.session.get('loginuser');
+    user = request.session.get('loginuser')
     if not user:
         return util.ctrl.needLogin()
     progressid = request.GET.get('id')
@@ -126,7 +126,7 @@ def progressDetail(request):
     userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
     userexp.addExp(1, '查看进度《{opus.name}》的详情'.format(opus=opus))
     # calcs
-    aux = {};
+    aux = {}
     if progress.status == 'done':
         time_spent = progress.getTimedelta('c2m')
         aux['time_spent'] = util.ctrl.formatTimedelta(time_spent)
@@ -159,7 +159,7 @@ def progressImagecolor(request): #AJAX #PUBLIC
         cache_timeout = 60*60*24*7*2 # 2 weeks
         cached_color = cache.get(cache_key)
         if cached_color: # has-name & cached
-            result['is_cached'] = True;
+            result['is_cached'] = True
             result['color'] = cached_color
             return util.ctrl.returnJson(result)
         else:# has-name & not-cached

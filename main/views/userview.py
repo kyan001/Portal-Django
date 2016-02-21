@@ -260,7 +260,7 @@ def userForgetanswer(request):
         <li>请点击下面的连接重置答案/密码</li>
         <li>下面的连接有效期只有 60 分钟。</li>
         <li>如果连接无法打开，请在复制后在浏览器中打开：</li>
-        <a href='http://portal.superfarmer.net/user/resetanswer/'>http://portal.superfarmer.net/user/resetanswer/</a>
+        <a href='http://www.superfarmer.net/user/resetanswer/'>http://www.superfarmer.net/user/resetanswer/</a>
     '''
     # TODO: Not worked on Server
     # result = sendEmail(content, 'kai@superfarmer.net', subject='忘记密码找回注册')

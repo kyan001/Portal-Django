@@ -28,24 +28,24 @@ def infoMsg(content="Hi", url=None, title=None):
         else:
             button_text = None
         context['button'] = button_text
-    return render_to_response("msg.html", context);
+    return render_to_response("msg.html", context)
 
 def returnJson(dict_input):
     if dict_input:
         #return HttpResponse(json.dumps(dict_input), content_type='application/json')
-        return JsonResponse(dict_input);
+        return JsonResponse(dict_input)
     else:
         return JsonResponse({'error':'returnJson() input dict_input is empty'})
 
 def returnJsonError(word):
     if word:
-        return returnJson({'error':word});
+        return returnJson({'error':word})
     else:
         return returnJson({'error':"input of returnJsonError() is empty"})
 
 def returnJsonResult(word):
     if word:
-        return returnJson({'result':word});
+        return returnJson({'result':word})
     else:
         return returnJson({'result':"input of returnJsonResult() is empty"})
 
@@ -66,13 +66,13 @@ def calcExp(level):
 
 def needLogin():
     return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
-    # return redirect('/user/signin');
+    # return redirect('/user/signin')
 
 def sendEmail(word, to_email, subject='一封来自SuperFarmer网站的邮件'):
     if not word:
-        return False;
+        return False
     if not to_email or to_email.find('@') <= 0:
-        return False;
+        return False
     subject = subject
     content = loader.render_to_string('email.html', {'subject':subject.strip(), 'content':word.strip()})
     msg = EmailMessage(
@@ -91,9 +91,9 @@ def formatDate(dt, mode="optimize"):
         if dt.year != timezone.now().year:
             time_format = '%Y-' + time_format
     elif mode == 'dateonly': #12-05
-        time_format = '%m-%d';
+        time_format = '%m-%d'
     elif mode == 'fulldateonly': #2015-12-05
-        time_format = '%Y-%m-%d';
+        time_format = '%Y-%m-%d'
     elif mode == 'timeonly':
         time_format = '%H:%M:%S'
     else:
@@ -121,3 +121,13 @@ def formatTimedelta(td, mode="full"):
     if not result:
         result = str(td)
     return result
+
+def isMobile(request):
+    if not request:
+        return False
+    user_agent = request.META.get('HTTP_USER_AGENT')
+    if not user_agent:
+        return False
+    if user_agent.lower().find('mobile') < 0:
+        return False
+    return True
