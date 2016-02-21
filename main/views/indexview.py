@@ -5,6 +5,9 @@ from util.ctrl import *
 # Create your views here.
 def index(request):
     context = {'request': request}
+    user_agent = request.META.get('HTTP_USER_AGENT')
+    if user_agent and user_agent.lower().find('mobile') >= 0:
+        return render_to_response('index/index-m.html', context);
     return render_to_response('index/index.html', context);
 
 def indexSettheme(request):

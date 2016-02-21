@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Welcome 欢迎{% endblock title %}
+
+{% block css %}
+<style>
+    .container-fluid {
+        padding-top: 0 !important;
+    }
+    .link-img {
+        width: 100%;
+        border-bottom: 1px solid white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <a class="no-decoration" href="/progress/list">
+            <img class="link-img" src="/static/img/index/m-prolist.jpg">
+        </a>
+    </div>
+    <div class="row">
+        <a class="no-decoration" href="/chat/conversation?mode=quicknote">
+            <img class="link-img" src="/static/img/index/m-quicknote.jpg">
+        </a>
+    </div>
+    <div class="row">
+        <a class="no-decoration" href="http://www.duetime.cn/beijingmore">
+            <img class="link-img" src="/static/img/index/m-bjmore.jpg">
+        </a>
+    </div>
+    <div class="row">
+        <a class="no-decoration" href="http://www.superfarmer.net/thinking">
+            <img class="link-img" src="/static/img/index/m-thinking.jpg">
+        </a>
+    </div>
+</div>
+{% endblock content %}
