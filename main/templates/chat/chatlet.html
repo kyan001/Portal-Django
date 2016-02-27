@@ -1,5 +1,5 @@
 
-{% load nickname_link %}
+{% load parse_msg_content %}
 
 <div class="panel panel-default {% if not c.isread %}unread{% endif %} chat-record beveryfast hover-shadow" chatid="{{c.id}}" {%if c.receiverid == user.id%}onclick="markread(this)"{%endif%}>
     <div class="panel-heading beveryfast" data-toggle="collapse" data-target="#chat-{{c.id}}" data-parent="#msg-group">
@@ -36,14 +36,14 @@
             <div class="text-muted visible-xs-block">{{ c.getCreated }}</div>
             <div class='chat-content pull-left'>
                 {% if c.getSender.username == 'syschat' %}
-                    <p>{{ c.content|safe }}</p>
+                    <p>{{ c.content|highlightlink|safe }}</p>
                 {% else %}
-                    {{ c.content|linebreaks }}
+                    {{ c.content|linebreaks|highlightlink|safe }}
                 {% endif %}
-                {% if c.content|extractnickname %}
+                {% if c.content|extractlink|length > 2 %}
                     <li style="border-top: 1px dashed silver;">
                         <span class="text-warning">提到了</span>：
-                        {% for at in c.content|extractnickname %}
+                        {% for at in c.content|extractlink %}
                             {{ at|safe }}
                             {% if not forloop.last %}, {% endif %}
                         {% endfor %}

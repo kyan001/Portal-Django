@@ -328,9 +328,10 @@ def userCheckLogin(request):
     # send chat
     chat_content = '''
         欢迎您归来，开始您的网站之旅吧！<br/>
-        <li>访问 <a href="/progress/list">我的进度</a> 查看您的进度</li>
-        <li>访问 <a href="/user/profile">我的账号信息</a> 查看您的活跃度</li>
+        <li>访问 <a href="/progress/list">我的进度</a> 查看进度列表</li>
+        <li>访问 <a href="/user/profile">我的账号信息</a> 查看您的活跃度、进度统计</li>
         <li>访问 <a href="/chat/conversation?mode=quicknote">临时笔记</a> 随手记录您的想法</li>
+        <li>遇到问题或想 #提建议 ，请发消息给 @系统消息 ！</li>
     '''
     Chat.objects.sendBySys(user, title=msg_title, content=chat_content)
     # set cookie

@@ -22,12 +22,16 @@ def superuserIndex(request):
     except User.DoesNotExist:
         return util.ctrl.infoMsg("您查找的用户 @{nickname} 并不存在".format(nickname=superuser_nickname));
     # send commands
-    title = "你好，{category_name}".format(category_name=UserPermission.objects.getCategoryName('superuser'))
+    title = "《{category_name} 操作手册》".format(category_name=UserPermission.objects.getCategoryName('superuser'))
     content = '''
         <li class="text-muted">@{user.nickname} 执行了 {category_name} 的初始化。</li>
-        超级管理员操作连接：
-        <li><a href="/superuser/index">初始化</a>：默认@{superuser.nickname} ，并发送此邮件</li>
-        <li><a href="/superuser/broadcast">广播系统消息</a>：处理、广播系统消息</li>
+        <h5>
+            超级管理员操作连接：
+            <a class="btn btn-default btn-sm" href="/superuser/index">初始化</a>
+            <a class="btn btn-default btn-sm" href="/superuser/broadcast">广播系统消息</a>
+        </h5>
+        <li><b>初始化</b>：默认@{superuser.nickname} ，并发送此邮件</li>
+        <li><b>广播系统消息</b>：处理、广播系统消息</li>
     '''.format(user=user, superuser=superuser, category_name=UserPermission.objects.getCategoryName('superuser'));
     isSuccessed = Chat.objects.sendBySys(superuser, title=title, content=content)
     if not isSuccessed:
@@ -93,4 +97,4 @@ def superuserSendbroadcast(request):
             return util.ctrl.infoMsg("发送失败，未知原因，对方用户：@{user.nickname}".format(user=r));
         receiver_nicknames.append(r.nickname)
     # render
-    return util.ctrl.infoMsg("发送成功：{}".format(str(receiver_nicknames)))
+    return util.ctrl.infoMsg("发送成功：{}".format(str(receiver_nicknames)), url="/chat/inbox")

@@ -24,7 +24,11 @@ def infoMsg(content="Hi", url=None, title=None):
         elif '/user/signup' in url:
             button_text = '前往「注册」页面'
         elif '/progress/list' in url:
-            button_text = '前往「我的进度-列表」页面'
+            button_text = '前往「我的进度列表」页面'
+        elif '/chat/inbox' in url:
+            button_text = '前往「收件箱」'
+        elif '/chat/quicknote' in url:
+            button_text = '前往「临时笔记」'
         else:
             button_text = None
         context['button'] = button_text
