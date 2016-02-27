@@ -27,7 +27,7 @@ def extractlink(text):
     return final_set
 
 @register.filter
-def highlightlink(text):
+def highlightlink(text, mode='default'):
     if not isinstance(text, str):
         return text
     # highlight nicknames
@@ -44,4 +44,6 @@ def highlightlink(text):
     topic_list = topic_pattern.findall(text)
     for tp in topic_list:
         text = text.replace('#{}'.format(tp), topic_url.format(topic=tp))
-    return text.replace('\n','<br/>')
+    if mode != 'sys':
+        text = text.replace('\n','<br/>')
+    return text

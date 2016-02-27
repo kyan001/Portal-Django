@@ -36,7 +36,7 @@
             <div class="text-muted visible-xs-block">{{ c.getCreated }}</div>
             <div class='chat-content pull-left'>
                 {% if c.getSender.username == 'syschat' %}
-                    <p>{{ c.content|highlightlink|safe }}</p>
+                    <p>{{ c.content|highlightlink:'sys'|safe }}</p>
                 {% else %}
                     <p>{{ c.content|force_escape|highlightlink|safe }}</p>
                 {% endif %}
