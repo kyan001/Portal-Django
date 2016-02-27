@@ -17,7 +17,7 @@
         {% block inhead %}{% endblock %}
         <script>
             // 本地测试不加载腾讯分析
-            var ta_filter = new Array('localhost','127.0.0.1','local.')
+            var ta_filter = new Array('localhost','127.0.0.1','local.duetime.cn','local.superfarmer.net')
             if( ta_filter.indexOf(window.location.hostname)<0 ){
                 jQuery.getScript('http://tajs.qq.com/stats?sId=50871665')
             }
@@ -189,7 +189,7 @@
                     <a href="/" class="btn btn-info btn-sm hidden-xs" title="Home Page" data-toggle="tooltip" data-placement="left">
                         <span class="glyphicon glyphicon-home"></span>
                     </a>
-                    <a href="/chat/inbox" class="btn btn-default btn-sm" title="Inbox">
+                    <a href="/chat/inbox" class="btn btn-default btn-sm" id='inbox-btn'>
                         <span class="glyphicon glyphicon-envelope"></span>
                         <b id="unread-count"></b>
                     </a>
@@ -272,6 +272,7 @@
             <script>
                 $(document).ready(function(){
                     getLoginUser();
+                    updateUnreadCount();
                 });
                 function getLoginUser(){
                     $.ajax({
@@ -287,11 +288,39 @@
                             } else {
                                 $("#user-bar .profile-nikename").text("@").append("<b>"+result.nickname+"</b>");
                                 $("#user-bar #dropdown-header-level").text("Lv. "+result.level);
-                                $('#user-bar [data-toggle="tooltip"]').tooltip();
-                                if(result.unreadcount>0){
-                                    $("#user-bar #unread-count").text(result.unreadcount);
-                                }
                                 $("#user-bar .loginshow").show();
+                                $('#user-bar [data-toggle="tooltip"]').tooltip();
+                            }
+                        },
+                    });
+                }
+                function updateUnreadCount(){
+                    $.ajax({
+                        type: "GET",
+                        url: "/user/getunreadcount/",
+                        data: {},
+                        success: function (data) {
+                            var result = data;
+                            if (result.error) {
+                                alert(result.error);
+                            } else if (result.unreadcount > 0) {
+                                var content = ''
+                                for (i in result.msgs){
+                                    content += '<li><span class="text-primary">@'+result.msgs[i].sender+'</span>'+'：'+result.msgs[i].words+'</li>'
+                                }
+                                $("#user-bar #unread-count").text(result.unreadcount);
+                                $("#user-bar #inbox-btn").popover({
+                                    'container': 'body',
+                                    'html': 'true',
+                                    'placement': 'bottom',
+                                    'title': '未读消息：',
+                                    'content': content,
+                                    'trigger': 'hover',
+                                });
+                                $("#user-bar #inbox-btn").data('bs.popover').options.content = content
+                            } else if (result.unreadcount == 0) {
+                                $("#user-bar #unread-count").text('')
+                                $("#user-bar #inbox-btn").popover('destroy')
                             }
                         },
                     });

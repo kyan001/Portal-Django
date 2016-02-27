@@ -52,12 +52,12 @@
             </div>
             <div class="pull-right">
                 {% if not receiver %}
-                    <a class="btn btn-primary btn-sm" href="/chat/conversation?receiver={{c.getSender.nickname}}&title=回复：{{c.content|truncatechars:12}}">
+                    <a class="btn btn-primary btn-sm" href="/chat/conversation?receiver={{c.getSender.nickname}}&title=回复：{{c.content|truncatechars:12}}" onclick="disableAllBtn()">
                         <span class="glyphicon glyphicon-envelope"></span> 回复
                     </a>
                 {% endif %}
                 {% if c.receiverid == user.id %}
-                    <a class="btn btn-default btn-sm" href="/chat/delete?id={{c.id}}">
+                    <a class="btn btn-default btn-sm" href="/chat/delete?id={{c.id}}" onclick="disableAllBtn()">
                         <span class="glyphicon glyphicon-remove"></span> 删除
                     </a>
                 {% endif %}

@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^user/forgetanswer/$', views.userForgetanswer),
     url(r'^user/checklogin/$', views.userCheckLogin),
     url(r'^user/getloginerinfo/$', views.userGetloginerInfo),
+    url(r'^user/getunreadcount/$', views.userGetUnreadCount),
     url(r'^user/newuser/$', views.userNewUser),
     url(r'^user/logout/$', views.userLogout),
     url(r'^user/validateusername$', views.userValidateUsername),

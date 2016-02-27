@@ -134,3 +134,28 @@ function disableAllBtn(){
         return false;
     })
 }
+
+function markread(ele){
+    chatid = $(ele).attr('chatid')
+    if(chatid<0){
+        return;
+    }
+    if(!$(ele).hasClass("unread")){
+        return;
+    }
+    $.ajax({
+        type: "GET",
+        url: "/chat/markread",
+        data: {'chatid': chatid},
+        async: true,
+        dataType: 'json',
+        success: function(result) {
+            if(result.error){
+                alert(result.error)
+            } else {
+                $("div[chatid="+chatid+"]").removeClass('unread')
+            }
+            updateUnreadCount()
+        }
+    });
+}

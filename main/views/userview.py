@@ -47,6 +47,18 @@ def getUserById(user_id):
         return None;
     return user;
 
+def getUserInCookie(request):
+    '''将 cookie 中存的 user 信息存入 session 并返回'''
+    user_id = request.COOKIES.get('user_id')
+    user_answer = request.COOKIES.get('user_answer')
+    if user_id and user_answer:
+        user = getUserById(user_id)
+        if user and (user.answer1 == user_answer or user.answer2 == user_answer):
+            loginuser = user.toArray()
+            request.session['loginuser'] = loginuser
+            return loginuser
+    return False
+
 def checkAnswer(user, answer):
     '''传入用户对象，返回答案对不对'''
     if not user:
@@ -309,6 +321,10 @@ def userCheckLogin(request):
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
     userexp.addExp(1, '登入成功')
+    # remove old msgs
+    msg_title = 'Hi, @{user.nickname}'.format(user=user)
+    sysuser = Chat.objects.getSyschatUser()
+    user.getReceivedChats().filter(senderid=sysuser.id, title=msg_title).delete()
     # send chat
     chat_content = '''
         欢迎您归来，开始您的网站之旅吧！<br/>
@@ -316,7 +332,7 @@ def userCheckLogin(request):
         <li>访问 <a href="/user/profile">我的账号信息</a> 查看您的活跃度</li>
         <li>访问 <a href="/chat/conversation?mode=quicknote">临时笔记</a> 随手记录您的想法</li>
     '''
-    Chat.objects.sendBySys(user, title='Hi, @{user.nickname}'.format(user=user), content=chat_content)
+    Chat.objects.sendBySys(user, title=msg_title, content=chat_content)
     # set cookie
     if rememberme == 'yes':
         oneweek = 60*60*24*7
@@ -346,20 +362,42 @@ def userGetloginerInfo(request): # AJAX
     loginuser = request.session.get('loginuser')
     # from cookies
     if not loginuser:
-        user_id = request.COOKIES.get('user_id')
-        user_answer = request.COOKIES.get('user_answer')
-        if user_id and user_answer:
-            user = getUserById(user_id)
-            if user.answer1 == user_answer or user.answer2 == user_answer:
-                request.session['loginuser'] = user.toArray()
-                loginuser = user.toArray();
+        loginuser = getUserInCookie(request)
     # get user's gravatar
     if loginuser:
         user = getUserById(loginuser['id'])
         loginuser['avatar'] = getGravatarUrl(loginuser['email'])
         loginuser['level'] = user.getLevel()
-        loginuser['unreadcount'] = user.getUnreadChats().count()
         return returnJson(loginuser)
+    else:
+        return returnJsonResult('nologinuser')
+
+def userGetUnreadCount(request): # AJAX
+    '''顶部用户栏：更新当前用户的未读消息数目'''
+    # from session
+    loginuser = request.session.get('loginuser')
+    result = {}
+    # from cookies
+    if not loginuser:
+        loginuser = getUserInCookie(request)
+    # get user's gravatar
+    if loginuser:
+        user = getUserById(loginuser['id'])
+        unread_count = user.getUnreadChats().count()
+        result['unreadcount'] = unread_count
+        result['msgs'] = []
+        if unread_count:
+            unread_chats = user.getUnreadChats()
+            for uc in unread_chats:
+                sender = User.objects.get(id=uc.senderid)
+                words = uc.title or uc.content
+                if len(words) > 12:
+                    words = words[0:12] + '...'
+                result['msgs'].append({
+                    'sender':sender.nickname,
+                    'words':words,
+                })
+        return returnJson(result)
     else:
         return returnJsonResult('nologinuser')
 

@@ -340,6 +340,9 @@ class ChatManager(models.Manager):
     def sendBySys(self, receiver, title="", content=""):
         if not receiver:
             return False
+        sysuser = self.getSyschatUser()
+        return sysuser.sendChat(receiver, title, content)
+    def getSyschatUser(self):
         sysuser, iscreated = User.objects.get_or_create(nickname='系统消息',
             defaults={
                 'username': 'syschat',
@@ -350,7 +353,7 @@ class ChatManager(models.Manager):
         )
         if iscreated:
             sysuser.setUserpermission('signin', False)
-        return sysuser.sendChat(receiver, title, content)
+        return sysuser
 
 class Chat(models.Model):
     senderid = models.IntegerField(default=0, blank=False, null=False)
