@@ -30,9 +30,6 @@ def extractlink(text):
 def highlightlink(text):
     if not isinstance(text, str):
         return text
-    else:
-        if text[-4:] == '</p>':
-            text = text[:-4]
     # highlight nicknames
     nickname_pattern = re.compile(r'@([\S]+)')
     nickname_list = nickname_pattern.findall(text)
@@ -47,4 +44,4 @@ def highlightlink(text):
     topic_list = topic_pattern.findall(text)
     for tp in topic_list:
         text = text.replace('#{}'.format(tp), topic_url.format(topic=tp))
-    return text
+    return text.replace('\n','<br/>')

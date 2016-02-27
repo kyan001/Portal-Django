@@ -38,7 +38,7 @@
                 {% if c.getSender.username == 'syschat' %}
                     <p>{{ c.content|highlightlink|safe }}</p>
                 {% else %}
-                    {{ c.content|linebreaks|highlightlink|safe }}
+                    <p>{{ c.content|force_escape|highlightlink|safe }}</p>
                 {% endif %}
                 {% if c.content|extractlink|length > 2 %}
                     <li style="border-top: 1px dashed silver;">
