@@ -35,10 +35,7 @@
         });
     });
     function clearForm(){
-        $('input[name="name"]').val('')
-        $('input[name="subtitle"]').val('')
-        $('input[name="total"]').val('')
-        $('input[name="current"]').val('')
+        $('input.clearable').val('')
     }
     function submitForm(){
         var name = $('input[name="name"]').val()
@@ -107,7 +104,7 @@
                         <div class="row">
                             <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-danger ">名称</span>
                             <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
-                                <input type="text" placeholder="必填（不要加书名号）" name="name" class="editable" onchange="getPages()">
+                                <input type="text" placeholder="必填（不要加书名号）" name="name" class="editable clearable" onchange="getPages()">
                             </span>
                             <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
                                 <span class="text-danger">动漫名、电视剧名、书名</span>
@@ -119,7 +116,7 @@
                         <div class="extra-info row">
                             <span class="col-sm-2 col-xs-4 text-right text-warning">副标题</span>
                             <span class="col-sm-6 col-xs-8">
-                                <input type="text" placeholder="可不填（尽量简短）" name="subtitle" class="editable">
+                                <input type="text" placeholder="可不填（尽量简短）" name="subtitle" class="editable clearable">
                             </span>
                             <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
                                 <span>作品的副标题、备注、分类</span>
@@ -131,7 +128,7 @@
                         <div class="row">
                             <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-warning">总共</span>
                             <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
-                                <input type="number" placeholder="可不填（纯数字，追剧请填 0）" name="total" class="editable">
+                                <input type="number" placeholder="可不填（纯数字，追剧请填 0）" name="total" class="editable clearable">
                             </span>
                             <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
                                 <span>总共几页、总共几集？</span>
@@ -146,7 +143,7 @@
                         <div class="extra-info row">
                             <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-warning">当前进度</span>
                             <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
-                                <input type="number" placeholder="可不填（必须为纯数字）" name="current" class="editable">
+                                <input type="number" placeholder="可不填（必须为纯数字）" name="current" class="editable clearable">
                             </span>
                             <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
                                 <span>已看到第几集</span>
@@ -158,7 +155,7 @@
                         <div class="extra-info row">
                             <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-warning">链接</span>
                             <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
-                                <input type="text" placeholder="可不填（须以 http:// 开头）" name="weblink" class="editable">
+                                <input type="text" placeholder="可不填（须以 http:// 开头）" name="weblink" class="editable clearable">
                             </span>
                             <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
                                 <span>作品的链接地址</span>
