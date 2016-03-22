@@ -191,7 +191,7 @@
 					for (var i = 0; i < neighborEvents.length; i++) {
 						var $temp = $(neighborEvents[i]);
 						var oData = $temp.data('event');
-						var zh_month = oData.on.getMonth()
+						var zh_month = oData.on.getMonth() + 1
 						var zh_date = oData.on.getFullYear() + '-' + datejust(zh_month) + '-' + datejust(oData.on.getDate())
 						strToolTip = strToolTip + '<div class="msg" id="msg_'+oData.id+'">'+ '<span class="text-muted">'+zh_date+'</span> '+ oData.name +'</div>';
 					};

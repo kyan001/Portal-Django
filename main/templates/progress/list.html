@@ -126,31 +126,31 @@
                 {
                     progressid: {{item.prg.id}},
                     name: "<span class='text-info'>开始看</span>《{{item.opus.name}}》",
-                    on: new Date({{item.prg.created.year}}, {{item.prg.created.month}}, {{item.prg.created.day}})
+                    on: new Date({{item.prg.created.year}}, {{item.prg.created.month|add:-1}}, {{item.prg.created.day}})
                 },
                 {% if item.prg.status == 'done' %}
                     {
                         progressid: {{item.prg.id}},
                         name: "<span class='text-success'>完成</span>《{{item.opus.name}}》！",
-                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month}}, {{item.prg.modified.day}})
+                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month|add:-1}}, {{item.prg.modified.day}})
                     },
                 {% elif item.prg.status == 'giveup' %}
                     {
                         progressid: {{item.prg.id}},
                         name: "<span class='text-danger'>冻结了</span>《{{item.opus.name}}》",
-                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month}}, {{item.prg.modified.day}})
+                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month|add:-1}}, {{item.prg.modified.day}})
                     },
                 {% elif item.prg.status == 'inprogress' %}
                     {
                         progressid: {{item.prg.id}},
                         name: "《{{item.opus.name}}》<span class='text-primary'>进行至 </span>{{item.prg.getPersent}}%",
-                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month}}, {{item.prg.modified.day}})
+                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month|add:-1}}, {{item.prg.modified.day}})
                     },
                 {% elif item.prg.status == 'follow' %}
                     {
                         progressid: {{item.prg.id}},
                         name: "《{{item.opus.name}}》<span class='text-primary'>追剧至 </span>第 {{item.prg.current}} 集",
-                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month}}, {{item.prg.modified.day}})
+                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month|add:-1}}, {{item.prg.modified.day}})
                     },
                 {% endif %}
             {% endfor %}
