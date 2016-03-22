@@ -2,13 +2,13 @@
 {% block title %}进度存档{% endblock title %}
 {% block icon %}<link rel="icon" href="/static/img/Logo_List.png" />{% endblock icon %}
 
-{% block css %}
+{% block inhead %}
 <link rel="stylesheet" href="/static/css/progress/list_common.css">
-{% endblock css %}
-
-{% block js %}
+<link rel="stylesheet" href="/static/jqtimeline/css/jquery.jqtimeline.zh.css">
+<!-- <link rel="stylesheet" href="/static/jqtimeline/css/jquery.timeline.blue.css"> -->
 <script src="/static/js/progress/list_common.js"></script>
-{% endblock js %}
+<script src="/static/jqtimeline/js/jquery.jqtimeline.zh.js"></script>
+{% endblock inhead %}
 
 {% block nav-btn %}
 <a href="/progress/list" class="btn btn-warning btn-sm">
@@ -22,8 +22,17 @@
 </a>
 {% endblock function-btn %}
 
+{% block css %}
+<style>
+    #event-timeline {
+        margin-bottom: -40px;
+    }
+</style>
+{% endblock css %}
+
 {% block content %}
 <div class="container">
+    <div id="event-timeline" class="hidden-xs"></div>
     <div class="page-header" data-toggle="collapse" data-target="#list-done">
         <h4>
             <span class="glyphicon glyphicon-chevron-up text-muted"></span>
@@ -61,3 +70,55 @@
     </div><!--row-->
 </div>
 {% endblock content %}
+
+
+{% block js %}
+<script>
+    $(function(){
+        var events = [
+            {% for item in prg_timeline %}
+                {
+                    progressid: {{item.prg.id}},
+                    name: "<span class='text-info'>开始看</span>《{{item.opus.name}}》",
+                    on: new Date({{item.prg.created.year}}, {{item.prg.created.month}}, {{item.prg.created.day}})
+                },
+                {% if item.prg.status == 'done' %}
+                    {
+                        progressid: {{item.prg.id}},
+                        name: "<span class='text-success'>完成</span>《{{item.opus.name}}》！",
+                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month}}, {{item.prg.modified.day}})
+                    },
+                {% elif item.prg.status == 'giveup' %}
+                    {
+                        progressid: {{item.prg.id}},
+                        name: "<span class='text-danger'>冻结了</span>《{{item.opus.name}}》",
+                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month}}, {{item.prg.modified.day}})
+                    },
+                {% elif item.prg.status == 'inprogress' %}
+                    {
+                        progressid: {{item.prg.id}},
+                        name: "《{{item.opus.name}}》<span class='text-primary'>进行至 </span>{{item.prg.getPersent}}%",
+                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month}}, {{item.prg.modified.day}})
+                    },
+                {% elif item.prg.status == 'follow' %}
+                    {
+                        progressid: {{item.prg.id}},
+                        name: "《{{item.opus.name}}》<span class='text-primary'>追剧至 </span>第 {{item.prg.current}} 集",
+                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month}}, {{item.prg.modified.day}})
+                    },
+                {% endif %}
+            {% endfor %}
+        ];
+        $('#event-timeline').jqtimeline({
+            events: events,
+            showToolTip: true,
+            gap: $('.container').width() / 12 * 0.9,
+            numYears: 1,
+            startYear: (new Date()).getFullYear(),
+            click: function(e,event){
+                window.location='/progress/detail?id=' + event.progressid
+            },
+        });
+    });
+</script>
+{% endblock %}

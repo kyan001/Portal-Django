@@ -6,6 +6,7 @@ from django.template import *
 import datetime
 from django.views.decorators.csrf import csrf_exempt
 from main.models import *
+from django.db.models import Q
 from django.core.cache import cache
 import util.ctrl
 
@@ -72,14 +73,15 @@ def progressArchive(request):
     except User.DoesNotExist:
         return infoMsg("用户 id:{id} 不存在".format(id=str(loginuser['id'])), title='找不到用户')
     #get user's progresses
-    progresses = Progress.objects.filter(userid=loginuser['id']).order_by('-modified');
-    if len(progresses):
+    progresses = Progress.objects.filter(userid=loginuser['id'])
+    prg_ordered = progresses.order_by('-modified');
+    if len(prg_ordered):
         #init vars
         pList = {}
         for st in Progress.status_pool.get('archive'):
             pList[st] = [];
         #put progress items
-        for prg in progresses:
+        for prg in prg_ordered:
             if prg.status in Progress.status_pool.get('archive'):
                 try:
                     opus = Opus.objects.get(id=prg.opusid)
@@ -93,6 +95,22 @@ def progressArchive(request):
         for st in Progress.status_pool.get('archive'):
             if pList[st]:
                 context['list'+st] = pList[st]
+    # add timeline info
+    now_year = timezone.now().year # only this year
+    prg_timeline_item = []
+    prg_timeline = progresses.filter(Q(created__gte=datetime.datetime(now_year,1,1)) | Q(modified__gte=datetime.datetime(now_year,1,1))) # created or modified >= this year
+    if len(prg_timeline):
+        for prg in prg_timeline:
+            try:
+                opus = Opus.objects.get(id=prg.opusid)
+            except Opus.DoesNotExist:
+                return infoMsg("未找到 id 为 {id} 的作品".format(id=str(p.opusid)))
+            l = {
+                'prg': prg,
+                'opus': opus,
+            }
+            prg_timeline_item.append(l)
+    context['prg_timeline'] = prg_timeline_item
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=loginuser['id'], category='progress')
     userexp.addExp(1, '访问进度存档页面')
