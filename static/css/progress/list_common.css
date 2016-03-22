@@ -6,8 +6,9 @@
     color: red;
 }
 .page-header {
-    padding-bottom: 2px;
+    padding-bottom: 2px !important;
     cursor: pointer;
+    margin-top: 0 !important;
 }
 .prg-counts {
     color: inherit;
@@ -44,4 +45,16 @@
 .progress-card .subtitle,
 .progress-card .weblink {
     font-size: 15px;
+}
+/* timeline */
+#hide-timeline {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: -26px;
+}
+#hide-timeline span.glyphicon-chevron-up {
+    z-index: 2;
+}
+#hide-timeline span.glyphicon-chevron-up:hover {
+    color: red;
 }

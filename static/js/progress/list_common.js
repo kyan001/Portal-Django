@@ -18,7 +18,7 @@ $(function(){
         if(ele.hasClass(whenOpen)){
             ele.removeClass(whenOpen)
             ele.addClass(whenClose)
-        } else {
+        } else if(ele.hasClass(whenOpen)) {
             ele.removeClass(whenClose)
             ele.addClass(whenOpen)
         }

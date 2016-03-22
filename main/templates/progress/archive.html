@@ -5,7 +5,6 @@
 {% block inhead %}
 <link rel="stylesheet" href="/static/css/progress/list_common.css">
 <link rel="stylesheet" href="/static/jqtimeline/css/jquery.jqtimeline.zh.css">
-<!-- <link rel="stylesheet" href="/static/jqtimeline/css/jquery.timeline.blue.css"> -->
 <script src="/static/js/progress/list_common.js"></script>
 <script src="/static/jqtimeline/js/jquery.jqtimeline.zh.js"></script>
 {% endblock inhead %}
@@ -22,17 +21,14 @@
 </a>
 {% endblock function-btn %}
 
-{% block css %}
-<style>
-    #event-timeline {
-        margin-bottom: -40px;
-    }
-</style>
-{% endblock css %}
-
 {% block content %}
 <div class="container">
-    <div id="event-timeline" class="hidden-xs"></div>
+    <div id="timeline-zone" class="hidden-xs">
+        <div id="hide-timeline">
+            <span class="glyphicon glyphicon-chevron-up text-muted" onmouseenter="$('#timeline-zone').slideUp()"></span>
+        </div>
+        <div id="event-timeline"></div>
+    </div>
     <div class="page-header" data-toggle="collapse" data-target="#list-done">
         <h4>
             <span class="glyphicon glyphicon-chevron-up text-muted"></span>
@@ -70,7 +66,6 @@
     </div><!--row-->
 </div>
 {% endblock content %}
-
 
 {% block js %}
 <script>
@@ -112,9 +107,9 @@
         $('#event-timeline').jqtimeline({
             events: events,
             showToolTip: true,
-            gap: $('.container').width() / 12 * 0.95,
+            gap: $('.container').width() / 12 * 0.9,
             numYears: 1,
-            startYear: (new Date()).getFullYear(),
+            startYear: (new Date()).getFullYear() - 1,
             groupEventWithinPx: 9,
             click: function(e,event){
                 window.location='/progress/detail?id=' + event.progressid

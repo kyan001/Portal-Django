@@ -14,6 +14,22 @@ import json
 import util.KyanToolKit_Py
 ktk = util.KyanToolKit_Py.KyanToolKit_Py()
 
+def getTimeline(year, prgss):
+    prg_timeline_item = []
+    prg_timeline = prgss.filter( Q(created__year=year) | Q(modified__year=year) ) # created or modified in this year
+    if len(prg_timeline):
+        for prg in prg_timeline:
+            try:
+                opus = Opus.objects.get(id=prg.opusid)
+            except Opus.DoesNotExist:
+                return infoMsg("未找到 id 为 {id} 的作品".format(id=str(p.opusid)))
+            l = {
+                'prg': prg,
+                'opus': opus,
+            }
+            prg_timeline_item.append(l)
+    return prg_timeline_item
+
 def progressList(request):
     '''进度列表：显示所有进行中、待开始、追剧中的进度'''
     context = {'request': request}
@@ -55,6 +71,9 @@ def progressList(request):
             最后，祝您使用愉快！
         '''
         Chat.objects.sendBySys(user, title='欢迎使用「我的进度」系统', content=chat_content)
+    # add timeline info (also in
+    now_year = timezone.now().year
+    context['prg_timeline'] = getTimeline(year=now_year, prgss=progresses)
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=loginuser['id'], category='progress')
     userexp.addExp(1, '访问进度列表页面')
@@ -96,21 +115,8 @@ def progressArchive(request):
             if pList[st]:
                 context['list'+st] = pList[st]
     # add timeline info
-    now_year = timezone.now().year # only this year
-    prg_timeline_item = []
-    prg_timeline = progresses.filter(Q(created__gte=datetime.datetime(now_year,1,1)) | Q(modified__gte=datetime.datetime(now_year,1,1))) # created or modified >= this year
-    if len(prg_timeline):
-        for prg in prg_timeline:
-            try:
-                opus = Opus.objects.get(id=prg.opusid)
-            except Opus.DoesNotExist:
-                return infoMsg("未找到 id 为 {id} 的作品".format(id=str(p.opusid)))
-            l = {
-                'prg': prg,
-                'opus': opus,
-            }
-            prg_timeline_item.append(l)
-    context['prg_timeline'] = prg_timeline_item
+    now_year = timezone.now().year
+    context['prg_timeline'] = getTimeline(year=now_year-1, prgss=progresses)
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=loginuser['id'], category='progress')
     userexp.addExp(1, '访问进度存档页面')
