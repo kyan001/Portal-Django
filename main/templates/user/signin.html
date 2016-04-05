@@ -122,6 +122,16 @@
             },
         });
     }
+
+    function showLoading(mode){
+        var ele = $('#submit-button')
+        if('off'==mode){
+            ele.text('登入 / Login')
+        } else {
+            ele.text('LOADING ...')
+        }
+    }
+
     var timer_vUn
     function validateUsername(option){
         clearHasClass($('#username-group'));
@@ -130,8 +140,10 @@
             foldOptions()
             return
         }
+        showLoading('off')
         clearTimeout(timer_vUn);
         timer_vUn = setTimeout(function(){
+            showLoading('on')
             $.ajax({
                 type: "GET",
                 url: "/user/validateusername",
@@ -139,6 +151,7 @@
                     'username':$('input[name="username"]').val()
                 },
                 success: function (data) {
+                    showLoading('off')
                     var result = data;
                     if(result.error){
                         $.danger(result.error);
