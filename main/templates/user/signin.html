@@ -127,8 +127,12 @@
         var ele = $('#submit-button')
         if('off'==mode){
             ele.text('登入 / Login')
+            ele.addClass('btn-success')
+            ele.removeClass('btn-warning')
         } else {
             ele.text('LOADING ...')
+            ele.removeClass('btn-success')
+            ele.addClass('btn-warning')
         }
     }
 
