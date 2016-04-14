@@ -11,7 +11,7 @@ import threading, queue
 from functools import wraps
 
 class KyanToolKit_Py(object):
-    version = '3.4'
+    version = '3.8'
     def __init__(self, trace_file="trace.xml"):
         self.trace_file = trace_file
         self.q = {
@@ -52,9 +52,11 @@ class KyanToolKit_Py(object):
             @wraps(input_func)
             def callInputFunc(*args, **kwargs):
                 self = args[0]
-                print("\n" + self.banner(str(decorator_param)));
+                print("*")
+                self.echo(decorator_param, "start");
                 result = input_func(*args, **kwargs)
-                print("============ " + str(decorator_param) + " : end   ============\n");
+                self.echo(decorator_param, "end");
+                print("|");
                 return result
             return callInputFunc
         return get_func
@@ -89,14 +91,20 @@ class KyanToolKit_Py(object):
         banner_border = self.special_char * content_line_length
         return banner_border + '\n' + content_line + '\n' + banner_border
 
+    def echo(self, words, prefix="!"):
+        words = str(words)
+        prefix = prefix.capitalize()
+        print("| [{p}] {w}".format(p=prefix, w=words))
+        return self
+
     def info(self, words):
-        print("[INFO] " + words)
+        return self.echo(words, "info")
 
     def warn(self, words):
-        print("[WARNING] " + words)
+        return self.echo(words, "warning")
 
     def err(self, words):
-        print("[ERROR] " + words)
+        return self.echo(words, "error")
 
     def md5(self, words=""):
         if type(words) != bytes: # md5的输入必须为bytes类型
@@ -147,20 +155,20 @@ class KyanToolKit_Py(object):
             self.err("No clearScreen for " + sys.platform)
 
     @lockStdout
-    def pressToContinue(self, input_="\nPress Enter to Continue...\n"):
-        #PY2# raw_input(input_)
-        input(input_)
+    def pressToContinue(self, msg="\nPress Enter to Continue...\n"):
+        #PY2# raw_input(msg)
+        input(msg)
 
-    def byeBye(self, input_="See you later"): #BWC
-        self.bye(input_)
+    def byeBye(self, msg="See you later"): #BWC
+        self.bye(msg)
 
-    def bye(self, input_='See you later'):
-        exit(input_)
+    def bye(self, msg=''):
+        exit(msg)
 
     @printStartAndEnd('Run Command')
     def runCmd(self, cmd):
         'run command and show if success or failed'
-        self.info("CMD: " + cmd);
+        self.echo(cmd, "command");
         result = os.system(cmd);
         self.checkResult(result);
 
@@ -180,10 +188,8 @@ class KyanToolKit_Py(object):
 
     def getChoice(self, choices_):
         assemble_print = ""
-        index = 1
-        for item in choices_:
-            assemble_print += "\n" + str(index) + " - " + str(item)
-            index += 1
+        for index,item in enumerate(choices_):
+            assemble_print += "\n" + str(index+1) + " - " + str(item)
         user_choice = self.getInput(assemble_print);
         if user_choice in choices_:
             return user_choice;
@@ -213,23 +219,19 @@ class KyanToolKit_Py(object):
         return None
 
 #--Pre-checks---------------------------------------------------
-    @printStartAndEnd("Checking Platform")
+    @printStartAndEnd("Platform Check")
     def needPlatform(self, expect_platform):
-        self.info("Platform Require: " + expect_platform)
+        self.info("   Need: " + expect_platform)
         self.info("Current: " + sys.platform)
         if not expect_platform in sys.platform:
-            self.byeBye("Wrong Platform.");
-        else:
-            self.info("Done");
+            self.byeBye("Platform Check Failed");
 
-    @printStartAndEnd("Checking User")
+    @printStartAndEnd("User Check")
     def needUser(self, expect_user):
-        self.info("Required User: " + expect_user);
-        self.info("Current User: " + self.getUser());
+        self.info("   Need: " + expect_user);
+        self.info("Current: " + self.getUser());
         if self.getUser() != expect_user:
-            self.byeBye("Bye");
-        else:
-            self.info("Done");
+            self.byeBye("User Check Failed");
 
 #--Debug---------------------------------------------------------
     def TRACE(self, input_, trace_type='INFO'):
@@ -272,9 +274,9 @@ class KyanToolKit_Py(object):
 #--Internal Uses-------------------------------------------------
     def checkResult(self, result):
         if 0 == result:
-            self.info("Done")
+            self.echo("Done", "result")
         else:
-            self.warn("Failed")
+            self.echo("Failed", "result")
 
     def getUser(self):
         return getpass.getuser();
