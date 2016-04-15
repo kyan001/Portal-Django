@@ -30,12 +30,12 @@
         <div id="event-timeline"></div>
     </div>
     <div class="page-header" data-toggle="collapse" data-target="#list-done">
-        <h4>
+        <h5>
             <span class="glyphicon glyphicon-chevron-up text-muted"></span>
             已完成
             <small>Done</small>
             <small class="prg-counts">({{ listdone|length }})</small>
-        </h4>
+        </h5>
     </div>
     <div class="row collapse in" id="list-done">
         {% for p in listdone %}
@@ -48,12 +48,12 @@
     </div><!--row-->
 
     <div class="page-header" data-toggle="collapse" data-target="#list-giveup">
-        <h4>
+        <h5>
             <span class="glyphicon glyphicon-chevron-down text-muted"></span>
             冻结中
             <small>Giveup</small>
             <small class="prg-counts">({{ listgiveup|length }})</small>
-        </h4>
+        </h5>
     </div>
     <div class="row collapse" id="list-giveup">
         {% for p in listgiveup %}
