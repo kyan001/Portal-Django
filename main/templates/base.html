@@ -313,10 +313,11 @@
                                     'container': 'body',
                                     'html': 'true',
                                     'placement': 'bottom',
-                                    'title': '未读消息：',
+                                    //'title': '未读消息：',
                                     'content': content,
                                     'trigger': 'hover',
                                 });
+                                //force refresh the content
                                 $("#user-bar #inbox-btn").data('bs.popover').options.content = content
                             } else if (result.unreadcount == 0) {
                                 $("#user-bar #unread-count").text('')
