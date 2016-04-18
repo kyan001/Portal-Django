@@ -11,7 +11,7 @@ import threading, queue
 from functools import wraps
 
 class KyanToolKit_Py(object):
-    version = '4.0'
+    version = '4.1'
     def __init__(self, trace_file="trace.xml"):
         self.trace_file = trace_file
         self.q = {
@@ -53,10 +53,9 @@ class KyanToolKit_Py(object):
             def callInputFunc(*args, **kwargs):
                 self = args[0]
                 print("*")
-                print("|-----[ {} ]-----".format(func_title))
+                print("| {}:".format(func_title))
                 result = input_func(*args, **kwargs)
-                print("|-------{}-------".format("-" * len(func_title)))
-                print("|");
+                print("!")
                 return result
             return callInputFunc
         return get_func
@@ -189,14 +188,15 @@ class KyanToolKit_Py(object):
     def getChoice(self, choices_):
         assemble_print = ""
         for index,item in enumerate(choices_):
-            assemble_print += "\n" + str(index+1) + " - " + str(item)
+            assemble_print += "\n| " + str(index+1).rjust(2) + " - " + str(item)
         user_choice = self.getInput(assemble_print);
         if user_choice in choices_:
             return user_choice;
         elif user_choice.isdigit():
             numerical_choice = int(user_choice);
             if numerical_choice > len(choices_):
-                self.byeBye("[ERR] Invalid Choice")
+                self.err("Invalid Choice")
+                self.bye()
             return choices_[numerical_choice-1]
         else:
             self.err("Please enter a valid choice");
@@ -221,14 +221,14 @@ class KyanToolKit_Py(object):
 #--Pre-checks---------------------------------------------------
     @printStartAndEnd("Platform Check")
     def needPlatform(self, expect_platform):
-        self.info("   Need: " + expect_platform)
+        self.info("Need: " + expect_platform)
         self.info("Current: " + sys.platform)
         if not expect_platform in sys.platform:
             self.byeBye("Platform Check Failed");
 
     @printStartAndEnd("User Check")
     def needUser(self, expect_user):
-        self.info("   Need: " + expect_user);
+        self.info("Need: " + expect_user);
         self.info("Current: " + self.getUser());
         if self.getUser() != expect_user:
             self.byeBye("User Check Failed");
