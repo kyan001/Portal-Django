@@ -115,7 +115,7 @@
                 <div class="panel-body second-panel-body">
                     <div class="row">
                         <div id='left-half-panel' class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <div class="panel panel-primary">
+                            <div class="panel panel-primary viewmode-opacity befast">
                                 <div class="panel-heading">快速更新</div>
                                 <form id="fastupdateform" action="/progress/fastupdate/" method="post">
                                     <input type="hidden" name="id" value="{{prg.id}}">
@@ -220,7 +220,7 @@
                             </form>
                         </div><!--.col#left-half-panel-->
                         <div id='right-half-panel' class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="panel panel-primary">
+                            <div class="panel panel-primary viewmode-slide">
                                 <div class="panel-heading">
                                     <span>时间信息</span>
                                 </div>
@@ -363,7 +363,7 @@
             return false
         } else  {//作品存在且精确匹配
             $('#title-tr').popover('destroy')
-            $("#douban-info-panel").fadeIn()
+            $("#douban-info-panel").addClass('viewmode-slide').fadeIn()
             if(info.tags.length != 0){//作品无tag
                 $('#tag-tr').show()
             }
@@ -488,7 +488,10 @@
     function enterEdit(){
         $('.editable').removeAttr('readonly')
         $('.viewmode').hide()
+        $('.viewmode-opacity').css('opacity','0.5')
+        $('.viewmode-slide').slideUp()
         $('.editmode').show()
+        $('.editmode-slide').slideDown()
         $('.viewunlock').attr('disabled','disabled')
         $('.editunlock').addClass('warning');
         $.success('输入框已解锁');
@@ -496,7 +499,10 @@
     function cancelEdit(){
         $('.editable').attr('readonly','');
         $('.viewmode').show()
+        $('.viewmode-opacity').css('opacity','1')
+        $('.viewmode-slide').slideDown()
         $('.editmode').hide()
+        $('.editmode-slide').slideUp()
         $('.viewunlock').removeAttr('disabled')
         $('input[name="name"]').val('{{opus.name}}')
         $('input[name="subtitle"]').val('{{opus.subtitle}}')
