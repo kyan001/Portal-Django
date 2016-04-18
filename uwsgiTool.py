@@ -22,7 +22,7 @@ ktk = KyanToolKit_Py.KyanToolKit_Py()
 
 #--Pre-conditions Check-------------------------------------------
 ktk.needPlatform("linux");
-ktk.runCmd("sudo echo ''");
+ktk.runCmd("sudo echo '| get sudo success.'");
 #--set params-----------------------------------------------------
 #config file
 uwsgi_xml="./uwsgi.xml"
