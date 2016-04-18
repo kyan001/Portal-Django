@@ -11,7 +11,7 @@ import threading, queue
 from functools import wraps
 
 class KyanToolKit_Py(object):
-    version = '3.8'
+    version = '4.0'
     def __init__(self, trace_file="trace.xml"):
         self.trace_file = trace_file
         self.q = {
@@ -46,16 +46,16 @@ class KyanToolKit_Py(object):
             return t.start()
         return callInputFunc
 
-    def printStartAndEnd(decorator_param="function"):#decorator
+    def printStartAndEnd(func_title="function"):#decorator
         '使函数执行前和执行完毕后打印start/end'
         def get_func(input_func):
             @wraps(input_func)
             def callInputFunc(*args, **kwargs):
                 self = args[0]
                 print("*")
-                self.echo(decorator_param, "start");
+                print("|-----[ {} ]-----".format(func_title))
                 result = input_func(*args, **kwargs)
-                self.echo(decorator_param, "end");
+                print("|-------{}-------".format("-" * len(func_title)))
                 print("|");
                 return result
             return callInputFunc
@@ -93,8 +93,8 @@ class KyanToolKit_Py(object):
 
     def echo(self, words, prefix="!"):
         words = str(words)
-        prefix = prefix.capitalize()
-        print("| [{p}] {w}".format(p=prefix, w=words))
+        prefix = '({})'.format(prefix.capitalize())
+        print("| {p} {w}".format(p=prefix.rjust(9), w=words))
         return self
 
     def info(self, words):
