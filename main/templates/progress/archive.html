@@ -29,6 +29,12 @@
         </div>
         <div id="event-timeline"></div>
     </div>
+    <div id='search-div'>
+            <input id="search-input" type='text' placeholder="Search" autocomplete='off' oninput="searchProgress()">
+            <span id='clear-search-btn' onclick='resetSearch()' hidden>
+                <span class="glyphicon glyphicon-remove"></span>
+            </span>
+    </div>
     <div class="page-header" data-toggle="collapse" data-target="#list-done">
         <h5>
             <span class="glyphicon glyphicon-chevron-up text-muted"></span>
@@ -116,5 +122,36 @@
             },
         });
     });
+
+    function resetSearch(){
+        $("#search-input").val("")
+        $('.progress-card').show()
+        $('.page-header').show()
+        $('#clear-search-btn').hide()
+    }
+    function searchProgress(){
+        var kw = $.trim($('#search-input').val()).toLowerCase();
+        if(kw == ''){
+            resetSearch()
+        } else {
+            $('#clear-search-btn').show()
+            $('.collapse').each(function(){ //unfold all catagory cards
+                if(!$(this).hasClass('in')){
+                    var idselector = "#" + $(this).attr('id')
+                    $('.page-header[data-target="'+idselector+'"]').click()
+                }
+            })
+            $('.progress-card').each(function(){
+                var opusname = $(this).find('.opus-name').text().toLowerCase()
+                var opussubtitle = $(this).find('.subtitle').text().toLowerCase()
+                if(opusname.indexOf(kw)>=0 || opussubtitle.indexOf(kw)>=0){
+                    $(this).show()
+                } else {
+                    $(this).hide()
+                }
+            })
+            $('.page-header').hide()
+        }
+    }
 </script>
 {% endblock %}
