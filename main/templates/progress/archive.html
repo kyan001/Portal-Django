@@ -21,6 +21,16 @@
 </a>
 {% endblock function-btn %}
 
+{% block css %}
+<style>
+    #clear-search-btn {
+        pointer-events: auto;
+        z-index: 3;
+        display: none;
+    }
+</style>
+{% endblock css %}
+
 {% block content %}
 <div class="container">
     <div id="timeline-zone" class="hidden-xs">
@@ -29,11 +39,13 @@
         </div>
         <div id="event-timeline"></div>
     </div>
-    <div id='search-div'>
-            <input id="search-input" type='text' placeholder="Search" autocomplete='off' oninput="searchProgress()">
-            <span id='clear-search-btn' onclick='resetSearch()' hidden>
+    <div id='search-div' class='row'>
+        <div class="col-sm-5 col-xs-12">
+            <input id="search-input" type='text' class="form-control" placeholder="Search" autocomplete='off' oninput="searchProgress()">
+            <span id='clear-search-btn' class="form-control-feedback" onclick='resetSearch()'>
                 <span class="glyphicon glyphicon-remove"></span>
             </span>
+        </div>
     </div>
     <div class="page-header" data-toggle="collapse" data-target="#list-done">
         <h5>
