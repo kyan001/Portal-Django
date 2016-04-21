@@ -156,6 +156,10 @@
                 #user-bar .profile-link {
                     text-transform: none;
                 }
+                #user-bar .dropdown-menu {
+                    max-height: 80vh;
+                    overflow-y: auto;
+                }
                 #user-bar .dropdown-menu > li > a {
                     line-height: 40px;
                 }
@@ -229,6 +233,12 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                                <a href="/index/settheme">
+                                    <span class="glyphicon glyphicon-repeat"></span> 恢复默认主题
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
                             <li><a href="/index/settheme?name=cerulean">蔚蓝 Cerulean</a></li>
                             <li><a href="/index/settheme?name=cosmo">宇宙 Cosmo</a></li>
                             <li><a href="/index/settheme?name=cyborg">半机械 Cyborg</a></li>
@@ -245,12 +255,6 @@
                             <li><a href="/index/settheme?name=superhero">英雄 Superhero</a></li>
                             <li><a href="/index/settheme?name=united">统一 United</a></li>
                             <li><a href="/index/settheme?name=yeti">雪人 Yeti</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="/index/settheme">
-                                    <span class="glyphicon glyphicon-repeat"></span> 恢复默认主题
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </span>
