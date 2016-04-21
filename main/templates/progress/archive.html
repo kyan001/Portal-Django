@@ -10,9 +10,7 @@
 {% endblock inhead %}
 
 {% block nav-btn %}
-<a href="/progress/list" class="btn btn-warning btn-sm">
-    <span class="glyphicon glyphicon-arrow-left"></span> 回到列表
-</a>
+{% include 'progress/list-navdropdown.html' %}
 {% endblock nav-btn %}
 
 {% block function-btn %}
@@ -21,17 +19,6 @@
 </a>
 {% endblock function-btn %}
 
-{% block css %}
-<style>
-    #clear-search-btn {
-        pointer-events: auto;
-        z-index: 3;
-        display: none;
-        cursor: pointer;
-    }
-</style>
-{% endblock css %}
-
 {% block content %}
 <div class="container">
     <div id="timeline-zone" class="hidden-xs">
@@ -39,14 +26,6 @@
             <span class="glyphicon glyphicon-chevron-up text-muted" onmouseenter="$('#timeline-zone').slideUp()"></span>
         </div>
         <div id="event-timeline"></div>
-    </div>
-    <div id='search-div' class='row'>
-        <div class="col-sm-5 col-xs-12">
-            <input id="search-input" type='text' class="form-control" placeholder="Search" autocomplete='off' oninput="searchProgress()">
-            <span id='clear-search-btn' class="form-control-feedback" onclick='resetSearch()'>
-                <span class="glyphicon glyphicon-remove"></span>
-            </span>
-        </div>
     </div>
     <div class="page-header" data-toggle="collapse" data-target="#list-done">
         <h5>
@@ -57,14 +36,18 @@
         </h5>
     </div>
     <div class="row collapse in" id="list-done">
-        {% for p in listdone %}
-            {% include 'progress/list-progresscard.html' %}
-        {% empty %}
-            <div class="well">
-                进度完成后，会自动显示在这里~
-            </div>
-        {% endfor %}
-    </div><!--row-->
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
+            <div class="row">
+                {% for p in listdone %}
+                    {% include 'progress/list-progresscard.html' %}
+                {% empty %}
+                    <div class="well">
+                        进度完成后，会自动显示在这里~
+                    </div>
+                {% endfor %}
+            </div><!--.row-->
+        </div><!--.col-->
+    </div><!--.row-->
 
     <div class="page-header" data-toggle="collapse" data-target="#list-giveup">
         <h5>
@@ -75,14 +58,18 @@
         </h5>
     </div>
     <div class="row collapse" id="list-giveup">
-        {% for p in listgiveup %}
-            {% include 'progress/list-progresscard.html' %}
-        {% empty %}
-            <div class="well">
-                冻结中的进度，会自动显示在这里，可以随时再继续阅读。
-            </div>
-        {% endfor %}
-    </div><!--row-->
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
+            <div class="row">
+                {% for p in listgiveup %}
+                    {% include 'progress/list-progresscard.html' %}
+                {% empty %}
+                    <div class="well">
+                        冻结中的进度，会自动显示在这里，可以随时再继续阅读。
+                    </div>
+                {% endfor %}
+            </div><!--.row-->
+        </div><!--.col-->
+    </div><!--.row-->
 </div>
 {% endblock content %}
 
@@ -135,36 +122,5 @@
             },
         });
     });
-
-    function resetSearch(){
-        $("#search-input").val("")
-        $('.progress-card').show()
-        $('.page-header').show()
-        $('#clear-search-btn').hide()
-    }
-    function searchProgress(){
-        var kw = $.trim($('#search-input').val()).toLowerCase();
-        if(kw == ''){
-            resetSearch()
-        } else {
-            $('#clear-search-btn').show()
-            $('.collapse').each(function(){ //unfold all catagory cards
-                if(!$(this).hasClass('in')){
-                    var idselector = "#" + $(this).attr('id')
-                    $('.page-header[data-target="'+idselector+'"]').click()
-                }
-            })
-            $('.progress-card').each(function(){
-                var opusname = $(this).find('.opus-name').text().toLowerCase()
-                var opussubtitle = $(this).find('.subtitle').text().toLowerCase()
-                if(opusname.indexOf(kw)>=0 || opussubtitle.indexOf(kw)>=0){
-                    $(this).show()
-                } else {
-                    $(this).hide()
-                }
-            })
-            $('.page-header').hide()
-        }
-    }
 </script>
 {% endblock %}
