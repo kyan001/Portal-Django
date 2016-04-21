@@ -105,34 +105,25 @@
         <style>
             #nav-btn-zone {
                 position: fixed;
-                top: 0;
-                left: 0;
-                z-index: 1000;
-                padding-left: 5%;
-                padding-top: 10px;
+                top: 10px;
+                left: 5%;
+                z-index: 800;
                 font-size: 15px;
-            }
-            #nav-btn-zone,
-            #function-btn-zone {
-                pointer-events: none;
-            }
-            #nav-btn-zone .btn,
-            #function-btn-zone .btn {
-                pointer-events: auto;
             }
             @media (max-width: 768px) {
                 #function-btn-zone {
                     position: fixed;
-                    bottom: 0;
-                    right: 0;
-                    z-index: 1000;
-                    padding-right: 5%;
-                    padding-bottom: 66px;
+                    bottom: 66px;
+                    right: 5%;
+                    z-index: 800;
                     font-size: 15px;
                 }
                 #function-btn-zone .btn {
                     box-shadow: 0 2px 2px 1px rgba(0,0,0,0.3);
                 }
+            }
+            #nav-btn-zone .dropdown-menu > li > a {
+                line-height: 40px;
             }
         </style>
         <!-- ############ USER BAR ############-->
@@ -145,19 +136,11 @@
                     padding-top: 51px;
                 }
                 #user-bar {
-                    width: 100%;
                     position: fixed;
-                    top: 0;
-                    right: 0;
+                    top: 10px;
+                    right: 5%;
                     z-index: 800;
-                    padding-right: 5%;
-                    padding-left: 5%;
-                    padding-top: 10px;
-                    padding-bottom: 10px;
                     font-size: 15px;
-                }
-                #user-bar:hover {
-                    background: -webkit-linear-gradient(left, rgba(255,255,255,0), rgba(255,255,255,0.5));
                 }
                 #user-bar img {
                     max-height: 19px;
@@ -172,6 +155,9 @@
                 }
                 #user-bar .profile-link {
                     text-transform: none;
+                }
+                #user-bar .dropdown-menu > li > a {
+                    line-height: 40px;
                 }
             </style>
             <nav id='user-bar'>
