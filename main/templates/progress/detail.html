@@ -64,13 +64,25 @@
 {% endblock css %}
 
 {% block nav-btn %}
-<a href="/progress/list" class="btn btn-warning btn-sm">
-    <span class="glyphicon glyphicon-arrow-left"></span> 回到列表
-</a>
+<div class="btn-group">
+    {% if prg.status == 'giveup' or prg.status == 'done' %}
+        <a class="btn btn-warning btn-sm" href="/progress/archive">
+            <span class="glyphicon glyphicon-arrow-left"></span> 进度存档
+        </a>
+    {% else %}
+        <a class="btn btn-warning btn-sm" href="/progress/list">
+            <span class="glyphicon glyphicon-arrow-left"></span> 进度列表
+        </a>
+    {% endif %}
+    <a class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="caret"></span>
+    </a>
+    {% include 'progress/list-navlink.html' %}
+</div>
 {% endblock nav-btn %}
 
 {% block function-btn %}
-<a href="/progress/new" class="btn btn-success btn-sm">
+<a href="/progress/new" class="btn btn-success btn-sm viewmode-opacity">
     <span class="glyphicon glyphicon-plus"></span> 新增进度
 </a>
 {% endblock function-btn %}
@@ -82,9 +94,9 @@
             <div class="panel panel-primary" id="main-panel">
                 <div class="panel-heading">
                     <span class="panel-title">
-                    {% ifequal prg.status 'giveup' %}
+                    {% if prg.status == 'giveup' %}
                         <span class="persent label label-danger">已冻结</span>
-                    {% endifequal %}
+                    {% endif %}
                         <span class="persent badge">{{prg.getPersent}}%</span>
                         《 <a id="opustitle" data-toggle="tooltip" data-placement="top" href="/opus/detail?id={{opus.id}}" title="看看还有谁在看这本书">
                             <b>{{opus.name}}</b>
@@ -104,11 +116,11 @@
                 <div class="panel-body first-panel-body">
                     <div class="progress">
                         <div class="progress-bar progress-bar-striped active {{prg.getBartype}}" style="width: {{prg.getPersent}}%; min-width: 5em;">
-                            {% ifequal opus.total 0 %}
+                            {% if opus.total == 0 %}
                             <b>{{prg.current}} / ∞</b>
                             {% else %}
                             <b>{{prg.current}} / {{opus.total}}</b>
-                            {% endifequal %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
