@@ -337,9 +337,29 @@
 {% endblock css %}
 
 {% block nav-btn %}
-<a href="#div-apps" class="btn btn-default btn-sm">
-    <span class="glyphicon glyphicon-list-alt"></span> WebApps
-</a>
+<div class="btn-group">
+    <a class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="glyphicon glyphicon-list-alt"></span> Web Apps <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="/progress/list">
+                <span class="glyphicon glyphicon-th-list"></span> 我的进度
+            </a>
+        </li>
+        <li>
+            <a href="/chat/conversation?mode=quicknote">
+                <span class="glyphicon glyphicon-list-alt"></span> 临时笔记
+            </a>
+        </li>
+        <li role="separator" class="divider"></li>
+        <li>
+            <a href="http://www.duetime.cn/beijingmore">
+                <span class="glyphicon glyphicon-bold"></span> 北京·默
+            </a>
+        </li>
+    </ul>
+</div>
 {% endblock nav-btn %}
 
 {% block content %}
@@ -456,7 +476,7 @@
                         <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-1">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4>「<a class="no-decoration" href="http://www.duetime.cn/beijingmore">BeijingMore</a>」<small>北京默</small></h4>
+                                    <h4>「<a class="no-decoration" href="http://www.duetime.cn/beijingmore">北京·默</a>」<small>BeijingMore</small></h4>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
