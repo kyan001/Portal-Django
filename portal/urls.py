@@ -31,8 +31,9 @@ urlpatterns = [
     # PROGRESS
     url(r'^progress/list/$', views.progressList),
     url(r'^progress/archive/$', views.progressArchive),
-    url(r'^progress/detail$', views.progressDetail),
-    url(r'^progress/imagecolor$', views.progressImagecolor),
+    url(r'^progress/search$', views.progressSearch), #get
+    url(r'^progress/detail$', views.progressDetail), #get
+    url(r'^progress/imagecolor$', views.progressImagecolor), #get
     url(r'^progress/fastupdate/$', views.progressFastupdate),
     url(r'^progress/new/$', views.progressNew),
     url(r'^progress/add/$', views.progressAdd),

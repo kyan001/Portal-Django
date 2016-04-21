@@ -76,7 +76,7 @@ def progressList(request):
     context['prg_timeline'] = getTimeline(year=now_year, prgss=progresses)
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=loginuser['id'], category='progress')
-    userexp.addExp(1, '访问进度列表页面')
+    userexp.addExp(1, '访问「进度列表」页面')
     # render
     return render_to_response('progress/list.html', context)
 
@@ -119,9 +119,47 @@ def progressArchive(request):
     context['prg_timeline'] = getTimeline(year=now_year-1, prgss=progresses)
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=loginuser['id'], category='progress')
-    userexp.addExp(1, '访问进度存档页面')
+    userexp.addExp(1, '访问「进度存档」页面')
     # render
     return render_to_response('progress/archive.html', context)
+
+def progressSearch(request):
+    '''进度搜索：筛选所有进度'''
+    context = {'request': request}
+    #get user
+    loginuser = request.session.get('loginuser');
+    if not loginuser:
+        return util.ctrl.needLogin()
+    try:
+        user = User.objects.get(id=loginuser['id'])
+    except User.DoesNotExist:
+        return infoMsg("用户 id:{id} 不存在".format(id=str(loginuser['id'])), title='找不到用户')
+    #get user's progresses
+    progresses = Progress.objects.filter(userid=user.id).order_by('created');
+    #init vars
+    pList = []
+    #put progress items
+    if len(progresses):
+        for prg in progresses:
+            try:
+                opus = Opus.objects.get(id=prg.opusid)
+            except Opus.DoesNotExist:
+                return infoMsg("未找到 id 为 {id} 的作品".format(id=str(p.opusid)))
+            l = {}
+            l['opus'] = opus
+            l['prg'] = prg
+            pList.append(l)
+    #put into context
+    context['list'] = pList
+    #pass searched keyword
+    keyword = request.GET.get('kw')
+    if keyword:
+        context['keyword'] = keyword
+    # add exps
+    userexp, created = UserExp.objects.get_or_create(userid=loginuser['id'], category='progress')
+    userexp.addExp(1, '访问「进度搜索」页面')
+    # render
+    return render_to_response('progress/search.html', context)
 
 def progressDetail(request):
     '''进度详情页'''
