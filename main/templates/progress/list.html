@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}我的进度{% endblock title %}
+{% block title %}进度列表{% endblock title %}
 {% block icon %}<link rel="icon" href="/static/img/Logo_List.png" />{% endblock icon %}
 
 {% block inhead %}
@@ -10,9 +10,7 @@
 {% endblock inhead %}
 
 {% block nav-btn %}
-<a href="/progress/archive" class="btn btn-warning btn-sm">
-    进度存档 <span class="glyphicon glyphicon-arrow-right"></span>
-</a>
+{% include 'progress/list-navdropdown.html' %}
 {% endblock nav-btn %}
 
 {% block function-btn %}
@@ -47,7 +45,7 @@
                         您还没有任何进度哦~
                     </div>
                 {% endfor %}
-            </div><!--row-->
+            </div><!--.row-->
         </div><!--.col-->
     </div><!--.row-->
 
@@ -69,9 +67,9 @@
                     您没有在追剧的进度哦~
                 </div>
             {% endfor %}
-            </div><!--row-->
+            </div><!--.row-->
         </div><!--.col-->
-    </div><!--row-->
+    </div><!--.row-->
 
     <div class="page-header" data-toggle="collapse" data-target="#list-todo">
         <h5>
@@ -91,9 +89,9 @@
                     您没有尚未开始的进度哦~
                 </div>
             {% endfor %}
-            </div><!--row-->
+            </div><!--.row-->
         </div><!--.col-->
-    </div><!--row-->
+    </div><!--.row-->
 
     {% if listerror %}
     <div class="page-header" data-toggle="collapse" data-target="#list-error">
@@ -110,9 +108,9 @@
             {% for p in listerror %}
                 {% include 'progress/list-progresscard.html' %}
             {% endfor %}
-            </div><!--row-->
+            </div><!--.row-->
         </div><!--.col-->
-    </div><!--row-->
+    </div><!--.row-->
     {% endif %}
 
 </div><!--.container-->
