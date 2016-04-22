@@ -32,9 +32,14 @@
                         <span class="glyphicon glyphicon-search"></span>
                     </span>
                     <input id="search-input" type='text' class="form-control" placeholder="搜索标题、副标题" value="{{keyword}}" autocomplete='off' oninput="searchProgress()">
-                    <span class="input-group-btn">
-                        <a id='clear-search-btn' class="btn btn-default" onclick='resetSearch()'>
+                    <span class="input-group-addon">
+                        <a id='clear-search-btn' class="" onclick='resetSearch()'>
                             <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </span>
+                    <span class="input-group-addon">
+                        <a id="start-speech-btn" class="" onclick="startSpeech()">
+                            <span class="glyphicon glyphicon-headphones"></span>
                         </a>
                     </span>
                 </div>
@@ -80,7 +85,55 @@
 <script>
     $(function(){
         searchProgress()
+        initSpeechRec()
     });
+
+    function initSpeechRec(){
+        if(!webkitSpeechRecognition){
+            $('#start-speech-btn').hide()
+            return
+        }
+        recognition = new webkitSpeechRecognition();
+        recognizing = false;
+        recognition.continuous = true; // stop when stop talking
+        recognition.interimResults = false; // word already recognized can not change.
+        recognition.onstart = function() {
+            recognizing = true;
+            $('#start-speech-btn').css('color', 'red')
+            $.info('开始语音识别')
+        };
+        recognition.onend = function() {
+            recognizing = false;
+            $('#start-speech-btn').css('color', 'black')
+            $.info('语音识别停止')
+        };
+        recognition.onerror = function(event) {
+            $.danger("语音识别错误：" + event.error)
+        };
+        recognition.onresult = function(event) {
+            var final_txt = '';
+            console.log(event.results)
+            for (var i = event.resultIndex; i < event.results.length; ++i) {
+                final_txt += event.results[i][0].transcript;
+            }
+            if(['取消', '停止', 'cancel', 'stop'].indexOf(final_txt)>=0){
+                recognition.stop();
+                resetSearch();
+                return
+            }
+            $('#search-input').val(final_txt)
+            searchProgress()
+        };
+    }
+
+    function startSpeech(event) {
+        if (recognizing) {
+            recognition.stop();
+            return;
+        }
+        recognition.lang = 'cmn-Hans-CN';
+        recognition.start();
+    }
 
     function resetSearch(){
         $("#search-input").val("")
