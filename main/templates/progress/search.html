@@ -94,11 +94,12 @@
     });
 
     function initSpeechRec(){
-        if(!webkitSpeechRecognition){
+        var speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.oSpeechRecognition || window.msSpeechRecognition
+        if(speechRecognition){
             $('#start-speech-btn').parent('.input-group-addon').hide()
             return
         }
-        recognition = new webkitSpeechRecognition();
+        recognition = new speechRecognition();
         recognizing = false;
         recognition.continuous = true; // stop when stop talking
         recognition.interimResults = false; // word already recognized can not change.
@@ -117,7 +118,6 @@
         };
         recognition.onresult = function(event) {
             var final_txt = '';
-            console.log(event.results)
             for (var i = event.resultIndex; i < event.results.length; ++i) {
                 final_txt += event.results[i][0].transcript;
             }
