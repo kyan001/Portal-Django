@@ -19,6 +19,10 @@
     .page-header {
         cursor: default;
     }
+    #clear-search-btn:hover,
+    #start-speech-btn:hover {
+        color: #C14140;
+    }
 </style>
 {% endblock css %}
 
@@ -33,14 +37,14 @@
                     </span>
                     <input id="search-input" type='text' class="form-control" placeholder="搜索标题、副标题" value="{{keyword}}" autocomplete='off' oninput="searchProgress()">
                     <span class="input-group-addon">
-                        <a id='clear-search-btn' class="" onclick='resetSearch()'>
+                        <span id='clear-search-btn' class="hover-pointer" onclick='resetSearch()'>
                             <span class="glyphicon glyphicon-remove"></span>
-                        </a>
+                        </span>
                     </span>
-                    <span class="input-group-addon">
-                        <a id="start-speech-btn" class="" onclick="startSpeech()">
+                    <span class="input-group-addon" title="!! 需要访问 Google.com !!" data-toggle="tooltip" data-placement="top">
+                        <span id="start-speech-btn" class="hover-pointer" onclick="startSpeech()">
                             <span class="glyphicon glyphicon-headphones"></span>
-                        </a>
+                        </span>
                     </span>
                 </div>
 
@@ -86,11 +90,12 @@
     $(function(){
         searchProgress()
         initSpeechRec()
+        $('[data-toggle="tooltip"]').tooltip()
     });
 
     function initSpeechRec(){
         if(!webkitSpeechRecognition){
-            $('#start-speech-btn').hide()
+            $('#start-speech-btn').parent('.input-group-addon').hide()
             return
         }
         recognition = new webkitSpeechRecognition();
@@ -100,12 +105,12 @@
         recognition.onstart = function() {
             recognizing = true;
             $('#start-speech-btn').css('color', 'red')
-            $.info('开始语音识别')
+            $.info('正在语音识别中...')
         };
         recognition.onend = function() {
             recognizing = false;
             $('#start-speech-btn').css('color', 'black')
-            $.info('语音识别停止')
+            $.info('语音识别已停止')
         };
         recognition.onerror = function(event) {
             $.danger("语音识别错误：" + event.error)
@@ -138,7 +143,7 @@
     function resetSearch(){
         $("#search-input").val("")
         $('.progress-card').show()
-        $('#clear-search-btn').hide()
+        $('#clear-search-btn').parent('.input-group-addon').hide()
         $('#show-all-header').show()
         $('#search-result-header').hide()
         $('#search-input').focus()
@@ -162,7 +167,7 @@
             $('#search-result-title').text('包含 「'+ kw +'」的进度：')
             $('#search-result-link').attr('href','/progress/search?kw='+kw)
             $('#search-result-count').text('('+ count +')')
-            $('#clear-search-btn').show()
+            $('#clear-search-btn').parent('.input-group-addon').show()
             $('#show-all-header').hide()
             $('#search-result-header').show()
         }

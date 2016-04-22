@@ -25,6 +25,10 @@
              -o-transform: translateY(-2px);
                 transform: translateY(-2px);
     }
+/* other */
+    .hover-pointer {
+        cursor: pointer;
+    }
 
 /* blurs */
     .blur,
