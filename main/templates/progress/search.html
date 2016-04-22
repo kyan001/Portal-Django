@@ -95,7 +95,7 @@
 
     function initSpeechRec(){
         var speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.oSpeechRecognition || window.msSpeechRecognition
-        if(speechRecognition){
+        if(!speechRecognition){
             $('#start-speech-btn').parent('.input-group-addon').hide()
             return
         }
