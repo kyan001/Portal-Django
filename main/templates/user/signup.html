@@ -65,6 +65,28 @@
         modeToggle('old')
         disableSubmit()
     });
+    function showLoading(mode){
+        var ele = $('#submit-button')
+        if('off'==mode){
+            ele.text('提交注册 / Submit')
+            ele.addClass('btn-success')
+            ele.removeClass('btn-warning')
+        } else {
+            ele.text('LOADING ...')
+            ele.removeClass('btn-success')
+            ele.addClass('btn-warning')
+        }
+    }
+
+    function showSubmitting(mode){
+        var ele = $('#submit-button')
+        if('off'==mode){
+            ele.text('提交注册 / Submit')
+        } else {
+            ele.text('提交中 / Submitting')
+        }
+    }
+
     function disableSubmit(){
         $("#submit-button").attr('disabled','disabled');
         $('#submit-button').css('pointer-events','none');
@@ -130,8 +152,10 @@
             $('#username-group').addClass('has-warning');
             return
         }
+        showLoading('off')
         clearTimeout(timer_vUn)
         timer_vUn = setTimeout(function(){
+            showLoading('on')
             $.ajax({
                 type: "GET",
                 url: "/user/validateusername",
@@ -139,6 +163,7 @@
                     'username':$('input[name="username"]').val()
                 },
                 success: function (data) {
+                    showLoading('off')
                     var result = data;
                     if(result.error){
                         $.danger(result.error);
@@ -164,7 +189,9 @@
             return
         }
         clearTimeout(timer_vUn)
+        showLoading('off')
         timer_vNn = setTimeout(function(){
+            showLoading('on')
             $.ajax({
                 type: "GET",
                 url: "/user/validatenickname",
@@ -172,6 +199,7 @@
                     'nickname':$('input[name="nickname"]').val()
                 },
                 success: function (data) {
+                    showLoading('off')
                     var result = data;
                     if(result.error){
                         $.danger(result.error);
@@ -197,7 +225,9 @@
             return
         }
         clearTimeout(timer_vE)
+        showLoading('off')
         timer_vE = setTimeout(function(){
+            showLoading('on')
             $.ajax({
                 type: "GET",
                 url: "/user/validateemail",
@@ -205,6 +235,7 @@
                     'email':$('input[name="email"]').val()
                 },
                 success: function (data) {
+                    showLoading('off')
                     var result = data;
                     if(result.error){
                         $.danger(result.error);
@@ -244,6 +275,7 @@
             return false;
         }
         disableAllBtn()
+        showSubmitting()
         $("#the-form").submit();
     }
 </script>

@@ -136,6 +136,15 @@
         }
     }
 
+    function showSubmitting(mode){
+        var ele = $('#submit-button')
+        if('off'==mode){
+            ele.text('登入 / Login')
+        } else {
+            ele.text('登入中 ...')
+        }
+    }
+
     var timer_vUn
     function validateUsername(option){
         clearHasClass($('#username-group'));
@@ -196,6 +205,7 @@
             $('input[name="rememberme"]').val('')
         }
         disableAllBtn()
+        showSubmitting()
         $("#login-form").submit();
     }
     function keydownAnswer(){
