@@ -98,6 +98,14 @@ class UserPermission(models.Model):
         if category_name:
             return category_name;
         return self.category
+    def getBadge(self):
+        badge = UserPermissionBadge.objects.get(category=self.category, isallowed=self.isallowed)
+        return badge.image
+
+class UserPermissionBadge(models.Model):
+    category = models.CharField(max_length=128, blank=False, null=False)
+    isallowed = models.BooleanField()
+    image = models.ImageField(default='default.jpg', upload_to='badges');
 
 class UserExp(models.Model):
     userid = models.IntegerField(default=0, blank=False, null=False)
