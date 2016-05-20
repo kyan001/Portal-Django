@@ -121,6 +121,7 @@ class UserPermissionBadge(models.Model):
     image = models.TextField(default='/static/media/badges/no.png');
     description = models.TextField(default='')
     requirement = models.TextField(default='')
+    designerid = models.IntegerField(default=0, blank=True, null=True)
     created = models.DateTimeField(default=timezone.now, blank=True)
     def __str__(self):
         return "{self.id}) {self.category}:{self.isallowed} - ({self.image})".format(self=self)
@@ -134,8 +135,21 @@ class UserPermissionBadge(models.Model):
         try:
             user_permissions = UserPermission.objects.filter(category=self.category, isallowed=self.isallowed)
         except UserPermission.DoesNotExist:
-            return None;
+            return None
         return user_permissions.count()
+    def getDesigner(self):
+        if not self.designerid:
+            return None
+        try:
+            user = User.objects.get(id=self.designerid)
+            return user
+        except User.DoesNotExist:
+            return None
+    def getDesignerNickname(self):
+        designer = self.getDesigner()
+        if designer:
+            return designer.nickname
+        return None
 
 class UserExp(models.Model):
     userid = models.IntegerField(default=0, blank=False, null=False)

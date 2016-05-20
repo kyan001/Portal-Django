@@ -84,6 +84,7 @@ def superuserUpdatedb(request):
     if not user.getUserpermission('superuser'):
         return util.ctrl.infoMsg("您不具有 {category_name} 权限".format(category_name=UserPermission.objects.getCategoryName('superuser')));
     # update userPermissionBadge
+    userk = User.objects.get(nickname='唯笑竹')
     sql_list = [
         {
             'category': 'superuser',
@@ -91,6 +92,7 @@ def superuserUpdatedb(request):
             'image': '/static/media/badges/superuser.png',
             'description': 'For who owns the site',
             'requirement': '当且仅当你是网站的超级管理员',
+            'designerid': userk.id,
         },
         {
             'category': 'signin',
@@ -98,6 +100,7 @@ def superuserUpdatedb(request):
             'image': '/static/media/badges/signin-no.png',
             'description': '此用户被禁止登录',
             'requirement': '当你被关入小黑屋时，或者作为系统的特殊用户',
+            'designerid': userk.id,
         },
         {
             'category': 'betauser',
@@ -105,10 +108,11 @@ def superuserUpdatedb(request):
             'image': '/static/media/badges/betauser.png',
             'description': '加入于网站尚未成熟时',
             'requirement': '在网站成熟之前就注册成功',
+            'designerid': userk.id,
         },
     ]
     for sql in sql_list:
-        upb, iscreated = UserPermissionBadge.objects.update_or_create(**sql)
+        upb, iscreated = UserPermissionBadge.objects.update_or_create(category=sql['category'], isallowed=sql['isallowed'], defaults=sql)
     # render
     return util.ctrl.infoMsg("数据库更新完毕")
 
