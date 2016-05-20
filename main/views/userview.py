@@ -371,8 +371,6 @@ def userGetloginerInfo(request): # AJAX
     if loginuser:
         user = getUserById(loginuser['id'])
         loginuser['avatar'] = getGravatarUrl(loginuser['email'])
-        loginuser['level'] = user.getLevel()
-        loginuser['badgecount'] = len(user.getUserbadges())
         return returnJson(loginuser)
     else:
         return returnJsonResult('nologinuser')
