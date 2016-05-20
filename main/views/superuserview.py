@@ -109,10 +109,6 @@ def superuserUpdatedb(request):
     ]
     for sql in sql_list:
         upb, iscreated = UserPermissionBadge.objects.update_or_create(**sql)
-    # betauser badges
-    users = User.objects.all()
-    for u in users:
-        u.setUserpermission('betauser', True)
     # render
     return util.ctrl.infoMsg("数据库更新完毕")
 
