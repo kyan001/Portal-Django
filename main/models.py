@@ -17,7 +17,7 @@ class User(models.Model):
     email = models.EmailField()
     created = models.DateTimeField(default=timezone.now, blank=True)
     def __str__(self): # 用于需要 string 时的处理 python3
-        return "{self.id}: {created} - @{self.nickname} : {self.username}".format(self=self, created=self.getCreated())
+        return "{self.id}) {created} - @{self.nickname} : {self.username}".format(self=self, created=self.getCreated())
     def toArray(self):
         self.created = self.created.isoformat(' ')
         return model_to_dict(self)
@@ -33,11 +33,20 @@ class User(models.Model):
         except UserPermission.DoesNotExist:
             return None;
     def setUserpermission(self, category, isallowed):
-        up = UserPermission.objects.update_or_create(userid=self.id, category=category,
+        up, iscreated = UserPermission.objects.update_or_create(userid=self.id, category=category,
             defaults={
                 'isallowed': isallowed
             }
         )
+    def getUserbadges(self):
+        try:
+            user_badges = []
+            user_permissions = UserPermission.objects.filter(userid=self.id)
+            for up in user_permissions:
+                user_badges.append(up.getBadge())
+            return user_badges
+        except UserPermission.DoesNotExist:
+            return None;
     # exps related
     def getUserExp(self, category=None):
         if category:
@@ -82,15 +91,16 @@ class UserPermission(models.Model):
     isallowed = models.BooleanField()
     objects = UserPermissionManager()
     category_pool = {
-        'all': ('signin', 'superuser'),
+        'all': ('signin', 'superuser', 'betauser'),
     }
     category_name = {
         'signin': '登入',
         'superuser': '超级管理员',
+        'betauser': '公测用户',
     }
     def __str__(self):
         user = self.getUser()
-        return "{self.id}: @{user.nickname} - {category_name} {self.category} : {self.isallowed}".format(self=self, user=user, category_name=self.getCategoryName())
+        return "{self.id}) @{user.nickname} - {category_name} {self.category} : {self.isallowed}".format(self=self, user=user, category_name=self.getCategoryName())
     def getUser(self):
         return User.objects.get(id=self.userid)
     def getCategoryName(self):
@@ -99,13 +109,33 @@ class UserPermission(models.Model):
             return category_name;
         return self.category
     def getBadge(self):
-        badge = UserPermissionBadge.objects.get(category=self.category, isallowed=self.isallowed)
-        return badge.image
+        try:
+            badge = UserPermissionBadge.objects.get(category=self.category, isallowed=self.isallowed)
+        except UserPermissionBadge.DoesNotExist:
+            return None;
+        return badge
 
 class UserPermissionBadge(models.Model):
     category = models.CharField(max_length=128, blank=False, null=False)
     isallowed = models.BooleanField()
-    image = models.ImageField(default='default.jpg', upload_to='badges');
+    image = models.TextField(default='/static/media/badges/no.png');
+    description = models.TextField(default='')
+    requirement = models.TextField(default='')
+    created = models.DateTimeField(default=timezone.now, blank=True)
+    def __str__(self):
+        return "{self.id}) {self.category}:{self.isallowed} - ({self.image})".format(self=self)
+    # Created & Modified
+    def setCreated(self):
+        self.created = timezone.now()
+    def getCreated(self):
+        return util.ctrl.formatDate(self.created)
+    # util
+    def userCount(self):
+        try:
+            user_permissions = UserPermission.objects.filter(category=self.category, isallowed=self.isallowed)
+        except UserPermission.DoesNotExist:
+            return None;
+        return user_permissions.count()
 
 class UserExp(models.Model):
     userid = models.IntegerField(default=0, blank=False, null=False)
@@ -124,7 +154,7 @@ class UserExp(models.Model):
     }
     def __str__(self):
         user = self.getUser()
-        return "{self.id}: @{user.nickname} - {category_name}: {self.exp} - Lv.{level}".format(self=self, user=user, category_name=self.getCategory(), level=self.getLevel())
+        return "{self.id}) @{user.nickname} - {category_name}: {self.exp} - Lv.{level}".format(self=self, user=user, category_name=self.getCategory(), level=self.getLevel())
     # Category
     def setCategory(self, category):
         if category not in self.category_pool.get('all'):
@@ -181,7 +211,7 @@ class ExpHistory(models.Model):
     def __str__(self):
         userexp = self.getUserexp()
         user = userexp.getUser()
-        return "{self.id}: {created} - @{user.nickname}: [{category_name}] {self.operation} +{self.change}".format(self=self, user=user, created=self.getCreated(), category_name=userexp.getCategory())
+        return "{self.id}) {created} - @{user.nickname}: [{category_name}] {self.operation} +{self.change}".format(self=self, user=user, created=self.getCreated(), category_name=userexp.getCategory())
     def getUserexp(self):
         return UserExp.objects.get(id=self.userexpid)
     # Created & Modified
@@ -198,7 +228,7 @@ class Opus(models.Model):
     def __str__(self):
         subtext = "({self.subtitle})".format(self=self) if self.subtitle else "";
         total = self.total if self.total else '∞'
-        return "{self.id}: 《 {self.name} 》 {subtext} [{total}]".format(self=self, subtext=subtext, total=total)
+        return "{self.id}) 《 {self.name} 》 {subtext} [{total}]".format(self=self, subtext=subtext, total=total)
     def toArray(self):
         self.created = self.created.isoformat(' ')
         return model_to_dict(self)
@@ -259,7 +289,7 @@ class Progress(models.Model):
     def __str__(self):
         opus = self.getOpus()
         user = self.getUser()
-        return "{self.id}: @{user.nickname} -《 {opus.name} 》 ({self.current}/{opus.total})".format(self=self, user=user, opus=opus)
+        return "{self.id}) @{user.nickname} -《 {opus.name} 》 ({self.current}/{opus.total})".format(self=self, user=user, opus=opus)
     def toArray(self):
         self.created = self.created.isoformat(' ')
         self.modified = self.modified.isoformat(' ')
@@ -376,7 +406,7 @@ class Chat(models.Model):
         receiver = self.getReceiver()
         unread = "" if self.isread else "[unread]"
         content = (self.content[:40] + '..') if len(self.content)>40 else self.content
-        return "{self.id}: {created} - @{sender.nickname}→@{receiver.nickname} : {unread} {content}".format(self=self, created=self.getCreated(), sender=sender, receiver=receiver, content=content, unread=unread)
+        return "{self.id}) {created} - @{sender.nickname}→@{receiver.nickname} : {unread} {content}".format(self=self, created=self.getCreated(), sender=sender, receiver=receiver, content=content, unread=unread)
     # send / receive / isread
     def markRead(self):
         self.isread = True;

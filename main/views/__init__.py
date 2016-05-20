@@ -4,3 +4,4 @@ from .progressview import *
 from .opusview import *
 from .chatview import *
 from .superuserview import *
+from .badgeview import *

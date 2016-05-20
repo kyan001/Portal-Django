@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}徽章：{{badge.category|capfirst}}{% endblock title %}
+
+{% block css %}
+<style>
+    .container {
+        font-family: 'Microsoft YaHei';
+    }
+    .userbadge {
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block nav-btn %}
+<a href="/badge/list" class="btn btn-warning btn-sm">
+    <span class="glyphicon glyphicon-arrow-left"></span> 回到徽章列表
+</a>
+{% endblock nav-btn %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+            <div class="panel panel-primary">
+                <div class='panel-heading'>
+                        <span class="panel-title">「
+                            {% if not badge.isallowed %}
+                                <span class='glyphicon glyphicon-ban-circle'></span>
+                            {% endif %}
+                            {{badge.category|upper}}」
+                        <span>
+                        <span class='text-right'>
+                            <span class="glyphicon glyphicon-user"></span>
+                            <span>{{badge.userCount}}</span>
+                        </span>
+                </div>
+                <img class='userbadge' src='{{badge.image}}'>
+                <div class="panel-body">
+                    <h5 class=''>{{badge.description}}</h5>
+                    <li class="text-muted">获得条件：{{badge.requirement}}</li>
+                    <li class="text-muted">加入时间：{{badge.getCreated}}</li>
+                </div>
+            </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

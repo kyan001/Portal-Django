@@ -29,6 +29,7 @@ def superuserIndex(request):
             超级管理员操作连接：
             <a class="btn btn-default btn-sm" href="/superuser/index">初始化</a>
             <a class="btn btn-default btn-sm" href="/superuser/broadcast">广播系统消息</a>
+            <a class="btn btn-default btn-sm" href="/superuser/updatedb">更新数据库</a>
         </h5>
         <li><b>初始化</b>：默认@{superuser.nickname} ，并发送此邮件</li>
         <li><b>广播系统消息</b>：处理、广播系统消息</li>
@@ -67,6 +68,54 @@ def superuserBroadcast(request):
     context['chats'] = chats
     context['user'] = sysuser
     return render_to_response('superuser/broadcast.html', context);
+
+def superuserUpdatedb(request):
+    '''su 更新数据库'''
+    context = {'request': request}
+    loginuser = request.session.get('loginuser')
+    if not loginuser:
+        return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
+    # get user
+    try:
+        user = User.objects.get(id=loginuser['id'])
+    except User.DoesNotExist:
+        return util.ctrl.infoMsg("您查找的用户 id：{id} 并不存在".format(id=str(loginuser['id'])));
+    # check superuser
+    if not user.getUserpermission('superuser'):
+        return util.ctrl.infoMsg("您不具有 {category_name} 权限".format(category_name=UserPermission.objects.getCategoryName('superuser')));
+    # update userPermissionBadge
+    sql_list = [
+        {
+            'category': 'superuser',
+            'isallowed': True,
+            'image': '/static/media/badges/superuser.png',
+            'description': 'For who owns the site',
+            'requirement': '当且仅当你是网站的超级管理员',
+        },
+        {
+            'category': 'signin',
+            'isallowed': False,
+            'image': '/static/media/badges/signin-no.png',
+            'description': '此用户被禁止登录',
+            'requirement': '当你被关入小黑屋时，或者作为系统的特殊用户',
+        },
+        {
+            'category': 'betauser',
+            'isallowed': True,
+            'image': '/static/media/badges/betauser.png',
+            'description': '加入于网站尚未成熟时',
+            'requirement': '在网站成熟之前就注册成功',
+        },
+    ]
+    for sql in sql_list:
+        upb, iscreated = UserPermissionBadge.objects.update_or_create(**sql)
+    # betauser badges
+    users = User.objects.all()
+    for u in users:
+        u.setUserpermission('betauser', True)
+    # render
+    return util.ctrl.infoMsg("数据库更新完毕")
+
 
 @csrf_exempt
 def superuserSendbroadcast(request):

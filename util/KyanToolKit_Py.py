@@ -11,7 +11,7 @@ import threading, queue
 from functools import wraps
 
 class KyanToolKit_Py(object):
-    version = '4.1'
+    version = '4.3'
     def __init__(self, trace_file="trace.xml"):
         self.trace_file = trace_file
         self.q = {
@@ -52,10 +52,10 @@ class KyanToolKit_Py(object):
             @wraps(input_func)
             def callInputFunc(*args, **kwargs):
                 self = args[0]
-                print("*")
-                print("| {}:".format(func_title))
+                self.pStart()
+                self.pTitle(func_title)
                 result = input_func(*args, **kwargs)
-                print("!")
+                self.pEnd()
                 return result
             return callInputFunc
         return get_func
@@ -90,20 +90,33 @@ class KyanToolKit_Py(object):
         banner_border = self.special_char * content_line_length
         return banner_border + '\n' + content_line + '\n' + banner_border
 
-    def echo(self, words, prefix="!"):
+    def echo(self, words, prefix="", lvl=0):
         words = str(words)
-        prefix = '({})'.format(prefix.capitalize())
-        print("| {p} {w}".format(p=prefix.rjust(9), w=words))
+        if prefix:
+            prefix = '({})'.format(prefix.capitalize()) + ' '
+        tabs = '    ' * int(lvl) if int(lvl) else ''
+        print("| {p}{t}{w}".format(p=prefix, t=tabs, w=words))
         return self
 
-    def info(self, words):
-        return self.echo(words, "info")
+    def pStart(self):
+        print('*')
+        return self
 
-    def warn(self, words):
-        return self.echo(words, "warning")
+    def pEnd(self):
+        print('!')
+        return self
 
-    def err(self, words):
-        return self.echo(words, "error")
+    def pTitle(self, words):
+        return self.echo(words + ":")
+
+    def info(self, words, **options):
+        return self.echo(words, "info", **options)
+
+    def warn(self, words, **options):
+        return self.echo(words, "warning", **options)
+
+    def err(self, words, **options):
+        return self.echo(words, "error", **options)
 
     def md5(self, words=""):
         if type(words) != bytes: # md5的输入必须为bytes类型
@@ -188,15 +201,15 @@ class KyanToolKit_Py(object):
     def getChoice(self, choices_):
         assemble_print = ""
         for index,item in enumerate(choices_):
-            assemble_print += "\n| " + str(index+1).rjust(2) + " - " + str(item)
+            assemble_print +='\n' if index else ''
+            assemble_print += "| " + " {}) ".format(str(index+1)) + str(item)
         user_choice = self.getInput(assemble_print);
         if user_choice in choices_:
             return user_choice;
         elif user_choice.isdigit():
             numerical_choice = int(user_choice);
             if numerical_choice > len(choices_):
-                self.err("Invalid Choice")
-                self.bye()
+                self.err("Invalid Choice").bye()
             return choices_[numerical_choice-1]
         else:
             self.err("Please enter a valid choice");

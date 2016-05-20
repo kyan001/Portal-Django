@@ -244,6 +244,9 @@ def userNewUser(request):
     user.setCreated();
     user.save();
 
+    # add betauser badge
+    user.setUserpermission('betauser', True)
+
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
     userexp.addExp(1, '注册成功')
@@ -369,6 +372,7 @@ def userGetloginerInfo(request): # AJAX
         user = getUserById(loginuser['id'])
         loginuser['avatar'] = getGravatarUrl(loginuser['email'])
         loginuser['level'] = user.getLevel()
+        loginuser['badgecount'] = len(user.getUserbadges())
         return returnJson(loginuser)
     else:
         return returnJsonResult('nologinuser')
