@@ -124,7 +124,7 @@ class UserPermissionBadge(models.Model):
     designerid = models.IntegerField(default=0, blank=True, null=True)
     created = models.DateTimeField(default=timezone.now, blank=True)
     def __str__(self):
-        return "{self.id}) {self.category}:{self.isallowed} - ({self.image})".format(self=self)
+        return "{self.id}) {self.category}:{self.isallowed} - ({self.image}) @{dnickname}".format(self=self, dnickname=self.getDesignerNickname())
     # Created & Modified
     def setCreated(self):
         self.created = timezone.now()

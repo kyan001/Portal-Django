@@ -187,21 +187,22 @@
                         <b id="unread-count"></b>
                     </a>
                     <div class="btn-group">
-                        <a class="btn btn-default btn-sm profile-link" href='/user/profile'>
+                        <a type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="profile-nikename">
                                 用户名
                             </span>
-                        </a>
-                        <a type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" onmouseover='$(this).click()' aria-haspopup="true" aria-expanded="false">
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="dropdown-header">
-                                <span id="dropdown-header-level"></span>
-                                <span class='pull-right' title='徽章'>
-                                    <span class='glyphicon glyphicon-tower'></span>
-                                    <span id='dropdown-header-badges'></span>
-                                </span>
+                            <li class="profile-link">
+                                <a href='/user/profile'>
+                                    <span class="glyphicon glyphicon-user"></span> 个人信息
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/user/logout">
+                                    <span class="glyphicon glyphicon-log-out"></span> 登出
+                                </a>
                             </li>
                             <li role="separator" class="divider"></li>
                             <li class="visible-xs-block">
@@ -228,10 +229,6 @@
                             <li>
                                 <a href='/badge/list'>
                                     <span class="glyphicon glyphicon-tower"></span> 徽章列表
-                                </a>
-                            <li>
-                                <a href="/user/logout">
-                                    <span class="glyphicon glyphicon-log-out"></span> 登出
                                 </a>
                             </li>
                         </ul>
@@ -290,8 +287,6 @@
                                 $("#user-bar .nologinshow").show();
                             } else {
                                 $("#user-bar .profile-nikename").text("@").append("<b>"+result.nickname+"</b>");
-                                $("#user-bar #dropdown-header-level").text("Lv."+result.level);
-                                $("#user-bar #dropdown-header-badges").text(result.badgecount)
                                 $("#user-bar .loginshow").show();
                                 $('#user-bar [data-toggle="tooltip"]').tooltip();
                             }
