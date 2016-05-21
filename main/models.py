@@ -43,7 +43,6 @@ class User(models.Model):
             user_badges = []
             user_permissions = UserPermission.objects.filter(userid=self.id)
             for up in user_permissions:
-                print(up.getBadge())
                 user_badges.append(up.getBadge())
             return user_badges
         except UserPermission.DoesNotExist:
@@ -51,7 +50,7 @@ class User(models.Model):
 
     def claimUserbadges(self):
         done_prg_count = Progress.objects.filter(status='done').count()
-        if done_prg_count >= 1:
+        if done_prg_count >= 25:
             self.setUserpermission('wellread', True)
     # exps related
     def getUserExp(self, category=None):
