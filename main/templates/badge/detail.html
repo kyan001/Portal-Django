@@ -8,6 +8,7 @@
     }
     .userbadge {
         width: 100%;
+        max-width: 300px;
     }
 </style>
 {% endblock %}
@@ -24,28 +25,47 @@
         <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
                 <div class='panel-heading'>
-                        <span class="panel-title">「
-                            {% if not badge.isallowed %}
-                                <span class='glyphicon glyphicon-ban-circle'></span>
-                            {% endif %}
-                            {{badge.category|upper}}」
-                        <span>
-                        <span class='text-right'>
-                            <span class="glyphicon glyphicon-user"></span>
-                            <span>{{badge.userCount}}</span>
-                        </span>
+                    <span class="panel-title">
+                        {% if not badge.isallowed %}
+                            <span class='glyphicon glyphicon-ban-circle'></span>
+                        {% endif %}
+                        {{badge.category|upper}}
+                    </span>
                 </div>
-                <img class='userbadge' src='{{badge.image}}'>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 text-center">
+                        <img class='userbadge' src='{{badge.image}}'>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <table class='table'>
+                            <tr>
+                                <td>设计师：</td>
+                                <td>
+                                    <a href="/user/public?nickname={{badge.designernname}}">
+                                        @{{badge.designernname}}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>加入时间：</td>
+                                <td>{{badge.getCreated}}</td>
+                            </tr>
+                            <tr>
+                                <td>拥有人数：</td>
+                                <td>
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    <span>{{badge.userCount}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
                 <div class="panel-body">
-                    <h5 class=''>{{badge.description}}</h5>
-                    <li class="text-muted">{{badge.requirement}}</li>
-                    <li class="text-muted">设计师：
-                        <a href="/user/public?nickname={{badge.getDesignerNickname}}">@{{badge.getDesignerNickname}}
-                        </a>
-                    </li>
-                    <li class="text-muted">加入时间：{{badge.getCreated}}</li>
+                    <h4 class='text-info'>{{badge.description}}</h4>
+                    <li>{{badge.requirement|linebreaks}}</li>
                 </div>
             </div>
+        </div>
     </div>
 </div>
 {% endblock %}

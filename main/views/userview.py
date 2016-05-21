@@ -176,6 +176,7 @@ def userProfile(request):
         cache.set(cache_key, ue.getLevel(), cache_timeout)
     # get user progress counts
     progress_statics = user.getProgressStatics();
+    user.claimUserbadges()
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
     userexp.addExp(1, '查看用户私人信息')
@@ -299,7 +300,7 @@ def userCheckLogin(request):
     # check username vs. answer
     user = getUser(username)
     if user.getUserpermission('signin')==False:
-        return infoMsg('您已被禁止{category_name}，请联系管理员'.format(category_name=UserPermission.objects.getCategoryName('signin')))
+        return infoMsg('您已被禁止 登录，请联系管理员')
     if checkAnswer(user, answer):
         request.session['loginuser'] = user.toArray()
     else:

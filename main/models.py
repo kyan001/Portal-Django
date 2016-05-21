@@ -43,10 +43,16 @@ class User(models.Model):
             user_badges = []
             user_permissions = UserPermission.objects.filter(userid=self.id)
             for up in user_permissions:
+                print(up.getBadge())
                 user_badges.append(up.getBadge())
             return user_badges
         except UserPermission.DoesNotExist:
             return None;
+
+    def claimUserbadges(self):
+        done_prg_count = Progress.objects.filter(status='done').count()
+        if done_prg_count >= 1:
+            self.setUserpermission('wellread', True)
     # exps related
     def getUserExp(self, category=None):
         if category:
@@ -80,9 +86,6 @@ class User(models.Model):
 
 class UserPermissionManager(models.Manager):
     def getCategoryName(self, category):
-        category_name = UserPermission.category_name.get(category)
-        if category_name:
-            return category_name;
         return category
 
 class UserPermission(models.Model):
@@ -91,23 +94,13 @@ class UserPermission(models.Model):
     isallowed = models.BooleanField()
     objects = UserPermissionManager()
     category_pool = {
-        'all': ('signin', 'superuser', 'betauser'),
-    }
-    category_name = {
-        'signin': '登入',
-        'superuser': '超级管理员',
-        'betauser': '公测用户',
+        'all': ('signin', 'superuser', 'betauser', 'wellread', 'badgedesigner'),
     }
     def __str__(self):
         user = self.getUser()
-        return "{self.id}) @{user.nickname} - {category_name} {self.category} : {self.isallowed}".format(self=self, user=user, category_name=self.getCategoryName())
+        return "{self.id}) @{user.nickname} - {self.category} : {self.isallowed}".format(self=self, user=user)
     def getUser(self):
         return User.objects.get(id=self.userid)
-    def getCategoryName(self):
-        category_name = self.category_name.get(self.category)
-        if category_name:
-            return category_name;
-        return self.category
     def getBadge(self):
         try:
             badge = UserPermissionBadge.objects.get(category=self.category, isallowed=self.isallowed)
@@ -121,10 +114,10 @@ class UserPermissionBadge(models.Model):
     image = models.TextField(default='/static/media/badges/no.png');
     description = models.TextField(default='')
     requirement = models.TextField(default='')
-    designerid = models.IntegerField(default=0, blank=True, null=True)
+    designernname = models.CharField(default="", max_length=128, blank=True, null=True)
     created = models.DateTimeField(default=timezone.now, blank=True)
     def __str__(self):
-        return "{self.id}) {self.category}:{self.isallowed} - ({self.image}) @{dnickname}".format(self=self, dnickname=self.getDesignerNickname())
+        return "{self.id}) {self.category}:{self.isallowed} - ({self.image}) @{dnn}".format(self=self, dnn=self.designernname)
     # Created & Modified
     def setCreated(self):
         self.created = timezone.now()
@@ -138,18 +131,13 @@ class UserPermissionBadge(models.Model):
             return None
         return user_permissions.count()
     def getDesigner(self):
-        if not self.designerid:
+        if not self.designernname:
             return None
         try:
-            user = User.objects.get(id=self.designerid)
+            user = User.objects.get(nickname=self.designernname)
             return user
         except User.DoesNotExist:
             return None
-    def getDesignerNickname(self):
-        designer = self.getDesigner()
-        if designer:
-            return designer.nickname
-        return None
 
 class UserExp(models.Model):
     userid = models.IntegerField(default=0, blank=False, null=False)
