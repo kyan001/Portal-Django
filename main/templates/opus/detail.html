@@ -70,7 +70,7 @@
         </div><!--.col-->
         <div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>
             <div class="panel panel-primary" id="info-panel">
-                <img src='http://pan.baidu.com/share/qrcode?w=150&h=150&url={{request.path}}' title='当前页面的二维码'>
+                <img src='http://pan.baidu.com/share/qrcode?w=150&h=150&url={{request.build_absolute_uri}}' title='当前页面的二维码'>
             </div>
         </div>
     </div><!--.row-->
