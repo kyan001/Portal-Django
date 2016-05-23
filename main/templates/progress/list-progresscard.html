@@ -6,7 +6,7 @@
             <div class="panel-heading progress-title">
                 <span class="panel-title">
                     <span class="persent badge">{{ p.prg.getPersent }}%</span>
-                    <span class='opus-name'>《 <b>{{ p.opus.name|truncatechars:15 }}</b> 》</span>
+                    <span class='opus-name'>《 <b>{{ p.opus.name|truncatechars:25 }}</b> 》</span>
                     {% if p.opus.subtitle %}
                     <span class="subtitle label label-info">
                         {{ p.opus.subtitle|truncatechars:9 }}
@@ -43,4 +43,3 @@
         </div>
     </a>
 </div><!--col-->
-
