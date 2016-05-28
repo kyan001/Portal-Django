@@ -309,11 +309,8 @@ def userCheckLogin(request):
     redirect_url = request.POST.get('redirect')
     redirect_to_home = (
         '/user/newuser',
-        '/user/newuser/',
         '/user/signin',
-        '/user/signin/',
         '/user/signup',
-        '/user/signup/'
         )
     if redirect_url:
         response = redirect(redirect_url)
