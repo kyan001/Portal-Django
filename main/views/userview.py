@@ -317,11 +317,11 @@ def userCheckLogin(request):
         )
     if redirect_url:
         response = redirect(redirect_url)
+        for urllet in redirect_to_home:
+            if urllet in redirect_url:
+                response = redirect('/')
     else:
         response = redirect('/')
-    for urllet in redirect_to_home:
-        if urllet in redirect_url:
-            response = redirect('/')
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
     userexp.addExp(1, '登入成功')
