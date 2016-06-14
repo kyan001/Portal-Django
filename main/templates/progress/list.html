@@ -23,7 +23,7 @@
 <div class="container">
     <div id="timeline-zone" class="hidden-xs">
         <div id="hide-timeline">
-            <span class="glyphicon glyphicon-chevron-up text-muted" onmouseenter="$('#timeline-zone').slideUp()"></span>
+            <span class="glyphicon glyphicon-chevron-up text-muted animate-hide" onmouseenter="hideTimeline()" onmouseout='stopHideTimeline()'></span>
         </div>
         <div id="event-timeline"></div>
     </div>

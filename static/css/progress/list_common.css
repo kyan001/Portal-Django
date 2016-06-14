@@ -54,7 +54,18 @@
 }
 #hide-timeline span.glyphicon-chevron-up {
     z-index: 2;
+    border-radius: 100%;
 }
 #hide-timeline span.glyphicon-chevron-up:hover {
     color: red;
+    -webkit-transform: rotate(360deg) scale(1.2);
+       -moz-transform: rotate(360deg) scale(1.2);
+         -o-transform: rotate(360deg) scale(1.2);
+            transform: rotate(360deg) scale(1.2);
+}
+.animate-hide {
+    -webkit-transition: all 0.7s linear;
+       -moz-transition: all 0.7s linear;
+         -o-transition: all 0.7s linear;
+            transition: all 0.7s linear;
 }
