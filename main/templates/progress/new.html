@@ -68,7 +68,7 @@
         if(bookname != ''){
             $.getBookInfo(bookname, function(info){
                 pages = parseInt(info.pages)
-                if(pages > 0){
+                if(info.match && pages > 0){
                     $('input[name="total"]').val(pages)
                 }
             });
