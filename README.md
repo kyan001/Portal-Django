@@ -1,5 +1,7 @@
 Table of Contents
 =================
+
+[![Join the chat at https://gitter.im/kyan001/Portal-Django](https://badges.gitter.im/kyan001/Portal-Django.svg)](https://gitter.im/kyan001/Portal-Django?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
     * [网站地图](#网站地图)
         * [「我的进度」](#我的进度)
             * [¶ 进度属性](#-进度属性)
