@@ -1,11 +1,13 @@
 [![Join the chat at https://gitter.im/kyan001/Portal-Django](https://badges.gitter.im/kyan001/Portal-Django.svg)](https://gitter.im/kyan001/Portal-Django?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
+
 
 Table of Contents
 =================
-    * [网站地图](#网站地图)
-        * [「我的进度」](#我的进度)
-            * [¶ 进度属性](#-进度属性)
-            * [¶ 进度状态分类](#-进度状态分类)
+* [网站地图](#网站地图)
+    * [「我的进度」](#我的进度)
+        * [¶ 进度属性](#-进度属性)
+        * [¶ 进度状态分类](#-进度状态分类)
 
 # 网站介绍 Intro
 - 个人维护的网站，逐渐完善并增加新功能
