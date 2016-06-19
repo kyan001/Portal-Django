@@ -1,7 +1,7 @@
 $.extend({
     getBookInfo: function(name, callback){
         var book_search_api = 'https://api.douban.com/v2/book/search';
-        if(name != ''){
+        if(name !== ''){
             $.get(book_search_api, {'count':'1','q':name}, function(data){
                 var info = {}
                 if(data.books[0]){
