@@ -1,6 +1,6 @@
 [![Join the chat at https://gitter.im/kyan001/Portal-Django](https://badges.gitter.im/kyan001/Portal-Django.svg)](https://gitter.im/kyan001/Portal-Django?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
-
+[![forthebadge](http://forthebadge.com/images/badges/makes-people-smile.svg)](http://forthebadge.com)
 
 Table of Contents
 =================
