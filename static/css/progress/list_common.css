@@ -2,11 +2,11 @@
     font-family: 'Microsoft YaHei';
 }
 /* page-header */
-.page-header:hover span.glyphicon {
+.page-header:hover .glyphicon {
     color: red;
 }
 .page-header {
-    padding-bottom: 2px !important;
+    padding-bottom: 2px !important; /* noqa */
     cursor: pointer;
     margin-top: 0 !important;
 }
@@ -25,7 +25,7 @@
     white-space: nowrap;
 }
 .progress-card .panel-body {
-    padding: 0px;
+    padding: 0;
 }
 .progress-card .progress {
     height: 25px;
