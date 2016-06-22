@@ -45,26 +45,27 @@
         <div class="col-xs-12 col-sm-8 col-sm-offset-2">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <div class="panel-title">RoboTalk</div>
+                    <div class="panel-title">
+                        <span id='loading-icon' class="glyphicon glyphicon-comment"></span>
+                        RoboTalk
+                    </div>
                 </div>
             </div>
             <div class="panel-body">
                 <div id="chat-zone">
                 </div>
             </div>
-            <div class="panel-footer">
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <span id='loading-icon' class="glyphicon glyphicon-comment"></span>
-                    </span>
-                    <input type="text" name="userinput" class="form-control" placeholder="说点儿什么" autofocus="true">
-                    <span class="input-group-btn">
-                        <button id='sendbtn' class="btn btn-success" type="button" onclick='sendmsg()'>
-                            发送
-                        </button>
-                    </span>
-                </div><!-- /input-group -->
-            </div>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <span id='loading-icon' class="glyphicon glyphicon-comment"></span>
+                </span>
+                <input type="text" name="userinput" class="form-control" placeholder="说点儿什么" autofocus="true">
+                <span class="input-group-btn">
+                    <button id='sendbtn' class="btn btn-success" type="button" onclick='sendmsg()'>
+                        发送
+                    </button>
+                </span>
+            </div><!-- /input-group -->
         </div>
     </div>
 </div>
