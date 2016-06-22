@@ -26,7 +26,7 @@ def robotalkIndex(request):
     if not cache_starttime:
         cache_starttime = timezone.now()
         cache.set(cache_key, cache_starttime, cache_timeout)
-    context['starttime'] = str(cache_starttime - timezone.now())
+    context['starttime'] = str(timezone.now() - cache_starttime)
     return render_to_response('robotalk/index.html', context)
 
 
