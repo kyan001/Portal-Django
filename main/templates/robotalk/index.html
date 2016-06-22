@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block title %}RoboTalk{% endblock %}
+
+{% block css %}
+<style>
+    .container-fluid {
+        font-family: "微软雅黑";
+    }
+    .user-img {
+        width: 100%;
+    }
+    .col {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+</style>
+{% endblock css %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="panel-title">RoboTalk</div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div id="chat-zone">
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <span id='loading-icon' class="glyphicon glyphicon-comment"></span>
+                    </span>
+                    <input type="text" name="userinput" class="form-control" placeholder="Say something ..." autofocus="true">
+                    <span class="input-group-btn">
+                        <button id='sendbtn' class="btn btn-info" type="button" onclick='sendmsg()'>
+                            <span class="glyphicon glyphicon-envelope"></span> Send
+                        </button>
+                    </span>
+                </div><!-- /input-group -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    $(function(){
+        $('input[name="userinput"]').keydown(function(event){
+            if(event.keyCode == 13){ // press enter
+                $('#sendbtn').click()
+            }
+        })
+        getResponse('Hi')
+    })
+    function showLoading(enable){
+        $('#loading-icon').removeClass('glyphicon-refresh').removeClass('glyphicon-comment')
+        if(enable){
+            $('#loading-icon').addClass('glyphicon-refresh')
+        } else {
+            $('#loading-icon').addClass('glyphicon-comment')
+        }
+    }
+    function sendmsg(){
+        var input_ele = $('input[name="userinput"]')
+        var input_txt = input_ele.val()
+        if(input_txt != ''){
+            addChat(input_txt, 'me')  // show this chat on screen
+            getResponse(input_txt)  // ask for robo responses
+            input_ele.val('')
+        }
+        input_ele.focus()
+    }
+    function getResponse(userinput){
+        if(userinput==''){
+            return false
+        }
+        showLoading(true)
+        $.ajax({
+            type: 'GET',
+            url: '/robotalk/getresponse',
+            data: {
+                'txt': userinput,
+            },
+            success: function(data){
+                if(data.error){
+                    alert("Error:"+data.error)
+                }
+                for (robo in data.result){
+                    addChat(data.result[robo].txt, robo)
+                }
+                showLoading(false)
+            },
+            dataType: 'json',
+        })
+    }
+
+    var timer_aC
+    function addChat(word, from){
+        clearTimeout(timer_aC)
+        // Create chat-row
+        var crow = $("<div class='row'></div>")
+        // Create chat-col
+        var ccol = $('<div></div>').addClass('col-xs-7 col-sm-8 col')
+        if(from=='me'){
+            ccol.addClass('col-xs-offset-3 col-sm-offset-3')
+        }
+        // Create user-img
+        var ucol = $('<div></div>').addClass('col-xs-2 col-sm-1 col')
+        var uimg = $('<img>').addClass('user-img')
+        // Create chat-ul
+        var cul = $('<ul></ul>').addClass('list-group')
+        // Create chat-ele
+        var cele = $('<span></span>').addClass('list-group-item')
+        uimg.attr('title', from)
+        switch(from){
+            case 'me':
+                cul.addClass('text-right')
+                cele.addClass('list-group-item-success')
+                uimg.attr('src', "/static/img/robotalk/fromme.png")
+                break;
+            case 'feifei':
+                cele.addClass('list-group-item-danger')
+                uimg.attr('src', "/static/img/robotalk/fromfeifei.png")
+                break;
+            case 'simsimi':
+                cele.addClass('list-group-item-info')
+                uimg.attr('src', "/static/img/robotalk/fromsimsimi.png")
+                break;
+            default:
+                cele.addClass('list-group-item-warning')
+                uimg.attr('src', "/static/img/robotalk/fromme.png")
+                break;
+        }
+        // Appends
+        cele.append(word)
+        ucol.append(uimg)
+        cul.append(cele)
+        ccol.append(cul)
+        if(from=='me'){
+            crow.append(ccol).append(ucol)
+        } else {
+            crow.append(ucol).append(ccol)
+        }
+        crow.hide()
+        $('#chat-zone').append(crow)
+        crow.slideDown()
+        timer_aC = setTimeout(function(){
+            $("html, body").animate({scrollTop: $(document).height()}, 500)
+        }, 100)
+    }
+</script>
+{% endblock js %}
+
+{% block footer %}{% endblock %}

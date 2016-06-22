@@ -7,45 +7,49 @@ from main.models import *
 from django.core.cache import cache
 from util.ctrl import *
 
-import json
 import util.KyanToolKit_Py
 ktk = util.KyanToolKit_Py.KyanToolKit_Py()
+
 
 def getGravatarUrl(email):
     '''获取用户gravatar地址'''
     base_src = "https://secure.gravatar.com/avatar/"
-    email_md5 = ktk.md5(email) if email else "";
+    email_md5 = ktk.md5(email) if email else ""
     return base_src + email_md5
+
 
 def getRandomName():
     '''生成用户昵称'''
-    shengmu = ['a','i','u','e','o']
-    yunmu = ['s','k','m','n','r','g','h','p','b','z','t','d']
+    shengmu = ['a', 'i', 'u', 'e', 'o']
+    yunmu = ['s', 'k', 'm', 'n', 'r', 'g', 'h', 'p', 'b', 'z', 't', 'd']
     nickname = random.choice(yunmu).upper() + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu)
     users = User.objects.filter(nickname=nickname)
     if len(users) > 0:
         return getRandomName()
-    return nickname;
+    return nickname
+
 
 def getUser(username):
     '''通过用户名获得用户'''
     if not username:
         raise Exception("username 不能为空")
     try:
-        user = User.objects.get(username=username);
+        user = User.objects.get(username=username)
     except User.DoesNotExist:
-        return None;
-    return user;
+        return None
+    return user
+
 
 def getUserById(user_id):
     '''通过用户名获得用户'''
     if not user_id:
         raise Exception("username 不能为空")
     try:
-        user = User.objects.get(id=user_id);
+        user = User.objects.get(id=user_id)
     except User.DoesNotExist:
-        return None;
-    return user;
+        return None
+    return user
+
 
 def getUserInCookie(request):
     '''将 cookie 中存的 user 信息存入 session 并返回'''
@@ -59,6 +63,7 @@ def getUserInCookie(request):
             return loginuser
     return False
 
+
 def checkAnswer(user, answer):
     '''传入用户对象，返回答案对不对'''
     if not user:
@@ -67,25 +72,26 @@ def checkAnswer(user, answer):
         raise Exception("answer 不能为空")
     answer_md5 = salty(answer)
     if user.answer1 == answer_md5:
-        return True;
+        return True
     if user.answer2 == answer_md5:
-        return True;
-    return False;
+        return True
+    return False
 
-#--views-----------------------------------------------
 
+# -views-----------------------------------------------
 def userLogout(request):
     '''用户点击登出'''
     # clean session
-    request.session['loginuser'] = None;
+    request.session['loginuser'] = None
     # create response
     response = redirect('/')
     # clean cookie
     response.delete_cookie('user_id')
     response.delete_cookie('user_answer')
-    return response;
+    return response
 
-def userAvatar(request, email): # public
+
+def userAvatar(request, email):  # public
     '''通过 email 取回 gravatar'''
     context = {'request': request}
     if email:
@@ -93,6 +99,7 @@ def userAvatar(request, email): # public
     else:
         return infoMsg("请输入email")
     return render_to_response('user/avatar.html', context)
+
 
 def userExphistory(request):
     '''用户的所有/某类活跃列表，由 profile 进入'''
@@ -121,6 +128,7 @@ def userExphistory(request):
     context['exphistorys'] = exphistorys
     context['view'] = view
     return render_to_response('user/exphistory.html', context)
+
 
 def userPublic(request): # public
     '''通过 email/id/nickname 查看用户公开信息'''
@@ -342,7 +350,7 @@ def userCheckLogin(request):
         response.set_cookie('user_answer', user.answer1, max_age=oneweek)
     return response
 
-def userGetQuestionAndTip(request): #AJAX
+def userGetQuestionAndTip(request):  # AJAX
     '''登入时：通过用户名得到用户问题'''
     username = request.GET.get('username')
     if not username:
@@ -358,7 +366,7 @@ def userGetQuestionAndTip(request): #AJAX
     else:
         return returnJsonError('用户未找到：{username}'.format(username=username))
 
-def userGetloginerInfo(request): # AJAX
+def userGetloginerInfo(request):  # AJAX
     '''顶部用户栏：获取当前登入用户的信息'''
     # from session
     loginuser = request.session.get('loginuser')
@@ -373,7 +381,7 @@ def userGetloginerInfo(request): # AJAX
     else:
         return returnJsonResult('nologinuser')
 
-def userGetUnreadCount(request): # AJAX
+def userGetUnreadCount(request):  # AJAX
     '''顶部用户栏：更新当前用户的未读消息数目'''
     # from session
     loginuser = request.session.get('loginuser')
@@ -403,7 +411,7 @@ def userGetUnreadCount(request): # AJAX
         return returnJsonResult('nologinuser')
 
 #-Validations------------------------------------------
-def userValidateUsername(request): #AJAX
+def userValidateUsername(request):  # AJAX
     '''注册/登入时：用户名是否可用'''
     username = request.GET.get('username');
     result = {}
@@ -421,7 +429,7 @@ def userValidateUsername(request): #AJAX
         result['exist'] = False
     return returnJson(result)
 
-def userValidateNickname(request): #AJAX
+def userValidateNickname(request):  # AJAX
     '''注册时：昵称是否可用'''
     nickname = request.GET.get('nickname');
     result = {}
@@ -434,7 +442,7 @@ def userValidateNickname(request): #AJAX
         result['exist'] = False
     return returnJson(result)
 
-def userValidateEmail(request): #AJAX
+def userValidateEmail(request):  # AJAX
     '''注册时：邮箱是否可用'''
     email = request.GET.get('email');
     result = {}

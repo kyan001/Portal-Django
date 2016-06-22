@@ -31,9 +31,9 @@ urlpatterns = [
     # PROGRESS
     url(r'^progress/list/$', views.progressList),
     url(r'^progress/archive/$', views.progressArchive),
-    url(r'^progress/search$', views.progressSearch), #get
-    url(r'^progress/detail$', views.progressDetail), #get
-    url(r'^progress/imagecolor$', views.progressImagecolor), #get
+    url(r'^progress/search$', views.progressSearch),  # get
+    url(r'^progress/detail$', views.progressDetail),  # get
+    url(r'^progress/imagecolor$', views.progressImagecolor),  # get
     url(r'^progress/fastupdate/$', views.progressFastupdate),
     url(r'^progress/new/$', views.progressNew),
     url(r'^progress/add/$', views.progressAdd),
@@ -51,11 +51,13 @@ urlpatterns = [
     url(r'^chat/conversation$', views.chatConversation),
     # badge
     url(r'^badge/list/$', views.badgeList),
-    url(r'^badge/detail$', views.badgeDetail), #get
+    url(r'^badge/detail$', views.badgeDetail),  # get
+    # robo talk
+    url(r'^robotalk$', views.robotalkIndex),
+    url(r'^robotalk/getresponse$', views.robotalkGetresponse),  # get
     # SUPERUSER
     url(r'^superuser/index$', views.superuserIndex),
     url(r'^superuser/broadcast$', views.superuserBroadcast),
     url(r'^superuser/sendbroadcast$', views.superuserSendbroadcast),
     url(r'^superuser/updatedb$', views.superuserUpdatedb),
-
 ]
