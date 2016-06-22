@@ -311,7 +311,7 @@ def userCheckLogin(request):
         return util.ctrl.infoMsg("答案不能为空", title="登入失败")
     # check username vs. answer
     user = getUser(username)
-    if user.getUserpermission('signin') is False:
+    if user.getUserpermission('signin') is False:  # None is OK, True is OK, False is not OK
         return util.ctrl.infoMsg('您已被禁止 登录，请联系管理员')
     if checkAnswer(user, answer):
         request.session['loginuser'] = user.toArray()
