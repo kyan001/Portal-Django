@@ -30,6 +30,12 @@
              -o-transition: all 3s linear;
                 transition: all 3s linear;
     }
+    .list-group {
+        margin-bottom: 5px;
+    }
+    .chat-li {
+        padding: 12px;
+    }
 </style>
 {% endblock css %}
 
@@ -51,7 +57,7 @@
                     <span class="input-group-addon">
                         <span id='loading-icon' class="glyphicon glyphicon-comment"></span>
                     </span>
-                    <input type="text" name="userinput" class="form-control" placeholder="Say something ..." autofocus="true">
+                    <input type="text" name="userinput" class="form-control" placeholder="说点儿什么" autofocus="true">
                     <span class="input-group-btn">
                         <button id='sendbtn' class="btn btn-success" type="button" onclick='sendmsg()'>
                             发送
@@ -134,7 +140,7 @@
         // Create chat-ul
         var cul = $('<ul></ul>').addClass('list-group')
         // Create chat-ele
-        var cele = $('<span></span>').addClass('list-group-item')
+        var cele = $('<span></span>').addClass('list-group-item chat-li')
         uimg.attr('title', from)
         switch(from){
             case 'me':
@@ -154,7 +160,6 @@
                 cele.addClass('list-group-item-warning')
                 uimg.attr('src', "/static/img/Logo_Robotalk.png")
             default:
-                cele.addClass('list-group-item')
                 uimg.attr('src', "/static/img/robotalk/fromme.png")
                 break;
         }
