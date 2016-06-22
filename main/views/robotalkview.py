@@ -2,6 +2,7 @@ import json
 import urllib.request
 
 from django.shortcuts import render_to_response
+from django.core.cache import cache
 from main.models import User, UserExp
 
 import util.ctrl
@@ -25,6 +26,14 @@ def robotalkGetresponse(request):  # AJAX
     userinput = request.GET.get('txt')
     if not userinput:
         return util.ctrl.returnJsonError('userinput is empty')
+    # save count into cache
+    cache_key = 'robotalk:count'
+    cache_timeout = 60 * 60 * 24 * 7 * 4  # 1 month
+    cache_count = cache.get(cache_key)
+    if not cache_count:
+        cache_count = 0
+    cache_count += 1
+    cache.set(cache_key, cache_count, cache_timeout)
 
     def getFullurl(robo):
         if not (robo and robo.get('param') and robo.get('url')):
@@ -58,13 +67,16 @@ def robotalkGetresponse(request):  # AJAX
     robo2_resp = getResponse(robo2)
     robo2_says = json.loads(robo2_resp).get('content').replace('{br}', '<br/>')
     result = {
-        robo1.get('from'): {
-            'txt': robo1_says,
-            'fullurl': getFullurl(robo1),
+        'result': {
+            robo1.get('from'): {
+                'txt': robo1_says,
+                'fullurl': getFullurl(robo1),
+            },
+            robo2.get('from'): {
+                'txt': robo2_says,
+                'fullurl': getFullurl(robo2),
+            },
         },
-        robo2.get('from'): {
-            'txt': robo2_says,
-            'fullurl': getFullurl(robo2),
-        },
+        'count': cache_count
     }
-    return util.ctrl.returnJsonResult(result)
+    return util.ctrl.returnJson(result)

@@ -51,6 +51,10 @@
                     <div class="panel-title">
                         <span class="glyphicon glyphicon-comment"></span>
                         RoboTalk
+                        <span class="pull-right">
+                            <span class="glyphicon glyphicon-heart"></span>
+                            <span id="counts"></span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -122,6 +126,7 @@
                 for (robo in data.result){
                     addChat(data.result[robo].txt, robo)
                 }
+                $('#counts').text(data.count)
                 showLoading(false)
             },
             dataType: 'json',

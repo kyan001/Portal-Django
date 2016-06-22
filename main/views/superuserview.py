@@ -4,6 +4,8 @@ from django.template import *
 from main.models import *
 from django.views.decorators.csrf import csrf_exempt
 import util.ctrl
+
+
 def superuserIndex(request):
     '设置超级管理员'
     context = {'request': request}
