@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}RoboTalk{% endblock %}
+{% block icon %}<link rel="icon" href="/static/img/Logo_Robotalk.png">{% endblock %}
 
 {% block css %}
 <style>
@@ -12,6 +13,16 @@
     .col {
         padding-left: 5px;
         padding-right: 5px;
+    }
+    .loading {
+        -webkit-transform: rotate(360deg) scale(1.2);
+           -moz-transform: rotate(360deg) scale(1.2);
+             -o-transform: rotate(360deg) scale(1.2);
+                transform: rotate(360deg) scale(1.2);
+        -webkit-animation: infinite;
+           -moz-animation: infinite;
+             -o-animation: infinite;
+                animation: infinite;
     }
 </style>
 {% endblock css %}
@@ -32,7 +43,7 @@
             <div class="panel-footer">
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <span id='loading-icon' class="glyphicon glyphicon-comment"></span>
+                        <span id='loading-icon' class="glyphicon glyphicon-comment befast"></span>
                     </span>
                     <input type="text" name="userinput" class="form-control" placeholder="Say something ..." autofocus="true">
                     <span class="input-group-btn">
@@ -61,8 +72,10 @@
         $('#loading-icon').removeClass('glyphicon-refresh').removeClass('glyphicon-comment')
         if(enable){
             $('#loading-icon').addClass('glyphicon-refresh')
+            $('#loading-icon').addClass('loading')
         } else {
             $('#loading-icon').addClass('glyphicon-comment')
+            $('#loading-icon').removeClass('loading')
         }
     }
     function sendmsg(){
@@ -131,8 +144,11 @@
                 cele.addClass('list-group-item-info')
                 uimg.attr('src', "/static/img/robotalk/fromsimsimi.png")
                 break;
-            default:
+            case 'superfarmer.net':
                 cele.addClass('list-group-item-warning')
+                uimg.attr('src', "/static/img/Logo_Robotalk.png")
+            default:
+                cele.addClass('list-group-item')
                 uimg.attr('src', "/static/img/robotalk/fromme.png")
                 break;
         }

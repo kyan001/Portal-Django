@@ -1,12 +1,22 @@
 import json
 import urllib.request
+
 from django.shortcuts import render_to_response
-from django.http import JsonResponse
+from main.models import User, UserExp
+
+import util.ctrl
 
 
 def robotalkIndex(request):
     context = {'request': request}
-    current_user = request.session.get('loginuser');
+    current_user = request.session.get('loginuser')
+    if current_user:
+        try:
+            user = User.objects.get(id=current_user['id'])
+        except User.DoesNotExist:
+            return util.ctrl.infoMsg("您查找的用户 id：{id} 并不存在".format(id=current_user['id']))
+        userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
+        userexp.addExp(1, '与 RoboTalk 对话')
     return render_to_response('robotalk/index.html', context)
 
 
@@ -14,7 +24,7 @@ def robotalkGetresponse(request):  # AJAX
     """Get input and take back request via AJAX"""
     userinput = request.GET.get('txt')
     if not userinput:
-        return JsonResponse({'error': 'userinput is empty'})
+        return util.ctrl.returnJsonError('userinput is empty')
 
     def getFullurl(robo):
         if not (robo and robo.get('param') and robo.get('url')):
@@ -48,15 +58,13 @@ def robotalkGetresponse(request):  # AJAX
     robo2_resp = getResponse(robo2)
     robo2_says = json.loads(robo2_resp).get('content').replace('{br}', '<br/>')
     result = {
-        'result': {
-            robo1.get('from'): {
-                'txt': robo1_says,
-                'fullurl': getFullurl(robo1),
-            },
-            robo2.get('from'): {
-                'txt': robo2_says,
-                'fullurl': getFullurl(robo2),
-            },
+        robo1.get('from'): {
+            'txt': robo1_says,
+            'fullurl': getFullurl(robo1),
+        },
+        robo2.get('from'): {
+            'txt': robo2_says,
+            'fullurl': getFullurl(robo2),
         },
     }
-    return JsonResponse(result)
+    return util.ctrl.returnJsonResult(result)
