@@ -70,6 +70,11 @@ def robotalkGetresponse(request):  # AJAX
         },
         'from': 'feifei',
     }
+    robo3 = {
+        'url': 'http://www.xiaodoubi.com/simsimiapi.php',
+        'param': {'msg': userinput},
+        'from': 'xiaodoubi',
+    }
     robo1_says = getResponse(robo1)
     robo2_resp = getResponse(robo2)
     robo2_says = json.loads(robo2_resp).get('content').replace('{br}', '<br/>')
