@@ -102,7 +102,7 @@
     }
 
     function randomEvents(){
-        var RCTE_rate = lastchat['RCTE'] ? 60 : 30  // 30% chance to start a RCTE, 60% chance to reply a robo
+        var RCTE_rate = lastchat['RCTE'] ? 55 : 25  // 25% chance to start a RCTE, 55% chance to reply a robo
         var isRoboChatToEach = randomNum() < RCTE_rate
         lastchat['RCTE'] = isRoboChatToEach
         if(isRoboChatToEach){
