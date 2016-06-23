@@ -17,10 +17,10 @@
         {% block inhead %}{% endblock %}
         <script>
             // 本地测试不加载腾讯分析
-            var ta_filter = new Array('localhost','127.0.0.1','local.duetime.cn','local.superfarmer.net')
-            if( ta_filter.indexOf(window.location.hostname)<0 ){
-                jQuery.getScript('http://tajs.qq.com/stats?sId=50871665')
-            }
+            // var ta_filter = new Array('localhost','127.0.0.1','local.duetime.cn','local.superfarmer.net')
+            // if( ta_filter.indexOf(window.location.hostname)<0 ){
+            //     jQuery.getScript('http://tajs.qq.com/stats?sId=50871665')
+            // }
             // 所有 ajax 错误打印在 console 中
             $( document ).ajaxError(function(event, jqxhr, settings, exception) {
                 console.log("Ajax Error, " + settings.url);
