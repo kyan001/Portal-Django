@@ -1,5 +1,6 @@
 import json
 import urllib.request
+import re
 
 from django.shortcuts import render_to_response
 from django.core.cache import cache
@@ -35,6 +36,7 @@ def robotalkGetresponse(request):  # AJAX
     userinput = request.GET.get('txt')
     if not userinput:
         return util.ctrl.returnJsonError('userinput is empty')
+    from_ = request.GET.get('from')
     # save count into cache
     cache_key = 'robotalk:count'
     cache_timeout = 60 * 60 * 24 * 7 * 4  # 1 month
@@ -55,40 +57,66 @@ def robotalkGetresponse(request):  # AJAX
         u_resp = u.read()
         if not u_resp:
             return None
-        return u_resp.decode()
-    robo1 = {
-        'url': 'http://www.niurenqushi.com/app/simsimi/ajax.aspx',
-        'param': {'txt': userinput},
-        'from': 'simsimi',
-    }
-    robo2 = {
-        'url': 'http://api.qingyunke.com/api.php',
-        'param': {
-            'key': 'free',
-            'appid': 0,
-            'msg': userinput,
+        resp_str = u_resp.decode()
+        return robo.get('getContent')(resp_str)
+
+    def addToResult(robo, result):
+        key = robo.get('from')
+        value = {
+            'txt': getResponse(robo),
+            'fullurl': getFullurl(robo),
+        }
+        result['result'][key] = value
+        return True
+
+    def extractFeifei(content: str):
+        """从 菲菲 的返回字符串中获得真正的内容"""
+        if not content:
+            return None
+        json_obj = json.loads(content)
+        content = json_obj.get('content').replace('{br}', '<br/>')
+        content = re.sub(r'{face:[0-9]+}', '', content)
+        return content
+
+    def extractSimsimi(content: str):
+        """从 Simsimi 的返回字符串中获得真正的内容"""
+        if not content:
+            return None
+        content = content.replace('\n', '<br/>')
+        return content
+    # robos list(dictionary)
+    robos = {
+        'simsimi': {
+            'from': 'simsimi',
+            'url': 'http://www.niurenqushi.com/app/simsimi/ajax.aspx',
+            'param': {'txt': userinput},
+            'getContent': extractSimsimi,
         },
-        'from': 'feifei',
-    }
-    robo3 = {
-        'url': 'http://www.xiaodoubi.com/simsimiapi.php',
-        'param': {'msg': userinput},
-        'from': 'xiaodoubi',
-    }
-    robo1_says = getResponse(robo1)
-    robo2_resp = getResponse(robo2)
-    robo2_says = json.loads(robo2_resp).get('content').replace('{br}', '<br/>')
-    result = {
-        'result': {
-            robo1.get('from'): {
-                'txt': robo1_says,
-                'fullurl': getFullurl(robo1),
+        'feifei': {
+            'from': 'feifei',
+            'url': 'http://api.qingyunke.com/api.php',
+            'param': {
+                'key': 'free',
+                'appid': 0,
+                'msg': userinput,
             },
-            robo2.get('from'): {
-                'txt': robo2_says,
-                'fullurl': getFullurl(robo2),
-            },
+            'getContent': extractFeifei,
         },
-        'count': cache_count
+        # 'simsimi': {
+        #     'from': 'simsimi',
+        #     'url': 'http://www.xiaodoubi.com/simsimiapi.php',
+        #     'param': {'msg': userinput},
+        #     'getContent': extractSimsimi,
+        # },
     }
+    # get results
+    result = {'result': {}}
+    if from_:
+        robo = robos.get(from_)
+        addToResult(robo, result)
+    else:
+        for i in robos:
+            addToResult(robos.get(i), result)
+    # render
+    result['count'] = cache_count
     return util.ctrl.returnJson(result)

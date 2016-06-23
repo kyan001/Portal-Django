@@ -39,6 +39,10 @@
     .text-from {
         color: rgba(0,0,0,0.4);
     }
+    .text-quote {
+        opacity: 0.7;
+        font-style: italic;
+    }
 </style>
 {% endblock css %}
 
@@ -87,6 +91,57 @@
         })
         getResponse('Hi')
     })
+
+    var lastchat = {
+        'whotalk': '',  // last chat from who
+    }
+
+
+    function randomNum(){ // 0-100
+        return Math.random()*100
+    }
+
+    function randomEvents(){
+        var RCTE_rate = lastchat['RCTE'] ? 60 : 30  // 30% chance to start a RCTE, 60% chance to reply a robo
+        var isRoboChatToEach = randomNum() < RCTE_rate
+        lastchat['RCTE'] = isRoboChatToEach
+        if(isRoboChatToEach){
+            roboChatToEachEvent()
+        }
+    }
+
+    function roboChatToEachEvent(){
+        // decide who talk
+        var whotalk = ""
+        var qualified = {}
+        if(lastchat['feifei'].length < 25 && lastchat['whotalk'] != 'feifei'){
+            qualified['feifei'] = true
+        } else {
+            qualified['feifei'] = false
+        }
+        if(lastchat['simsimi'].length < 25 && lastchat['whotalk'] != 'simsimi'){
+            qualified['simsimi'] = true
+        } else {
+            qualified['simsimi'] = false
+        }
+        if(qualified['simsimi'] && qualified['feifei']){
+            whotalk = randomNum()>50 ? 'feifei' : 'simsimi'
+        } else if(qualified['feifei']){
+            whotalk = 'feifei'
+        } else if(qualified['simsimi']) {
+            whotalk = 'simsimi'
+        } else {
+            return None
+        }
+        var wholisten = whotalk=='feifei' ? 'simsimi' : 'feifei'
+        // same person cannot talk twice
+        if(lastchat['whotalk'] != whotalk){
+            // talk
+            getResponse(lastchat[wholisten], whotalk, wholisten)
+        }
+        console.log('触发事件：机器人之间对话，由 ' + whotalk + ' 对 ' + wholisten + ' 说')
+    }
+
     function showLoading(enable){
         $('#loading-icon').removeClass('glyphicon-refresh').removeClass('glyphicon-comment')
         if(enable){
@@ -97,6 +152,8 @@
             $('#loading-icon').removeClass('loading')
         }
     }
+
+
     function sendmsg(){
         var input_ele = $('input[name="userinput"]')
         var input_txt = input_ele.val()
@@ -107,39 +164,56 @@
         }
         input_ele.focus()
     }
-    function getResponse(userinput){
+
+
+    function getResponse(userinput, from_, to_){
+        // get inputs
         if(userinput==''){
             return false
         }
+        var from_ = arguments[1] || 'all'
+        var to_ = arguments[2] || 'all'
+
         showLoading(true)
+
+        var param ={
+            'txt': userinput,
+        }
+        if(from_ != 'all' && from_ != 'all'){
+            param['from'] = from_
+        }
+        // remote get
         $.ajax({
             type: 'GET',
             url: '/robotalk/getresponse',
-            data: {
-                'txt': userinput,
-            },
+            data: param,
             success: function(data){
                 if(data.error){
                     alert("Error:"+data.error)
                 }
                 for (robo in data.result){
-                    addChat(data.result[robo].txt, robo)
+                    addChat(data.result[robo].txt, robo, to_)
                 }
                 $('#counts').text(data.count)
                 showLoading(false)
+                randomEvents()
             },
             dataType: 'json',
         })
     }
 
+
     var timer_aC
-    function addChat(word, from){
+    function addChat(word, from_, to_){
         clearTimeout(timer_aC)
+        lastchat[from_] = word  // remember last words eachone said
+        lastchat['whotalk'] = from_
+        to_ = arguments[2] || 'all'
         // Create chat-row
         var crow = $("<div class='row'></div>")
         // Create chat-col
         var ccol = $('<div></div>').addClass('col-xs-9 col-sm-8 col')
-        if(from=='me'){
+        if(from_=='me'){
             ccol.addClass('col-xs-offset-1 col-sm-offset-3')
         }
         // Create user-img
@@ -150,9 +224,9 @@
         // Create chat-ele
         var cele = $('<span></span>').addClass('list-group-item chat-li')
         var cfrom = $('<span class="pull-right text-from"></span>').hide()
-        uimg.attr('title', from)
+        uimg.attr('title', from_)
         uimg.click(function(){$('.text-from').show().delay(500).fadeOut()});
-        switch(from){
+        switch(from_){
             case 'me':
                 cul.addClass('text-right')
                 cele.addClass('list-group-item-success')
@@ -175,12 +249,17 @@
                 uimg.attr('src', "/static/img/robotalk/fromme.png")
                 break;
         }
+        // Create reply quote
+        var cquote = $('<span class="text-quote"></span>')
+        if(to_ != 'all'){
+            cquote.append("“" + lastchat[to_] + "”<br/>")
+        }
         // Appends
-        cele.append(word).append(cfrom)
+        cele.append(cquote).append(word).append(cfrom)
         ucol.append(uimg)
         cul.append(cele)
         ccol.append(cul)
-        if(from=='me'){
+        if(from_=='me'){
             crow.append(ccol).append(ucol)
         } else {
             crow.append(ucol).append(ccol)
