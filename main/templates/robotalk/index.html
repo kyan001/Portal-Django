@@ -20,15 +20,33 @@
         padding-left: 5px;
         padding-right: 5px;
     }
+
+    @keyframes rotate360 {
+        from {transform: rotate(0deg);}
+        to {transform: rotate(360deg);}
+    }
+    @-webkit-keyframes rotate360 {
+        from {-webkit-transform: rotate(0deg);}
+        to {-webkit-transform: rotate(360deg);}
+    }
+    @-moz-keyframes rotate360 {
+        from {-moz-transform: rotate(0deg);}
+        to {-moz-transform: rotate(360deg);}
+    }
+    @-ms-keyframes rotate360 {
+        from {-ms-transform: rotate(0deg);}
+        to {-ms-transform: rotate(360deg);}
+    }
+    @-o-keyframes rotate360 {
+        from {-o-transform: rotate(0deg);}
+        to {-o-transform: rotate(360deg);}
+    }
     .loading {
-        -webkit-transform: rotate(1080deg);
-           -moz-transform: rotate(1080deg);
-             -o-transform: rotate(1080deg);
-                transform: rotate(1080deg);
-        -webkit-transition: all 3s linear;
-           -moz-transition: all 3s linear;
-             -o-transition: all 3s linear;
-                transition: all 3s linear;
+        -webkit-animation: rotate360 1s linear infinite;
+           -moz-animation: rotate360 1s linear infinite;
+            -ms-animation: rotate360 1s linear infinite;
+             -o-animation: rotate360 1s linear infinite;
+                animation: rotate360 1s linear infinite;
     }
     .list-group {
         margin-bottom: 5px;
@@ -37,7 +55,7 @@
         padding: 12px;
     }
     .text-from {
-        color: rgba(0,0,0,0.4);
+        color: rgba(0,0,0,0.5);
     }
     .text-quote {
         opacity: 0.7;
@@ -131,7 +149,7 @@
         } else if(qualified['simsimi']) {
             whotalk = 'simsimi'
         } else {
-            return None
+            return null
         }
         var wholisten = whotalk=='feifei' ? 'simsimi' : 'feifei'
         // same person cannot talk twice
@@ -146,10 +164,10 @@
         $('#loading-icon').removeClass('glyphicon-refresh').removeClass('glyphicon-comment')
         if(enable){
             $('#loading-icon').addClass('glyphicon-refresh')
-            $('#loading-icon').addClass('loading')
+            $('#loading-icon').addClass('loading text-danger')
         } else {
             $('#loading-icon').addClass('glyphicon-comment')
-            $('#loading-icon').removeClass('loading')
+            $('#loading-icon').removeClass('loading text-danger')
         }
     }
 
@@ -205,8 +223,11 @@
 
     var timer_aC
     function addChat(word, from_, to_){
+        if(word == ''){
+            return
+        }
         clearTimeout(timer_aC)
-        lastchat[from_] = word  // remember last words eachone said
+        lastchat[from_] = word// remember last words eachone said
         lastchat['whotalk'] = from_
         to_ = arguments[2] || 'all'
         // Create chat-row
@@ -223,9 +244,7 @@
         var cul = $('<ul></ul>').addClass('list-group')
         // Create chat-ele
         var cele = $('<span></span>').addClass('list-group-item chat-li')
-        var cfrom = $('<span class="pull-right text-from"></span>').hide()
         uimg.attr('title', from_)
-        uimg.click(function(){$('.text-from').show().delay(500).fadeOut()});
         switch(from_){
             case 'me':
                 cul.addClass('text-right')
@@ -235,12 +254,10 @@
             case 'feifei':
                 cele.addClass('list-group-item-danger')
                 uimg.attr('src', "/static/img/robotalk/fromfeifei.png")
-                cfrom.text('@菲菲')
                 break;
             case 'simsimi':
                 cele.addClass('list-group-item-info')
                 uimg.attr('src', "/static/img/robotalk/fromsimsimi.png")
-                cfrom.text('@Simsimi')
                 break;
             case 'superfarmer.net':
                 cele.addClass('list-group-item-warning')
@@ -255,16 +272,16 @@
             cquote.append("“" + lastchat[to_] + "”<br/>")
         }
         // Appends
-        cele.append(cquote).append(word).append(cfrom)
+        cele.append(cquote).append(word)
         ucol.append(uimg)
         cul.append(cele)
         ccol.append(cul)
+        crow.hide()
         if(from_=='me'){
             crow.append(ccol).append(ucol)
         } else {
             crow.append(ucol).append(ccol)
         }
-        crow.hide()
         $('#chat-zone').append(crow)
         crow.slideDown()
         timer_aC = setTimeout(function(){
