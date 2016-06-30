@@ -1,6 +1,7 @@
 import json
 import urllib.request
 import re
+import datetime
 
 from django.shortcuts import render_to_response
 from django.core.cache import cache
@@ -62,10 +63,13 @@ def robotalkGetresponse(request):  # AJAX
 
     def addToResult(robo, result):
         key = robo.get('from')
+        time_now = datetime.datetime.now()
         value = {
             'txt': getResponse(robo),
             'fullurl': getFullurl(robo),
         }
+        time_rtt = (datetime.datetime.now() - time_now).microseconds / 1000
+        value['rtt'] = int(time_rtt)  # milliseconds
         result['result'][key] = value
         return True
 
