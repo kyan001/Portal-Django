@@ -6,7 +6,7 @@
     color: red;
 }
 .page-header {
-    padding-bottom: 2px !important; /* noqa */
+    padding-bottom: 2px !important;
     cursor: pointer;
     margin-top: 0 !important;
 }
@@ -14,38 +14,7 @@
     color: inherit;
 }
 
-/* progress-card */
-/*.progress-card .panel{
-    cursor: pointer;
-}*/
-.progress-card .panel-heading.progress-title {
-    overflow-x: auto;
-    overflow-y: hidden;
-    word-break: keep-all;
-    white-space: nowrap;
-}
-.progress-card .panel-body {
-    padding: 0;
-}
-.progress-card .progress {
-    height: 25px;
-    line-height: 25px;
-    margin: 0;
-}
-.progress-card .progress .progress-bar {
-    line-height: inherit;
-}
-.progress-card .div-table {
-    padding: 2px;
-    font-size: 12.9px;
-    color: white;
-    border-radius: 0;
-}
-.progress-card .persent,
-.progress-card .subtitle,
-.progress-card .weblink {
-    font-size: 15px;
-}
+
 /* timeline */
 #hide-timeline {
     text-align: center;
@@ -60,12 +29,14 @@
     color: red;
     -webkit-transform: rotate(360deg) scale(1.2);
        -moz-transform: rotate(360deg) scale(1.2);
+        -ms-transform: rotate(360deg) scale(1.2);
          -o-transform: rotate(360deg) scale(1.2);
             transform: rotate(360deg) scale(1.2);
 }
 .animate-hide {
     -webkit-transition: all 0.7s linear;
        -moz-transition: all 0.7s linear;
+        -ms-transition: all 0.7s linear;
          -o-transition: all 0.7s linear;
             transition: all 0.7s linear;
 }

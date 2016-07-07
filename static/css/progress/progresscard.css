@@ -1,0 +1,36 @@
+/* progress-card */
+.progress-card {
+    opacity: 0.75;
+}
+.progress-card:hover{
+    opacity: 1;
+}
+.progress-card .progress-title {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    word-break: keep-all;
+    white-space: nowrap;
+}
+@media (max-width: 768px) {
+    .progress-card .progress-title {
+        overflow-x: auto;
+    }
+}
+
+.progress-card .panel-body {
+    padding: 0;
+}
+.progress-card .progress {
+    height: 25px;
+    line-height: 25px;
+    margin: 0;
+}
+.progress-card .progress .progress-bar {
+    line-height: inherit;
+}
+.progress-card .div-table {
+    padding: 2px;
+    font-size: 12.9px;
+    color: white;
+    border-radius: 0;
+}
