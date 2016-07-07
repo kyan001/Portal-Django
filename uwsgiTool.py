@@ -10,10 +10,9 @@
 # -----------------------------------------------------------------
 import os
 import sys
-sys.path.append('/home/kyan001/KyanToolKit_Unix')
 
-import KyanToolKit_Py
-ktk = KyanToolKit_Py.KyanToolKit_Py()
+import KyanToolKit
+ktk = KyanToolKit.KyanToolKit()
 
 # -Pre-conditions Check-------------------------------------------
 ktk.needPlatform("linux")

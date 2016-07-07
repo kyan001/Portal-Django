@@ -7,8 +7,8 @@ from django.core.cache import cache
 from main.models import User, UserExp, Progress, Chat
 import util.ctrl
 
-import util.KyanToolKit_Py
-ktk = util.KyanToolKit_Py.KyanToolKit_Py()
+import KyanToolKit
+ktk = KyanToolKit.KyanToolKit()
 
 
 def getGravatarUrl(email):

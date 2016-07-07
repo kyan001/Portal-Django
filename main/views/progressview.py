@@ -11,8 +11,8 @@ from django.core.cache import cache
 import util.ctrl
 
 import json
-import util.KyanToolKit_Py
-ktk = util.KyanToolKit_Py.KyanToolKit_Py()
+import KyanToolKit
+ktk = KyanToolKit.KyanToolKit()
 
 def getTimeline(year, prgss):
     prg_timeline_item = []

@@ -3,8 +3,8 @@ from django.forms.models import model_to_dict
 import util.ctrl
 from django.utils import timezone
 import json, datetime
-import util.KyanToolKit_Py
-ktk = util.KyanToolKit_Py.KyanToolKit_Py()
+import KyanToolKit
+ktk = KyanToolKit.KyanToolKit()
 
 # Create your models here.
 class User(models.Model):

@@ -7,8 +7,8 @@ from main.models import Opus
 from util.ctrl import *
 
 import json
-import util.KyanToolKit_Py
-ktk = util.KyanToolKit_Py.KyanToolKit_Py()
+import KyanToolKit
+ktk = KyanToolKit.KyanToolKit()
 
 def opusDetail(request):
     '''TODO 获得作品的详情'''

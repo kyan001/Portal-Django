@@ -6,8 +6,8 @@ from django.views.decorators.csrf import csrf_exempt
 from main.models import UserPermissionBadge
 import util.ctrl
 
-import util.KyanToolKit_Py
-ktk = util.KyanToolKit_Py.KyanToolKit_Py()
+import KyanToolKit
+ktk = KyanToolKit.KyanToolKit()
 
 def badgeList(request):
     '''获得所有徽章列表'''
@@ -19,11 +19,11 @@ def badgeList(request):
 def badgeDetail(request):
     '''查看单个徽章'''
     context = {'request': request}
-    #获得参数
+    # 获得参数
     badgeid = request.GET.get('id')
     if not badgeid:
         return util.ctrl.infoMsg("需要一个徽章 id")
-    #获得作品
+    # 获得作品
     try:
         badge = UserPermissionBadge.objects.get(id=badgeid)
     except UserPermissionBadge.DoesNotExist:

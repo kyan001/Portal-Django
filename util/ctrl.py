@@ -5,8 +5,8 @@ from django.template import loader
 from django.conf import settings
 from django.utils import timezone
 
-import util.KyanToolKit_Py
-ktk = util.KyanToolKit_Py.KyanToolKit_Py()
+import KyanToolKit
+ktk = KyanToolKit.KyanToolKit()
 
 
 # Utils
