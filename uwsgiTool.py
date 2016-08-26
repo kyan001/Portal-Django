@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
-# HISTORY
-# -----------------------------------------------------------------
-#     DATE    |     AUTHOR     |  VERSION | COMMENT
-# ------------+----------------+----------+-----------------------
-#  2015-01-13 |     YAN Kai    |   V1.0   | Script Creation
-#  2015-04-05 |     YAN Kai    |   V1.1   | detect running
-#  2015-08-07 |     YAN Kai    |   V1.2   | Merge
-#  2016-07-07 |     YAN Kai    |   V1.3   | fix bug
-# -----------------------------------------------------------------
+# usage:
+#    ./uwsgiTool.py
+#    python3 uwsgiTool.py
+#    ./uwsgiTool.py start/stop/reload
+
 import os
 import sys
 
