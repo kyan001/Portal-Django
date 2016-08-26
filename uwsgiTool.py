@@ -25,7 +25,7 @@ if os.path.isfile(uwsgi_xml):
 else:
     ktk.err("uwsgi config file not found: " + uwsgi_xml)
 # pid file
-dir_name = os.path.basename(os.path.abspath(__file__))
+dir_name = os.path.basename(os.path.dirname(os.path.abspath(__file__)))
 pid_file = "/var/run/uwsgi_{}.pid".format(dir_name)
 if os.path.exists(pid_file):
     ktk.warn("uwsgi is running @ " + pid_file)
