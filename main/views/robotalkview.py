@@ -92,8 +92,8 @@ def robotalkGetresponse(request):  # AJAX
     robos = {
         'simsimi': {
             'from': 'simsimi',
-            'url': 'http://www.niurenqushi.com/app/simsimi/ajax.aspx',
-            'param': {'txt': userinput},
+            'url': 'http://www.xiaodoubi.com/simsimiapi.php',
+            'param': {'msg': userinput},
             'getContent': extractSimsimi,
         },
         'feifei': {
