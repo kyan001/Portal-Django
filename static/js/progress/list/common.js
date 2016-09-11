@@ -23,14 +23,14 @@ $(function(){
             ele.addClass(whenOpen)
         }
     });
-    $('.progress-card').each(function(){
-        var ele = $(this)
-        $.getImageColor("", ele.attr('progressname'), function(result){
-            if( result.color ){
-                ele.find('.panel').css('border-left', '5px solid' + result.color);
-            }
-        });
-    });
+    // $('.progress-card').each(function(){
+    //     var ele = $(this)
+    //     $.getImageColor("", ele.attr('progressname'), function(result){
+    //         if( result.color ){
+    //             ele.find('.panel').css('border-left', '5px solid' + result.color);
+    //         }
+    //     });
+    // });
 });
 
 var timer_hTl

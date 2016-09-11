@@ -2,7 +2,8 @@
 
 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 progress-card" progressid="{{ p.prg.id }}" progressname="{{ p.opus.name }}">
     <a href="/progress/detail?id={{p.prg.id}}" class="no-decoration">
-        <div class="panel panel-default beveryfast hover-shadow">
+        <div class="panel panel-default beveryfast hover-shadow"
+            {% if p.opus.covercolor %}style="border-left: 5px solid {{ p.opus.covercolor }}"{% endif %}>
             <div class="panel-heading progress-title">
                 <span class="panel-title">
                     <span class="persent badge">{{ p.prg.getPersent }}%</span>
