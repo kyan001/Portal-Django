@@ -40,7 +40,7 @@
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
             <div class="row">
                 {% for p in listdone %}
-                    {% include 'progress/progresscard.html' with p=p %}
+                    {% include 'progress/progresscard.html' with item=p %}
                 {% empty %}
                     <div class="well">
                         进度完成后，会自动显示在这里~
@@ -62,7 +62,7 @@
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
             <div class="row">
                 {% for p in listgiveup %}
-                    {% include 'progress/progresscard.html' with p=p %}
+                    {% include 'progress/progresscard.html' with item=p %}
                 {% empty %}
                     <div class="well">
                         冻结中的进度，会自动显示在这里，可以随时再继续阅读。
