@@ -106,12 +106,6 @@ def robotalkGetresponse(request):  # AJAX
             },
             'getContent': extractFeifei,
         },
-        # 'simsimi': {
-        #     'from': 'simsimi',
-        #     'url': 'http://www.xiaodoubi.com/simsimiapi.php',
-        #     'param': {'msg': userinput},
-        #     'getContent': extractSimsimi,
-        # },
     }
     # get results
     result = {'result': {}}
