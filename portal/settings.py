@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -76,8 +77,7 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-import sys
-if 'win' in sys.platform: #测试环境下
+if 'win' in sys.platform:  # 测试环境下
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -87,12 +87,13 @@ if 'win' in sys.platform: #测试环境下
     }
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+            # 'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         }
     }
 else:
     with open(os.path.join(BASE_DIR, "mysql.pswd"), "r") as pswd_file:
-        mysql_pswd = pswd_file.read();
+        mysql_pswd = pswd_file.read()
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -135,7 +136,7 @@ MEDIA_URL = '/static/media/'
 
 # Emails
 with open(os.path.join(BASE_DIR, "email.pswd"), "r") as pswd_file:
-        email_pswd = pswd_file.read();
+    email_pswd = pswd_file.read()
 EMAIL_HOST_USER = 'superfarmernet@tom.com'
 EMAIL_HOST_PASSWORD = email_pswd.strip()
 EMAIL_HOST = 'smtp.tom.com'

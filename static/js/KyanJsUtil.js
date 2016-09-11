@@ -69,16 +69,16 @@ $.extend({
      * @param  {[string]}   name     [the opus's title which contains the image]
      * @param  {Function}   callback [call this function after got the data]
      */
-    getImageColor: function(url, name, callback){
+    getImageColor: function(url, opusid, callback){
         var request_data = {}
         if(url==""){
             request_data = {
-                'name': name
+                'opusid': opusid,
             };
         } else {
             request_data = {
                 'url': url,
-                'name': name,
+                'opusid': opusid,
             };
         }
         $.ajax({

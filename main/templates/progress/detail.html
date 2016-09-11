@@ -404,7 +404,7 @@
         });
     }
     function showImageColor(info){
-        $.getImageColor(info.images.small, '{{opus.name}}', function(result){
+        $.getImageColor(info.images.small, '{{opus.id}}', function(result){
             $('#main-panel .second-panel-body').css('border-left', '5px solid' + result.color);
             console.info(result);
         });

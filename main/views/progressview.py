@@ -214,25 +214,25 @@ def progressDetail(request):
 def progressImagecolor(request):  # AJAX #PUBLIC
     '''异步获取一个url的颜色'''
     url = request.GET.get('url')
-    name = request.GET.get('name')
+    opusid = request.GET.get('opusid')
     result = {}
-    if name:  # has-name
-        cache_key = 'opus:' + name.replace(' ', '') + ':covercolor'
+    if opusid:  # has-opusid
+        cache_key = 'opus:{}:covercolor'.format(opusid)
         cache_timeout = 60 * 60 * 24 * 7 * 2  # 2 weeks
         cached_color = cache.get(cache_key)
-        if cached_color:  # has-name & cached
+        if cached_color:  # has-opusid & cached
             result['is_cached'] = True
             result['color'] = cached_color
             return util.ctrl.returnJson(result)
-        else:  # has-name & not-cached
+        else:  # has-opusid & not-cached
             result['is_cached'] = False
-    if url:  # no-name or not-cached
+    if url:  # no-opusid or not-cached
         try:
             color = ktk.imageToColor(url, mode='hex')
         except Exception as e:
             return util.ctrl.returnJsonError(str(e))
         result['color'] = color
-        if name:
+        if opusid:
             cache.set(cache_key, color, cache_timeout)
     return util.ctrl.returnJson(result)
 
