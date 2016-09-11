@@ -71,7 +71,7 @@ def runserver_dev():
 def create_superuser():
     """Create superuser account for Django admin"""
     ktk.info('Password is specified, ask someone for it')
-    ktk.runCmd('py manage.py createsuperuser --username yizhan --email admin@yizhanonline.com')
+    ktk.runCmd('py manage.py createsuperuser --username portal --email kai@superfarmer.net')
 
 
 def show_menu():
