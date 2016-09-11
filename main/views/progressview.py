@@ -217,7 +217,7 @@ def progressImagecolor(request):  # AJAX #PUBLIC
     name = request.GET.get('name')
     result = {}
     if name:  # has-name
-        cache_key = 'progress:' + name.replace(' ', '') + ':imagecolor'
+        cache_key = 'opus:' + name.replace(' ', '') + ':covercolor'
         cache_timeout = 60 * 60 * 24 * 7 * 2  # 2 weeks
         cached_color = cache.get(cache_key)
         if cached_color:  # has-name & cached

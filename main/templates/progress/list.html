@@ -40,7 +40,7 @@
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
             <div class="row">
                 {% for p in listinprogress %}
-                    {% include 'progress/progresscard.html' %}
+                    {% include 'progress/progresscard.html' with p=p %}
                 {% empty %}
                     <div class="well">
                         您还没有任何进度哦~
@@ -62,7 +62,7 @@
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
             <div class="row">
             {% for p in listfollow %}
-                {% include 'progress/progresscard.html' %}
+                {% include 'progress/progresscard.html' with p=p %}
             {% empty %}
                 <div class="well">
                     您没有在追剧的进度哦~
@@ -84,7 +84,7 @@
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
             <div class="row">
             {% for p in listtodo %}
-                {% include 'progress/progresscard.html' %}
+                {% include 'progress/progresscard.html' with p=p %}
             {% empty %}
                 <div class="well">
                     您没有尚未开始的进度哦~
@@ -107,7 +107,7 @@
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
             <div class="row">
             {% for p in listerror %}
-                {% include 'progress/progresscard.html' %}
+                {% include 'progress/progresscard.html' with p=p %}
             {% endfor %}
             </div><!--.row-->
         </div><!--.col-->

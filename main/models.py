@@ -293,7 +293,7 @@ class Opus(models.Model):
         return Progress.objects.get(opusid=self.id)
 
     def getCoverColor(self):
-        cache_key = 'opus:' + self.name.replace(' ', '') + ':imagecolor'
+        cache_key = 'opus:' + self.name.replace(' ', '') + ':covercolor'
         cached_color = cache.get(cache_key)
         return cached_color
 
