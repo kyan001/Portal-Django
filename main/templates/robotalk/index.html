@@ -114,9 +114,8 @@
         'whotalk': '',  // last chat from who
     }
 
-
     function randomNum(){ // 0-100
-        return Math.random()*100
+        return Math.random() * 100
     }
 
     function randomEvents(){
@@ -171,7 +170,6 @@
         }
     }
 
-
     function sendmsg(){
         var input_ele = $('input[name="userinput"]')
         var input_txt = input_ele.val()
@@ -182,7 +180,6 @@
         }
         input_ele.focus()
     }
-
 
     function getResponse(userinput, from_, to_){
         // get inputs
