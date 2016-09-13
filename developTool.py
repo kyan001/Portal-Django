@@ -68,11 +68,17 @@ def runserver_dev():
     ktk.runCmd('py manage.py runserver')
 
 
-@pStartEnd('-- Runserver localhost --')
+@pStartEnd('-- Runserver LAN --')
 def runserver_lan():
     """Runserver in development environment, for Local Area Network debug use"""
     my_ip = socket.gethostbyname(socket.gethostname())
     ktk.runCmd('py manage.py runserver {}:8000'.format(my_ip))
+
+
+@pStartEnd('-- System Checking --')
+def system_check():
+    """Check if django projects has a problem"""
+    ktk.runCmd('py manage.py check')
 
 
 @pStartEnd('-- Create superuser --')
@@ -96,6 +102,7 @@ def show_menu():
         'Runserver (LAN ip:8000)': runserver_lan,
         'Shell: Interactive': interactive_shell,
         'Shell: Database': db_shell,
+        'Django system check': system_check,
         'Exit': ktk.bye,
     })
     ktk.echo('Select one of these:')
