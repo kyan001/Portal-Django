@@ -8,6 +8,6 @@
     <pythonpath>/home/kyan001/src/portal_django</pythonpath>
     <module>portal.wsgi:application</module>
     <master/>
-    <processes>4</processes>
+    <processes>32</processes>
     <plugins>python34</plugins>
 </uwsgi>
