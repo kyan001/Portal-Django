@@ -4,6 +4,7 @@
 import os
 import sys
 import collections
+import socket
 from functools import wraps
 import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
@@ -67,6 +68,13 @@ def runserver_dev():
     ktk.runCmd('py manage.py runserver')
 
 
+@pStartEnd('-- Runserver localhost --')
+def runserver_lan():
+    """Runserver in development environment, for Local Area Network debug use"""
+    my_ip = socket.gethostbyname(socket.gethostname())
+    ktk.runCmd('py manage.py runserver {}:8000'.format(my_ip))
+
+
 @pStartEnd('-- Create superuser --')
 def create_superuser():
     """Create superuser account for Django admin"""
@@ -85,6 +93,7 @@ def show_menu():
         'Make & migrate database': migrate_db,
         'Create superuser account': create_superuser,
         'Runserver (localhost:8000)': runserver_dev,
+        'Runserver (LAN ip:8000)': runserver_lan,
         'Shell: Interactive': interactive_shell,
         'Shell: Database': db_shell,
         'Exit': ktk.bye,
