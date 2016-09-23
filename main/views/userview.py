@@ -310,7 +310,7 @@ def userCheckLogin(request):
     # get posts
     username = request.POST.get('username')
     answer = request.POST.get('answer')
-    rememberme = request.POST.get('rememberme')
+    rememberme = request.POST.get('rememberme') or 'off'
     if not username:
         return util.ctrl.infoMsg("用户名不能为空", title="登入失败")
     if not answer:
@@ -359,7 +359,7 @@ def userCheckLogin(request):
         new_msg.isread = True
         new_msg.save()
     # set cookie
-    if rememberme == 'yes':
+    if rememberme == 'on':
         oneweek = 60 * 60 * 24 * 7
         response.set_cookie('user_id', user.id, max_age=oneweek)
         response.set_cookie('user_answer', user.answer1, max_age=oneweek)

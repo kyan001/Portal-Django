@@ -197,12 +197,7 @@
         if( $('input[name="username"]').val() == '' ){
             $('#username-group').addClass('has-error')
             $.danger('用户名不能为空')
-            return false;
-        }
-        if( $('#rememberme').prop('checked') ){
-            $('input[name="rememberme"]').val('yes')
-        } else {
-            $('input[name="rememberme"]').val('')
+            return false
         }
         disableAllBtn()
         showSubmitting()
@@ -237,7 +232,8 @@
                             data-title="记住我 / Remember me"
                             data-content="<li class='text-primary'>2周内免登入</li><li class='text-danger'>公共电脑请勿勾选此项</li>"
                             data-trigger='hover'
-                            onclick='clickRememberMe()'
+                            name='rememberme'
+                            value='on'
                             checked>
                     </span>
                     <input type="text" name="username" class="form-control" placeholder="用户名 / Username" autofocus="autofocus" onblur="validateUsername('onblur')" oninput="validateUsername('oninput')" autocomplete="off"/>
@@ -278,8 +274,6 @@
                 </div>
                 {% if redirect %}
                 <input type="hidden" name='redirect' value="{{redirect}}">
-                <input type="hidden" name="rememberme">
-                {% endif %}
             </form>
             <div id="buttons row">
                 <button id="submit-button" class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12" onclick="submitForm()" disabled>
