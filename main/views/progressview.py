@@ -505,12 +505,14 @@ def progressIcal(request):
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     cal = icalendar.Calendar()
-    cal['dtstart'] = '20160923T080000'
+    cal['prodid'] = 'superfarmer.net'
+    cal['version'] = '1.0'
     cal['summary'] = 'Python ical test'
-    cal['attendee'] = 'MAILTO: kai@superfarmer.net'
     for prg in progresses:
         evnt = icalendar.Event()
         evnt['uid'] = prg.id
+        evnt['dtstart'] = prg.modified.strftime('%Y%m%dT%H%M%SZ')
+        evnt['dtstemp'] = prg.modified.strftime('%Y%m%dT%H%M%SZ')
         cal.add_component(evnt)
     # render
     return HttpResponse(cal.to_ical())
