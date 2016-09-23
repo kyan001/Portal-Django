@@ -554,5 +554,8 @@ def progressIcalendar(request):  # GET
             evnt_fllw['dtstamp'] = modify_time
             evnt_fllw['summary'] = '《{opus.name}》追剧至 第 {prg.current} 集'.format(opus=opus, prg=prg)
             cal.add_component(evnt_fllw)
+    # add exps
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
+    userexp.addExp(1, '「进度日历」被访问')
     # render
     return HttpResponse(cal.to_ical(), content_type='text/calendar')
