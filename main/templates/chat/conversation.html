@@ -51,6 +51,7 @@
             </div>
 
             <form id='form-send' action="/chat/send" method="post">
+                {% csrf_token %}
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <textarea name='content' class="form-control" rows="2" placeholder="请输入内容" autocomplete="off" {%if receiver%}autofocus{%endif%} oninput="validateContent()" tabindex="2"></textarea>

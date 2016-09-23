@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from main.models import User, UserPermission, Chat, UserPermissionBadge
-from django.views.decorators.csrf import csrf_exempt
 import util.ctrl
 import util.user
 

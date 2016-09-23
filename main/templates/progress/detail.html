@@ -130,6 +130,7 @@
                             <div class="panel panel-primary viewmode-opacity befast">
                                 <div class="panel-heading">快速更新</div>
                                 <form id="fastupdateform" action="/progress/fastupdate/" method="post">
+                                    {% csrf_token %}
                                     <input type="hidden" name="id" value="{{prg.id}}">
                                     <div class="form-group">
                                         <div class="input-group">
@@ -172,6 +173,7 @@
                                 </form>
                             </div><!--.panel-->
                             <form id="saveform" action="/progress/update/" method="post">
+                                {% csrf_token %}
                                 <input name="id" type="hidden" value="{{prg.id}}">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
@@ -315,12 +317,15 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
                         <form id="deleteform" action="/progress/delete/" method="post">
+                            {% csrf_token %}
                             <input name="id" type="hidden" value="{{prg.id}}">
                         </form>
                         <form id="giveupform" action="/progress/giveup/" method="post">
+                            {% csrf_token %}
                             <input name="id" type="hidden" value="{{prg.id}}">
                         </form>
                         <form id="resetform" action="/progress/reset/" method="post">
+                            {% csrf_token %}
                             <input name="id" type="hidden" value="{{prg.id}}">
                         </form>
                         <button class="btn btn-danger pull-left" id='delete' onclick="confirmDelete()">

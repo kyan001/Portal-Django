@@ -42,6 +42,7 @@
             </div>
 
             <form id='form-send' action="/superuser/sendbroadcast" method="post">
+                {% csrf_token %}
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <textarea name='content' class="form-control" rows="6" placeholder="请输入内容" autocomplete="off" oninput="validateContent()" tabindex="2"></textarea>

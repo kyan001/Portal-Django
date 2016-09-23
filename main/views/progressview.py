@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.utils import timezone
-from django.views.decorators.csrf import csrf_exempt
 from main.models import User, UserExp, Opus, Progress, Chat
 from django.db.models import Q
 from django.core.cache import cache
@@ -230,7 +229,6 @@ def progressImagecolor(request):  # AJAX #PUBLIC
     return util.ctrl.returnJson(result)
 
 
-@csrf_exempt
 def progressFastupdate(request):
     '''detail界面右下角的快捷更新'''
     # get inputs
@@ -276,7 +274,6 @@ def progressFastupdate(request):
     return redirect('/progress/detail?id={progress.id}'.format(progress=progress))
 
 
-@csrf_exempt
 def progressUpdate(request):
     '''detail页面，编辑模式的保存'''
     # get inputs
@@ -332,7 +329,6 @@ def progressUpdate(request):
     return redirect('/progress/detail?id={progress.id}'.format(progress=progress))
 
 
-@csrf_exempt
 def progressDelete(request):
     '''detail 界面点击删除按钮'''
     # get inputs
@@ -365,7 +361,6 @@ def progressDelete(request):
     return redirect('/progress/list')
 
 
-@csrf_exempt
 def progressGiveup(request):
     '''detail 界面点击冻结按钮'''
     # get inputs
@@ -398,7 +393,6 @@ def progressGiveup(request):
     return redirect('/progress/detail?id=' + str(progress.id))
 
 
-@csrf_exempt
 def progressReset(request):
     '''detail 界面点击激活进度按钮'''
     # get inputs
@@ -445,7 +439,6 @@ def progressNew(request):
     return render(request, 'progress/new.html', context)
 
 
-@csrf_exempt
 def progressAdd(request):
     '''新增界面点击保存按钮'''
     # get inputs
