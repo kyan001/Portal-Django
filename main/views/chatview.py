@@ -123,9 +123,7 @@ def chatSend(request):
     except User.DoesNotExist:
         return util.ctrl.infoMsg("您查找的用户 @{nickname} 并不存在".format(nickname=str(receiver_nickname)))
     # send chat
-    isSuccessed = user.sendChat(receiver, title=title, content=content)
-    if not isSuccessed:
-        return util.ctrl.infoMsg("发送失败，未知原因")
+    user.sendChat(receiver, title=title, content=content)
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
     userexp.addExp(2, '向 @{receiver.nickname} 发送消息'.format(receiver=receiver))
