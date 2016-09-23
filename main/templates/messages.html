@@ -1,0 +1,66 @@
+<!-- MESSAGES START -->
+<div class="messages-div">
+    {% if messages %}
+        {% for msg in messages %}
+            <div class='row messages-row'>
+                <div class="messages alert alert-{{msg.tags}} alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true" class='dismiss-btn'>×</span>
+                    </button>
+                    <span class='glyphicon glyphicon-bell'></span>
+                    <span>{{ msg|safe }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+<style>
+    .messages-div {
+        position: fixed;
+        top: 80px;
+        right: 5%;
+        width: 100%;
+        pointer-events: none;
+        z-index: 999;
+    }
+    .messages-row {
+        pointer-events: none;
+    }
+    .messages {
+        pointer-events: auto;
+        float: right;
+    }
+</style>
+<script>
+    $('.messages').delay(10000).slideUp()  // 20s before slide up
+    function msgAlert(txt, type) {
+        var html = $('<div></div>').addClass('row messages-row')
+        var msg = $('<div></div>').addClass("messages alert alert-dismissible fade in").addClass('alert-' + type).attr('role', "alert")
+        var button = $('<button></button>').attr('type', 'button').attr('aria-label', 'Close').attr('data-dismiss', 'alert').addClass('close')
+        var dismiss = $('<span>×</span>').attr("aria-hidden", "true").addClass('dismiss-btn')
+        var icon = $('<span></span>').addClass('glyphicon glyphicon-bell')
+        var txt = $('<span> ' + txt + '</span>')
+        button.append(dismiss)
+        msg.append(button)
+        msg.append(icon)
+        msg.append(txt)
+        html.append(msg)
+        html.delay(10000).slideUp()
+        $('.messages-div').prepend(html)
+    };
+    $.extend({
+        warning: function(txt) {
+            msgAlert(txt, "warning");
+        },
+        success: function(txt) {
+            msgAlert(txt, "success");
+        },
+        danger: function(txt) {
+            msgAlert(txt, "danger");
+        },
+        info: function(txt) {
+            msgAlert(txt, "info");
+        },
+    });
+</script>
+<!-- MESSAGES END -->

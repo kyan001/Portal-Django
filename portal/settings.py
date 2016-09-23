@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import sys
+import django.contrib.messages.constants
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -141,3 +142,9 @@ EMAIL_HOST_USER = 'superfarmernet@tom.com'
 EMAIL_HOST_PASSWORD = email_pswd.strip()
 EMAIL_HOST = 'smtp.tom.com'
 EMAIL_PORT = 25
+
+# MESSAGE MIDDLEWARE CONFIG
+MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
+MESSAGE_TAGS = {
+    django.contrib.messages.constants.ERROR: 'danger',
+}

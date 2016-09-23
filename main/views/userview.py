@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
+from django.contrib import messages
 
 from main.models import User, UserExp, Progress, Chat
 import util.ctrl
@@ -311,18 +312,23 @@ def userCheckLogin(request):
     username = request.POST.get('username')
     answer = request.POST.get('answer')
     rememberme = request.POST.get('rememberme') or 'off'
+    _failto = request.META.get('HTTP_REFERER', "/user/signin")
     if not username:
-        return util.ctrl.infoMsg("用户名不能为空", title="登入失败")
+        messages.error(request, "登入失败：用户名不能为空")
+        return redirect(_failto)
     if not answer:
-        return util.ctrl.infoMsg("答案不能为空", title="登入失败")
+        messages.error(request, "登入失败：答案不能为空")
+        return redirect(_failto)
     # check username vs. answer
     user = getUser(username)
     if user.getUserpermission('signin') is False:  # None is OK, True is OK, False is not OK
-        return util.ctrl.infoMsg('您已被禁止 登录，请联系管理员')
+        messages.error(request, '登入失败：您已被禁止登入，请联系管理员')
+        return redirect(_failto)
     if checkAnswer(user, answer):
         util.user.rememberLogin(request, user)
     else:
-        return util.ctrl.infoMsg("用户名/答案不对：\n用户名：{username}\n输入的答案/密码：{answer}".format(username=username, answer=answer), title="登入失败")
+        messages.error(request, "登入失败：用户名与答案不匹配")
+        return redirect(_failto)
     # redirections
     redirect_url = request.POST.get('redirect')
     redirect_to_home = (

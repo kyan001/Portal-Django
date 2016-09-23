@@ -47,57 +47,8 @@
         {% block js %}{% endblock %}
     </head>
     <body>
-        <!-- ############ ALERT ZONE ############-->
-        {% block alertzone %}
-            <script>
-                function msgAlert(msg, type) {
-                    var html = "<div class='alert alert-" + type + " alert-dismissible fade in' role='alert'>";
-                    html += "<button type='button' class='close' data-dismiss='alert'>";
-                    html += "<span aria-hidden='true' class='dismiss-btn'>×</span>";
-                    html += "</button>";
-                    html += msg;
-                    html += "</div>";
-                    var msgItem = $(html);
-                    msgItem.delay(10000).slideUp();
-                    $('#alert-zone').prepend(msgItem);
-                };
-                $.extend({
-                    warning: function(msg) {
-                        msgAlert(msg, "warning");
-                    },
-                    success: function(msg) {
-                        msgAlert(msg, "success");
-                    },
-                    danger: function(msg) {
-                        msgAlert(msg, "danger");
-                    },
-                    info: function(msg) {
-                        msgAlert(msg, "info");
-                    },
-                });
-            </script>
-            <style>
-                #alert-zone {
-                    position: fixed;
-                    top: 80px;
-                    right: 5%;
-                    font-size: 15px;
-                    z-index: 1001;
-                    pointer-events: none;
-                }
-                #alert-zone .alert {
-                    opacity: 0.9;
-                    padding: 10px;
-                    padding-right: 35px;
-                    margin-bottom: 10px;
-                }
-                #alert-zone .alert .dismiss-btn {
-                    pointer-events: auto;
-                }
-            </style>
-            <div id='alert-zone'>
-            </div>
-        {% endblock alertzone %}
+        <!-- ############ MESSAGES ############-->
+        {% include "messages.html" %}
         <!-- ############ NAVIGATIONS ############-->
         <div id='nav-btn-zone'>
             {% block nav-btn %}{% endblock nav-btn %}
