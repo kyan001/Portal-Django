@@ -343,7 +343,9 @@ def userCheckLogin(request):
     # remove old msgs
     msg_title = 'Hi, @{user.nickname}'.format(user=user)
     sysuser = Chat.objects.getSyschatUser()
-    user.getReceivedChats().filter(senderid=sysuser.id, title=msg_title).delete()
+    old_msg = user.getReceivedChats().filter(senderid=sysuser.id, title=msg_title)
+    has_old_msg = old_msg.exists()
+    old_msg.delete()
     # send chat
     chat_content = '''
         欢迎您归来，开始您的网站之旅吧！<br/>
@@ -352,7 +354,10 @@ def userCheckLogin(request):
         <li>访问 <a href="/chat/conversation?mode=quicknote">临时笔记</a> 随手记录您的想法</li>
         <li>遇到问题或想 #提建议 ，请发消息给 @系统消息 ！</li>
     '''
-    Chat.objects.sendBySys(user, title=msg_title, content=chat_content)
+    new_msg = Chat.objects.sendBySys(user, title=msg_title, content=chat_content)
+    if has_old_msg:
+        new_msg.isread = True
+        new_msg.save()
     # set cookie
     if rememberme == 'yes':
         oneweek = 60 * 60 * 24 * 7

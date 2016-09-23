@@ -85,7 +85,7 @@ class User(models.Model):
     def sendChat(self, receiver, title="", content=""):
         new_chat = Chat(senderid=self.id, receiverid=receiver.id, title=title, content=content.strip())
         new_chat.save()
-        return True
+        return new_chat
 
     def getReceivedChats(self):
         return Chat.objects.filter(receiverid=self.id).order_by('-created')
