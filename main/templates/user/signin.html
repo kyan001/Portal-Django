@@ -272,8 +272,7 @@
                 <div class="input-group" id="tip-group">
                     <input id='tip-content' type='tip' name='tip' class="form-control" value="" readonly autocomplete="off">
                 </div>
-                {% if redirect %}
-                <input type="hidden" name='redirect' value="{{redirect}}">
+                <input type="hidden" name="from" value="{{from}}">
             </form>
             <div id="buttons row">
                 <button id="submit-button" class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12" onclick="submitForm()" disabled>

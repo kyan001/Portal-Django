@@ -278,11 +278,15 @@ def userNewUser(request):
 def userSignin(request):
     '''点击登入后的页面，供输入用户名/密码'''
     # check if already logged in
+    from_ = request.GET.get("from") or ""
     current_user = util.user.getCurrentUser(request)
     if current_user:
         return util.ctrl.infoMsg("您已经以 {username} 的身份登入了，请勿重复登入".format(username=current_user.username), title="登入失败", url="/")
     # render
-    context = {'request': request}
+    context = {
+        'request': request,
+        'from': from_,
+    }
     if 'HTTP_REFERER' in request.META:
         context['redirect'] = request.META.get('HTTP_REFERER')
     return render(request, 'user/signin.html', context)
@@ -312,6 +316,7 @@ def userCheckLogin(request):
     username = request.POST.get('username')
     answer = request.POST.get('answer')
     rememberme = request.POST.get('rememberme') or 'off'
+    from_ = request.POST.get('from') or ''
     _failto = request.META.get('HTTP_REFERER', "/user/signin")
     if not username:
         messages.error(request, "登入失败：用户名不能为空")
@@ -330,19 +335,8 @@ def userCheckLogin(request):
         messages.error(request, "登入失败：用户名与答案不匹配")
         return redirect(_failto)
     # redirections
-    redirect_url = request.POST.get('redirect')
-    redirect_to_home = (
-        '/user/newuser',
-        '/user/signin',
-        '/user/signup',
-    )
-    if redirect_url:
-        response = redirect(redirect_url)
-        for urllet in redirect_to_home:
-            if urllet in redirect_url:
-                response = redirect('/')
-    else:
-        response = redirect('/')
+    to_ = from_ or '/'
+    response = redirect(to_)
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
     userexp.addExp(1, '登入成功')
