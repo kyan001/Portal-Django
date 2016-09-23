@@ -8,7 +8,7 @@ def superuserIndex(request):
     '设置超级管理员'
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     # get superuser user
     superuser_nickname = '唯笑竹'
     try:
@@ -47,7 +47,7 @@ def superuserBroadcast(request):
     context = {'request': request}
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     # get syschat
     try:
         sysuser = User.objects.get(username='syschat')
@@ -68,7 +68,7 @@ def superuserUpdatedb(request):
     '''su 更新数据库'''
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     # check superuser
     if not user.getUserpermission('superuser'):
         return util.ctrl.infoMsg("您不具有 {category_name} 权限".format(category_name=UserPermission.objects.getCategoryName('superuser')))
@@ -143,7 +143,7 @@ def superuserSendbroadcast(request):
     '''点击 superuser/broadcast 界面中的发送按钮后'''
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     # check superuser
     if not user.getUserpermission('superuser'):
         return util.ctrl.infoMsg("您不具有 {category_name} 权限".format(category_name=UserPermission.objects.getCategoryName('superuser')))

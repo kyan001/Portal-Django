@@ -75,11 +75,6 @@ def calcExp(level):
     return None
 
 
-def needLogin():
-    return infoMsg("此页面需要用户信息，\n请登入/注册后再访问。", url="/user/signin", title="请先登入")
-    # return redirect('/user/signin')
-
-
 def sendEmail(word, to_email, subject='一封来自SuperFarmer网站的邮件'):
     if not word:
         return False

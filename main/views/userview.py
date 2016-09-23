@@ -160,7 +160,7 @@ def userSetting(request):
     '''修改用户设置'''
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     icalon = user.getUserpermission('progressical')
     context = {
         'user': user,

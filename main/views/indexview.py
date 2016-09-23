@@ -15,7 +15,7 @@ def indexSettheme(request):
     '''保存/清除用户的 theme 到 cookies 里'''
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     # get history.back
     if 'HTTP_REFERER' in request.META:
         href_back = request.META.get('HTTP_REFERER')

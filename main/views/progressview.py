@@ -36,7 +36,7 @@ def progressList(request):
     # get user
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     if len(progresses):
@@ -83,7 +83,7 @@ def progressArchive(request):
     # get user
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id)
     prg_ordered = progresses.order_by('-modified')
@@ -123,7 +123,7 @@ def progressSearch(request):
     # get user
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('created')
     # init vars
@@ -158,7 +158,7 @@ def progressDetail(request):
     # get inputs
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     progressid = request.GET.get('id')
     if not progressid:
         return util.ctrl.infoMsg("请输入进度 ID")
@@ -234,7 +234,7 @@ def progressFastupdate(request):
     # get inputs
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     progressid = request.POST.get('id')
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
@@ -279,7 +279,7 @@ def progressUpdate(request):
     # get inputs
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     progressid = request.POST.get('id')
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
@@ -334,7 +334,7 @@ def progressDelete(request):
     # get inputs
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     progressid = request.POST.get('id')
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
@@ -366,7 +366,7 @@ def progressGiveup(request):
     # get inputs
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     progressid = request.POST.get('id')
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
@@ -398,7 +398,7 @@ def progressReset(request):
     # get inputs
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     progressid = request.POST.get('id')
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
@@ -431,7 +431,7 @@ def progressNew(request):
     # get inputs
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(2, '尝试新增进度')
@@ -444,7 +444,7 @@ def progressAdd(request):
     # get inputs
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     name = request.POST.get('name')
     subtitle = request.POST.get('subtitle')
     weblink = request.POST.get('weblink')
@@ -481,7 +481,7 @@ def progressSetical(request):  # POST
     '''用户设置进度日历的界面'''
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     use_ical = request.POST.get('useical') or 'off'
     icalon = (use_ical == 'on')
     user.setUserpermission('progressical', icalon)
