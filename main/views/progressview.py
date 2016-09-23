@@ -495,7 +495,7 @@ def progressSetical(request):  # POST
     return redirect('/user/setting')
 
 
-def progressIcal(request):
+def progressIcalendar(request):  # GET
     '''生成 ical 字符串加入 google calendar'''
     userid = request.GET.get('userid')
     try:

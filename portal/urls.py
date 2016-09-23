@@ -42,7 +42,7 @@ urlpatterns = [
     url(r'^progress/delete/$', views.progressDelete),
     url(r'^progress/giveup/$', views.progressGiveup),
     url(r'^progress/reset/$', views.progressReset),
-    url(r'^progress/ical$', views.progressIcal),  # get
+    url(r'^progress/icalendar$', views.progressIcalendar),  # get
     url(r'^progress/setical$', views.progressSetical),  # post
     # OPUS
     url(r'^opus/detail$', views.opusDetail),
