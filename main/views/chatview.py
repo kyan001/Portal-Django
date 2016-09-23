@@ -3,7 +3,6 @@ from django.shortcuts import redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from main.models import UserExp, Chat, User
 from django.db.models import Q
-from django.views.decorators.csrf import csrf_exempt
 import util.ctrl
 import util.user
 
@@ -105,7 +104,6 @@ def chatConversation(request):
     return render(request, 'chat/conversation.html', context)
 
 
-@csrf_exempt
 def chatSend(request):
     '''点击对话界面中的发送按钮后'''
     user = util.user.getCurrentUser(request)
