@@ -3,22 +3,18 @@ import urllib.request
 import re
 import datetime
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.core.cache import cache
 from django.utils import timezone
-from main.models import User, UserExp
+from main.models import UserExp
 
 import util.ctrl
 
 
 def robotalkIndex(request):
     context = {'request': request}
-    current_user = request.session.get('loginuser')
-    if current_user:
-        try:
-            user = User.objects.get(id=current_user['id'])
-        except User.DoesNotExist:
-            return util.ctrl.infoMsg("您查找的用户 id：{id} 并不存在".format(id=current_user['id']))
+    user = util.user.getCurrentUser(request)
+    if user:
         userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
         userexp.addExp(1, '与 RoboTalk 对话')
     # save/get counter start time
@@ -29,7 +25,7 @@ def robotalkIndex(request):
         cache_starttime = timezone.now()
         cache.set(cache_key, cache_starttime, cache_timeout)
     context['starttime'] = str(timezone.now() - cache_starttime)
-    return render_to_response('robotalk/index.html', context)
+    return render(request, 'robotalk/index.html', context)
 
 
 def robotalkGetresponse(request):  # AJAX

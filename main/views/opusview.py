@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import *
@@ -40,4 +40,4 @@ def opusDetail(request):
     #render
     context['opus'] = opus
     context['itemlist'] = item_list
-    return render_to_response('opus/detail.html', context)
+    return render(request, 'opus/detail.html', context)

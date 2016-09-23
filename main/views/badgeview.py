@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import *
@@ -14,7 +14,7 @@ def badgeList(request):
     context = {'request': request}
     upbs = UserPermissionBadge.objects.all()
     context['upbs'] = upbs
-    return render_to_response('badge/list.html', context)
+    return render(request, 'badge/list.html', context)
 
 def badgeDetail(request):
     '''查看单个徽章'''
@@ -30,4 +30,4 @@ def badgeDetail(request):
         return util.ctrl.infoMsg("未找到 id 为 {id} 的徽章".format(id=str(badgeid)))
     # render
     context['badge'] = badge
-    return render_to_response('badge/detail.html', context)
+    return render(request, 'badge/detail.html', context)

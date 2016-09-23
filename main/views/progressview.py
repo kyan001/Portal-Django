@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.utils import timezone
@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.core.cache import cache
 import icalendar
 import util.ctrl
+import util.user
 
 import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
@@ -34,13 +35,9 @@ def progressList(request):
     '''进度列表：显示所有进行中、待开始、追剧中的进度'''
     context = {'request': request}
     # get user
-    loginuser = request.session.get('loginuser')
-    if not loginuser:
+    user = util.user.getCurrentUser(request)
+    if not user:
         return util.ctrl.needLogin()
-    try:
-        user = User.objects.get(id=loginuser['id'])
-    except User.DoesNotExist:
-        return util.ctrl.infoMsg("用户 id:{id} 不存在".format(id=str(loginuser['id'])), title='找不到用户')
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     if len(progresses):
@@ -75,23 +72,21 @@ def progressList(request):
     now_year = timezone.now().year
     context['prg_timeline'] = getTimeline(year=now_year, prgss=progresses)
     # add exps
-    userexp, created = UserExp.objects.get_or_create(userid=loginuser['id'], category='progress')
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(1, '访问「进度列表」页面')
     # render
-    return render_to_response('progress/list.html', context)
+    return render(request, 'progress/list.html', context)
 
 
 def progressArchive(request):
     '''进度存档：显示所有已完成、已冻结的进度'''
     context = {'request': request}
     # get user
-    loginuser = request.session.get('loginuser')
-    if not loginuser:
+    user = util.user.getCurrentUser(request)
+    if not user:
         return util.ctrl.needLogin()
-    if not User.objects.filter(id=loginuser['id']).exists():
-        return util.ctrl.infoMsg("用户 id:{id} 不存在".format(id=str(loginuser['id'])), title='找不到用户')
     # get user's progresses
-    progresses = Progress.objects.filter(userid=loginuser['id'])
+    progresses = Progress.objects.filter(userid=user.id)
     prg_ordered = progresses.order_by('-modified')
     if len(prg_ordered):
         # init vars
@@ -117,23 +112,19 @@ def progressArchive(request):
     now_year = timezone.now().year
     context['prg_timeline'] = getTimeline(year=now_year - 1, prgss=progresses)
     # add exps
-    userexp, created = UserExp.objects.get_or_create(userid=loginuser['id'], category='progress')
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(1, '访问「进度存档」页面')
     # render
-    return render_to_response('progress/archive.html', context)
+    return render(request, 'progress/archive.html', context)
 
 
 def progressSearch(request):
     '''进度搜索：筛选所有进度'''
     context = {'request': request}
     # get user
-    loginuser = request.session.get('loginuser')
-    if not loginuser:
+    user = util.user.getCurrentUser(request)
+    if not user:
         return util.ctrl.needLogin()
-    try:
-        user = User.objects.get(id=loginuser['id'])
-    except User.DoesNotExist:
-        return util.ctrl.infoMsg("用户 id:{id} 不存在".format(id=str(loginuser['id'])), title='找不到用户')
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('created')
     # init vars
@@ -156,17 +147,17 @@ def progressSearch(request):
     if keyword:
         context['keyword'] = keyword
     # add exps
-    userexp, created = UserExp.objects.get_or_create(userid=loginuser['id'], category='progress')
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(1, '访问「进度搜索」页面')
     # render
-    return render_to_response('progress/search.html', context)
+    return render(request, 'progress/search.html', context)
 
 
 def progressDetail(request):
     '''进度详情页'''
     context = {'request': request}
     # get inputs
-    user = request.session.get('loginuser')
+    user = util.user.getCurrentUser(request)
     if not user:
         return util.ctrl.needLogin()
     progressid = request.GET.get('id')
@@ -178,7 +169,7 @@ def progressDetail(request):
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {id} 的进度".format(id=str(progressid)))
     # check owner
-    if progress.userid != user['id']:
+    if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能查看该进度", url='/progress/list')
     # get opus
     try:
@@ -186,7 +177,7 @@ def progressDetail(request):
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {id} 的作品".format(id=str(progress.opusid)))
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(1, '查看进度《{opus.name}》的详情'.format(opus=opus))
     # calcs
     aux = {}
@@ -210,7 +201,7 @@ def progressDetail(request):
     context['opus'] = opus
     context['prg'] = progress
     context['aux'] = aux
-    return render_to_response('progress/detail.html', context)
+    return render(request, 'progress/detail.html', context)
 
 
 def progressImagecolor(request):  # AJAX #PUBLIC
@@ -243,7 +234,7 @@ def progressImagecolor(request):  # AJAX #PUBLIC
 def progressFastupdate(request):
     '''detail界面右下角的快捷更新'''
     # get inputs
-    user = request.session.get('loginuser')
+    user = util.user.getCurrentUser(request)
     if not user:
         return util.ctrl.needLogin()
     progressid = request.POST.get('id')
@@ -261,7 +252,7 @@ def progressFastupdate(request):
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {id} 的进度".format(id=str(progressid)))
     # check owner
-    if progress.userid != user['id']:
+    if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能更新该进度")
     # get opus
     try:
@@ -272,7 +263,7 @@ def progressFastupdate(request):
     if opus.total > 0 and quick_current > opus.total:
         return util.ctrl.infoMsg("当前进度 {quick_current} 超过最大值 {opus.total}".format(quick_current=quick_current, opus=opus))
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(2, '快捷更新进度《{opus.name}》'.format(opus=opus))
     # save
     progress.current = quick_current
@@ -289,7 +280,7 @@ def progressFastupdate(request):
 def progressUpdate(request):
     '''detail页面，编辑模式的保存'''
     # get inputs
-    user = request.session.get('loginuser')
+    user = util.user.getCurrentUser(request)
     if not user:
         return util.ctrl.needLogin()
     progressid = request.POST.get('id')
@@ -316,7 +307,7 @@ def progressUpdate(request):
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {id} 的进度".format(id=str(progressid)))
     # check owner
-    if progress.userid != user['id']:
+    if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能更新该进度")
     # get opus
     try:
@@ -324,7 +315,7 @@ def progressUpdate(request):
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {id} 的作品".format(id=str(progress.opusid)))
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(2, '编辑进度《{opus.name}》成功'.format(opus=opus))
     # save
     progress.current = current
@@ -345,7 +336,7 @@ def progressUpdate(request):
 def progressDelete(request):
     '''detail 界面点击删除按钮'''
     # get inputs
-    user = request.session.get('loginuser')
+    user = util.user.getCurrentUser(request)
     if not user:
         return util.ctrl.needLogin()
     progressid = request.POST.get('id')
@@ -357,7 +348,7 @@ def progressDelete(request):
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {id} 的进度".format(id=str(progressid)))
     # check owner
-    if progress.userid != user['id']:
+    if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能删除该进度")
     # get opus
     try:
@@ -365,7 +356,7 @@ def progressDelete(request):
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {id} 的作品".format(id=str(progress.opusid)))
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(2, '删除进度《{opus.name}》'.format(opus=opus))
     # save
     progress.delete()
@@ -378,7 +369,7 @@ def progressDelete(request):
 def progressGiveup(request):
     '''detail 界面点击冻结按钮'''
     # get inputs
-    user = request.session.get('loginuser')
+    user = util.user.getCurrentUser(request)
     if not user:
         return util.ctrl.needLogin()
     progressid = request.POST.get('id')
@@ -390,7 +381,7 @@ def progressGiveup(request):
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {id} 的进度".format(id=str(progressid)))
     # check owner
-    if progress.userid != user['id']:
+    if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能删除该进度")
     # get opus
     try:
@@ -398,7 +389,7 @@ def progressGiveup(request):
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {progress.opusid} 的作品".format(progress=progress))
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(2, '冻结进度《{opus.name}》'.format(opus=opus))
     # save
     progress.setStatus('giveup')
@@ -411,7 +402,7 @@ def progressGiveup(request):
 def progressReset(request):
     '''detail 界面点击激活进度按钮'''
     # get inputs
-    user = request.session.get('loginuser')
+    user = util.user.getCurrentUser(request)
     if not user:
         return util.ctrl.needLogin()
     progressid = request.POST.get('id')
@@ -423,7 +414,7 @@ def progressReset(request):
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {id} 的进度".format(id=str(progressid)))
     # check owner
-    if progress.userid != user['id']:
+    if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能删除该进度")
     # get opus
     try:
@@ -431,7 +422,7 @@ def progressReset(request):
     except Opus.DoesNotExist:
         return util.ctrl.infoMsg("未找到 id 为 {progress.opusid} 的作品".format(progress=progress))
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(2, '恢复已冻结的进度《{opus.name}》'.format(opus=opus))
     # save
     progress.resetStatus()
@@ -444,21 +435,21 @@ def progressNew(request):
     '''list/detail 界面点击新增按钮'''
     context = {'request': request}
     # get inputs
-    user = request.session.get('loginuser')
+    user = util.user.getCurrentUser(request)
     if not user:
         return util.ctrl.needLogin()
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(2, '尝试新增进度')
     # render
-    return render_to_response('progress/new.html', context)
+    return render(request, 'progress/new.html', context)
 
 
 @csrf_exempt
 def progressAdd(request):
     '''新增界面点击保存按钮'''
     # get inputs
-    user = request.session.get('loginuser')
+    user = util.user.getCurrentUser(request)
     if not user:
         return util.ctrl.needLogin()
     name = request.POST.get('name')
@@ -478,14 +469,12 @@ def progressAdd(request):
     if total > 0 and current > total:
         return util.ctrl.infoMsg("初始进度 {current} 不能大于总页数 {total}".format(current=current, total=total))
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user['id'], category='progress')
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(2, '新增进度《{name}》成功'.format(name=name))
     # save
     opus = Opus(name=name, subtitle=subtitle, total=total)
-    opus.setCreated()
     opus.save()
-    progress = Progress(current=current, opusid=opus.id, userid=user['id'], weblink=weblink)
-    progress.setCreated()
+    progress = Progress(current=current, opusid=opus.id, userid=user.id, weblink=weblink)
     if(progress.setStatusAuto()):
         progress.save()
     else:
@@ -495,13 +484,26 @@ def progressAdd(request):
     return redirect('/progress/detail?id={progress.id}'.format(progress=progress))
 
 
+def progressSetical(request):  # POST
+    '''用户设置进度日历的界面'''
+    user = util.user.getCurrentUser(request)
+    if not user:
+        return util.ctrl.needLogin()
+    use_ical = request.POST.get('useical') or 'off'
+    icalon = (use_ical == 'on')
+    user.setUserpermission('progressical', icalon)
+    return redirect('/user/setting')
+
+
 def progressIcal(request):
     '''生成 ical 字符串加入 google calendar'''
     userid = request.GET.get('userid')
     try:
         user = User.objects.get(id=userid)
     except User.DoesNotExist:
-        return util.ctrl.infoMsg("用户 id:{id} 不存在".format(id=userid), title='找不到用户')
+        return util.ctrl.infoMsg("用户 userid={id} 不存在".format(id=userid), title='找不到用户')
+    if not user.getUserpermission('progressical'):
+        return util.ctrl.infoMsg("此用户尚未公开其进度日历".format(id=userid), title='获取日历失败')
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     cal = icalendar.Calendar()

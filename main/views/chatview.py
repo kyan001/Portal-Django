@@ -1,23 +1,19 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.shortcuts import redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from main.models import UserExp, Chat, User
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 import util.ctrl
+import util.user
 
 
 def chatInbox(request):
     '''用户查看自己的 inbox'''
     context = {'request': request}
-    loginuser = request.session.get('loginuser')
-    if not loginuser:
+    user = util.user.getCurrentUser(request)
+    if not user:
         return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
-    # get user
-    try:
-        user = User.objects.get(id=loginuser['id'])
-    except User.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的用户 id：{id} 并不存在".format(id=str(loginuser['id'])))
     # get inputs
     chat_type = request.GET.get('type')
     # get chats
@@ -42,25 +38,20 @@ def chatInbox(request):
     # render
     context['chats'] = chats
     context['user'] = user
-    return render_to_response('chat/inbox.html', context)
+    return render(request, 'chat/inbox.html', context)
 
 
 def chatDelete(request):
     '''在 inbox 界面删除某条消息'''
-    loginuser = request.session.get('loginuser')
-    if not loginuser:
-        return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
+    user = util.user.getCurrentUser(request)
+    if not user:
+        return util.ctrl.needLogin()
     # get history.back
     if 'HTTP_REFERER' in request.META:
         href_back = request.META.get('HTTP_REFERER')
         response = redirect(href_back)
     else:
         response = redirect('/chat/inbox')
-    # get user
-    try:
-        user = User.objects.get(id=loginuser['id'])
-    except User.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的用户 id：{id} 并不存在".format(id=str(loginuser['id'])))
     # get inputs
     chat_id = request.GET.get('id')
     if not chat_id:
@@ -83,14 +74,9 @@ def chatDelete(request):
 def chatConversation(request):
     '''进入一对一聊天页面'''
     context = {'request': request}
-    loginuser = request.session.get('loginuser')
-    if not loginuser:
-        return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
-    # get user
-    try:
-        user = User.objects.get(id=loginuser['id'])
-    except User.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的用户 id：{id} 并不存在".format(id=str(loginuser['id'])))
+    user = util.user.getCurrentUser(request)
+    if not user:
+        return util.ctrl.needLogin()
     # get inputs
     mode = request.GET.get('mode')
     if mode == 'quicknote':
@@ -116,20 +102,15 @@ def chatConversation(request):
     # render
     context['user'] = user
     context['title'] = title
-    return render_to_response('chat/conversation.html', context)
+    return render(request, 'chat/conversation.html', context)
 
 
 @csrf_exempt
 def chatSend(request):
     '''点击对话界面中的发送按钮后'''
-    loginuser = request.session.get('loginuser')
-    if not loginuser:
-        return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
-    # get user
-    try:
-        user = User.objects.get(id=loginuser['id'])
-    except User.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的用户 id：{id} 并不存在".format(id=str(loginuser['id'])))
+    user = util.user.getCurrentUser(request)
+    if not user:
+        return util.ctrl.needLogin()
     # get inputs
     title = request.POST.get('title')
     content = request.POST.get('content')
@@ -156,14 +137,9 @@ def chatSend(request):
 
 def chatMarkread(request):  # AJAX
     '''用户标记自己的 chat 消息为已读'''
-    loginuser = request.session.get('loginuser')
-    if not loginuser:
+    user = util.user.getCurrentUser(request)
+    if not user:
         return util.ctrl.returnJsonError("您还没有登入，请先登入")
-    # get user
-    try:
-        user = User.objects.get(id=loginuser['id'])
-    except User.DoesNotExist:
-        return util.ctrl.returnJsonError("您查找的用户 id：{id} 并不存在".format(id=str(loginuser['id'])))
     # get chat
     chatid = request.GET.get('chatid')
     try:

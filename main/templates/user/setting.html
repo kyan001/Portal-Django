@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}个人设置{% endblock %}
+
+{% block content %}
+<div class='container'>
+    <div class='row'>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-sm-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    进度相关设置
+                </div>
+                <div class="panel-body">
+                    <form id='ical-form' action="/progress/setical" method="post">
+                        {% csrf_token %}
+                        <label>使用进度日历：</label>
+                        <input type="checkbox" name='useical' value='on'{%if icalon%}checked{%endif%} onchange='$("#ical-form").submit()'/>
+                        {% if icalon %}
+                            <a href='/progress/ical?userid={{ user.id }}'>日历地址</a>
+                            <a class='pull-right' href='https://calendar.google.com/'>去 Google Calendar</a>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

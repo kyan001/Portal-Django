@@ -1,11 +1,12 @@
 import random
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
 
 from main.models import User, UserExp, Progress, Chat
 import util.ctrl
+import util.user
 
 import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
@@ -58,9 +59,8 @@ def getUserInCookie(request):
     if user_id and user_answer:
         user = getUserById(user_id)
         if user and (user.answer1 == user_answer or user.answer2 == user_answer):
-            loginuser = user.toArray()
-            request.session['loginuser'] = loginuser
-            return loginuser
+            util.user.rememberLogin(request, user)
+            return user
     return False
 
 
@@ -82,7 +82,7 @@ def checkAnswer(user, answer):
 def userLogout(request):
     '''用户点击登出'''
     # clean session
-    request.session['loginuser'] = None
+    request.session[User.LOGIN_SESSION_KEY] = None
     # create response
     response = redirect('/')
     # clean cookie
@@ -98,16 +98,15 @@ def userAvatar(request, email):  # public
         context['headimg'] = getGravatarUrl(email)
     else:
         return util.ctrl.infoMsg("请输入email")
-    return render_to_response('user/avatar.html', context)
+    return render(request, 'user/avatar.html', context)
 
 
 def userExphistory(request):
     '''用户的所有/某类活跃列表，由 profile 进入'''
     # user check
-    user = request.session.get('loginuser')
+    user = util.user.getCurrentUser(request)
     if not user:
         return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
-    user = User.objects.get(id=user['id'])
     # get inputs
     context = {'request': request}
     category = request.GET.get('category')
@@ -127,7 +126,7 @@ def userExphistory(request):
     context['userexp'] = userexp
     context['exphistorys'] = exphistorys
     context['view'] = view
-    return render_to_response('user/exphistory.html', context)
+    return render(request, 'user/exphistory.html', context)
 
 
 def userPublic(request):  # public
@@ -153,20 +152,28 @@ def userPublic(request):  # public
     context['user'] = user
     context['headimg'] = getGravatarUrl(user.email)
     context['prgcounts'] = progress_statics_group
-    return render_to_response('user/public.html', context)
+    return render(request, 'user/public.html', context)
+
+
+def userSetting(request):
+    '''修改用户设置'''
+    user = util.user.getCurrentUser(request)
+    if not user:
+        return util.ctrl.needLogin()
+    icalon = user.getUserpermission('progressical')
+    context = {
+        'user': user,
+        'icalon': icalon,
+    }
+    return render(request, 'user/setting.html', context)
 
 
 def userProfile(request):
     '''查看当前用户的个人信息，点击右上角昵称进入'''
     context = {'request': request}
-    loginuser = request.session.get('loginuser')
-    if not loginuser:
+    user = util.user.getCurrentUser(request)
+    if not user:
         return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
-    # get user
-    try:
-        user = User.objects.get(id=loginuser['id'])
-    except User.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的用户 id：{id} 并不存在".format(id=str(loginuser['id'])))
     # get user exps
     exps = []
     lv_notice = []
@@ -195,7 +202,7 @@ def userProfile(request):
     context['prgstatics'] = progress_statics.values()
     context['exps'] = exps
     context['lvnotice'] = lv_notice
-    return render_to_response('user/profile.html', context)
+    return render(request, 'user/profile.html', context)
 
 
 # -Signup-----------------------------------------------
@@ -206,7 +213,7 @@ def userSignup(request):  # PUBLIC
         context['redirect'] = request.GET.get('redirect')
     elif 'HTTP_REFERER' in request.META:
         context['redirect'] = request.META.get('HTTP_REFERER')
-    return render_to_response('user/signup.html', context)
+    return render(request, 'user/signup.html', context)
 
 
 @csrf_exempt
@@ -253,7 +260,6 @@ def userNewUser(request):
 
     # create into db
     user = User(username=username, question=question, answer1=answer1, answer2=answer2, tip=tip, nickname=nickname, email=email)
-    user.setCreated()
     user.save()
 
     # add betauser badge
@@ -271,14 +277,14 @@ def userNewUser(request):
 def userSignin(request):
     '''点击登入后的页面，供输入用户名/密码'''
     # check if already logged in
-    current_user = request.session.get('loginuser')
+    current_user = util.user.getCurrentUser(request)
     if current_user:
-        return util.ctrl.infoMsg("您已经以 {username} 的身份登入了，请勿重复登入".format(username=current_user['username']), title="登入失败", url="/")
+        return util.ctrl.infoMsg("您已经以 {username} 的身份登入了，请勿重复登入".format(username=current_user.username), title="登入失败", url="/")
     # render
     context = {'request': request}
     if 'HTTP_REFERER' in request.META:
         context['redirect'] = request.META.get('HTTP_REFERER')
-    return render_to_response('user/signin.html', context)
+    return render(request, 'user/signin.html', context)
 
 
 def userForgetanswer(request):
@@ -295,7 +301,7 @@ def userForgetanswer(request):
     # result = sendEmail(content, 'kai@superfarmer.net', subject='忘记密码找回注册')
     # if not result:
     #     return util.ctrl.infoMsg("发送邮件失败："+ json.dumps(result), title="发送失败")
-    return render_to_response('user/forgetanswer.html', context)
+    return render(request, 'user/forgetanswer.html', context)
 
 
 @csrf_exempt
@@ -314,7 +320,7 @@ def userCheckLogin(request):
     if user.getUserpermission('signin') is False:  # None is OK, True is OK, False is not OK
         return util.ctrl.infoMsg('您已被禁止 登录，请联系管理员')
     if checkAnswer(user, answer):
-        request.session['loginuser'] = user.toArray()
+        util.user.rememberLogin(request, user)
     else:
         return util.ctrl.infoMsg("用户名/答案不对：\n用户名：{username}\n输入的答案/密码：{answer}".format(username=username, answer=answer), title="登入失败")
     # redirections
@@ -374,16 +380,15 @@ def userGetQuestionAndTip(request):  # AJAX
 
 def userGetloginerInfo(request):  # AJAX
     '''顶部用户栏：获取当前登入用户的信息'''
-    # from session
-    loginuser = request.session.get('loginuser')
-    # from cookies
-    if not loginuser:
-        loginuser = getUserInCookie(request)
+    user = util.user.getCurrentUser(request)
+    if not user:
+        user = getUserInCookie(request)
     # get user's gravatar
-    if loginuser:
-        user = getUserById(loginuser['id'])
-        loginuser['avatar'] = getGravatarUrl(user.email)
-        return util.ctrl.returnJson(loginuser)
+    if user:
+        user_dict = {
+            'nickname': user.nickname,
+        }
+        return util.ctrl.returnJson(user_dict)
     else:
         return util.ctrl.returnJsonResult('nologinuser')
 
@@ -391,14 +396,13 @@ def userGetloginerInfo(request):  # AJAX
 def userGetUnreadCount(request):  # AJAX
     '''顶部用户栏：更新当前用户的未读消息数目'''
     # from session
-    loginuser = request.session.get('loginuser')
+    user = util.user.getCurrentUser(request)
     result = {}
     # from cookies
-    if not loginuser:
-        loginuser = getUserInCookie(request)
+    if not user:
+        user = getUserInCookie(request)
     # get user's gravatar
-    if loginuser:
-        user = getUserById(loginuser['id'])
+    if user:
         unread_count = user.getUnreadChats().count()
         result['unreadcount'] = unread_count
         result['msgs'] = []

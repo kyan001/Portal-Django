@@ -9,6 +9,7 @@ ktk = KyanToolKit.KyanToolKit()
 
 
 class User(models.Model):
+    LOGIN_SESSION_KEY = 'logined:user:id'
     username = models.CharField(max_length=255, unique=True)
     nickname = models.CharField(max_length=255, unique=True)
     question = models.TextField()
@@ -24,9 +25,6 @@ class User(models.Model):
     def toArray(self):
         self.created = self.created.isoformat(' ')
         return model_to_dict(self)
-
-    def setCreated(self):
-        self.created = timezone.now()
 
     def getCreated(self):
         return util.ctrl.formatDate(self.created)
@@ -86,7 +84,6 @@ class User(models.Model):
     # chat related
     def sendChat(self, receiver, title="", content=""):
         new_chat = Chat(senderid=self.id, receiverid=receiver.id, title=title, content=content.strip())
-        new_chat.setCreated()
         new_chat.save()
         return True
 
@@ -111,7 +108,7 @@ class UserPermission(models.Model):
     isallowed = models.BooleanField()
     objects = UserPermissionManager()
     category_pool = {
-        'all': ('signin', 'superuser', 'betauser', 'wellread', 'badgedesigner'),
+        'all': ('signin', 'superuser', 'betauser', 'wellread', 'badgedesigner', 'progressical'),
     }
 
     def __str__(self):
@@ -142,9 +139,6 @@ class UserPermissionBadge(models.Model):
         return "{self.id}) {self.category}:{self.isallowed} - ({self.image}) @{dnn}".format(self=self, dnn=self.designernname)
 
     # Created & Modified
-    def setCreated(self):
-        self.created = timezone.now()
-
     def getCreated(self):
         return util.ctrl.formatDate(self.created)
 
@@ -200,9 +194,6 @@ class UserExp(models.Model):
         return self.category
 
     # Created & Modified
-    def setCreated(self):
-        self.created = timezone.now()
-
     def getCreated(self):
         return util.ctrl.formatDate(self.created)
 
@@ -261,9 +252,6 @@ class ExpHistory(models.Model):
         return UserExp.objects.get(id=self.userexpid)
 
     # Created & Modified
-    def setCreated(self):
-        self.created = timezone.now()
-
     def getCreated(self):
         return util.ctrl.formatDate(self.created)
 
@@ -282,9 +270,6 @@ class Opus(models.Model):
     def toArray(self):
         self.created = self.created.isoformat(' ')
         return model_to_dict(self)
-
-    def setCreated(self):
-        self.created = timezone.now()
 
     def getCreated(self):
         return util.ctrl.formatDate(self.created)
@@ -359,9 +344,6 @@ class Progress(models.Model):
         return model_to_dict(self)
 
     # created & modified
-    def setCreated(self):
-        self.created = timezone.now()
-
     def getCreated(self):
         return util.ctrl.formatDate(self.created)
 
@@ -506,9 +488,6 @@ class Chat(models.Model):
 
     def getReceiver(self):
         return User.objects.get(id=self.receiverid)
-
-    def setCreated(self):
-        self.created = timezone.now()
 
     def getCreated(self):
         return util.ctrl.formatDate(self.created)

@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^user/validatenickname$', views.userValidateNickname),
     url(r'^user/validateemail$', views.userValidateEmail),
     url(r'^user/getquestionandtip$', views.userGetQuestionAndTip),
+    url(r'^user/setting/$', views.userSetting),
     # PROGRESS
     url(r'^progress/list/$', views.progressList),
     url(r'^progress/archive/$', views.progressArchive),
@@ -42,6 +43,7 @@ urlpatterns = [
     url(r'^progress/giveup/$', views.progressGiveup),
     url(r'^progress/reset/$', views.progressReset),
     url(r'^progress/ical$', views.progressIcal),  # get
+    url(r'^progress/setical$', views.progressSetical),  # post
     # OPUS
     url(r'^opus/detail$', views.opusDetail),
     # CHAT
