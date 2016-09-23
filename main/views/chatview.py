@@ -44,7 +44,7 @@ def chatDelete(request):
     '''在 inbox 界面删除某条消息'''
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     # get history.back
     if 'HTTP_REFERER' in request.META:
         href_back = request.META.get('HTTP_REFERER')
@@ -75,7 +75,7 @@ def chatConversation(request):
     context = {'request': request}
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     # get inputs
     mode = request.GET.get('mode')
     if mode == 'quicknote':
@@ -108,7 +108,7 @@ def chatSend(request):
     '''点击对话界面中的发送按钮后'''
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.needLogin()
+        return util.user.loginToContinue(request)
     # get inputs
     title = request.POST.get('title')
     content = request.POST.get('content')
