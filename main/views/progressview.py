@@ -507,6 +507,9 @@ def progressIcal(request):
     cal = icalendar.Calendar()
     cal['prodid'] = 'superfarmer.net'
     cal['version'] = '1.0'
+    cal['X-WR-CALNAME'] = '「我的进度」日历'
+    cal['X-WR-TIMEZONE'] = 'Asia/Shanghai'
+    cal['X-WR-CALDESC'] = 'http://www.superfarmer.net/progress/list'
     for prg in progresses:
         opus = Opus.objects.get(id=prg.opusid)
         create_time = prg.created.strftime('%Y%m%dT%H%M%SZ')
@@ -514,7 +517,7 @@ def progressIcal(request):
         url = 'http://www.superfarmer.net/progress/detail?id={}'.format(prg.id)
         evnt_create = icalendar.Event()
         evnt_create['uid'] = 'prg:id:{}:create'.format(prg.id)
-        evnt_create['url'] = url
+        evnt_create['description'] = url
         evnt_create['dtstart'] = create_time
         evnt_create['dtstamp'] = create_time
         evnt_create['summary'] = '开始看《{opus.name}》'.format(opus=opus)
@@ -522,7 +525,7 @@ def progressIcal(request):
         if prg.status == 'done':
             evnt_done = icalendar.Event()
             evnt_done['uid'] = 'prg:id:{}:done'.format(prg.id)
-            evnt_done['url'] = url
+            evnt_done['description'] = url
             evnt_done['dtstart'] = modify_time
             evnt_done['dtstamp'] = modify_time
             evnt_done['summary'] = '完成《{opus.name}》'.format(opus=opus)
@@ -530,7 +533,7 @@ def progressIcal(request):
         elif prg.status == 'giveup':
             evnt_giveup = icalendar.Event()
             evnt_giveup['uid'] = 'prg:id:{}:giveup'.format(prg.id)
-            evnt_giveup['url'] = url
+            evnt_giveup['description'] = url
             evnt_giveup['dtstart'] = modify_time
             evnt_giveup['dtstamp'] = modify_time
             evnt_giveup['summary'] = '冻结了《{opus.name}》'.format(opus=opus)
@@ -538,7 +541,7 @@ def progressIcal(request):
         elif prg.status == 'inprogress':
             evnt_inprgrss = icalendar.Event()
             evnt_inprgrss['uid'] = 'prg:id:{}:inprogress'.format(prg.id)
-            evnt_inprgrss['url'] = url
+            evnt_inprgrss['description'] = url
             evnt_inprgrss['dtstart'] = modify_time
             evnt_inprgrss['dtstamp'] = modify_time
             evnt_inprgrss['summary'] = '《{opus.name}》进行至 {prg.current}/{opus.total}'.format(opus=opus, prg=prg)
@@ -546,10 +549,10 @@ def progressIcal(request):
         elif prg.status == 'follow':
             evnt_fllw = icalendar.Event()
             evnt_fllw['uid'] = 'prg:id:{}:follow'.format(prg.id)
-            evnt_fllw['url'] = url
+            evnt_fllw['description'] = url
             evnt_fllw['dtstart'] = modify_time
             evnt_fllw['dtstamp'] = modify_time
             evnt_fllw['summary'] = '《{opus.name}》追剧至 第 {prg.current} 集'.format(opus=opus, prg=prg)
             cal.add_component(evnt_fllw)
     # render
-    return HttpResponse(cal.to_ical())
+    return HttpResponse(cal.to_ical(), mimetype='text/calendar')
