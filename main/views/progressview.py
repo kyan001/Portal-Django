@@ -560,4 +560,4 @@ def progressIcal(request):
             evnt_fllw['summary'] = '《{opus.name}》追剧至 第 {prg.current} 集'.format(opus=opus, prg=prg)
             cal.add_component(evnt_fllw)
     # render
-    return HttpResponse(cal.to_ical())
+    return HttpResponse(cal.to_ical(), content_type='text/calendar')
