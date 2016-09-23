@@ -1,10 +1,12 @@
 from django.shortcuts import render_to_response
 from django.shortcuts import redirect
+from django.http import HttpResponse
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from main.models import User, UserExp, Opus, Progress, Chat
 from django.db.models import Q
 from django.core.cache import cache
+import icalendar
 import util.ctrl
 
 import KyanToolKit
@@ -491,3 +493,28 @@ def progressAdd(request):
     progress.save()
     # render
     return redirect('/progress/detail?id={progress.id}'.format(progress=progress))
+
+
+def progressIcal(request):
+    '''生成 ical 字符串加入 google calendar'''
+    # get user
+    loginuser = request.session.get('loginuser')
+    if not loginuser:
+        return util.ctrl.needLogin()
+    try:
+        user = User.objects.get(id=loginuser['id'])
+    except User.DoesNotExist:
+        return util.ctrl.infoMsg("用户 id:{id} 不存在".format(id=str(loginuser['id'])), title='找不到用户')
+    # get user's progresses
+    progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
+    cal = icalendar.Calendar()
+    cal['dtstart'] = '20160923T080000'
+    cal['summary'] = 'Python ical test'
+    cal['attendee'] = 'MAILTO: kai@superfarmer.net'
+    for prg in progresses:
+        evnt = icalendar.Event()
+        evnt['uid'] = prg.id
+        evnt['dtstart'] = prg.modified.strftime('%Y%m%dT%H%M%S')
+        cal.add_component(evnt)
+    # render
+    return HttpResponse(cal.to_ical())
