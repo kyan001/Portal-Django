@@ -556,6 +556,7 @@ def progressIcalendar(request):  # GET
             cal.add_component(evnt_fllw)
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
-    userexp.addExp(1, '「进度日历」被访问')
+    _by = request.META.get('REMOTE_HOST') or request.META.get('REMOTE_ADDR')
+    userexp.addExp(1, '{} 访问了你的「进度日历」'.format(_by))
     # render
     return HttpResponse(cal.to_ical(), content_type='text/calendar')

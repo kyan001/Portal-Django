@@ -148,7 +148,8 @@ def userPublic(request):  # public
         progress_statics_group.append(item)
     # add exp to 被查看人
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
-    userexp.addExp(1, '公开页被访问')
+    _by = request.META.get('REMOTE_HOST') or request.META.get('REMOTE_ADDR')
+    userexp.addExp(1, '{} 访问了你的「公开页」'.format(_by))
     # render
     context['user'] = user
     context['headimg'] = getGravatarUrl(user.email)
