@@ -1,13 +1,10 @@
 from django.shortcuts import render
-from django.shortcuts import redirect
-from django.http import HttpResponse
-from django.template import *
-from django.views.decorators.csrf import csrf_exempt
 from main.models import UserPermissionBadge
 import util.ctrl
 
 import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
+
 
 def badgeList(request):
     '''获得所有徽章列表'''
@@ -15,6 +12,7 @@ def badgeList(request):
     upbs = UserPermissionBadge.objects.all()
     context['upbs'] = upbs
     return render(request, 'badge/list.html', context)
+
 
 def badgeDetail(request):
     '''查看单个徽章'''
