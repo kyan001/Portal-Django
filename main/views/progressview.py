@@ -512,7 +512,7 @@ def progressIcal(request):
         evnt = icalendar.Event()
         evnt['uid'] = prg.id
         evnt['dtstart'] = prg.modified.strftime('%Y%m%dT%H%M%SZ')
-        evnt['dtstemp'] = prg.modified.strftime('%Y%m%dT%H%M%SZ')
+        evnt['dtstamp'] = prg.created.strftime('%Y%m%dT%H%M%SZ')
         cal.add_component(evnt)
     # render
     return HttpResponse(cal.to_ical())
