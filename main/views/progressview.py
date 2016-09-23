@@ -507,12 +507,38 @@ def progressIcal(request):
     cal = icalendar.Calendar()
     cal['prodid'] = 'superfarmer.net'
     cal['version'] = '1.0'
-    cal['summary'] = 'Python ical test'
     for prg in progresses:
-        evnt = icalendar.Event()
-        evnt['uid'] = prg.id
-        evnt['dtstart'] = prg.modified.strftime('%Y%m%dT%H%M%SZ')
-        evnt['dtstamp'] = prg.created.strftime('%Y%m%dT%H%M%SZ')
-        cal.add_component(evnt)
+        opus = Opus.objects.get(id=prg.opusid)
+        create_time = prg.created.strftime('%Y%m%dT%H%M%SZ')
+        modify_time = prg.modified.strftime('%Y%m%dT%H%M%SZ')
+        evnt_create = icalendar.Event()
+        evnt_create['dtstart'] = create_time
+        evnt_create['dtstamp'] = create_time
+        evnt_create['summary'] = '开始看《{opus.name}》'.format(opus=opus)
+        cal.add_component(evnt_create)
+        if prg.status == 'done':
+            evnt_done = icalendar.Event()
+            evnt_done['dtstart'] = modify_time
+            evnt_done['dtstamp'] = modify_time
+            evnt_done['summary'] = '完成《{opus.name}》'.format(opus=opus)
+            cal.add_component(evnt_done)
+        elif prg.status == 'giveup':
+            evnt_giveup = icalendar.Event()
+            evnt_giveup['dtstart'] = modify_time
+            evnt_giveup['dtstamp'] = modify_time
+            evnt_giveup['summary'] = '冻结了《{opus.name}》'.format(opus=opus)
+            cal.add_component(evnt_giveup)
+        elif prg.status == 'inprogress':
+            evnt_inprgrss = icalendar.Event()
+            evnt_inprgrss['dtstart'] = modify_time
+            evnt_inprgrss['dtstamp'] = modify_time
+            evnt_inprgrss['summary'] = '《{opus.name}》进行至 {prg.current}/{opus.total}'.format(opus=opus, prg=prg)
+            cal.add_component(evnt_inprgrss)
+        elif prg.status == 'follow':
+            evnt_fllw = icalendar.Event()
+            evnt_fllw['dtstart'] = modify_time
+            evnt_fllw['dtstamp'] = modify_time
+            evnt_fllw['summary'] = '《{opus.name}》进行至 {prg.current}/{opus.total}'.format(opus=opus, prg=prg)
+            cal.add_component(evnt_fllw)
     # render
     return HttpResponse(cal.to_ical())
