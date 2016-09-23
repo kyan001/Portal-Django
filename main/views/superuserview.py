@@ -138,7 +138,6 @@ def superuserUpdatedb(request):
     return util.ctrl.infoMsg("数据库更新完毕，模式 {}".format(mode))
 
 
-@csrf_exempt
 def superuserSendbroadcast(request):
     '''点击 superuser/broadcast 界面中的发送按钮后'''
     user = util.user.getCurrentUser(request)
