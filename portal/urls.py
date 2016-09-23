@@ -41,7 +41,7 @@ urlpatterns = [
     url(r'^progress/delete/$', views.progressDelete),
     url(r'^progress/giveup/$', views.progressGiveup),
     url(r'^progress/reset/$', views.progressReset),
-    url(r'^progress/ical/$', views.progressIcal),
+    url(r'^progress/ical$', views.progressIcal),  # get
     # OPUS
     url(r'^opus/detail$', views.opusDetail),
     # CHAT

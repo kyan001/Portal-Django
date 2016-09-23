@@ -34,13 +34,13 @@ def manage_file_exist():
 
 @pStartEnd('-- Installing Requirements --')
 def requirements_install():
-    """Install necessary modules by pip & requirements.txt"""
-    if not os.path.exists('./requirements.txt'):
-        ktk.err('No requirements.txt detected.').bye()
+    """Install necessary modules by pip & requirements.pip"""
+    if not os.path.exists('./requirements.pip'):
+        ktk.err('No requirements.pip detected.').bye()
     if 'win' in sys.platform:
-        ktk.runCmd('pip3 install -r requirements.txt')
+        ktk.runCmd('pip3 install -r requirements.pip')
     else:
-        ktk.runCmd('sudo pip3 install -r requirements.txt')
+        ktk.runCmd('sudo pip3 install -r requirements.pip')
 
 
 @pStartEnd('-- Applying changes to database --')

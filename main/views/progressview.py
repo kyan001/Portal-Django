@@ -497,14 +497,11 @@ def progressAdd(request):
 
 def progressIcal(request):
     '''生成 ical 字符串加入 google calendar'''
-    # get user
-    loginuser = request.session.get('loginuser')
-    if not loginuser:
-        return util.ctrl.needLogin()
+    userid = request.GET.get('userid')
     try:
-        user = User.objects.get(id=loginuser['id'])
+        user = User.objects.get(id=userid)
     except User.DoesNotExist:
-        return util.ctrl.infoMsg("用户 id:{id} 不存在".format(id=str(loginuser['id'])), title='找不到用户')
+        return util.ctrl.infoMsg("用户 id:{id} 不存在".format(id=userid), title='找不到用户')
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     cal = icalendar.Calendar()
