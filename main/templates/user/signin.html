@@ -59,31 +59,31 @@
 <script>
     $(function(){
         $('.tips').each(function(){
-            $(this).attr('data-toggle',"popover");
-            $(this).attr('data-container',"body");
-            $(this).attr('data-placement',"right");
-            $(this).attr('data-trigger',"hover click");
-            $(this).attr('data-html',true);
-        });
-        $('#rememberme').attr('data-html',true);
-        $('[data-toggle="popover"]').popover();
-        $('#question-group').hide();
-        $('#answer-group').hide();
-        $('#tip-group').hide();
+            $(this).attr('data-toggle',"popover")
+            $(this).attr('data-container',"body")
+            $(this).attr('data-placement',"right")
+            $(this).attr('data-trigger',"hover click")
+            $(this).attr('data-html',true)
+        })
+        $('#rememberme').attr('data-html',true)
+        $('[data-toggle="popover"]').popover()
+        $('#question-group').hide()
+        $('#answer-group').hide()
+        $('#tip-group').hide()
     });
     function clearHasClass(ele){
-        ele.removeClass('has-warning');
-        ele.removeClass('has-success');
-        ele.removeClass('has-error');
+        ele.removeClass('has-warning')
+        ele.removeClass('has-success')
+        ele.removeClass('has-error')
     }
     function foldOptions(){
         $('#question-content').val('')
         $('#tip-content').val('')
         $('input[name="answer"]').val('')
-        $('#question-group').fadeOut();
-        $('#tip-group').fadeOut();
-        $('#answer-group').fadeOut();
-        $('#submit-button').attr('disabled','disabled');
+        $('#question-group').fadeOut('fast')
+        $('#tip-group').fadeOut('fast')
+        $('#answer-group').fadeOut('fast')
+        $('#submit-button').attr('disabled','disabled')
     }
     function unfoldOptions(option){
         $.ajax({
@@ -95,9 +95,9 @@
             success: function (data) {
                 var result = data;
                 if( result.error ){
-                    $.danger(result.error);
+                    $.danger(result.error)
                 } else {
-                    $('#question-content').val(result.question);
+                    $('#question-content').val(result.question)
                     if(result.question.indexOf('密码')>=0){
                         $('input[name="answer"]').attr('placeholder','密码 / Password')
                         $('input[name="answer"]').attr('type','password')
@@ -105,22 +105,22 @@
                         $('input[name="answer"]').attr('placeholder','答案 / Answer')
                         $('input[name="answer"]').attr('type','text')
                     }
-                    $('#question-group').fadeIn();
-                    $('#answer-group').fadeIn();
+                    $('#question-group').fadeIn('fast')
+                    $('#answer-group').fadeIn('fast')
                     if(result.tip){
-                        $('#tip-content').val('提示：'+result.tip);
-                        $('#tip-group').fadeIn();
+                        $('#tip-content').val('提示：'+result.tip)
+                        $('#tip-group').fadeIn('fast')
                     } else {
-                        $('#tip-content').val('');
-                        $('#tip-group').fadeOut();
+                        $('#tip-content').val('')
+                        $('#tip-group').fadeOut('fast')
                     }
-                    $('#submit-button').removeAttr('disabled');
+                    $('#submit-button').removeAttr('disabled')
                     if(option == 'unique'){
-                        $('input[name="answer"]').focus();
+                        $('input[name="answer"]').focus()
                     }
                 }
             },
-        });
+        })
     }
 
     function showLoading(mode){
@@ -149,12 +149,12 @@
     function validateUsername(option){
         clearHasClass($('#username-group'));
         if( $('input[name="username"]').val() == '' ){
-            $('#username-group').addClass('has-warning');
+            $('#username-group').addClass('has-warning')
             foldOptions()
             return
         }
         showLoading('off')
-        clearTimeout(timer_vUn);
+        clearTimeout(timer_vUn)
         timer_vUn = setTimeout(function(){
             showLoading('on')
             $.ajax({
@@ -165,37 +165,37 @@
                 },
                 success: function (data) {
                     showLoading('off')
-                    var result = data;
+                    var result = data
                     if(result.error){
-                        $.danger(result.error);
-                        foldOptions();
+                        $.danger(result.error)
+                        foldOptions()
                         return
                     }
                     if (result.exist) {
                         if(result.unique){
                             unfoldOptions('unique')
                         } else {
-                            unfoldOptions('normal');
+                            unfoldOptions('normal')
                         }
                     } else {
                         if(option=='onblur' || option=='onchange'){
-                            $('#username-group').addClass('has-error');
-                            $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在');
+                            $('#username-group').addClass('has-error')
+                            $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在')
                         }
-                        foldOptions();
+                        foldOptions()
                     }
                 },
-            });
-        }, 500);
+            })
+        }, 500)
     }
     function submitForm(){
         if( $('input[name="answer"]').val() == '' ){
-            $('#answer-group').addClass('has-error');
+            $('#answer-group').addClass('has-error')
             $.danger('答案不能为空')
-            return false;
+            return false
         }
         if( $('input[name="username"]').val() == '' ){
-            $('#username-group').addClass('has-error');
+            $('#username-group').addClass('has-error')
             $.danger('用户名不能为空')
             return false;
         }
@@ -206,12 +206,12 @@
         }
         disableAllBtn()
         showSubmitting()
-        $("#login-form").submit();
+        $("#login-form").submit()
     }
     function keydownAnswer(){
         if(event.keyCode==13){
-            $('#submit-button').click();
-            return false;
+            $('#submit-button').click()
+            return false
         }
     }
 </script>
