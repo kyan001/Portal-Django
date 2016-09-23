@@ -174,7 +174,7 @@ def userProfile(request):
     context = {'request': request}
     user = util.user.getCurrentUser(request)
     if not user:
-        return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
+        return util.user.loginToContinue(request)
     # get user exps
     exps = []
     lv_notice = []
@@ -196,7 +196,7 @@ def userProfile(request):
     user.claimUserbadges()
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
-    userexp.addExp(1, '查看用户私人信息')
+    userexp.addExp(1, '查看用户个人信息')
     # render
     context['user'] = user
     context['headimg'] = getGravatarUrl(user.email)
