@@ -12,11 +12,17 @@
                 <div class="panel-body">
                     <form id='ical-form' action="/progress/setical" method="post">
                         {% csrf_token %}
-                        <label>使用进度日历：</label>
-                        <input type="checkbox" name='useical' value='on'{%if icalon%}checked{%endif%} onchange='$("#ical-form").submit()'/>
+                        <div class='checkbox'>
+                            <label>
+                                <input type="checkbox" name='useical' value='on' {%if icalon%}checked{%endif%} onchange='$("#ical-form").submit()'/>
+                                使用进度日历
+                            </label>
+                            <span class='text-muted'>（使用进度日历会公开您的进度）</span>
+                        </div>
                         {% if icalon %}
-                            <a href='/progress/ical?userid={{ user.id }}'>日历地址</a>
-                            <a class='pull-right' href='https://calendar.google.com/'>去 Google Calendar</a>
+                            <a class='btn btn-link' href='/progress/ical?userid={{ user.id }}'>
+                                日历地址（请复制）
+                            </a>
                         {% endif %}
                     </form>
                 </div>
