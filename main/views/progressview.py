@@ -508,7 +508,6 @@ def progressIcal(request):
     cal['prodid'] = 'superfarmer.net'
     cal['version'] = '1.0'
     cal['X-WR-CALNAME'] = '「我的进度」日历'
-    cal['X-WR-CALNAME'] = 'mycalendar'
     cal['X-WR-TIMEZONE'] = 'Asia/Shanghai'
     cal['X-WR-CALDESC'] = 'http://www.superfarmer.net/progress/list'
     for prg in progresses:
@@ -523,7 +522,6 @@ def progressIcal(request):
         evnt_create['dtstart'] = create_time
         evnt_create['dtstamp'] = create_time
         evnt_create['summary'] = '开始看《{opus.name}》'.format(opus=opus)
-        evnt_create['summary'] = 'test{}'.format(prg.id)
         cal.add_component(evnt_create)
         if prg.status == 'done':
             evnt_done = icalendar.Event()
