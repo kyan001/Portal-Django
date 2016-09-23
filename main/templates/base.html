@@ -265,7 +265,7 @@
                             } else if (result.unreadcount > 0) {
                                 var content = ''
                                 for (i in result.msgs){
-                                    content += '<li><span class="text-primary">@'+result.msgs[i].sender+'</span>'+'：'+result.msgs[i].words+'</li>'
+                                    content += '<div><span class="text-primary">@'+result.msgs[i].sender+'</span>'+'：'+result.msgs[i].words+'</div>'
                                 }
                                 $("#user-bar #unread-count").text(result.unreadcount);
                                 $("#user-bar #inbox-btn").popover({
