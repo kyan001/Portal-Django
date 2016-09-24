@@ -506,7 +506,7 @@ def progressIcalendar(request):  # GET
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     cal = icalendar.Calendar()
     cal['prodid'] = 'superfarmer.net'
-    cal['version'] = '1.0'
+    cal['version'] = '1.1'
     owner = '我' if privatekey else user.nickname
     cal['X-WR-CALNAME'] = '{}的「进度日历」'.format(owner)
     cal['X-WR-TIMEZONE'] = 'Asia/Shanghai'
