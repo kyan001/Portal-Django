@@ -191,7 +191,7 @@ def progressDetail(request):
             estimate_finish_time = time_spent_so_far / progress.current * (opus.total - progress.current)
             aux['estmt_fnsh_tm'] = util.ctrl.formatTimedelta(estimate_finish_time, 'largest')
             estimate_finish_date = progress.modified + estimate_finish_time
-            aux['estmt_fnsh_dt'] = util.ctrl.formatDate(estimate_finish_date, 'fulldateonly')
+            aux['estmt_fnsh_dt'] = estimate_finish_date
     if progress.current:  # 平均阅读速度
         speed = progress.getTimedelta('speed')
         if speed:

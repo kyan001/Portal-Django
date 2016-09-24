@@ -242,7 +242,7 @@
                                     <table class="table table-condensed table-hover">
                                         <tr>
                                             <th>开始时间</th>
-                                            <td>{{prg.getCreated}}</td>
+                                            <td>{{prg.created|date:'Y-m-d H:i'}}</td>
                                         </tr>
                                         <tr>
                                             {% ifequal prg.status "done" %}
@@ -251,7 +251,7 @@
                                             <th>上次更新</th>
                                             {% endifequal %}
                                             <td>
-                                                <span>{{prg.getModified}}</span>
+                                                <span>{{prg.modified|date:'Y-m-d H:i' }}</span>
                                                 {% if aux.time_untouch %}
                                                     <span class="text-muted">{{aux.time_untouch}}前</span>
                                                 {% endif %}
@@ -270,7 +270,7 @@
                                         <tr class="text-success">
                                             <td>预计完成</td>
                                             <td>
-                                                <span>{{ aux.estmt_fnsh_dt }}</span>
+                                                <span>{{ aux.estmt_fnsh_dt|date:'Y-m-d' }}</span>
                                                 <span class="text-muted">{{ aux.estmt_fnsh_tm }}后</span>
                                             </td>
                                         </tr>

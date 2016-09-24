@@ -60,7 +60,7 @@
                                 </tr>
                                 <tr>
                                     <td class='attrname'>创建时间</td>
-                                    <td>{{ opus.getCreated }}</td>
+                                    <td>{{ opus.created|date:'Y-m-d H:i' }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -92,11 +92,11 @@
                     </tr>
                     <tr>
                         <td class='attrname'>开始时间</td>
-                        <td>{{ item.progress.getCreated }}</td>
+                        <td>{{ item.progress.created|date:'Y-m-d H:i' }}</td>
                     </tr>
                     <tr>
                         <td class='attrname'>上次访问</td>
-                        <td>{{ item.progress.getModified }}</td>
+                        <td>{{ item.progress.modified|date:'Y-m-d H:i' }}</td>
                     </tr>
                     {% if item.progress.weblink %}
                     <tr>

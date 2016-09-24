@@ -29,11 +29,11 @@
         {% else %}
             {{ c.content|truncatechars:12 }}
         {% endif %}
-        <div class="pull-right text-muted hidden-xs">{{ c.getCreated }}</div>
+        <div class="pull-right text-muted hidden-xs">{{ c.created|date:'Y-m-d H:i' }}</div>
     </div>
     <div id="chat-{{c.id}}" class="panel-collapse collapse {%if receiver%}in{%endif%}" role="tabpanel">
         <div class="panel-body">
-            <div class="text-muted visible-xs-block">{{ c.getCreated }}</div>
+            <div class="text-muted visible-xs-block">{{ c.created|date:'Y-m-d H:i' }}</div>
             <div class='chat-content pull-left'>
                 {% if c.getSender.username == 'syschat' %}
                     <p>{{ c.content|highlightlink:'sys'|safe }}</p>

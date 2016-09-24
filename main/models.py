@@ -20,14 +20,11 @@ class User(models.Model):
     created = models.DateTimeField(default=timezone.now, blank=True)
 
     def __str__(self):  # 用于需要 string 时的处理 python3
-        return "{self.id}) {created} - @{self.nickname} : {self.username}".format(self=self, created=self.getCreated())
+        return "{self.id}) {created} - @{self.nickname} : {self.username}".format(self=self, created=util.ctrl.formatDate(self.created))
 
     def toArray(self):
         self.created = self.created.isoformat(' ')
         return model_to_dict(self)
-
-    def getCreated(self):
-        return util.ctrl.formatDate(self.created)
 
     # permission related
     def getUserpermission(self, category):
@@ -138,10 +135,6 @@ class UserPermissionBadge(models.Model):
     def __str__(self):
         return "{self.id}) {self.category}:{self.isallowed} - ({self.image}) @{dnn}".format(self=self, dnn=self.designernname)
 
-    # Created & Modified
-    def getCreated(self):
-        return util.ctrl.formatDate(self.created)
-
     # util
     def userCount(self):
         try:
@@ -194,14 +187,8 @@ class UserExp(models.Model):
         return self.category
 
     # Created & Modified
-    def getCreated(self):
-        return util.ctrl.formatDate(self.created)
-
     def setModified(self):
         self.modified = timezone.now()
-
-    def getModified(self):
-        return util.ctrl.formatDate(self.modified)
 
     # Exp
     def setExp(self, exp):
@@ -246,14 +233,10 @@ class ExpHistory(models.Model):
     def __str__(self):
         userexp = self.getUserexp()
         user = userexp.getUser()
-        return "{self.id}) {created} - @{user.nickname}: [{category_name}] {self.operation} +{self.change}".format(self=self, user=user, created=self.getCreated(), category_name=userexp.getCategory())
+        return "{self.id}) {created} - @{user.nickname}: [{category_name}] {self.operation} +{self.change}".format(self=self, user=user, created=util.ctrl.formatDate(self.created), category_name=userexp.getCategory())
 
     def getUserexp(self):
         return UserExp.objects.get(id=self.userexpid)
-
-    # Created & Modified
-    def getCreated(self):
-        return util.ctrl.formatDate(self.created)
 
 
 class Opus(models.Model):
@@ -270,9 +253,6 @@ class Opus(models.Model):
     def toArray(self):
         self.created = self.created.isoformat(' ')
         return model_to_dict(self)
-
-    def getCreated(self):
-        return util.ctrl.formatDate(self.created)
 
     def getProgress(self):
         return Progress.objects.get(opusid=self.id)
@@ -344,14 +324,8 @@ class Progress(models.Model):
         return model_to_dict(self)
 
     # created & modified
-    def getCreated(self):
-        return util.ctrl.formatDate(self.created)
-
     def setModified(self):
         self.modified = timezone.now()
-
-    def getModified(self):
-        return util.ctrl.formatDate(self.modified)
 
     # time spent
     def getTimedelta(self, mode='default'):
@@ -469,7 +443,7 @@ class Chat(models.Model):
         receiver = self.getReceiver()
         unread = "" if self.isread else "[unread]"
         content = (self.content[:40] + '..') if len(self.content) > 40 else self.content
-        return "{self.id}) {created} - @{sender.nickname}→@{receiver.nickname} : {unread} {content}".format(self=self, created=self.getCreated(), sender=sender, receiver=receiver, content=content, unread=unread)
+        return "{self.id}) {created} - @{sender.nickname}→@{receiver.nickname} : {unread} {content}".format(self=self, created=util.ctrl.formatDate(self.created), sender=sender, receiver=receiver, content=content, unread=unread)
 
     # send / receive / isread
     def markRead(self):
@@ -488,6 +462,3 @@ class Chat(models.Model):
 
     def getReceiver(self):
         return User.objects.get(id=self.receiverid)
-
-    def getCreated(self):
-        return util.ctrl.formatDate(self.created)

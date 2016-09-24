@@ -23,10 +23,10 @@
             <div class="div-table panel-heading hidden-xs">
                 <div class='row'>
                     {% if item.prg.current == item.opus.total and item.prg.current != 0 %}
-                    <div class="text-center col-xs-12">完成：{{ item.prg.getModified }}</div>
+                    <div class="text-center col-xs-12">完成：{{ item.prg.modified|date:'Y-m-d H:i' }}</div>
                     {% else %}
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">开始：{{ item.prg.getCreated }}</div>
-                    <div class="text-right col-xs-12 col-sm-6 col-md-6 col-lg-6">上次：{{ item.prg.getModified }}</div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">开始：{{ item.prg.created|date:'Y-m-d H:i' }}</div>
+                    <div class="text-right col-xs-12 col-sm-6 col-md-6 col-lg-6">上次：{{ item.prg.modified|date:'Y-m-d H:i' }}</div>
                     {% endif %}
                 </div>
             </div>
