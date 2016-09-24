@@ -1,0 +1,18 @@
+<!-- badges start -->
+<style>
+    .userbadge {
+        width: 100%;
+    }
+</style>
+<div class="row">
+    {% for badge in user.getUserbadges %}
+        {% if badge %}
+            <div class='col-xs-4 col-sm-3 col-md-2 col-lg-1'>
+                <a href='/badge/detail?id={{badge.id}}'>
+                    <img class='userbadge befast hover-shadow' src='{{badge.image}}' title='{{badge.description}}'>
+                </a>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div><!--.row-->
+<!-- badges end -->
