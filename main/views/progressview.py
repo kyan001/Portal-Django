@@ -507,7 +507,8 @@ def progressIcalendar(request):  # GET
     cal = icalendar.Calendar()
     cal['prodid'] = 'superfarmer.net'
     cal['version'] = '1.0'
-    cal['X-WR-CALNAME'] = '「进度日历」' if privatekey else '「进度日历」（公开）'
+    owner = '我' if privatekey else user.nickname
+    cal['X-WR-CALNAME'] = '{}的「进度日历」'.format(owner)
     cal['X-WR-TIMEZONE'] = 'Asia/Shanghai'
     cal['X-WR-CALDESC'] = 'http://www.superfarmer.net/progress/list'
     for prg in progresses:
