@@ -1,9 +1,11 @@
 from django.db import models
 from django.forms.models import model_to_dict
-import util.ctrl
 from django.utils import timezone
-import datetime
 from django.core.cache import cache
+from django.contrib.auth import hashers
+import datetime
+
+import util.ctrl
 import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
@@ -92,6 +94,9 @@ class User(models.Model):
 
     def getUnreadChats(self):
         return Chat.objects.filter(receiverid=self.id, isread=False)
+
+    def getPrivateKey(self):
+        return util.ctrl.salty(self.created)
 
 
 class UserPermissionManager(models.Manager):

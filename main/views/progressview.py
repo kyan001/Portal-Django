@@ -491,12 +491,17 @@ def progressSetical(request):  # POST
 def progressIcalendar(request):  # GET
     '''生成 ical 字符串加入 google calendar'''
     userid = request.GET.get('userid')
+    privatekey = request.GET.get('private') or None
     try:
         user = User.objects.get(id=userid)
     except User.DoesNotExist:
         return util.ctrl.infoMsg("用户 userid={id} 不存在".format(id=userid), title='找不到用户')
-    if not user.getUserpermission('progressical'):
-        return util.ctrl.infoMsg("此用户尚未公开其进度日历".format(id=userid), title='获取日历失败')
+    if privatekey:  # private mode
+        if privatekey != user.getPrivateKey():
+            return util.ctrl.infoMsg("用户的私钥不合法", title='无法读取')
+    else:  # public mode
+        if not user.getUserpermission('progressical'):
+            return util.ctrl.infoMsg("此用户尚未公开其进度日历", title='获取日历失败')
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     cal = icalendar.Calendar()

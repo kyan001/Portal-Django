@@ -15,15 +15,20 @@
                         <div class='checkbox'>
                             <label>
                                 <input type="checkbox" name='useical' value='on' {%if icalon%}checked{%endif%} onchange='$("#ical-form").submit()'/>
-                                使用进度日历
+                                公开进度日历
                             </label>
-                            <span class='text-muted'>（使用进度日历会公开您的进度）</span>
+                            <span class='text-muted'>（公开时私人仍可用）</span>
+                            {% if icalon %}
+                                <a class='pull-right' href='/progress/icalendar?userid={{ user.id }}'>
+                                    「进度日历」地址（公开）
+                                </a>
+                            {% else %}
+                                <a class='pull-right' href='/progress/icalendar?userid={{ user.id }}&private={{ privatekey }}'>
+                                    「进度日历」地址（私人）
+                                </a>
+                            {% endif %}
                         </div>
-                        {% if icalon %}
-                            <a class='btn btn-link' href='/progress/icalendar?userid={{ user.id }}'>
-                                「进度日历」地址（请复制）
-                            </a>
-                        {% endif %}
+
                     </form>
                 </div>
             </div>

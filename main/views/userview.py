@@ -166,6 +166,7 @@ def userSetting(request):
     context = {
         'user': user,
         'icalon': icalon,
+        'privatekey': user.getPrivateKey(),
     }
     return render(request, 'user/setting.html', context)
 
