@@ -124,8 +124,8 @@ def superuserUpdatedb(request):
                 'category': 'progressical',
                 'isallowed': True,
                 'image': '/static/img/badges/ical.png',
-                'description': '时间管理者',
-                'requirement': '这枚徽章意味着，会使用进程日历的都是时间管理大师。',
+                'description': '与民同乐',
+                'requirement': '这枚徽章仅授予愿意将「进程日历」分享给他人的用户',
                 'designernname': '唯笑竹',
             },
         ]
