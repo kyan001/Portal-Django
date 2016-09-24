@@ -507,7 +507,7 @@ def progressIcalendar(request):  # GET
     cal = icalendar.Calendar()
     cal['prodid'] = 'superfarmer.net'
     cal['version'] = '1.0'
-    cal['X-WR-CALNAME'] = '「我的进度」日历'
+    cal['X-WR-CALNAME'] = '「进度日历」' if privatekey else '「进度日历」（公开）'
     cal['X-WR-TIMEZONE'] = 'Asia/Shanghai'
     cal['X-WR-CALDESC'] = 'http://www.superfarmer.net/progress/list'
     for prg in progresses:
@@ -562,7 +562,9 @@ def progressIcalendar(request):  # GET
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     _by = request.META.get('REMOTE_HOST') or request.META.get('REMOTE_ADDR')
-    _mode = '私有' if privatekey else '公开'
-    userexp.addExp(1, '{by} 访问了你的「进度日历」（{mode}）'.format(by=_by, mode=_mode))
+    _word = '{by} 访问了你的「进度日历」'.format(by=_by)
+    if not privatekey:
+        _word += '（公开）'
+    userexp.addExp(1, _word)
     # render
     return HttpResponse(cal.to_ical(), content_type='text/calendar')
