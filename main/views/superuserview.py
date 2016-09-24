@@ -79,11 +79,11 @@ def superuserUpdatedb(request):
     # main codes
     if 'initbadges' == mode:
         # update userPermissionBadge
-        sql_list = [
+        badge_list = [
             {
                 'category': 'superuser',
                 'isallowed': True,
-                'image': '/static/media/badges/superuser.png',
+                'image': '/static/img/badges/superuser.png',
                 'description': 'For who owns the site',
                 'requirement': '在你成为网站超级管理员的瞬间，这枚徽章将会自动出现。',
                 'designernname': '唯笑竹',
@@ -91,7 +91,7 @@ def superuserUpdatedb(request):
             {
                 'category': 'signin',
                 'isallowed': False,
-                'image': '/static/media/badges/signin-no.png',
+                'image': '/static/img/badges/signin-no.png',
                 'description': '此用户被禁止登入',
                 'requirement': '当你做了什么事被关入小黑屋的时候，这枚徽章将会自动出现。\n（然而现在并没有什么小黑屋）\n一些不准许登入的系统用户也会拥有此徽章）',
                 'designernname': '唯笑竹',
@@ -99,7 +99,7 @@ def superuserUpdatedb(request):
             {
                 'category': 'betauser',
                 'isallowed': True,
-                'image': '/static/media/badges/betauser.png',
+                'image': '/static/img/badges/betauser.png',
                 'description': '网站的前 100 名用户',
                 'requirement': '这是对你曾经注册支持过一个不太成熟的网站的证明。',
                 'designernname': '唯笑竹',
@@ -107,7 +107,7 @@ def superuserUpdatedb(request):
             {
                 'category': 'wellread',
                 'isallowed': True,
-                'image': '/static/media/badges/wellread.png',
+                'image': '/static/img/badges/wellread.png',
                 'description': '饱读诗书',
                 'requirement': '这是完成了超过 25 个进度的证明，说你饱读诗书也不为过。',
                 'designernname': 'Winnie',
@@ -115,14 +115,22 @@ def superuserUpdatedb(request):
             {
                 'category': 'badgedesigner',
                 'isallowed': True,
-                'image': '/static/media/badges/badgedesigner.png',
+                'image': '/static/img/badges/badgedesigner.png',
                 'description': '徽章设计师',
                 'requirement': '你将会获得这枚徽章，以感谢对徽章设计的贡献。',
                 'designernname': 'Winnie',
             },
+            {
+                'category': 'progressical',
+                'isallowed': True,
+                'image': '/static/img/badges/ical.png',
+                'description': '时间管理者',
+                'requirement': '这枚徽章意味着，会使用进程日历的都是时间管理大师。',
+                'designernname': '唯笑竹',
+            },
         ]
-        for sql in sql_list:
-            upb, iscreated = UserPermissionBadge.objects.update_or_create(category=sql['category'], isallowed=sql['isallowed'], defaults=sql)
+        for badge in badge_list:
+            upb, iscreated = UserPermissionBadge.objects.update_or_create(category=badge['category'], isallowed=badge['isallowed'], defaults=badge)
     if 'badgedesigner' == mode:
         # update badgedesigner badge
         badges = UserPermissionBadge.objects.all()
