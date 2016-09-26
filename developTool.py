@@ -9,6 +9,9 @@ from functools import wraps
 import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
+git_username = 'portal'
+git_email = 'kai@superfarmer.net'
+
 
 def pStartEnd(title="Call"):  # decorator
     """Decorator: Print start and end for a function"""
@@ -86,7 +89,7 @@ def system_check():
 def create_superuser():
     """Create superuser account for Django admin"""
     ktk.info('Password is specified, ask someone for it')
-    ktk.runCmd('py manage.py createsuperuser --username portal --email kai@superfarmer.net')
+    ktk.runCmd('py manage.py createsuperuser --username {username} --email {email}'.format(username=git_username, email=git_email))
 
 
 def show_menu():
