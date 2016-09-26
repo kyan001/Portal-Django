@@ -72,7 +72,8 @@ def runserver_dev():
 def runserver_lan():
     """Runserver in development environment, for Local Area Network debug use"""
     my_ip = socket.gethostbyname(socket.gethostname())
-    ktk.runCmd('py manage.py runserver {}:8000'.format(my_ip))
+    ktk.info('Your LAN IP address: {}'.format(my_ip))
+    ktk.runCmd('py manage.py runserver 0.0.0.0:8000')
 
 
 @pStartEnd('-- System Checking --')
