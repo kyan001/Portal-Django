@@ -159,3 +159,8 @@ function markread(ele){
         }
     });
 }
+
+function square_this(ele){
+    var width = $(ele).width()
+    $(ele).height(width)
+}
