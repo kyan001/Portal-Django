@@ -19,9 +19,9 @@ urlpatterns = [
     url(r'^user/signin$', views.userSignin),  # get
     url(r'^user/signup$', views.userSignup),
     url(r'^user/forgetanswer/$', views.userForgetanswer),
-    url(r'^user/checklogin/$', views.userCheckLogin),
+    url(r'^user/checklogin/$', views.userCheckLogin),  # POST
     url(r'^user/getunreadcount/$', views.userGetUnreadCount),
-    url(r'^user/newuser/$', views.userNewUser),
+    url(r'^user/newuser/$', views.userNewUser),  # POST
     url(r'^user/logout/$', views.userLogout),
     url(r'^user/validateusername$', views.userValidateUsername),
     url(r'^user/validatenickname$', views.userValidateNickname),

@@ -1,7 +1,6 @@
 import random
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
 from django.contrib import messages
 
@@ -219,8 +218,7 @@ def userSignup(request):  # PUBLIC
     return render(request, 'user/signup.html', context)
 
 
-@csrf_exempt
-def userNewUser(request):
+def userNewUser(request):  # POST
     '''新用户点击提交注册按钮后'''
     username = request.POST.get('username')
     question = request.POST.get('question')
@@ -311,8 +309,7 @@ def userForgetanswer(request):
     return render(request, 'user/forgetanswer.html', context)
 
 
-@csrf_exempt
-def userCheckLogin(request):
+def userCheckLogin(request):  # POST
     '''用户点击登入后：判断用户是否可以登入'''
     # get posts
     username = request.POST.get('username')
