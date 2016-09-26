@@ -34,6 +34,12 @@ class User(models.Model):
     def __str__(self):  # 用于需要 string 时的处理 python3
         return "{self.id}) {created} - @{self.nickname} : {self.username}".format(self=self, created=util.ctrl.formatDate(self.created))
 
+    @property
+    def headimg_url(self):
+        if self.headimg and hasattr(self.headimg, 'url'):
+            return self.headimg.url
+        return ''
+
     def toArray(self):
         self.created = self.created.isoformat(' ')
         return model_to_dict(self)

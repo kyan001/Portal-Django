@@ -47,8 +47,8 @@
         <div class='hidden-xs col-sm-4 col-md-3 col-md-offset-1' id='gravatar'>
             <div class="panel panel-primary beveryfast hover-shadow">
                 <div class="panel-body">
-                    <a href="{{ user.headimg.url|default:'/static/img/user/default_headimg.jpg' }}">
-                        <img id="headimg" src="{{ user.headimg.url|default:'/static/img/user/default_headimg.jpg' }}">
+                    <a href="{{ user.headimg_url|default:'/static/img/user/default_headimg.jpg' }}">
+                        <img id="headimg" class='be-square img-rounded' src="{{ user.headimg_url|default:'/static/img/user/default_headimg.jpg' }}">
                     </a>
                 </div>
             </div>
