@@ -385,21 +385,6 @@ def userGetQuestionAndTip(request):  # AJAX
         return util.ctrl.returnJsonError('用户未找到：{username}'.format(username=username))
 
 
-def userGetloginerInfo(request):  # AJAX
-    '''顶部用户栏：获取当前登入用户的信息'''
-    user = util.user.getCurrentUser(request)
-    if not user:
-        user = getUserInCookie(request)
-    # get user's gravatar
-    if user:
-        user_dict = {
-            'nickname': user.nickname,
-        }
-        return util.ctrl.returnJson(user_dict)
-    else:
-        return util.ctrl.returnJsonResult('nologinuser')
-
-
 def userGetUnreadCount(request):  # AJAX
     '''顶部用户栏：更新当前用户的未读消息数目'''
     # from session
