@@ -12,13 +12,6 @@ import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
 
-def getGravatarUrl(email):
-    '''获取用户gravatar地址'''
-    base_src = "https://secure.gravatar.com/avatar/"
-    email_md5 = ktk.md5(email) if email else ""
-    return base_src + email_md5
-
-
 def getRandomName():
     '''生成用户昵称'''
     shengmu = ['a', 'i', 'u', 'e', 'o']
@@ -91,16 +84,6 @@ def userLogout(request):
     return response
 
 
-def userAvatar(request, email):  # public
-    '''通过 email 取回 gravatar'''
-    context = {'request': request}
-    if email:
-        context['headimg'] = getGravatarUrl(email)
-    else:
-        return util.ctrl.infoMsg("请输入email")
-    return render(request, 'user/avatar.html', context)
-
-
 def userExphistory(request):
     '''用户的所有/某类活跃列表，由 profile 进入'''
     # user check
@@ -150,7 +133,6 @@ def userPublic(request):  # public
     userexp.addExp(1, '{} 访问了你的「公开页」'.format(_by))
     # render
     context['user'] = user
-    context['headimg'] = getGravatarUrl(user.email)
     context['prgcounts'] = progress_statics_group
     return render(request, 'user/public.html', context)
 
@@ -197,7 +179,6 @@ def userProfile(request):
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
     userexp.addExp(1, '查看用户个人信息')
     # render
-    context['headimg'] = getGravatarUrl(user.email)
     context['prgstatics'] = progress_statics.values()
     context['exps'] = exps
     context['lvnotice'] = lv_notice
@@ -233,7 +214,6 @@ def userNewUser(request):  # POST
         return util.ctrl.infoMsg("“答案” 不能为空", title="注册失败")
     if not email:
         return util.ctrl.infoMsg("“邮箱” 不能为空", title="注册失败")
-
     # auto fills
     if not nickname:
         nickname = getRandomName()
@@ -241,7 +221,6 @@ def userNewUser(request):  # POST
     answer2 = util.ctrl.salty(answer2) if answer2 else None
     if not tip:
         tip = None
-
     # check conflicts
     if len(User.objects.filter(username=username)) != 0:
         return util.ctrl.infoMsg("用户名 '{username}' 已存在！".format(username=username), title="注册失败")
@@ -249,26 +228,33 @@ def userNewUser(request):  # POST
         return util.ctrl.infoMsg("昵称 '{nickname}' 已存在！".format(nickname=nickname), title="注册失败")
     if len(User.objects.filter(email=email)) != 0:
         return util.ctrl.infoMsg("邮箱 '{email}' 已存在！".format(email=email), title="注册失败")
-
     # check literally
     if " " in username:
         return util.ctrl.infoMsg("用户名 '{username}' 只应包含数字、字母、和英文句号！".format(username=username), title="注册失败")
     if " " in nickname:
         return util.ctrl.infoMsg("昵称 '{nickname}' 只应包含字母和汉字！".format(nickname=nickname), title="注册失败")
-
     # create into db
     user = User(username=username, question=question, answer1=answer1, answer2=answer2, tip=tip, nickname=nickname, email=email)
     user.save()
-
     # add betauser badge
     user.setUserpermission('betauser', True)
-
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
     userexp.addExp(1, '注册成功')
-
     # render
     return util.ctrl.infoMsg(" {user.username} 注册成功！\n您是网站第 {user.id} 位用户。\n请登入以便我们记住您！".format(user=user), url='/user/signin', title="欢迎加入")
+
+
+def userHeadimgUpdate(request):
+    '''点击修改头像后处理更换头像'''
+    user = util.user.getCurrentUser(request)
+    if not user:
+        return util.artist.loginToContinue(request)
+    headimg = request.FILES.get('headimg')
+    user.headimg = headimg
+    user.save()
+    messages.success(request, '修改头像成功')
+    return redirect('/user/profile')
 
 
 # -Signin-----------------------------------------------

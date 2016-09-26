@@ -33,6 +33,9 @@
         font-size: 15px;
         font-weight: bold;
     }
+    #headimg-form {
+        display: none;
+    }
 </style>
 {% endblock css %}
 
@@ -48,9 +51,13 @@
         <div class='hidden-xs col-sm-4 col-md-3 col-md-offset-1' id='gravatar'>
             <div class="panel panel-primary befast hover-shadow">
                 <div class="panel-body">
-                    <a href="/user/avatar/{{cuser.email}}" title="from gravatar.com">
-                        <img id="headimg" src="{{ headimg }}">
+                    <a href="javascript:;" onclick='changeHeadimg()' title='修改头像'>
+                        <img id="headimg" class='be-square img-rounded' src="{{ cuser.headimg.url|default:'/static/img/user/default_headimg.jpg' }}">
                     </a>
+                    <form id="headimg-form" action="/user/headimgupdate" method='post' role="form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type='file' name='headimg' onchange="$('#headimg-form').submit();"/>
+                    </form>
                 </div>
             </div>
         </div>
@@ -209,11 +216,14 @@
 
 {% block js %}
 <script>
-$(function(){
-    {% for category, oldlv, newlv in lvnotice %}
-        $.success("恭喜升级！「{{category}}」从 Lv.{{oldlv}} 升级到 Lv.{{newlv}}！")
-    {% endfor %}
-    $("[data-toggle='tooltip']").tooltip()
-})
+    $(function(){
+        {% for category, oldlv, newlv in lvnotice %}
+            $.success("恭喜升级！「{{category}}」从 Lv.{{oldlv}} 升级到 Lv.{{newlv}}！")
+        {% endfor %}
+        $("[data-toggle='tooltip']").tooltip()
+    })
+    function changeHeadimg(){
+        $('#headimg-form input[name="headimg"]').click()
+    }
 </script>
 {% endblock js %}
