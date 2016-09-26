@@ -1,16 +1,25 @@
+import os
+import datetime
+
 from django.db import models
 from django.forms.models import model_to_dict
 from django.utils import timezone
 from django.core.cache import cache
-from django.contrib.auth import hashers
-import datetime
+import KyanToolKit
 
 import util.ctrl
-import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
 
 class User(models.Model):
+    def headimg_upload_to(self, filename):
+        """return the path for headimg(ImageField) use
+
+        New filename:
+            <MEDIA_ROOT>/user/headimg/<filename>
+        """
+        newname = os.path.join('user', 'headimg', filename)
+        return newname
     LOGIN_SESSION_KEY = 'logged:user:id'
     username = models.CharField(max_length=255, unique=True)
     nickname = models.CharField(max_length=255, unique=True)
@@ -19,6 +28,7 @@ class User(models.Model):
     answer2 = models.CharField(max_length=128, blank=True, null=True)
     tip = models.TextField(blank=True, null=True)
     email = models.EmailField()
+    headimg = models.ImageField(default='', upload_to=headimg_upload_to, blank=True)
     created = models.DateTimeField(default=timezone.now, blank=True)
 
     def __str__(self):  # 用于需要 string 时的处理 python3
