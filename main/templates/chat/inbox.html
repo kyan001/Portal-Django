@@ -57,8 +57,8 @@
                 </h3>
             </div>
             <div class="panel-group" id="msg-group" role="tablist" aria-multiselectable="true">
-                {% for c in chats %}
-                    {% include 'chat/chatlet.html' %}
+                {% for chat in chats %}
+                    {% include 'chat/chatlet.html' with chat=chat user=cuser %}
                 {% empty %}
                 <div class="well">
                     你还没有收到任何消息

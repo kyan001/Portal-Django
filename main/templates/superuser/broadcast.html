@@ -75,8 +75,8 @@
             <hr/>
 
             <div class="panel-group">
-                {% for c in chats %}
-                    {% include 'chat/chatlet.html' %}
+                {% for chat in chats %}
+                    {% include 'chat/chatlet.html' with chat=chat user=sysuser %}
                 {% empty %}
                     <div class="well">
                         @系统消息 尚未收到任何消息

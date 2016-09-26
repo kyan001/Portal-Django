@@ -41,11 +41,11 @@
             <div class="page-header">
                 <h3>
                     {% if receiver %}
-                    <a href="/user/public?nickname={{ receiver.nickname }}">@{{ receiver.nickname }}</a>
-                    <small><span class="glyphicon glyphicon-transfer"></span> @{{ user.nickname }}</small>
+                        <a href="/user/public?nickname={{ receiver.nickname }}">@{{ receiver.nickname }}</a>
+                        <small><span class="glyphicon glyphicon-transfer"></span> @{{ cuser.nickname }}</small>
                     {% else %}
-                    <span>发送消息</span>
-                    <small><span class="text-muted">From:</span> @{{ user.nickname }}</small>
+                        <span>发送消息</span>
+                        <small><span class="text-muted">From:</span> @{{ cuser.nickname }}</small>
                     {% endif %}
                 </h3>
             </div>
@@ -63,7 +63,11 @@
                                     <div class="input-group-addon">
                                         <span class="text-muted">To:</span> @
                                     </div>
-                                    <input type='text' name='receiver' class="form-control" value="{{receiver.nickname}}" placeholder="用户" {% if receiver %}readonly{%else%}autofocus{% endif %} oninput="validateNickname()" tabindex="1">
+                                    {% if receiver %}
+                                        <input type='text' name='receiver' class="form-control" placeholder="用户" value="{{receiver.nickname}}" readonly>
+                                    {%else%}
+                                        <input type='text' name='receiver' class="form-control" placeholder="用户" oninput="validateNickname()" tabindex="1" autofocus>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="col-md-9 col-sm-8 col-xs-12">
@@ -84,8 +88,8 @@
             <hr/>
 
             <div class="panel-group">
-                {% for c in chats %}
-                    {% include 'chat/chatlet.html' %}
+                {% for chat in chats %}
+                    {% include 'chat/chatlet.html' with chat=chat user=cuser %}
                 {% empty %}
                     {% if receiver %}
                         <div class="well">

@@ -60,7 +60,7 @@ def superuserBroadcast(request):
     chats = Chat.objects.filter(receiverid=sysuser.id).order_by('-created')
     # render
     context['chats'] = chats
-    context['user'] = sysuser
+    context['sysuser'] = sysuser
     return render(request, 'superuser/broadcast.html', context)
 
 

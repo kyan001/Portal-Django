@@ -19,11 +19,11 @@
                             </label>
                             <span class='text-muted'>（公开时私人仍可用）</span>
                             {% if icalon %}
-                                <a class='pull-right' href='/progress/icalendar?userid={{ user.id }}'>
+                                <a class='pull-right' href='/progress/icalendar?userid={{ cuser.id }}'>
                                     「进度日历」地址（公开）
                                 </a>
                             {% else %}
-                                <a class='pull-right' href='/progress/icalendar?userid={{ user.id }}&private={{ privatekey }}'>
+                                <a class='pull-right' href='/progress/icalendar?userid={{ cuser.id }}&private={{ privatekey }}'>
                                     「进度日历」地址（私人）
                                 </a>
                             {% endif %}

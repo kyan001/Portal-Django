@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ user.nickname }}{% endblock title %}
+{% block title %}{{ cuser.nickname }}{% endblock title %}
 
 {% block inhead %}
     <meta http-equiv=Cache-Control content=no-cache />
@@ -48,7 +48,7 @@
         <div class='hidden-xs col-sm-4 col-md-3 col-md-offset-1' id='gravatar'>
             <div class="panel panel-primary befast hover-shadow">
                 <div class="panel-body">
-                    <a href="/user/avatar/{{user.email}}" title="from gravatar.com">
+                    <a href="/user/avatar/{{cuser.email}}" title="from gravatar.com">
                         <img id="headimg" src="{{ headimg }}">
                     </a>
                 </div>
@@ -73,28 +73,28 @@
                     <table class="table table-condensed table-hover">
                         <tr>
                             <th>id：</th>
-                            <td>{{ user.id }}</td>
+                            <td>{{ cuser.id }}</td>
                         </tr>
                         <tr>
                             <th>用户名：</th>
-                            <td>{{ user.username }}</td>
+                            <td>{{ cuser.username }}</td>
                         </tr>
                         <tr>
                             <th>昵称：</th>
                             <td>
-                                <a href="/user/public?nickname={{ user.nickname }}">
-                                    @<abbr title="我的公开页，任何人都可以查看" data-toggle="tooltip" data-placement="right">{{ user.nickname }}</abbr>
+                                <a href="/user/public?nickname={{ cuser.nickname }}">
+                                    @<abbr title="我的公开页，任何人都可以查看" data-toggle="tooltip" data-placement="right">{{ cuser.nickname }}</abbr>
                                 </a>
                             </td>
                         </tr>
                         <tr>
                             <th>邮箱：</th>
-                            <td>{{ user.email }}</td>
+                            <td>{{ cuser.email }}</td>
                         </tr>
                         <tr>
                             <th>活跃等级：</th>
                             <td>
-                                <abbr title="根据“总活跃度”计算" data-toggle="tooltip" data-placement="right">Lv.{{ user.getLevel }}</abbr>
+                                <abbr title="根据“总活跃度”计算" data-toggle="tooltip" data-placement="right">Lv.{{ cuser.getLevel }}</abbr>
                             </td>
                         </tr>
                     </table>
@@ -103,11 +103,11 @@
                     <table class="table table-condensed table-hover">
                         <tr>
                             <th>问题：</th>
-                            <td>{{ user.question }}</td>
+                            <td>{{ cuser.question }}</td>
                         </tr>
                         <tr>
                             <th>答案1：</th>
-                            {% if user.answer1 %}
+                            {% if cuser.answer1 %}
                             <td><i>[已加密]</i></td>
                             {% else %}
                             <td>无</td>
@@ -115,7 +115,7 @@
                         </tr>
                         <tr>
                             <th>答案2：</th>
-                            {% if user.answer2 %}
+                            {% if cuser.answer2 %}
                             <td><i>[已加密]</i></td>
                             {% else %}
                             <td>无</td>
@@ -123,15 +123,15 @@
                         </tr>
                         <tr>
                             <th>提示：</th>
-                            {% if user.tip %}
-                            <td>{{ user.tip }}</td>
+                            {% if cuser.tip %}
+                            <td>{{ cuser.tip }}</td>
                             {% else %}
                             <td>无</td>
                             {% endif %}
                         </tr>
                         <tr>
                             <th>创建时间：</th>
-                            <td>{{ user.created|date:'Y-m-d H:i' }}</td>
+                            <td>{{ cuser.created|date:'Y-m-d H:i' }}</td>
                         </tr>
                     </table>
                 </div>

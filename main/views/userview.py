@@ -163,7 +163,6 @@ def userSetting(request):
         return util.user.loginToContinue(request)
     icalon = user.getUserpermission('progressical')
     context = {
-        'user': user,
         'icalon': icalon,
         'privatekey': user.getPrivateKey(),
     }
@@ -199,7 +198,6 @@ def userProfile(request):
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
     userexp.addExp(1, '查看用户个人信息')
     # render
-    context['user'] = user
     context['headimg'] = getGravatarUrl(user.email)
     context['prgstatics'] = progress_statics.values()
     context['exps'] = exps

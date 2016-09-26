@@ -36,7 +36,6 @@ def chatInbox(request):
     userexp.addExp(1, '查看收件箱')
     # render
     context['chats'] = chats
-    context['user'] = user
     return render(request, 'chat/inbox.html', context)
 
 
@@ -99,7 +98,6 @@ def chatConversation(request):
     if receiver_nickname:
         userexp.addExp(1, '查看与 @{receiver.nickname} 的对话'.format(receiver=receiver))
     # render
-    context['user'] = user
     context['title'] = title
     return render(request, 'chat/conversation.html', context)
 
