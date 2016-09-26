@@ -60,3 +60,4 @@ target/
 mysql.pswd
 test.sqlite3
 email.pswd
+static/media/*
