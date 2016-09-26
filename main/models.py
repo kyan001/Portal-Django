@@ -11,7 +11,7 @@ ktk = KyanToolKit.KyanToolKit()
 
 
 class User(models.Model):
-    LOGIN_SESSION_KEY = 'logined:user:id'
+    LOGIN_SESSION_KEY = 'logged:user:id'
     username = models.CharField(max_length=255, unique=True)
     nickname = models.CharField(max_length=255, unique=True)
     question = models.TextField()

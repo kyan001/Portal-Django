@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 
 
 def getCurrentUser(request):
-    """Get logined user from session"""
+    """Get logged user from session"""
     userid = request.session.get(User.LOGIN_SESSION_KEY)
     if not userid:
         return False
@@ -16,7 +16,7 @@ def getCurrentUser(request):
 
 
 def rememberLogin(request, user):
-    """Remember logined user"""
+    """Remember logged user"""
     if not user:
         return None
     request.session[User.LOGIN_SESSION_KEY] = user.id  # remember login
