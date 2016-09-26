@@ -2,3 +2,4 @@ KyanToolKit
 PyMySQL
 Pillow
 icalendar
+django-cleanup
