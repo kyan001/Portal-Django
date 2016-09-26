@@ -122,7 +122,6 @@ def userExphistory(request):
     else:
         return util.ctrl.infoMsg("请输入请求的分类，可用的分类为 {pool}".format(pool=str(UserExp.category_pool.get('all'))), title='访问错误')
     # render
-    context['user'] = user
     context['userexp'] = userexp
     context['exphistorys'] = exphistorys
     context['view'] = view
