@@ -5,7 +5,7 @@
     }
 </style>
 <div class="row">
-    {% for badge in user.getUserbadges %}
+    {% for badge in user.badges %}
         {% if badge %}
             <div class='col-xs-4 col-sm-3 col-md-2 col-lg-1'>
                 <a href='/badge/detail?id={{badge.id}}'>

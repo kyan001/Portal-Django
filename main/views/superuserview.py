@@ -18,7 +18,7 @@ def superuserIndex(request):
     # send commands
     title = "《超级管理员操作手册》".format()
     content = '''
-        <li class="text-muted">@{user.nickname} 执行了 {category_name} 的初始化。</li>
+        <li class="text-muted">@{user.nickname} 执行了 {category} 的初始化。</li>
         <h5>
             超级管理员操作连接：
         </h5>
@@ -31,7 +31,7 @@ def superuserIndex(request):
         </div>
         <li><b>初始化</b>：默认@{superuser.nickname} ，并发送此邮件</li>
         <li><b>广播系统消息</b>：处理、广播系统消息</li>
-    '''.format(user=user, superuser=superuser, category_name=UserPermission.objects.getCategoryName('superuser'))
+    '''.format(user=user, superuser=superuser, category='superuser')
     isSuccessed = Chat.objects.sendBySys(superuser, title=title, content=content)
     if not isSuccessed:
         return util.ctrl.infoMsg("发送失败，未知原因，对方用户：@{user.nickname}".format(user=superuser))
@@ -71,7 +71,7 @@ def superuserUpdatedb(request):
         return util.user.loginToContinue(request)
     # check superuser
     if not user.getUserpermission('superuser'):
-        return util.ctrl.infoMsg("您不具有 {category_name} 权限".format(category_name=UserPermission.objects.getCategoryName('superuser')))
+        return util.ctrl.infoMsg("您不具有 {category} 权限".format(category='superuser'))
     # get mode
     mode = request.GET.get('mode')
     if not mode:
@@ -135,7 +135,7 @@ def superuserUpdatedb(request):
         # update badgedesigner badge
         badges = UserPermissionBadge.objects.all()
         for b in badges:
-            designer = b.getDesigner()
+            designer = b.designer
             if designer:
                 designer.setUserpermission('badgedesigner', True)
     if 'betauser' == mode:
@@ -153,7 +153,7 @@ def superuserSendbroadcast(request):
         return util.user.loginToContinue(request)
     # check superuser
     if not user.getUserpermission('superuser'):
-        return util.ctrl.infoMsg("您不具有 {category_name} 权限".format(category_name=UserPermission.objects.getCategoryName('superuser')))
+        return util.ctrl.infoMsg("您不具有 {category} 权限".format(category='superuser'))
     # get inputs
     title = request.POST.get('title')
     content = request.POST.get('content')

@@ -6,7 +6,7 @@
             {% if item.opus.getCoverColor %}style="box-shadow: 0 0 1px 2px {{ item.opus.getCoverColor }}"{% endif %}>
             <div class="panel-heading progress-title">
                 <span class="panel-title">
-                    <span class="persent badge">{{ item.prg.getPersent }}%</span>
+                    <span class="persent badge">{{ item.prg.persent }}%</span>
                     <span class='opus-name'>《 <b>{{ item.opus.name|truncatechars:25 }}</b> 》</span>
                     {% if item.prg.weblink and item.prg.weblink|isurl %}
                     <span class="weblink label btn-link" href="{{item.prg.weblink}}" title="{{item.prg.weblink}}" target="_blank">
@@ -32,7 +32,7 @@
             </div>
             <div class="panel-body">
                 <div class="progress">
-                    <div class="progress-bar {{ item.prg.getBartype }}" style="width: {{item.prg.getPersent}}%; min-width: 5em;">
+                    <div class="progress-bar {{ item.prg.getBartype }}" style="width: {{item.prg.persent}}%; min-width: 5em;">
                     {% if item.opus.total != 0 %}
                         <b>{{item.prg.current}} / {{item.opus.total}}</b>
                     {% else %}

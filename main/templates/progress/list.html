@@ -142,7 +142,7 @@
                 {% elif item.prg.status == 'inprogress' %}
                     {
                         progressid: {{item.prg.id}},
-                        name: "《{{item.opus.name}}》<span class='text-primary'>进行至 </span>{{item.prg.getPersent}}%",
+                        name: "《{{item.opus.name}}》<span class='text-primary'>进行至 </span>{{item.prg.persent}}%",
                         on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month|add:-1}}, {{item.prg.modified.day}})
                     },
                 {% elif item.prg.status == 'follow' %}

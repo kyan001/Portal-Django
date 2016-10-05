@@ -497,7 +497,7 @@ def progressIcalendar(request):  # GET
     except User.DoesNotExist:
         return util.ctrl.infoMsg("用户 userid={id} 不存在".format(id=userid), title='找不到用户')
     if privatekey:  # private mode
-        if privatekey != user.getPrivateKey():
+        if privatekey != user.privatekey():
             return util.ctrl.infoMsg("用户的私钥不合法", title='无法读取')
     else:  # public mode
         if not user.getUserpermission('progressical'):

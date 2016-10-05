@@ -11,7 +11,20 @@ import util.ctrl
 ktk = KyanToolKit.KyanToolKit()
 
 
-class User(models.Model):
+class BaseModel(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+    def toArray(self):
+        self.created = self.created.isoformat(' ')
+        self.modified = self.modified.isoformat(' ')
+        return model_to_dict(self)
+
+
+class User(BaseModel):
     def headimg_upload_to(self, filename):
         """return the path for headimg(ImageField) use
 
@@ -29,10 +42,6 @@ class User(models.Model):
     tip = models.TextField(blank=True, null=True)
     email = models.EmailField()
     headimg = models.ImageField(default='', upload_to=headimg_upload_to, blank=True)
-    created = models.DateTimeField(default=timezone.now, blank=True)
-
-    def __str__(self):  # 用于需要 string 时的处理 python3
-        return "{self.id}) {created} - @{self.nickname} : {self.username}".format(self=self, created=util.ctrl.formatDate(self.created))
 
     @property
     def headimg_url(self):
@@ -40,9 +49,25 @@ class User(models.Model):
             return self.headimg.url
         return ''
 
-    def toArray(self):
-        self.created = self.created.isoformat(' ')
-        return model_to_dict(self)
+    @property
+    def privatekey(self):
+        return util.ctrl.salty(self.created)
+
+    @property
+    def level(self):
+        userexps = self.getUserExp()
+        total_exp = sum(ue.exp for ue in userexps)
+        return util.ctrl.calcLevel(total_exp)
+
+    @property
+    def badges(self):
+        user_permissions = UserPermission.objects.filter(userid=self.id)
+        if user_permissions.exists():
+            return [up.badge for up in user_permissions]
+        return None
+
+    def __str__(self):  # 用于需要 string 时的处理 python3
+        return "{self.id}) {created} - @{self.nickname} : {self.username}".format(self=self, created=util.ctrl.formatDate(self.created))
 
     # permission related
     def getUserpermission(self, category):
@@ -61,32 +86,12 @@ class User(models.Model):
             }
         )
 
-    def getUserbadges(self):
-        try:
-            user_badges = []
-            user_permissions = UserPermission.objects.filter(userid=self.id)
-            for up in user_permissions:
-                user_badges.append(up.getBadge())
-            return user_badges
-        except UserPermission.DoesNotExist:
-            return None
-
-    def claimUserbadges(self):
-        done_prg_count = Progress.objects.filter(status='done').count()
-        if done_prg_count >= 25:
-            self.setUserpermission('wellread', True)
-
     # exps related
     def getUserExp(self, category=None):
         if category:
-            return UserExp.objects.get_or_create(userid=self.id, category=category)[0]
+            return UserExp.objects.get_or_create(userid=self.id, category=category).first()
         else:
             return UserExp.objects.filter(userid=self.id)
-
-    def getLevel(self):
-        userexps = self.getUserExp()
-        total_exp = sum(ue.exp for ue in userexps)
-        return util.ctrl.calcLevel(total_exp)
 
     # progress related
     def getProgressStatics(self):
@@ -102,69 +107,46 @@ class User(models.Model):
         new_chat.save()
         return new_chat
 
-    def getReceivedChats(self):
-        return Chat.objects.filter(receiverid=self.id).order_by('-created')
-
-    def getSentChats(self):
-        return Chat.objects.filter(senderid=self.id).order_by('-created')
-
-    def getUnreadChats(self):
-        return Chat.objects.filter(receiverid=self.id, isread=False)
-
-    def getPrivateKey(self):
-        return util.ctrl.salty(self.created)
+    def getChats(self, mode=None):
+        if mode == 'received':
+            return Chat.objects.filter(receiverid=self.id).order_by('-created')
+        if mode == 'sent':
+            return Chat.objects.filter(senderid=self.id).order_by('-created')
+        if mode == 'unread':
+            return Chat.objects.filter(receiverid=self.id, isread=False)
 
 
-class UserPermissionManager(models.Manager):
-    def getCategoryName(self, category):
-        return category
-
-
-class UserPermission(models.Model):
+class UserPermission(BaseModel):
     userid = models.IntegerField(default=0, blank=False, null=False)
     category = models.CharField(max_length=128, blank=False, null=False)
     isallowed = models.BooleanField()
-    objects = UserPermissionManager()
-    category_pool = {
-        'all': ('signin', 'superuser', 'betauser', 'wellread', 'badgedesigner', 'progressical'),
-    }
 
-    def __str__(self):
-        user = self.getUser()
-        return "{self.id}) @{user.nickname} - {self.category} : {self.isallowed}".format(self=self, user=user)
-
-    def getUser(self):
+    @property
+    def user(self):
         return User.objects.get(id=self.userid)
 
-    def getBadge(self):
+    @property
+    def badge(self):
         try:
             badge = UserPermissionBadge.objects.get(category=self.category, isallowed=self.isallowed)
+            return badge
         except UserPermissionBadge.DoesNotExist:
             return None
-        return badge
+
+    def __str__(self):
+        return "{self.id}) @{self.user.nickname} - {self.category} : {self.isallowed}".format(self=self)
 
 
-class UserPermissionBadge(models.Model):
+class UserPermissionBadge(BaseModel):
     category = models.CharField(max_length=128, blank=False, null=False)
     isallowed = models.BooleanField()
     image = models.TextField(default='/static/media/badges/no.png')
     description = models.TextField(default='')
     requirement = models.TextField(default='')
     designernname = models.CharField(default="", max_length=128, blank=True, null=True)
-    created = models.DateTimeField(default=timezone.now, blank=True)
 
-    def __str__(self):
-        return "{self.id}) {self.category}:{self.isallowed} - ({self.image}) @{dnn}".format(self=self, dnn=self.designernname)
-
-    # util
-    def userCount(self):
-        try:
-            user_permissions = UserPermission.objects.filter(category=self.category, isallowed=self.isallowed)
-        except UserPermission.DoesNotExist:
-            return None
-        return user_permissions.count()
-
-    def getDesigner(self):
+    @property
+    def designer(self):
         if not self.designernname:
             return None
         try:
@@ -173,16 +155,21 @@ class UserPermissionBadge(models.Model):
         except User.DoesNotExist:
             return None
 
+    def __str__(self):
+        return "{self.id}) {self.category}:{self.isallowed} - ({self.image}) @{dnn}".format(self=self, dnn=self.designernname)
 
-class UserExp(models.Model):
+    def userCount(self):
+        try:
+            user_permissions = UserPermission.objects.filter(category=self.category, isallowed=self.isallowed)
+            return user_permissions.count()
+        except UserPermission.DoesNotExist:
+            return 0
+
+
+class UserExp(BaseModel):
     userid = models.IntegerField(default=0, blank=False, null=False)
     category = models.CharField(max_length=255, blank=False, null=False)
     exp = models.IntegerField(default=0, blank=False, null=False)
-    modified = models.DateTimeField(default=timezone.now, blank=True)
-    created = models.DateTimeField(default=timezone.now, blank=True)
-    category_pool = {
-        'all': ('progress', 'user', 'chat', 'error'),
-    }
     category_name = {
         'progress': '进度活跃度',
         'user': '用户活跃度',
@@ -191,43 +178,24 @@ class UserExp(models.Model):
     }
 
     def __str__(self):
-        user = self.getUser()
-        return "{self.id}) @{user.nickname} - {category_name}: {self.exp} - Lv.{level}".format(self=self, user=user, category_name=self.getCategory(), level=self.getLevel())
+        return "{self.id}) @{self.user.nickname} - {self.category_zh}: {self.exp} - Lv.{self.level}".format(self=self)
 
-    # Category
-    def setCategory(self, category):
-        if category not in self.category_pool.get('all'):
-            raise Exception("分类只能为 {pool}".format(pool=str(self.category_pool.get('all'))))
-        self.category = category
-        self.setModified()
-
-    def getCategory(self):
+    @property
+    def category_zh(self):
         category_name = self.category_name.get(self.category)
-        if category_name:
-            return category_name
-        return self.category
+        return category_name or self.category
 
-    # Created & Modified
-    def setModified(self):
-        self.modified = timezone.now()
-
-    # Exp
-    def setExp(self, exp):
-        self.exp = exp
-        self.setModified()
-
-    def addExp(self, exp, operation):
-        self.setExp(self.exp + exp)
-        history = ExpHistory(userexpid=self.id, operation=operation, change=exp)
-        self.save()
-        history.save()
-
-    # calculations
-    def getLevel(self):
+    @property
+    def level(self):
         return util.ctrl.calcLevel(self.exp)
 
-    def getPersent(self):
-        level = self.getLevel()
+    @property
+    def user(self):
+        return User.objects.get(id=self.userid)
+
+    @property
+    def persent(self):
+        level = self.level
         prev_exp = util.ctrl.calcExp(level)
         next_exp = util.ctrl.calcExp(level + 1)
         exp_need = next_exp - prev_exp
@@ -235,8 +203,19 @@ class UserExp(models.Model):
         persent = exp_have / exp_need * 100
         return int(persent)
 
-    def getUser(self):
-        return User.objects.get(id=self.userid)
+    # Category
+    def setCategory(self, category):
+        self.category = category
+
+    # Exp
+    def setExp(self, exp):
+        self.exp = exp
+
+    def addExp(self, exp, operation):
+        self.setExp(self.exp + exp)
+        history = ExpHistory(userexpid=self.id, operation=operation, change=exp)
+        self.save()
+        history.save()
 
     def getExpHistory(self, count=0):
         result = ExpHistory.objects.filter(userexpid=self.id).order_by('-created')
@@ -245,35 +224,29 @@ class UserExp(models.Model):
         return result
 
 
-class ExpHistory(models.Model):
+class ExpHistory(BaseModel):
     userexpid = models.IntegerField(default=0, blank=False, null=False)
     operation = models.TextField()
     change = models.IntegerField(default=0, blank=False, null=False)
-    created = models.DateTimeField(default=timezone.now, blank=True)
 
     def __str__(self):
         userexp = self.getUserexp()
-        user = userexp.getUser()
-        return "{self.id}) {created} - @{user.nickname}: [{category_name}] {self.operation} +{self.change}".format(self=self, user=user, created=util.ctrl.formatDate(self.created), category_name=userexp.getCategory())
+        user = userexp.user
+        return "{self.id}) {created} - @{user.nickname}: [{category_name}] {self.operation} +{self.change}".format(self=self, user=user, created=util.ctrl.formatDate(self.created), category_name=userexp.category_zh)
 
     def getUserexp(self):
         return UserExp.objects.get(id=self.userexpid)
 
 
-class Opus(models.Model):
+class Opus(BaseModel):
     name = models.CharField(max_length=255)
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     total = models.IntegerField(default=0)
-    created = models.DateTimeField(default=timezone.now, blank=True)
 
     def __str__(self):
         subtext = "({self.subtitle})".format(self=self) if self.subtitle else ""
         total = self.total if self.total else '∞'
         return "{self.id}) 《 {self.name} 》 {subtext} [{total}]".format(self=self, subtext=subtext, total=total)
-
-    def toArray(self):
-        self.created = self.created.isoformat(' ')
-        return model_to_dict(self)
 
     def getProgress(self):
         return Progress.objects.get(opusid=self.id)
@@ -310,14 +283,12 @@ class ProgressManager(models.Manager):
         return result
 
 
-class Progress(models.Model):
+class Progress(BaseModel):
     userid = models.IntegerField(default=0)
     opusid = models.IntegerField(default=0)
     current = models.IntegerField(default=0)
     status = models.CharField(max_length=50)
     weblink = models.URLField(max_length=2083, blank=True, default="")
-    created = models.DateTimeField(default=timezone.now, blank=True)
-    modified = models.DateTimeField(default=timezone.now, blank=True)
     status_pool = {
         'all': ('inprogress', 'follow', 'todo', 'done', 'giveup', 'error'),
         'active': ('inprogress', 'follow', 'todo', 'error'),
@@ -335,18 +306,7 @@ class Progress(models.Model):
     objects = ProgressManager()
 
     def __str__(self):
-        opus = self.getOpus()
-        user = self.getUser()
-        return "{self.id}) @{user.nickname} -《 {opus.name} 》 ({self.current}/{opus.total})".format(self=self, user=user, opus=opus)
-
-    def toArray(self):
-        self.created = self.created.isoformat(' ')
-        self.modified = self.modified.isoformat(' ')
-        return model_to_dict(self)
-
-    # created & modified
-    def setModified(self):
-        self.modified = timezone.now()
+        return "{self.id}) @{self.user.nickname} -《 {self.opus.name} 》 ({self.current}/{opus.total})".format(self=self)
 
     # time spent
     def getTimedelta(self, mode='default'):
@@ -366,10 +326,9 @@ class Progress(models.Model):
         if status not in self.status_pool.get('all'):
             raise Exception("状态只能为 {pool}".format(pool=str(self.status_pool.get('all'))))
         self.status = status
-        self.setModified()
 
     def setStatusAuto(self):
-        opus = self.getOpus()
+        opus = self.opus
         if self.status == 'giveup':
             return True
         if self.current == 0:
@@ -400,8 +359,9 @@ class Progress(models.Model):
         return self.status
 
     # calculations
-    def getPersent(self):
-        opus = self.getOpus()
+    @property
+    def persent(self):
+        opus = self.opus
         if opus.total == 0:
             total = int(self.current) + 1
         else:
@@ -410,7 +370,7 @@ class Progress(models.Model):
         return int(persent)
 
     def getBartype(self):
-        persent = self.getPersent()
+        persent = self.persent
         if persent < 33:
             bartype = 'progress-bar-danger'
         elif persent < 66:
@@ -421,10 +381,12 @@ class Progress(models.Model):
             bartype = 'progress-bar-primary'
         return bartype
 
-    def getOpus(self):
+    @property
+    def opus(self):
         return Opus.objects.get(id=self.opusid)
 
-    def getUser(self):
+    @property
+    def user(self):
         return User.objects.get(id=self.userid)
 
 
@@ -450,13 +412,12 @@ class ChatManager(models.Manager):
         return sysuser
 
 
-class Chat(models.Model):
+class Chat(BaseModel):
     senderid = models.IntegerField(default=0, blank=False, null=False)
     receiverid = models.IntegerField(default=0, blank=False, null=False)
     title = models.TextField(blank=True, null=True)
     content = models.TextField(blank=True, null=True)
     isread = models.BooleanField(default=False)
-    created = models.DateTimeField(default=timezone.now, blank=False)
     objects = ChatManager()
 
     def __str__(self):

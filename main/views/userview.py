@@ -23,17 +23,6 @@ def getRandomName():
     return nickname
 
 
-def getUser(username):
-    '''通过用户名获得用户'''
-    if not username:
-        raise Exception("username 不能为空")
-    try:
-        user = User.objects.get(username=username)
-    except User.DoesNotExist:
-        return None
-    return user
-
-
 def getUserById(user_id):
     '''通过用户名获得用户'''
     if not user_id:
@@ -95,15 +84,15 @@ def userExphistory(request):
     category = request.GET.get('category')
     view = request.GET.get('view')
     if category:
-        if category not in UserExp.category_pool.get('all'):
-            return util.ctrl.infoMsg("请求的分类（{category}）不存在".format(category=category), title='访问错误')
         userexp = user.getUserExp(category)
+        if not userexp:
+            return util.ctrl.infoMsg("请求的分类（{category}）不存在".format(category=category), title='访问错误')
         if view == 'full':
             exphistorys = userexp.getExpHistory()
         else:
             exphistorys = userexp.getExpHistory(22)
     else:
-        return util.ctrl.infoMsg("请输入请求的分类，可用的分类为 {pool}".format(pool=str(UserExp.category_pool.get('all'))), title='访问错误')
+        return util.ctrl.infoMsg("请输入请求的分类", title='访问错误')
     # render
     context['userexp'] = userexp
     context['exphistorys'] = exphistorys
@@ -145,7 +134,7 @@ def userSetting(request):
     icalon = user.getUserpermission('progressical')
     context = {
         'icalon': icalon,
-        'privatekey': user.getPrivateKey(),
+        'privatekey': user.privatekey(),
     }
     return render(request, 'user/setting.html', context)
 
@@ -167,14 +156,16 @@ def userProfile(request):
         cache_timeout = 60 * 60 * 24 * 7 * 2  # 2 weeks
         cached_lv = cache.get(cache_key)
         if cached_lv:  # has cached category:level
-            new_lv = ue.getLevel()
+            new_lv = ue.level()
             if new_lv > cached_lv:
                 lv_noticelet = (ue.getCategory(), cached_lv, new_lv)
                 lv_notice.append(lv_noticelet)
-        cache.set(cache_key, ue.getLevel(), cache_timeout)
+        cache.set(cache_key, ue.level, cache_timeout)
     # get user progress counts
     progress_statics = user.getProgressStatics()
-    user.claimUserbadges()
+    done_prg_count = Progress.objects.filter(status='done').count()
+    if done_prg_count >= 25:
+        user.setUserpermission('wellread', True)
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
     userexp.addExp(1, '查看用户个人信息')
@@ -307,7 +298,11 @@ def userCheckLogin(request):  # POST
         messages.error(request, "登入失败：答案不能为空")
         return redirect(_failto)
     # check username vs. answer
-    user = getUser(username)
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        messages.error(request, "登入失败：找不到用户名为 {} 的用户".format(username))
+        return redirect(_failto)
     if user.getUserpermission('signin') is False:  # None is OK, True is OK, False is not OK
         messages.error(request, '登入失败：您已被禁止登入，请联系管理员')
         return redirect(_failto)
@@ -325,7 +320,7 @@ def userCheckLogin(request):  # POST
     # remove old msgs
     msg_title = 'Hi, @{user.nickname}'.format(user=user)
     sysuser = Chat.objects.getSyschatUser()
-    old_msg = user.getReceivedChats().filter(senderid=sysuser.id, title=msg_title)
+    old_msg = user.getChats('received').filter(senderid=sysuser.id, title=msg_title)
     has_old_msg = old_msg.exists()
     old_msg.delete()
     # send chat
@@ -353,7 +348,10 @@ def userGetQuestionAndTip(request):  # AJAX
     username = request.GET.get('username')
     if not username:
         return util.ctrl.returnJsonError('用户名不能为空')
-    user = getUser(username)
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return util.ctrl.returnJsonError("登入失败：找不到用户名为 {} 的用户".format(username))
     if user:
         question = user.question
         tip = user.tip
@@ -375,11 +373,11 @@ def userGetUnreadCount(request):  # AJAX
         user = getUserInCookie(request)
     # get user's gravatar
     if user:
-        unread_count = user.getUnreadChats().count()
+        unread_count = user.getChats('unread').count()
         result['unreadcount'] = unread_count
         result['msgs'] = []
         if unread_count:
-            unread_chats = user.getUnreadChats()
+            unread_chats = user.getChats('unread')
             for uc in unread_chats:
                 sender = User.objects.get(id=uc.senderid)
                 words = uc.title or uc.content

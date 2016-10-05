@@ -17,9 +17,9 @@ def chatInbox(request):
     chat_type = request.GET.get('type')
     # get chats
     if chat_type == 'unread':
-        chat_list = user.getUnreadChats()
+        chat_list = user.getChats('unread')
     else:
-        chat_list = user.getReceivedChats()
+        chat_list = user.getChats('received')
     # paginator
     paginator = Paginator(chat_list, per_page=15)
     page = request.GET.get('page')

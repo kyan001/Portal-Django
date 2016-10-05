@@ -97,7 +97,7 @@
                     {% if prg.status == 'giveup' %}
                         <span class="persent label label-danger">已冻结</span>
                     {% endif %}
-                        <span class="persent badge">{{prg.getPersent}}%</span>
+                        <span class="persent badge">{{prg.persent}}%</span>
                         《 <a id="opustitle" data-toggle="tooltip" data-placement="top" href="/opus/detail?id={{opus.id}}" title="看看还有谁在看这本书">
                             <b>{{opus.name}}</b>
                         </a> 》
@@ -115,7 +115,7 @@
                 </div>
                 <div class="panel-body first-panel-body">
                     <div class="progress">
-                        <div class="progress-bar progress-bar-striped active {{prg.getBartype}}" style="width: {{prg.getPersent}}%; min-width: 5em;">
+                        <div class="progress-bar progress-bar-striped active {{prg.getBartype}}" style="width: {{prg.persent}}%; min-width: 5em;">
                             {% if opus.total == 0 %}
                             <b>{{prg.current}} / ∞</b>
                             {% else %}
@@ -226,7 +226,7 @@
                                             </tr>
                                             <tr>
                                                 <th>阅读百分比</th>
-                                                <td>{{prg.getPersent}}%</td>
+                                                <td>{{prg.persent}}%</td>
                                             </tr>
                                         </table>
                                     </div><!--.panel-body-->

@@ -29,7 +29,7 @@ def opusDetail(request):
             return util.ctrl.infoMsg("未找到 opusid 为 {id} 的进度".format(id=str(opusid)))
         # 获得用户
         try:
-            user = progress.getUser()
+            user = progress.user
         except User.DoesNotExist:
             return util.ctrl.infoMsg("未找到 id 为 {progress.userid} 的进度".format(progress=progress))
         item_list.append({'progress': progress, 'user': user, 'opus': opuslet})
