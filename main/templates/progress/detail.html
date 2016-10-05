@@ -12,7 +12,9 @@
     .progress-card .table {
         margin: 0;
     }
-    .progress-card .subtitle, .progress-card .persent, .progress-card .weblink {
+    .progress-card .subtitle,
+    .progress-card .persent,
+    .progress-card .weblink {
         font-size: 15px;
     }
     .progress-card .panel-heading {
@@ -57,7 +59,10 @@
     .fastupdate-total {
         padding-left: 0;
     }
-    #title-tr, #rating-tr, #tag-tr, #douban-info-panel {
+    #title-tr,
+    #rating-tr,
+    #tag-tr,
+    #douban-info-panel {
         display: none;
     }
 </style>
@@ -94,32 +99,33 @@
             <div class="panel panel-primary" id="main-panel">
                 <div class="panel-heading">
                     <span class="panel-title">
-                    {% if prg.status == 'giveup' %}
-                        <span class="persent label label-danger">已冻结</span>
-                    {% endif %}
-                        <span class="persent badge">{{prg.persent}}%</span>
-                        《 <a id="opustitle" data-toggle="tooltip" data-placement="top" href="/opus/detail?id={{opus.id}}" title="看看还有谁在看这本书">
-                            <b>{{opus.name}}</b>
-                        </a> 》
-                    {% if opus.subtitle %}
-                        <span class="subtitle label label-info">
-                            {{ opus.subtitle }}
-                        </span>
-                    {% endif %}
-                    {% if prg.weblink and prg.weblink|isurl %}
-                        <a class="weblink label btn-link" data-toggle="tooltip" data-placement="top" href="{{prg.weblink}}" title="在新窗口打开链接" target="_blank">
-                            <span class="glyphicon glyphicon-link"></span>
-                        </a>
-                    {% endif %}
+                        {% if prg.status == 'giveup' %}
+                            <span class="persent label label-danger">已冻结</span>
+                        {% endif %}
+                        {% if prg.weblink and prg.weblink|isurl %}
+                            <a class="weblink label btn-link" data-toggle="tooltip" data-placement="top" href="{{prg.weblink}}" title="在新窗口打开链接" target="_blank">
+                                <span class="glyphicon glyphicon-link"></span>
+                            </a>
+                        {% endif %}
+                        《<a id="opustitle" data-toggle="tooltip" data-placement="top" href="/opus/detail?id={{ opus.id }}" title="看看还有谁在看这本书">
+                            <b>{{ opus.name }}</b>
+                        </a>》
+                        {% if opus.subtitle %}
+                            <span class="subtitle label label-default">
+                                {{ opus.subtitle }}
+                            </span>
+                        {% endif %}
+
                     </span>
                 </div>
                 <div class="panel-body first-panel-body">
                     <div class="progress">
-                        <div class="progress-bar progress-bar-striped active {{prg.getBartype}}" style="width: {{prg.persent}}%; min-width: 5em;">
+                        <div class="progress-bar progress-bar-striped active {{prg.getBartype}}" style="width: {{prg.persent}}%; min-width: 7em;">
                             {% if opus.total == 0 %}
-                            <b>{{prg.current}} / ∞</b>
+                                <b>{{prg.current}} / ∞</b>
                             {% else %}
-                            <b>{{prg.current}} / {{opus.total}}</b>
+                                <b>{{prg.current}} / {{opus.total}}</b>
+                                <span class='pull-right'>{{ prg.persent }}%</span>
                             {% endif %}
                         </div>
                     </div>

@@ -6,17 +6,16 @@
             {% if item.opus.covercolor %}style="box-shadow: 0 0 1px 2px {{ item.opus.covercolor }}"{% endif %}>
             <div class="panel-heading progress-title">
                 <span class="panel-title">
-                    <span class="persent badge">{{ item.prg.persent }}%</span>
-                    <span class='opus-name'>《 <b>{{ item.opus.name|truncatechars:25 }}</b> 》</span>
                     {% if item.prg.weblink and item.prg.weblink|isurl %}
-                    <span class="weblink label btn-link" href="{{item.prg.weblink}}" title="{{item.prg.weblink}}" target="_blank">
-                        <span class="glyphicon glyphicon-link"></span>
-                    </span>
+                        <span class="weblink label btn-link" href="{{item.prg.weblink}}" title="{{item.prg.weblink}}" target="_blank">
+                            <span class="glyphicon glyphicon-link"></span>
+                        </span>
                     {% endif %}
+                    <span class='opus-name'>《<b>{{ item.opus.name|truncatechars:25 }}</b>》</span>
                     {% if item.opus.subtitle %}
-                    <span class="subtitle label label-info">
-                        {{ item.opus.subtitle|truncatechars:9 }}
-                    </span>
+                        <span class="subtitle label label-default">
+                            {{ item.opus.subtitle|truncatechars:9 }}
+                        </span>
                     {% endif %}
                 </span>
             </div>
@@ -32,9 +31,10 @@
             </div>
             <div class="panel-body">
                 <div class="progress">
-                    <div class="progress-bar {{ item.prg.getBartype }}" style="width: {{item.prg.persent}}%; min-width: 5em;">
+                    <div class="progress-bar {{ item.prg.getBartype }}" style="width: {{ item.prg.persent }}%; min-width: 7em;">
                     {% if item.opus.total != 0 %}
                         <b>{{item.prg.current}} / {{item.opus.total}}</b>
+                        <span class='pull-right'>{{ item.prg.persent }}%</span>
                     {% else %}
                         <b>{{item.prg.current}} / ∞</b>
                     {% endif %}
