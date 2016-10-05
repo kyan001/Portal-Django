@@ -52,7 +52,7 @@
             <div class="panel panel-primary befast hover-shadow">
                 <div class="panel-body">
                     <a href="javascript:;" onclick='changeHeadimg()' title='修改头像'>
-                        <img id="headimg" class='be-square img-rounded' src="{{ cuser.headimg_url|default:'/static/img/user/default_headimg.jpg' }}">
+                        <div id="headimg" class='img-square img-rounded' style='background-image: url("{{ cuser.headimg_url|default:'/static/img/user/default_headimg.jpg' }}")'></div>
                     </a>
                     <form id="headimg-form" action="/user/headimgupdate" method='post' role="form" enctype="multipart/form-data">
                         {% csrf_token %}

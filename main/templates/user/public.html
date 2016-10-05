@@ -48,7 +48,7 @@
             <div class="panel panel-primary beveryfast hover-shadow">
                 <div class="panel-body">
                     <a href="{{ user.headimg_url|default:'/static/img/user/default_headimg.jpg' }}">
-                        <img id="headimg" class='be-square img-rounded' src="{{ user.headimg_url|default:'/static/img/user/default_headimg.jpg' }}">
+                        <div id="headimg" class='img-square img-rounded' style='background-image: url("{{ user.headimg_url|default:'/static/img/user/default_headimg.jpg' }}")'></div>
                     </a>
                 </div>
             </div>
