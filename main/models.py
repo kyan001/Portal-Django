@@ -299,7 +299,7 @@ class Progress(BaseModel):
     objects = ProgressManager()
 
     @property
-    def status(self):
+    def status_zh(self):
         status_name = self.status_name.get(self.status)
         return status_name or self.status
 
