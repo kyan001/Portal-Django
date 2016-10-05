@@ -1,92 +1,84 @@
 /*!
- * KyanCssUtil.css v1.1
+ * KyanCssUtil.css v1.2
  */
 
-/* Picture alignment */
-    .alignleft { display: inline; float: left; }
-    .alignright { display: inline; float: right; }
-    .aligncenter { clear: both; display: block; margin: auto; }
+/* a */
+a.no-decoration,
+a.no-decoration:hover {
+    text-decoration: none !important;
+}
 
-/* Text alignment */
-    .text-alignleft { display: inline-block; width: 100%; text-align: left; }
-    .text-alignright { display: inline-block; width: 100%; text-align: right; }
-    .text-aligncenter { display: inline-block; width: 100%; text-align: center; }
+/* shadow */
+.hover-shadow:hover {
+    box-shadow: 0 5px 9px rgba(0, 0, 0, 0.16), 0 2px 5px rgba(0, 0, 0, 0.26);
+    -webkit-transform: translateY(-2px);
+       -moz-transform: translateY(-2px);
+        -ms-transform: translateY(-2px);
+         -o-transform: translateY(-2px);
+            transform: translateY(-2px);
+}
 
-/* Float */
-    a.no-decoration,
-    a.no-decoration:hover {
-        text-decoration: none !important;
-    }
-    .hover-shadow:hover {
-        box-shadow: 0 5px 9px rgba(0, 0, 0, 0.16), 0 2px 5px rgba(0, 0, 0, 0.26);
-        -webkit-transform: translateY(-2px);
-           -moz-transform: translateY(-2px);
-            -ms-transform: translateY(-2px);
-             -o-transform: translateY(-2px);
-                transform: translateY(-2px);
-    }
-/* other */
-    .hover-pointer {
-        cursor: pointer;
-    }
+.hover-pointer {
+    cursor: pointer;
+}
 
 /* blurs */
-    .blur,
-    .hover-notblur,
-    .hover-blur:hover{
-        -webkit-filter: blur(2px);
-           -moz-filter: blur(2px);
-             -o-filter: blur(2px);
-            -ms-filter: blur(2px);
-                filter: blur(2px);
-    }
-    .hover-notblur:hover{
-        -webkit-filter:  blur(0);
-           -moz-filter:  blur(0);
-             -o-filter:  blur(0);
-            -ms-filter:  blur(0);
-                filter:  blur(0);
-    }
+.blur,
+.hover-notblur,
+.hover-blur:hover{
+    -webkit-filter: blur(2px);
+       -moz-filter: blur(2px);
+         -o-filter: blur(2px);
+        -ms-filter: blur(2px);
+            filter: blur(2px);
+}
+.hover-notblur:hover{
+    -webkit-filter: blur(0);
+       -moz-filter: blur(0);
+         -o-filter: blur(0);
+        -ms-filter: blur(0);
+            filter: blur(0);
+}
 
 /* images */
-    .img-square {
-        background-position: 50% 50%;
-        background-size: cover;
-        background-repeat: no-repeat;
-    }
-    .img-square::after {
-        display: block;
-        padding-top: 100%;
-        content: '';
-    }
+.img-square {
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.img-square::after {
+    display: block;
+    padding-top: 100%;
+    content: '';
+}
 
 /* animations */
-    .beveryfast {
-        -webkit-transition: all 0.2s ease;
-           -moz-transition: all 0.2s ease;
-             -o-transition: all 0.2s ease;
-                transition: all 0.2s ease;
-    }
-    .befast {
-        -webkit-transition: all 0.5s ease;
-           -moz-transition: all 0.5s ease;
-             -o-transition: all 0.5s ease;
-                transition: all 0.5s ease;
-    }
-    .benormal {
-        -webkit-transition: all 1s ease;
-           -moz-transition: all 1s ease;
-             -o-transition: all 1s ease;
-                transition: all 1s ease;
-    }
-    .beslow {
-        -webkit-transition: all 2s ease;
-           -moz-transition: all 2s ease;
-             -o-transition: all 2s ease;
-                transition: all 2s ease;
-    }
+.beveryfast {
+    -webkit-transition: all 0.2s ease;
+       -moz-transition: all 0.2s ease;
+         -o-transition: all 0.2s ease;
+            transition: all 0.2s ease;
+}
+.befast {
+    -webkit-transition: all 0.5s ease;
+       -moz-transition: all 0.5s ease;
+         -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+}
+.benormal {
+    -webkit-transition: all 1s ease;
+       -moz-transition: all 1s ease;
+         -o-transition: all 1s ease;
+            transition: all 1s ease;
+}
+.beslow {
+    -webkit-transition: all 2s ease;
+       -moz-transition: all 2s ease;
+         -o-transition: all 2s ease;
+            transition: all 2s ease;
+}
 
 /* colors */
-    .silver { color: silver; }
-    .gray { color: gray; }
-    .darkgray { color: darkgray; }
+.silver { color: silver; }
+.gray { color: gray; }
+.darkgray { color: darkgray; }
