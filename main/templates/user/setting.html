@@ -1,13 +1,19 @@
 {% extends "base.html" %}
 {% block title %}个人设置{% endblock %}
 
+{% block nav-btn %}
+<a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
+    <span class="glyphicon glyphicon-arrow-left"></span> 回到上一页
+</a>
+{% endblock nav-btn %}
+
 {% block content %}
 <div class='container'>
     <div class='row'>
         <div class="col-xs-12 col-sm-6 col-md-6 col-sm-offset-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    进度相关设置
+                    进度日历设置
                 </div>
                 <div class="panel-body">
                     <form id='ical-form' action="/progress/setical" method="post">
