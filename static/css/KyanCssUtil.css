@@ -48,6 +48,18 @@
                 filter:  blur(0);
     }
 
+/* images */
+    .img-square {
+        background-position: 50% 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .img-square::after {
+        display: block;
+        padding-top: 100%;
+        content: '';
+    }
+
 /* animations */
     .beveryfast {
         -webkit-transition: all 0.2s ease;
