@@ -266,7 +266,6 @@ def progressFastupdate(request):
     # save
     progress.current = quick_current
     if(progress.setStatusAuto()):
-        progress.setModified()
         progress.save()
     else:
         return util.ctrl.infoMsg("储存进度时失败，可能是状态导致的问题", title="存储 progress 出错")
@@ -387,7 +386,7 @@ def progressGiveup(request):
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(2, '冻结进度《{opus.name}》'.format(opus=opus))
     # save
-    progress.setStatus('giveup')
+    progress.status = 'giveup'
     progress.save()
     # render
     return redirect('/progress/detail?id=' + str(progress.id))

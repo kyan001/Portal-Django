@@ -3,7 +3,7 @@
 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 progress-card" progressid="{{ item.prg.id }}" progressname="{{ item.opus.name }}">
     <a href="/progress/detail?id={{item.prg.id}}" class="no-decoration">
         <div class="panel panel-default beveryfast hover-shadow"
-            {% if item.opus.getCoverColor %}style="box-shadow: 0 0 1px 2px {{ item.opus.getCoverColor }}"{% endif %}>
+            {% if item.opus.covercolor %}style="box-shadow: 0 0 1px 2px {{ item.opus.covercolor }}"{% endif %}>
             <div class="panel-heading progress-title">
                 <span class="panel-title">
                     <span class="persent badge">{{ item.prg.persent }}%</span>

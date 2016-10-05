@@ -64,7 +64,7 @@ def chatDelete(request):
     chat.delete()
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
-    userexp.addExp(1, '删除了一条来自 @{sender.nickname} 的消息'.format(sender=chat.getSender()))
+    userexp.addExp(1, '删除了一条来自 @{sender.nickname} 的消息'.format(sender=chat.sender))
     # render
     return response
 
@@ -144,7 +144,7 @@ def chatMarkread(request):  # AJAX
         return util.ctrl.returnJsonError('你没有权限修改 id: {chat.id} 的消息'.format(chat=chat))
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
-    userexp.addExp(2, '阅读来自 @{sender.nickname} 的消息'.format(sender=chat.getSender()))
+    userexp.addExp(2, '阅读来自 @{sender.nickname} 的消息'.format(sender=chat.sender))
     # markread
     isSuccessed = chat.markRead()
     return util.ctrl.returnJsonResult(isSuccessed)

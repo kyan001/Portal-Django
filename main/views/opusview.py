@@ -24,7 +24,7 @@ def opusDetail(request):
     for opuslet in opus_list:
         # 获得进度
         try:
-            progress = opuslet.getProgress()
+            progress = opuslet.progress
         except Progress.DoesNotExist:
             return util.ctrl.infoMsg("未找到 opusid 为 {id} 的进度".format(id=str(opusid)))
         # 获得用户

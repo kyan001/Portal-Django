@@ -89,7 +89,8 @@ class User(BaseModel):
     # exps related
     def getUserExp(self, category=None):
         if category:
-            return UserExp.objects.get_or_create(userid=self.id, category=category).first()
+            userexp, iscreated = UserExp.objects.get_or_create(userid=self.id, category=category)
+            return userexp
         else:
             return UserExp.objects.filter(userid=self.id)
 
@@ -203,16 +204,8 @@ class UserExp(BaseModel):
         persent = exp_have / exp_need * 100
         return int(persent)
 
-    # Category
-    def setCategory(self, category):
-        self.category = category
-
-    # Exp
-    def setExp(self, exp):
-        self.exp = exp
-
     def addExp(self, exp, operation):
-        self.setExp(self.exp + exp)
+        self.exp += exp
         history = ExpHistory(userexpid=self.id, operation=operation, change=exp)
         self.save()
         history.save()
@@ -229,13 +222,12 @@ class ExpHistory(BaseModel):
     operation = models.TextField()
     change = models.IntegerField(default=0, blank=False, null=False)
 
-    def __str__(self):
-        userexp = self.getUserexp()
-        user = userexp.user
-        return "{self.id}) {created} - @{user.nickname}: [{category_name}] {self.operation} +{self.change}".format(self=self, user=user, created=util.ctrl.formatDate(self.created), category_name=userexp.category_zh)
-
-    def getUserexp(self):
+    @property
+    def userexp(self):
         return UserExp.objects.get(id=self.userexpid)
+
+    def __str__(self):
+        return "{self.id}) {created} - @{self.userexp.user.nickname}: [{self.userexp.category_zh}] {self.operation} +{self.change}".format(self=self, created=util.ctrl.formatDate(self.created))
 
 
 class Opus(BaseModel):
@@ -243,18 +235,20 @@ class Opus(BaseModel):
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     total = models.IntegerField(default=0)
 
+    @property
+    def progress(self):
+        return Progress.objects.get(opusid=self.id)
+
+    @property
+    def covercolor(self):
+        cache_key = 'opus:{}:covercolor'.format(self.id)
+        cached_color = cache.get(cache_key)
+        return cached_color or cache_key
+
     def __str__(self):
         subtext = "({self.subtitle})".format(self=self) if self.subtitle else ""
         total = self.total if self.total else '∞'
         return "{self.id}) 《 {self.name} 》 {subtext} [{total}]".format(self=self, subtext=subtext, total=total)
-
-    def getProgress(self):
-        return Progress.objects.get(opusid=self.id)
-
-    def getCoverColor(self):
-        cache_key = 'opus:{}:covercolor'.format(self.id)
-        cached_color = cache.get(cache_key)
-        return cached_color or cache_key
 
 
 class ProgressManager(models.Manager):
@@ -298,12 +292,34 @@ class Progress(BaseModel):
         'done': '已完成',
         'inprogress': '进行中',
         'giveup': '冻结中',
-        'done': '已完成',
         'error': '出错',
         'todo': '待阅读',
         'follow': '追剧中',
     }
     objects = ProgressManager()
+
+    @property
+    def status(self):
+        status_name = self.status_name.get(self.status)
+        return status_name or self.status
+
+    @property
+    def persent(self):
+        opus = self.opus
+        if opus.total == 0:
+            total = int(self.current) + 1
+        else:
+            total = int(opus.total)
+        persent = int(self.current) / total * 100
+        return int(persent)
+
+    @property
+    def opus(self):
+        return Opus.objects.get(id=self.opusid)
+
+    @property
+    def user(self):
+        return User.objects.get(id=self.userid)
 
     def __str__(self):
         return "{self.id}) @{self.user.nickname} -《 {self.opus.name} 》 ({self.current}/{opus.total})".format(self=self)
@@ -321,54 +337,32 @@ class Progress(BaseModel):
         else:
             return datetime.timedelta()
 
-    # status
-    def setStatus(self, status):
-        if status not in self.status_pool.get('all'):
-            raise Exception("状态只能为 {pool}".format(pool=str(self.status_pool.get('all'))))
-        self.status = status
-
     def setStatusAuto(self):
         opus = self.opus
         if self.status == 'giveup':
             return True
         if self.current == 0:
-            self.setStatus('todo')
+            self.status = 'todo'
             return True
         if opus.total == 0:
-            self.setStatus('follow')
+            self.status = 'follow'
             return True
         if self.current > opus.total:
-            self.setStatus('error')
+            self.status = 'error'
             return True
         if self.current == opus.total:
-            self.setStatus('done')
+            self.status = 'done'
             return True
         if self.current < opus.total:
-            self.setStatus('inprogress')
+            self.status = 'inprogress'
             return True
         return False
 
     def resetStatus(self):
-        self.setStatus('error')
+        self.status = 'error'
         return self.setStatusAuto()
 
-    def getStatus(self):
-        status_name = self.status_name.get(self.status)
-        if status_name:
-            return status_name
-        return self.status
-
     # calculations
-    @property
-    def persent(self):
-        opus = self.opus
-        if opus.total == 0:
-            total = int(self.current) + 1
-        else:
-            total = int(opus.total)
-        persent = int(self.current) / total * 100
-        return int(persent)
-
     def getBartype(self):
         persent = self.persent
         if persent < 33:
@@ -380,14 +374,6 @@ class Progress(BaseModel):
         else:
             bartype = 'progress-bar-primary'
         return bartype
-
-    @property
-    def opus(self):
-        return Opus.objects.get(id=self.opusid)
-
-    @property
-    def user(self):
-        return User.objects.get(id=self.userid)
 
 
 class ChatManager(models.Manager):
@@ -420,12 +406,18 @@ class Chat(BaseModel):
     isread = models.BooleanField(default=False)
     objects = ChatManager()
 
+    @property
+    def sender(self):
+        return User.objects.get(id=self.senderid)
+
+    @property
+    def receiver(self):
+        return User.objects.get(id=self.receiverid)
+
     def __str__(self):
-        sender = self.getSender()
-        receiver = self.getReceiver()
         unread = "" if self.isread else "[unread]"
         content = (self.content[:40] + '..') if len(self.content) > 40 else self.content
-        return "{self.id}) {created} - @{sender.nickname}→@{receiver.nickname} : {unread} {content}".format(self=self, created=util.ctrl.formatDate(self.created), sender=sender, receiver=receiver, content=content, unread=unread)
+        return "{self.id}) {created} - @{self.sender.nickname}→@{self.receiver.nickname} : {unread} {content}".format(self=self, created=util.ctrl.formatDate(self.created), content=content, unread=unread)
 
     # send / receive / isread
     def markRead(self):
@@ -437,10 +429,3 @@ class Chat(BaseModel):
         self.isread = False
         self.save()
         return True
-
-    # util
-    def getSender(self):
-        return User.objects.get(id=self.senderid)
-
-    def getReceiver(self):
-        return User.objects.get(id=self.receiverid)
