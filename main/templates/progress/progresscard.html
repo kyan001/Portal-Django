@@ -31,10 +31,12 @@
             </div>
             <div class="panel-body">
                 <div class="progress">
-                    <div class="progress-bar {{ item.prg.getBartype }}" style="width: {{ item.prg.persent }}%; min-width: 7em;">
+                    <div class="progress-bar {{ item.prg.getBartype }}" style="width: {{ item.prg.persent }}%; min-width: 5em;">
                     {% if item.opus.total != 0 %}
                         <b>{{item.prg.current}} / {{item.opus.total}}</b>
-                        <span class='pull-right'>{{ item.prg.persent }}%</span>
+                        {% if item.prg.persent >= 20 %}
+                            <span class='pull-right'>{{ item.prg.persent }}%</span>
+                        {% endif %}
                     {% else %}
                         <b>{{item.prg.current}} / ∞</b>
                     {% endif %}
