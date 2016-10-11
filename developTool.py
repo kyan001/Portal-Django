@@ -27,7 +27,8 @@ def manage_file_exist():
 def requirements_install():
     """Install necessary modules by pip & requirements.pip"""
     if not os.path.exists('./requirements.pip'):
-        cit.err('No requirements.pip detected.').bye()
+        cit.err('No requirements.pip detected.')
+        cit.bye()
     if 'win' in sys.platform:
         ktk.runCmd('pip3 install -r requirements.pip')
     else:
@@ -105,7 +106,8 @@ def show_menu():
 def main():
     ktk.clearScreen()
     if not manage_file_exist():
-        cit.err('No manage.py detected. Please run this under projects folder').bye()
+        cit.err('No manage.py detected. Please run this under projects folder')
+        cit.bye()
     while True:
         to_run = show_menu()
         to_run()
