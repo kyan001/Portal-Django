@@ -134,7 +134,7 @@ def userSetting(request):
     icalon = user.getUserpermission('progressical')
     context = {
         'icalon': icalon,
-        'privatekey': user.privatekey(),
+        'privatekey': user.privatekey,
     }
     return render(request, 'user/setting.html', context)
 
