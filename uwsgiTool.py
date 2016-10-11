@@ -7,6 +7,7 @@
 import os
 import sys
 
+import consoleiotools as cit
 import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
@@ -17,26 +18,26 @@ ktk.needPlatform("linux")
 # config file
 uwsgi_xml = "./uwsgi.xml"
 if os.path.isfile(uwsgi_xml):
-    ktk.info("uwsgi config file: " + uwsgi_xml)
+    cit.info("uwsgi config file: " + uwsgi_xml)
 else:
-    ktk.err("uwsgi config file not found: " + uwsgi_xml)
+    cit.err("uwsgi config file not found: " + uwsgi_xml)
 # pid file
 dir_name = os.path.basename(os.path.dirname(os.path.abspath(__file__)))
 pid_file = "/var/run/uwsgi_{}.pid".format(dir_name)
 if os.path.exists(pid_file):
-    ktk.warn("uwsgi is running @ " + pid_file)
+    cit.warn("uwsgi is running @ " + pid_file)
 else:
-    ktk.info("No uwsgi running")
+    cit.info("No uwsgi running")
 # choice
 operations = ["start", "stop", "reload"]
 oprtn = ""
 if len(sys.argv) != 2:
-    oprtn = ktk.getChoice(operations)
+    oprtn = cit.get_choice(operations)
 elif sys.argv[1] in operations:
     oprtn = sys.argv[1]
 else:
-    ktk.err("Wrong Params: " + sys.argv[1])
-    ktk.byeBye()
+    cit.err("Wrong Params: " + sys.argv[1])
+    cit.bye()
 
 # -run commands---------------------------------------------------
 if "start" == oprtn:
@@ -47,5 +48,5 @@ elif "stop" == oprtn:
 elif "reload" == oprtn:
     ktk.runCmd("sudo uwsgi --reload " + pid_file)
 else:
-    ktk.err("Wrong operation: " + oprtn)
-    ktk.byeBye()
+    cit.err("Wrong operation: " + oprtn)
+    cit.bye()

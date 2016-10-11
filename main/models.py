@@ -5,10 +5,8 @@ from django.db import models
 from django.forms.models import model_to_dict
 from django.utils import timezone
 from django.core.cache import cache
-import KyanToolKit
 
 import util.ctrl
-ktk = KyanToolKit.KyanToolKit()
 
 
 class BaseModel(models.Model):

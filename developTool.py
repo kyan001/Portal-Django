@@ -5,25 +5,13 @@ import os
 import sys
 import collections
 import socket
-from functools import wraps
+
+import consoleiotools as cit
 import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
 git_username = 'portal'
 git_email = 'kai@superfarmer.net'
-
-
-def pStartEnd(title="Call"):  # decorator
-    """Decorator: Print start and end for a function"""
-    def get_func(func: callable):
-        @wraps(func)
-        def callInputFunc(*args, **kwargs):
-            ktk.pStart().pTitle(title)
-            result = func(*args, **kwargs)
-            ktk.pEnd()
-            return result
-        return callInputFunc
-    return get_func
 
 
 def manage_file_exist():
@@ -35,60 +23,60 @@ def manage_file_exist():
     return os.path.exists('./manage.py')
 
 
-@pStartEnd('-- Installing Requirements --')
+@cit.as_session('-- Installing Requirements --')
 def requirements_install():
     """Install necessary modules by pip & requirements.pip"""
     if not os.path.exists('./requirements.pip'):
-        ktk.err('No requirements.pip detected.').bye()
+        cit.err('No requirements.pip detected.').bye()
     if 'win' in sys.platform:
         ktk.runCmd('pip3 install -r requirements.pip')
     else:
         ktk.runCmd('sudo pip3 install -r requirements.pip')
 
 
-@pStartEnd('-- Applying changes to database --')
+@cit.as_session('-- Applying changes to database --')
 def migrate_db():
     """Apply changes to database"""
     ktk.runCmd('py manage.py makemigrations')
     ktk.runCmd('py manage.py migrate')
 
 
-@pStartEnd('-- Enter DB shell --')
+@cit.as_session('-- Enter DB shell --')
 def db_shell():
     """Enter Django database shell mode"""
     ktk.runCmd('py manage.py dbshell')
 
 
-@pStartEnd('-- Enter interactive shell --')
+@cit.as_session('-- Enter interactive shell --')
 def interactive_shell():
     """Enter Django shell mode"""
     ktk.runCmd('py manage.py shell')
 
 
-@pStartEnd('-- Runserver localhost --')
+@cit.as_session('-- Runserver localhost --')
 def runserver_dev():
     """Runserver in development environment, only for localhost debug use"""
     ktk.runCmd('py manage.py runserver')
 
 
-@pStartEnd('-- Runserver LAN --')
+@cit.as_session('-- Runserver LAN --')
 def runserver_lan():
     """Runserver in development environment, for Local Area Network debug use"""
     my_ip = socket.gethostbyname(socket.gethostname())
-    ktk.info('Your LAN IP address: {}'.format(my_ip))
+    cit.info('Your LAN IP address: {}'.format(my_ip))
     ktk.runCmd('py manage.py runserver 0.0.0.0:8000')
 
 
-@pStartEnd('-- System Checking --')
+@cit.as_session('-- System Checking --')
 def system_check():
     """Check if django projects has a problem"""
     ktk.runCmd('py manage.py check')
 
 
-@pStartEnd('-- Create superuser --')
+@cit.as_session('-- Create superuser --')
 def create_superuser():
     """Create superuser account for Django admin"""
-    ktk.info('Password is specified, ask someone for it')
+    cit.info('Password is specified, ask someone for it')
     ktk.runCmd('py manage.py createsuperuser --username {username} --email {email}'.format(username=git_username, email=git_email))
 
 
@@ -107,17 +95,17 @@ def show_menu():
         'Shell: Interactive': interactive_shell,
         'Shell: Database': db_shell,
         'Django system check': system_check,
-        'Exit': ktk.bye,
+        'Exit': cit.bye,
     })
-    ktk.echo('Select one of these:')
-    selection = ktk.getChoice(sorted(commands.keys()))
+    cit.echo('Select one of these:')
+    selection = cit.get_choice(sorted(commands.keys()))
     return commands.get(selection)
 
 
 def main():
     ktk.clearScreen()
     if not manage_file_exist():
-        ktk.err('No manage.py detected. Please run this under projects folder').bye()
+        cit.err('No manage.py detected. Please run this under projects folder').bye()
     while True:
         to_run = show_menu()
         to_run()
