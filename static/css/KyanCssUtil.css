@@ -13,7 +13,6 @@ a.no-decoration:hover {
     width: 100% !important;
     background-size: cover !important;/*撑开图片*/
     background-position: 50% 50% !important;
-    display: table !important;
 }
 
 /* shadow */

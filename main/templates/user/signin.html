@@ -7,6 +7,7 @@
 <style>
     .container {
         background: url('/static/img/user/signin.jpg');
+        display: table;
     }
     #form-wrap {
         display: table-cell;
@@ -204,7 +205,7 @@
                 {% csrf_token %}
                 <div class="input-group" id="username-group">
                     <span class="input-group-addon icon-lg">
-                        <span class='glyphicon glyphicon-user' title='必填，只能包含“英文字母”、“数字”和“英文句号' data-toggle="tooltip" data-placement="left"></span>
+                        <span class='glyphicon glyphicon-user' title='必填，只能包含“英文字母”、“数字”和“英文句号' data-toggle="tooltip" data-placement="top"></span>
                     </span>
                     <input type="text" class="form-control" name="username"
                         placeholder="用户名 / Username"
@@ -220,7 +221,7 @@
                 </div>
                 <div class="input-group" id='answer-group'>
                     <span class="input-group-addon icon-lg">
-                        <span class='glyphicon glyphicon-credit-card' title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="left"></span>
+                        <span class='glyphicon glyphicon-credit-card' title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="top"></span>
                     </span>
                     <input type="password" class="form-control" name="answer"
                         placeholder="密码 / Password"
