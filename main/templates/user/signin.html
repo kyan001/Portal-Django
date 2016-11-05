@@ -6,12 +6,7 @@
 {% block css %}
 <style>
     .container {
-        height: 100%;
-        width: 100%;
         background: url('/static/img/user/signin.jpg');
-        background-size: cover !important;/*撑开图片*/
-        background-position: 50% 50% !important;
-        display: table;
     }
     #form-wrap {
         display: table-cell;
@@ -219,7 +214,7 @@
 {% endblock nav-btn %}
 
 {% block content %}
-<div class="container">
+<div class="container fullscreen">
     <div id="form-wrap" class="row">
         <div id="form-div" class='col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-xs-12'>
             <form id="login-form" action="/user/checklogin/" method="post">
