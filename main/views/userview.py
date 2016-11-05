@@ -156,7 +156,7 @@ def userProfile(request):
         cache_timeout = 60 * 60 * 24 * 7 * 2  # 2 weeks
         cached_lv = cache.get(cache_key)
         if cached_lv:  # has cached category:level
-            new_lv = ue.level()
+            new_lv = ue.level
             if new_lv > cached_lv:
                 lv_noticelet = (ue.category_zh(), cached_lv, new_lv)
                 lv_notice.append(lv_noticelet)
