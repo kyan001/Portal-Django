@@ -22,20 +22,19 @@
     .input-group input {
         color: white;
     }
-    .input-group-addon {
+    .icon-lg {
         color: silver;
-        font-size: x-large;
+        font-size: large;
     }
-    .tips {
-        cursor: help;
-    }
-    #question-content {
-        border-bottom: 0;
+    input[readonly='readonly'] {
+        border-bottom: 0 !important;
     }
     #tip-content {
-        border-bottom: 0;
-        color: silver;
         text-align: right;
+    }
+    #tip-content,
+    #rememberme-content {
+        color: silver;
         font-size: small;
     }
     #buttons {
@@ -45,25 +44,14 @@
     #submit-button{
         pointer-events: auto;
     }
-    input[name='password'] {
-        display: none;
-    }
 </style>
 {% endblock css %}
 {% block js %}
 <script>
     $(function(){
-        $('.tips').each(function(){
-            $(this).attr('data-toggle',"popover")
-            $(this).attr('data-container',"body")
-            $(this).attr('data-placement',"right")
-            $(this).attr('data-trigger',"hover click")
-            $(this).attr('data-html',true)
-        })
         $('#rememberme').attr('data-html',true)
-        $('[data-toggle="popover"]').popover()
+        $('[data-toggle="tooltip"]').tooltip()
         $('#question-group').hide()
-        $('#answer-group').hide()
         $('#tip-group').hide()
     });
     function clearHasClass(ele){
@@ -77,8 +65,6 @@
         $('input[name="answer"]').val('')
         $('#question-group').fadeOut('fast')
         $('#tip-group').fadeOut('fast')
-        $('#answer-group').fadeOut('fast')
-        $('#submit-button').attr('disabled','disabled')
     }
     function unfoldOptions(option){
         $.ajax({
@@ -101,7 +87,6 @@
                         $('input[name="answer"]').attr('type','text')
                     }
                     $('#question-group').fadeIn('fast')
-                    $('#answer-group').fadeIn('fast')
                     if(result.tip){
                         $('#tip-content').val('提示：'+result.tip)
                         $('#tip-group').fadeIn('fast')
@@ -109,7 +94,6 @@
                         $('#tip-content').val('')
                         $('#tip-group').fadeOut('fast')
                     }
-                    $('#submit-button').removeAttr('disabled')
                     if(option == 'unique'){
                         $('input[name="answer"]').focus()
                     }
@@ -118,25 +102,18 @@
         })
     }
 
-    function showLoading(mode){
+    function showStatus(mode, word){
         var ele = $('#submit-button')
         if('off'==mode){
             ele.text('登入 / Login')
             ele.addClass('btn-success')
             ele.removeClass('btn-warning')
+            ele.removeClass('disabled')
         } else {
-            ele.text('LOADING ...')
+            ele.text(word)
             ele.removeClass('btn-success')
             ele.addClass('btn-warning')
-        }
-    }
-
-    function showSubmitting(mode){
-        var ele = $('#submit-button')
-        if('off'==mode){
-            ele.text('登入 / Login')
-        } else {
-            ele.text('登入中 ...')
+            ele.addClass('disabled')
         }
     }
 
@@ -148,10 +125,10 @@
             foldOptions()
             return
         }
-        showLoading('off')
+        showStatus('off', 'LOADING ...')
         clearTimeout(timer_vUn)
         timer_vUn = setTimeout(function(){
-            showLoading('on')
+            showStatus('on'), 'LOADING ...'
             $.ajax({
                 type: "GET",
                 url: "/user/validateusername",
@@ -159,7 +136,7 @@
                     'username':$('input[name="username"]').val()
                 },
                 success: function (data) {
-                    showLoading('off')
+                    showStatus('off', 'LOADING ...')
                     var result = data
                     if(result.error){
                         $.danger(result.error)
@@ -186,7 +163,7 @@
     function submitForm(){
         if( $('input[name="answer"]').val() == '' ){
             $('#answer-group').addClass('has-error')
-            $.danger('答案不能为空')
+            $.danger('密码/答案不能为空')
             return false
         }
         if( $('input[name="username"]').val() == '' ){
@@ -195,12 +172,18 @@
             return false
         }
         disableAllBtn()
-        showSubmitting()
+        showStatus('on', '登入中 ...')
         $("#login-form").submit()
     }
     function keydownAnswer(){
         if(event.keyCode==13){
             $('#submit-button').click()
+            return false
+        }
+    }
+    function keydownUsername(){
+        if(event.keyCode==13){
+            $('input[name="answer"]').focus()
             return false
         }
     }
@@ -220,60 +203,51 @@
             <form id="login-form" action="/user/checklogin/" method="post">
                 {% csrf_token %}
                 <div class="input-group" id="username-group">
-                    <span class="input-group-addon">
-                        <input id="rememberme" type="checkbox"
-                            data-container="body"
-                            data-toggle="popover"
-                            data-placement="top"
-                            data-title="记住我 / Remember me"
-                            data-content="<li class='text-primary'>2周内免登入</li><li class='text-danger'>公共电脑请勿勾选此项</li>"
-                            data-trigger='hover'
-                            name='rememberme'
-                            value='on'
-                            checked>
+                    <span class="input-group-addon icon-lg">
+                        <span class='glyphicon glyphicon-user' title='必填，只能包含“英文字母”、“数字”和“英文句号' data-toggle="tooltip" data-placement="left"></span>
                     </span>
-                    <input type="text" name="username" class="form-control" placeholder="用户名 / Username" autofocus="autofocus" onblur="validateUsername('onblur')" oninput="validateUsername('oninput')" autocomplete="off"/>
-                    <span class="input-group-addon tips hidden-xs"
-                        title="用户名 / Username <span class='label label-primary'>必填</span>"
-                        data-content="<li class='text-primary'>请输入注册时的用户名</li>
-                        <li class='text-danger'>只能包含“英文字母”、“数字”和“英文句号 .”</li>
-                        <li>输入结束后，点击其他地方</li>">
-                        ?
-                    </span>
+                    <input type="text" class="form-control" name="username"
+                        placeholder="用户名 / Username"
+                        autofocus="autofocus" autocomplete="off"
+                        onblur="validateUsername('onblur')" onkeydown="keydownUsername()">
                 </div>
-                <input type="password" name='password' value="fakepasswordzone">
                 <div class="input-group" id='question-group'>
-                    <span class="input-group-addon">
+                    <span class="input-group-addon icon-lg">
                         <span class='glyphicon glyphicon-comment'></span>
                     </span>
-                    <input id='question-content' type="question" name='question' class="form-control" value="" readonly/>
+                    <input id='question-content' type="question" name='question' class="form-control" value=""
+                        readonly='readonly' autocomplete="off">
                 </div>
                 <div class="input-group" id='answer-group'>
-                    <input type="text"
-                        name="answer"
-                        class="form-control"
-                        placeholder="答案 / Answer"
-                        onkeydown="keydownAnswer()"
-                        autocomplete="off"
-                        />
-                    <span class="input-group-addon tips hidden-xs"
-                        title="答案 / Answer <span class='label label-primary'>必填</span>"
-                        data-content="<li class='text-primary'>注册时您填写的内容</li>
-                        <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登入</li>
-                        <li class='text-success'>中英文、标点、数字均可</li>
-                        ">
-                        ?
+                    <span class="input-group-addon icon-lg">
+                        <span class='glyphicon glyphicon-credit-card' title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="left"></span>
                     </span>
+                    <input type="password" class="form-control" name="answer"
+                        placeholder="密码 / Password"
+                        autocomplete="off"
+                        onkeydown="keydownAnswer()" onfocus='$(this).val("")'>
                 </div>
                 <div class="input-group" id="tip-group">
-                    <input id='tip-content' type='tip' name='tip' class="form-control" value="" readonly autocomplete="off">
+                    <input id='tip-content' type='tip' name='tip' class="form-control" value=""
+                        readonly='readonly' autocomplete="off">
+                </div>
+                <div class="input-group" id="rememberme-group">
+                    <span class="input-group-addon">
+                        <input id="rememberme" type="checkbox" name='rememberme'
+                            title='2 周内免登入，公共电脑请勿勾选此项' data-toggle="tooltip" data-placement="top"
+                            value='on' checked>
+                    </span>
+                    <input id='rememberme-content' type='text' class="form-control" value="记住我 / Remember me"
+                        readonly='readonly' autocomplete="off">
                 </div>
                 <input type="hidden" name="from" value="{{from}}">
             </form>
-            <div id="buttons row">
-                <button id="submit-button" class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12" onclick="submitForm()" disabled>
-                    登入 / Login
-                </button>
+            <div class='row'>
+                <div class='col-xs-12'>
+                    <button id="submit-button" class="btn btn-success btn-block" onclick="submitForm()">
+                        登入 / Login
+                    </button>
+                </div>
             </div>
         </div>
     </div>
