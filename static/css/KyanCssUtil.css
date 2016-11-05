@@ -8,6 +8,14 @@ a.no-decoration:hover {
     text-decoration: none !important;
 }
 
+.fullscreen {
+    height: 100% !important;
+    width: 100% !important;
+    background-size: cover !important;/*撑开图片*/
+    background-position: 50% 50% !important;
+    display: table !important;
+}
+
 /* shadow */
 .hover-shadow:hover {
     box-shadow: 0 5px 9px rgba(0, 0, 0, 0.16), 0 2px 5px rgba(0, 0, 0, 0.26);
