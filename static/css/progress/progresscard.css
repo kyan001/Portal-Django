@@ -1,8 +1,8 @@
 /* progress-card */
 .progress-card {
-    opacity: 0.75;
+    opacity: 0.70;
 }
-.progress-card:hover{
+.collapse:hover .progress-card {
     opacity: 1;
 }
 .progress-card .progress-title {

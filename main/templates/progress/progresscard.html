@@ -1,6 +1,6 @@
 {% load tags_url %}
 
-<div class="{{ size }} progress-card" progressid="{{ item.prg.id }}" progressname="{{ item.opus.name }}">
+<div class="{{ size }} progress-card befast" progressid="{{ item.prg.id }}" progressname="{{ item.opus.name }}">
     <a href="/progress/detail?id={{item.prg.id}}" class="no-decoration">
         <div class="panel panel-default beveryfast hover-shadow"
             {% if item.opus.covercolor %}style="box-shadow: 0 0 1px 2px {{ item.opus.covercolor }}"{% endif %}>
