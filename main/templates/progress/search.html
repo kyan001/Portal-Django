@@ -71,10 +71,10 @@
         </h5>
     </div>
     <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
+        <div class="col-xs-12">
             <div class="row">
                 {% for p in list %}
-                    {% include 'progress/progresscard.html' with item=p %}
+                    {% include 'progress/progresscard.html' with item=p size='col-xs-12 col-sm-6 col-lg-4' %}
                 {% empty %}
                     <div class="well">
                         您还没有进度哦，请先添加一个进度

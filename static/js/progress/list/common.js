@@ -11,18 +11,12 @@ $(function(){
         window.open(href)
         return false
     });
-    $('.page-header').click(function(){
-        var ele = $(this).find('span.glyphicon');
-        var whenOpen = 'glyphicon-chevron-up';
-        var whenClose = 'glyphicon-chevron-down';
-        if(ele.hasClass(whenOpen)){
-            ele.removeClass(whenOpen)
-            ele.addClass(whenClose)
-        } else if(ele.hasClass(whenClose)) {
-            ele.removeClass(whenClose)
-            ele.addClass(whenOpen)
-        }
-    });
+    $('.collapse').on('hide.bs.collapse', function () {
+        $(this).parent().find('.page-header').find('span.glyphicon').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down')
+    })
+    $('.collapse').on('show.bs.collapse', function () {
+        $(this).parent().find('.page-header').find('span.glyphicon').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up')
+    })
     // $('.progress-card').each(function(){
     //     var ele = $(this)
     //     $.getImageColor("", ele.attr('progressname'), function(result){

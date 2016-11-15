@@ -13,7 +13,11 @@
 .prg-counts {
     color: inherit;
 }
-
+@media (min-width: 992px) {
+    .right-bordered {
+        border-right: 1px solid #eeeeee;
+    }
+}
 
 /* timeline */
 #hide-timeline {

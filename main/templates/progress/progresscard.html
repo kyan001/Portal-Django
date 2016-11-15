@@ -1,6 +1,6 @@
 {% load tags_url %}
 
-<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 progress-card" progressid="{{ item.prg.id }}" progressname="{{ item.opus.name }}">
+<div class="{{ size }} progress-card" progressid="{{ item.prg.id }}" progressname="{{ item.opus.name }}">
     <a href="/progress/detail?id={{item.prg.id}}" class="no-decoration">
         <div class="panel panel-default beveryfast hover-shadow"
             {% if item.opus.covercolor %}style="box-shadow: 0 0 1px 2px {{ item.opus.covercolor }}"{% endif %}>
@@ -22,10 +22,19 @@
             <div class="div-table panel-heading hidden-xs">
                 <div class='row'>
                     {% if item.prg.current == item.opus.total and item.prg.current != 0 %}
-                    <div class="text-center col-xs-12">完成：{{ item.prg.modified|date:'Y-m-d H:i' }}</div>
+                        <div class="text-center col-xs-12" title="完成时间：{{ item.prg.modified|date:'Y-m-d H:i' }}">
+                            <span class='glyphicon glyphicon-ok'></span>
+                            <span class=''>{{ item.prg.modified|date:'Y-m-d' }}</span>
+                        </div>
                     {% else %}
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">开始：{{ item.prg.created|date:'Y-m-d H:i' }}</div>
-                    <div class="text-right col-xs-12 col-sm-6 col-md-6 col-lg-6">上次：{{ item.prg.modified|date:'Y-m-d H:i' }}</div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" title="开始时间：{{ item.prg.created|date:'Y-m-d H:i' }}">
+                            <span class='text-muted glyphicon glyphicon-plus'></span>
+                            <span class=''>{{ item.prg.created|date:'Y-m-d' }}</span>
+                        </div>
+                        <div class="text-right col-xs-12 col-sm-6 col-md-6 col-lg-6" title="上次更新：{{ item.prg.modified|date:'Y-m-d H:i' }}">
+                            <span class='text-muted glyphicon glyphicon-refresh'></span>
+                            <span class=''>{{ item.prg.modified|date:'Y-m-d' }}</span>
+                        </div>
                     {% endif %}
                 </div>
             </div>

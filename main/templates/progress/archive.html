@@ -28,47 +28,49 @@
         </div>
         <div id="event-timeline"></div>
     </div>
-    <div class="page-header" data-toggle="collapse" data-target="#list-done">
-        <h5>
-            <span class="glyphicon glyphicon-chevron-up text-muted"></span>
-            已完成
-            <small>Done</small>
-            <small class="prg-counts">({{ listdone|length }})</small>
-        </h5>
-    </div>
-    <div class="row collapse in" id="list-done">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
-            <div class="row">
-                {% for p in listdone %}
-                    {% include 'progress/progresscard.html' with item=p %}
-                {% empty %}
-                    <div class="well">
-                        进度完成后，会自动显示在这里~
-                    </div>
-                {% endfor %}
-            </div><!--.row-->
+    <div class='row'>
+        <div class="col-xs-12 col-sm-12 col-md-8 right-bordered">
+            <div class="page-header" data-toggle="collapse" data-target="#list-done">
+                <h5>
+                    <span class="glyphicon glyphicon-chevron-up text-muted"></span>
+                    已完成
+                    <small>Done</small>
+                    <small class="prg-counts">({{ listdone|length }})</small>
+                </h5>
+            </div>
+            <div class="collapse in" id="list-done">
+                <div class="row">
+                    {% for p in listdone %}
+                        {% include 'progress/progresscard.html' with item=p size='col-sm-6 col-xs-12' %}
+                    {% empty %}
+                        <div class="well">
+                            进度完成后，会自动显示在这里~
+                        </div>
+                    {% endfor %}
+                </div><!--.row-->
+            </div>
         </div><!--.col-->
-    </div><!--.row-->
 
-    <div class="page-header" data-toggle="collapse" data-target="#list-giveup">
-        <h5>
-            <span class="glyphicon glyphicon-chevron-down text-muted"></span>
-            冻结中
-            <small>Giveup</small>
-            <small class="prg-counts">({{ listgiveup|length }})</small>
-        </h5>
-    </div>
-    <div class="row collapse" id="list-giveup">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
-            <div class="row">
-                {% for p in listgiveup %}
-                    {% include 'progress/progresscard.html' with item=p %}
-                {% empty %}
-                    <div class="well">
-                        冻结中的进度，会自动显示在这里，可以随时再继续阅读。
-                    </div>
-                {% endfor %}
-            </div><!--.row-->
+        <div class="col-xs-12 col-sm-12 col-md-4">
+            <div class="page-header" data-toggle="collapse" data-target="#list-giveup">
+                <h5>
+                    <span class="glyphicon glyphicon-chevron-down text-muted"></span>
+                    冻结中
+                    <small>Giveup</small>
+                    <small class="prg-counts">({{ listgiveup|length }})</small>
+                </h5>
+            </div>
+            <div class="collapse in" id="list-giveup">
+                <div class="row">
+                    {% for p in listgiveup %}
+                        {% include 'progress/progresscard.html' with item=p size='col-xs-12' %}
+                    {% empty %}
+                        <div class="well">
+                            冻结中的进度，会自动显示在这里，可以随时再继续阅读。
+                        </div>
+                    {% endfor %}
+                </div><!--.row-->
+            </div>
         </div><!--.col-->
     </div><!--.row-->
 </div>

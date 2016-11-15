@@ -28,90 +28,100 @@
         </div>
         <div id="event-timeline"></div>
     </div>
-    <div class="page-header" data-toggle="collapse" data-target="#list-inprogress">
-        <h5>
-            <span class="glyphicon glyphicon-chevron-up text-muted"></span>
-            进行中
-            <small>Inprogress</small>
-            <small class="prg-counts">({{ listinprogress|length }})</small>
-        </h5>
-    </div>
-    <div class="row collapse in" id="list-inprogress">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
-            <div class="row">
-                {% for p in listinprogress %}
-                    {% include 'progress/progresscard.html' with item=p %}
+    <div class='row'>
+        <div class="col-xs-12 col-sm-12 col-md-8 right-bordered">
+            <div class="page-header" data-toggle="collapse" data-target="#list-inprogress">
+                <h5>
+                    <span class="glyphicon glyphicon-chevron-up text-muted"></span>
+                    进行中
+                    <small>Inprogress</small>
+                    <small class="prg-counts">({{ listinprogress|length }})</small>
+                </h5>
+            </div>
+            <div class="collapse in" id="list-inprogress">
+                <div class="row">
+                    {% for p in listinprogress %}
+                        {% include 'progress/progresscard.html' with item=p size='col-sm-6 col-xs-12' %}
+                    {% empty %}
+                        <div class="well">
+                            您还没有任何进度哦~
+                        </div>
+                    {% endfor %}
+                </div><!--.row-->
+            </div><!--.col-->
+        </div><!--.row-->
+
+        <div class="col-xs-12 col-sm-12 col-md-4">
+            <div class="page-header" data-toggle="collapse" data-target="#list-follow">
+                <h5>
+                    <span class="glyphicon glyphicon-chevron-up text-muted"></span>
+                    追剧中
+                    <small>Follow</small>
+                    <small class="prg-counts">({{ listfollow|length }})</small>
+                </h5>
+            </div>
+            <div class="collapse in" id="list-follow">
+                <div class="row">
+                {% for p in listfollow %}
+                    {% include 'progress/progresscard.html' with item=p size='col-xs-12' %}
                 {% empty %}
                     <div class="well">
-                        您还没有任何进度哦~
+                        您没有在追剧的进度哦~
                     </div>
                 {% endfor %}
-            </div><!--.row-->
-        </div><!--.col-->
-    </div><!--.row-->
-
-    <div class="page-header" data-toggle="collapse" data-target="#list-follow">
-        <h5>
-            <span class="glyphicon glyphicon-chevron-up text-muted"></span>
-            追剧中
-            <small>Follow</small>
-            <small class="prg-counts">({{ listfollow|length }})</small>
-        </h5>
+                </div><!--.row-->
+            </div><!--.col-->
+        </div><!--.row-->
     </div>
-    <div class="row collapse in" id="list-follow">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
-            <div class="row">
-            {% for p in listfollow %}
-                {% include 'progress/progresscard.html' with item=p %}
-            {% empty %}
-                <div class="well">
-                    您没有在追剧的进度哦~
-                </div>
-            {% endfor %}
-            </div><!--.row-->
-        </div><!--.col-->
-    </div><!--.row-->
 
-    <div class="page-header" data-toggle="collapse" data-target="#list-todo">
-        <h5>
-            <span class="glyphicon glyphicon-chevron-down text-muted"></span>
-            待阅读
-            <small>Todo</small>
-            <small class="prg-counts">({{ listtodo|length }})</small>
-        </h5>
-    </div>
-    <div class="row collapse" id="list-todo">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
-            <div class="row">
-            {% for p in listtodo %}
-                {% include 'progress/progresscard.html' with item=p %}
-            {% empty %}
-                <div class="well">
-                    您没有尚未开始的进度哦~
-                </div>
-            {% endfor %}
+    <div class='row'>
+        <div class='col-xs-12'>
+            <div class="page-header" data-toggle="collapse" data-target="#list-todo" onmouseover='$("#list-todo").collapse("show");'>
+                <h5>
+                    <span class="glyphicon glyphicon-chevron-down text-muted"></span>
+                    待阅读
+                    <small>Todo</small>
+                    <small class="prg-counts">({{ listtodo|length }})</small>
+                </h5>
+            </div>
+            <div class="row collapse" id="list-todo">
+                <div class="col-xs-12">
+                    <div class="row">
+                    {% for p in listtodo %}
+                        {% include 'progress/progresscard.html' with item=p size='col-md-4 col-sm-6 col-xs-12' %}
+                    {% empty %}
+                        <div class="well">
+                            您没有尚未开始的进度哦~
+                        </div>
+                    {% endfor %}
+                    </div><!--.row-->
+                </div><!--.col-->
             </div><!--.row-->
-        </div><!--.col-->
-    </div><!--.row-->
+        </div>
+    </div>
 
     {% if listerror %}
-    <div class="page-header" data-toggle="collapse" data-target="#list-error">
-        <h5>
-            <span class="glyphicon glyphicon-plus text-muted"></span>
-            出错
-            <small>Error</small>
-            <small class="prg-counts">({{ listerror|length }})</small>
-        </h5>
-    </div>
-    <div class="row collapse in" id="list-giveup">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1">
-            <div class="row">
-            {% for p in listerror %}
-                {% include 'progress/progresscard.html' with item=p %}
-            {% endfor %}
+    <div class='row'>
+        <div class='col-xs-12'>
+            <div class="page-header" data-toggle="collapse" data-target="#list-error">
+                <h5>
+                    <span class="glyphicon glyphicon-plus text-muted"></span>
+                    出错
+                    <small>Error</small>
+                    <small class="prg-counts">({{ listerror|length }})</small>
+                </h5>
+            </div>
+            <div class="row collapse in" id="list-giveup">
+                <div class="col-xs-12">
+                    <div class="row">
+                    {% for p in listerror %}
+                        {% include 'progress/progresscard.html' with item=p size='col-md-4 col-sm-6 col-xs-12'%}
+                    {% endfor %}
+                    </div><!--.row-->
+                </div><!--.col-->
             </div><!--.row-->
-        </div><!--.col-->
-    </div><!--.row-->
+        </div>
+    </div>
     {% endif %}
 
 </div><!--.container-->
