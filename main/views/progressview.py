@@ -13,27 +13,8 @@ import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
 
-def getTimeline(year, prgss):
-    prg_timeline_item = []
-    prg_timeline = prgss.filter(Q(created__year=year) | Q(modified__year=year))  # created or modified in this year
-    if len(prg_timeline):
-        for prg in prg_timeline:
-            try:
-                opus = Opus.objects.get(id=prg.opusid)
-            except Opus.DoesNotExist:
-                return util.ctrl.infoMsg("未找到 id 为 {id} 的作品".format(id=str(prg.opusid)))
-            l = {
-                'prg': prg,
-                'opus': opus,
-            }
-            prg_timeline_item.append(l)
-    return prg_timeline_item
-
-
 def progressList(request):
     '''进度列表：显示所有进行中、待开始、追剧中的进度'''
-    context = {}
-    # get user
     user = util.user.getCurrentUser(request)
     if not user:
         return util.user.loginToContinue(request)
@@ -43,7 +24,6 @@ def progressList(request):
     if len(progresses):
         for st in Progress.status_pool.get('active'):
             prg_list[st] = progresses.filter(status=st)
-        context['prglist'] = prg_list
     else:
         chat_content = '''
             欢迎您使用「我的进度」<br/>
@@ -64,8 +44,6 @@ def progressList(request):
 
 def progressArchive(request):
     '''进度存档：显示所有已完成、已冻结的进度'''
-    context = {}
-    # get user
     user = util.user.getCurrentUser(request)
     if not user:
         return util.user.loginToContinue(request)
@@ -119,9 +97,10 @@ def progressTimeline(request):
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     # add timeline info
     now_year = timezone.now().year
-    context['prg_timeline_this_year'] = getTimeline(year=now_year, prgss=progresses)
-    now_year = timezone.now().year
-    context['prg_timeline_last_year'] = getTimeline(year=now_year - 1, prgss=progresses)
+    context['prg_timeline_this_year'] = progresses.filter(Q(created__year=now_year) | Q(modified__year=now_year))  # created or modified in this year
+    last_year = timezone.now().year - 1
+    context['prg_timeline_last_year'] = progresses.filter(Q(created__year=last_year) | Q(modified__year=last_year))  # created or modified in this year
+    context['prglist'] = progresses
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(1, '访问「进度列表」页面')

@@ -4,57 +4,136 @@
 {% block title %}进度历程{% endblock title %}
 
 
+{% block inhead %}
+    {{ super }}
+    <link rel="stylesheet" href="/static/jqtimeline/css/jquery.jqtimeline.zh.css">
+    <script src="/static/jqtimeline/js/jquery.jqtimeline.zh.js"></script>
+{% endblock %}
+
 {% block content %}
 <div class="container">
-    <div id="timeline-zone" class="hidden-xs">
+    <div id="last-year-timeline-zone" class="hidden-xs">
         <div id="hide-timeline">
-            <span class="glyphicon glyphicon-chevron-up text-muted animate-hide" onmouseenter="hideTimeline()" onmouseout='stopHideTimeline()'></span>
+            <span class="glyphicon glyphicon-chevron-up text-muted animate-hide" onmouseenter="hideTimeline(this)" onmouseout='stopHideTimeline()'></span>
         </div>
-        <div id="event-timeline"></div>
+        <div id="event-timeline-last-year"></div>
     </div>
+    <hr class='hidden-xs'/>
+    <div id="this-year-timeline-zone" class="hidden-xs">
+        <div id="hide-timeline">
+            <span class="glyphicon glyphicon-chevron-up text-muted animate-hide" onmouseenter="hideTimeline(this)" onmouseout='stopHideTimeline()'></span>
+        </div>
+        <div id="event-timeline-this-year"></div>
+    </div>
+    <hr class='hidden-xs'/>
 </div><!--.container-->
 {% endblock content %}
 
 
+{% block css %}
+    <style>
+        /* timeline */
+        #hide-timeline {
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: -26px;
+        }
+        #hide-timeline span.glyphicon-chevron-up {
+            z-index: 2;
+            border-radius: 100%;
+        }
+        #hide-timeline span.glyphicon-chevron-up:hover {
+            color: red;
+            -webkit-transform: rotate(360deg) scale(1.2);
+               -moz-transform: rotate(360deg) scale(1.2);
+                -ms-transform: rotate(360deg) scale(1.2);
+                 -o-transform: rotate(360deg) scale(1.2);
+                    transform: rotate(360deg) scale(1.2);
+        }
+        .animate-hide {
+            -webkit-transition: all 0.7s linear;
+               -moz-transition: all 0.7s linear;
+                -ms-transition: all 0.7s linear;
+                 -o-transition: all 0.7s linear;
+                    transition: all 0.7s linear;
+        }
+    </style>
+{% endblock %}
+
 {% block js %}
 <script>
     $(function(){
-        var events = [
-            {% for item in prg_timeline %}
+        var this_year_events = [
+            {% for prg in prg_timeline_this_year %}
                 {
-                    progressid: {{item.prg.id}},
-                    name: "<span class='text-info'>开始看</span>《{{item.opus.name}}》",
-                    on: new Date({{item.prg.created.year}}, {{item.prg.created.month|add:-1}}, {{item.prg.created.day}})
+                    progressid: {{prg.id}},
+                    name: "<span class='text-info'>开始看</span>《{{prg.opus.name}}》",
+                    on: new Date({{prg.created.year}}, {{prg.created.month|add:-1}}, {{prg.created.day}})
                 },
-                {% if item.prg.status == 'done' %}
+                {% if prg.status == 'done' %}
                     {
-                        progressid: {{item.prg.id}},
-                        name: "<span class='text-success'>完成</span>《{{item.opus.name}}》！",
-                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month|add:-1}}, {{item.prg.modified.day}})
+                        progressid: {{prg.id}},
+                        name: "<span class='text-success'>完成</span>《{{prg.opus.name}}》！",
+                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
                     },
-                {% elif item.prg.status == 'giveup' %}
+                {% elif prg.status == 'giveup' %}
                     {
-                        progressid: {{item.prg.id}},
-                        name: "<span class='text-danger'>冻结了</span>《{{item.opus.name}}》",
-                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month|add:-1}}, {{item.prg.modified.day}})
+                        progressid: {{prg.id}},
+                        name: "<span class='text-danger'>冻结了</span>《{{prg.opus.name}}》",
+                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
                     },
-                {% elif item.prg.status == 'inprogress' %}
+                {% elif prg.status == 'inprogress' %}
                     {
-                        progressid: {{item.prg.id}},
-                        name: "《{{item.opus.name}}》<span class='text-primary'>进行至 </span>{{item.prg.persent}}%",
-                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month|add:-1}}, {{item.prg.modified.day}})
+                        progressid: {{prg.id}},
+                        name: "《{{prg.opus.name}}》<span class='text-primary'>进行至 </span>{{prg.persent}}%",
+                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
                     },
-                {% elif item.prg.status == 'follow' %}
+                {% elif prg.status == 'follow' %}
                     {
-                        progressid: {{item.prg.id}},
-                        name: "《{{item.opus.name}}》<span class='text-primary'>追剧至 </span>第 {{item.prg.current}} 集",
-                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month|add:-1}}, {{item.prg.modified.day}})
+                        progressid: {{prg.id}},
+                        name: "《{{prg.opus.name}}》<span class='text-primary'>追剧至 </span>第 {{prg.current}} 集",
+                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
                     },
                 {% endif %}
             {% endfor %}
         ];
-        $('#event-timeline').jqtimeline({
-            events: events,
+        var last_year_events = [
+            {% for prg in prg_timeline_last_year %}
+                {
+                    progressid: {{prg.id}},
+                    name: "<span class='text-info'>开始看</span>《{{prg.opus.name}}》",
+                    on: new Date({{prg.created.year}}, {{prg.created.month|add:-1}}, {{prg.created.day}})
+                },
+                {% if prg.status == 'done' %}
+                    {
+                        progressid: {{prg.id}},
+                        name: "<span class='text-success'>完成</span>《{{prg.opus.name}}》！",
+                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
+                    },
+                {% elif prg.status == 'giveup' %}
+                    {
+                        progressid: {{prg.id}},
+                        name: "<span class='text-danger'>冻结了</span>《{{prg.opus.name}}》",
+                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
+                    },
+                {% elif prg.status == 'inprogress' %}
+                    {
+                        progressid: {{prg.id}},
+                        name: "《{{prg.opus.name}}》<span class='text-primary'>进行至 </span>{{prg.persent}}%",
+                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
+                    },
+                {% elif prg.status == 'follow' %}
+                    {
+                        progressid: {{prg.id}},
+                        name: "《{{prg.opus.name}}》<span class='text-primary'>追剧至 </span>第 {{prg.current}} 集",
+                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
+                    },
+                {% endif %}
+            {% endfor %}
+        ];
+
+        $('#event-timeline-this-year').jqtimeline({
+            events: this_year_events,
             showToolTip: true,
             gap: $('.container').width() / 12 * 0.9,
             numYears: 1,
@@ -64,12 +143,24 @@
                 window.location='/progress/detail?id=' + event.progressid
             },
         });
+
+        $('#event-timeline-last-year').jqtimeline({
+            events: last_year_events,
+            showToolTip: true,
+            gap: $('.container').width() / 12 * 0.9,
+            numYears: 1,
+            startYear: (new Date()).getFullYear() - 1,
+            groupEventWithinPx: 9,
+            click: function(e,event){
+                window.location='/progress/detail?id=' + event.progressid
+            },
+        });
     });
 
     var timer_hTl
-    function hideTimeline(){
+    function hideTimeline(ele){
         clearTimeout(timer_hTl)
-        var tl_ele = $('#timeline-zone')
+        var tl_ele = $(ele).parent().parent()
         timer_hTl = setTimeout(function(){
             tl_ele.slideUp()
         }, 700);
