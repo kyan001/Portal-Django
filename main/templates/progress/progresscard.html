@@ -1,53 +1,53 @@
 {% load tags_url %}
 
-<div class="{{ size }} progress-card befast" progressid="{{ item.prg.id }}" progressname="{{ item.opus.name }}">
-    <a href="/progress/detail?id={{item.prg.id}}" class="no-decoration">
+<div class="{{ size }} progress-card befast" progressid="{{ prg.id }}" progressname="{{ prg.opus.name }}">
+    <a href="/progress/detail?id={{prg.id}}" class="no-decoration">
         <div class="panel panel-default beveryfast hover-shadow"
-            {% if item.opus.covercolor %}style="box-shadow: 0 0 1px 2px {{ item.opus.covercolor }}"{% endif %}>
+            {% if prg.opus.covercolor %}style="box-shadow: 0 0 1px 2px {{ prg.opus.covercolor }}"{% endif %}>
             <div class="panel-heading progress-title">
                 <span class="panel-title">
-                    {% if item.prg.weblink and item.prg.weblink|isurl %}
-                        <span class="weblink label btn-link" href="{{item.prg.weblink}}" title="{{item.prg.weblink}}" target="_blank">
+                    {% if prg.weblink and prg.weblink|isurl %}
+                        <span class="weblink label btn-link" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
                             <span class="glyphicon glyphicon-link"></span>
                         </span>
                     {% endif %}
-                    <span class='opus-name'>《<b>{{ item.opus.name|truncatechars:25 }}</b>》</span>
-                    {% if item.opus.subtitle %}
+                    <span class='opus-name'>《<b>{{ prg.opus.name|truncatechars:25 }}</b>》</span>
+                    {% if prg.opus.subtitle %}
                         <span class="subtitle label label-default">
-                            {{ item.opus.subtitle|truncatechars:9 }}
+                            {{ prg.opus.subtitle|truncatechars:9 }}
                         </span>
                     {% endif %}
                 </span>
             </div>
             <div class="div-table panel-heading hidden-xs">
                 <div class='row'>
-                    {% if item.prg.current == item.opus.total and item.prg.current != 0 %}
-                        <div class="text-center col-xs-12" title="完成时间：{{ item.prg.modified|date:'Y-m-d H:i' }}">
+                    {% if prg.current == prg.opus.total and prg.current != 0 %}
+                        <div class="text-center col-xs-12" title="完成时间：{{ prg.modified|date:'Y-m-d H:i' }}">
                             <span class='glyphicon glyphicon-ok'></span>
-                            <span class=''>{{ item.prg.modified|date:'Y-m-d' }}</span>
+                            <span class=''>{{ prg.modified|date:'Y-m-d' }}</span>
                         </div>
                     {% else %}
-                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" title="开始时间：{{ item.prg.created|date:'Y-m-d H:i' }}">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" title="开始时间：{{ prg.created|date:'Y-m-d H:i' }}">
                             <span class='text-muted glyphicon glyphicon-plus'></span>
-                            <span class=''>{{ item.prg.created|date:'Y-m-d' }}</span>
+                            <span class=''>{{ prg.created|date:'Y-m-d' }}</span>
                         </div>
-                        <div class="text-right col-xs-12 col-sm-6 col-md-6 col-lg-6" title="上次更新：{{ item.prg.modified|date:'Y-m-d H:i' }}">
+                        <div class="text-right col-xs-12 col-sm-6 col-md-6 col-lg-6" title="上次更新：{{ prg.modified|date:'Y-m-d H:i' }}">
                             <span class='text-muted glyphicon glyphicon-refresh'></span>
-                            <span class=''>{{ item.prg.modified|date:'Y-m-d' }}</span>
+                            <span class=''>{{ prg.modified|date:'Y-m-d' }}</span>
                         </div>
                     {% endif %}
                 </div>
             </div>
             <div class="panel-body">
                 <div class="progress">
-                    <div class="progress-bar {{ item.prg.getBartype }}" style="width: {{ item.prg.persent }}%; min-width: 5em;">
-                    {% if item.opus.total != 0 %}
-                        <b>{{item.prg.current}} / {{item.opus.total}}</b>
-                        {% if item.prg.persent >= 20 %}
-                            <span class='pull-right'>{{ item.prg.persent }}%</span>
+                    <div class="progress-bar {{ prg.getBartype }}" style="width: {{ prg.persent }}%; min-width: 5em;">
+                    {% if prg.opus.total != 0 %}
+                        <b>{{prg.current}} / {{prg.opus.total}}</b>
+                        {% if prg.persent >= 20 %}
+                            <span class='pull-right'>{{ prg.persent }}%</span>
                         {% endif %}
                     {% else %}
-                        <b>{{item.prg.current}} / ∞</b>
+                        <b>{{prg.current}} / ∞</b>
                     {% endif %}
                     </div>
                 </div>

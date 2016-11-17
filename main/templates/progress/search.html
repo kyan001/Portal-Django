@@ -1,16 +1,8 @@
-{% extends "base.html" %}
+{% extends "progress/base.html" %}
+
+
 {% block title %}进度搜索{% endblock title %}
-{% block icon %}<link rel="icon" href="/static/img/Logo_List.png" />{% endblock icon %}
 
-{% block inhead %}
-<link rel="stylesheet" href="/static/css/progress/list/common.css">
-<link rel="stylesheet" href="/static/css/progress/progresscard.css">
-<script src="/static/js/progress/list/common.js"></script>
-{% endblock inhead %}
-
-{% block nav-btn %}
-{% include 'progress/navdropdown.html' %}
-{% endblock nav-btn %}
 
 {% block css %}
 <style>
@@ -27,151 +19,153 @@
 </style>
 {% endblock css %}
 
-{% block content %}
-<div class="container">
-    <div class="well">
-        <div id='search-div' class='row'>
-            <div class="col-sm-6 col-xs-12">
-                <div class="input-group input-group-lg">
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </span>
-                    <input id="search-input" type='text' class="form-control" placeholder="搜索标题、副标题" value="{{keyword}}" autocomplete='off' oninput="searchProgress()">
-                    <span class="input-group-addon">
-                        <span id='clear-search-btn' class="hover-pointer" onclick='resetSearch()'>
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </span>
-                    </span>
-                    <span class="input-group-addon" title="需要访问 Google" data-toggle="tooltip" data-placement="top">
-                        <span id="start-speech-btn" class="hover-pointer" onclick="startSpeech()">
-                            <span class="glyphicon glyphicon-headphones"></span>
-                        </span>
-                    </span>
-                </div>
 
+{% block content %}
+    <div class="container">
+        <div class="well">
+            <div id='search-div' class='row'>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </span>
+                        <input id="search-input" type='text' class="form-control" placeholder="搜索标题、副标题" value="{{keyword}}" autocomplete='off' oninput="searchProgress()">
+                        <span class="input-group-addon">
+                            <span id='clear-search-btn' class="hover-pointer" onclick='resetSearch()'>
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </span>
+                        </span>
+                        <span class="input-group-addon" title="需要访问 Google" data-toggle="tooltip" data-placement="top">
+                            <span id="start-speech-btn" class="hover-pointer" onclick="startSpeech()">
+                                <span class="glyphicon glyphicon-headphones"></span>
+                            </span>
+                        </span>
+                    </div>
+
+                </div>
             </div>
         </div>
+        <div id='show-all-header' class="page-header">
+            <h5>
+                <span class="glyphicon glyphicon-th-list text-muted"></span>
+                所有进度
+                <small>All</small>
+                <small class="prg-counts">({{ prglist|length }})</small>
+            </h5>
+        </div>
+        <div id='search-result-header' class="page-header">
+            <h5>
+                <span class="glyphicon glyphicon-th-list text-muted"></span>
+                <span id="search-result-title">包含 「XXX」 的进度：</span>
+                <small id='search-result-count' class="prg-counts">(0)</small>
+                <small>
+                    <a id="search-result-link" class="no-decoration">(生成连接)</a>
+                </small>
+            </h5>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    {% for prg in prglist %}
+                        {% include 'progress/progresscard.html' with prg=prg size='col-xs-12 col-sm-6 col-lg-4' %}
+                    {% empty %}
+                        <div class="well">
+                            您还没有进度哦，请先添加一个进度
+                        </div>
+                    {% endfor %}
+                </div><!--.row-->
+            </div><!--.col-->
+        </div><!--.row-->
     </div>
-    <div id='show-all-header' class="page-header">
-        <h5>
-            <span class="glyphicon glyphicon-th-list text-muted"></span>
-            所有进度
-            <small>All</small>
-            <small class="prg-counts">({{ list|length }})</small>
-        </h5>
-    </div>
-    <div id='search-result-header' class="page-header">
-        <h5>
-            <span class="glyphicon glyphicon-th-list text-muted"></span>
-            <span id="search-result-title">包含 「XXX」 的进度：</span>
-            <small id='search-result-count' class="prg-counts">(0)</small>
-            <small>
-                <a id="search-result-link" class="no-decoration">(生成连接)</a>
-            </small>
-        </h5>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="row">
-                {% for p in list %}
-                    {% include 'progress/progresscard.html' with item=p size='col-xs-12 col-sm-6 col-lg-4' %}
-                {% empty %}
-                    <div class="well">
-                        您还没有进度哦，请先添加一个进度
-                    </div>
-                {% endfor %}
-            </div><!--.row-->
-        </div><!--.col-->
-    </div><!--.row-->
-</div>
 {% endblock content %}
 
-{% block js %}
-<script>
-    $(function(){
-        searchProgress()
-        initSpeechRec()
-        $('[data-toggle="tooltip"]').tooltip()
-    });
 
-    function initSpeechRec(){
-        var speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.oSpeechRecognition || window.msSpeechRecognition
-        if(!speechRecognition){
-            $('#start-speech-btn').parent('.input-group-addon').hide()
-            return
-        }
-        recognition = new speechRecognition();
-        recognizing = false;
-        recognition.continuous = true; // stop when stop talking
-        recognition.interimResults = false; // word already recognized can not change.
-        recognition.onstart = function() {
-            recognizing = true;
-            $('#start-speech-btn').css('color', 'red')
-            $.info('正在语音识别中...')
-        };
-        recognition.onend = function() {
-            recognizing = false;
-            $('#start-speech-btn').css('color', 'black')
-            $.info('语音识别已停止')
-        };
-        recognition.onerror = function(event) {
-            $.danger("语音识别错误：" + event.error)
-        };
-        recognition.onresult = function(event) {
-            var final_txt = '';
-            for (var i = event.resultIndex; i < event.results.length; ++i) {
-                final_txt += event.results[i][0].transcript;
-            }
-            if(['取消', '停止', 'cancel', 'stop'].indexOf(final_txt)>=0){
-                recognition.stop();
-                resetSearch();
+{% block js %}
+    <script>
+        $(function(){
+            searchProgress()
+            initSpeechRec()
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+
+        function initSpeechRec(){
+            var speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.oSpeechRecognition || window.msSpeechRecognition
+            if(!speechRecognition){
+                $('#start-speech-btn').parent('.input-group-addon').hide()
                 return
             }
-            $('#search-input').val(final_txt)
-            searchProgress()
-        };
-    }
-
-    function startSpeech(event) {
-        if (recognizing) {
-            recognition.stop();
-            return;
-        }
-        recognition.lang = 'cmn-Hans-CN';
-        recognition.start();
-    }
-
-    function resetSearch(){
-        $("#search-input").val("")
-        $('.progress-card').show()
-        $('#clear-search-btn').parent('.input-group-addon').hide()
-        $('#show-all-header').show()
-        $('#search-result-header').hide()
-        $('#search-input').focus()
-    }
-    function searchProgress(){
-        var kw = $.trim($('#search-input').val()).toLowerCase();
-        if(kw == ''){
-            resetSearch()
-        } else {
-            var count = 0
-            $('.progress-card').each(function(){
-                var opusname = $(this).find('.opus-name').text().toLowerCase()
-                var opussubtitle = $(this).find('.subtitle').text().toLowerCase()
-                if(opusname.indexOf(kw)>=0 || opussubtitle.indexOf(kw)>=0){
-                    $(this).show()
-                    count++
-                } else {
-                    $(this).hide()
+            recognition = new speechRecognition();
+            recognizing = false;
+            recognition.continuous = true; // stop when stop talking
+            recognition.interimResults = false; // word already recognized can not change.
+            recognition.onstart = function() {
+                recognizing = true;
+                $('#start-speech-btn').css('color', 'red')
+                $.info('正在语音识别中...')
+            };
+            recognition.onend = function() {
+                recognizing = false;
+                $('#start-speech-btn').css('color', 'black')
+                $.info('语音识别已停止')
+            };
+            recognition.onerror = function(event) {
+                $.danger("语音识别错误：" + event.error)
+            };
+            recognition.onresult = function(event) {
+                var final_txt = '';
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    final_txt += event.results[i][0].transcript;
                 }
-            })
-            $('#search-result-title').text('包含 「'+ kw +'」的进度：')
-            $('#search-result-link').attr('href','/progress/search?kw='+kw)
-            $('#search-result-count').text('('+ count +')')
-            $('#clear-search-btn').parent('.input-group-addon').show()
-            $('#show-all-header').hide()
-            $('#search-result-header').show()
+                if(['取消', '停止', 'cancel', 'stop'].indexOf(final_txt)>=0){
+                    recognition.stop();
+                    resetSearch();
+                    return
+                }
+                $('#search-input').val(final_txt)
+                searchProgress()
+            };
         }
-    }
-</script>
+
+        function startSpeech(event) {
+            if (recognizing) {
+                recognition.stop();
+                return;
+            }
+            recognition.lang = 'cmn-Hans-CN';
+            recognition.start();
+        }
+
+        function resetSearch(){
+            $("#search-input").val("")
+            $('.progress-card').show()
+            $('#clear-search-btn').parent('.input-group-addon').hide()
+            $('#show-all-header').show()
+            $('#search-result-header').hide()
+            $('#search-input').focus()
+        }
+        function searchProgress(){
+            var kw = $.trim($('#search-input').val()).toLowerCase();
+            if(kw == ''){
+                resetSearch()
+            } else {
+                var count = 0
+                $('.progress-card').each(function(){
+                    var opusname = $(this).find('.opus-name').text().toLowerCase()
+                    var opussubtitle = $(this).find('.subtitle').text().toLowerCase()
+                    if(opusname.indexOf(kw)>=0 || opussubtitle.indexOf(kw)>=0){
+                        $(this).show()
+                        count++
+                    } else {
+                        $(this).hide()
+                    }
+                })
+                $('#search-result-title').text('包含 「'+ kw +'」的进度：')
+                $('#search-result-link').attr('href','/progress/search?kw='+kw)
+                $('#search-result-count').text('('+ count +')')
+                $('#clear-search-btn').parent('.input-group-addon').show()
+                $('#show-all-header').hide()
+                $('#search-result-header').show()
+            }
+        }
+    </script>
 {% endblock %}

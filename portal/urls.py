@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^progress/list/$', views.progressList),
     url(r'^progress/archive/$', views.progressArchive),
     url(r'^progress/search$', views.progressSearch),  # get
+    url(r'^progress/timeline$', views.progressTimeline),  # post
     url(r'^progress/detail$', views.progressDetail),  # get
     url(r'^progress/imagecolor$', views.progressImagecolor),  # get
     url(r'^progress/fastupdate/$', views.progressFastupdate),

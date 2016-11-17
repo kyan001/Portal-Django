@@ -1,0 +1,82 @@
+{% extends "progress/base.html" %}
+
+
+{% block title %}进度历程{% endblock title %}
+
+
+{% block content %}
+<div class="container">
+    <div id="timeline-zone" class="hidden-xs">
+        <div id="hide-timeline">
+            <span class="glyphicon glyphicon-chevron-up text-muted animate-hide" onmouseenter="hideTimeline()" onmouseout='stopHideTimeline()'></span>
+        </div>
+        <div id="event-timeline"></div>
+    </div>
+</div><!--.container-->
+{% endblock content %}
+
+
+{% block js %}
+<script>
+    $(function(){
+        var events = [
+            {% for item in prg_timeline %}
+                {
+                    progressid: {{item.prg.id}},
+                    name: "<span class='text-info'>开始看</span>《{{item.opus.name}}》",
+                    on: new Date({{item.prg.created.year}}, {{item.prg.created.month|add:-1}}, {{item.prg.created.day}})
+                },
+                {% if item.prg.status == 'done' %}
+                    {
+                        progressid: {{item.prg.id}},
+                        name: "<span class='text-success'>完成</span>《{{item.opus.name}}》！",
+                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month|add:-1}}, {{item.prg.modified.day}})
+                    },
+                {% elif item.prg.status == 'giveup' %}
+                    {
+                        progressid: {{item.prg.id}},
+                        name: "<span class='text-danger'>冻结了</span>《{{item.opus.name}}》",
+                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month|add:-1}}, {{item.prg.modified.day}})
+                    },
+                {% elif item.prg.status == 'inprogress' %}
+                    {
+                        progressid: {{item.prg.id}},
+                        name: "《{{item.opus.name}}》<span class='text-primary'>进行至 </span>{{item.prg.persent}}%",
+                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month|add:-1}}, {{item.prg.modified.day}})
+                    },
+                {% elif item.prg.status == 'follow' %}
+                    {
+                        progressid: {{item.prg.id}},
+                        name: "《{{item.opus.name}}》<span class='text-primary'>追剧至 </span>第 {{item.prg.current}} 集",
+                        on: new Date({{item.prg.modified.year}}, {{item.prg.modified.month|add:-1}}, {{item.prg.modified.day}})
+                    },
+                {% endif %}
+            {% endfor %}
+        ];
+        $('#event-timeline').jqtimeline({
+            events: events,
+            showToolTip: true,
+            gap: $('.container').width() / 12 * 0.9,
+            numYears: 1,
+            startYear: (new Date()).getFullYear(),
+            groupEventWithinPx: 9,
+            click: function(e,event){
+                window.location='/progress/detail?id=' + event.progressid
+            },
+        });
+    });
+
+    var timer_hTl
+    function hideTimeline(){
+        clearTimeout(timer_hTl)
+        var tl_ele = $('#timeline-zone')
+        timer_hTl = setTimeout(function(){
+            tl_ele.slideUp()
+        }, 700);
+    }
+
+    function stopHideTimeline(){
+        clearTimeout(timer_hTl)
+    }
+</script>
+{% endblock %}

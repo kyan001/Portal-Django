@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+
+{% block icon %}<link rel="icon" href="/static/img/Logo_List.png" />{% endblock icon %}
+
+
+{% block inhead %}
+    <link rel="stylesheet" href="/static/css/progress/list/common.css">
+    <link rel="stylesheet" href="/static/css/progress/progresscard.css">
+    <script src="/static/js/progress/list/common.js"></script>
+{% endblock inhead %}
+
+
+{% block nav-btn %}
+    {% include 'progress/navdropdown.html' %}
+{% endblock nav-btn %}

@@ -26,15 +26,3 @@ $(function(){
     //     });
     // });
 });
-
-var timer_hTl
-function hideTimeline(){
-    clearTimeout(timer_hTl)
-    var tl_ele = $('#timeline-zone')
-    timer_hTl = setTimeout(function(){
-        tl_ele.slideUp()
-    }, 700);
-}
-function stopHideTimeline(){
-    clearTimeout(timer_hTl)
-}
