@@ -32,33 +32,18 @@ def getTimeline(year, prgss):
 
 def progressList(request):
     '''进度列表：显示所有进行中、待开始、追剧中的进度'''
-    context = {'request': request}
+    context = {}
     # get user
     user = util.user.getCurrentUser(request)
     if not user:
         return util.user.loginToContinue(request)
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
+    prg_list = {}
     if len(progresses):
-        # init vars
-        pList = {}
         for st in Progress.status_pool.get('active'):
-            pList[st] = []
-        # put progress items
-        for prg in progresses:
-            if prg.status in Progress.status_pool.get('active'):
-                try:
-                    opus = Opus.objects.get(id=prg.opusid)
-                except Opus.DoesNotExist:
-                    return util.ctrl.infoMsg("未找到 id 为 {id} 的作品".format(id=str(prg.opusid)))
-                l = {}
-                l['opus'] = opus
-                l['prg'] = prg
-                pList[prg.status].append(l)
-        # put into context
-        for st in Progress.status_pool.get('active'):
-            if pList[st]:
-                context['list' + st] = pList[st]
+            prg_list[st] = progresses.filter(status=st)
+        context['prglist'] = prg_list
     else:
         chat_content = '''
             欢迎您使用「我的进度」<br/>
@@ -67,94 +52,86 @@ def progressList(request):
             最后，祝您使用愉快！
         '''
         Chat.objects.sendBySys(user, title='欢迎使用「我的进度」系统', content=chat_content)
-    # add timeline info (also in
-    now_year = timezone.now().year
-    context['prg_timeline'] = getTimeline(year=now_year, prgss=progresses)
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(1, '访问「进度列表」页面')
     # render
+    context = {
+        'prglist': prg_list,
+    }
     return render(request, 'progress/list.html', context)
 
 
 def progressArchive(request):
     '''进度存档：显示所有已完成、已冻结的进度'''
-    context = {'request': request}
+    context = {}
     # get user
     user = util.user.getCurrentUser(request)
     if not user:
         return util.user.loginToContinue(request)
     # get user's progresses
-    progresses = Progress.objects.filter(userid=user.id)
-    prg_ordered = progresses.order_by('-modified')
-    if len(prg_ordered):
-        # init vars
-        pList = {}
+    progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
+    prg_list = {}
+    if len(progresses):
         for st in Progress.status_pool.get('archive'):
-            pList[st] = []
-        # put progress items
-        for prg in prg_ordered:
-            if prg.status in Progress.status_pool.get('archive'):
-                try:
-                    opus = Opus.objects.get(id=prg.opusid)
-                except Opus.DoesNotExist:
-                    return util.ctrl.infoMsg("未找到 id 为 {id} 的作品".format(id=str(prg.opusid)))
-                l = {}
-                l['opus'] = opus
-                l['prg'] = prg
-                pList[prg.status].append(l)
-        # ut into context
-        for st in Progress.status_pool.get('archive'):
-            if pList[st]:
-                context['list' + st] = pList[st]
-    # add timeline info
-    now_year = timezone.now().year
-    context['prg_timeline'] = getTimeline(year=now_year - 1, prgss=progresses)
+            prg_list[st] = progresses.filter(status=st)
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(1, '访问「进度存档」页面')
     # render
+    context = {
+        'prglist': prg_list,
+    }
     return render(request, 'progress/archive.html', context)
 
 
 def progressSearch(request):
     '''进度搜索：筛选所有进度'''
-    context = {'request': request}
+    context = {}
     # get user
     user = util.user.getCurrentUser(request)
     if not user:
         return util.user.loginToContinue(request)
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('created')
-    # init vars
-    pList = []
-    # put progress items
-    if len(progresses):
-        for prg in progresses:
-            try:
-                opus = Opus.objects.get(id=prg.opusid)
-            except Opus.DoesNotExist:
-                return util.ctrl.infoMsg("未找到 id 为 {id} 的作品".format(id=str(prg.opusid)))
-            l = {}
-            l['opus'] = opus
-            l['prg'] = prg
-            pList.append(l)
-    # put into context
-    context['list'] = pList
+    context['prglist'] = progresses
     # pass searched keyword
-    keyword = request.GET.get('kw')
-    if keyword:
-        context['keyword'] = keyword
+    keyword = request.GET.get('kw') or ""
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(1, '访问「进度搜索」页面')
     # render
+    context = {
+        'prglist': progresses,
+        'keyword': keyword,
+    }
     return render(request, 'progress/search.html', context)
+
+
+def progressTimeline(request):
+    '''进度历程：显示所有进度的时间轴'''
+    context = {}
+    # get user
+    user = util.user.getCurrentUser(request)
+    if not user:
+        return util.user.loginToContinue(request)
+    # get user's progresses
+    progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
+    # add timeline info
+    now_year = timezone.now().year
+    context['prg_timeline_this_year'] = getTimeline(year=now_year, prgss=progresses)
+    now_year = timezone.now().year
+    context['prg_timeline_last_year'] = getTimeline(year=now_year - 1, prgss=progresses)
+    # add exps
+    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
+    userexp.addExp(1, '访问「进度列表」页面')
+    # render
+    return render(request, 'progress/timeline.html', context)
 
 
 def progressDetail(request):
     '''进度详情页'''
-    context = {'request': request}
+    context = {}
     # get inputs
     user = util.user.getCurrentUser(request)
     if not user:
@@ -426,7 +403,7 @@ def progressReset(request):
 
 def progressNew(request):
     '''list/detail 界面点击新增按钮'''
-    context = {'request': request}
+    context = {}
     # get inputs
     user = util.user.getCurrentUser(request)
     if not user:

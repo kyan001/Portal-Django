@@ -8,7 +8,7 @@ ktk = KyanToolKit.KyanToolKit()
 
 def opusDetail(request):
     '''TODO 获得作品的详情'''
-    context = {'request': request}
+    context = {}
     # 获得参数
     opusid = request.GET.get('id')
     if not opusid:

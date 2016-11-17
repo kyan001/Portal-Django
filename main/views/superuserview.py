@@ -44,7 +44,7 @@ def superuserIndex(request):
 
 def superuserBroadcast(request):
     '''su 发送给所有人的私信'''
-    context = {'request': request}
+    context = {}
     user = util.user.getCurrentUser(request)
     if not user:
         return util.user.loginToContinue(request)

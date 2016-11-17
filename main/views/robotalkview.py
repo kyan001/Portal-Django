@@ -12,7 +12,7 @@ import util.ctrl
 
 
 def robotalkIndex(request):
-    context = {'request': request}
+    context = {}
     user = util.user.getCurrentUser(request)
     if user:
         userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')

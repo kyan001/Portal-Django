@@ -80,7 +80,7 @@ def userExphistory(request):
     if not user:
         return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
     # get inputs
-    context = {'request': request}
+    context = {}
     category = request.GET.get('category')
     view = request.GET.get('view')
     if category:
@@ -102,7 +102,7 @@ def userExphistory(request):
 
 def userPublic(request):  # public
     '''通过 email/id/nickname 查看用户公开信息'''
-    context = {'request': request}
+    context = {}
     nickname = request.GET.get('nickname')
     if not nickname:
         return util.ctrl.infoMsg("被查看用户的昵称不在参数中", title='参数错误')
@@ -141,7 +141,7 @@ def userSetting(request):
 
 def userProfile(request):
     '''查看当前用户的个人信息，点击右上角昵称进入'''
-    context = {'request': request}
+    context = {}
     user = util.user.getCurrentUser(request)
     if not user:
         return util.user.loginToContinue(request)
@@ -179,7 +179,7 @@ def userProfile(request):
 # -Signup-----------------------------------------------
 def userSignup(request):  # PUBLIC
     '''点击注册按钮后页面'''
-    context = {'request': request}
+    context = {}
     if 'redirect' in request.GET:
         context['redirect'] = request.GET.get('redirect')
     elif 'HTTP_REFERER' in request.META:
@@ -268,7 +268,7 @@ def userSignin(request):
 
 def userForgetanswer(request):
     '登入页面点击忘记回答'
-    context = {'request': request}
+    context = {}
     # TODO: Not worked on Server
     # content = '''
     #     <li>您在 <a href='http://superfarmer.net' target='_blank'>superfarmer.net</a> 申请了“忘记答案/密码”</li>

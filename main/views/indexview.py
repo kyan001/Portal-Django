@@ -5,7 +5,7 @@ import util.user
 
 
 def index(request):
-    context = {'request': request}
+    context = {}
     if util.ctrl.isMobile(request):
         return render(request, 'index/index-m.html', context)
     return render(request, 'index/index.html', context)

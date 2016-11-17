@@ -9,7 +9,7 @@ import util.user
 
 def chatInbox(request):
     '''用户查看自己的 inbox'''
-    context = {'request': request}
+    context = {}
     user = util.user.getCurrentUser(request)
     if not user:
         return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
@@ -71,7 +71,7 @@ def chatDelete(request):
 
 def chatConversation(request):
     '''进入一对一聊天页面'''
-    context = {'request': request}
+    context = {}
     user = util.user.getCurrentUser(request)
     if not user:
         return util.user.loginToContinue(request)

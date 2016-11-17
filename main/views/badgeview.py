@@ -8,7 +8,7 @@ ktk = KyanToolKit.KyanToolKit()
 
 def badgeList(request):
     '''获得所有徽章列表'''
-    context = {'request': request}
+    context = {}
     upbs = UserPermissionBadge.objects.all()
     context['upbs'] = upbs
     return render(request, 'badge/list.html', context)
@@ -16,7 +16,7 @@ def badgeList(request):
 
 def badgeDetail(request):
     '''查看单个徽章'''
-    context = {'request': request}
+    context = {}
     # 获得参数
     badgeid = request.GET.get('id')
     if not badgeid:
