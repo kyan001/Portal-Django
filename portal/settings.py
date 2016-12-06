@@ -27,8 +27,9 @@ SECRET_KEY = 'wjk)lm9$j0dp%mv4699yx)a%rn#-bg3!e=iwsu%foedz+5jn8h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    '.superfarmer.net',
+]
 
 # Application definition
 
