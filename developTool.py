@@ -35,7 +35,7 @@ def requirements_install():
 
 
 def run_by_py3(cmd):
-    py3_cmd = 'py' if 'win' in sys.platform else 'python3'
+    py3_cmd = 'py' if 'win32' in sys.platform else 'python3'
     ktk.runCmd("{py3} {cmd}".format(py3=py3_cmd, cmd=cmd))
 
 
