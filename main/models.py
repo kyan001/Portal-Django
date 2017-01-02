@@ -364,7 +364,7 @@ class Progress(BaseModel):
     def getContextualType(self):
         persent = self.persent
         if self.current == 0:
-            contextual_type = 'default'
+            contextual_type = None
         elif persent < 1:
             contextual_type = 'info'
         elif persent < 33:

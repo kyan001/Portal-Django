@@ -17,12 +17,4 @@ $(function(){
     $('.collapse').on('show.bs.collapse', function () {
         $(this).parent().find('.page-header').find('span.glyphicon').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up')
     })
-    // $('.progress-card').each(function(){
-    //     var ele = $(this)
-    //     $.getImageColor("", ele.attr('progressname'), function(result){
-    //         if( result.color ){
-    //             ele.find('.panel').css('border-left', '5px solid' + result.color);
-    //         }
-    //     });
-    // });
 });
