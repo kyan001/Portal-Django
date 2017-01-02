@@ -20,14 +20,6 @@
         padding: 25px;
         background-color: rgba(0,0,0,0.5);
     }
-
-    .input-group input {
-        color: white;
-    }
-    .input-group-addon {
-        color: silver !important;
-        font-size: x-large;
-    }
     .tips {
         cursor: help;
     }
@@ -35,9 +27,8 @@
         color: silver;
         display: none;
     }
-    #submit-button {
-        margin-top: 10px;
-        width: 100%;
+    #submit-button{
+        pointer-events: auto;
     }
 </style>
 {% endblock css %}
@@ -295,7 +286,7 @@
                         data-content="<li class='text-primary'>登入时的凭证之一</li>
                         <li class='text-danger'>只能包含“英文字母”、“数字”和“英文句号”</li>
                         <li class='text-danger'>不能同其他人的用户名重复。</li>">
-                        ?
+                        <span class='glyphicon glyphicon-question-sign'></span>
                     </span>
                     <span class="xs-tips">
                         <li class='text-primary'>登入时的凭证之一</li>
@@ -315,7 +306,7 @@
                         <li>“最想获得的超能力”</li>
                         <li>“家里保险柜的数量”</li>
                         </ul>">
-                        ?
+                        <span class='glyphicon glyphicon-question-sign'></span>
                     </span>
                     <span class="xs-tips">
                         <li class='text-primary'>登入时会问您的问题</li>
@@ -345,7 +336,7 @@
                         <li class='text-danger'>请输入密码，长度、字符不限</li>
                         </ul>
                         ">
-                        ?
+                        <span class='glyphicon glyphicon-question-sign'></span>
                     </span>
                     <span class="xs-tips">
                         <li>问答模式时：</li>
@@ -378,7 +369,7 @@
                         <div>（炸鸡 vs. 烧烤）</div></li>
                         </ul>
                         ">
-                        ?
+                        <span class='glyphicon glyphicon-question-sign'></span>
                     </span>
                     <span class="xs-tips">
                         <li class='text-primary'>同样作为正常答案生效</li>
@@ -414,7 +405,7 @@
                             <li>答案是正常回答的回文</li>
                         </ul>
                         ">
-                        ?
+                        <span class='glyphicon glyphicon-question-sign'></span>
                     </span>
                     <span class="xs-tips">
                         <li class='text-primary'>登入时，问题答案的提示信息</li>
@@ -437,7 +428,7 @@
                         <li class='text-danger'>昵称不可与他人重复</li>
                         <li class='text-success'>昵称可随时修改</li>
                         <li class=''>昵称为空时，我们将自动帮您生成</li>">
-                        ?
+                        <span class='glyphicon glyphicon-question-sign'></span>
                     </span>
                     <span class="xs-tips">
                         <li class='text-primary'>你希望他人看到的名称</li>
@@ -455,7 +446,7 @@
                         <li class='text-danger'>邮箱验证通过后方可生效</li>
                         <li class='text-danger'>邮箱验证生效前，无法找回密码</li>
                         <li class=''>用户头像将显示您邮箱绑定的 Gravatar™</li>">
-                        ?
+                        <span class='glyphicon glyphicon-question-sign'></span>
                     </span>
                     <span class="xs-tips">
                         <li class='text-primary'>用于找回密码</li>
@@ -468,7 +459,7 @@
                 <input type="hidden" value="{{redirect}}">
                 {% endif %}
             </form>
-            <button id="submit-button" class="btn btn-success" onclick="submitForm()">
+            <button id="submit-button" class="btn btn-success btn-block" onclick="submitForm()">
                 提交注册 / Submit
             </button>
         </div>

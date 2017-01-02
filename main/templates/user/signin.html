@@ -14,18 +14,11 @@
         vertical-align: middle;
     }
     #form-div {
-        padding: 25px;
-        background-color: rgba(0,0,0,0.5);
+        padding: 5%;
+        background-color: rgba(0,0,0,.0);
     }
     .input-group {
-        width: 100%;
-    }
-    .input-group input {
-        color: white;
-    }
-    .icon-lg {
-        color: silver;
-        font-size: large;
+        margin-bottom: 10px;
     }
     input[readonly='readonly'] {
         border-bottom: 0 !important;
@@ -35,12 +28,7 @@
     }
     #tip-content,
     #rememberme-content {
-        color: silver;
         font-size: small;
-    }
-    #buttons {
-        margin-top: 10px;
-        width: 100%;
     }
     #submit-button{
         pointer-events: auto;
@@ -205,7 +193,7 @@
             <form id="login-form" action="/user/checklogin/" method="post">
                 {% csrf_token %}
                 <div class="input-group" id="username-group">
-                    <span class="input-group-addon icon-lg">
+                    <span class="input-group-addon text-muted">
                         <span class='glyphicon glyphicon-user' title='必填，只能包含“英文字母”、“数字”和“英文句号' data-toggle="tooltip" data-placement="top"></span>
                     </span>
                     <input type="text" class="form-control" name="username"
@@ -214,14 +202,13 @@
                         onblur="validateUsername('onblur')" onkeydown="keydownUsername()">
                 </div>
                 <div class="input-group" id='question-group'>
-                    <span class="input-group-addon icon-lg">
+                    <span class="input-group-addon text-muted">
                         <span class='glyphicon glyphicon-comment'></span>
                     </span>
-                    <input id='question-content' type="question" name='question' class="form-control" value=""
-                        readonly='readonly' autocomplete="off">
+                    <input id='question-content' type="question" name='question' class="form-control" value="" readonly='readonly' autocomplete="off">
                 </div>
                 <div class="input-group" id='answer-group'>
-                    <span class="input-group-addon icon-lg">
+                    <span class="input-group-addon text-muted">
                         <span class='glyphicon glyphicon-credit-card' title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="top"></span>
                     </span>
                     <input type="password" class="form-control" name="answer"
