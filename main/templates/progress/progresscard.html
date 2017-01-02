@@ -1,55 +1,58 @@
 {% load tags_url %}
 
-<div class="{{ size }} progress-card befast" progressid="{{ prg.id }}" progressname="{{ prg.opus.name }}">
+<div class="{{size}} progress-card befast" progressid="{{prg.id}}" progressname="{{prg.opus.name}}">
     <a href="/progress/detail?id={{prg.id}}" class="no-decoration">
-        <div class="panel panel-default beveryfast hover-shadow"
-            {% if prg.opus.covercolor %}style="box-shadow: 0 0 1px 2px {{ prg.opus.covercolor }}"{% endif %}>
-            <div class="panel-heading progress-title">
+        <div class="panel panel-{{ prg.getContextualType }} beveryfast hover-shadow"
+            {% if prg.opus.covercolor %}style="box-shadow: 0 0 2px 2px {{prg.opus.covercolor}}"{% endif %}>
+            <div class="panel-heading no-bottom-border progress-title text-nowrap">
                 <span class="panel-title">
                     {% if prg.weblink and prg.weblink|isurl %}
-                        <span class="weblink label btn-link" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
+                        <span class="weblink btn btn-default btn-xs pull-left" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
                             <span class="glyphicon glyphicon-link"></span>
                         </span>
                     {% endif %}
                     <span class='opus-name'>《<b>{{ prg.opus.name|truncatechars:25 }}</b>》</span>
                     {% if prg.opus.subtitle %}
-                        <span class="subtitle label label-default">
+                        <em class="subtitle small">
                             {{ prg.opus.subtitle|truncatechars:9 }}
-                        </span>
+                        </em>
                     {% endif %}
                 </span>
             </div>
-            <div class="div-table panel-heading hidden-xs">
-                <div class='row'>
-                    {% if prg.current == prg.opus.total and prg.current != 0 %}
-                        <div class="text-center col-xs-12" title="完成时间：{{ prg.modified|date:'Y-m-d H:i' }}">
+            <table class='table table-condensed table-hover table-responsive small text-{{ prg.getContextualType }}'>
+                <tr>
+                    {% if prg.status == 'done' %}
+                        <td class="text-center {{ prg.getContextualType }}" title="完成时间：{{ prg.modified|date:'Y-m-d H:i' }}">
                             <span class='glyphicon glyphicon-ok'></span>
                             <span class=''>{{ prg.modified|date:'Y-m-d' }}</span>
-                        </div>
-                    {% else %}
-                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" title="开始时间：{{ prg.created|date:'Y-m-d H:i' }}">
-                            <span class='text-muted glyphicon glyphicon-plus'></span>
+                        </td>
+                    {% elif prg.created.date == prg.modified.date %}
+                        <td class="text-center {{ prg.getContextualType }}" title="创建时间：{{ prg.created|date:'Y-m-d H:i' }}">
+                            <span class='glyphicon glyphicon-plus'></span>
                             <span class=''>{{ prg.created|date:'Y-m-d' }}</span>
-                        </div>
-                        <div class="text-right col-xs-12 col-sm-6 col-md-6 col-lg-6" title="上次更新：{{ prg.modified|date:'Y-m-d H:i' }}">
-                            <span class='text-muted glyphicon glyphicon-refresh'></span>
+                        </td>
+                    {% else %}
+                        <td class="text-left {{ prg.getContextualType }}" title="开始时间：{{ prg.created|date:'Y-m-d H:i' }}">
+                            <span class='glyphicon glyphicon-play'></span>
+                            <span class=''>{{ prg.created|date:'Y-m-d' }}</span>
+                        </td>
+                        <td class="text-right {{ prg.getContextualType }}" title="上次更新：{{ prg.modified|date:'Y-m-d H:i' }}">
+                            <span class='glyphicon glyphicon-pause'></span>
                             <span class=''>{{ prg.modified|date:'Y-m-d' }}</span>
-                        </div>
+                        </td>
                     {% endif %}
-                </div>
-            </div>
-            <div class="panel-body">
-                <div class="progress">
-                    <div class="progress-bar {{ prg.getBartype }}" style="width: {{ prg.persent }}%; min-width: 5em;">
+                </tr>
+            </table>
+            <div class="progress">
+                <div class="progress-bar progress-bar-{{ prg.getContextualType }}" style="width: {{ prg.persent }}%; min-width: 5em;">
                     {% if prg.opus.total != 0 %}
-                        <b>{{prg.current}} / {{prg.opus.total}}</b>
-                        {% if prg.persent >= 20 %}
+                        <b>{{prg.current}}</b> / <b>{{prg.opus.total}}</b>
+                        {% if prg.persent >= 10 %}
                             <span class='pull-right'>{{ prg.persent }}%</span>
                         {% endif %}
                     {% else %}
-                        <b>{{prg.current}} / ∞</b>
+                        <b>{{prg.current}}</b> / <b>∞</b>
                     {% endif %}
-                    </div>
                 </div>
             </div>
         </div>

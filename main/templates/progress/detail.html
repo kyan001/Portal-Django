@@ -6,46 +6,28 @@
 
 {% block css %}
 <style>
-    .container {
-        font-family: 'Microsoft YaHei';
-    }
     .progress-card .table {
         margin: 0;
-    }
-    .progress-card .subtitle,
-    .progress-card .persent,
-    .progress-card .weblink {
-        font-size: 15px;
     }
     .progress-card .panel-heading {
         overflow-x: auto;
         overflow-y: hidden;
         word-break: keep-all;
-        white-space: nowrap;
     }
-
     /* progress bar */
     .progress-card .progress {
         height: 25px;
         line-height: 25px;
-        margin: 0;
+        margin-bottom: 0;
     }
     .progress-card .progress .progress-bar {
         line-height: inherit;
     }
     .editable {
-        font-size: 14px !important;
         width: 100%;
-        border-bottom: 0 !important;
     }
     .editmode {
         display: none;
-    }
-    .first-panel-body {
-        background-color: #eeeeee;
-        padding: 0px;
-        padding-bottom: 0px;
-        border-bottom: dashed silver 1px;
     }
     input[name="quick_current"] {
         text-align: right;
@@ -97,13 +79,13 @@
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 progress-card" progressid="{{ prg.id }}">
             <div class="panel panel-primary" id="main-panel">
-                <div class="panel-heading">
+                <div class="panel-heading text-nowrap">
                     <span class="panel-title">
                         {% if prg.status == 'giveup' %}
-                            <span class="persent label label-danger">已冻结</span>
+                            <span class="label label-danger">已冻结</span>
                         {% endif %}
                         {% if prg.weblink and prg.weblink|isurl %}
-                            <a class="weblink label btn-link" data-toggle="tooltip" data-placement="top" href="{{prg.weblink}}" title="在新窗口打开链接" target="_blank">
+                            <a class="btn btn-primary btn-xs pull-left" data-toggle="tooltip" data-placement="top" href="{{prg.weblink}}" title="在新窗口打开链接" target="_blank">
                                 <span class="glyphicon glyphicon-link"></span>
                             </a>
                         {% endif %}
@@ -111,29 +93,27 @@
                             <b>{{ opus.name }}</b>
                         </a>》
                         {% if opus.subtitle %}
-                            <span class="subtitle label label-default">
+                            <em class="subtitle small">
                                 {{ opus.subtitle }}
-                            </span>
+                            </em>
                         {% endif %}
 
                     </span>
                 </div>
-                <div class="panel-body first-panel-body">
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped active {{prg.getBartype}}" style="width: {{prg.persent}}%; min-width: 7em;">
-                            {% if opus.total == 0 %}
-                                <b>{{prg.current}} / ∞</b>
-                            {% else %}
-                                <b>{{prg.current}} / {{opus.total}}</b>
-                                {% if prg.persent >= 33 %}
-                                    <span class='pull-right'>{{ prg.persent }}%</span>
-                                {% endif %}
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active progress-bar-{{prg.getContextualType}}" style="width: {{prg.persent}}%; min-width: 7em;">
+                        {% if opus.total == 0 %}
+                            <b>{{prg.current}} / ∞</b>
+                        {% else %}
+                            <b>{{prg.current}} / {{opus.total}}</b>
+                            {% if prg.persent >= 33 %}
+                                <span class='pull-right'>{{ prg.persent }}%</span>
                             {% endif %}
-                        </div>
-                        {% if prg.persent < 33 %}
-                            <span class='text-right'>{{ prg.persent }}%</span>
                         {% endif %}
                     </div>
+                    {% if prg.persent < 33 %}
+                        <span class='text-right'>{{ prg.persent }}%</span>
+                    {% endif %}
                 </div>
                 <div class="panel-body second-panel-body">
                     <div class="row">
@@ -298,7 +278,9 @@
                             <div class="panel panel-primary" id="douban-info-panel">
                                 <div class="panel-heading">
                                     <span><b>作品信息</b></span>
-                                    <a class="glyphicon text-muted" id="opus-type" href="" target="_blank" ></a>
+                                    <a id="opus-type-a" class='btn btn-xs btn-primary pull-right' href="" target="_blank">
+                                        <span id='opus-type' class="glyphicon"></span>
+                                    </a>
                                 </div>
                                 <div class="panel-body">
                                     <table class="table table-condensed table-hover">
@@ -437,8 +419,8 @@
             $('#opus-type').addClass('glyphicon-film');
             $('#speed-unit').text('每集')
         }
-        $('#opus-type').attr('title', info.title);
-        $('#opus-type').attr('href', info.api);
+        $('#opus-type-a').attr('title', info.title);
+        $('#opus-type-a').attr('href', info.api);
         showImageColor(info);
         checkInfoVisibility(info)
     }
@@ -514,7 +496,7 @@
         }
     }
     function enterEdit(){
-        $('.editable').removeAttr('readonly')
+        $('.editable').removeAttr('readonly').addClass('form-control')
         $('.viewmode').hide()
         $('.viewmode-opacity').css('opacity','0.5')
         $('.editmode').show()
@@ -523,7 +505,7 @@
         $.success('输入框已解锁');
     }
     function cancelEdit(){
-        $('.editable').attr('readonly','');
+        $('.editable').attr('readonly','').removeClass('form-control')
         $('.viewmode').show()
         $('.viewmode-opacity').css('opacity','1')
         $('.editmode').hide()

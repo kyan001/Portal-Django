@@ -241,7 +241,7 @@ class Opus(BaseModel):
     def covercolor(self):
         cache_key = 'opus:{}:covercolor'.format(self.id)
         cached_color = cache.get(cache_key)
-        return cached_color or cache_key
+        return cached_color or None
 
     def __str__(self):
         subtext = "({self.subtitle})".format(self=self) if self.subtitle else ""
@@ -361,17 +361,23 @@ class Progress(BaseModel):
         return self.setStatusAuto()
 
     # calculations
-    def getBartype(self):
+    def getContextualType(self):
         persent = self.persent
-        if persent < 33:
-            bartype = 'progress-bar-danger'
+        if self.current == 0:
+            contextual_type = 'default'
+        elif persent < 1:
+            contextual_type = 'info'
+        elif persent < 33:
+            contextual_type = 'danger'
         elif persent < 66:
-            bartype = 'progress-bar-warning'
+            contextual_type = 'warning'
         elif persent < 100:
-            bartype = 'progress-bar-success'
+            contextual_type = 'success'
+        elif persent == 100:
+            contextual_type = 'primary'
         else:
-            bartype = 'progress-bar-primary'
-        return bartype
+            raise Exception('Contextual Type Error')
+        return contextual_type
 
 
 class ChatManager(models.Manager):
