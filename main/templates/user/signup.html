@@ -16,18 +16,22 @@
         display: table-cell;
         vertical-align: middle;
     }
+    .input-group {
+        margin-top: 10px;
+    }
     #form-div {
-        padding: 25px;
-        background-color: rgba(0,0,0,0.5);
+        padding: 5%;
+        background-color: rgba(0,0,0,.0);
     }
     .tips {
         cursor: help;
     }
     .xs-tips {
-        color: silver;
+        color: rgba(255, 255, 255, 0.9);
         display: none;
     }
     #submit-button{
+        margin-top: 10px;
         pointer-events: auto;
     }
 </style>
@@ -116,14 +120,14 @@
         if($('.hidden-xs').css('display') != 'none'){
             $(this).siblings('span.tips').popover('show');
         } else {
-            $(this).siblings('span.xs-tips').slideDown();
+            $(this).parent().siblings('span.xs-tips').slideDown();
         }
     }
     function hideTips(){
         if($('.hidden-xs').css('display') != 'none'){
             $(this).siblings('span.tips').popover('hide');
         } else {
-            $(this).siblings('span.xs-tips').slideUp();
+            $(this).parent().siblings('span.xs-tips').slideUp();
         }
     }
     function clearHasClass(ele){
@@ -133,9 +137,9 @@
     }
     var timer_vUn
     function validateUsername(){
-        clearHasClass($('#username-group'));
+        clearHasClass($('#username-group .input-group'));
         if( $('input[name="username"]').val() == '' ){
-            $('#username-group').addClass('has-warning');
+            $('#username-group .input-group').addClass('has-warning');
             return
         }
         showLoading('off')
@@ -156,11 +160,12 @@
                         return
                     }
                     if (result.exist) {
-                        $('#username-group').addClass('has-error');
+                        $('#username-group .input-group').addClass('has-error');
                         $.danger('用户名 “'+ $('input[name="username"]').val() +'” 已存在')
+                        $('input[name="username"]').focus()
                         disableSubmit()
                     } else {
-                        $('#username-group').addClass('has-success');
+                        $('#username-group .input-group').addClass('has-success');
                         enableSubmit()
                     }
                 },
@@ -169,7 +174,7 @@
     }
     var timer_vNn
     function validateNickname(){
-        clearHasClass($('#nickname-group'));
+        clearHasClass($('#nickname-group .input-group'));
         if( $('input[name="nickname"]').val() == '' ){
             enableSubmit()
             return
@@ -192,11 +197,11 @@
                         return
                     }
                     if (result.exist) {
-                        $('#nickname-group').addClass('has-error');
+                        $('#nickname-group .input-group').addClass('has-error');
                         $.danger('昵称 “'+ $('input[name="nickname"]').val() +'” 已存在')
                         disableSubmit()
                     } else {
-                        $('#nickname-group').addClass('has-success');
+                        $('#nickname-group .input-group').addClass('has-success');
                         enableSubmit()
                     }
                 },
@@ -205,9 +210,9 @@
     }
     var timer_vE
     function validateEmail(){
-        clearHasClass($('#email-group'));
+        clearHasClass($('#email-group .input-group'));
         if( $('input[name="email"]').val() == '' ){
-            $('#email-group').addClass('has-warning');
+            $('#email-group .input-group').addClass('has-warning');
             return
         }
         clearTimeout(timer_vE)
@@ -228,11 +233,11 @@
                         return
                     }
                     if (result.exist) {
-                        $('#email-group').addClass('has-error');
+                        $('#email-group .input-group').addClass('has-error');
                         $.danger('邮箱 “'+ $('input[name="email"]').val() +'” 已存在')
                         disableSubmit()
                     } else {
-                        $('#email-group').addClass('has-success');
+                        $('#email-group .input-group').addClass('has-success');
                         enableSubmit()
                     }
                 },
@@ -240,25 +245,26 @@
         }, 500)
     }
     function submitForm(){
-        if( $('input[name="username"]').val() == '' ){
-            $('#username-group').addClass('has-error');
-            $.danger('用户名不能为空')
-            return false;
+        function checkIsEmpty(selector, word){
+            if( $(selector).find('input').val() == '' ){
+                $(selector).addClass('has-error');
+                $.danger(word + '不能为空')
+                return false;
+            }
+            return true;
         }
-        if( $('input[name="question"]').val() == '' ){
-            $('#question-group').addClass('has-error');
-            $.danger('问题不能为空')
-            return false;
+        var checklist = {
+            '#username-group .input-group': '用户名',
+            '#question-group .input-group': '问题',
+            '#answer1-group .input-group': '答案 / 密码',
+            '#email-group .input-group': '邮箱',
         }
-        if( $('input[name="answer1"]').val() == '' ){
-            $('#answer1-group').addClass('has-error');
-            $.danger('答案不能为空')
-            return false;
-        }
-        if( $('input[name="email"]').val() == '' ){
-            $('#email-group').addClass('has-error');
-            $.danger('邮箱不能为空')
-            return false;
+        for (var k in checklist) {
+            if (checkIsEmpty(k, checklist[k])){
+                continue
+            } else {
+                return false;
+            }
         }
         disableAllBtn()
         showSubmitting()
@@ -279,39 +285,49 @@
         <div id="form-div" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-xs-12">
             <form action="/user/newuser/" method="post" id="the-form">
                 {% csrf_token %}
-                <div class="input-group" id='username-group'>
-                    <input type="text" name="username" class="form-control needverify" placeholder="用户名 / Username" autofocus="autofocus" oninput="clearHasClass($('#username-group'))" onblur='validateUsername()' autocomplete="off">
-                    <span class="input-group-addon tips hidden-xs"
-                        title="用户名 / Username <span class='label label-primary'>必填</span>"
-                        data-content="<li class='text-primary'>登入时的凭证之一</li>
-                        <li class='text-danger'>只能包含“英文字母”、“数字”和“英文句号”</li>
-                        <li class='text-danger'>不能同其他人的用户名重复。</li>">
-                        <span class='glyphicon glyphicon-question-sign'></span>
-                    </span>
+                <div id='username-group'>
+                    <div class="input-group">
+                        <span class="input-group-addon text-muted">
+                            <span class='glyphicon glyphicon-user' title='必填，只能包含“英文字母”、“数字”和“英文句号' data-toggle="tooltip" data-placement="top"></span>
+                        </span>
+                        <input type="text" name="username" class="form-control needverify" placeholder="用户名 / Username" autofocus="autofocus" oninput="clearHasClass($('#username-group'))" onblur='validateUsername()' autocomplete="off">
+                        <span class="input-group-addon tips hidden-xs"
+                            title="用户名 / Username <span class='label label-primary'>必填</span>"
+                            data-content="<li class='text-primary'>登入时的凭证之一</li>
+                            <li class='text-danger'>只能包含“英文字母”、“数字”和“英文句号”</li>
+                            <li class='text-danger'>不能同其他人的用户名重复。</li>">
+                            <span class='glyphicon glyphicon-question-sign'></span>
+                        </span>
+                    </div>
                     <span class="xs-tips">
-                        <li class='text-primary'>登入时的凭证之一</li>
-                        <li class='text-danger'>只能包含“英文字母”、“数字”和“英文句号”</li>
-                        <li class='text-danger'>不能同其他人的用户名重复。</li>
+                        <li><ins>登入时的凭证之一</ins></li>
+                        <li><em>只能包含“英文字母”、“数字”和“英文句号”</em></li>
+                        <li><em>不能同其他人的用户名重复。</em></li>
                     </span>
                 </div>
-                <div class="input-group newmode" id="question-group">
-                    <input type="text" name="question" class="form-control" placeholder="问题 / Question" oninput="clearHasClass($('#question-group'))" autocomplete="off">
-                    <span class="input-group-addon tips hidden-xs"
-                        title="问题 / Question <span class='label label-primary'>必填</span>"
-                        data-content="<li class='text-primary'>登入时会问您的问题</li>
-                        <li class='text-success'>我们用 “问题+回答” 来代替传统密码。</li>
-                        <li>一些常用的问题包括：</li>
-                        <ul>
-                        <li>“最常用的8位密码”</li>
-                        <li>“最想获得的超能力”</li>
-                        <li>“家里保险柜的数量”</li>
-                        </ul>">
-                        <span class='glyphicon glyphicon-question-sign'></span>
-                    </span>
+                <div id="question-group">
+                    <div class="input-group newmode">
+                        <span class="input-group-addon text-muted">
+                            <span class='glyphicon glyphicon-comment'></span>
+                        </span>
+                        <input type="text" name="question" class="form-control" placeholder="问题 / Question" oninput="clearHasClass($('#question-group'))" autocomplete="off">
+                        <span class="input-group-addon tips hidden-xs"
+                            title="问题 / Question <span class='label label-primary'>必填</span>"
+                            data-content="<li class='text-primary'>登入时会问您的问题</li>
+                            <li class='text-success'>我们用 “问题+回答” 来代替传统密码。</li>
+                            <li>一些常用的问题包括：</li>
+                            <ul>
+                            <li>“最常用的8位密码”</li>
+                            <li>“最想获得的超能力”</li>
+                            <li>“家里保险柜的数量”</li>
+                            </ul>">
+                            <span class='glyphicon glyphicon-question-sign'></span>
+                        </span>
+                    </div>
                     <span class="xs-tips">
-                        <li class='text-primary'>登入时会问您的问题</li>
-                        <li class='text-success'>我们用 “问题+回答” 来代替传统密码。</li>
-                        <li>一些常用的问题包括：</li>
+                        <li><ins>登入时会问您的问题</ins></li>
+                        <li><em>用 “问题+回答” 来代替传统密码。</em></li>
+                        <li><b>一些常用的问题包括：</b></li>
                         <ul>
                             <li>“最常用的8位密码”</li>
                             <li>“最想获得的超能力”</li>
@@ -319,99 +335,114 @@
                         </ul>
                     </span>
                 </div>
-                <div class="input-group" id="answer1-group">
-                    <input type="text" name="answer1" class="form-control" placeholder="答案 / Answer" oninput="clearHasClass($('#answer1-group'))" autocomplete="off">
-                    <span class="input-group-addon tips hidden-xs"
-                        title="答案 / 密码 <span class='label label-primary'>必填</span>"
-                        data-content="<li>问答模式时：</li>
-                        <ul>
-                        <li class='text-primary'>登入时您需要回答的内容</li>
-                        <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登入</li>
-                        <li class='text-success'>一般应与上面的问题相对应。</li>
-                        <li class='text-success'>中英文、标点、数字均可</li>
-                        <li class='text-warning'>任何人（包括管理员）均无法查看您的回答。</li>
-                        </ul>
-                        <li>传统模式时：</li>
-                        <ul>
-                        <li class='text-danger'>请输入密码，长度、字符不限</li>
-                        </ul>
-                        ">
-                        <span class='glyphicon glyphicon-question-sign'></span>
-                    </span>
-                    <span class="xs-tips">
-                        <li>问答模式时：</li>
-                        <ul>
+                <div id="answer1-group">
+                    <div class="input-group">
+                        <span class="input-group-addon text-muted">
+                            <span class='glyphicon glyphicon-credit-card' title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="top"></span>
+                        </span>
+                        <input type="text" name="answer1" class="form-control" placeholder="答案 / Answer" oninput="clearHasClass($('#answer1-group'))" autocomplete="off">
+                        <span class="input-group-addon tips hidden-xs"
+                            title="答案 / 密码 <span class='label label-primary'>必填</span>"
+                            data-content="<li>问答模式时：</li>
+                            <ul>
                             <li class='text-primary'>登入时您需要回答的内容</li>
                             <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登入</li>
                             <li class='text-success'>一般应与上面的问题相对应。</li>
                             <li class='text-success'>中英文、标点、数字均可</li>
                             <li class='text-warning'>任何人（包括管理员）均无法查看您的回答。</li>
-                        </ul>
-                        <li>传统模式时：</li>
-                        <ul>
+                            </ul>
+                            <li>传统模式时：</li>
+                            <ul>
                             <li class='text-danger'>请输入密码，长度、字符不限</li>
+                            </ul>
+                            ">
+                            <span class='glyphicon glyphicon-question-sign'></span>
+                        </span>
+                    </div>
+                    <span class="xs-tips">
+                        <li><b>问答模式时：</b></li>
+                        <ul>
+                            <li><ins>登入时您需要回答的内容</ins></li>
+                            <li><em>回答 “答案” 或 “备选答案” 均可正常登入</em></li>
+                            <li><em>一般应与上面的问题相对应</em></li>
+                            <li><em>中英文、标点、数字均可</em></li>
+                            <li>任何人（包括管理员）均无法查看您的回答。</li>
+                        </ul>
+                        <li><b>传统模式时：</b></li>
+                        <ul>
+                            <li><em>请输入密码，长度、字符不限</em></li>
                         </ul>
                     </span>
                 </div>
-                <div class="input-group newmode" id="answer2-group">
-                    <input type="text" name="answer2" class="form-control" placeholder="备选答案 / Alternative Answer" autocomplete="off">
-                    <span class="input-group-addon tips hidden-xs"
-                        title="备选答案 / Alternative Answer <span class='label label-success'>选填</span>"
-                        data-content="<li class='text-primary'>同样作为正常答案生效</li>
-                        <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登入</li>
-                        <li class=''>常见的 “答案” 与 “备选答案” 的组合有：</li>
-                        <ul>
-                        <li><span style='color:brown'>中文答案 + 英文答案</span>
-                        <div>（北京 vs. beijing）</div></li>
-                        <li><span style='color:brown'>容易混淆的答案</span>
-                        <div>（8月15日 vs. 08-15）</div></li>
-                        <li><span style='color:brown'>自己也拿不准的答案</span>
-                        <div>（炸鸡 vs. 烧烤）</div></li>
-                        </ul>
-                        ">
-                        <span class='glyphicon glyphicon-question-sign'></span>
-                    </span>
+                <div id="answer2-group">
+                    <div class="input-group newmode">
+                        <span class="input-group-addon text-muted">
+                            <span class='glyphicon glyphicon-credit-card' title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="top"></span>
+                        </span>
+                        <input type="text" name="answer2" class="form-control" placeholder="备选答案 / Alternative Answer" autocomplete="off">
+                        <span class="input-group-addon tips hidden-xs"
+                            title="备选答案 / Alternative Answer <span class='label label-success'>选填</span>"
+                            data-content="<li class='text-primary'>同样作为正常答案生效</li>
+                            <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登入</li>
+                            <li class=''>常见的 “答案” 与 “备选答案” 的组合有：</li>
+                            <ul>
+                            <li><span style='color:brown'>中文答案 + 英文答案</span>
+                            <div>（北京 vs. beijing）</div></li>
+                            <li><span style='color:brown'>容易混淆的答案</span>
+                            <div>（8月15日 vs. 08-15）</div></li>
+                            <li><span style='color:brown'>自己也拿不准的答案</span>
+                            <div>（炸鸡 vs. 烧烤）</div></li>
+                            </ul>
+                            ">
+                            <span class='glyphicon glyphicon-question-sign'></span>
+                        </span>
+                    </div>
                     <span class="xs-tips">
-                        <li class='text-primary'>同样作为正常答案生效</li>
-                        <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登入</li>
-                        <li class=''>常见的 “答案” 与 “备选答案” 的组合有：</li>
+                        <li><ins>同样作为正常答案生效</ins></li>
+                        <li><em>回答 “答案” 或 “备选答案” 均可正常登入</em></li>
+                        <li><b>常见的 “答案” 与 “备选答案” 的组合有：</b></li>
                         <ul>
                             <li>
-                                <span style='color:brown'>中文答案 + 英文答案</span>
+                                <span>中文答案 + 英文答案</span>
                                 <div>（北京 vs. beijing）</div>
                             </li>
                             <li>
-                                <span style='color:brown'>容易混淆的答案</span>
+                                <span>容易混淆的答案</span>
                                 <div>（8月15日 vs. 08-15）</div>
                             </li>
                             <li>
-                                <span style='color:brown'>自己也拿不准的答案</span>
+                                <span>自己也拿不准的答案</span>
                                 <div>（炸鸡 vs. 烧烤）</div>
                             </li>
                         </ul>
                     </span>
                 </div>
-                <div class="input-group newmode" id="tip-group">
-                    <input type="text" name="tip" class="form-control" placeholder="回答提示 / Tip" autocomplete="off">
-                    <span class="input-group-addon tips hidden-xs"
-                        title="回答提示 / Tip <span class='label label-success'>选填</span>"
-                        data-content="<li class='text-primary'>登入时，问题答案的提示信息</li>
-                        <li class='text-success'>在登入界面您需要时自动显示</li>
-                        <li class='text-warning'>请不要将答案直接放在这里</li>
-                        <li class=''>常见的 “回答提示” 有：</li>
-                        <ul>
-                            <li>答案是2个汉字</li>
-                            <li>答案1块钱一串</li>
-                            <li>答案是正常回答的回文</li>
-                        </ul>
-                        ">
-                        <span class='glyphicon glyphicon-question-sign'></span>
-                    </span>
+                <div id="tip-group">
+                    <div class="input-group newmode">
+                        <span class="input-group-addon text-muted">
+                            <span class='glyphicon glyphicon-magnet'></span>
+                        </span>
+                        <input type="text" name="tip" class="form-control" placeholder="回答提示 / Tip" autocomplete="off">
+                        <span class="input-group-addon tips hidden-xs"
+                            title="回答提示 / Tip <span class='label label-success'>选填</span>"
+                            data-content="<li class='text-primary'>登入时，问题答案的提示信息</li>
+                            <li class='text-success'>在登入界面您需要时自动显示</li>
+                            <li class='text-warning'>请不要将答案直接放在这里</li>
+                            <li class=''>常见的 “回答提示” 有：</li>
+                            <ul>
+                                <li>答案是2个汉字</li>
+                                <li>答案1块钱一串</li>
+                                <li>答案是正常回答的回文</li>
+                            </ul>
+                            ">
+                            <span class='glyphicon glyphicon-question-sign'></span>
+                        </span>
+                    </div>
                     <span class="xs-tips">
-                        <li class='text-primary'>登入时，问题答案的提示信息</li>
-                        <li class='text-success'>在登入界面您需要时自动显示</li>
-                        <li class='text-warning'>请不要将答案直接放在这里</li>
-                        <li class=''>常见的 “回答提示” 有：</li>
+                        <li><ins>登入时，问题答案的提示信息</ins></li>
+                        <li><em>在登入界面您需要时自动显示</em></li>
+                        <li><em>请不要将答案直接放在这里</em></li>
+                        <li><b>常见的 “回答提示” 有：</b></li>
                         <ul>
                             <li>答案是2个汉字</li>
                             <li>答案1块钱一串</li>
@@ -419,44 +450,54 @@
                         </ul>
                     </span>
                 </div>
-                <div class="input-group" id="nickname-group">
-                    <input type="text" name="nickname" class="form-control needverify" placeholder="昵称 / Nickname" oninput="clearHasClass($('#nickname-group'))" onblur='validateNickname()' autocomplete="off">
-                    <span class="input-group-addon tips hidden-xs"
-                        title="昵称 / Nickname <span class='label label-success'>选填</span>"
-                        data-content="<li class='text-primary'>你希望他人看到的名称</li>
-                        <li class='text-danger'>昵称只能是 “汉字” 和 “字母”</li>
-                        <li class='text-danger'>昵称不可与他人重复</li>
-                        <li class='text-success'>昵称可随时修改</li>
-                        <li class=''>昵称为空时，我们将自动帮您生成</li>">
-                        <span class='glyphicon glyphicon-question-sign'></span>
-                    </span>
+                <div id="nickname-group">
+                    <div class="input-group">
+                        <span class="input-group-addon text-muted">
+                            <span class='glyphicon glyphicon-search'></span>
+                        </span>
+                        <input type="text" name="nickname" class="form-control needverify" placeholder="昵称 / Nickname" oninput="clearHasClass($('#nickname-group'))" onblur='validateNickname()' autocomplete="off">
+                        <span class="input-group-addon tips hidden-xs"
+                            title="昵称 / Nickname <span class='label label-success'>选填</span>"
+                            data-content="<li class='text-primary'>你希望他人看到的名称</li>
+                            <li class='text-danger'>昵称只能是 “汉字” 和 “字母”</li>
+                            <li class='text-danger'>昵称不可与他人重复</li>
+                            <li class='text-success'>昵称可随时修改</li>
+                            <li class=''>昵称为空时，我们将自动帮您生成</li>">
+                            <span class='glyphicon glyphicon-question-sign'></span>
+                        </span>
+                    </div>
                     <span class="xs-tips">
-                        <li class='text-primary'>你希望他人看到的名称</li>
-                        <li class='text-danger'>昵称只能是 “汉字” 和 “字母”</li>
-                        <li class='text-danger'>昵称不可与他人重复</li>
-                        <li class='text-success'>昵称可随时修改</li>
-                        <li class=''>昵称为空时，我们将自动帮您生成</li>
+                        <li><ins>你希望他人看到的名称</ins></li>
+                        <li><em>昵称只能是 “汉字” 和 “字母”</em></li>
+                        <li><em>昵称不可与他人重复</em></li>
+                        <li>昵称可随时修改</li>
+                        <li>昵称为空时，我们将自动帮您生成</li>
                     </span>
                 </div>
-                <div class="input-group" id="email-group">
-                    <input type="email" name="email" class="form-control needverify" placeholder="邮箱 / Email" oninput="clearHasClass($('#email-group'));" onblur='validateEmail()' autocomplete="off">
-                    <span class="input-group-addon tips hidden-xs"
-                        title="邮箱 / Email <span class='label label-primary'>必填</span>"
-                        data-content="<li class='text-primary'>用于找回密码</li>
-                        <li class='text-danger'>邮箱验证通过后方可生效</li>
-                        <li class='text-danger'>邮箱验证生效前，无法找回密码</li>
-                        <li class=''>用户头像将显示您邮箱绑定的 Gravatar™</li>">
-                        <span class='glyphicon glyphicon-question-sign'></span>
-                    </span>
+                <div id="email-group">
+                    <div class="input-group">
+                        <span class="input-group-addon text-muted">
+                            <span class='glyphicon glyphicon-envelope'></span>
+                        </span>
+                        <input type="email" name="email" class="form-control needverify" placeholder="邮箱 / Email" oninput="clearHasClass($('#email-group'));" onblur='validateEmail()' autocomplete="off">
+                        <span class="input-group-addon tips hidden-xs"
+                            title="邮箱 / Email <span class='label label-primary'>必填</span>"
+                            data-content="<li class='text-primary'>用于找回密码</li>
+                            <li class='text-danger'>邮箱验证通过后方可生效</li>
+                            <li class='text-danger'>邮箱验证生效前，无法找回密码</li>
+                            <li class=''>用户头像将显示您邮箱绑定的 Gravatar™</li>">
+                            <span class='glyphicon glyphicon-question-sign'></span>
+                        </span>
+                    </div>
                     <span class="xs-tips">
-                        <li class='text-primary'>用于找回密码</li>
-                        <li class='text-danger'>邮箱验证通过后方可生效</li>
-                        <li class='text-danger'>邮箱验证生效前，无法找回密码</li>
+                        <li><ins>用于找回密码</ins></li>
+                        <li><em>邮箱验证通过后方可生效</em></li>
+                        <li><em>邮箱验证生效前，无法找回密码</em></li>
                         <li class=''>用户头像将显示您邮箱绑定的 Gravatar™</li>
                     </span>
                 </div>
                 {% if redirect %}
-                <input type="hidden" value="{{redirect}}">
+                    <input type="hidden" value="{{redirect}}">
                 {% endif %}
             </form>
             <button id="submit-button" class="btn btn-success btn-block" onclick="submitForm()">
