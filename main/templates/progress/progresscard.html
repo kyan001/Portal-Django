@@ -44,8 +44,8 @@
                 </tr>
             </table>
             <div class="progress text-center">
-                <div class="progress-bar progress-bar-{{ prg.getContextualType }}" style="width: {{ prg.persent }}%; {% if prg.persent < 5 %}color: black;{% endif %}">
-                    {% if prg.persent < 33 %}
+                <div class="progress-bar progress-bar-{{ prg.getContextualType }}" style="width: {{ prg.persent }}%;">
+                    {% if prg.persent < 10 %}
                 </div>
                 <div class='small'>
                     {% endif %}
