@@ -104,7 +104,6 @@
                                 {{ opus.subtitle }}
                             </em>
                         {% endif %}
-
                     </span>
                 </div>
                 <div class="progress">
@@ -306,7 +305,7 @@
                                         </tr>
                                         <tr id="tag-tr">
                                             <td id="tag-label">标签</td>
-                                            <td id="tag-tag"></td>
+                                            <td id="tag-tag">无</td>
                                         </tr>
                                     </table>
                                 </div><!--.panel-body-->
@@ -381,7 +380,7 @@
         } else  {//作品存在且精确匹配
             $('#title-tr').popover('destroy')
             $("#douban-info-panel").addClass('viewmode').fadeIn()
-            if(info.tags.length != 0){//作品无tag
+            if(info.tags[0].length != 0){//作品无tag
                 $('#tag-tr').show()
             }
             if(info.rating && parseInt(info.rating) > 0){//作品评分 > 0
@@ -417,7 +416,7 @@
     function showInfo(info){
         $('#title-link').attr('href', info.url);
         $('#title-link').text(info.title);
-        $('#tag-tag').text( info.tags.join('，') );
+        $('#tag-tag').text(info.tags.join('，'));
         $('#rating-av').text(info.rating);
         if(info.type == 'book'){
             $('#opus-type').addClass('glyphicon-book');

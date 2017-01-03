@@ -46,6 +46,7 @@ urlpatterns = [
     url(r'^progress/setical$', views.progressSetical),  # post
     # OPUS
     url(r'^opus/detail$', views.opusDetail),
+    url(r'^opus/searchopusinfo$', views.opusSearchOpusInfo),  # get Ajax
     # CHAT
     url(r'^chat/inbox$', views.chatInbox),
     url(r'^chat/markread$', views.chatMarkread),
