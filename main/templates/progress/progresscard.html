@@ -19,12 +19,12 @@
                     {% endif %}
                 </span>
             </div>
-            <table class='hidden-xs table table-condensed table-hover table-responsive small text-{{ prg.getContextualType|default:"muted" }}'>
+            <table class='hidden-xs table table-condensed table-responsive small text-{{ prg.getContextualType|default:"muted" }}'>
                 <tr>
                     {% if prg.status == 'done' %}
-                        <td class="text-center bg-primary" title="完成时间：{{ prg.modified|date:'Y-m-d H:i' }}">
+                        <td class="text-center bg-primary">
                             <span class='glyphicon glyphicon-ok'></span>
-                            <span class=''>{{ prg.modified|date:'Y-m-d' }}</span>
+                            <span title='完成时间'>{{ prg.modified|date:'Y-m-d' }}</span>
                         </td>
                     {% elif prg.created.date == prg.modified.date %}
                         <td class="text-center {{ prg.getContextualType|default:'active' }}">
