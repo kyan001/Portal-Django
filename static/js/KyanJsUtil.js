@@ -33,7 +33,7 @@ $.extend({
                 info.match = checkHas(name, data.books[0])
                 info.exist = data.books[0]?true:false
                 callback(info)
-            }, 'jsonp');
+            }, 'json');
         }
     },
     getMovieInfo: function(name, callback){
@@ -62,7 +62,7 @@ $.extend({
                 info.match = checkHas(name, data.subjects[0])
                 info.exist = data.subjects[0]?true:false
                 callback(info);
-            }, 'jsonp');
+            }, 'json');
         }
     },
     /**
