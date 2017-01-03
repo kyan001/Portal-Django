@@ -3,7 +3,7 @@ $.extend({
         var book_search_api = '/opus/searchopusinfo'
         var book_search_api_douban = 'https://api.douban.com/v2/book/search';
         if(name !== ''){
-            $.get(book_search_api, {'count':'1','q':name}, function(data){
+            $.get(book_search_api, {'count':'1','q':name, 'type':'book'}, function(data){
                 var info = {}
                 if(data.books[0]){
                     info.title = data.books[0].title;
@@ -28,7 +28,7 @@ $.extend({
                     }
                     info.image = data.books[0].image
                 }
-                info.api = book_search_api + '?count=1&q=' + name
+                info.api = book_search_api_douban + '?count=1&q=' + name
                 info.type = 'book'
                 info.match = checkHas(name, data.books[0])
                 info.exist = data.books[0]?true:false
@@ -37,10 +37,11 @@ $.extend({
         }
     },
     getMovieInfo: function(name, callback){
-        var movie_search_api = 'https://api.douban.com/v2/movie/search';
+        var movie_search_api = '/opus/searchopusinfo'
+        var movie_search_api_douban = 'https://api.douban.com/v2/movie/search';
         var movie_info_api = 'https://api.douban.com/v2/movie/subject/';
         if(name != ''){
-            $.get(movie_search_api, {'count':'1','q':name}, function(data){
+            $.get(movie_search_api, {'count':'1','q':name, 'type':'movie'}, function(data){
                 var info = {}
                 if( data.subjects[0] ){
                     info.title = data.subjects[0].title;
@@ -56,7 +57,7 @@ $.extend({
                         info.image = data.subjects[0].images.medium
                     }
                 }
-                info.api = movie_search_api + '?count=1&q=' + name
+                info.api = movie_search_api_douban + '?count=1&q=' + name
                 info.type = 'movie'
                 info.match = checkHas(name, data.subjects[0])
                 info.exist = data.subjects[0]?true:false
