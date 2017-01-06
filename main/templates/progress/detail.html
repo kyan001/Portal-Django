@@ -294,6 +294,7 @@
                                             <td>作品名称</td>
                                             <td>
                                                 《<a id="title-link" data-toggle="tooltip" data-placement="top" href="" title="作品详细信息" target="_blank"></a>》
+                                                <var id="original-title"></var>
                                             </td>
                                         </tr>
                                         <tr id="rating-tr">
@@ -416,6 +417,9 @@
     function showInfo(info){
         $('#title-link').attr('href', info.url);
         $('#title-link').text(info.title);
+        if(info.original_title){
+            $('#original-title').text(info.original_title)
+        }
         $('#tag-tag').text(info.tags.join('，'));
         $('#rating-av').text(info.rating);
         if(info.type == 'book'){
