@@ -47,7 +47,7 @@ def opusSearchOpusInfo(request):  # get # ajax
     opustype = request.GET.get('type') or 'book'
     count = request.GET.get('count') or '1'
     keyword = request.GET.get('q')
-    cache_key = '{typ}:{kw}:info'.format(typ=opustype, kw=keyword)
+    cache_key = '{typ}:{kw}:info'.format(typ=opustype, kw=keyword.replace(' ','_'))
     cache_timeout = 60 * 60 * 24 * 7 * 2  # 2 weeks
     cached_info = cache.get(cache_key)
     if cached_info:
