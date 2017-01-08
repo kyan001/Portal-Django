@@ -1,1 +1,22 @@
-请用注册邮箱写信给 kai@superfarmer.net 说明情况
+{% extends "base.html" %}
+{% block title %}找回用户名{% endblock title %}
+
+{% block theme %}{% endblock %}
+
+{% block nav-btn %}
+    {% include 'user/signindropdown.html' %}
+{% endblock nav-btn %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class='col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-xs-12'>
+            <div class='well small'>请用注册邮箱 <a class='btn btn-sm btn-default' href='mailto:kai@superfarmer.net'>写信</a> 给 <strong>kai@superfarmer.net</strong> 说明情况</div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+
+{% block footer %}{% endblock footer %}

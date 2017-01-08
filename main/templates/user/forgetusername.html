@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}找回用户名{% endblock title %}
+
+{% block theme %}{% endblock %}
+
+{% block nav-btn %}
+    {% include 'user/signindropdown.html' %}
+{% endblock nav-btn %}
+
+{% block css %}
+    <style>
+        .container {
+            background: url('/static/img/user/signin.jpg');
+            display: table;
+        }
+        #form-wrap {
+            display: table-cell;
+            vertical-align: middle;
+        }
+        #form-div {
+            padding: 5%;
+            background-color: rgba(0,0,0,.5);
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        #submit-button{
+            pointer-events: auto;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container fullscreen">
+    <div id="form-wrap" class="row">
+        <div id="form-div" class='col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-xs-12'>
+            <div class='well small'>
+                <strong>注意：</strong>
+                <div>找回用户名的同时，系统会向该用户发送一封站内信，声明此次找回。</div>
+            </div>
+            <form id="forgetusername-form" action="/user/forgetusername" method="post">
+                {% csrf_token %}
+                <div class="input-group" id="username-group">
+                    <span class="input-group-addon text-muted">
+                        <span class='glyphicon glyphicon-envelope' title='请输入注册时填写的邮箱'></span>
+                    </span>
+                    <input type="email" class="form-control" name="email" placeholder="请输入注册时填写的邮箱" autofocus="autofocus" autocomplete="off">
+                </div>
+            </form>
+            <div class='row'>
+                <div class='col-xs-12'>
+                    <button id="submit-button" class="btn btn-success btn-block" onclick="submitForm()">
+                        找回用户名
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+    <script>
+        function submitForm(){
+            if($('input[name="email"]').val() == ''){
+                $.danger('邮箱不能为空')
+                $('input[name="email"]').focus()
+                return false
+            }
+            $('#forgetusername-form').submit()
+        }
+    </script>
+{% endblock %}
+
+{% block footer %}{% endblock footer %}

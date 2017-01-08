@@ -283,6 +283,39 @@ def userForgetanswer(request):
     return render(request, 'user/forgetanswer.html', context)
 
 
+def userForgetusername(request):
+    email = request.POST.get('email')
+    if not email:
+        return render(request, 'user/forgetusername.html')
+    target_user = User.objects.filter(email=email)
+    if len(target_user) == 0:
+        return util.ctrl.infoMsg("此邮箱（{}）尚未被注册".format(email), title="找回用户名")
+    else:
+        user = target_user.get()
+        username = user.username
+        step = random.randint(2,3)
+        username_part = ((step - 1) * '*').join(username[::step])
+        # send chat
+        chat_content = '''
+            有人正在通过邮件的方式找回您的用户名。
+            <hr/>
+            他输入的邮件是：<pre>{eml}</pre>
+            他得到的用户名是：<pre>{un} </pre>
+            <hr/>
+            若此操作不是您所为，请联系管理员 @系统消息
+        '''.format(eml=email, un=username_part)
+        msg = Chat.objects.sendBySys(user, title="有人正在通过邮件的方式找回您的用户名", content=chat_content)
+        msg.save()
+        infomsg = """
+            出于安全考虑，您的用户名未全部显示，每个 <code>*</code> 代表一个字符。
+            <hr/>
+            你的用户名是：<pre>{}</pre>
+            <hr/>
+            一封包含此次操作信息的站内信已经发送给您。
+        """.format(username_part)
+        return util.ctrl.infoMsg(infomsg, title='找回用户名')
+
+
 def userCheckLogin(request):  # POST
     '''用户点击登入后：判断用户是否可以登入'''
     # get posts

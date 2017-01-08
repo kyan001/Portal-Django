@@ -180,9 +180,7 @@
 {% endblock js %}
 
 {% block nav-btn %}
-<a href="/user/forgetanswer" class="btn btn-warning btn-sm">
-    <span class="glyphicon glyphicon-exclamation-sign"></span> 忘记密码/答案
-</a>
+    {% include 'user/signindropdown.html' %}
 {% endblock nav-btn %}
 
 {% block content %}
@@ -192,8 +190,8 @@
             <form id="login-form" action="/user/checklogin/" method="post">
                 {% csrf_token %}
                 <div class="input-group" id="username-group">
-                    <span class="input-group-addon text-muted">
-                        <span class='glyphicon glyphicon-user' title='必填，只能包含“英文字母”、“数字”和“英文句号' data-toggle="tooltip" data-placement="top"></span>
+                    <span class="input-group-addon text-muted" title='必填，只能包含“英文字母”、“数字”和“英文句号' data-toggle="tooltip" data-placement="top">
+                        <span class='glyphicon glyphicon-user'></span>
                     </span>
                     <input type="text" class="form-control" name="username"
                         placeholder="用户名 / Username"
@@ -207,8 +205,8 @@
                     <input id='question-content' type="question" name='question' class="form-control" value="" readonly='readonly' autocomplete="off">
                 </div>
                 <div class="input-group" id='answer-group'>
-                    <span class="input-group-addon text-muted">
-                        <span class='glyphicon glyphicon-credit-card' title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="top"></span>
+                    <span class="input-group-addon text-muted" title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="top">
+                        <span class='glyphicon glyphicon-credit-card'></span>
                     </span>
                     <input type="password" class="form-control" name="answer"
                         placeholder="密码 / Password"
@@ -220,13 +218,10 @@
                         readonly='readonly' autocomplete="off">
                 </div>
                 <div class="input-group" id="rememberme-group">
-                    <span class="input-group-addon">
-                        <input id="rememberme" type="checkbox" name='rememberme'
-                            title='2 周内免登入，公共电脑请勿勾选此项' data-toggle="tooltip" data-placement="top"
-                            value='on' checked>
+                    <span class="input-group-addon" title='两周内免登入，公共电脑请勿勾选此项' data-toggle="tooltip" data-placement="top">
+                        <input id="rememberme" type="checkbox" name='rememberme' value='on' checked>
                     </span>
-                    <input id='rememberme-content' type='text' class="form-control" value="记住我 / Remember me"
-                        readonly='readonly' autocomplete="off">
+                    <input id='rememberme-content' type='text' class="form-control" value="记住我 / Remember me" readonly='readonly' autocomplete="off">
                 </div>
                 <input type="hidden" name="from" value="{{from}}">
             </form>
