@@ -45,18 +45,20 @@
             </table>
             <div class="progress text-center">
                 <div class="progress-bar progress-bar-{{ prg.getContextualType }}" style="width: {{ prg.persent }}%;">
-                    {% if prg.persent < 25 %}
+                    {% if prg.persent >= 25 %}
+                        <b>{{prg.current}}</b> / <b>{% if prg.opus.total != 0 %}{{prg.opus.total}}{% else %}∞{% endif %}</b>
+                    {% endif %}
+                    {% if prg.persent > 50 and prg.persent < 100 %}
+                        <span class='pull-right'>{{ prg.persent }}%</span>
+                    {% endif %}
                 </div>
                 <div class='small'>
-                    {% endif %}
+                    {% if prg.persent < 25 %}
                         <b>{{prg.current}}</b> / <b>{% if prg.opus.total != 0 %}{{prg.opus.total}}{% else %}∞{% endif %}</b>
-                        {% if prg.persent > 0 and prg.persent < 100 %}
-                            {% if prg.persent > 25 %}
-                                <span class='pull-right'>{{ prg.persent }}%</span>
-                            {% else %}
-                                <span class='pull-left'>{{ prg.persent }}%</span>
-                            {% endif %}
-                        {% endif %}
+                    {% endif %}
+                    {% if prg.persent > 0 and prg.persent < 50 %}
+                        <span class='pull-left'>{{ prg.persent }}%</span>
+                    {% endif %}
                 </div>
             </div>
         </div>

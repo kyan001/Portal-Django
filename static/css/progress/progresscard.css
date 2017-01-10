@@ -1,6 +1,6 @@
 /* progress-card */
 .progress-card {
-    opacity: 0.70;
+    opacity: 0.80;
 }
 .collapse:hover .progress-card {
     opacity: 1;
