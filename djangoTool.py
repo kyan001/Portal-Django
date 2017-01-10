@@ -9,7 +9,7 @@ import consoleiotools as cit
 from KyanToolKit import KyanToolKit as ktk
 
 
-__version__ = '1.1.1'
+__version__ = '1.2.0'
 
 
 def manage_file_exist():
@@ -76,6 +76,17 @@ def system_check():
     """Check if django projects has a problem"""
     run_by_py3('manage.py check')
 
+@cit.as_session('Dump Data')
+def dump_data():
+    """Dump Database data to a json file"""
+    run_by_py3('manage.py dumpdata > datadump.json')
+
+
+@cit.as_session('Load Data')
+def load_data():
+    """Load Database data from a json file"""
+    run_by_py3('manage.py loaddata datadump.json')
+
 
 @cit.as_session('Create superuser')
 def create_superuser():
@@ -99,8 +110,10 @@ def show_menu():
         'Runserver (localhost:8000)': runserver_dev,
         'Runserver (LAN ip:8000)': runserver_lan,
         'Shell: Interactive': interactive_shell,
-        'Shell: Database': db_shell,
+        'Shell: DB': db_shell,
         'Django system check': system_check,
+        'DB Data Dump': dump_data,
+        'DB Data Load': load_data,
         'Exit': cit.bye,
     })
     cit.echo('Select one of these:')
