@@ -293,7 +293,7 @@ def userForgetusername(request):
     else:
         user = target_user.get()
         username = user.username
-        step = random.randint(2,3)
+        step = random.randint(2, 3)
         username_part = ((step - 1) * '*').join(username[::step])
         # send chat
         chat_content = '''
