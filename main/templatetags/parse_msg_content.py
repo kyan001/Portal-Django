@@ -1,5 +1,6 @@
 from main.models import User
 from django import template
+import django.utils.html
 import re
 register = template.Library()
 nickname_url = '<a class="text-primary" href="/user/public?nickname={nickname}">@{nickname}</a>'
@@ -23,7 +24,8 @@ def extractlink(text):
     # extrace nicknames
     final_set = set()
     for nn in findNickname(text):
-        if nn.endwith('.com'):
+        nn = django.utils.html.strip_tags(nn)
+        if nn.endswith('.com'):
             continue
         elif User.objects.filter(nickname=nn).exists() and '.com' not in nn:
             final_set.add(nickname_url.format(nickname=nn))
@@ -41,7 +43,8 @@ def highlightlink(text, mode='default'):
         return text
     # highlight nicknames
     for nn in findNickname(text):
-        if nn.endwith('.com'):
+        nn = django.utils.html.strip_tags(nn)
+        if nn.endswith('.com'):
             continue
         elif User.objects.filter(nickname=nn).exists():
             text = text.replace("@{}".format(nn), nickname_url.format(nickname=nn))
