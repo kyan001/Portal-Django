@@ -450,30 +450,7 @@
                         </ul>
                     </span>
                 </div>
-                <div id="nickname-group">
-                    <div class="input-group">
-                        <span class="input-group-addon text-muted">
-                            <span class='glyphicon glyphicon-search'></span>
-                        </span>
-                        <input type="text" name="nickname" class="form-control needverify" placeholder="昵称 / Nickname" oninput="clearHasClass($('#nickname-group'))" onblur='validateNickname()' autocomplete="off">
-                        <span class="input-group-addon tips hidden-xs"
-                            title="昵称 / Nickname <span class='label label-success'>选填</span>"
-                            data-content="<li class='text-primary'>你希望他人看到的名称</li>
-                            <li class='text-danger'>昵称只能是 “汉字” 和 “字母”</li>
-                            <li class='text-danger'>昵称不可与他人重复</li>
-                            <li class='text-success'>昵称可随时修改</li>
-                            <li class=''>昵称为空时，我们将自动帮您生成</li>">
-                            <span class='glyphicon glyphicon-question-sign'></span>
-                        </span>
-                    </div>
-                    <span class="xs-tips">
-                        <li><ins>你希望他人看到的名称</ins></li>
-                        <li><em>昵称只能是 “汉字” 和 “字母”</em></li>
-                        <li><em>昵称不可与他人重复</em></li>
-                        <li>昵称可随时修改</li>
-                        <li>昵称为空时，我们将自动帮您生成</li>
-                    </span>
-                </div>
+                <hr/>
                 <div id="email-group">
                     <div class="input-group">
                         <span class="input-group-addon text-muted">
@@ -496,6 +473,30 @@
                         <li class=''>用户头像将显示您邮箱绑定的 Gravatar™</li>
                     </span>
                 </div>
+                <div id="nickname-group">
+                    <div class="input-group">
+                        <span class="input-group-addon text-muted">
+                            <span class='glyphicon glyphicon-music'></span>
+                        </span>
+                        <input type="text" name="nickname" class="form-control needverify" placeholder="昵称 / Nickname" oninput="clearHasClass($('#nickname-group'))" onblur='validateNickname()' autocomplete="off">
+                        <span class="input-group-addon tips hidden-xs"
+                        title="昵称 / Nickname <span class='label label-success'>选填</span>"
+                        data-content="<li class='text-primary'>你希望他人看到的名称</li>
+                        <li class='text-danger'>昵称只能是 “汉字” 和 “字母”</li>
+                        <li class='text-danger'>昵称不可与他人重复</li>
+                        <li class='text-success'>昵称可随时修改</li>
+                        <li class=''>昵称为空时，我们将自动帮您生成</li>">
+                        <span class='glyphicon glyphicon-question-sign'></span>
+                    </span>
+                </div>
+                <span class="xs-tips">
+                    <li><ins>你希望他人看到的名称</ins></li>
+                    <li><em>昵称只能是 “汉字” 和 “字母”</em></li>
+                    <li><em>昵称不可与他人重复</em></li>
+                    <li>昵称可随时修改</li>
+                    <li>昵称为空时，我们将自动帮您生成</li>
+                </span>
+            </div>
                 {% if redirect %}
                     <input type="hidden" value="{{redirect}}">
                 {% endif %}
