@@ -69,6 +69,7 @@
             $.getBookInfo(bookname, function(info){
                 pages = parseInt(info.pages)
                 if(info.match && pages > 0){
+                    $('#show-extra-info-btn').click()
                     $('input[name="total"]').val(pages)
                 }
             });
@@ -126,7 +127,7 @@
                         <div class="clearfix visible-xs-block">
                             <hr/>
                         </div>
-                        <div class="row">
+                        <div class="extra-info row">
                             <span class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-warning">总共</span>
                             <span class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
                                 <input type="number" placeholder="可不填（纯数字，追剧请填 0）" name="total" class="editable clearable">
