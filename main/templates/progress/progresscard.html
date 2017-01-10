@@ -51,7 +51,11 @@
                     {% endif %}
                         <b>{{prg.current}}</b> / <b>{% if prg.opus.total != 0 %}{{prg.opus.total}}{% else %}∞{% endif %}</b>
                         {% if prg.persent > 0 and prg.persent < 100 %}
-                            <span class='pull-right'>{{ prg.persent }}%</span>
+                            {% if prg.persent > 25 %}
+                                <span class='pull-right'>{{ prg.persent }}%</span>
+                            {% else %}
+                                <span class='pull-left'>{{ prg.persent }}%</span>
+                            {% endif %}
                         {% endif %}
                 </div>
             </div>
