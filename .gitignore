@@ -57,7 +57,11 @@ docs/_build/
 target/
 
 # password protect
-mysql.pswd
+#mysql.pswd
+#email.pswd
+
+# local dev
 test.sqlite3
-email.pswd
+
+# user uploads
 static/media/*
