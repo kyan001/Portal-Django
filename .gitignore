@@ -62,6 +62,7 @@ target/
 
 # local dev
 test.sqlite3
+datadump.json
 
 # user uploads
 static/media/*
