@@ -23,7 +23,7 @@ def extractlink(text):
     # extrace nicknames
     final_set = set()
     for nn in findNickname(text):
-        if '.com' in nn:
+        if nn.endwith('.com'):
             continue
         elif User.objects.filter(nickname=nn).exists() and '.com' not in nn:
             final_set.add(nickname_url.format(nickname=nn))
@@ -41,7 +41,7 @@ def highlightlink(text, mode='default'):
         return text
     # highlight nicknames
     for nn in findNickname(text):
-        if '.com' in nn:
+        if nn.endwith('.com'):
             continue
         elif User.objects.filter(nickname=nn).exists():
             text = text.replace("@{}".format(nn), nickname_url.format(nickname=nn))
