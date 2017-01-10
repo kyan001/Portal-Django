@@ -7,8 +7,8 @@ $.extend({
                 var info = {}
                 if(data.books[0]){
                     info.title = data.books[0].title;
-                    info.original_title = data.books[0].original_title  // optional
-                    info.numrator = data.books[0].rating.numRator  // book only
+                    info.origin_title = data.books[0].origin_title  // book only, optional
+                    info.numrater = data.books[0].rating.numRaters  // book only
                     info.rating = data.books[0].rating.average;
                     info.pages = data.books[0].pages;
                     info.url = data.books[0].alt;
@@ -48,12 +48,11 @@ $.extend({
                 if( data.subjects[0] ){
                     info.title = data.subjects[0].title;
                     info.rating = data.subjects[0].rating.average;
-                    info.original_title = data.subjects[0].original_title  // optional
+                    info.original_title = data.subjects[0].original_title  // movie only, optional
                     info.stars = data.subjects[0].rating.stars  // movie only
                     info.subtype = data.subjects[0].subtype  // movie only
                     info.url = data.subjects[0].alt;
                     info.tags = new Array(data.subjects[0].genres);
-                    info.subtype = data.subjects[0].subtype
                     if(data.subjects[0].images){
                         info.images = {};
                         info.images.small = data.subjects[0].images.small
