@@ -48,6 +48,9 @@
             $(this).attr('data-html',true);
         });
         $('.input-group').on('input','.needverify', disableSubmit)   // 输入、修改需要验证的字段时，禁止提交
+        $('.input-group').on('input','.needverify', function(){ // 输入、修改需要验证的字段时，消除错误、正确的样式
+            clearHasClass($(this).parent())
+        })
         $('[data-toggle="popover"]').popover();
         $('.input-group').on('focus','input', showTips);
         $('.input-group').on('blur','input', hideTips);
@@ -333,14 +336,14 @@
 <div class="container fullscreen">
     <div id="form-wrap" class="row">
         <div id="form-div" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-xs-12">
-            <form action="/user/newuser/" method="post" id="the-form">
+            <form id="the-form" action="/user/newuser/" method="post" autocomplete="off">
                 {% csrf_token %}
                 <div id='username-group'>
                     <div class="input-group">
                         <span class="input-group-addon text-muted">
                             <span class='glyphicon glyphicon-user' title='必填，只能包含“英文字母”、“数字”和“英文句号' data-toggle="tooltip" data-placement="top"></span>
                         </span>
-                        <input type="text" name="username" class="form-control needverify" placeholder="用户名 / Username" autofocus="autofocus" oninput="clearHasClass($('#username-group'))" onblur='validateUsername()' autocomplete="off">
+                        <input type="text" name="username" class="form-control needverify" placeholder="用户名 / Username" autofocus="autofocus" onblur='validateUsername()'>
                         <span class="input-group-addon tips hidden-xs"
                             title="用户名 / Username <span class='label label-primary'>必填</span>"
                             data-content="<li class='text-primary'>登入时的凭证之一</li>
@@ -360,7 +363,7 @@
                         <span class="input-group-addon text-muted">
                             <span class='glyphicon glyphicon-comment'></span>
                         </span>
-                        <input type="text" name="question" class="form-control" placeholder="问题 / Question" oninput="clearHasClass($('#question-group'))" autocomplete="off">
+                        <input type="text" name="question" class="form-control" placeholder="问题 / Question">
                         <span class="input-group-addon tips hidden-xs"
                             title="问题 / Question <span class='label label-primary'>必填</span>"
                             data-content="<li class='text-primary'>登入时会问您的问题</li>
@@ -390,7 +393,7 @@
                         <span class="input-group-addon text-muted">
                             <span class='glyphicon glyphicon-credit-card' title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="top"></span>
                         </span>
-                        <input type="text" name="answer1" class="form-control" placeholder="答案 / Answer" onchange='generateTip()' oninput="clearHasClass($('#answer1-group'))" autocomplete="off">
+                        <input type="text" name="answer1" class="form-control" placeholder="答案 / Answer" onchange='generateTip()'>
                         <span class="input-group-addon tips hidden-xs"
                             title="答案 / 密码 <span class='label label-primary'>必填</span>"
                             data-content="<li>问答模式时：</li>
@@ -429,7 +432,7 @@
                         <span class="input-group-addon text-muted">
                             <span class='glyphicon glyphicon-credit-card' title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="top"></span>
                         </span>
-                        <input type="text" name="answer2" class="form-control" placeholder="备选答案 / Alternative Answer" autocomplete="off">
+                        <input type="text" name="answer2" class="form-control" placeholder="备选答案 / Alternative Answer">
                         <span class="input-group-addon tips hidden-xs"
                             title="备选答案 / Alternative Answer <span class='label label-success'>选填</span>"
                             data-content="<li class='text-primary'>同样作为正常答案生效</li>
@@ -472,7 +475,7 @@
                         <span class="input-group-addon text-muted">
                             <span class='glyphicon glyphicon-magnet'></span>
                         </span>
-                        <input type="text" name="tip" class="form-control" placeholder="回答提示 / Tip" autocomplete="off">
+                        <input type="text" name="tip" class="form-control" placeholder="回答提示 / Tip">
                         <span class="input-group-addon btn btn-default" onclick='generateTip()' title='生成提示'>
                             <span class='glyphicon glyphicon-refresh'></span>
                         </span>
@@ -509,7 +512,7 @@
                         <span class="input-group-addon text-muted">
                             <span class='glyphicon glyphicon-envelope'></span>
                         </span>
-                        <input type="email" name="email" class="form-control needverify" placeholder="邮箱 / Email" oninput="clearHasClass($('#email-group'));" onblur='validateEmail()' autocomplete="off">
+                        <input type="email" name="email" class="form-control needverify" placeholder="邮箱 / Email" onblur='validateEmail()'>
                         <span class="input-group-addon tips hidden-xs"
                             title="邮箱 / Email <span class='label label-primary'>必填</span>"
                             data-content="<li class='text-primary'>用于找回密码</li>
@@ -531,7 +534,7 @@
                         <span class="input-group-addon text-muted">
                             <span class='glyphicon glyphicon-music'></span>
                         </span>
-                        <input type="text" name="nickname" class="form-control needverify" placeholder="昵称 / Nickname" oninput="clearHasClass($('#nickname-group'))" onblur='validateNickname()' autocomplete="off">
+                        <input type="text" name="nickname" class="form-control needverify" placeholder="昵称 / Nickname" onblur='validateNickname()'>
                         <span class="input-group-addon tips hidden-xs"
                         title="昵称 / Nickname <span class='label label-success'>选填</span>"
                         data-content="<li class='text-primary'>你希望他人看到的名称</li>
