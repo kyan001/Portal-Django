@@ -121,17 +121,21 @@
     }
 
     function showTips(){
-        if($('.hidden-xs').css('display') != 'none'){
-            $(this).siblings('span.tips').popover('show');
-        } else {
-            $(this).parent().siblings('span.xs-tips').slideDown();
+        if($('#mode-toggle').attr('mode') =='new'){  // 只在“问答”模式下给出提示
+            if($('.hidden-xs').css('display') != 'none'){
+                $(this).siblings('span.tips').popover('show');
+            } else {
+                $(this).parent().siblings('span.xs-tips').slideDown();
+            }
         }
     }
     function hideTips(){
-        if($('.hidden-xs').css('display') != 'none'){
-            $(this).siblings('span.tips').popover('hide');
-        } else {
-            $(this).parent().siblings('span.xs-tips').slideUp();
+        if($('#mode-toggle').attr('mode') =='new'){  // 只在“问答”模式下给出提示
+            if($('.hidden-xs').css('display') != 'none'){
+                $(this).siblings('span.tips').popover('hide');
+            } else {
+                $(this).parent().siblings('span.xs-tips').slideUp();
+            }
         }
     }
     function generateTip(){
