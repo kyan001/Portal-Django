@@ -17,15 +17,12 @@
         padding: 5%;
         background-color: rgba(0,0,0,.0);
     }
-    .input-group {
+    .one-group {
         margin-bottom: 10px;
     }
-    input[readonly='readonly'] {
+    #tip-group {
+        margin-top: -10px;
     }
-    #tip-content {
-        text-align: right;
-    }
-    #tip-content,
     #rememberme-content {
         font-size: small;
     }
@@ -49,7 +46,7 @@
     }
     function foldOptions(){
         $('#question-content').val('')
-        $('#tip-content').val('')
+        $('#tip-content').text('')
         $('input[name="answer"]').val('')
         $('#question-group').fadeOut('fast')
         $('#tip-group').fadeOut('fast')
@@ -76,10 +73,10 @@
                     }
                     $('#question-group').fadeIn('fast')
                     if(result.tip){
-                        $('#tip-content').val('提示：'+result.tip)
+                        $('#tip-content').text('提示：'+result.tip)
                         $('#tip-group').fadeIn('fast')
                     } else {
-                        $('#tip-content').val('')
+                        $('#tip-content').text('')
                         $('#tip-group').fadeOut('fast')
                     }
                     if(option == 'unique'){
@@ -189,7 +186,7 @@
         <div id="form-div" class='col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-xs-12'>
             <form id="login-form" action="/user/checklogin/" method="post">
                 {% csrf_token %}
-                <div class="input-group" id="username-group">
+                <div class="one-group input-group" id="username-group">
                     <span class="input-group-addon text-muted" title='必填，只能包含“英文字母”、“数字”和“英文句号' data-toggle="tooltip" data-placement="top">
                         <span class='glyphicon glyphicon-user'></span>
                     </span>
@@ -198,13 +195,13 @@
                         autofocus="autofocus" autocomplete="off"
                         onblur="validateUsername('onblur')" onkeydown="keydownUsername()">
                 </div>
-                <div class="input-group" id='question-group'>
+                <div class="one-group input-group" id='question-group'>
                     <span class="input-group-addon text-muted">
                         <span class='glyphicon glyphicon-comment'></span>
                     </span>
                     <input id='question-content' type="question" name='question' class="form-control" value="" readonly='readonly' autocomplete="off">
                 </div>
-                <div class="input-group" id='answer-group'>
+                <div class="one-group input-group" id='answer-group'>
                     <span class="input-group-addon text-muted" title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="top">
                         <span class='glyphicon glyphicon-credit-card'></span>
                     </span>
@@ -213,11 +210,10 @@
                         autocomplete="off"
                         onkeydown="keydownAnswer()" onfocus='$(this).val("")'>
                 </div>
-                <div class="input-group" id="tip-group">
-                    <input id='tip-content' type='tip' name='tip' class="form-control" value=""
-                        readonly='readonly' autocomplete="off">
+                <div class="one-group well well-sm" id="tip-group">
+                    <div id='tip-content' class='small'></div>
                 </div>
-                <div class="input-group" id="rememberme-group">
+                <div class="one-group input-group" id="rememberme-group">
                     <span class="input-group-addon" title='两周内免登入，公共电脑请勿勾选此项' data-toggle="tooltip" data-placement="top">
                         <input id="rememberme" type="checkbox" name='rememberme' value='on' checked>
                     </span>
