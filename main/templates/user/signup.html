@@ -146,28 +146,34 @@
         }
         var tips = new Array()
         var stat = {}
-        var pattern_en = /[a-zA-Z]/g
-        var pattern_zh = /[\u4e00-\u9fa5]/g
-        var pattern_num = /[0-9]/g
-        var pattern_space = / /g
-        var count_en = answer.match(pattern_en) ? answer.match(pattern_en).length : 0
-        var count_zh = answer.match(pattern_zh) ? answer.match(pattern_zh).length : 0
-        var count_num = answer.match(pattern_num) ? answer.match(pattern_num).length : 0
-        var count_space = answer.match(pattern_space) ? answer.match(pattern_space).length : 0
+        var pattern = {}
+        pattern["英文字母"] = /[a-zA-Z]/g
+        pattern["汉字"] = /[\u4e00-\u9fa5]/g
+        pattern["数字"] = /[0-9]/g
+        /* 不常用
+        pattern["空格"] = / /g
+        */
+        // generate counts
+        var count = {}
+        for(k in pattern){
+            count[k] = answer.match(pattern[k]) ? answer.match(pattern[k]).length : 0
+        }
         // generate tip words
-        random_index = Math.floor(Math.random()*conjs.length)
-        stat['first_en'] = "第 " + index + answer[index].match(pattern_en) ? "第位是英文" : "第一位不是英文"
-        stat['first_zh'] = answer[index].match(pattern_zh) ? "第一位是汉字" : "第一位不是汉字"
-        stat['first_num'] = answer[index].match(pattern_num) ? "第一位是数字" : "第一位不是数字"
-        stat['first_space'] = answer[index].match(pattern_space) ? "第一位是空格" : "第一位不是空格"
-        stat['last_en'] = answer[answer.length-1].match(pattern_en) ? "最后一位是英文" : "最后一位不是英文"
-        stat['last_zh'] = answer[answer.length-1].match(pattern_zh) ? "最后一位是汉字" : "最后一位不是汉字"
-        stat['last_num'] = answer[answer.length-1].match(pattern_num) ? "最后一位是数字" : "最后一位不是数字"
-        stat['first_space'] = answer[answer.length-1].match(pattern_space) ? "最后一位是空格" : "最后一位不是空格"
-        stat['has_en'] = count_en == 0 ? '不包含英文' : '包含 ' + count_en + ' 个英文字母'
-        stat['has_zh'] = count_zh == 0 ? '不包含汉字' : '包含 ' + count_zh + ' 个汉字'
-        stat['has_num'] = count_num == 0 ? '不包含数字' : '包含 ' + count_num + ' 个数字'
-        stat['has_space'] = count_space == 0 ? '不包含空格' : '包含 ' + count_space + ' 个空格'
+        random_i = Math.floor(Math.random()*(answer.length))
+        for(k in pattern){
+            if(random_i < (answer.length / 2)){
+                var nth = "第 " + (random_i + 1) + ' 位'
+            } else if(random_i == answer.length) {
+                var nth = "最后一位"
+            } else {
+                var nth = "倒数第 " + (answer.length - random_i) + ' 位'
+            }
+            if(answer[random_i].match(pattern[k])){
+                stat['nth_has_' + k] = nth + "是" + k
+            }
+            stat['has_' + k] = count[k] == 0 ? '不包含' + k : '包含 ' + count[k] + ' 个' + k
+        }
+        stat['nth_is'] = nth + "是「" + answer[random_i] + "」"
         stat['count_all'] = '一共 ' + answer.length + ' 个字符'
         for(k in stat){
             tips.push(stat[k])
