@@ -47,7 +47,7 @@
             $(this).attr('data-trigger',"hover click");
             $(this).attr('data-html',true);
         });
-        $('.input-group').on('input','.needverify', disableSubmit)
+        $('.input-group').on('input','.needverify', disableSubmit)   // 输入、修改需要验证的字段时，禁止提交
         $('[data-toggle="popover"]').popover();
         $('.input-group').on('focus','input', showTips);
         $('.input-group').on('blur','input', hideTips);
@@ -109,7 +109,7 @@
                 $('.newmode').fadeIn()
                 break;
             default:
-                if( $('#mode-toggle').attr('mode') =='new' ){
+                if($('#mode-toggle').attr('mode') =='new'){
                     modeToggle('old')
                 } else {
                     modeToggle('new')
