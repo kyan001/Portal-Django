@@ -130,6 +130,55 @@
             $(this).parent().siblings('span.xs-tips').slideUp();
         }
     }
+    function generateTip(){
+        var answer = $('input[name="answer1"]').val()
+        if(!answer){
+            $('input[name="tip"]').val('')
+            return
+        }
+        var tips = new Array()
+        var stat = {}
+        var pattern_en = /[a-zA-Z]/g
+        var pattern_zh = /[\u4e00-\u9fa5]/g
+        var pattern_num = /[0-9]/g
+        var pattern_space = / /g
+        var count_en = answer.match(pattern_en) ? answer.match(pattern_en).length : 0
+        var count_zh = answer.match(pattern_zh) ? answer.match(pattern_zh).length : 0
+        var count_num = answer.match(pattern_num) ? answer.match(pattern_num).length : 0
+        var count_space = answer.match(pattern_space) ? answer.match(pattern_space).length : 0
+        // generate tip words
+        random_index = Math.floor(Math.random()*conjs.length)
+        stat['first_en'] = "第 " + index + answer[index].match(pattern_en) ? "第位是英文" : "第一位不是英文"
+        stat['first_zh'] = answer[index].match(pattern_zh) ? "第一位是汉字" : "第一位不是汉字"
+        stat['first_num'] = answer[index].match(pattern_num) ? "第一位是数字" : "第一位不是数字"
+        stat['first_space'] = answer[index].match(pattern_space) ? "第一位是空格" : "第一位不是空格"
+        stat['last_en'] = answer[answer.length-1].match(pattern_en) ? "最后一位是英文" : "最后一位不是英文"
+        stat['last_zh'] = answer[answer.length-1].match(pattern_zh) ? "最后一位是汉字" : "最后一位不是汉字"
+        stat['last_num'] = answer[answer.length-1].match(pattern_num) ? "最后一位是数字" : "最后一位不是数字"
+        stat['first_space'] = answer[answer.length-1].match(pattern_space) ? "最后一位是空格" : "最后一位不是空格"
+        stat['has_en'] = count_en == 0 ? '不包含英文' : '包含 ' + count_en + ' 个英文字母'
+        stat['has_zh'] = count_zh == 0 ? '不包含汉字' : '包含 ' + count_zh + ' 个汉字'
+        stat['has_num'] = count_num == 0 ? '不包含数字' : '包含 ' + count_num + ' 个数字'
+        stat['has_space'] = count_space == 0 ? '不包含空格' : '包含 ' + count_space + ' 个空格'
+        stat['count_all'] = '一共 ' + answer.length + ' 个字符'
+        for(k in stat){
+            tips.push(stat[k])
+        }
+        // get 2 random tip words
+        function randomsort(a, b) {
+            return Math.random() > 0.5 ? -1 : 1;
+        }
+        tips = tips.sort(randomsort)
+        tip1 = tips.pop()
+        tips = tips.sort(randomsort)
+        tip2 = tips.pop()
+        var conjs = ['、', '并且', '且', '而且', '同时']
+        var tip = "答案中" + tip1 + conjs[Math.floor(Math.random()*conjs.length)] + tip2
+        // write tip input
+        if($('#mode-toggle').attr('mode') == 'new'){  // only show in new mode
+            $('input[name="tip"]').val(tip)
+        }
+    }
     function clearHasClass(ele){
         ele.removeClass('has-warning');
         ele.removeClass('has-success');
@@ -340,7 +389,7 @@
                         <span class="input-group-addon text-muted">
                             <span class='glyphicon glyphicon-credit-card' title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="top"></span>
                         </span>
-                        <input type="text" name="answer1" class="form-control" placeholder="答案 / Answer" oninput="clearHasClass($('#answer1-group'))" autocomplete="off">
+                        <input type="text" name="answer1" class="form-control" placeholder="答案 / Answer" onchange='generateTip()' oninput="clearHasClass($('#answer1-group'))" autocomplete="off">
                         <span class="input-group-addon tips hidden-xs"
                             title="答案 / 密码 <span class='label label-primary'>必填</span>"
                             data-content="<li>问答模式时：</li>
@@ -423,6 +472,9 @@
                             <span class='glyphicon glyphicon-magnet'></span>
                         </span>
                         <input type="text" name="tip" class="form-control" placeholder="回答提示 / Tip" autocomplete="off">
+                        <span class="input-group-addon btn btn-default" onclick='generateTip()' title='生成提示'>
+                            <span class='glyphicon glyphicon-refresh'></span>
+                        </span>
                         <span class="input-group-addon tips hidden-xs"
                             title="回答提示 / Tip <span class='label label-success'>选填</span>"
                             data-content="<li class='text-primary'>登入时，问题答案的提示信息</li>
