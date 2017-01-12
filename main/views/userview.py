@@ -293,8 +293,10 @@ def userForgetusername(request):
     else:
         user = target_user.get()
         username = user.username
-        step = random.randint(2, 3)
-        username_part = ((step - 1) * '*').join(username[::step])
+        step = random.randint(2, 3)  # a*c*e*g or a**d**g
+        username_part = ((step - 1) * '*').join(username[::step])  # show username partial
+        username_part += '*' * (len(username) - len(username_part))  # make it full length
+        username_part = username_part[:-1] + username[-1]  # last letter is shown
         # send chat
         chat_content = '''
             有人正在通过邮件的方式找回您的用户名。
