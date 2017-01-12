@@ -27,7 +27,8 @@
         cursor: help;
     }
     .xs-tips {
-        color: rgba(255, 255, 255, 0.9);
+        color: white;
+        text-shadow: 0 0 1px silver;
         display: none;
     }
     #submit-button{
@@ -50,7 +51,7 @@
         $('[data-toggle="popover"]').popover();
         $('.input-group').on('focus','input', showTips);
         $('.input-group').on('blur','input', hideTips);
-        $('.oldmode').show()
+        $('.oldmode').hide()
         $('.newmode').hide()
         modeToggle('old')
         disableSubmit()
