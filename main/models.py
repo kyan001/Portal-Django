@@ -363,17 +363,17 @@ class Progress(BaseModel):
     # calculations
     def getContextualType(self):
         persent = self.persent
-        if self.current == 0:
+        if self.current == 0:  # todo
             contextual_type = None
-        elif persent < 1:
-            contextual_type = 'info'
-        elif persent < 33:
+        elif persent < 30:
             contextual_type = 'danger'
-        elif persent < 66:
+        elif persent < 60:
             contextual_type = 'warning'
-        elif persent < 100:
+        elif persent < 90:
             contextual_type = 'success'
-        elif persent == 100:
+        elif persent < 100:
+            contextual_type = 'info'
+        elif persent == 100:  # done
             contextual_type = 'primary'
         else:
             raise Exception('Contextual Type Error')
