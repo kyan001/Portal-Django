@@ -26,11 +26,6 @@
                             <span class='glyphicon glyphicon-ok'></span>
                             <span title='完成时间'>{{ prg.modified|date:'Y-m-d' }}</span>
                         </td>
-                    {% elif prg.created.date == prg.modified.date %}
-                        <td class="text-center {{ prg.getContextualType|default:'active' }}">
-                            <span class='glyphicon glyphicon-plus'></span>
-                            <span title="创建时间">{{ prg.created|date:'Y-m-d' }}</span>
-                        </td>
                     {% else %}
                         <td class="text-left {{ prg.getContextualType|default:'active' }}">
                             <span class='glyphicon glyphicon-play'></span>
