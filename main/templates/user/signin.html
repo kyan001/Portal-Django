@@ -21,7 +21,7 @@
         margin-bottom: 10px;
     }
     #tip-group {
-        margin-top: -10px;
+        margin-top: -9px;
     }
     #rememberme-content {
         font-size: small;
@@ -31,150 +31,6 @@
     }
 </style>
 {% endblock css %}
-{% block js %}
-<script>
-    $(function(){
-        $('#rememberme').attr('data-html',true)
-        $('[data-toggle="tooltip"]').tooltip()
-        $('#question-group').hide()
-        $('#tip-group').hide()
-    });
-    function clearHasClass(ele){
-        ele.removeClass('has-warning')
-        ele.removeClass('has-success')
-        ele.removeClass('has-error')
-    }
-    function foldOptions(){
-        $('#question-content').val('')
-        $('#tip-content').text('')
-        $('input[name="answer"]').val('')
-        $('#question-group').fadeOut('fast')
-        $('#tip-group').fadeOut('fast')
-    }
-    function unfoldOptions(option){
-        $.ajax({
-            type: "GET",
-            url: "/user/getquestionandtip",
-            data: {
-                'username':$('input[name="username"]').val()
-            },
-            success: function (data) {
-                var result = data;
-                if( result.error ){
-                    $.danger(result.error)
-                } else {
-                    $('#question-content').val(result.question)
-                    if(result.question.indexOf('密码')>=0){
-                        $('input[name="answer"]').attr('placeholder','密码 / Password')
-                        $('input[name="answer"]').attr('type','password')
-                    } else {
-                        $('input[name="answer"]').attr('placeholder','答案 / Answer')
-                        $('input[name="answer"]').attr('type','text')
-                    }
-                    $('#question-group').fadeIn('fast')
-                    if(result.tip){
-                        $('#tip-content').text('提示：'+result.tip)
-                        $('#tip-group').fadeIn('fast')
-                    } else {
-                        $('#tip-content').text('')
-                        $('#tip-group').fadeOut('fast')
-                    }
-                    if(option == 'unique'){
-                        $('input[name="answer"]').focus()
-                    }
-                }
-            },
-        })
-    }
-
-    function showStatus(mode, word){
-        var ele = $('#submit-button')
-        if('off'==mode){
-            ele.text('登入 / Login')
-            ele.addClass('btn-success')
-            ele.removeClass('btn-warning')
-            ele.removeClass('disabled')
-        } else {
-            ele.text(word)
-            ele.removeClass('btn-success')
-            ele.addClass('btn-warning')
-            ele.addClass('disabled')
-        }
-    }
-
-    var timer_vUn
-    function validateUsername(option){
-        clearHasClass($('#username-group'));
-        if( $('input[name="username"]').val() == '' ){
-            $('#username-group').addClass('has-warning')
-            foldOptions()
-            return
-        }
-        showStatus('off', 'LOADING ...')
-        clearTimeout(timer_vUn)
-        timer_vUn = setTimeout(function(){
-            showStatus('on'), 'LOADING ...'
-            $.ajax({
-                type: "GET",
-                url: "/user/validateusername",
-                data: {
-                    'username':$('input[name="username"]').val()
-                },
-                success: function (data) {
-                    showStatus('off', 'LOADING ...')
-                    var result = data
-                    if(result.error){
-                        $.danger(result.error)
-                        foldOptions()
-                        return
-                    }
-                    if (result.exist) {
-                        if(result.unique){
-                            unfoldOptions('unique')
-                        } else {
-                            unfoldOptions('normal')
-                        }
-                    } else {
-                        if(option=='onblur' || option=='onchange'){
-                            $('#username-group').addClass('has-error')
-                            $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在')
-                        }
-                        foldOptions()
-                    }
-                },
-            })
-        }, 500)
-    }
-    function submitForm(){
-        if( $('input[name="answer"]').val() == '' ){
-            $('#answer-group').addClass('has-error')
-            $.danger('密码/答案不能为空')
-            return false
-        }
-        if( $('input[name="username"]').val() == '' ){
-            $('#username-group').addClass('has-error')
-            $.danger('用户名不能为空')
-            return false
-        }
-        clearTimeout(timer_vUn)
-        disableAllBtn()
-        showStatus('on', '登入中 ...')
-        $("#login-form").submit()
-    }
-    function keydownAnswer(){
-        if(event.keyCode==13){
-            $('#submit-button').click()
-            return false
-        }
-    }
-    function keydownUsername(){
-        if(event.keyCode==13){
-            $('input[name="answer"]').focus()
-            return false
-        }
-    }
-</script>
-{% endblock js %}
 
 {% block nav-btn %}
     {% include 'user/signindropdown.html' %}
@@ -234,3 +90,150 @@
 {% endblock content %}
 
 {% block footer %}{% endblock footer %}
+
+
+{% block js %}
+    <script>
+        $(function(){
+            $('#rememberme').attr('data-html',true)
+            $('[data-toggle="tooltip"]').tooltip()
+            $('#question-group').hide()
+            $('#tip-group').hide()
+            eventBinds()
+        });
+        function eventBinds(){
+            $('input[name="answer"').blur(function(){
+                $(this).attr('type', 'password')
+            })
+            $('input[name="answer"]').focus(function(){
+                $(this).attr('type', 'text')
+            })
+            $('input').keydown(function(){
+                if(event.keyCode==13){
+                    if($(this).attr('name') == 'username'){
+                        $('input[name="answer"]').focus()
+                    } else if ($(this).attr('name') == 'answer'){
+                        $('#submit-button').focus().click()
+                    }
+                    return false
+                }
+            })
+            $('input[name="username"]').change(function(){
+                //$('input[name="answer"]').val('')
+            })
+        }
+        function clearHasClass(ele){
+            ele.removeClass('has-warning')
+            ele.removeClass('has-success')
+            ele.removeClass('has-error')
+        }
+        function foldOptions(){
+            $('.clean-when-fold').text('').val('')
+            $('#question-group').slideUp('fast')
+            $('#tip-group').slideUp('fast')
+        }
+        function unfoldOptions(option){
+            $.ajax({
+                type: "GET",
+                url: "/user/getquestionandtip",
+                data: {
+                    'username':$('input[name="username"]').val()
+                },
+                success: function (data) {
+                    var result = data;
+                    if( result.error ){
+                        $.danger(result.error)
+                    } else {
+                        $('#question-content').text(result.question)
+                        $('#question-group').slideDown('fast')
+                        if(result.tip){
+                            $('#tip-content').text('提示：'+result.tip)
+                            $('#tip-group').slideDown('fast')
+                        } else {
+                            $('#tip-content').text('')
+                            $('#tip-group').slideUp('fast')
+                        }
+                        if(option == 'unique'){
+                            $('input[name="answer"]').focus()
+                        }
+                    }
+                },
+            })
+        }
+
+        function showStatus(mode, word){
+            var ele = $('#submit-button')
+            if('off'==mode){
+                ele.text('登入 / Login')
+                ele.addClass('btn-success')
+                ele.removeClass('btn-warning')
+                ele.removeClass('disabled')
+            } else {
+                ele.text(word)
+                ele.removeClass('btn-success')
+                ele.addClass('btn-warning')
+                ele.addClass('disabled')
+            }
+        }
+
+        var timer_vUn
+        function validateUsername(option){
+            clearHasClass($('#username-group'));
+            if( $('input[name="username"]').val() == '' ){
+                $('#username-group').addClass('has-warning')
+                foldOptions()
+                return
+            }
+            showStatus('off', 'LOADING ...')
+            clearTimeout(timer_vUn)
+            timer_vUn = setTimeout(function(){
+                showStatus('on'), 'LOADING ...'
+                $.ajax({
+                    type: "GET",
+                    url: "/user/validateusername",
+                    data: {
+                        'username':$('input[name="username"]').val()
+                    },
+                    success: function (data) {
+                        showStatus('off', 'LOADING ...')
+                        var result = data
+                        if(result.error){
+                            $.danger(result.error)
+                            foldOptions()
+                            return
+                        }
+                        if (result.exist) {
+                            if(result.unique){
+                                unfoldOptions('unique')
+                            } else {
+                                unfoldOptions('normal')
+                            }
+                        } else {
+                            if(option=='onblur' || option=='onchange'){
+                                $('#username-group').addClass('has-error').find('input').focus()
+                                $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在')
+                            }
+                            foldOptions()
+                        }
+                    },
+                })
+            }, 500)
+        }
+        function submitForm(){
+            if( $('input[name="answer"]').val() == '' ){
+                $('#answer-group').addClass('has-error')
+                $.danger('密码/答案不能为空')
+                return false
+            }
+            if( $('input[name="username"]').val() == '' ){
+                $('#username-group').addClass('has-error')
+                $.danger('用户名不能为空')
+                return false
+            }
+            clearTimeout(timer_vUn)
+            disableAllBtn()
+            showStatus('on', '登入中 ...')
+            $("#login-form").submit()
+        }
+    </script>
+{% endblock js %}
