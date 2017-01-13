@@ -1,38 +1,176 @@
 {% extends "base.html" %}
-{% block title %}进度：{{ opus.name }}{% endblock title %}
+{% block title %}新增进度{% endblock title %}
 {% block icon %}<link rel="icon" href="/static/img/Logo_List.png" />{% endblock icon %}
 
 {% block css %}
-<style>
-    .container {
-        font-family: 'Microsoft YaHei';
-    }
-    .panel-body {
-        font-size: 15px;
-    }
-    .panel-footer {
-        padding: 0;
-    }
-    #theform .row {
-        font-size: 15px;
-        padding-bottom: 20px;
-    }
-    .editable {
-        font-size: 15px !important;
-        width: 100%;
-    }
-    .extra-info {
-        display: none;
-    }
-</style>
+    <style>
+        .container {
+            font-family: 'Microsoft YaHei';
+        }
+        .panel-body {
+            font-size: 15px;
+        }
+        .panel-footer {
+            padding: 0;
+        }
+        #theform .row {
+            font-size: 15px;
+            padding-bottom: 20px;
+        }
+        .editable {
+            font-size: 15px !important;
+            width: 100%;
+        }
+        #subtitle-group .dropdown-menu {
+            padding: 5px;
+            width: 255px;
+        }
+        .catagory {
+            margin: 5px;
+            float: right;
+        }
+    </style>
 {% endblock css %}
+
+{% block nav-btn %}
+    <a href="/progress/list" class="btn btn-warning btn-sm">
+        <span class="glyphicon glyphicon-arrow-left"></span> 回到列表
+    </a>
+{% endblock nav-btn %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12" progressid="{{ prg.id }}">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="panel-title">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        新增进度
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <form id="theform" action="/progress/add/" method="post">
+                        {% csrf_token %}
+                        <div class='row'>
+                            <div class='col-xs-12 col-sm-10 col-sm-offset-1'>
+                                <div class="row">
+                                    <span class="col-sm-8 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon text-muted">名称</span>
+                                            <input type="text" class='form-control' placeholder="不用加书名号" name="name" class="editable clearable" onchange="getPages()">
+                                        </div>
+                                    </span>
+                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
+                                        <span class="text-danger">动漫名、电视剧名、书名</span>
+                                    </span>
+                                </div>
+                                <span class='text-muted'>选填：</span>
+                                <div class="row">
+                                    <span class="col-sm-8 col-xs-12">
+                                        <div id='subtitle-group' class="input-group">
+                                            <span class="input-group-addon text-muted">备注</span>
+                                            <input type="text" class='form-control' placeholder="任何" name="subtitle" class="editable clearable">
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    <span class="caret"></span>
+                                                 </button>
+                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                    <span class='btn btn-default catagory'>书</span>
+                                                    <span class='btn btn-default catagory'>PDF</span>
+                                                    <span class='btn btn-default catagory'>漫画</span>
+                                                    <span class='btn btn-default catagory'>动画</span>
+                                                    <span class='btn btn-default catagory'>电视剧</span>
+                                                    <span class='btn btn-default catagory'>公开课</span>
+                                                    <span class='btn btn-default catagory'>第一季</span>
+                                                    <span class='btn btn-default catagory'>视频</span>
+                                                    <span class='btn btn-default catagory'>小说</span>
+                                                    <span class='btn btn-default catagory'>朋友推荐</span>
+                                                </ul>
+                                            </div><!-- /btn-group -->
+                                        </div>
+                                    </span>
+                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
+                                        <span>作品的备注、章节、分类</span>
+                                    </span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-sm-8 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon text-muted">总共</span>
+                                            <input type="number" class='form-control' placeholder="纯数字，追剧请填 0" name="total" class="editable clearable">
+                                            <span class="input-group-btn">
+                                                <span id='guess-total' class="btn btn-default" data-guess='0' onclick='guessTotal()'>
+                                                    <span class='glyphicon glyphicon-cloud'></span>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </span>
+                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
+                                        <span>总共几页、总共几集？</span>
+                                    </span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-sm-8 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon text-muted">当前进度</span>
+                                            <input type="number" class='form-control' placeholder="必须为纯数字" name="current" class="editable clearable">
+                                            <span class="input-group-btn">
+                                                <span class="btn btn-default" onclick='addOneCurrent()'>+</span>
+                                            </span>
+                                        </div>
+                                    </span>
+                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
+                                        <span>已看到第几集</span>
+                                    </span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-sm-8 col-xs-12">
+                                        <div class="input-group has-feedback">
+                                            <span class="input-group-addon text-muted">链接</span>
+                                            <input type="text" class='form-control' placeholder="以 http 开头" name="weblink" class="editable clearable">
+                                            <span class="glyphicon glyphicon-link form-control-feedback"></span>
+                                        </div>
+                                    </span>
+                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
+                                        <span>作品的链接地址</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <a class="btn btn-default" href="javascript:history.back()" onclick='disableAllBtn()'>
+                                <span class="glyphicon glyphicon-remove"></span> 取消
+                            </a>
+                        </div>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 text-right">
+                            <div class="text-right">
+                                <button class="btn btn-warning" onclick="clearForm()">
+                                    <span class="glyphicon glyphicon-refresh"></span> 清空
+                                </button>
+                                <button class="btn btn-success" onclick="submitForm()">
+                                        <span class="glyphicon glyphicon-ok"></span> 保存
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--col-->
+    </div><!--row-->
+</div>
+{% endblock content %}
 
 {% block js %}
 <script>
     $(function(){
-        $('.disableBtn').click(function(){
-            $('.btn').attr('disabled','disabled')
-        });
+        $('.catagory').click(function(){
+            $('input[name="subtitle"]').val($(this).text())
+        })
     });
     function clearForm(){
         $('input.clearable').val('')
@@ -68,131 +206,24 @@
         if(bookname != ''){
             $.getBookInfo(bookname, function(info){
                 pages = parseInt(info.pages)
-                if(info.match && pages > 0){
-                    $('#show-extra-info-btn').click()
+                if(info.match && pages > 0){  // 精确匹配
                     $('input[name="total"]').val(pages)
+                } else if(pages > 0){  // 不精确匹配
+                    $('#guess-total').attr('data-guess', pages).attr('title', '是《' + info.title + '》吗？')
                 }
             });
         }
     }
-    function showExtraInfo(){
-        $('#show-extra-info-div').slideUp();
-        $('.extra-info').slideDown();
-        $('.extra-info.clearfix').addClass('visible-xs-block');
+    function guessTotal(){
+        var guess = $('#guess-total').attr("data-guess")
+        $('input[name="total"]').val(guess)
+    }
+    function addOneCurrent(){
+        var current = $('input[name="current"]');
+        if( isNaN(current.val()) || current.val() == '' ){
+            current.val('0')
+        }
+        $('input[name="current"]').val(parseInt(current.val()) + 1);
     }
 </script>
 {% endblock js %}
-
-{% block nav-btn %}
-<a href="/progress/list" class="btn btn-warning btn-sm">
-    <span class="glyphicon glyphicon-arrow-left"></span> 回到列表
-</a>
-{% endblock nav-btn %}
-
-{% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12" progressid="{{ prg.id }}">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <span class="panel-title">
-                        <span class="glyphicon glyphicon-plus"></span>
-                        新增进度
-                    </span>
-                </div>
-                <div class="panel-body">
-                    <form id="theform" action="/progress/add/" method="post">
-                        {% csrf_token %}
-                        <div class='row'>
-                            <div class='col-xs-12 col-sm-10 col-sm-offset-1'>
-                                <div class="row">
-                                    <span class="col-sm-8 col-xs-12">
-                                        <div class="input-group">
-                                            <span class="input-group-addon text-muted">名称</span>
-                                            <input type="text" class='form-control' placeholder="必填（不要加书名号）" name="name" class="editable clearable" onchange="getPages()">
-                                        </div>
-                                    </span>
-                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                        <span class="text-danger">动漫名、电视剧名、书名</span>
-                                    </span>
-                                </div>
-                                <div class="extra-info row">
-                                    <span class="col-sm-8 col-xs-12">
-                                        <div class="input-group">
-                                            <span class="input-group-addon text-muted">备注</span>
-                                            <input type="text" class='form-control' placeholder="（尽量简短）" name="subtitle" class="editable clearable">
-                                            <span class="input-group-addon">
-                                                <div class='btn btn-default'>111</div>
-                                            </span>
-                                        </div>
-                                    </span>
-                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                        <span>作品的备注、章节、分类</span>
-                                    </span>
-                                </div>
-                                <div class="extra-info row">
-                                    <span class="col-sm-8 col-xs-12">
-                                        <div class="input-group">
-                                            <span class="input-group-addon text-muted">总共</span>
-                                            <input type="number" class='form-control' placeholder="（纯数字，追剧请填 0）" name="total" class="editable clearable">
-                                        </div>
-                                    </span>
-                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                        <span>总共几页、总共几集？</span>
-                                    </span>
-                                </div>
-                                <div class="extra-info row">
-                                    <span class="col-sm-8 col-xs-12">
-                                        <div class="input-group">
-                                            <span class="input-group-addon text-muted">当前进度</span>
-                                            <input type="number" class='form-control' placeholder="（必须为纯数字）" name="current" class="editable clearable">
-                                        </div>
-                                    </span>
-                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                        <span>已看到第几集</span>
-                                    </span>
-                                </div>
-                                <div class="extra-info row">
-                                    <span class="col-sm-8 col-xs-12">
-                                        <div class="input-group">
-                                            <span class="input-group-addon text-muted">链接</span>
-                                            <input type="text" class='form-control' placeholder="（须以 http:// 开头）" name="weblink" class="editable clearable">
-                                        </div>
-                                    </span>
-                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                        <span>作品的链接地址</span>
-                                    </span>
-                                </div>
-                                <div class="row" id="show-extra-info-div">
-                                    <div class='col-xs-10 col-xs-offset-1'>
-                                        <div class="btn btn-default btn-block" id="show-extra-info-btn" onclick="showExtraInfo()">显示选填信息</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="panel-footer">
-                    <div class="row">
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <a class="btn btn-default disableBtn" href="javascript:history.back()">
-                                <span class="glyphicon glyphicon-remove"></span> 取消
-                            </a>
-                        </div>
-                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 text-right">
-                            <div class="text-right">
-                                <button class="btn btn-warning" onclick="clearForm()">
-                                    <span class="glyphicon glyphicon-refresh"></span> 清空
-                                </button>
-                                <button class="btn btn-success disableBtn" onclick="submitForm()">
-                                        <span class="glyphicon glyphicon-ok"></span> 保存
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!--col-->
-    </div><!--row-->
-</div>
-{% endblock content %}
