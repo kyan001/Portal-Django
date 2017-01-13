@@ -112,14 +112,9 @@
                             <b>{{prg.current}} / ∞</b>
                         {% else %}
                             <b>{{prg.current}} / {{opus.total}}</b>
-                            {% if prg.persent >= 33 %}
-                                <span class='pull-right'>{{ prg.persent }}%</span>
-                            {% endif %}
+                            <span class='pull-right'>{{ prg.persent }}%</span>
                         {% endif %}
                     </div>
-                    {% if prg.persent < 33 %}
-                        <span class='text-right'>{{ prg.persent }}%</span>
-                    {% endif %}
                 </div>
                 <div class="panel-body second-panel-body">
                     <div class="row">
