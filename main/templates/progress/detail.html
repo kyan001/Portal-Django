@@ -357,6 +357,12 @@
     $(function(){
         getOpusInfo()
         $('[data-toggle="tooltip"]').tooltip();
+        $('input.editable').keydown(function(){
+            if(event.keyCode==13){
+                $('#save').click()
+                return false
+            }
+        })
     });
     function getOpusInfo(){
         var book_subs = ['书','书籍','book','pdf','漫画','comic','文字','doc','txt']
