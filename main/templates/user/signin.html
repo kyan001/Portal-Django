@@ -40,40 +40,32 @@
 <div class="container fullscreen">
     <div id="form-wrap" class="row">
         <div id="form-div" class='col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-xs-12'>
-            <form id="login-form" action="/user/checklogin/" method="post">
+            <form id="login-form" action="/user/checklogin/" method="post" autocomplete="off">
                 {% csrf_token %}
                 <div class="one-group input-group" id="username-group">
                     <span class="input-group-addon text-muted" title='必填，只能包含“英文字母”、“数字”和“英文句号' data-toggle="tooltip" data-placement="top">
                         <span class='glyphicon glyphicon-user'></span>
                     </span>
-                    <input type="text" class="form-control" name="username"
-                        placeholder="用户名 / Username"
-                        autofocus="autofocus" autocomplete="off"
-                        onblur="validateUsername('onblur')" onkeydown="keydownUsername()">
+                    <input type="text" class="form-control" name="username" placeholder="用户名" autofocus="autofocus" onblur="validateUsername('onblur')">
                 </div>
-                <div class="one-group input-group" id='question-group'>
-                    <span class="input-group-addon text-muted">
-                        <span class='glyphicon glyphicon-comment'></span>
-                    </span>
-                    <input id='question-content' type="question" name='question' class="form-control" value="" readonly='readonly' autocomplete="off">
+                <div class="one-group well well-sm" id="question-group">
+                    <span class='glyphicon glyphicon-comment'></span>
+                    <span id='question-content' class='clean-when-fold'></span>
                 </div>
                 <div class="one-group input-group" id='answer-group'>
                     <span class="input-group-addon text-muted" title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="top">
                         <span class='glyphicon glyphicon-credit-card'></span>
                     </span>
-                    <input type="password" class="form-control" name="answer"
-                        placeholder="密码 / Password"
-                        autocomplete="off"
-                        onkeydown="keydownAnswer()" onfocus='$(this).val("")'>
+                    <input type="password" class="form-control clean-when-fold" name="answer" placeholder="密码或答案">
                 </div>
                 <div class="one-group well well-sm" id="tip-group">
-                    <div id='tip-content' class='small'></div>
+                    <div id='tip-content' class='small clean-when-fold'></div>
                 </div>
                 <div class="one-group input-group" id="rememberme-group">
                     <span class="input-group-addon" title='两周内免登入，公共电脑请勿勾选此项' data-toggle="tooltip" data-placement="top">
                         <input id="rememberme" type="checkbox" name='rememberme' value='on' checked>
                     </span>
-                    <input id='rememberme-content' type='text' class="form-control" value="记住我 / Remember me" readonly='readonly' autocomplete="off">
+                    <input id='rememberme-content' type='text' class="form-control" value="记住我" readonly='readonly' tabindex="-1">
                 </div>
                 <input type="hidden" name="from" value="{{from}}">
             </form>
@@ -119,7 +111,7 @@
                 }
             })
             $('input[name="username"]').change(function(){
-                //$('input[name="answer"]').val('')
+                $('input[name="answer"]').val('')
             })
         }
         function clearHasClass(ele){
