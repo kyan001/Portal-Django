@@ -21,7 +21,7 @@
             </div>
             <table class='hidden-xs table table-condensed table-responsive small text-{{ prg.getContextualType|default:"muted" }}'>
                 <tr>
-                    {% if prg.status == 'done' %}
+                    {% if prg.current == prg.opus.total and prg.current != 0 %}
                         <td class="text-center bg-primary">
                             <span class='glyphicon glyphicon-ok'></span>
                             <span title='完成时间'>{{ prg.modified|date:'Y-m-d' }}</span>
