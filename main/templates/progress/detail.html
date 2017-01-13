@@ -365,8 +365,8 @@
         })
     });
     function getOpusInfo(){
-        var book_subs = ['书','书籍','book','pdf','漫画','comic','文字','doc','txt']
-        var movie_subs = ['动画','anime','电影','movie','电视剧','tv','show','美剧','英剧','韩剧','日剧']
+        var book_subs = ['书','书籍','book','pdf','漫画','comic','文字','doc','txt','小说']
+        var movie_subs = ['动画','anime','电影','movie','电视剧','tv','show','美剧','英剧','韩剧','日剧','公开课','视频']
         var sub = $("input[name='subtitle']").val().toLowerCase()
         if(book_subs.indexOf(sub) >= 0){
             getBookInfo('book')
