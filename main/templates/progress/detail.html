@@ -141,9 +141,10 @@
                                                 class="viewunlock form-control"
                                                 placeholder="当前 {{prg.current}}"
                                                 value="{{prg.current}}"
-                                                onfocus="focusQuickCurrent()"
+                                                data-current='{{prg.current}}'
+                                                onfocus="if(this.value==this.dataset.current){this.value=''}"
+                                                onblur="if(this.value==''){this.value=this.dataset.current}"
                                                 autocomplete="off"
-                                                onblur="blurQuickCurrent()"
                                                 oninput="checkUpdateButtonLock()"
                                                 >
 
@@ -592,19 +593,6 @@
         }
         disableAllBtn()
         $("#fastupdateform").submit();
-    }
-    function focusQuickCurrent(){
-        var nc = $('input[name="quick_current"]');
-        if(nc.val() == '{{prg.current}}'){
-            nc.val('');
-        }
-    }
-    function blurQuickCurrent(){
-        var nc = $('input[name="quick_current"]');
-        if(nc.val() == ''){
-            nc.val('{{prg.current}}');
-        }
-        checkUpdateButtonLock();
     }
     function checkUpdateButtonLock(){
         var nc = $('input[name="quick_current"]');
