@@ -1,10 +1,19 @@
 $.extend({
-    getIsbnInfo: function(isbn, callback){
+    getIsbnInfo: function(isbn, callback, callback404){
         var isbn_search_api = 'https://api.douban.com/v2/book/isbn/' + isbn
         if(isbn !== ''){
-            $.get(isbn_search_api, {}, function(data){
-                callback(data)
-            }, 'jsonp');
+            $.ajax({
+                type: "GET",
+                url: isbn_search_api,
+                data: {},
+                dataType: 'jsonp',
+                error: function() {
+                    callback404()
+                },
+                success: function(result){
+                    callback(result)
+                }
+            })
         }
     },
     getBookInfo: function(name, callback){

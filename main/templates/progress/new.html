@@ -199,10 +199,16 @@
                     locate: true,
                     src: URL.createObjectURL(e.target.files[0])
                 }, function(data){
-                    $.getIsbnInfo(data.codeResult.code, function(result){
-                        $('input[name="name"]').val(result.title)
-                        $('input[name="total"]').val(result.pages)
-                    })
+                    if(data && data.codeResult && data.codeResult.code){
+                        $.getIsbnInfo(data.codeResult.code, function(result){
+                            $('input[name="name"]').val(result.title)
+                            $('input[name="total"]').val(result.pages)
+                        }, function(){
+                            $.warning('未找到 ISBN:' + data.codeResult.code + ' 的书籍')
+                        })
+                    } else {
+                        $.warning('未能解析条形码')
+                    }
                 })
             }
         })
