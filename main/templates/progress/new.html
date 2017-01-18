@@ -109,7 +109,7 @@
                                             <input type="number" class='form-control' placeholder="纯数字，追剧请填 0" name="total" class="editable clearable">
                                             <span class="input-group-btn">
                                                 <span id='guess-total' class="btn btn-default" data-guess='0' onclick='guessTotal()'>
-                                                    <span class='glyphicon glyphicon-cloud'></span>
+                                                    <span class='glyphicon glyphicon-cloud text-muted'></span>
                                                 </span>
                                             </span>
                                         </div>
@@ -200,7 +200,8 @@
                     src: URL.createObjectURL(e.target.files[0])
                 }, function(data){
                     $.getIsbnInfo(data.codeResult.code, function(result){
-                        $('input[name="name"]').val(result.title).focus()
+                        $('input[name="name"]').val(result.title)
+                        $('input[name="total"]').val(result.pages)
                     })
                 })
             }
@@ -240,10 +241,12 @@
         if(bookname != ''){
             $.getBookInfo(bookname, function(info){
                 pages = parseInt(info.pages)
-                if(info.match && pages > 0){  // 精确匹配
-                    $('input[name="total"]').val(pages)
-                } else if(pages > 0){  // 不精确匹配
+                if(pages > 0){  // 不一定是精确匹配
                     $('#guess-total').attr('data-guess', pages).attr('title', '是《' + info.title + '》吗？')
+                    $('#guess-total .glyphicon').removeClass('text-muted')
+                    if(info.match && pages > 0){  // 精确匹配
+                        $('input[name="total"]').val(pages)
+                    }
                 }
             });
         }
