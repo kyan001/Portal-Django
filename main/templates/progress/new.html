@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block title %}新增进度{% endblock title %}
 {% block icon %}<link rel="icon" href="/static/img/Logo_List.png" />{% endblock icon %}
+{% block inhead %}
+    <script src="/static/js/quagga.min.js"></script>
+{% endblock %}
 
 {% block css %}
     <style>
@@ -59,6 +62,11 @@
                                         <div class="input-group">
                                             <span class="input-group-addon text-muted">名称</span>
                                             <input type="text" class='form-control' placeholder="不用加书名号" name="name" class="editable clearable" onchange="getPages()">
+                                            <span class="input-group-btn">
+                                                <span class="btn btn-default" onclick='$("#barcode-input").click()'>
+                                                    <span class='glyphicon glyphicon-barcode'></span>
+                                                </span>
+                                            </span>
                                         </div>
                                     </span>
                                     <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
@@ -162,7 +170,7 @@
             </div>
         </div><!--col-->
     </div><!--row-->
-</div>
+    <input id='barcode-input' class='hidden' type='file'>
 {% endblock content %}
 
 {% block js %}
@@ -170,6 +178,32 @@
     $(function(){
         $('.catagory').click(function(){
             $('input[name="subtitle"]').val($(this).text())
+        })
+        $("#barcode-input").on("change", function(e) {
+            if (e.target.files && e.target.files.length) {
+                Quagga.decodeSingle({
+                    inputStream: {
+                        size: 800,
+                        singleChannel: false
+                    },
+                    locator: {
+                        patchSize: "medium",
+                        halfSample: true
+                    },
+                    decoder: {
+                        readers: [{
+                            format: "ean_reader",
+                            config: {}
+                        }]
+                    },
+                    locate: true,
+                    src: URL.createObjectURL(e.target.files[0])
+                }, function(data){
+                    $.getIsbnInfo(data.codeResult.code, function(result){
+                        $('input[name="name"]').val(result.title).focus()
+                    })
+                })
+            }
         })
     });
     function clearForm(){

@@ -1,4 +1,12 @@
 $.extend({
+    getIsbnInfo: function(isbn, callback){
+        var isbn_search_api = 'https://api.douban.com/v2/book/isbn/' + isbn
+        if(isbn !== ''){
+            $.get(isbn_search_api, {}, function(data){
+                callback(data)
+            }, 'jsonp');
+        }
+    },
     getBookInfo: function(name, callback){
         var book_search_api = '/opus/searchopusinfo'
         var book_search_api_douban = 'https://api.douban.com/v2/book/search';
