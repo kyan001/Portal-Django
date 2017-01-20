@@ -227,11 +227,28 @@ class ExpHistory(BaseModel):
     def __str__(self):
         return "{self.id}) {created} - @{self.userexp.user.nickname}: [{self.userexp.category_zh}] {self.operation} +{self.change}".format(self=self, created=util.ctrl.formatDate(self.created))
 
+class OpusManager(models.Manager):
+    def getTopSubtitles(self):
+        """Count and return the top common subtitles
+
+        Returns:
+            sorted subtitle:count k-v dictionary
+        """
+        records = Opus.objects.all()
+        sbttl_counts = {}
+        for r in records:
+            if not r.subtitle:
+                continue
+            count = sbttl_counts.get(r.subtitle, 0)
+            sbttl_counts[r.subtitle] = sbttl_counts.get(r.subtitle, 0) + 1
+        return sorted(sbttl_counts.items(), key=lambda itm:itm[1], reverse=True)
+
 
 class Opus(BaseModel):
     name = models.CharField(max_length=255)
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     total = models.IntegerField(default=0)
+    objects = OpusManager()
 
     @property
     def progress(self):
