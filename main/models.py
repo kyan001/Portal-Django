@@ -336,6 +336,10 @@ class Progress(BaseModel):
     def user(self):
         return User.objects.get(id=self.userid)
 
+    @property
+    def link(self):
+        return "<a href='/progress/detail?id={id}'>{name}</a>".format(id=self.id, name=self.opus.name)
+
     def __str__(self):
         return "{self.id}) @{self.user.nickname} -《 {self.opus.name} 》 ({self.current}/{opus.total})".format(self=self)
 
