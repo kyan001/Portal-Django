@@ -48,7 +48,7 @@
                 <div class="collapse in" id="list-follow">
                     <div class="row">
                     {% for prg in prglist.follow %}
-                        {% include 'progress/progresscard.html' with prg=prg size='col-xs-12' %}
+                        {% include 'progress/progresscard.html' with prg=prg size='col-xs-12 col-sm-6 col-md-12' %}
                     {% empty %}
                         <div class="well">
                             您没有在追剧的进度哦~
