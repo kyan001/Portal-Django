@@ -8,6 +8,8 @@
     {{ super }}
     <link rel="stylesheet" href="/static/jqtimeline/css/jquery.jqtimeline.zh.css">
     <script src="/static/jqtimeline/js/jquery.jqtimeline.zh.js"></script>
+    <link rel="stylesheet" href="/static/timelineMe/jquery.timelineMe.css">
+    <script src="/static/timelineMe/jquery.timelineMe.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -21,6 +23,10 @@
         </div>
         <div id="this-year-timeline-zone">
             <div id="event-timeline-this-year"></div>
+        </div>
+    </div>
+    <div id='timelineme-zone' class='well'>
+        <div id='timelineme'>
         </div>
     </div>
 </div><!--.container-->
@@ -128,7 +134,6 @@
                 {% endif %}
             {% endfor %}
         ];
-
         $('#event-timeline-this-year').jqtimeline({
             events: this_year_events,
             showToolTip: true,
@@ -140,7 +145,6 @@
                 window.location='/progress/detail?id=' + event.progressid
             },
         });
-
         $('#event-timeline-last-year').jqtimeline({
             events: last_year_events,
             showToolTip: true,
@@ -152,6 +156,31 @@
                 window.location='/progress/detail?id=' + event.progressid
             },
         });
+        $('#timelineme').timelineMe({
+            items: [
+                {
+                    type: 'milestone',
+                    label: 'my label 1'
+                },
+                {
+                    type: 'smallItem',
+                    label: 'my label 2',
+                    shortContent: 'short description',
+                    fullContent: 'big description <br> with more lines <br> than the short one. <br> <div style="text-align: center;"><img src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png" style="width: 50%;" /></div>',
+                    showMore: 'show more',
+                    showLess: 'show less'
+                },
+                {
+                    type: 'bigItem',
+                    label: '<span style="background-color: #8DD8DD;">my label 3</span>',
+                    shortContent: 'short description',
+                    fullContent: 'big description <br> with more lines <br> than the short one. <br> <div style="text-align: center;"><img src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png" style="width: 50%;" /></div>',
+                    showMore: 'show more',
+                    showLess: 'show less'
+                }
+            ]
+        });
+
     });
 
     var timer_hTl
