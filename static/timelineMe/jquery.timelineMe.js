@@ -501,7 +501,9 @@
                 }
 
                 var shortContentElm = $('<div class="timeline-me-shortcontent">');
-                contentElm.append(shortContentElm);
+                if(item.shortContent) {
+                    contentElm.append(shortContentElm);
+                }
                 item.shortContentElement = shortContentElm;
 
                 var fullContentElm = $('<div class="timeline-me-fullcontent">');
