@@ -12,27 +12,6 @@
     <script src="/static/timelineMe/jquery.timelineMe.js"></script>
 {% endblock %}
 
-{% block content %}
-<div class="container">
-    <div id='timeline-zone' class='hidden-xs well'>
-        <div id="last-year-timeline-zone">
-            <div id="hide-timeline">
-                <span class="glyphicon glyphicon-chevron-up text-muted animate-hide" onmouseenter="hideTimeline()" onmouseout='stopHideTimeline()'></span>
-            </div>
-            <div id="event-timeline-last-year"></div>
-        </div>
-        <div id="this-year-timeline-zone">
-            <div id="event-timeline-this-year"></div>
-        </div>
-    </div>
-    <div id='timelineme-zone' class='well'>
-        <div id='timelineme'>
-        </div>
-    </div>
-</div><!--.container-->
-{% endblock content %}
-
-
 {% block css %}
     <style>
         /* timeline */
@@ -60,8 +39,50 @@
                  -o-transition: all 0.7s linear;
                     transition: all 0.7s linear;
         }
+        .timeline-me-label .timeline-me-same-position {  /* Hack timelineme */
+            display: none;
+        }
+        .timeline-me-smallitem .timeline-me-fullcontent .timeline-me-same-position,
+        .timeline-me-smallitem .timeline-me-shortcontent .timeline-me-same-position {  /* Hack timelineme */
+            display: block;
+            border-top: 1px solid silver;
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+        @media (max-width: 768px) {
+            .well-in-sm {  /* Hack bootstrap's well */
+                padding: 0;
+            }
+            .timeline-me-smallitem.timeline-me-left .timeline-me-content-container, .timeline-me-smallitem:not(.timeline-me-top):not(.timeline-me-right):not(.timeline-me-bottom) .timeline-me-content-container {  /* Hack timelineme */
+                width: 45%;
+                margin-left: 5%;
+            }
+            .timeline-me-smallitem.timeline-me-right .timeline-me-content-container {  /* Hack timelineme */
+              width: 45%;
+            }
+        }
     </style>
 {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div id='timeline-zone' class='hidden-xs well row'>
+            <div id="last-year-timeline-zone">
+                <div id="hide-timeline">
+                    <span class="glyphicon glyphicon-chevron-up text-muted animate-hide" onmouseenter="hideTimeline()" onmouseout='stopHideTimeline()'></span>
+                </div>
+                <div id="event-timeline-last-year"></div>
+            </div>
+            <div id="this-year-timeline-zone">
+                <div id="event-timeline-this-year"></div>
+            </div>
+        </div>
+        <div id='timelineme-zone' class='well well-in-sm row'>
+            <div id='timelineme'>
+            </div>
+        </div>
+    </div><!--.container-->
+{% endblock content %}
 
 {% block js %}
 <script>
@@ -157,27 +178,51 @@
             },
         });
         $('#timelineme').timelineMe({
+            // orientation: 'horizontal',
             items: [
-                {
-                    type: 'milestone',
-                    label: 'my label 1'
-                },
-                {
-                    type: 'smallItem',
-                    label: 'my label 2',
-                    shortContent: 'short description',
-                    fullContent: 'big description <br> with more lines <br> than the short one. <br> <div style="text-align: center;"><img src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png" style="width: 50%;" /></div>',
-                    showMore: 'show more',
-                    showLess: 'show less'
-                },
-                {
-                    type: 'bigItem',
-                    label: '<span style="background-color: #8DD8DD;">my label 3</span>',
-                    shortContent: 'short description',
-                    fullContent: 'big description <br> with more lines <br> than the short one. <br> <div style="text-align: center;"><img src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png" style="width: 50%;" /></div>',
-                    showMore: 'show more',
-                    showLess: 'show less'
-                }
+                {% for prg in prglist %}
+                    {% ifchanged prg.modified.year %}
+                        {
+                            label: '<h1><span class="label label-primary">{{ prg.modified.year }}</span></h1>',
+                            type: 'bigItem',
+                            relativePosition: -{{ prg.modified|date:'Y' }}0000,  //-20170000
+                        },
+                    {% endifchanged %}
+                    {% ifchanged prg.modified.month %}
+                        {
+                            label: '<span class="label label-primary">{{ prg.modified.year }}-{{ prg.modified.month }}</span>',
+                            type: 'milestone',
+                            relativePosition: -{{ prg.modified|date:'Ym' }}00,  //-20170100
+                        },
+                    {% endifchanged %}
+                    {
+                        label: '<span class="text-muted">{{ prg.modified|date:"Y-m-d" }}</span>',
+                        type: 'smallItem',
+                        showMore: '',
+                        showLess: '',
+                        relativePosition: -{{ prg.modified|date:'Ymd' }},  //-20170101
+                        {% if prg.status == 'done' %}
+                            picto: '<span class="glyphicon glyphicon-ok text-success"></span>',
+                            shortContent: "<span class='text-success'>完成</span>《{{prg.link|safe}}》",
+                            forcePosition: 'right',
+                        {% elif prg.status == 'giveup' %}
+                            picto: '<span class="glyphicon glyphicon-ban-circle text-danger"></span>',
+                            shortContent: "<span class='text-danger'>冻结了</span>《{{prg.link|safe}}》",
+                            forcePosition: 'right',
+                        {% elif prg.status == 'inprogress' %}
+                            picto: '<span class="glyphicon glyphicon-play"></span>',
+                            shortContent: "《{{prg.link|safe}}》进行至 <span class='text-info'>{{prg.persent}}%</span>",
+                            forcePosition: 'left',
+                        {% elif prg.status == 'follow' %}
+                            shortContent: "《{{prg.link|safe}}》追剧至<span class='text-info'>第 {{prg.current}} 集</span>",
+                            forcePosition: 'left',
+                        {% elif prg.status == 'todo' %}
+                            picto: '<span class="glyphicon glyphicon-plus"></span>',
+                            shortContent: "《{{prg.link|safe}}》加入<span class='text-info'>待阅读</span>",
+                            forcePosition: 'left',
+                        {% endif %}
+                    },
+                {% endfor %}
             ]
         });
 
