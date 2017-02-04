@@ -202,7 +202,7 @@
                             }
                         } else {
                             if(option=='onblur' || option=='onchange'){
-                                $('#username-group').addClass('has-error').find('input').focus()
+                                $('#username-group').addClass('has-error')
                                 $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在')
                             }
                             foldOptions()
