@@ -69,7 +69,7 @@ def get_operation():
 def run_operation(oprtn, config_file, pid_file):
     if "start" == oprtn:
         ktk.runCmd("sudo echo ''")
-        ktk.runCmd("sudo uwsgi -x '" + config_file + "' --pidfile '" + pid_file)
+        ktk.runCmd("sudo uwsgi -x '{c}' --pidfile '{p}'".format(c=config_file, p=pid_file))
     elif "stop" == oprtn:
         ktk.runCmd("sudo uwsgi --stop " + pid_file)
     elif "reload" == oprtn:
