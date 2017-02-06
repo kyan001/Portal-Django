@@ -89,7 +89,7 @@
 
             <div class="panel-group">
                 {% for chat in chats %}
-                    {% include 'chat/chatlet.html' with chat=chat user=cuser %}
+                    {% include 'chat/chatlet.html' with chat=chat user=cuser conversation=True %}
                 {% empty %}
                     {% if receiver %}
                         <div class="well">

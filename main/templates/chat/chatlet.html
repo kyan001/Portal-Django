@@ -31,7 +31,7 @@
         {% endif %}
         <div class="pull-right text-muted hidden-xs">{{ chat.created|date:'Y-m-d H:i' }}</div>
     </div>
-    <div id="chat-{{chat.id}}" class="panel-collapse collapse {%if receiver%}in{%endif%}" role="tabpanel">
+    <div id="chat-{{chat.id}}" class="panel-collapse collapse {% if conversation %}in{% endif %}" role="tabpanel">
         <div class="panel-body">
             <div class="text-muted visible-xs-block">{{ chat.created|date:'Y-m-d H:i' }}</div>
             <div class='chat-content pull-left'>
@@ -51,7 +51,7 @@
                 {% endif %}
             </div>
             <div class="pull-right">
-                {% if not receiver %}
+                {% if not conversation %}
                     <a class="btn btn-primary btn-sm" href="/chat/conversation?receiver={{chat.sender.nickname}}&title=回复：{{chat.content|truncatechars:12}}" onclick="disableAllBtn()">
                         <span class="glyphicon glyphicon-envelope"></span> 回复
                     </a>
