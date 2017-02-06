@@ -23,6 +23,9 @@
     .chat-content {
         word-break: break-all;
     }
+    .dropdown-menu > li > a {
+        line-height: 40px;
+    }
 </style>
 {% endblock css %}
 
@@ -54,6 +57,27 @@
                 <h3>
                     <span class="glyphicon glyphicon-inbox"></span> 收信箱
                     <small>({{chats.paginator.count}})</small>
+                    <span class='pull-right'>
+                        <div class='visible-xs-inline-block'>
+                            <div class="btn-group">
+                                <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ types.thiszh }} <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    {% for tt, tn in types.all.items %}
+                                        <li class="{% if types.this == tt %}active{% endif %}">
+                                            <a href='?type={{ tt }}'>{{ tn }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class='hidden-xs'>
+                            {% for tt, tn in types.all.items %}
+                                <a class='btn btn-sm {% if types.this == tt %}btn-info{% else %}btn-default{% endif %}' href='?type={{ tt }}'>{{ tn }}</a>
+                            {% endfor %}
+                        </div>
+                    </span>
                 </h3>
             </div>
             <div class="panel-group" id="msg-group" role="tablist" aria-multiselectable="true">
@@ -61,7 +85,7 @@
                     {% include 'chat/chatlet.html' with chat=chat user=cuser parent='#msg-group' %}
                 {% empty %}
                     <div class="well">
-                        你还没有收到任何消息
+                        没有任何消息
                     </div>
                 {% endfor %}
             </div><!--.panel-group-->
@@ -70,25 +94,25 @@
     <nav>
         <ul class="pager">
             {% if chats.has_previous %}
-            <li>
-                <a href="?page={{ chats.previous_page_number }}">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-            </li>
+                <li>
+                    <a href="?page={{ chats.previous_page_number }}">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                </li>
             {% endif %}
             {% if chats.has_other_pages %}
-            <li title="unread">
-                <a href="?type=unread">
-                    <span>{{ chats.number }} / {{ chats.paginator.num_pages }}</span>
-                </a>
-            </li>
+                <li title="unread">
+                    <a href="?type=unread">
+                        <span>{{ chats.number }} / {{ chats.paginator.num_pages }}</span>
+                    </a>
+                </li>
             {% endif %}
             {% if chats.has_next %}
-            <li>
-                <a href="?page={{ chats.next_page_number }}">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                </a>
-            </li>
+                <li>
+                    <a href="?page={{ chats.next_page_number }}">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </li>
             {% endif %}
         </ul>
     </nav>
