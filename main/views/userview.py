@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.core.cache import cache
 from django.contrib import messages
+import django.utils.html
 
 from main.models import User, UserExp, Progress, Chat
 import util.ctrl
@@ -416,6 +417,7 @@ def userGetUnreadCount(request):  # AJAX
             for uc in unread_chats:
                 sender = User.objects.get(id=uc.senderid)
                 words = uc.title or uc.content
+                words = django.utils.html.strip_tags(words)
                 if len(words) > 12:
                     words = words[0:12] + '...'
                 result['msgs'].append({
