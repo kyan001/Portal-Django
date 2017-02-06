@@ -95,21 +95,27 @@
         <ul class="pager">
             {% if chats.has_previous %}
                 <li>
-                    <a href="?page={{ chats.previous_page_number }}">
+                    <a href="?type={{ types.this }}&page={{ chats.previous_page_number }}">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </a>
                 </li>
             {% endif %}
             {% if chats.has_other_pages %}
-                <li title="unread">
-                    <a href="?type=unread">
-                        <span>{{ chats.number }} / {{ chats.paginator.num_pages }}</span>
-                    </a>
+                <li title='跳到最后一页/第一页'>
+                    {% if chats.has_previous %}
+                        <a href="?type={{ types.this }}&page=1">
+                            <span>{{ chats.number }} / {{ chats.paginator.num_pages }}</span>
+                        </a>
+                    {% else %}
+                        <a href="?type={{ types.this }}&page={{ chats.paginator.num_pages }}">
+                            <span>{{ chats.number }} / {{ chats.paginator.num_pages }}</span>
+                        </a>
+                    {% endif %}
                 </li>
             {% endif %}
             {% if chats.has_next %}
                 <li>
-                    <a href="?page={{ chats.next_page_number }}">
+                    <a href="?type={{ types.this }}&page={{ chats.next_page_number }}">
                         <span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
                 </li>
