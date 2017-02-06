@@ -1,8 +1,11 @@
+import collections
+
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from main.models import UserExp, Chat, User
 from django.db.models import Q
+
+from main.models import UserExp, Chat, User
 import util.ctrl
 import util.user
 
@@ -14,12 +17,16 @@ def chatInbox(request):
     if not user:
         return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
     # get inputs
-    chat_type = request.GET.get('type')
+    chat_type = request.GET.get('type') or 'received'
+
     # get chats
-    if chat_type == 'unread':
-        chat_list = user.getChats('unread')
-    else:
-        chat_list = user.getChats('received')
+    ALL_TYPES = collections.OrderedDict()
+    ALL_TYPES['received'] = '所有'
+    ALL_TYPES['unread'] = '未读'
+    ALL_TYPES['fromsys'] = '系统'
+    ALL_TYPES['fromhuman'] = '朋友'
+    ALL_TYPES['sent'] = '已发送'
+    chat_list = user.getChats(chat_type) if chat_type in ALL_TYPES.keys() else user.getChats('received')
     # paginator
     paginator = Paginator(chat_list, per_page=15)
     page = request.GET.get('page')
@@ -36,6 +43,11 @@ def chatInbox(request):
     userexp.addExp(1, '查看收件箱')
     # render
     context['chats'] = chats
+    context['types'] = {
+        'this': chat_type,
+        'thiszh': ALL_TYPES.get(chat_type),
+        'all': ALL_TYPES,
+    }
     return render(request, 'chat/inbox.html', context)
 
 
