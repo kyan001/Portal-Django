@@ -12,9 +12,9 @@
             <span class="glyphicon glyphicon-list-alt"></span>
             <span class="text-muted">临时笔记</span>
         {% elif chat.sender.username == user.username %}
-            <span class="text-primary">
-                我
-            </span>
+            <span class="text-primary">我</span>
+            <span class='text-muted'>></span>
+            <span class='text-muted'>@{{ chat.receiver.nickname }}</span>
         {% else %}
             <span class="text-primary">
                 <span class="glyphicon glyphicon-comment"></span>
