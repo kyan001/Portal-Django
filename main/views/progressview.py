@@ -25,13 +25,14 @@ def progressList(request):
         for st in Progress.status_pool.get('active'):
             prg_list[st] = progresses.filter(status=st)
     else:
-        chat_content = '''
-            欢迎您使用「我的进度」<br/>
-            请点击 “<a href="/progress/new">新建进度</a>” 按钮添加新的进度，<br/>
-            “已完成”和“冻结中”的进度会存放在 <a href="/progress/archive">进度存档</a> 页面。<br/>
-            最后，祝您使用愉快！
-        '''
-        Chat.objects.sendBySys(user, title='欢迎使用「我的进度」系统', content=chat_content)
+        if not user.getChats('received').filter(senderid=Chat.objects.getSyschatUser().id, title='欢迎使用「我的进度」系统').exists():
+            chat_content = '''
+欢迎您使用「我的进度」<br/>
+请点击 “<a href="/progress/new">新建进度</a>” 按钮添加新的进度，<br/>
+“已完成”和“冻结中”的进度会存放在 <a href="/progress/archive">进度存档</a> 页面。<br/>
+最后，祝您使用愉快！
+            '''
+            Chat.objects.sendBySys(user, title='欢迎使用「我的进度」系统', content=chat_content)
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(1, '访问「进度列表」页面')
