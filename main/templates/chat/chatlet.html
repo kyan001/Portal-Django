@@ -49,7 +49,7 @@
                 {% endif %}
             </div>
             <div class="pull-right">
-                {% if not conversation or chat.receiver.username == user.username %}
+                {% if not conversation and chat.receiver.username == user.username %}
                     <a class="btn btn-primary btn-sm" href="/chat/conversation?receiver={{chat.sender.nickname}}&title=回复：{{chat.content|truncatechars:12}}" onclick="disableAllBtn()">
                         <span class="glyphicon glyphicon-envelope"></span> 回复
                     </a>
