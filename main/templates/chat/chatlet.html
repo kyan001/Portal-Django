@@ -10,9 +10,7 @@
             </span>
         {% elif chat.sender.username == user.username and chat.receiverid == user.id %}
             <span class="glyphicon glyphicon-list-alt"></span>
-            <span class="text-muted">
-                临时笔记
-            </span>
+            <span class="text-muted">临时笔记</span>
         {% elif chat.sender.username == user.username %}
             <span class="text-primary">
                 我
@@ -23,7 +21,7 @@
                 @{{ chat.sender.nickname }}
             </span>
         {% endif %}
-        ：
+        <span>:</span>
         {% if chat.title %}
             {{ chat.title }}
         {% else %}
