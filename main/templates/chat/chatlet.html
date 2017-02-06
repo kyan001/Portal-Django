@@ -23,9 +23,9 @@
         {% endif %}
         <span>:</span>
         {% if chat.title %}
-            {{ chat.title }}
+            {{ chat.title|striptags }}
         {% else %}
-            {{ chat.content|truncatechars:12 }}
+            {{ chat.content|striptags|truncatechars:12 }}
         {% endif %}
         <div class="pull-right text-muted hidden-xs">{{ chat.created|date:'Y-m-d H:i' }}</div>
     </div>
