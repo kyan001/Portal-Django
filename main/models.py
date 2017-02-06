@@ -109,10 +109,18 @@ class User(BaseModel):
     def getChats(self, mode=None):
         if mode == 'received':
             return Chat.objects.filter(receiverid=self.id).order_by('-created')
-        if mode == 'sent':
+        elif mode == 'sent':
             return Chat.objects.filter(senderid=self.id).order_by('-created')
-        if mode == 'unread':
-            return Chat.objects.filter(receiverid=self.id, isread=False)
+        elif mode == 'unread':
+            return Chat.objects.filter(receiverid=self.id, isread=False).order_by('-created')
+        elif mode == 'fromsys':
+            syschatuser = Chat.objects.getSyschatUser()
+            return Chat.objects.filter(senderid=syschatuser.id, receiverid=self.id).order_by('-created')
+        elif mode == 'fromhuman':
+            syschatuser = Chat.objects.getSyschatUser()
+            return Chat.objects.filter(receiverid=self.id).exclude(senderid=syschatuser.id).order_by('-created')
+        else:
+            return Chat.objects.filter(receiverid=self.id)
 
 
 class UserPermission(BaseModel):
@@ -227,6 +235,7 @@ class ExpHistory(BaseModel):
     def __str__(self):
         return "{self.id}) {created} - @{self.userexp.user.nickname}: [{self.userexp.category_zh}] {self.operation} +{self.change}".format(self=self, created=util.ctrl.formatDate(self.created))
 
+
 class OpusManager(models.Manager):
     def getTopSubtitles(self):
         """Count and return the top common subtitles
@@ -240,8 +249,8 @@ class OpusManager(models.Manager):
             if not r.subtitle:
                 continue
             count = sbttl_counts.get(r.subtitle, 0)
-            sbttl_counts[r.subtitle] = sbttl_counts.get(r.subtitle, 0) + 1
-        return sorted(sbttl_counts.items(), key=lambda itm:itm[1], reverse=True)
+            sbttl_counts[r.subtitle] = count + 1
+        return sorted(sbttl_counts.items(), key=lambda itm: itm[1], reverse=True)
 
 
 class Opus(BaseModel):
