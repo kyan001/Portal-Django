@@ -41,3 +41,8 @@ def indexSettheme(request):
         userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
         userexp.addExp(2, '尝试主题：{theme_name}'.format(theme_name=theme_name_smart.title()))
     return response
+
+
+def indexHelp(request):  # GET
+    """网站的帮助页"""
+    return redirect('//readthedocs.org')

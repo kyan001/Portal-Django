@@ -11,6 +11,7 @@ urlpatterns = [
     # INDEX
     url(r'^$', views.index, name='index'),
     url(r'^index/settheme$', views.indexSettheme),
+    url(r'^index/help$', views.indexHelp),
     # USER
     url(r'^user/public$', views.userPublic),
     url(r'^user/profile/', views.userProfile),
