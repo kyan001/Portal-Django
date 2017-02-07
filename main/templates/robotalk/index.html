@@ -92,8 +92,8 @@
                 </div>
             </div>
             <div class="panel-body">
-                <img class='img-responsive' src='/static/img/index/slide_robotalk.jpg'>
-                <hr>
+                <img class='visible-xs-block img-responsive' src='/static/img/index/slide_robotalk.jpg'>
+                <hr class='visible-xs-block'/>
                 <div id="chat-zone">
                 </div>
             </div>
@@ -238,8 +238,9 @@
                         console.log("机器人 " + i + " 出错")
                         for(j in ROBOS){
                             if(ROBOS[j].key == i){
+                                console.log("机器人 " + ROBOS[j].name + " 已被移除")
+                                addChat('呃，我先走了，你们聊~', ROBOS[j].key)
                                 ROBOS.splice(j, 1)
-                                console.log("机器人 " + i + " 已被移除")
                             }
                         }
                     }
