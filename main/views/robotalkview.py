@@ -82,14 +82,21 @@ def robotalkGetresponse(request):  # AJAX
         """从 Simsimi 的返回字符串中获得真正的内容"""
         if not content:
             return None
-        content = content.replace('\n', '<br/>')
+        json_obj = json.loads(content)
+        content = json_obj.get('response').replace('\n', '<br/>')
+        return content
         return content
     # robos list(dictionary)
     robos = {
         'simsimi': {
             'from': 'simsimi',
-            'url': 'http://www.xiaodoubi.com/simsimiapi.php',
-            'param': {'msg': userinput},
+            'url': 'http://sandbox.api.simsimi.com/request.p',
+            'param': {
+                'key': '434daf7b-e657-4192-8fb9-ba38bfa5f730',
+                'lc': 'zh',
+                'ft': '1.0',
+                'text': userinput,
+            },
             'getContent': extractSimsimi,
         },
         'feifei': {
