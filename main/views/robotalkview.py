@@ -34,49 +34,17 @@ def robotalkGetresponse(request):  # AJAX
     if not userinput:
         return util.ctrl.returnJsonError('userinput is empty')
     from_ = request.GET.get('from')
-    # save count into cache
-    cache_key = 'robotalk:count'
-    cache_timeout = 60 * 60 * 24 * 7 * 4  # 1 month
-    cache_count = cache.get(cache_key, 0)
-    cache_count += 1
-    cache.set(cache_key, cache_count, cache_timeout)
 
-    def getFullurl(robo):
-        if not (robo and robo.get('param') and robo.get('url')):
-            return None
-        param = urllib.parse.urlencode(robo.get('param'))
-        fullurl = "{u}?{p}".format(u=robo.get('url'), p=param)
-        return fullurl
-
-    def getResponse(robo):
-        fullurl = getFullurl(robo)
-        u = urllib.request.urlopen(fullurl)
-        u_resp = u.read()
-        if not u_resp:
-            return None
-        return u_resp.decode()
-
-    def addToResult(robo, result):
-        key = robo.get('from')
-        time_now = datetime.datetime.now()
-        orig_resp = getResponse(robo)
-        value = {
-            'txt': robo.get('getContent')(orig_resp),
-            'fullurl': getFullurl(robo),
-            'response': orig_resp,
-        }
-        time_rtt = (datetime.datetime.now() - time_now).microseconds / 1000
-        value['rtt'] = int(time_rtt)  # milliseconds
-        result['result'][key] = value
-        return True
-
+    # extracts
     def extractFeifei(content: str):
         """从 feifei 的返回字符串中获得真正的内容"""
         if not content:
             return None
         json_obj = json.loads(content)
-        content = json_obj.get('content').replace('{br}', '<br/>')
-        content = re.sub(r'{face:[0-9]+}', '', content)
+        content = json_obj.get('content')
+        if content:
+            content.replace('{br}', '<br/>')
+            content = re.sub(r'{face:[0-9]+}', '', content)
         return content
 
     def extractSimsimi(content: str):
