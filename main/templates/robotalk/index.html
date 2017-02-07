@@ -241,28 +241,34 @@
         var cul = $('<ul></ul>').addClass('list-group')
         // Create chat-ele
         var cele = $('<span></span>').addClass('list-group-item chat-li')
-        uimg.attr('title', from_)
-        switch(from_){
-            case 'me':
-                cul.addClass('text-right')
-                cele.addClass('list-group-item-success')
-                uimg.attr('src', "/static/img/robotalk/fromme.png")
-                break;
-            case 'feifei':
-                cele.addClass('list-group-item-danger')
-                uimg.attr('src', "/static/img/robotalk/fromfeifei.png")
-                break;
-            case 'simsimi':
-                cele.addClass('list-group-item-info')
-                uimg.attr('src', "/static/img/robotalk/fromsimsimi.png")
-                break;
-            case 'superfarmer.net':
-                cele.addClass('list-group-item-warning')
-                uimg.attr('src', "/static/img/Logo_Robotalk.png")
-            default:
-                uimg.attr('src', "/static/img/robotalk/fromme.png")
-                break;
+        for (i in ROBOS){
+            if(ROBOS[i].key == from_){
+                uimg.attr('title', ROBOS[i].name)
+                break
+            }
         }
+        function styleByFrom(from){
+            switch (from) {
+                case 'me':
+                    cul.addClass('text-right')
+                    cele.addClass('list-group-item-success')
+                    uimg.attr('src', "/static/img/robotalk/fromme.png")
+                    return
+                case 'superfarmer.net':
+                    cele.addClass('list-group-item-primary')
+                    uimg.attr('src', "/static/img/Logo_Robotalk.png")
+                    return
+            }
+            for(i in ROBOS){
+                if(from == ROBOS[i].key){
+                    cele.addClass('list-group-item-' + ROBOS[i].style)
+                    uimg.attr('src', "/static/img/robotalk/" + ROBOS[i].headimg)
+                    return
+                }
+            }
+            uimg.attr('src', "/static/img/robotalk/fromunknown.png")
+        }
+        styleByFrom(from_)
         // Create reply quote
         var cquote = $('<span class="text-quote"></span>')
         if(to_ != 'all'){
