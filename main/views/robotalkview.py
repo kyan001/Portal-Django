@@ -71,7 +71,7 @@ def robotalkGetresponse(request):  # AJAX
         return True
 
     def extractFeifei(content: str):
-        """从 菲菲 的返回字符串中获得真正的内容"""
+        """从 feifei 的返回字符串中获得真正的内容"""
         if not content:
             return None
         json_obj = json.loads(content)
