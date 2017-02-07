@@ -101,6 +101,14 @@
 
 {% block js %}
 <script>
+    $(function(){
+        $('input[name="userinput"]').keydown(function(event){
+            if(event.keyCode == 13){ // press enter
+                $('#sendbtn').click()
+            }
+        })
+        getResponse('你好')
+    })
     function Robo(key, name, style, headimg){
         this.key = key
         this.name = name
@@ -112,15 +120,6 @@
         new Robo('tuling', '图酱', 'warning', 'fromrobo2.png'),
         new Robo('simsimi', 'Simsimi', 'danger', 'fromrobo3.png'),
     ]
-    $(function(){
-        $('input[name="userinput"]').keydown(function(event){
-            if(event.keyCode == 13){ // press enter
-                $('#sendbtn').click()
-            }
-        })
-        getResponse('你好')
-    })
-
     var lastchat = {
         'whotalk': '',  // last chat from who
     }
