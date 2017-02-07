@@ -85,6 +85,13 @@ def robotalkGetresponse(request):  # AJAX
         json_obj = json.loads(content)
         content = json_obj.get('response').replace('\n', '<br/>')
         return content
+
+    def extractTuling(content: str):
+        """从 Tuling 的返回字符串中获得真正的内容"""
+        if not content:
+            return None
+        json_obj = json.loads(content)
+        content = json_obj.get('text').replace('\n', '<br/>')
         return content
     # robos list(dictionary)
     robos = {
@@ -108,6 +115,15 @@ def robotalkGetresponse(request):  # AJAX
                 'msg': userinput,
             },
             'getContent': extractFeifei,
+        },
+        'tuling': {
+            'from': 'tuling',
+            'url': 'http://www.tuling123.com/openapi/api',
+            'param': {
+                'key': '96dd75c1bfb64b2094327ba286da25d6',
+                'info': userinput,
+            },
+            'getContent': extractTuling,
         },
     }
     # get results
