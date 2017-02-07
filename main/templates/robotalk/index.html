@@ -3,65 +3,77 @@
 {% block icon %}<link rel="icon" href="/static/img/Logo_Robotalk.png">{% endblock %}
 
 {% block css %}
-<style>
-    .container-fluid {
-        font-family: "微软雅黑";
-    }
-    .user-img {
-        width: 100%;
-    }
-    .user-img:hover {
-        -webkit-transform: scale(1.2);
-           -moz-transform: scale(1.2);
-             -o-transform: scale(1.2);
-                transform: scale(1.2);
-    }
-    .col {
-        padding-left: 5px;
-        padding-right: 5px;
-    }
+    <style>
+        html {
+            overflow: scroll;
+        }
+        .container-fluid {
+            font-family: "微软雅黑";
+        }
+        html,
+        body,
+        #the-very-div,
+        .container-fluid {
+            height: auto;
+        }
+        .user-img {
+            width: 100%;
+        }
+        .user-img:hover {
+            -webkit-transform: scale(1.2);
+               -moz-transform: scale(1.2);
+                 -o-transform: scale(1.2);
+                    transform: scale(1.2);
+        }
+        .col {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
 
-    @keyframes rotate360 {
-        from {transform: rotate(0deg);}
-        to {transform: rotate(360deg);}
-    }
-    @-webkit-keyframes rotate360 {
-        from {-webkit-transform: rotate(0deg);}
-        to {-webkit-transform: rotate(360deg);}
-    }
-    @-moz-keyframes rotate360 {
-        from {-moz-transform: rotate(0deg);}
-        to {-moz-transform: rotate(360deg);}
-    }
-    @-ms-keyframes rotate360 {
-        from {-ms-transform: rotate(0deg);}
-        to {-ms-transform: rotate(360deg);}
-    }
-    @-o-keyframes rotate360 {
-        from {-o-transform: rotate(0deg);}
-        to {-o-transform: rotate(360deg);}
-    }
-    .loading {
-        -webkit-animation: rotate360 1s linear infinite;
-           -moz-animation: rotate360 1s linear infinite;
-            -ms-animation: rotate360 1s linear infinite;
-             -o-animation: rotate360 1s linear infinite;
-                animation: rotate360 1s linear infinite;
-    }
-    .list-group {
-        margin-bottom: 5px;
-    }
-    .chat-li {
-        padding: 12px;
-    }
-    .text-from {
-        color: rgba(0,0,0,0.5);
-    }
-    .text-quote {
-        opacity: 0.7;
-        font-style: italic;
-    }
-</style>
+        @keyframes rotate360 {
+            from {transform: rotate(0deg);}
+            to {transform: rotate(360deg);}
+        }
+        @-webkit-keyframes rotate360 {
+            from {-webkit-transform: rotate(0deg);}
+            to {-webkit-transform: rotate(360deg);}
+        }
+        @-moz-keyframes rotate360 {
+            from {-moz-transform: rotate(0deg);}
+            to {-moz-transform: rotate(360deg);}
+        }
+        @-ms-keyframes rotate360 {
+            from {-ms-transform: rotate(0deg);}
+            to {-ms-transform: rotate(360deg);}
+        }
+        @-o-keyframes rotate360 {
+            from {-o-transform: rotate(0deg);}
+            to {-o-transform: rotate(360deg);}
+        }
+        .loading {
+            -webkit-animation: rotate360 1s linear infinite;
+               -moz-animation: rotate360 1s linear infinite;
+                -ms-animation: rotate360 1s linear infinite;
+                 -o-animation: rotate360 1s linear infinite;
+                    animation: rotate360 1s linear infinite;
+        }
+        .list-group {
+            margin-bottom: 5px;
+        }
+        .chat-li {
+            padding: 12px;
+        }
+        .text-from {
+            color: rgba(0,0,0,0.5);
+        }
+        .text-quote {
+            opacity: 0.7;
+            font-style: italic;
+        }
+        #input-box {
+            margin-bottom: 15px;
+        }
+    </style>
 {% endblock css %}
 
 {% block content %}
@@ -80,10 +92,12 @@
                 </div>
             </div>
             <div class="panel-body">
+                <img class='img-responsive' src='/static/img/index/slide_robotalk.jpg'>
+                <hr>
                 <div id="chat-zone">
                 </div>
             </div>
-            <div class="input-group">
+            <div id='input-box' class="input-group keep-in-view">
                 <span class="input-group-addon">
                     <span id='loading-icon' class="glyphicon glyphicon-comment"></span>
                 </span>
@@ -129,7 +143,7 @@
     }
 
     function randomEvents(){
-        var RCTE_rate = lastchat['RCTE'] ? 55 : 25  // 25% chance to start a RCTE, 55% chance to reply a robo
+        var RCTE_rate = lastchat['RCTE'] ? 55 : 30  // 30% chance to start a RCTE, 55% chance to reply a robo
         var isRoboChatToEach = randomNum() < RCTE_rate
         lastchat['RCTE'] = isRoboChatToEach
         if(isRoboChatToEach){
@@ -146,7 +160,7 @@
             }
         }
         // judge whotalk
-        if(qualified.length < 2){  // no enough qualified robos
+        if(!qualified){  // no enough qualified robos
             return null
         }
         function randomsort(a, b) {
@@ -178,19 +192,20 @@
     function sendmsg(){
         var input_ele = $('input[name="userinput"]')
         var input_txt = input_ele.val()
-        input_ele.val('')
-        input_ele.focus()
+
         if(input_txt != ''){
             addChat(input_txt, 'me')  // show this chat on screen
+            var to = ''
             for(i in ROBOS){
                 if(input_txt.indexOf(ROBOS[i].name) != -1 || input_txt.indexOf(ROBOS[i].key) != -1){
                     console.log('触发事件：只询问某个机器人：' + ROBOS[i].name)
-                    getResponse(input_txt, ROBOS[i].key)
-                    return
+                    to = ROBOS[i].key
+                    break
                 }
             }
-            getResponse(input_txt)  // ask for robo responses
+            to ? getResponse(input_txt, to) : getResponse(input_txt)  // ask for robo responses
         }
+        input_ele.val('').focus()
     }
 
     function getResponse(userinput, from_, to_){
@@ -241,12 +256,10 @@
     }
 
 
-    var timer_aC
     function addChat(word, from_, to_){
         if(word == ''){
             return
         }
-        clearTimeout(timer_aC)
         lastchat[from_] = word// remember last words eachone said
         lastchat['whotalk'] = from_
         to_ = arguments[2] || 'all'
@@ -269,6 +282,13 @@
                 uimg.attr('title', ROBOS[i].name)
                 break
             }
+        }
+        function isInView (element) {
+            var pageTop = $(window).scrollTop();
+            var pageBottom = pageTop + $(window).height();
+            var elementTop = $(element).offset().top;
+            var elementBottom = elementTop + $(element).height();
+            return ((pageTop < elementTop) && (pageBottom > elementBottom));
         }
         function styleByFrom(from){
             switch (from) {
@@ -309,10 +329,10 @@
             crow.append(ucol).append(ccol)
         }
         $('#chat-zone').append(crow)
-        crow.slideDown()
-        timer_aC = setTimeout(function(){
-            $("html, body").animate({scrollTop: $(document).height()}, 500)
-        }, 100)
+        // crow.slideDown(100)
+        crow.slideDown('normal', function(){
+            $("html, body").animate({scrollTop: $(document).height()}, 'normal')
+        })
     }
 </script>
 {% endblock js %}
