@@ -181,6 +181,8 @@
     function sendmsg(){
         var input_ele = $('input[name="userinput"]')
         var input_txt = input_ele.val()
+        input_ele.val('')
+        input_ele.focus()
         if(input_txt != ''){
             addChat(input_txt, 'me')  // show this chat on screen
             for(i in ROBOS){
@@ -191,9 +193,7 @@
                 }
             }
             getResponse(input_txt)  // ask for robo responses
-            input_ele.val('')
         }
-        input_ele.focus()
     }
 
     function getResponse(userinput, from_, to_){
