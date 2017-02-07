@@ -101,6 +101,17 @@
 
 {% block js %}
 <script>
+    function Robo(key, name, style, headimg){
+        this.key = key
+        this.name = name
+        this.style = style
+        this.headimg = headimg
+    }
+    var ROBOS = [
+        new Robo('feifei', '菲菲', 'info', 'fromrobo1.png'),
+        new Robo('tuling', '图酱', 'warning', 'fromrobo2.png'),
+        new Robo('simsimi', 'Simsimi', 'danger', 'fromrobo3.png'),
+    ]
     $(function(){
         $('input[name="userinput"]').keydown(function(event){
             if(event.keyCode == 13){ // press enter
@@ -131,26 +142,23 @@
         // decide who talk
         var whotalk = ""
         var qualified = {}
-        if(lastchat['feifei'].length < 25 && lastchat['whotalk'] != 'feifei'){
-            qualified['feifei'] = true
-        } else {
-            qualified['feifei'] = false
+        for(i in ROBOS){
+            if(lastchat[ROBOS[i].key].length < 25 && lastchat['whotalk'] != ROBOS[i].key){
+                qualified[ROBOS[i].key] = true
+            } else {
+                qualified[ROBOS[i].key] = false
+            }
         }
-        if(lastchat['simsimi'].length < 25 && lastchat['whotalk'] != 'simsimi'){
-            qualified['simsimi'] = true
-        } else {
-            qualified['simsimi'] = false
-        }
-        if(qualified['simsimi'] && qualified['feifei']){
-            whotalk = randomNum()>50 ? 'feifei' : 'simsimi'
-        } else if(qualified['feifei']){
-            whotalk = 'feifei'
-        } else if(qualified['simsimi']) {
-            whotalk = 'simsimi'
+        if(qualified[ROBOS[1].key] && qualified[ROBOS[0].key]){
+            whotalk = randomNum()>50 ? ROBOS[0].key : ROBOS[1].key
+        } else if(qualified[ROBOS[0].key]){
+            whotalk = ROBOS[0].key
+        } else if(qualified[ROBOS[1].key]) {
+            whotalk = ROBOS[1].key
         } else {
             return null
         }
-        var wholisten = whotalk=='feifei' ? 'simsimi' : 'feifei'
+        var wholisten = whotalk==ROBOS[0].key ? ROBOS[1].key : ROBOS[0].key
         // same person cannot talk twice
         if(lastchat['whotalk'] != whotalk){
             // talk
@@ -175,6 +183,13 @@
         var input_txt = input_ele.val()
         if(input_txt != ''){
             addChat(input_txt, 'me')  // show this chat on screen
+            for(i in ROBOS){
+                if(input_txt.indexOf(ROBOS[i].name) != -1 || input_txt.indexOf(ROBOS[i].key) != -1){
+                    console.log('触发事件：只询问某个机器人：' + ROBOS[i].name)
+                    getResponse(input_txt, ROBOS[i].key)
+                    return
+                }
+            }
             getResponse(input_txt)  // ask for robo responses
             input_ele.val('')
         }
