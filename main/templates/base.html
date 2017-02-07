@@ -30,7 +30,10 @@
             {% endif %}
         {% endblock theme %}
         <style>
-            html, body, .container, .container-fluid {
+            html,
+            body,
+            .container,
+            .container-fluid {
                 height: 100%;
             }
             .glyphicon {
@@ -82,6 +85,9 @@
         <!-- ############ USER BAR ############-->
         {% block userbar %}
             <style>
+                #the-very-div {
+                    height: 100%;
+                }
                 .container {
                     padding-top: 51px;
                 }
@@ -268,7 +274,7 @@
             </script>
         {% endblock userbar %}
         <!-- ############ CONTENT ############-->
-        <div style="height:100%">
+        <div id='the-very-div'>
             {% block content %}
             {% endblock content %}
         </div>
