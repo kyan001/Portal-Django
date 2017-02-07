@@ -52,7 +52,9 @@ def robotalkGetresponse(request):  # AJAX
         if not content:
             return None
         json_obj = json.loads(content)
-        content = json_obj.get('response').replace('\n', '<br/>')
+        content = json_obj.get('response')
+        if content:
+            content.replace('{br}', '<br/>')
         return content
 
     def extractTuling(content: str):
@@ -60,10 +62,12 @@ def robotalkGetresponse(request):  # AJAX
         if not content:
             return None
         json_obj = json.loads(content)
-        content = json_obj.get('text').replace('\n', '<br/>')
+        content = json_obj.get('text')
+        if content:
+            content.replace('{br}', '<br/>')
         return content
-    # robos list(dictionary)
-    robos = {
+    # ROBOS list(dictionary)
+    ROBOS = {
         'simsimi': {
             'from': 'simsimi',
             'url': 'http://sandbox.api.simsimi.com/request.p',
@@ -140,11 +144,11 @@ def robotalkGetresponse(request):  # AJAX
         'failed': {},
     }
     if from_:
-        robo = robos.get(from_)
+        robo = ROBOS.get(from_)
         addToResult(robo, result)
     else:
-        for i in robos:
-            addToResult(robos.get(i), result)
+        for i in ROBOS:
+            addToResult(ROBOS.get(i), result)
     # render
     result['count'] = cache_count
     return util.ctrl.returnJson(result)
