@@ -139,32 +139,30 @@
     }
 
     function roboChatToEachEvent(){
-        // decide who talk
-        var whotalk = ""
-        var qualified = {}
+        // check who is qualified to be talker
+        var qualified = []
         for(i in ROBOS){
-            if(lastchat[ROBOS[i].key].length < 25 && lastchat['whotalk'] != ROBOS[i].key){
-                qualified[ROBOS[i].key] = true
-            } else {
-                qualified[ROBOS[i].key] = false
+            if(lastchat[ROBOS[i].key].length < 25 && lastchat['whotalk'] != ROBOS[i].key){  // 发言长度不能
+                qualified.push(ROBOS[i])
             }
         }
-        if(qualified[ROBOS[1].key] && qualified[ROBOS[0].key]){
-            whotalk = randomNum()>50 ? ROBOS[0].key : ROBOS[1].key
-        } else if(qualified[ROBOS[0].key]){
-            whotalk = ROBOS[0].key
-        } else if(qualified[ROBOS[1].key]) {
-            whotalk = ROBOS[1].key
-        } else {
+        // judge whotalk
+        if(qualified.length < 2){  // no enough qualified robos
             return null
         }
-        var wholisten = whotalk==ROBOS[0].key ? ROBOS[1].key : ROBOS[0].key
-        // same person cannot talk twice
-        if(lastchat['whotalk'] != whotalk){
-            // talk
-            getResponse(lastchat[wholisten], whotalk, wholisten)
+        function randomsort(a, b) {
+            return Math.random() > 0.5 ? -1 : 1;
         }
-        console.log('触发事件：机器人之间对话，由 ' + whotalk + ' 对 ' + wholisten + ' 说')
+        qualified = qualified.sort(randomsort)
+        var whotalk = qualified.pop()
+        // judge wholiston
+        do {
+            var wholisten = ROBOS.sort(randomsort)[0]
+        } while (wholisten == whotalk)
+        if(lastchat['whotalk'] != whotalk.key){  // same person cannot talk twice
+            getResponse(lastchat[wholisten.key], whotalk.key, wholisten.key)  // talk
+        }
+        console.log('触发事件：机器人之间对话，由 ' + whotalk.name + ' 对 ' + wholisten.name + ' 说')
     }
 
     function showLoading(enable){
