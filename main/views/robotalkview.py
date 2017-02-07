@@ -54,15 +54,16 @@ def robotalkGetresponse(request):  # AJAX
         u_resp = u.read()
         if not u_resp:
             return None
-        resp_str = u_resp.decode()
-        return robo.get('getContent')(resp_str)
+        return u_resp.decode()
 
     def addToResult(robo, result):
         key = robo.get('from')
         time_now = datetime.datetime.now()
+        orig_resp = getResponse(robo)
         value = {
-            'txt': getResponse(robo),
+            'txt': robo.get('getContent')(orig_resp),
             'fullurl': getFullurl(robo),
+            'response': orig_resp,
         }
         time_rtt = (datetime.datetime.now() - time_now).microseconds / 1000
         value['rtt'] = int(time_rtt)  # milliseconds
