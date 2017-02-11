@@ -29,7 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '.superfarmer.net',
-    '192.168.*.*',
 ]
 
 # Application definition

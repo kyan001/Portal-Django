@@ -185,14 +185,14 @@
                         {
                             label: '<h1><span class="label label-primary">{{ prg.modified.year }}</span></h1>',
                             type: 'bigItem',
-                            relativePosition: -{{ prg.modified|date:'Y' }}0000,  //-20170000
+                            // relativePosition: -{{ prg.modified|date:'Y' }}0000,  //-20170000
                         },
                     {% endifchanged %}
                     {% ifchanged prg.modified.month %}
                         {
                             label: '<span class="label label-primary">{{ prg.modified.year }}-{{ prg.modified.month }}</span>',
                             type: 'milestone',
-                            relativePosition: -{{ prg.modified|date:'Ym' }}00,  //-20170100
+                            // relativePosition: -{{ prg.modified|date:'Ym' }}00,  //-20170100
                         },
                     {% endifchanged %}
                     {
@@ -200,7 +200,7 @@
                         type: 'smallItem',
                         showMore: '',
                         showLess: '',
-                        relativePosition: -{{ prg.modified|date:'Ymd' }},  //-20170101
+                        // relativePosition: -{{ prg.modified|date:'Ymd' }},  //-20170101
                         {% if prg.status == 'done' %}
                             picto: '<span class="glyphicon glyphicon-ok text-success"></span>',
                             shortContent: "<span class='text-success'>完成</span>《{{prg.link|safe}}》",
