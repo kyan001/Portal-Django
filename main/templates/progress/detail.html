@@ -1,8 +1,11 @@
 {% extends "progress/base.html" %}
 
+
 {% block title %}进度：{{ opus.name }}{% endblock title %}
 
+
 {% load tags_url %}
+
 
 {% block css %}
 <style>
@@ -57,6 +60,7 @@
 </style>
 {% endblock css %}
 
+
 {% block nav-btn %}
 <div class="btn-group">
     {% if prg.status == 'giveup' or prg.status == 'done' %}
@@ -75,11 +79,13 @@
 </div>
 {% endblock nav-btn %}
 
+
 {% block function-btn %}
-<a href="/progress/new" class="btn btn-success btn-sm viewmode-opacity">
-    <span class="glyphicon glyphicon-plus"></span> 新增进度
-</a>
+    <a href="/progress/new" class="btn btn-success btn-sm viewmode-opacity">
+        <span class="glyphicon glyphicon-plus"></span> 新增进度
+    </a>
 {% endblock function-btn %}
+
 
 {% block content %}
 <div class="container-fluid">

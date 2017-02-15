@@ -1,9 +1,11 @@
 {% extends "progress/base.html" %}
 {% block title %}新增进度{% endblock title %}
 
+
 {% block inhead %}
     <script src="/static/js/quagga.min.js"></script>
 {% endblock %}
+
 
 {% block css %}
     <style>
@@ -35,11 +37,13 @@
     </style>
 {% endblock css %}
 
+
 {% block nav-btn %}
-    <a href="/progress/list" class="btn btn-warning btn-sm">
-        <span class="glyphicon glyphicon-arrow-left"></span> 回到列表
+    <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
+        <span class="glyphicon glyphicon-arrow-left"></span> 回到上一页
     </a>
 {% endblock nav-btn %}
+
 
 {% block content %}
 <div class="container">
