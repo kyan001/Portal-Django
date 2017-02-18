@@ -29,6 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '.superfarmer.net',
+    '.yankai.online',
+    '.kyan001.com',
 ]
 
 # Application definition
@@ -70,6 +72,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'util.context_processors.loggedUser',
+                'util.context_processors.topLevelDomain',
             ],
         },
     },
@@ -137,14 +140,6 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 MEDIA_URL = '/static/media/'
-
-# Emails
-with open(os.path.join(BASE_DIR, "email.pswd"), "r") as pswd_file:
-    email_pswd = pswd_file.read()
-EMAIL_HOST_USER = 'superfarmernet@tom.com'
-EMAIL_HOST_PASSWORD = email_pswd.strip()
-EMAIL_HOST = 'smtp.tom.com'
-EMAIL_PORT = 25
 
 # MESSAGE MIDDLEWARE CONFIG
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
