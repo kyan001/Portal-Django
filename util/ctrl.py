@@ -75,7 +75,7 @@ def calcExp(level):
     return None
 
 
-def sendEmail(word, to_email, subject='一封来自SuperFarmer网站的邮件'):
+def sendEmail(word, to_email, subject='一封来自网站的邮件'):
     if not word:
         return False
     if not to_email or to_email.find('@') <= 0:
