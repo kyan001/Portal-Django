@@ -1,4 +1,5 @@
 import util.user
+import tld
 
 
 def loggedUser(request):
@@ -10,3 +11,16 @@ def loggedUser(request):
         cuser: current user
     """
     return {'cuser': util.user.getCurrentUser(request)}
+
+
+def topLevelDomain(request):
+    """Get current top-level domain name
+
+    Args:
+        request: Django HttpRequest object
+    Returns:
+        tld: current top-level domain name  # kyan001.com
+    """
+    http_host = request.build_absolute_uri() or 'http://kyan001.com'
+    top_level_domain = tld.get_tld(http_host)
+    return {'tld': top_level_domain}
