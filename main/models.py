@@ -424,7 +424,7 @@ class ChatManager(models.Manager):
                 'username': 'syschat',
                 'question': 'syschat cannot be signined',
                 'answer1': 'iknow',
-                'email': 'syschat@superfarmer.net',
+                'email': 'syschat@kyan001.com',
             }
         )
         if iscreated:
