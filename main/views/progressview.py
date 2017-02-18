@@ -461,17 +461,17 @@ def progressIcalendar(request):  # GET
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     cal = icalendar.Calendar()
-    cal['prodid'] = 'superfarmer.net'
+    cal['prodid'] = 'kyan001.com'
     cal['version'] = '1.1'
     owner = '我' if privatekey else user.nickname
     cal['X-WR-CALNAME'] = '{}的「进度日历」'.format(owner)
     cal['X-WR-TIMEZONE'] = 'Asia/Shanghai'
-    cal['X-WR-CALDESC'] = 'http://www.superfarmer.net/progress/list'
+    cal['X-WR-CALDESC'] = 'http://www.kyan001.com/progress/list'
     for prg in progresses:
         opus = Opus.objects.get(id=prg.opusid)
         create_time = prg.created.strftime('%Y%m%dT%H%M%SZ')
         modify_time = prg.modified.strftime('%Y%m%dT%H%M%SZ')
-        url = 'http://www.superfarmer.net/progress/detail?id={}'.format(prg.id)
+        url = 'http://www.kyan001.com/progress/detail?id={}'.format(prg.id)
         evnt_create = icalendar.Event()
         evnt_create['uid'] = 'prg:id:{}:create'.format(prg.id)
         evnt_create['description'] = url
