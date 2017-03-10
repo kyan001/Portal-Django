@@ -103,17 +103,18 @@
                                         </div>
                                     </span>
                                     <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                        <span>作品的备注、章节、分类</span>
+                                        <span>作品的分类、备注</span>
                                     </span>
                                 </div>
                                 <div class="row">
                                     <span class="col-sm-8 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon text-muted">总共</span>
-                                            <input type="number" class='form-control' placeholder="纯数字，追剧请填 0" name="total" class="editable clearable">
+                                            <input type="number" class='form-control' placeholder="" name="total" class="editable clearable">
                                             <span class="input-group-btn">
-                                                <span id='guess-total' class="btn btn-default" data-guess='0' onclick='guessTotal()'>
-                                                    <span class='glyphicon glyphicon-cloud text-muted'></span>
+                                                <span id='guess-total' class="btn btn-default" onclick='guessTotal()'>
+                                                    <span class='guess-icon glyphicon glyphicon-cloud text-muted'></span>
+                                                    <span class='guess-icon-ok glyphicon glyphicon-cloud-download'></span>
                                                 </span>
                                             </span>
                                         </div>
@@ -126,7 +127,7 @@
                                     <span class="col-sm-8 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon text-muted">当前进度</span>
-                                            <input type="number" class='form-control' placeholder="必须为纯数字" name="current" class="editable clearable">
+                                            <input type="number" class='form-control' placeholder="纯数字，默认 0" name="current" class="editable clearable">
                                             <span class="input-group-btn">
                                                 <span class="btn btn-default" onclick='addOneCurrent()'>+</span>
                                             </span>
@@ -180,6 +181,7 @@
 {% block js %}
 <script>
     $(function(){
+        clearGuess()
         $('.catagory').click(function(){
             $('input[name="subtitle"]').val($(this).text())
         })
@@ -246,24 +248,38 @@
         disableAllBtn()
         $('#theform').submit();
     }
+    function clearGuess(){
+        $('input[name="total"]').attr('placeholder', '纯数字，追剧请填 0')
+        $('#guess-total .guess-icon-ok').hide()
+        $('#guess-total .guess-icon').show()
+        $('input[name="name"]').attr('title', '')  // 名称处提示
+    }
     function getPages(){
+        clearGuess()
         var bookname = $('input[name="name"]').val()
         if(bookname != ''){
             $.getBookInfo(bookname, function(info){
-                pages = parseInt(info.pages)
+                var pages = parseInt(info.pages)
                 if(pages > 0){  // 不一定是精确匹配
-                    $('#guess-total').attr('data-guess', pages).attr('title', '是《' + info.title + '》吗？')
-                    $('#guess-total .glyphicon').removeClass('text-muted')
-                    if(info.match && pages > 0){  // 精确匹配
-                        $('input[name="total"]').val(pages)
+                    $('input[name="total"]').attr('placeholder', pages)
+                    $('#guess-total .guess-icon').hide()
+                    $('#guess-total .guess-icon-ok').show()
+                    if(info.match){  // 精确匹配
+                        $('input[name="name"]').attr('title', '《' + info.title + '》')
+                    } else {  // 非精确匹配
+                        $('input[name="name"]').attr('title', '是《' + info.title + '》吗？')
                     }
                 }
             });
         }
     }
     function guessTotal(){
-        var guess = $('#guess-total').attr("data-guess")
-        $('input[name="total"]').val(guess)
+        var guess = $('input[name="total"]').attr('placeholder')
+        if(isNaN(guess)){
+            $('input[name="total"]').val('0')
+        } else {
+            $('input[name="total"]').val(guess)
+        }
     }
     function addOneCurrent(){
         var current = $('input[name="current"]');
