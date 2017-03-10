@@ -110,11 +110,10 @@
                                     <span class="col-sm-8 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon text-muted">总共</span>
-                                            <input type="number" class='form-control' placeholder="" name="total" class="editable clearable">
+                                            <input type="number" class='form-control' placeholder="纯数字，追剧请填 0" name="total" class="editable clearable">
                                             <span class="input-group-btn">
                                                 <span id='guess-total' class="btn btn-default" onclick='guessTotal()'>
-                                                    <span class='guess-icon glyphicon glyphicon-cloud text-muted'></span>
-                                                    <span class='guess-icon-ok glyphicon glyphicon-cloud-download'></span>
+                                                    <span class='guess-icon glyphicon glyphicon-cloud'></span>
                                                 </span>
                                             </span>
                                         </div>
@@ -181,7 +180,6 @@
 {% block js %}
 <script>
     $(function(){
-        clearGuess()
         $('.catagory').click(function(){
             $('input[name="subtitle"]').val($(this).text())
         })
@@ -250,8 +248,7 @@
     }
     function clearGuess(){
         $('input[name="total"]').attr('placeholder', '纯数字，追剧请填 0')
-        $('#guess-total .guess-icon-ok').hide()
-        $('#guess-total .guess-icon').show()
+        $('#guess-total .guess-icon').addClass('glyphicon-cloud').removeClass('glyphicon-cloud-download')
         $('input[name="name"]').attr('title', '')  // 名称处提示
     }
     function getPages(){
@@ -262,8 +259,7 @@
                 var pages = parseInt(info.pages)
                 if(pages > 0){  // 不一定是精确匹配
                     $('input[name="total"]').attr('placeholder', pages)
-                    $('#guess-total .guess-icon').hide()
-                    $('#guess-total .guess-icon-ok').show()
+                    $('#guess-total .guess-icon').addClass('glyphicon-cloud-download').removeClass('glyphicon-cloud')
                     if(info.match){  // 精确匹配
                         $('input[name="name"]').attr('title', '《' + info.title + '》')
                     } else {  // 非精确匹配
