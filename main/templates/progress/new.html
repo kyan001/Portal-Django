@@ -270,11 +270,10 @@
             }
             question_txt = '\n《'+ Guess.bookinfo.title + '》'
             if(Guess.bookinfo.tags.length > 0){  // 有 tag
-                question_txt += '\n标签：' + Guess.bookinfo.tags.join('，')
+                question_txt += '\n(' + Guess.bookinfo.tags.join('，') + ')'
             }
             question_txt += '\n页数：' + Guess.bookinfo.pages
-            question_txt += '\n页数：' + Guess.bookinfo.pages
-            question_txt += '\n\n书籍信息正确吗？\n'
+            question_txt += '\n\n“书籍信息正确吗？”\n'
             if(confirm(question_txt)){
                 Guess.apply(Guess.bookinfo.title, parseInt(Guess.bookinfo.pages))
             }
