@@ -34,12 +34,13 @@
 <script>
     $('.messages').delay(10000).slideUp()  // 20s before slide up
     function msgAlert(txt, type) {
+    function msgAlert(word, type) {
         var html = $('<div></div>').addClass('row messages-row')
         var msg = $('<div></div>').addClass("messages alert alert-dismissible fade in").addClass('alert-' + type).attr('role', "alert")
         var button = $('<button></button>').attr('type', 'button').attr('aria-label', 'Close').attr('data-dismiss', 'alert').addClass('close')
         var dismiss = $('<span>×</span>').attr("aria-hidden", "true").addClass('dismiss-btn')
         var icon = $('<span></span>').addClass('glyphicon glyphicon-bell')
-        var txt = $('<span> ' + txt + '</span>')
+        var txt = $('<span> ' + word + '</span>')
         button.append(dismiss)
         msg.append(button)
         msg.append(icon)
@@ -49,17 +50,17 @@
         $('.messages-div').prepend(html)
     };
     $.extend({
-        warning: function(txt) {
-            msgAlert(txt, "warning");
+        warning: function(word) {
+            msgAlert(word, "warning");
         },
-        success: function(txt) {
-            msgAlert(txt, "success");
+        success: function(word) {
+            msgAlert(word, "success");
         },
-        danger: function(txt) {
-            msgAlert(txt, "danger");
+        danger: function(word) {
+            msgAlert(word, "danger");
         },
-        info: function(txt) {
-            msgAlert(txt, "info");
+        info: function(word) {
+            msgAlert(word, "info");
         },
     });
 </script>
