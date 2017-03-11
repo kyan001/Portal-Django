@@ -15,16 +15,19 @@
     {% endif %}
 </div>
 <style>
+    .messages-div,
+    .messages-row,
+    .messages {
+        pointer-events: none;
+    }
     .messages-div {
         position: fixed;
         top: 80px;
         right: 5%;
         width: 100%;
-        pointer-events: none;
         z-index: 999;
     }
-    .messages-row {
-        pointer-events: none;
+    .messages .close {
         pointer-events: auto;
     }
 </style>
