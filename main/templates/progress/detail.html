@@ -499,7 +499,7 @@
     function getBookInfo(setType){
         var bookname = $("input[name='name']").val()
         if(bookname != ''){
-            $.getBookInfo(bookname, function(info){
+            OpusInfoGetter.getBookInfo(bookname, function(info){
                 bookinfo = info;
                 bookinfo.finish = true;
                 setInfo(setType)
@@ -509,7 +509,7 @@
     function getMovieInfo(setType){
         var moviename = $("input[name='name']").val()
         if(moviename != ''){
-            $.getMovieInfo(moviename, function(info){
+            OpusInfoGetter.getMovieInfo(moviename, function(info){
                 movieinfo = info;
                 movieinfo.finish = true;
                 setInfo(setType)

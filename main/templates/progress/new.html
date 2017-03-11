@@ -204,7 +204,7 @@
                     src: URL.createObjectURL(e.target.files[0])
                 }, function(data){
                     if(data && data.codeResult && data.codeResult.code){
-                        $.getIsbnInfo(data.codeResult.code, function(result){
+                        OpusInfoGetter.getIsbnInfo(data.codeResult.code, function(result){
                             $('input[name="name"]').val(result.title)
                             $('input[name="total"]').val(result.pages)
                         }, function(){
@@ -289,7 +289,7 @@
             if(!bookname){
                 return false
             }
-            $.getBookInfo(bookname, function(info){
+            OpusInfoGetter.getBookInfo(bookname, function(info){
                 if(parseInt(info.pages) > 0){  // 不一定是精确匹配
                     Guess.bookinfo = info
                     $('#guess-total .guess-icon').removeClass('text-muted')
