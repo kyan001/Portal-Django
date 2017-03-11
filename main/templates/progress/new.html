@@ -164,7 +164,7 @@
                                 <button class="btn btn-warning" onclick="clearForm()">
                                     <span class="glyphicon glyphicon-refresh"></span> 清空
                                 </button>
-                                <button class="btn btn-success" onclick="submitForm()">
+                                <button class="btn btn-success" onclick="Form.submit()">
                                         <span class="glyphicon glyphicon-ok"></span> 保存
                                 </button>
                             </div>
@@ -217,31 +217,36 @@
             }
         })
     });
-    function clearForm(){
-        $('input.form-control').val('')
-    }
-    function submitForm(){
-        var name = $('input[name="name"]').val()
-        var subtitle = $('input[name="subtitle"]').val()
-        var total = $('input[name="total"]').val()
-        var current = $('input[name="current"]').val()
-        if(name == ""){
-            $.danger('名称不能为空')
-            return false;
-        }
-        if(current == ""){
-            current = 0;
-            $('input[name="current"]').val(current)
-        }
-        if(total == ""){
-            total = 0
-            $('input[name="total"]').val(total)
-        }
-        if(total!=0){
-            if(parseInt(current) > parseInt(total)){
-                $.danger('初始进度不能大于总页数')
+
+    var Form = {
+        'clear': function(){
+            $('input.form-control').val('')
+        },
+        'submit': function(){
+            var name = $('input[name="name"]').val()
+            var subtitle = $('input[name="subtitle"]').val()
+            var total = $('input[name="total"]').val()
+            var current = $('input[name="current"]').val()
+            if(name == ""){
+                $.danger('名称不能为空')
                 return false;
             }
+            if(current == ""){
+                current = 0;
+                $('input[name="current"]').val(current)
+            }
+            if(total == ""){
+                total = 0
+                $('input[name="total"]').val(total)
+            }
+            if(total!=0){
+                if(parseInt(current) > parseInt(total)){
+                    $.danger('初始进度不能大于总页数')
+                    return false;
+                }
+            }
+            disableAllBtn()
+            $('#theform').submit();
         }
         disableAllBtn()
         $('#theform').submit();
