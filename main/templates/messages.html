@@ -32,8 +32,7 @@
     }
 </style>
 <script>
-    $('.messages').delay(10000).slideUp()  // 20s before slide up
-    function msgAlert(txt, type) {
+    $('.messages').delay(7777).slideUp()  // for existing messages: 7.777s before slideup
     function msgAlert(word, type) {
         var html = $('<div></div>').addClass('row messages-row')
         var msg = $('<div></div>').addClass("messages alert alert-dismissible fade in").addClass('alert-' + type).attr('role', "alert")
@@ -46,7 +45,7 @@
         msg.append(icon)
         msg.append(txt)
         html.append(msg)
-        html.delay(10000).slideUp()
+        html.delay(word.length * 300).fadeOut(word.length * 300)  // for each char: 0.3s before fadeout, and fadeout last 0.3s
         $('.messages-div').prepend(html)
     };
     $.extend({
