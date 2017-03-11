@@ -251,25 +251,27 @@
     }
 
     var Guess = {  // 根据书名猜测页数
+        'bookinfo': null,
         'clear': function(){
             $('#guess-total .guess-icon').addClass('text-muted')  // 还原图标颜色
             $('#guess-total .guess-icon').addClass('glyphicon-cloud').removeClass('glyphicon-cloud-download')  // 还原图标
             $('input[name="name"]').attr('title', '')  // 还原名称处 title
-            guess_bookinfo = null  // 清空
+            Guess.bookinfo = null  // 清空
         },
         'ask': function(){
             if(typeof(guess_bookinfo) == 'undefined' || !guess_bookinfo){
                 $.danger('未获取到书籍信息')
                 return false
             }
-            question_txt = '\n《'+ guess_bookinfo.title + '》'
-            if(guess_bookinfo.tags.length > 0){  // 有 tag
-                question_txt += '\n标签：' + guess_bookinfo.tags.join('，')
+            question_txt = '\n《'+ Guess.bookinfo.title + '》'
+            if(Guess.bookinfo.tags.length > 0){  // 有 tag
+                question_txt += '\n标签：' + Guess.bookinfo.tags.join('，')
             }
-            question_txt += '\n页数：' + guess_bookinfo.pages
-            question_txt += '\n\n书籍信息正确吗？'
+            question_txt += '\n页数：' + Guess.bookinfo.pages
+            question_txt += '\n页数：' + Guess.bookinfo.pages
+            question_txt += '\n\n书籍信息正确吗？\n'
             if(confirm(question_txt)){
-                Guess.apply(guess_bookinfo.title, parseInt(guess_bookinfo.pages))
+                Guess.apply(Guess.bookinfo.title, parseInt(Guess.bookinfo.pages))
             }
         },
         'apply': function(title, pages){
@@ -284,7 +286,7 @@
             }
             $.getBookInfo(bookname, function(info){
                 if(parseInt(info.pages) > 0){  // 不一定是精确匹配
-                    guess_bookinfo = info
+                    Guess.bookinfo = info
                     $('#guess-total .guess-icon').removeClass('text-muted')
                     if(info.match){  // 精确匹配
                         $('#guess-total .guess-icon').addClass('glyphicon-cloud-download').removeClass('glyphicon-cloud')
