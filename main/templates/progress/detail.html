@@ -392,10 +392,10 @@
         } else  {//作品存在且精确匹配
             $('#title-tr').popover('destroy')
             $("#douban-info-panel").addClass('viewmode').fadeIn()
-            if(info.tags[0].length != 0){//作品无tag
+            if(info.tags.length != 0){  // 作品有 tag
                 $('#tag-tr').show()
             }
-            if(info.rating && parseInt(info.rating) > 0){//作品评分 > 0
+            if(info.rating && parseInt(info.rating) > 0){  // 作品评分 > 0
                 $('#rating-tr').show()
             }
             if(info.title){
