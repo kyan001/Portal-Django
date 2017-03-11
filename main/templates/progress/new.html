@@ -259,8 +259,13 @@
             Guess.bookinfo = null  // 清空
         },
         'ask': function(){
-            if(typeof(guess_bookinfo) == 'undefined' || !guess_bookinfo){
-                $.danger('未获取到书籍信息')
+            if(!Guess.bookinfo){
+                var bookname = $('input[name="name"]').val()
+                if(!bookname){
+                    $.warning('请先填写进度名称')
+                } else {
+                    $.danger('未获取到《' + bookname + '》的信息')
+                }
                 return false
             }
             question_txt = '\n《'+ Guess.bookinfo.title + '》'
