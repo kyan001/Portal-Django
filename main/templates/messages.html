@@ -34,11 +34,11 @@
 <script>
     $('.messages').delay(7777).slideUp()  // for existing messages: 7.777s before slideup
     function msgAlert(word, type) {
-        var html = $('<div></div>').addClass('row messages-row')
-        var msg = $('<div></div>').addClass("messages alert alert-dismissible fade in pull-right").addClass('alert-' + type).attr('role', "alert")
-        var button = $('<button></button>').attr('type', 'button').attr('aria-label', 'Close').attr('data-dismiss', 'alert').addClass('close')
-        var dismiss = $('<span>×</span>').attr("aria-hidden", "true").addClass('dismiss-btn')
-        var icon = $('<span></span>').addClass('glyphicon glyphicon-bell')
+        var html = $('<div class="row messages-row"></div>')
+        var msg = $('<div class="messages alert alert-dismissible fade in pull-right" role="alert"></div>').addClass('alert-' + type)
+        var button = $('<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>')
+        var dismiss = $('<span aria-hidden="true" class="dismiss-btn">×</span>')
+        var icon = $('<span class="glyphicon glyphicon-bell"></span>')
         var txt = $('<span> ' + word + '</span>')
         button.append(dismiss)
         msg.append(button)
