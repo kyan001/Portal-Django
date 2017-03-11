@@ -22,5 +22,8 @@ def topLevelDomain(request):
         tld: current top-level domain name  # kyan001.com
     """
     http_host = request.build_absolute_uri() or 'http://kyan001.com'
-    top_level_domain = tld.get_tld(http_host)
+    try:
+        top_level_domain = tld.get_tld(http_host)
+    except tld.exceptions.TldDomainNotFound:
+        top_level_domain = http_host
     return {'tld': top_level_domain}
