@@ -245,9 +245,9 @@
                                         </tr>
                                         <tr>
                                             {% ifequal prg.status "done" %}
-                                            <th>完成时间</th>
+                                                <th>完成时间</th>
                                             {% else %}
-                                            <th>上次更新</th>
+                                                <th>上次更新</th>
                                             {% endifequal %}
                                             <td>
                                                 <span>{{prg.modified|date:'Y-m-d H:i' }}</span>
@@ -270,7 +270,7 @@
                                             <td>预计完成</td>
                                             <td>
                                                 <span>{{ aux.estmt_fnsh_dt|date:'Y-m-d' }}</span>
-                                                <span class="text-muted">{{ aux.estmt_fnsh_tm }}后</span>
+                                                <span class="text-muted">{{ aux.estmt_fnsh_tm_frm_nw_txt }}</span>
                                             </td>
                                         </tr>
                                         {% endif %}

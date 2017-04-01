@@ -146,9 +146,11 @@ def progressDetail(request):
         if opus.total and progress.current:  # 非追剧中、非待开始有预计完成时间
             time_spent_so_far = progress.getTimedelta('c2n')
             estimate_finish_time = time_spent_so_far / progress.current * (opus.total - progress.current)
-            aux['estmt_fnsh_tm'] = util.ctrl.formatTimedelta(estimate_finish_time, 'largest')
             estimate_finish_date = progress.modified + estimate_finish_time
             aux['estmt_fnsh_dt'] = estimate_finish_date
+            estimate_finish_time_from_now = abs(estimate_finish_date - timezone.now())
+            estimate_finish_time_from_now_prefix = '前' if estimate_finish_date < timezone.now() else '后'
+            aux['estmt_fnsh_tm_frm_nw_txt'] = util.ctrl.formatTimedelta(estimate_finish_time_from_now, 'largest') + estimate_finish_time_from_now_prefix
     if progress.current:  # 平均阅读速度
         speed = progress.getTimedelta('speed')
         if speed:
