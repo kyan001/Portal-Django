@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.core.cache import cache
 
 import util.ctrl
+import util.time
 
 
 class BaseModel(models.Model):
@@ -64,8 +65,8 @@ class User(BaseModel):
             return [up.badge for up in user_permissions]
         return None
 
-    def __str__(self):  # 用于需要 string 时的处理 python3
-        return "{self.id}) {created} - @{self.nickname} : {self.username}".format(self=self, created=util.ctrl.formatDate(self.created))
+    def __str__(self):
+        return "{self.id}) {created} - @{self.nickname} : {self.username}".format(self=self, created=util.time.formatDate(self.created))
 
     # permission related
     def getUserpermission(self, category):
@@ -233,7 +234,7 @@ class ExpHistory(BaseModel):
         return UserExp.objects.get(id=self.userexpid)
 
     def __str__(self):
-        return "{self.id}) {created} - @{self.userexp.user.nickname}: [{self.userexp.category_zh}] {self.operation} +{self.change}".format(self=self, created=util.ctrl.formatDate(self.created))
+        return "{self.id}) {created} - @{self.userexp.user.nickname}: [{self.userexp.category_zh}] {self.operation} +{self.change}".format(self=self, created=util.time.formatDate(self.created))
 
 
 class OpusManager(models.Manager):
@@ -295,9 +296,9 @@ class ProgressManager(models.Manager):
                 temp_c2m_total += r.getTimedelta('c2m')
                 temp_c2n_total += r.getTimedelta('c2n')
                 temp_m2n_total += r.getTimedelta('m2n')
-            result['average_created_modified'] = util.ctrl.formatTimedelta(temp_c2m_total / count, '%d %H %M') if count else 0
-            result['average_created_now'] = util.ctrl.formatTimedelta(temp_c2n_total / count, '%d %H %M') if count else 0
-            result['average_modified_now'] = util.ctrl.formatTimedelta(temp_m2n_total / count, '%d %H %M') if count else 0
+            result['average_created_modified'] = util.time.formatTimedelta(temp_c2m_total / count, '%d %H %M') if count else 0
+            result['average_created_now'] = util.time.formatTimedelta(temp_c2n_total / count, '%d %H %M') if count else 0
+            result['average_modified_now'] = util.time.formatTimedelta(temp_m2n_total / count, '%d %H %M') if count else 0
         return result
 
 
@@ -451,7 +452,7 @@ class Chat(BaseModel):
     def __str__(self):
         unread = "" if self.isread else "[unread]"
         content = (self.content[:40] + '..') if len(self.content) > 40 else self.content
-        return "{self.id}) {created} - @{self.sender.nickname}→@{self.receiver.nickname} : {unread} {content}".format(self=self, created=util.ctrl.formatDate(self.created), content=content, unread=unread)
+        return "{self.id}) {created} - @{self.sender.nickname}→@{self.receiver.nickname} : {unread} {content}".format(self=self, created=util.time.formatDate(self.created), content=content, unread=unread)
 
     # send / receive / isread
     def markRead(self):
