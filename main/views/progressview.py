@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.core.cache import cache
 import icalendar
 import util.ctrl
+import util.time
 import util.user
 
 import KyanToolKit
@@ -136,25 +137,22 @@ def progressDetail(request):
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(1, '查看进度《{opus.name}》的详情'.format(opus=opus))
     # calcs
-    aux = {}
-    if progress.status == 'done':
-        time_spent = progress.getTimedelta('c2m')
-        aux['time_spent'] = util.ctrl.formatTimedelta(time_spent)
-    else:
-        time_untouch = progress.getTimedelta('m2n')
-        aux['time_untouch'] = util.ctrl.formatTimedelta(time_untouch, 'largest')
-        if opus.total and progress.current:  # 非追剧中、非待开始有预计完成时间
-            time_spent_so_far = progress.getTimedelta('c2n')
-            estimate_finish_time = time_spent_so_far / progress.current * (opus.total - progress.current)
-            estimate_finish_date = progress.modified + estimate_finish_time
-            aux['estmt_fnsh_dt'] = estimate_finish_date
-            estimate_finish_time_from_now = abs(estimate_finish_date - timezone.now())
-            estimate_finish_time_from_now_prefix = '前' if estimate_finish_date < timezone.now() else '后'
-            aux['estmt_fnsh_tm_frm_nw_txt'] = util.ctrl.formatTimedelta(estimate_finish_time_from_now, 'largest') + estimate_finish_time_from_now_prefix
+    aux = {
+        'time': {},
+        'esti': {},
+    }
+    aux['time']['c2n'] = util.time.formatDateToNow(progress.created, 'largest')
+    aux['time']['m2n'] = util.time.formatDateToNow(progress.modified, 'largest')
+    aux['time']['c2m'] = util.time.formatTimedelta(progress.getTimedelta('c2m'))
+    if opus.total and progress.current:  # 非追剧中、非待开始有预计完成时间
+        esti_finish_timedelta = progress.getTimedelta('c2n') / progress.current * (opus.total - progress.current)
+        esti_finish_date = progress.modified + esti_finish_timedelta
+        aux['esti']['finish_date'] = esti_finish_date
+        aux['esti']['finish_time'] = util.time.formatDateToNow(esti_finish_date, 'largest')
     if progress.current:  # 平均阅读速度
         speed = progress.getTimedelta('speed')
         if speed:
-            aux['speed'] = util.ctrl.formatTimedelta(speed)
+            aux['time']['speed'] = util.time.formatTimedelta(speed)
     # render
     context['opus'] = opus
     context['prg'] = progress

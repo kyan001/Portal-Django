@@ -241,7 +241,10 @@
                                     <table class="table table-condensed table-hover">
                                         <tr>
                                             <th>开始时间</th>
-                                            <td>{{prg.created|date:'Y-m-d H:i'}}</td>
+                                            <td>
+                                                <span>{{prg.created|date:'Y-m-d H:i'}}</span>
+                                                <small class='text-muted'>{{aux.time.c2n}}</small>
+                                            </td>
                                         </tr>
                                         <tr>
                                             {% ifequal prg.status "done" %}
@@ -251,34 +254,31 @@
                                             {% endifequal %}
                                             <td>
                                                 <span>{{prg.modified|date:'Y-m-d H:i' }}</span>
-                                                {% if aux.time_untouch %}
-                                                    <span class="text-muted">{{aux.time_untouch}}前</span>
-                                                {% endif %}
+                                                <small class="text-muted">{{aux.time.m2n}}</small>
                                             </td>
                                         </tr>
-                                        {% if aux.speed %}
-                                        <tr class="text-success">
-                                            <td>平均速度</td>
-                                            <td>
-                                                <span id="speed-unit" class="text-muted">每个</span>
-                                                {{ aux.speed }}
-                                            </td>
-                                        </tr>
+                                        {% if aux.time.speed %}
+                                            <tr class="text-success">
+                                                <td>平均速度</td>
+                                                <td>
+                                                    {{ aux.time.speed }}
+                                                    <small id="speed-unit" class="text-muted">每个</small>
+                                                </td>
+                                            </tr>
                                         {% endif %}
-                                        {% if aux.estmt_fnsh_dt %}
-                                        <tr class="text-success">
-                                            <td>预计完成</td>
-                                            <td>
-                                                <span>{{ aux.estmt_fnsh_dt|date:'Y-m-d' }}</span>
-                                                <span class="text-muted">{{ aux.estmt_fnsh_tm_frm_nw_txt }}</span>
-                                            </td>
-                                        </tr>
-                                        {% endif %}
-                                        {% if aux.time_spent %}
-                                        <tr class="text-success">
-                                            <td>用时</td>
-                                            <td>{{ aux.time_spent }}</td>
-                                        </tr>
+                                        {% if prg.status == 'done' %}
+                                            <tr class="text-success">
+                                                <td>用时</td>
+                                                <td>{{ aux.time.c2m }}</td>
+                                            </tr>
+                                        {% elif aux.esti.finish_date %}
+                                            <tr class="text-success">
+                                                <td>预计完成</td>
+                                                <td>
+                                                    <span>{{aux.esti.finish_date|date:'Y-m-d'}}</span>
+                                                    <small class="text-muted">{{aux.esti.finish_time}}</small>
+                                                </td>
+                                            </tr>
                                         {% endif %}
                                     </table>
                                 </div><!--.panel-body-->
