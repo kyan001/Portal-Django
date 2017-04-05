@@ -13,7 +13,7 @@ def infoMsg(content="Hi", url=None, title=None):
         'title': title,
         'content': content,
         'url': url,
-    }
+        }
     if url:
         if url == '/':
             button_text = '回到主页'
@@ -58,7 +58,7 @@ def returnJsonResult(word):
 def salty(word):
     word_in_str = str(word)
     word_with_suffix = word_in_str + "superfarmer.net"
-    return ktk.md5(word_with_suffix)
+    return ktk.KyanToolKit.md5(word_with_suffix)
 
 
 def calcLevel(exp):
@@ -85,7 +85,7 @@ def sendEmail(word, to_email, subject='一封来自网站的邮件'):
         content,  # content
         settings.EMAIL_HOST_USER,  # from email
         [settings.EMAIL_HOST_USER, to_email.strip()]  # recipients
-    )
+        )
     msg.content_subtype = 'html'
     msg.send()
     return True
