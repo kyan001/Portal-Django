@@ -62,7 +62,7 @@ def checkAnswer(user, answer):
 
 
 # -views-----------------------------------------------
-def userLogout(request):
+def logout(request):
     '''用户点击登出'''
     # clean session
     request.session[User.LOGIN_SESSION_KEY] = None
@@ -74,7 +74,7 @@ def userLogout(request):
     return response
 
 
-def userExphistory(request):
+def exphistory(request):
     '''用户的所有/某类活跃列表，由 profile 进入'''
     # user check
     user = util.user.getCurrentUser(request)
@@ -101,7 +101,7 @@ def userExphistory(request):
     return render(request, 'user/exphistory.html', context)
 
 
-def userPublic(request):  # public
+def public(request):  # public
     '''通过 email/id/nickname 查看用户公开信息'''
     context = {}
     nickname = request.GET.get('nickname')
@@ -127,7 +127,7 @@ def userPublic(request):  # public
     return render(request, 'user/public.html', context)
 
 
-def userSetting(request):
+def setting(request):
     '''修改用户设置'''
     user = util.user.getCurrentUser(request)
     if not user:
@@ -136,11 +136,11 @@ def userSetting(request):
     context = {
         'icalon': icalon,
         'privatekey': user.privatekey,
-    }
+        }
     return render(request, 'user/setting.html', context)
 
 
-def userProfile(request):
+def profile(request):
     '''查看当前用户的个人信息，点击右上角昵称进入'''
     context = {}
     user = util.user.getCurrentUser(request)
@@ -178,7 +178,7 @@ def userProfile(request):
 
 
 # -Signup-----------------------------------------------
-def userSignup(request):  # PUBLIC
+def signup(request):  # PUBLIC
     '''点击注册按钮后页面'''
     context = {}
     if 'redirect' in request.GET:
@@ -188,7 +188,7 @@ def userSignup(request):  # PUBLIC
     return render(request, 'user/signup.html', context)
 
 
-def userNewUser(request):  # POST
+def newUser(request):  # POST
     '''新用户点击提交注册按钮后'''
     username = request.POST.get('username')
     question = request.POST.get('question')
@@ -237,7 +237,7 @@ def userNewUser(request):  # POST
     return util.ctrl.infoMsg(" {user.username} 注册成功！\n您是网站第 {user.id} 位用户。\n请登入以便我们记住您！".format(user=user), url='/user/signin', title="欢迎加入")
 
 
-def userHeadimgUpdate(request):
+def headimgUpdate(request):
     '''点击修改头像后处理更换头像'''
     user = util.user.getCurrentUser(request)
     if not user:
@@ -250,7 +250,7 @@ def userHeadimgUpdate(request):
 
 
 # -Signin-----------------------------------------------
-def userSignin(request):
+def signin(request):
     '''点击登入后的页面，供输入用户名/密码'''
     # check if already logged in
     from_ = request.GET.get("from") or ""
@@ -261,19 +261,19 @@ def userSignin(request):
     context = {
         'request': request,
         'from': from_,
-    }
+        }
     if 'HTTP_REFERER' in request.META:
         context['redirect'] = request.META.get('HTTP_REFERER')
     return render(request, 'user/signin.html', context)
 
 
-def userForgetanswer(request):
+def forgetanswer(request):
     '登入页面点击忘记回答'
     context = {}
     return render(request, 'user/forgetanswer.html', context)
 
 
-def userForgetusername(request):
+def forgetusername(request):
     email = request.POST.get('email')
     if not email:
         return render(request, 'user/forgetusername.html')
@@ -308,7 +308,7 @@ def userForgetusername(request):
         return util.ctrl.infoMsg(infomsg, title='找回用户名')
 
 
-def userCheckLogin(request):  # POST
+def checkLogin(request):  # POST
     '''用户点击登入后：判断用户是否可以登入'''
     # get posts
     username = request.POST.get('username')
@@ -368,7 +368,7 @@ def userCheckLogin(request):  # POST
     return response
 
 
-def userGetQuestionAndTip(request):  # AJAX
+def getQuestionAndTip(request):  # AJAX
     '''登入时：通过用户名得到用户问题'''
     username = request.GET.get('username')
     if not username:
@@ -383,12 +383,12 @@ def userGetQuestionAndTip(request):  # AJAX
         return util.ctrl.returnJson({
             'question': question,
             'tip': tip,
-        })
+            })
     else:
         return util.ctrl.returnJsonError('用户未找到：{username}'.format(username=username))
 
 
-def userGetUnreadCount(request):  # AJAX
+def getUnreadCount(request):  # AJAX
     '''顶部用户栏：更新当前用户的未读消息数目'''
     # from session
     user = util.user.getCurrentUser(request)
@@ -412,14 +412,14 @@ def userGetUnreadCount(request):  # AJAX
                 result['msgs'].append({
                     'sender': sender.nickname,
                     'words': words,
-                })
+                    })
         return util.ctrl.returnJson(result)
     else:
         return util.ctrl.returnJsonResult('nologinuser')
 
 
 # -Validations------------------------------------------
-def userValidateUsername(request):  # AJAX
+def validateUsername(request):  # AJAX
     '''注册/登入时：用户名是否可用'''
     username = request.GET.get('username')
     result = {}
@@ -438,7 +438,7 @@ def userValidateUsername(request):  # AJAX
     return util.ctrl.returnJson(result)
 
 
-def userValidateNickname(request):  # AJAX
+def validateNickname(request):  # AJAX
     '''注册时：昵称是否可用'''
     nickname = request.GET.get('nickname')
     result = {}
@@ -452,7 +452,7 @@ def userValidateNickname(request):  # AJAX
     return util.ctrl.returnJson(result)
 
 
-def userValidateEmail(request):  # AJAX
+def validateEmail(request):  # AJAX
     '''注册时：邮箱是否可用'''
     email = request.GET.get('email')
     result = {}

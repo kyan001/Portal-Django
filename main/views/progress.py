@@ -14,7 +14,7 @@ import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
 
-def progressList(request):
+def list(request):
     '''进度列表：显示所有进行中、待开始、追剧中的进度'''
     user = util.user.getCurrentUser(request)
     if not user:
@@ -40,11 +40,11 @@ def progressList(request):
     # render
     context = {
         'prglist': prg_list,
-    }
+        }
     return render(request, 'progress/list.html', context)
 
 
-def progressArchive(request):
+def archive(request):
     '''进度存档：显示所有已完成、已冻结的进度'''
     user = util.user.getCurrentUser(request)
     if not user:
@@ -61,11 +61,11 @@ def progressArchive(request):
     # render
     context = {
         'prglist': prg_list,
-    }
+        }
     return render(request, 'progress/archive.html', context)
 
 
-def progressSearch(request):
+def search(request):
     '''进度搜索：筛选所有进度'''
     context = {}
     # get user
@@ -84,11 +84,11 @@ def progressSearch(request):
     context = {
         'prglist': progresses,
         'keyword': keyword,
-    }
+        }
     return render(request, 'progress/search.html', context)
 
 
-def progressTimeline(request):
+def timeline(request):
     '''进度历程：显示所有进度的时间轴'''
     context = {}
     # get user
@@ -110,7 +110,7 @@ def progressTimeline(request):
     return render(request, 'progress/timeline.html', context)
 
 
-def progressDetail(request):
+def detail(request):
     '''进度详情页'''
     context = {}
     # get inputs
@@ -140,7 +140,7 @@ def progressDetail(request):
     aux = {
         'time': {},
         'esti': {},
-    }
+        }
     aux['time']['c2n'] = util.time.formatDateToNow(progress.created, 'largest')
     aux['time']['m2n'] = util.time.formatDateToNow(progress.modified, 'largest')
     aux['time']['c2m'] = util.time.formatTimedelta(progress.getTimedelta('c2m'))
@@ -160,7 +160,7 @@ def progressDetail(request):
     return render(request, 'progress/detail.html', context)
 
 
-def progressImagecolor(request):  # AJAX #PUBLIC
+def imagecolor(request):  # AJAX #PUBLIC
     '''异步获取一个url的颜色'''
     url = request.GET.get('url')
     opusid = request.GET.get('opusid')
@@ -186,7 +186,7 @@ def progressImagecolor(request):  # AJAX #PUBLIC
     return util.ctrl.returnJson(result)
 
 
-def progressFastupdate(request):
+def fastupdate(request):
     '''detail界面右下角的快捷更新'''
     # get inputs
     user = util.user.getCurrentUser(request)
@@ -230,7 +230,7 @@ def progressFastupdate(request):
     return redirect('/progress/detail?id={progress.id}'.format(progress=progress))
 
 
-def progressUpdate(request):
+def update(request):
     '''detail页面，编辑模式的保存'''
     # get inputs
     user = util.user.getCurrentUser(request)
@@ -285,7 +285,7 @@ def progressUpdate(request):
     return redirect('/progress/detail?id={progress.id}'.format(progress=progress))
 
 
-def progressDelete(request):
+def delete(request):
     '''detail 界面点击删除按钮'''
     # get inputs
     user = util.user.getCurrentUser(request)
@@ -317,7 +317,7 @@ def progressDelete(request):
     return redirect('/progress/list')
 
 
-def progressGiveup(request):
+def giveup(request):
     '''detail 界面点击冻结按钮'''
     # get inputs
     user = util.user.getCurrentUser(request)
@@ -349,7 +349,7 @@ def progressGiveup(request):
     return redirect('/progress/detail?id=' + str(progress.id))
 
 
-def progressReset(request):
+def reset(request):
     '''detail 界面点击激活进度按钮'''
     # get inputs
     user = util.user.getCurrentUser(request)
@@ -381,7 +381,7 @@ def progressReset(request):
     return redirect('/progress/detail?id=' + str(progress.id))
 
 
-def progressNew(request):
+def new(request):
     '''list/detail 界面点击新增按钮'''
     context = {}
     # get inputs
@@ -395,7 +395,7 @@ def progressNew(request):
     return render(request, 'progress/new.html', context)
 
 
-def progressAdd(request):
+def add(request):
     '''新增界面点击保存按钮'''
     # get inputs
     user = util.user.getCurrentUser(request)
@@ -433,7 +433,7 @@ def progressAdd(request):
     return redirect('/progress/detail?id={progress.id}'.format(progress=progress))
 
 
-def progressSetical(request):  # POST
+def setical(request):  # POST
     '''用户设置进度日历的界面'''
     user = util.user.getCurrentUser(request)
     if not user:
@@ -444,7 +444,7 @@ def progressSetical(request):  # POST
     return redirect('/user/setting')
 
 
-def progressIcalendar(request):  # GET
+def ical(request):  # GET
     '''生成 ical 字符串加入 google calendar'''
     userid = request.GET.get('userid')
     privatekey = request.GET.get('private') or None
@@ -516,12 +516,5 @@ def progressIcalendar(request):  # GET
             evnt_fllw['dtstamp'] = modify_time
             evnt_fllw['summary'] = '《{opus.name}》追剧至 第 {prg.current} 集'.format(opus=opus, prg=prg)
             cal.add_component(evnt_fllw)
-    # add exps
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
-    _by = request.META.get('REMOTE_HOST') or request.META.get('REMOTE_ADDR')
-    _word = '{by} 访问了你的「进度日历」'.format(by=_by)
-    if not privatekey:
-        _word += '（公开）'
-    userexp.addExp(1, _word)
     # render
     return HttpResponse(cal.to_ical(), content_type='text/calendar')

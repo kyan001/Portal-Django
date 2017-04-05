@@ -10,7 +10,7 @@ import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
 
-def opusDetail(request):
+def detail(request):
     '''TODO 获得作品的详情'''
     context = {}
     # 获得参数
@@ -42,12 +42,13 @@ def opusDetail(request):
     context['itemlist'] = item_list
     return render(request, 'opus/detail.html', context)
 
-def opusSearchOpusInfo(request):  # get # ajax
+
+def searchOpusInfo(request):  # get # ajax
     """从豆瓣获取书类作品信息并放入缓存"""
     opustype = request.GET.get('type') or 'book'
     count = request.GET.get('count') or '1'
     keyword = request.GET.get('q')
-    cache_key = '{typ}:{kw}:info'.format(typ=opustype, kw=keyword.replace(' ','_'))
+    cache_key = '{typ}:{kw}:info'.format(typ=opustype, kw=keyword.replace(' ', '_'))
     cache_timeout = 60 * 60 * 24 * 7 * 2  # 2 weeks
     cached_info = cache.get(cache_key)
     if cached_info:

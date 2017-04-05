@@ -1,6 +1,14 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from main import views
+import main.views.index
+import main.views.user
+import main.views.progress
+import main.views.opus
+import main.views.chat
+import main.views.badge
+import main.views.robotalk
+import main.views.superuser
+
 
 urlpatterns = [
     # Examples:
@@ -9,61 +17,61 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     # INDEX
-    url(r'^$', views.indexview.index, name='index'),
-    url(r'^index/settheme$', views.indexview.indexSettheme),
-    url(r'^index/help$', views.indexview.indexHelp),
+    url(r'^$', main.views.index.index, name='index'),
+    url(r'^index/settheme$', main.views.index.settheme),
+    url(r'^index/help$', main.views.index.help),
     # USER
-    url(r'^user/public$', views.userview.userPublic),
-    url(r'^user/profile/', views.userview.userProfile),
-    url(r'^user/exphistory$', views.userview.userExphistory),
-    url(r'^user/signin$', views.userview.userSignin),  # get
-    url(r'^user/signup$', views.userview.userSignup),
-    url(r'^user/headimgupdate$', views.userview.userHeadimgUpdate),  # POST
-    url(r'^user/forgetanswer/$', views.userview.userForgetanswer),
-    url(r'^user/forgetusername$', views.userview.userForgetusername),  # POST
-    url(r'^user/checklogin/$', views.userview.userCheckLogin),  # POST
-    url(r'^user/getunreadcount/$', views.userview.userGetUnreadCount),
-    url(r'^user/newuser/$', views.userview.userNewUser),  # POST
-    url(r'^user/logout/$', views.userview.userLogout),
-    url(r'^user/validateusername$', views.userview.userValidateUsername),
-    url(r'^user/validatenickname$', views.userview.userValidateNickname),
-    url(r'^user/validateemail$', views.userview.userValidateEmail),
-    url(r'^user/getquestionandtip$', views.userview.userGetQuestionAndTip),
-    url(r'^user/setting/$', views.userview.userSetting),
+    url(r'^user/public$', main.views.user.public),
+    url(r'^user/profile/', main.views.user.profile),
+    url(r'^user/exphistory$', main.views.user.exphistory),
+    url(r'^user/signin$', main.views.user.signin),  # get
+    url(r'^user/signup$', main.views.user.signup),
+    url(r'^user/headimgupdate$', main.views.user.headimgUpdate),  # POST
+    url(r'^user/forgetanswer/$', main.views.user.forgetanswer),
+    url(r'^user/forgetusername$', main.views.user.forgetusername),  # POST
+    url(r'^user/checklogin/$', main.views.user.checkLogin),  # POST
+    url(r'^user/getunreadcount/$', main.views.user.getUnreadCount),
+    url(r'^user/newuser/$', main.views.user.newUser),  # POST
+    url(r'^user/logout/$', main.views.user.logout),
+    url(r'^user/validateusername$', main.views.user.validateUsername),
+    url(r'^user/validatenickname$', main.views.user.validateNickname),
+    url(r'^user/validateemail$', main.views.user.validateEmail),
+    url(r'^user/getquestionandtip$', main.views.user.getQuestionAndTip),
+    url(r'^user/setting/$', main.views.user.setting),
     # PROGRESS
-    url(r'^progress/list/$', views.progressview.progressList),
-    url(r'^progress/archive/$', views.progressview.progressArchive),
-    url(r'^progress/search$', views.progressview.progressSearch),  # get
-    url(r'^progress/timeline$', views.progressview.progressTimeline),  # post
-    url(r'^progress/detail$', views.progressview.progressDetail),  # get
-    url(r'^progress/imagecolor$', views.progressview.progressImagecolor),  # get
-    url(r'^progress/fastupdate/$', views.progressview.progressFastupdate),
-    url(r'^progress/new/$', views.progressview.progressNew),
-    url(r'^progress/add/$', views.progressview.progressAdd),
-    url(r'^progress/update/$', views.progressview.progressUpdate),
-    url(r'^progress/delete/$', views.progressview.progressDelete),
-    url(r'^progress/giveup/$', views.progressview.progressGiveup),
-    url(r'^progress/reset/$', views.progressview.progressReset),
-    url(r'^progress/icalendar$', views.progressview.progressIcalendar),  # get
-    url(r'^progress/setical$', views.progressview.progressSetical),  # post
+    url(r'^progress/list/$', main.views.progress.list),
+    url(r'^progress/archive/$', main.views.progress.archive),
+    url(r'^progress/search$', main.views.progress.search),  # get
+    url(r'^progress/timeline$', main.views.progress.timeline),  # post
+    url(r'^progress/detail$', main.views.progress.detail),  # get
+    url(r'^progress/imagecolor$', main.views.progress.imagecolor),  # get
+    url(r'^progress/fastupdate/$', main.views.progress.fastupdate),
+    url(r'^progress/new/$', main.views.progress.new),
+    url(r'^progress/add/$', main.views.progress.add),
+    url(r'^progress/update/$', main.views.progress.update),
+    url(r'^progress/delete/$', main.views.progress.delete),
+    url(r'^progress/giveup/$', main.views.progress.giveup),
+    url(r'^progress/reset/$', main.views.progress.reset),
+    url(r'^progress/ical$', main.views.progress.ical),  # get
+    url(r'^progress/setical$', main.views.progress.setical),  # post
     # OPUS
-    url(r'^opus/detail$', views.opusview.opusDetail),
-    url(r'^opus/searchopusinfo$', views.opusview.opusSearchOpusInfo),  # get Ajax
+    url(r'^opus/detail$', main.views.opus.detail),
+    url(r'^opus/searchopusinfo$', main.views.opus.searchOpusInfo),  # get Ajax
     # CHAT
-    url(r'^chat/inbox$', views.chatview.chatInbox),
-    url(r'^chat/markread$', views.chatview.chatMarkread),
-    url(r'^chat/delete$', views.chatview.chatDelete),
-    url(r'^chat/send$', views.chatview.chatSend),
-    url(r'^chat/conversation$', views.chatview.chatConversation),
+    url(r'^chat/inbox$', main.views.chat.inbox),
+    url(r'^chat/markread$', main.views.chat.markread),
+    url(r'^chat/delete$', main.views.chat.delete),
+    url(r'^chat/send$', main.views.chat.send),
+    url(r'^chat/conversation$', main.views.chat.conversation),
     # badge
-    url(r'^badge/list/$', views.badgeview.badgeList),
-    url(r'^badge/detail$', views.badgeview.badgeDetail),  # get
+    url(r'^badge/list/$', main.views.badge.list),
+    url(r'^badge/detail$', main.views.badge.detail),  # get
     # robo talk
-    url(r'^robotalk$', views.robotalkview.robotalkIndex),
-    url(r'^robotalk/getresponse$', views.robotalkview.robotalkGetresponse),  # get
+    url(r'^robotalk$', main.views.robotalk.index),
+    url(r'^robotalk/getresponse$', main.views.robotalk.getresponse),  # get
     # SUPERUSER
-    url(r'^superuser/index$', views.superuserview.superuserIndex),
-    url(r'^superuser/broadcast$', views.superuserview.superuserBroadcast),
-    url(r'^superuser/sendbroadcast$', views.superuserview.superuserSendbroadcast),
-    url(r'^superuser/updatedb$', views.superuserview.superuserUpdatedb),
-]
+    url(r'^superuser/index$', main.views.superuser.index),
+    url(r'^superuser/broadcast$', main.views.superuser.broadcast),
+    url(r'^superuser/sendbroadcast$', main.views.superuser.sendbroadcast),
+    url(r'^superuser/updatedb$', main.views.superuser.updatedb),
+    ]

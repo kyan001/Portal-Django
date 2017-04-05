@@ -4,7 +4,7 @@ import util.ctrl
 import util.user
 
 
-def superuserIndex(request):
+def index(request):
     '设置超级管理员'
     user = util.user.getCurrentUser(request)
     if not user:
@@ -42,7 +42,7 @@ def superuserIndex(request):
     return util.ctrl.infoMsg("@{user.nickname} 已是 超级管理员，无需更改".format(user=superuser))
 
 
-def superuserBroadcast(request):
+def broadcast(request):
     '''su 发送给所有人的私信'''
     context = {}
     user = util.user.getCurrentUser(request)
@@ -64,7 +64,7 @@ def superuserBroadcast(request):
     return render(request, 'superuser/broadcast.html', context)
 
 
-def superuserUpdatedb(request):
+def updatedb(request):
     '''su 更新数据库'''
     user = util.user.getCurrentUser(request)
     if not user:
@@ -146,7 +146,7 @@ def superuserUpdatedb(request):
     return util.ctrl.infoMsg("数据库更新完毕，模式 {}".format(mode))
 
 
-def superuserSendbroadcast(request):
+def sendbroadcast(request):
     '''点击 superuser/broadcast 界面中的发送按钮后'''
     user = util.user.getCurrentUser(request)
     if not user:

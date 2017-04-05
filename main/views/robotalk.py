@@ -11,7 +11,7 @@ from main.models import UserExp
 import util.ctrl
 
 
-def robotalkIndex(request):
+def index(request):
     context = {}
     user = util.user.getCurrentUser(request)
     if user:
@@ -28,7 +28,7 @@ def robotalkIndex(request):
     return render(request, 'robotalk/index.html', context)
 
 
-def robotalkGetresponse(request):  # AJAX
+def getresponse(request):  # AJAX
     """Get input and take back request via AJAX"""
     userinput = request.GET.get('txt')
     if not userinput:
@@ -76,9 +76,9 @@ def robotalkGetresponse(request):  # AJAX
                 'lc': 'zh',
                 'ft': '1.0',
                 'text': userinput,
-            },
+                },
             'getContent': extractSimsimi,
-        },
+            },
         'feifei': {
             'from': 'feifei',
             'url': 'http://api.qingyunke.com/api.php',
@@ -86,19 +86,19 @@ def robotalkGetresponse(request):  # AJAX
                 'key': 'free',
                 'appid': 0,
                 'msg': userinput,
-            },
+                },
             'getContent': extractFeifei,
-        },
+            },
         'tuling': {
             'from': 'tuling',
             'url': 'http://www.tuling123.com/openapi/api',
             'param': {
                 'key': '96dd75c1bfb64b2094327ba286da25d6',
                 'info': userinput,
-            },
+                },
             'getContent': extractTuling,
-        },
-    }
+            },
+        }
     # save count into cache
     cache_key = 'robotalk:count'
     cache_timeout = 60 * 60 * 24 * 7 * 4  # 1 month
@@ -132,7 +132,7 @@ def robotalkGetresponse(request):  # AJAX
             'fullurl': getFullurl(robo),
             'response': resp,
             'rtt': time_rtt,
-        }
+            }
         if not txt:
             result['failed'][key] = value
         else:
@@ -142,7 +142,7 @@ def robotalkGetresponse(request):  # AJAX
     result = {
         'result': {},
         'failed': {},
-    }
+        }
     if from_:
         robo = ROBOS.get(from_)
         addToResult(robo, result)

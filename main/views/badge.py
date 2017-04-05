@@ -6,7 +6,7 @@ import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
 
-def badgeList(request):
+def list(request):
     '''获得所有徽章列表'''
     context = {}
     upbs = UserPermissionBadge.objects.all()
@@ -14,7 +14,7 @@ def badgeList(request):
     return render(request, 'badge/list.html', context)
 
 
-def badgeDetail(request):
+def detail(request):
     '''查看单个徽章'''
     context = {}
     # 获得参数

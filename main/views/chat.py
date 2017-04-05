@@ -10,7 +10,7 @@ import util.ctrl
 import util.user
 
 
-def chatInbox(request):
+def inbox(request):
     '''用户查看自己的 inbox'''
     context = {}
     user = util.user.getCurrentUser(request)
@@ -51,7 +51,7 @@ def chatInbox(request):
     return render(request, 'chat/inbox.html', context)
 
 
-def chatDelete(request):
+def delete(request):
     '''在 inbox 界面删除某条消息'''
     user = util.user.getCurrentUser(request)
     if not user:
@@ -81,7 +81,7 @@ def chatDelete(request):
     return response
 
 
-def chatConversation(request):
+def conversation(request):
     '''进入一对一聊天页面'''
     context = {}
     user = util.user.getCurrentUser(request)
@@ -114,7 +114,7 @@ def chatConversation(request):
     return render(request, 'chat/conversation.html', context)
 
 
-def chatSend(request):
+def send(request):
     '''点击对话界面中的发送按钮后'''
     user = util.user.getCurrentUser(request)
     if not user:
@@ -141,7 +141,7 @@ def chatSend(request):
     return redirect('/chat/conversation?receiver={receiver.nickname}'.format(receiver=receiver))
 
 
-def chatMarkread(request):  # AJAX
+def markread(request):  # AJAX
     '''用户标记自己的 chat 消息为已读'''
     user = util.user.getCurrentUser(request)
     if not user:

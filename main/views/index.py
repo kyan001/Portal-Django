@@ -11,7 +11,7 @@ def index(request):
     return render(request, 'index/index.html', context)
 
 
-def indexSettheme(request):
+def settheme(request):
     '''保存/清除用户的 theme 到 cookies 里'''
     user = util.user.getCurrentUser(request)
     if not user:
@@ -43,6 +43,6 @@ def indexSettheme(request):
     return response
 
 
-def indexHelp(request):  # GET
+def help(request):  # GET
     """网站的帮助页"""
     return redirect('//readthedocs.org')
