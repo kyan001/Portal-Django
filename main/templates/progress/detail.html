@@ -535,19 +535,20 @@
         $.success('输入框已解锁');
     }
     function cancelEdit(){
-        $('.editable').attr('readonly','').removeClass('form-control')
-        $('.viewmode').show()
-        $('.viewmode-opacity').css('opacity','1')
-        $('.editmode').hide()
-        $('.viewunlock').removeAttr('disabled')
-        $('input[name="name"]').val('{{opus.name}}')
-        $('input[name="subtitle"]').val('{{opus.subtitle}}')
-        $('input[name="weblink"]').val('{{prg.weblink}}')
-        $('input[name="total"]').val('{{opus.total}}')
-        $('input[name="current"]').val('{{prg.current}}')
-        $('.editunlock').removeClass('warning');
-        checkUpdateButtonLock();
-        $.warning('已撤销修改');
+        // $('.editable').attr('readonly','').removeClass('form-control')
+        // $('.viewmode').show()
+        // $('.viewmode-opacity').css('opacity','1')
+        // $('.editmode').hide()
+        // $('.viewunlock').removeAttr('disabled')
+        // $('input[name="name"]').val('{{opus.name}}')
+        // $('input[name="subtitle"]').val('{{opus.subtitle}}')
+        // $('input[name="weblink"]').val('{{prg.weblink}}')
+        // $('input[name="total"]').val('{{opus.total}}')
+        // $('input[name="current"]').val('{{prg.current}}')
+        // $('.editunlock').removeClass('warning');
+        // checkUpdateButtonLock();
+        // $.warning('已撤销修改');
+        window.location.reload()
     }
     function saveEdit(){
         var name = $('input[name="name"]').val()
