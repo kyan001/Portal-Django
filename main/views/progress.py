@@ -61,7 +61,7 @@ def archive(request):
     # render
     context = {
         'prglist': prg_list,
-        }
+    }
     return render(request, 'progress/archive.html', context)
 
 
@@ -84,7 +84,7 @@ def search(request):
     context = {
         'prglist': progresses,
         'keyword': keyword,
-        }
+    }
     return render(request, 'progress/search.html', context)
 
 
@@ -140,7 +140,7 @@ def detail(request):
     aux = {
         'time': {},
         'esti': {},
-        }
+    }
     aux['time']['c2n'] = util.time.formatDateToNow(progress.created, 'largest')
     aux['time']['m2n'] = util.time.formatDateToNow(progress.modified, 'largest')
     aux['time']['c2m'] = util.time.formatTimedelta(progress.getTimedelta('c2m'))

@@ -31,7 +31,7 @@ ALLOWED_HOSTS = [
     '.superfarmer.net',
     '.yankai.online',
     '.kyan001.com',
-]
+    ]
 
 # Application definition
 
@@ -56,7 +56,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-)
+    )
 
 ROOT_URLCONF = 'portal.urls'
 
