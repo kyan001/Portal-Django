@@ -223,8 +223,8 @@
                                 </div><!--.panel-->
                             </form>
                         </div><!--.col#left-half-panel-->
-                        <div id='right-half-panel' class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="panel panel-primary hide-when-edit">
+                        <div id='right-half-panel' class="col-xs-12 col-sm-12 col-md-6 col-lg-6 hide-when-edit">
+                            <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     <span>时间信息</span>
                                 </div>
@@ -274,7 +274,7 @@
                                     </table>
                                 </div><!--.panel-body-->
                             </div><!--.panel-->
-                            <div id="douban-info-panel" class="panel panel-primary hide-when-edit">
+                            <div id="douban-info-panel" class="panel panel-primary">
                                 <div class="panel-heading">
                                     <span><b>作品信息</b></span>
                                     <a id="opus-type-a" class='btn btn-xs btn-primary pull-right' href="" target="_blank">
@@ -386,10 +386,9 @@
         }
     }
     function checkInfoVisibility(info){
-        if(!info || !info.exist || !info.match){
-            // 作品不存在、未精确匹配时不显示整个面板
+        if(!info || !info.exist || !info.match){  // 作品不存在、未精确匹配时不显示整个面板
             return false
-        } else  {//作品存在且精确匹配
+        } else  {  //作品存在且精确匹配
             $('#title-tr').popover('destroy')
             $("#douban-info-panel").addClass('viewmode').fadeIn()
             if(info.tags.length != 0){  // 作品有 tag
@@ -462,17 +461,21 @@
         }
         switch(setType){
             case 'book':
-                if(bookinfo.exist && bookinfo.match){
-                    showInfo(bookinfo)
-                } else if(bookinfo.exist){
-                    showGuess(bookinfo)
+                if(bookinfo.exist){
+                    if(bookinfo.match){
+                        showInfo(bookinfo)
+                    } else {
+                        showGuess(bookinfo)
+                    }
                 }
                 break;
             case 'movie':
-                if(movieinfo.exist && movieinfo.match){
-                    showInfo(movieinfo)
-                } else if(movieinfo.exist){
-                    showGuess(movieinfo)
+                if(movieinfo.exist){
+                    if(movieinfo.match){
+                        showInfo(movieinfo)
+                    } else {
+                        showGuess(movieinfo)
+                    }
                 }
                 break;
             case 'compare':
