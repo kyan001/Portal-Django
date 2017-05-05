@@ -186,50 +186,6 @@ def imagecolor(request):  # AJAX #PUBLIC
     return util.ctrl.returnJson(result)
 
 
-def fastupdate(request):
-    '''detail界面右下角的快捷更新'''
-    # get inputs
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
-    progressid = request.POST.get('id')
-    if not progressid:
-        return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
-    quick_current = request.POST.get('quick_current')
-    if quick_current == '':
-        return util.ctrl.infoMsg("快速更新的当前进度不能为空" + quick_current, title="快速更新出错")
-    quick_current = int(quick_current)
-    if quick_current <= 0:
-        quick_current = 0
-    # get progress
-    try:
-        progress = Progress.objects.get(id=progressid)
-    except Opus.DoesNotExist:
-        return util.ctrl.infoMsg("未找到 id 为 {id} 的进度".format(id=str(progressid)))
-    # check owner
-    if progress.userid != user.id:
-        return util.ctrl.infoMsg("这个进度不属于您，因此您不能更新该进度")
-    # get opus
-    try:
-        opus = Opus.objects.get(id=progress.opusid)
-    except Opus.DoesNotExist:
-        return util.ctrl.infoMsg("未找到 id 为 {progress.opusid} 的作品".format(progress=progress))
-    # validation
-    if opus.total > 0 and quick_current > opus.total:
-        return util.ctrl.infoMsg("当前进度 {quick_current} 超过最大值 {opus.total}".format(quick_current=quick_current, opus=opus))
-    # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
-    userexp.addExp(2, '快捷更新进度《{opus.name}》'.format(opus=opus))
-    # save
-    progress.current = quick_current
-    if(progress.setStatusAuto()):
-        progress.save()
-    else:
-        return util.ctrl.infoMsg("储存进度时失败，可能是状态导致的问题", title="存储 progress 出错")
-    # render
-    return redirect('/progress/detail?id={progress.id}'.format(progress=progress))
-
-
 def update(request):
     '''detail页面，编辑模式的保存'''
     # get inputs
