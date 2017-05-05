@@ -29,10 +29,7 @@
     .editable {
         width: 100%;
     }
-    .editmode {
-        display: none;
-    }
-    input[name="quick_current"] {
+    input[name="current"] {
         text-align: right;
     }
     form {
@@ -40,9 +37,6 @@
     }
     .form-group {
         margin-bottom: 0;
-    }
-    .fastupdate-total {
-        padding-left: 0;
     }
     #title-tr,
     #rating-tr,
@@ -81,7 +75,7 @@
 
 
 {% block function-btn %}
-    <a href="/progress/new" class="btn btn-success btn-sm viewmode-opacity">
+    <a href="/progress/new" class="btn btn-success btn-sm">
         <span class="glyphicon glyphicon-plus"></span> 新增进度
     </a>
 {% endblock function-btn %}
@@ -125,40 +119,6 @@
                 <div class="panel-body second-panel-body">
                     <div class="row">
                         <div id='left-half-panel' class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <div class="panel panel-primary viewmode-opacity befast">
-                                <div class="panel-heading">快速更新</div>
-                                <form id="fastupdateform" action="/progress/fastupdate/" method="post">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="id" value="{{prg.id}}">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="tel" name="quick_current"
-                                                class="viewunlock form-control"
-                                                placeholder="当前 {{prg.current}}"
-                                                value="{{prg.current}}"
-                                                data-current='{{prg.current}}'
-                                                onfocus="if(this.value==this.dataset.current){this.value=''}"
-                                                onblur="if(this.value==''){this.value=this.dataset.current}"
-                                                autocomplete="off"
-                                                oninput="checkUpdateButtonLock()"
-                                                >
-                                            <span class="input-group-addon fastupdate-total">
-                                                {% ifequal opus.total 0 %}
-                                                    /∞
-                                                {% else %}
-                                                    /{{opus.total}}
-                                                {% endifequal %}
-                                            </span>
-                                            <span class="input-group-btn">
-                                                <div class="viewunlock btn btn-default" onclick="addOneCurrent()">+1</div>
-                                                <div id='fastupdate' class="viewunlock btn btn-success" onclick="submitFastupdateForm()" disabled='disabled'>
-                                                    <span class="glyphicon glyphicon-ok"></span> 保存
-                                                </div>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div><!--.panel-->
                             <form id="saveform" action="/progress/update/" method="post">
                                 {% csrf_token %}
                                 <input name="id" type="hidden" value="{{prg.id}}">
@@ -175,44 +135,84 @@
                                                     <span class="text-muted text-capitalize">{{ prg.status }}</span>
                                                 </td>
                                             </tr>
-                                            <tr class="text-info editunlock" id='name-tr' data-toggle="popover" data-placement='top' data-container='body'>
+                                            <tr class="text-info" id='name-tr' data-toggle="popover" data-placement='top' data-container='body'>
                                                 <th>名称</th>
                                                 <td class="text-info">
-                                                    <input class="editable" name="name" type="text" value="{{opus.name}}" autocomplete="off" readonly placeholder="{{opus.name}}">
+                                                    <input class="editable form-control"
+                                                        name="name"
+                                                        type="text"
+                                                        value="{{opus.name}}"
+                                                        data-original="{{opus.name}}"
+                                                        autocomplete="off"
+                                                        placeholder="{{opus.name}}">
                                                 </td>
                                             </tr>
-                                            <tr class="text-info editunlock">
+                                            <tr class="text-info">
                                                 <th>备注</th>
                                                 <td class="text-info">
-                                                    <input class="editable" name="subtitle" type="text" value="{{opus.subtitle}}" placeholder="{{opus.subtitle}}" readonly autocomplete="off">
+                                                    <input class="editable form-control"
+                                                        name="subtitle"
+                                                        type="text"
+                                                        value="{{opus.subtitle}}"
+                                                        data-original="{{opus.subtitle}}"
+                                                        placeholder="{{opus.subtitle}}"
+                                                        autocomplete="off">
                                                 </td>
                                             </tr>
-                                            <tr class="text-info editunlock">
+                                            <tr class="text-info">
                                                 <th>总共</th>
                                                 <td class="text-info">
-                                                    <input class="editable"
+                                                    <input class="editable form-control"
                                                         name="total"
                                                         type="number"
                                                         placeholder="{{opus.total}}"
                                                         value="{{opus.total}}"
-                                                        readonly
+                                                        data-original="{{opus.total}}"
                                                         autocomplete="off">
                                                 </td>
                                             </tr>
-                                            <tr class="text-info editunlock">
+                                            <tr class="text-info">
                                                 <th>当前进度</th>
                                                 <td class="text-info">
-                                                    <input class="editable" name="current" type="number" value="{{prg.current}}" readonly placeholder="{{prg.current}}">
+                                                    <div class="form-group form-group-lg has-feedback">
+                                                        <div class='input-group'>
+                                                        <span class="input-group-btn">
+                                                            <div class="viewunlock btn btn-lg btn-default" onclick="addOneCurrent()">
+                                                                <span class='glyphicon glyphicon-plus'></span>
+                                                            </div>
+                                                        </span>
+                                                        <input class="editable form-control"
+                                                            name="current"
+                                                            type="number"
+                                                            value="{{prg.current}}"
+                                                            data-original='{{prg.current}}'
+                                                            onfocus="if(this.value==this.dataset.original){this.value=''}"
+                                                            onblur="if(this.value==''){this.value=this.dataset.original}"
+                                                            placeholder="{{prg.current}}">
+                                                        <span class="form-control-feedback" aria-hidden="true">
+                                                            {% ifequal opus.total 0 %}
+                                                                / ∞
+                                                            {% else %}
+                                                                / {{opus.total}}
+                                                            {% endifequal %}
+                                                        </span>
+                                                    </div>
+                                                    </div>
                                                 </td>
                                             </tr>
-                                            <tr class="text-info editunlock" title="{{prg.weblink}}">
+                                            <tr class="text-info" title="{{prg.weblink}}">
                                                 <th>链接</th>
                                                 <td class="text-info">
-                                                    <input class="editable" name="weblink" type="text" value="{{prg.weblink}}" readonly placeholder="{{prg.weblink}}">
+                                                    <input class="editable form-control"
+                                                        name="weblink"
+                                                        type="text"
+                                                        value="{{prg.weblink}}"
+                                                        data-original="{{prg.weblink}}"
+                                                        placeholder="{{prg.weblink}}">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th>阅读百分比</th>
+                                                <th>百分比</th>
                                                 <td>{{prg.persent}}%</td>
                                             </tr>
                                         </table>
@@ -221,7 +221,7 @@
                             </form>
                         </div><!--.col#left-half-panel-->
                         <div id='right-half-panel' class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="panel panel-primary viewmode">
+                            <div class="panel panel-primary hide-when-edit">
                                 <div class="panel-heading">
                                     <span>时间信息</span>
                                 </div>
@@ -271,7 +271,7 @@
                                     </table>
                                 </div><!--.panel-body-->
                             </div><!--.panel-->
-                            <div class="panel panel-primary" id="douban-info-panel">
+                            <div id="douban-info-panel" class="panel panel-primary hide-when-edit">
                                 <div class="panel-heading">
                                     <span><b>作品信息</b></span>
                                     <a id="opus-type-a" class='btn btn-xs btn-primary pull-right' href="" target="_blank">
@@ -335,19 +335,14 @@
                                 </a>
                             {% endif %}
                         </div>
-                        <div class="viewmode">
-                            <a id='edit' class="btn btn-primary" onclick="enterEdit()">
-                                <span class="glyphicon glyphicon-pencil"></span> 进入编辑
-                            </a>
-                        </div>
-                        <span class="editmode">
-                            <a id="save" class="btn btn-success" onclick="saveEdit()">
+                        <div>
+                            <a id="save" class="btn btn-success weak-hidden" onclick="saveEdit()">
                                 <span class="glyphicon glyphicon-ok"></span> 保存
                             </a>
-                            <a id="cancel" class="btn btn-default" onclick="cancelEdit()">
+                            <a id="cancel" class="btn btn-default weak-hidden" onclick="cancelEdit()">
                                 <span class="glyphicon glyphicon-remove"></span> 取消编辑
                             </a>
-                        </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -362,12 +357,17 @@
     var movieinfo = {};
     $(function(){
         getOpusInfo()
+        checkEditMode()
+        checkInfoVisibility()
         $('[data-toggle="tooltip"]').tooltip();
         $('input.editable').keydown(function(){
             if(event.keyCode==13){
                 $('#save').click()
                 return false
             }
+        })
+        $('input.editable').on('input', function(){
+            checkEditMode()
         })
     });
     function getOpusInfo(){
@@ -384,9 +384,8 @@
         }
     }
     function checkInfoVisibility(info){
-        if(!info.exist){//作品不存在，不显示整个面板
-            return false
-        } else if(!info.match){//作品未精确匹配，
+        if(!info || !info.exist || !info.match){
+            // 作品不存在、未精确匹配时不显示整个面板
             return false
         } else  {//作品存在且精确匹配
             $('#title-tr').popover('destroy')
@@ -524,30 +523,38 @@
             $.info("删除操作已取消")
         }
     }
-    function enterEdit(){
-        $('.editable').removeAttr('readonly').addClass('form-control')
-        $('.viewmode').hide()
-        $('.viewmode-opacity').css('opacity','0.5')
-        $('.editmode').show()
-        $('.viewunlock').attr('disabled','disabled')
-        $('.editunlock').addClass('warning');
-        $.success('输入框已解锁');
+    function isEditableChanged(){
+        var is_changed = false
+        $('.editable').each(function(){
+            if($(this).val() != this.dataset.original){
+                is_changed = true
+            }
+        })
+        return is_changed
+    }
+    function checkEditMode(){
+        if(isEditableChanged()){
+            enterEdit()
+        } else {
+            exitEdit()
+        }
+    }
+
+    function enterEdit(){  // 隐藏不是编辑时的栏，
+        $('.hide-when-edit').fadeOut()
+        $('#save').fadeIn()
+        $('#cancel').fadeIn()
+    }
+    function exitEdit(){
+        $('.hide-when-edit').fadeIn()
+        $('#save').fadeOut()
+        $('#cancel').fadeOut()
     }
     function cancelEdit(){
-        // $('.editable').attr('readonly','').removeClass('form-control')
-        // $('.viewmode').show()
-        // $('.viewmode-opacity').css('opacity','1')
-        // $('.editmode').hide()
-        // $('.viewunlock').removeAttr('disabled')
-        // $('input[name="name"]').val('{{opus.name}}')
-        // $('input[name="subtitle"]').val('{{opus.subtitle}}')
-        // $('input[name="weblink"]').val('{{prg.weblink}}')
-        // $('input[name="total"]').val('{{opus.total}}')
-        // $('input[name="current"]').val('{{prg.current}}')
-        // $('.editunlock').removeClass('warning');
-        // checkUpdateButtonLock();
-        // $.warning('已撤销修改');
-        window.location.reload()
+        $('.editable').each(function(){
+            $(this).val(this.dataset.original)
+        })
+        checkEditMode()
     }
     function saveEdit(){
         var name = $('input[name="name"]').val()
@@ -564,73 +571,44 @@
             $('input[name="total"]').val(total)
         }
         if(current == ""){
+            current = 0;
             $('input[name="current"]').val("0")
         }
+        if(isNaN(current)){
+            $('input[name="current"]').parent().addClass('has-error');
+            $.danger('输入的更新的进度 ' + current +' 必须是纯数字！')
+            return false;
+        }
         if(parseInt(total) > 0 && parseInt(current) > parseInt(total)){
-            $.danger('错误：当前进度 ' + current + ' 大于总页数 ' + total)
+            $.danger('错误：当前进度 ' + current + ' 大于总共 ' + total)
             return false;
         }
         disableAllBtn()
         $('#saveform').submit();
     }
-    function submitFastupdateForm(){
-        if($('#fastupdate').attr('disabled')){
-            return false
-        }
-        var quick_current = $('input[name="quick_current"]').val();
-        var total = $('input[name="total"]').val();
-        if(total == ""){
-            total == 0;
-        }
-        if( isNaN(quick_current) ){
-            $('input[name="quick_current"]').parent().addClass('has-error');
-            $.danger('输入的更新的进度 '+quick_current+' 必须是纯数字！')
-            return false;
-        }
-        if( quick_current == '' ){
-            $('input[name="quick_current"]').parent().addClass('has-error');
-            $.danger('当前的更新进度为空 或 存在特殊字符')
-            return false;
-        }
-        if( parseInt(total) > 0 && parseInt(quick_current) > parseInt(total) ){
-             $('input[name="quick_current"]').parent().addClass('has-error');
-            $.danger('当前进度 '+quick_current+' 超过最大值 '+total);
-            return false;
-        }
-        disableAllBtn()
-        $("#fastupdateform").submit();
-    }
-    function checkUpdateButtonLock(){
-        var nc = $('input[name="quick_current"]');
-        if(nc.val()=='{{prg.current}}'){
-            $('#fastupdate').attr('disabled','disabled');
-        } else {
-            $('#fastupdate').removeAttr('disabled');
-        }
-    }
     function addOneCurrent(){
-        var quick_current = $('input[name="quick_current"]').val();
+        var current = $('input[name="current"]').val();
         var total = $('input[name="total"]').val();
         if(total == '∞' || total == ""){
             total = 0;
         }
-        if( isNaN(quick_current) ){
-            $('input[name="quick_current"]').parent().addClass('has-error');
-            $.danger('当前的更新进度 '+quick_current+' 必须是纯数字！')
+        if( isNaN(current) ){
+            $('input[name="current"]').parent().addClass('has-error');
+            $.danger('当前的更新进度 ' + current + ' 必须是纯数字！')
             return false;
         }
-        if( quick_current == '' ){
-            $('input[name="quick_current"]').parent().addClass('has-error');
+        if( current == '' ){
+            $('input[name="current"]').parent().addClass('has-error');
             $.danger('当前的更新进度为空 或 存在特殊字符')
             return false;
         }
-        if( parseInt(total) > 0 && parseInt(quick_current) >= parseInt(total) ){
-             $('input[name="quick_current"]').parent().addClass('has-error');
+        if( parseInt(total) > 0 && parseInt(current) >= parseInt(total) ){
+             $('input[name="current"]').parent().addClass('has-error');
             $.warning('进度已达到最大值');
             return false;
         }
-        $('input[name="quick_current"]').val(parseInt(quick_current)+1);
-        checkUpdateButtonLock();
+        $('input[name="current"]').val(parseInt(current)+1);
+        checkEditMode()
     }
 </script>
 {% endblock js %}
