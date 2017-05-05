@@ -132,17 +132,6 @@
                                     <input type="hidden" name="id" value="{{prg.id}}">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <span class="input-group-btn">
-                                            {% if prg.status == 'giveup' %}
-                                                <div id='reset' class="btn btn-warning disableBtn pull-left" onclick="$('#resetform').submit()">
-                                                    <span class="glyphicon glyphicon-ok-circle"></span> 激活
-                                                </div>
-                                            {% else %}
-                                                <div id='giveup' class="btn btn-warning disableBtn pull-left" onclick="$('#giveupform').submit()">
-                                                    <span class="glyphicon glyphicon-ban-circle"></span> 冻结
-                                                </div>
-                                            {% endif %}
-                                            </span>
                                             <input type="tel" name="quick_current"
                                                 class="viewunlock form-control"
                                                 placeholder="当前 {{prg.current}}"
@@ -153,7 +142,6 @@
                                                 autocomplete="off"
                                                 oninput="checkUpdateButtonLock()"
                                                 >
-
                                             <span class="input-group-addon fastupdate-total">
                                                 {% ifequal opus.total 0 %}
                                                     /∞
@@ -333,19 +321,30 @@
                             {% csrf_token %}
                             <input name="id" type="hidden" value="{{prg.id}}">
                         </form>
-                        <button class="btn btn-danger pull-left" id='delete' onclick="confirmDelete()">
-                            <span class="glyphicon glyphicon-trash"></span> 彻底删除
-                        </button>
+                        <div class='pull-left'>
+                            <button class="btn btn-danger disableBtn" id='delete' onclick="confirmDelete()">
+                                <span class="glyphicon glyphicon-trash"></span> 彻底删除
+                            </button>
+                            {% if prg.status == 'giveup' %}
+                                <a id='reset' class="btn btn-warning disableBtn" onclick="$('#resetform').submit()">
+                                    <span class="glyphicon glyphicon-ok-circle"></span> 激活
+                                </a>
+                            {% else %}
+                                <a id='giveup' class="btn btn-warning disableBtn" onclick="$('#giveupform').submit()">
+                                    <span class="glyphicon glyphicon-ban-circle"></span> 冻结
+                                </a>
+                            {% endif %}
+                        </div>
                         <div class="viewmode">
-                            <a class="btn btn-primary" id='edit' onclick="enterEdit()">
+                            <a id='edit' class="btn btn-primary disableBtn" onclick="enterEdit()">
                                 <span class="glyphicon glyphicon-pencil"></span> 进入编辑
                             </a>
                         </div>
                         <span class="editmode">
-                            <a class="btn btn-success disableBtn" id="save" onclick="saveEdit()">
+                            <a id="save" class="btn btn-success disableBtn" onclick="saveEdit()">
                                 <span class="glyphicon glyphicon-ok"></span> 保存
                             </a>
-                            <a class="btn btn-default" id="cancel" onclick="cancelEdit()">
+                            <a id="cancel" class="btn btn-default disableBtn" onclick="cancelEdit()">
                                 <span class="glyphicon glyphicon-remove"></span> 取消编辑
                             </a>
                         </span>
