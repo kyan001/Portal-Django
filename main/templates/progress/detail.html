@@ -169,6 +169,7 @@
                                                     <input class="editable form-control"
                                                         name="total"
                                                         type="number"
+                                                        min="0"
                                                         placeholder="{{opus.total}}"
                                                         value="{{opus.total}}"
                                                         data-original="{{opus.total}}"
@@ -188,6 +189,8 @@
                                                         <input class="editable form-control"
                                                             name="current"
                                                             type="number"
+                                                            min="0"
+                                                            max="{{opus.total}}"
                                                             value="{{prg.current}}"
                                                             data-original='{{prg.current}}'
                                                             onfocus="if(this.value==this.dataset.original){this.value=''}"
