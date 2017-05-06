@@ -328,7 +328,7 @@
                             {% csrf_token %}
                             <input name="id" type="hidden" value="{{prg.id}}">
                         </form>
-                        <div class='pull-left'>
+                        <div class='pull-left hide-when-edit'>
                             <button class="btn btn-danger" id='delete' onclick="confirmDelete()">
                                 <span class="glyphicon glyphicon-trash"></span> 彻底删除
                             </button>
