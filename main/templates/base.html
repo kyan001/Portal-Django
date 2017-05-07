@@ -18,9 +18,10 @@
         {% block inhead %}{% endblock %}
         <script>
             $(document).ajaxError(function(event, jqxhr, settings, exception) {
-                console.log("Ajax Error, " + settings.url);
-                console.log("status: " + jqxhr.status);
-                console.log("readyState: " + jqxhr.readyState);
+                console.debug("|-- " + event.type + ", " + settings.url);
+                console.debug("    |-- status: (" + jqxhr.status + ') ' + jqxhr.statusText);
+                console.debug("    |-- readyState: " + jqxhr.readyState);
+                console.debug("    |-- setting: " + settings.dataType + ', ' + settings.type)
             });
         </script>
         <link rel="stylesheet" href="/static/css/KyanCssUtil.css">
