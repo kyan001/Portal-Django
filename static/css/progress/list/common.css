@@ -5,10 +5,9 @@
 .page-header:hover .glyphicon {
     color: red;
 }
-.page-header {
-    padding-bottom: 2px !important;
+.row .page-header {
+    padding-bottom: 1px;
     cursor: pointer;
-    margin-top: 0 !important;
 }
 .prg-counts {
     color: inherit;
