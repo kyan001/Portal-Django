@@ -94,12 +94,10 @@
                         {% if prg.status == 'giveup' %}
                             <span class="label label-danger">已冻结</span>
                         {% endif %}
-                        {% if prg.weblink and prg.weblink|isurl %}
-                            <a class="btn btn-primary btn-xs pull-left" data-toggle="tooltip" data-placement="top" href="{{prg.weblink}}" title="在新窗口打开链接" target="_blank">
-                                <span class="glyphicon glyphicon-link"></span>
-                            </a>
-                        {% endif %}
-                        《<a id="opustitle" data-toggle="tooltip" data-placement="top" href="/opus/detail?id={{ opus.id }}" title="看看还有谁在看这本书">
+                        <a class="btn btn-primary btn-xs pull-left" data-toggle="tooltip" data-placement="top" data-container='body' href="/opus/detail?id={{opus.id}}" title="看看还有谁在看这本书">
+                            <span class="glyphicon glyphicon-qrcode"></span>
+                        </a>
+                        《<a id="opustitle" >
                             <b>{{ opus.name }}</b>
                         </a>》
                         {% if opus.subtitle %}
