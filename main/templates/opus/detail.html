@@ -2,126 +2,130 @@
 {% block title %}《{{opus.name}}》{% endblock title %}
 
 {% block css %}
-<style>
-    body {
-        background-image: url('/static/img/backdrop.png');
-    }
-    .container {
-        font-family: 'Microsoft YaHei';
-    }
-    #info-panel {
-        text-align: center;
-    }
-    /* item-panel */
-    .panel {
-        overflow: hidden;
-    }
-    .panel .attrname {
-        text-align: right;
-        color: darkblue;
-        white-space: nowrap;
-    }
-</style>
+    <style>
+        body {
+            background-image: url('/static/img/backdrop.png');
+        }
+        .container {
+            font-family: 'Microsoft YaHei';
+        }
+        #info-panel {
+            text-align: center;
+        }
+        /* item-panel */
+        .panel {
+            overflow: hidden;
+        }
+        .panel .attrname {
+            text-align: right;
+            color: darkblue;
+            white-space: nowrap;
+        }
+    </style>
 {% endblock css %}
 
-{% block js %}
-<script></script>
-{% endblock js %}
 
 {% block nav-btn %}
-<a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
-    <span class="glyphicon glyphicon-arrow-left"></span> 回到上一页
-</a>
+    <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
+        <span class="glyphicon glyphicon-arrow-left"></span> 回到上一页
+    </a>
 {% endblock nav-btn %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="panel panel-primary" id="info-panel">
-                        <div class="panel-heading">
-                            <b>基本信息</b>
+    <div class="container">
+        <div class="row">
+            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-primary" id="info-panel">
+                            <div class="panel-heading">
+                                <b>基本信息</b>
+                            </div>
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td class='attrname'>名称</td>
+                                        <th>《{{ opus.name }}》</th>
+                                    </tr>
+                                    <tr>
+                                        <td class='attrname'>备注</td>
+                                        <td>{{ opus.subtitle }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class='attrname'>总共</td>
+                                        <td>{{ opus.total }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class='attrname'>创建时间</td>
+                                        <td>{{ opus.created|date:'Y-m-d H:i' }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <table class="table table-hover">
-                            <tbody>
-                                <tr>
-                                    <td class='attrname'>名称</td>
-                                    <th>《{{ opus.name }}》</th>
-                                </tr>
-                                <tr>
-                                    <td class='attrname'>备注</td>
-                                    <td>{{ opus.subtitle }}</td>
-                                </tr>
-                                <tr>
-                                    <td class='attrname'>总共</td>
-                                    <td>{{ opus.total }}</td>
-                                </tr>
-                                <tr>
-                                    <td class='attrname'>创建时间</td>
-                                    <td>{{ opus.created|date:'Y-m-d H:i' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
-            </div>
-        </div><!--.col-->
-        <div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>
-            <div class="panel panel-primary" id="info-panel">
-                <img src='http://pan.baidu.com/share/qrcode?w=150&h=150&url={{request.build_absolute_uri}}' title='当前页面的二维码'>
-            </div>
-        </div>
-    </div><!--.row-->
-    <hr class='hidden-xs'/>
-    <div class='row'>
-        {% for item in itemlist %}
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-            <div class="panel panel-default item-panel hover-shadow beveryfast">
-                <div class="panel-heading">
-                    <a class="no-decoration" href="/user/public?nickname={{ item.user.nickname }}" title="查看 @{{ item.user.nickname }} 的公共页">
-                        <b>@{{ item.user.nickname }}</b>
-                    </a>
-                    的进度
+            </div><!--.col-->
+            <div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>
+                <div class="panel panel-primary" id="info-panel">
+                    <div class='panel-heading'>
+                        当前页面的二维码
+                    </div>
+                    <img src='http://pan.baidu.com/share/qrcode?w=150&h=150&url={{request.build_absolute_uri}}' title='当前页面的二维码'>
                 </div>
-                <table class="table table-hover">
-                    <tr>
-                        <td class='attrname'>当前进度</td>
-                        <td>{{ item.progress.current }} / {{ item.opus.total }}</td>
-                    </tr>
-                    <tr>
-                        <td class='attrname'>开始时间</td>
-                        <td>{{ item.progress.created|date:'Y-m-d H:i' }}</td>
-                    </tr>
-                    <tr>
-                        <td class='attrname'>上次访问</td>
-                        <td>{{ item.progress.modified|date:'Y-m-d H:i' }}</td>
-                    </tr>
-                    {% if item.progress.weblink %}
-                    <tr>
-                        <td class='attrname'>链接</td>
-                        <td>
-                            {{ item.progress.weblink|urlizetrunc:30}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class='attrname'>
-                            <span class="glyphicon glyphicon-qrcode"></span>
-                        </td>
-                        <td>
-                            <img src='http://pan.baidu.com/share/qrcode?w=150&h=150&url={{item.progress.weblink}}' title='进度连接二维码'>
-                        </td>
-                    </tr>
-                    {% endif %}
-                    <tr>
-                        <td class='attrname'>状态</td>
-                        <th>{{ item.progress.status }}</th>
-                    </tr>
-                </table>
             </div>
-        </div><!--.col-->
-        {% endfor %}
-    </div><!--.row-->
-</div>
+        </div><!--.row-->
+        <hr class='hidden-xs'/>
+        <div class='row'>
+            {% for item in itemlist %}
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="panel panel-default item-panel hover-shadow beveryfast">
+                    <div class="panel-heading">
+                        <a class="no-decoration" href="/user/public?nickname={{ item.user.nickname }}" title="查看 @{{ item.user.nickname }} 的公共页">
+                            <b>@{{ item.user.nickname }}</b>
+                        </a>
+                        的进度
+                    </div>
+                    <table class="table table-hover">
+                        <tr>
+                            <td class='attrname'>当前进度</td>
+                            <td>{{ item.progress.current }} / {{ item.opus.total }}</td>
+                        </tr>
+                        <tr>
+                            <td class='attrname'>开始时间</td>
+                            <td>{{ item.progress.created|date:'Y-m-d H:i' }}</td>
+                        </tr>
+                        <tr>
+                            <td class='attrname'>上次访问</td>
+                            <td>{{ item.progress.modified|date:'Y-m-d H:i' }}</td>
+                        </tr>
+                        {% if item.progress.weblink %}
+                        <tr>
+                            <td class='attrname'>
+                                <span>链接</span>
+                                <span class="glyphicon glyphicon-link"></span>
+                            </td>
+                            <td>
+                                {{ item.progress.weblink|urlizetrunc:30}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='attrname'>
+                                <span>链接</span>
+                                <span class="glyphicon glyphicon-qrcode"></span>
+                            </td>
+                            <td>
+                                <img src='http://pan.baidu.com/share/qrcode?w=150&h=150&url={{item.progress.weblink}}' title='进度连接二维码'>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td class='attrname'>状态</td>
+                            <th>{{ item.progress.status }}</th>
+                        </tr>
+                    </table>
+                </div>
+            </div><!--.col-->
+            {% endfor %}
+        </div><!--.row-->
+    </div>
 {% endblock content %}
