@@ -39,7 +39,7 @@
         margin-bottom: 0;
     }
     #saveform th {
-        min-width: 5em;
+        min-width: 6em;
     }
     #title-tr,
     #rating-tr,
@@ -146,38 +146,38 @@
                                                 <th>名称</th>
                                                 <td class="text-info">
                                                     <input class="editable form-control"
-                                                        name="name"
-                                                        type="text"
-                                                        value="{{opus.name}}"
-                                                        data-original="{{opus.name}}"
-                                                        autocomplete="off"
-                                                        placeholder="{{opus.name}}"
-                                                        required="required">
+                                                      name="name"
+                                                      type="text"
+                                                      value="{{opus.name}}"
+                                                      data-original="{{opus.name}}"
+                                                      autocomplete="off"
+                                                      placeholder="{{opus.name}}"
+                                                      required="required">
                                                 </td>
                                             </tr>
                                             <tr class="text-info">
                                                 <th>备注</th>
                                                 <td class="text-info">
                                                     <input class="editable form-control"
-                                                        name="subtitle"
-                                                        type="text"
-                                                        value="{{opus.subtitle}}"
-                                                        data-original="{{opus.subtitle}}"
-                                                        placeholder="{{opus.subtitle}}"
-                                                        autocomplete="off">
+                                                      name="subtitle"
+                                                      type="text"
+                                                      value="{{opus.subtitle}}"
+                                                      data-original="{{opus.subtitle}}"
+                                                      placeholder="{{opus.subtitle}}"
+                                                      autocomplete="off">
                                                 </td>
                                             </tr>
                                             <tr class="text-info">
                                                 <th>总共</th>
                                                 <td class="text-info">
                                                     <input class="editable form-control"
-                                                        name="total"
-                                                        type="number"
-                                                        min="0"
-                                                        placeholder="{{opus.total}}"
-                                                        value="{{opus.total}}"
-                                                        data-original="{{opus.total}}"
-                                                        autocomplete="off">
+                                                      name="total"
+                                                      type="number"
+                                                      min="0"
+                                                      placeholder="{{opus.total}}"
+                                                      value="{{opus.total}}"
+                                                      data-original="{{opus.total}}"
+                                                      autocomplete="off">
                                                 </td>
                                             </tr>
                                             <tr class="text-info">
@@ -185,41 +185,54 @@
                                                 <td class="text-info">
                                                     <div class="form-group form-group-lg has-feedback">
                                                         <div class='input-group'>
-                                                        <span class="input-group-btn">
-                                                            <div class="viewunlock btn btn-lg btn-default" onclick="addOneCurrent()">
-                                                                <span class='glyphicon glyphicon-plus'></span>
-                                                            </div>
-                                                        </span>
-                                                        <input class="editable form-control"
-                                                            name="current"
-                                                            type="number"
-                                                            min="0"
-                                                            max="{{opus.total}}"
-                                                            value="{{prg.current}}"
-                                                            data-original='{{prg.current}}'
-                                                            onfocus="if(this.value==this.dataset.original){this.value=''}"
-                                                            onblur="if(this.value==''){this.value=this.dataset.original}"
-                                                            placeholder="{{prg.current}}">
-                                                        <span class="form-control-feedback" aria-hidden="true">
-                                                            {% ifequal opus.total 0 %}
-                                                                / ∞
-                                                            {% else %}
-                                                                / {{opus.total}}
-                                                            {% endifequal %}
-                                                        </span>
-                                                    </div>
+                                                            <span class="input-group-btn">
+                                                                <div class="btn btn-lg btn-default" onclick="addOneCurrent()">
+                                                                    <span class='glyphicon glyphicon-plus'></span>
+                                                                </div>
+                                                            </span>
+                                                            <input class="editable form-control"
+                                                              name="current"
+                                                              type="number"
+                                                              min="0"
+                                                              max="{{opus.total}}"
+                                                              value="{{prg.current}}"
+                                                              data-original='{{prg.current}}'
+                                                              onfocus="if(this.value==this.dataset.original){this.value=''}"
+                                                              onblur="if(this.value==''){this.value=this.dataset.original}"
+                                                              placeholder="{{prg.current}}">
+                                                            <span class="form-control-feedback" aria-hidden="true">
+                                                                {% ifequal opus.total 0 %}
+                                                                    / ∞
+                                                                {% else %}
+                                                                    / {{opus.total}}
+                                                                {% endifequal %}
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr class="text-info" title="{{prg.weblink}}">
                                                 <th>链接</th>
                                                 <td class="text-info">
-                                                    <input class="editable form-control"
-                                                        name="weblink"
-                                                        type="text"
-                                                        value="{{prg.weblink}}"
-                                                        data-original="{{prg.weblink}}"
-                                                        placeholder="{{prg.weblink}}">
+                                                    <div class='input-group'>
+                                                        <input class="editable form-control"
+                                                          name="weblink"
+                                                          type="text"
+                                                          value="{{prg.weblink}}"
+                                                          data-original="{{prg.weblink}}"
+                                                          placeholder="{{prg.weblink}}">
+                                                        {% if prg.weblink and prg.weblink|isurl %}
+                                                            <span class="input-group-btn">
+                                                                <a class="btn btn-default"
+                                                                  data-toggle="tooltip"
+                                                                  data-placement="top"
+                                                                  href='{{prg.weblink}}'
+                                                                  target='_blank'>
+                                                                    <span class='glyphicon glyphicon-link'></span>
+                                                                </a>
+                                                            </span>
+                                                        {% endif %}
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </table>
