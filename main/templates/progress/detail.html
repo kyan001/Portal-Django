@@ -190,7 +190,7 @@
                                                               name="current"
                                                               type="number"
                                                               min="0"
-                                                              max="{{opus.total}}"
+                                                              max="{{opus.total|default:''}}"
                                                               value="{{prg.current}}"
                                                               data-original='{{prg.current}}'
                                                               onfocus="if(this.value==this.dataset.original){this.value=''}"
