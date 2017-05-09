@@ -2,8 +2,7 @@
 
 <div class="{{size}} progress-card befast" progressid="{{prg.id}}" progressname="{{prg.opus.name}}">
     <a href="/progress/detail?id={{prg.id}}" class="no-decoration">
-        <div class="panel panel-{{ prg.getContextualType|default:'default' }} beveryfast hover-shadow"
-            {% if prg.opus.covercolor %}style="box-shadow: 0 0 2px 2px {{prg.opus.covercolor}}"{% endif %}>
+        <div class="panel panel-{{ prg.getContextualType|default:'default' }} beveryfast hover-shadow">
             <div class="panel-heading no-bottom-border progress-title text-nowrap">
                 <span class="panel-title">
                     {% if prg.weblink and prg.weblink|isurl %}
@@ -16,6 +15,9 @@
                         <em class="subtitle small">
                             {{ prg.opus.subtitle|truncatechars:9 }}
                         </em>
+                    {% endif %}
+                    {% if prg.opus.covercolor %}
+                        <span class='pull-right glyphicon glyphicon-tint' style="color: {{prg.opus.covercolor}}" title="《{{prg.opus.name}}》的封面颜色"></span>
                     {% endif %}
                 </span>
             </div>
