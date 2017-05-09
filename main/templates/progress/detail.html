@@ -382,6 +382,7 @@
 <script>
     var bookinfo = {};
     var movieinfo = {};
+    var guessinfo = {};
     $(function(){
         getOpusInfo()
         checkEditMode()
@@ -430,16 +431,22 @@
             return true
         }
     }
+    function applyGuess(){
+        $('input[name="name"]').val(guessinfo.title)
+        checkEditMode()
+    }
     function showGuess(info){
-        var title_a = '<a href="' + info.url + '" target="_blank">' + info.title + '</a>'
-        var content_html = '您是否在找《' + title_a + '》'
-        if(info.subtype){
-            content_html += "（" + info.subtype.toUpperCase() + "）"
-        }
+        guessinfo = info
+        var title_a = '<a href="' + guessinfo.url + '" target="_blank">' + guessinfo.title + '</a>'
+        var guess_title = '《' + title_a + '》'
+        var guess_subtype = guessinfo.subtype ? "（" + guessinfo.subtype.toUpperCase() + "）" : ''
+        var apply_guess = "<span id='apply-guess' class='text-success glyphicon glyphicon-ok' onclick='applyGuess()'></span>"
+        var content_html = '是' + guess_title + guess_subtype + '吗？' + apply_guess
         $('#name-tr').popover({
-            delay: {'show':500, 'hide':1000},
+            delay: {'show':0, 'hide':0},
             html: true,
-            trigger: 'hover focus',
+            trigger: 'focus',
+            container: 'body',
             content: function(){
                 return content_html
             },
