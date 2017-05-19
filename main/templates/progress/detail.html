@@ -47,6 +47,9 @@
     #douban-info-panel {
         display: none;
     }
+    #color-indicator {
+        color: transparent;
+    }
     @media (max-width: 768px) {
         #left-half-panel,
         #right-half-panel {
@@ -311,6 +314,9 @@
                                             <td colspan="2">
                                                 《<a id="title-link" href="" target="_blank"></a>》
                                                 <span class='text-muted' id="original-title"></span>
+                                                <a id='color-indicator' class='btn btn-xs btn-link pull-right'>
+                                                    <span class='glyphicon glyphicon-tint'></span>
+                                                </a>
                                             </td>
                                         </tr>
                                         <tr id="rating-tr">
@@ -454,7 +460,7 @@
     }
     function showImageColor(info){
         OpusInfoGetter.getImageColor(info.images.small, '{{opus.id}}', function(result){
-            $('#main-panel .second-panel-body').css('border-left', '5px solid' + result.color);
+            $('#color-indicator').css('color', result.color)
         });
     }
     function showInfo(info){
