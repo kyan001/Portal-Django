@@ -342,18 +342,6 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
-                        <form id="deleteform" action="/progress/delete/" method="post">
-                            {% csrf_token %}
-                            <input name="id" type="hidden" value="{{prg.id}}">
-                        </form>
-                        <form id="giveupform" action="/progress/giveup/" method="post">
-                            {% csrf_token %}
-                            <input name="id" type="hidden" value="{{prg.id}}">
-                        </form>
-                        <form id="resetform" action="/progress/reset/" method="post">
-                            {% csrf_token %}
-                            <input name="id" type="hidden" value="{{prg.id}}">
-                        </form>
                         <div class='pull-left hide-when-edit'>
                             <button class="btn btn-danger" id='delete' onclick="confirmDelete()">
                                 <span class="glyphicon glyphicon-trash"></span> 彻底删除
@@ -381,6 +369,18 @@
             </div>
         </div><!--col-->
     </div><!--row-->
+    <form id="deleteform" action="/progress/delete/" method="post">
+        {% csrf_token %}
+        <input name="id" type="hidden" value="{{prg.id}}">
+    </form>
+    <form id="giveupform" action="/progress/giveup/" method="post">
+        {% csrf_token %}
+        <input name="id" type="hidden" value="{{prg.id}}">
+    </form>
+    <form id="resetform" action="/progress/reset/" method="post">
+        {% csrf_token %}
+        <input name="id" type="hidden" value="{{prg.id}}">
+    </form>
 </div>
 {% endblock content %}
 
