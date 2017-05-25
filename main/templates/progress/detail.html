@@ -247,6 +247,16 @@
                                             </tr>
                                         </table>
                                     </div><!--.panel-body-->
+                                    <div class='row'>
+                                        <div class='col-xs-12 text-right'>
+                                            <a id="save" class="btn btn-success" onclick="saveEdit()">
+                                                <span class="glyphicon glyphicon-ok"></span> 保存
+                                            </a>
+                                            <a id="cancel" class="btn btn-default" onclick="cancelEdit()">
+                                                <span class="glyphicon glyphicon-remove"></span> 取消编辑
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div><!--.panel-->
                             </form>
                         </div><!--.col#left-half-panel-->
@@ -342,28 +352,18 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12 hide-when-edit">
-                        <div class='pull-left hide-when-edit'>
-                            <button class="btn btn-danger" id='delete' onclick="confirmDelete()">
-                                <span class="glyphicon glyphicon-trash"></span> 彻底删除
-                            </button>
-                            {% if prg.status == 'giveup' %}
-                                <a id='reset' class="btn btn-warning" onclick="$('#resetform').submit()">
-                                    <span class="glyphicon glyphicon-ok-circle"></span> 激活
-                                </a>
-                            {% else %}
-                                <a id='giveup' class="btn btn-warning" onclick="$('#giveupform').submit()">
-                                    <span class="glyphicon glyphicon-ban-circle"></span> 冻结
-                                </a>
-                            {% endif %}
-                        </div>
-                        <div>
-                            <a id="save" class="btn btn-success weak-hidden" onclick="saveEdit()">
-                                <span class="glyphicon glyphicon-ok"></span> 保存
+                        <button class="btn btn-danger" id='delete' onclick="confirmDelete()">
+                            <span class="glyphicon glyphicon-trash"></span> 彻底删除
+                        </button>
+                        {% if prg.status == 'giveup' %}
+                            <a id='reset' class="btn btn-warning" onclick="$('#resetform').submit()">
+                                <span class="glyphicon glyphicon-ok-circle"></span> 激活
                             </a>
-                            <a id="cancel" class="btn btn-default weak-hidden" onclick="cancelEdit()">
-                                <span class="glyphicon glyphicon-remove"></span> 取消编辑
+                        {% else %}
+                            <a id='giveup' class="btn btn-warning" onclick="$('#giveupform').submit()">
+                                <span class="glyphicon glyphicon-ban-circle"></span> 冻结
                             </a>
-                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -581,7 +581,6 @@
             exitEdit()
         }
     }
-
     function enterEdit(){  // 隐藏不是编辑时的栏，
         $('.hide-when-edit').fadeOut()
         $('#save').fadeIn()
