@@ -391,6 +391,13 @@
             movie: {},
             guess: {}
         }
+        window.inputs = {
+            name: $('input[name="name"]'),
+            subtitle: $('input[name="subtitle"]'),
+            weblink: $('input[name="weblink"]'),
+            total: $('input[name="total"]'),
+            current: $('input[name="current"]')
+        }
         getOpusInfo()
         checkEditMode()
         syncTotal()
@@ -608,60 +615,45 @@
         })
         checkEditMode()
     }
-    function saveEdit(){
-        var inputs = {
-            name: $('input[name="name"]').val(),
-            subtitle: $('input[name="subtitle"]').val(),
-            weblink: $('input[name="weblink"]').val(),
-            total: $('input[name="total"]').val(),
-            current: $('input[name="current"]').val(),
-        }
-        if(inputs.name == ""){
+    function fullValidation(){
+        if(inputs.name.val() == ""){
             $.danger('名称不能为空')
             return false;
         }
-        if(inputs.total == ""){
-            inputs.total = 0;
-            $('input[name="total"]').val(inputs.total)
+        if(inputs.total.val() == '∞' || inputs.total.val() == ""){
+            inputs.total.val(0);
         }
-        if(inputs.current == ""){
-            inputs.current = 0;
-            $('input[name="current"]').val("0")
+        if(inputs.current.val() == ''){
+            inputs.current.val(0)
         }
-        if(isNaN(inputs.current)){
-            $('input[name="current"]').parent().addClass('has-error');
-            $.danger('输入的更新的进度 ' + inputs.current +' 必须是纯数字！')
+        if(isNaN(inputs.current.val())){
+            $.danger('输入的更新的进度 ' + inputs.current.val() +' 必须是纯数字！')
             return false;
         }
-        if(parseInt(inputs.total) > 0 && parseInt(inputs.current) > parseInt(inputs.total)){
-            $.danger('错误：当前进度 ' + inputs.current + ' 大于总共 ' + inputs.total)
+        if(parseInt(inputs.total.val()) > 0 && parseInt(inputs.current.val()) > parseInt(inputs.total.val())){
+            $.danger('错误：当前进度 ' + inputs.current.val() + ' 大于总共 ' + inputs.total.val())
             return false;
         }
-        disableAllBtn()
-        $('#saveform').submit();
+        return true
+    }
+    function saveEdit(){
+        if(fullValidation()){
+            disableAllBtn()
+            $('#saveform').submit();
+            return true
+        } else {
+            return false
+        }
     }
     function addOneCurrent(){
-        var current = $('input[name="current"]').val();
-        var total = $('input[name="total"]').val();
-        if(total == '∞' || total == ""){
-            total = 0;
+        if(!fullValidation()){
+            return false
         }
-        if( isNaN(current) ){
-            $('input[name="current"]').parent().addClass('has-error');
-            $.danger('当前的更新进度 ' + current + ' 必须是纯数字！')
-            return false;
-        }
-        if( current == '' ){
-            $('input[name="current"]').parent().addClass('has-error');
-            $.danger('当前的更新进度为空 或 存在特殊字符')
-            return false;
-        }
-        if( parseInt(total) > 0 && parseInt(current) >= parseInt(total) ){
-             $('input[name="current"]').parent().addClass('has-error');
+        if(parseInt(inputs.total.val()) > 0 && parseInt(inputs.current.val()) == parseInt(inputs.total.val())){
             $.warning('进度已达到最大值');
             return false;
         }
-        $('input[name="current"]').val(parseInt(current)+1);
+        inputs.current.val(parseInt(inputs.current.val()) + 1);
         checkEditMode()
     }
 </script>
