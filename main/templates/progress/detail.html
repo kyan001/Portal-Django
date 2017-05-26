@@ -385,10 +385,12 @@
 
 {% block js %}
 <script>
-    var bookinfo = {};
-    var movieinfo = {};
-    var guessinfo = {};
     $(function(){
+        window.infos = {
+            book: {},
+            movie: {},
+            guess: {}
+        }
         getOpusInfo()
         checkEditMode()
         syncTotal()
@@ -447,14 +449,14 @@
         }
     }
     function applyGuess(){
-        $('input[name="name"]').val(guessinfo.title)
+        $('input[name="name"]').val(infos.guess.title)
         checkEditMode()
     }
     function showGuess(info){
-        guessinfo = info
-        var title_a = '<a href="' + guessinfo.url + '" target="_blank">' + guessinfo.title + '</a>'
+        infos.guess = info
+        var title_a = '<a href="' + infos.guess.url + '" target="_blank">' + infos.guess.title + '</a>'
         var guess_title = '《' + title_a + '》'
-        var guess_subtype = guessinfo.subtype ? "（" + guessinfo.subtype.toUpperCase() + "）" : ''
+        var guess_subtype = infos.guess.subtype ? "（" + infos.guess.subtype.toUpperCase() + "）" : ''
         var apply_guess = "<span id='apply-guess' class='text-success glyphicon glyphicon-ok' onclick='applyGuess()'></span>"
         var content_html = '是' + guess_title + guess_subtype + '吗？' + apply_guess
         $('#name-tr').popover({
@@ -507,36 +509,36 @@
         }
         switch(setType){
             case 'book':
-                if(bookinfo.exist){
-                    if(bookinfo.match){
-                        showInfo(bookinfo)
+                if(infos.book.exist){
+                    if(infos.book.match){
+                        showInfo(infos.book)
                     } else {
-                        showGuess(bookinfo)
+                        showGuess(infos.book)
                     }
                 }
                 break;
             case 'movie':
-                if(movieinfo.exist){
-                    if(movieinfo.match){
-                        showInfo(movieinfo)
+                if(infos.movie.exist){
+                    if(infos.movie.match){
+                        showInfo(infos.movie)
                     } else {
-                        showGuess(movieinfo)
+                        showGuess(infos.movie)
                     }
                 }
                 break;
             case 'compare':
-                if(bookinfo.finish && movieinfo.finish){
-                    if(bookinfo.exist && !movieinfo.exist){
+                if(infos.book.finish && infos.movie.finish){
+                    if(infos.book.exist && !infos.movie.exist){
                         setInfo('book')
-                    } else if(!bookinfo.exist && movieinfo.exist){
+                    } else if(!infos.book.exist && infos.movie.exist){
                         setInfo('movie')
-                    } else if(bookinfo.match && !movieinfo.match){
+                    } else if(infos.book.match && !infos.movie.match){
                         setInfo('book')
-                    } else if(!bookinfo.match && movieinfo.match){
+                    } else if(!infos.book.match && infos.movie.match){
                         setInfo('movie')
                     } else if(parseInt(total) == 0){  //follow
                         setInfo('movie')
-                    } else if(parseInt(total) == parseInt(bookinfo.pages)){
+                    } else if(parseInt(total) == parseInt(infos.book.pages)){
                         setInfo('book')
                     } else { // default
                         setInfo('movie')
@@ -549,8 +551,8 @@
         var bookname = $("input[name='name']").val()
         if(bookname){
             OpusInfoGetter.getBookInfo(bookname, function(info){
-                bookinfo = info;
-                bookinfo.finish = true;
+                infos.book = info;
+                infos.book.finish = true;
                 setInfo(setType)
             });
         }
@@ -559,8 +561,8 @@
         var moviename = $("input[name='name']").val()
         if(moviename){
             OpusInfoGetter.getMovieInfo(moviename, function(info){
-                movieinfo = info;
-                movieinfo.finish = true;
+                infos.movie = info;
+                infos.movie.finish = true;
                 setInfo(setType)
             });
         }
