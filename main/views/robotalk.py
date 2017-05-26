@@ -169,7 +169,8 @@ def getresponse(request):  # AJAX
         addToResult(robo, result)
     else:
         for i in ROBOS:
-            addToResult(ROBOS.get(i), result)
+            if not ROBOS.get(i).get('disabled'):
+                addToResult(ROBOS.get(i), result)
     # render
     result['count'] = cache_count
     return util.ctrl.returnJson(result)
