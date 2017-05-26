@@ -176,7 +176,8 @@
                                                       placeholder="{{opus.total}}"
                                                       value="{{opus.total}}"
                                                       data-original="{{opus.total}}"
-                                                      autocomplete="off">
+                                                      autocomplete="off"
+                                                      oninput='syncTotal()'>
                                                 </td>
                                             </tr>
                                             <tr class="text-info">
@@ -200,11 +201,8 @@
                                                               onblur="if(this.value==''){this.value=this.dataset.original}"
                                                               placeholder="{{prg.current}}">
                                                             <span class="form-control-feedback" aria-hidden="true">
-                                                                {% ifequal opus.total 0 %}
-                                                                    / ∞
-                                                                {% else %}
-                                                                    / {{opus.total}}
-                                                                {% endifequal %}
+                                                                <span>/</span>
+                                                                <span id='total-as-feedback'></span>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -392,6 +390,7 @@
     $(function(){
         getOpusInfo()
         checkEditMode()
+        syncTotal()
         $('[data-toggle="tooltip"]').tooltip();
         $('input.editable').keydown(function(){
             if(event.keyCode==13){
@@ -403,6 +402,15 @@
             checkEditMode()
         })
     });
+    function syncTotal(){
+        var target_ele = $('#total-as-feedback')
+        var source_ele = $("input[name='total']")
+        if(source_ele.val() == "" || source_ele.val() == '∞' || source_ele.val() == '0'){
+            target_ele.text('∞')
+        } else {
+            target_ele.text(source_ele.val())
+        }
+    }
     function getOpusInfo(){
         var book_subs = ['书','书籍','book','pdf','漫画','comic','文字','doc','txt','小说']
         var movie_subs = ['动画','anime','电影','movie','电视剧','tv','show','美剧','英剧','韩剧','日剧','公开课','视频']
