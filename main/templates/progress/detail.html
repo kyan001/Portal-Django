@@ -212,17 +212,11 @@
                                                 <th>链接</th>
                                                 <td class="text-info">
                                                     <div class='input-group'>
-                                                        <input class="editable form-control"
-                                                          name="weblink"
-                                                          type="text"
-                                                          value="{{prg.weblink}}"
-                                                          data-original="{{prg.weblink}}"
-                                                          placeholder="{{prg.weblink}}">
                                                         {% if prg.weblink and prg.weblink|isurl %}
                                                             <span class="input-group-btn">
                                                                 <a class="btn btn-default"
                                                                   data-toggle="tooltip"
-                                                                  data-placement="top"
+                                                                  data-placement="right"
                                                                   data-container='body'
                                                                   title="在新窗口打开链接"
                                                                   href='{{prg.weblink}}'
@@ -234,12 +228,19 @@
                                                             <span class="input-group-addon">
                                                                 <span class='glyphicon glyphicon-link'
                                                                   data-toggle="tooltip"
-                                                                  data-placement="top"
+                                                                  data-placement="right"
                                                                   data-container='body'
                                                                   title="请以 http 或 https 开头">
                                                                 </span>
                                                             </span>
                                                         {% endif %}
+                                                        <input class="editable form-control"
+                                                          name="weblink"
+                                                          type="text"
+                                                          value="{{prg.weblink}}"
+                                                          placeholder="http://"
+                                                          data-original="{{prg.weblink}}"
+                                                          placeholder="{{prg.weblink}}">
                                                     </div>
                                                 </td>
                                             </tr>
