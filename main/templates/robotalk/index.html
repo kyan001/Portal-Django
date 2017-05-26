@@ -138,6 +138,7 @@
         new Robo('feifei', '菲菲', 'info', 'fromrobo1.png'),
         new Robo('tuling', '图酱', 'warning', 'fromrobo2.png'),
         new Robo('simsimi', 'Simsimi', 'danger', 'fromrobo3.png'),
+        new Robo('programo', 'Program-O', 'danger', 'fromrobo3.png'),
     ]
     var lastchat = {
         'whotalk': '',  // last chat from who
@@ -160,7 +161,8 @@
         // check who is qualified to be talker
         var qualified = []
         for(i in ROBOS){
-            if(lastchat[ROBOS[i].key].length < 25 && lastchat['whotalk'] != ROBOS[i].key){  // 发言长度不能
+            r = ROBOS[i].key
+            if(lastchat[r.key] && lastchat[r.key].length < 25 && lastchat['whotalk'] != r.key){  // 发言长度筛选
                 qualified.push(ROBOS[i])
             }
         }
