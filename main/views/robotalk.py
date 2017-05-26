@@ -57,6 +57,14 @@ def getresponse(request):  # AJAX
             content.replace('{br}', '<br/>')
         return content
 
+    def extractProgramo(content: str):
+        """从 Program-O 的返回字符串中获得真正的内容"""
+        if not content:
+            return None
+        json_obj = json.loads(content)
+        content = json_obj.get('botsay')
+        return content
+
     def extractTuling(content: str):
         """从 Tuling 的返回字符串中获得真正的内容"""
         if not content:
@@ -76,9 +84,10 @@ def getresponse(request):  # AJAX
                 'lc': 'zh',
                 'ft': '1.0',
                 'text': userinput,
-                },
-            'getContent': extractSimsimi,
             },
+            'getContent': extractSimsimi,
+            'disabled': True,
+        },
         'feifei': {
             'from': 'feifei',
             'url': 'http://api.qingyunke.com/api.php',
@@ -86,19 +95,31 @@ def getresponse(request):  # AJAX
                 'key': 'free',
                 'appid': 0,
                 'msg': userinput,
-                },
-            'getContent': extractFeifei,
             },
+            'getContent': extractFeifei,
+        },
         'tuling': {
             'from': 'tuling',
             'url': 'http://www.tuling123.com/openapi/api',
             'param': {
                 'key': '96dd75c1bfb64b2094327ba286da25d6',
                 'info': userinput,
-                },
-            'getContent': extractTuling,
             },
-        }
+            'getContent': extractTuling,
+        },
+        'programo': {
+            'from': 'programo',
+            'url': 'http://api.program-o.com/v2/chatbot/',
+            'param': {
+                'format': 'json',
+                'bot_id': '6',
+                'convo_id': request.session.get('key'),
+                'say': userinput,
+            },
+            'getContent': extractProgramo,
+            'disabled': True,
+        },
+    }
     # save count into cache
     cache_key = 'robotalk:count'
     cache_timeout = 60 * 60 * 24 * 7 * 4  # 1 month
@@ -132,7 +153,7 @@ def getresponse(request):  # AJAX
             'fullurl': getFullurl(robo),
             'response': resp,
             'rtt': time_rtt,
-            }
+        }
         if not txt:
             result['failed'][key] = value
         else:
@@ -142,7 +163,7 @@ def getresponse(request):  # AJAX
     result = {
         'result': {},
         'failed': {},
-        }
+    }
     if from_:
         robo = ROBOS.get(from_)
         addToResult(robo, result)
