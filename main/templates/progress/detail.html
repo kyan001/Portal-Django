@@ -414,17 +414,16 @@
     });
     function syncTotal(){
         var target_ele = $('#total-as-feedback')
-        var source_ele = $("input[name='total']")
-        if(source_ele.val() == "" || source_ele.val() == '∞' || source_ele.val() == '0'){
+        if(inputs.total.val() == "" || inputs.total.val() == '∞' || inputs.total.val() == '0'){
             target_ele.text('∞')
         } else {
-            target_ele.text(source_ele.val())
+            target_ele.text(inputs.total.val())
         }
     }
     function getOpusInfo(){
         var book_subs = ['书','书籍','book','pdf','漫画','comic','文字','doc','txt','小说']
         var movie_subs = ['动画','anime','电影','movie','电视剧','tv','show','美剧','英剧','韩剧','日剧','公开课','视频']
-        var sub = $("input[name='subtitle']").val().toLowerCase()
+        var sub = inputs.subtitle.val().toLowerCase()
         if(book_subs.indexOf(sub) >= 0){
             getBookInfo('book')
         } else if(movie_subs.indexOf(sub) >= 0) {
@@ -456,7 +455,7 @@
         }
     }
     function applyGuess(){
-        $('input[name="name"]').val(infos.guess.title)
+        inputs.name.val(infos.guess.title)
         checkEditMode()
     }
     function showGuess(info){
@@ -510,7 +509,7 @@
     }
 
     function setInfo(setType){
-        var total = $("input[name='total']").val()
+        var total = inputs.total.val()
         if(total == ""){
             total = 0;
         }
@@ -555,7 +554,7 @@
         }
     }
     function getBookInfo(setType){
-        var bookname = $("input[name='name']").val()
+        var bookname = inputs.name.val()
         if(bookname){
             OpusInfoGetter.getBookInfo(bookname, function(info){
                 infos.book = info;
@@ -565,7 +564,7 @@
         }
     }
     function getMovieInfo(setType){
-        var moviename = $("input[name='name']").val()
+        var moviename = inputs.name.val()
         if(moviename){
             OpusInfoGetter.getMovieInfo(moviename, function(info){
                 infos.movie = info;
