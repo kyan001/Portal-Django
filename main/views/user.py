@@ -1,4 +1,3 @@
-import random
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.core.cache import cache
@@ -13,55 +12,6 @@ import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
 
-def getRandomName():
-    '''生成用户昵称'''
-    shengmu = ['a', 'i', 'u', 'e', 'o']
-    yunmu = ['s', 'k', 'm', 'n', 'r', 'g', 'h', 'p', 'b', 'z', 't', 'd']
-    nickname = random.choice(yunmu).upper() + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu)
-    users = User.objects.filter(nickname=nickname)
-    if len(users) > 0:
-        return getRandomName()
-    return nickname
-
-
-def getUserById(user_id):
-    '''通过用户名获得用户'''
-    if not user_id:
-        raise Exception("username 不能为空")
-    try:
-        user = User.objects.get(id=user_id)
-    except User.DoesNotExist:
-        return None
-    return user
-
-
-def getUserInCookie(request):
-    '''将 cookie 中存的 user 信息存入 session 并返回'''
-    user_id = request.COOKIES.get('user_id')
-    user_answer = request.COOKIES.get('user_answer')
-    if user_id and user_answer:
-        user = getUserById(user_id)
-        if user and (user.answer1 == user_answer or user.answer2 == user_answer):
-            util.user.rememberLogin(request, user)
-            return user
-    return False
-
-
-def checkAnswer(user, answer):
-    '''传入用户对象，返回答案对不对'''
-    if not user:
-        raise Exception("user 不能为空")
-    if not answer:
-        raise Exception("answer 不能为空")
-    answer_md5 = util.ctrl.salty(answer)
-    if user.answer1 == answer_md5:
-        return True
-    if user.answer2 == answer_md5:
-        return True
-    return False
-
-
-# -views-----------------------------------------------
 def logout(request):
     '''用户点击登出'''
     # clean session
@@ -69,8 +19,7 @@ def logout(request):
     # create response
     response = redirect('/')
     # clean cookie
-    response.delete_cookie('user_id')
-    response.delete_cookie('user_answer')
+    response = util.user.cookieLogout(response)
     return response
 
 
@@ -208,7 +157,7 @@ def newUser(request):  # POST
         return util.ctrl.infoMsg("“邮箱” 不能为空", title="注册失败")
     # auto fills
     if not nickname:
-        nickname = getRandomName()
+        nickname = util.user.getRandomName()
     answer1 = util.ctrl.salty(answer1)
     answer2 = util.ctrl.salty(answer2) if answer2 else None
     if not tip:
@@ -331,7 +280,7 @@ def checkLogin(request):  # POST
     if user.getUserpermission('signin') is False:  # None is OK, True is OK, False is not OK
         messages.error(request, '登入失败：您已被禁止登入，请联系管理员')
         return redirect(_failto)
-    if checkAnswer(user, answer):
+    if util.user.checkAnswer(user, answer):
         util.user.rememberLogin(request, user)
     else:
         messages.error(request, "登入失败：用户名与答案不匹配")
@@ -362,9 +311,7 @@ def checkLogin(request):  # POST
         new_msg.save()
     # set cookie
     if rememberme == 'on':
-        oneweek = 60 * 60 * 24 * 7
-        response.set_cookie('user_id', user.id, max_age=oneweek)
-        response.set_cookie('user_answer', user.answer1, max_age=oneweek)
+        response = util.user.addCookieLogin(response, user=user, answer_raw=answer)
     return response
 
 
@@ -395,7 +342,7 @@ def getUnreadCount(request):  # AJAX
     result = {}
     # from cookies
     if not user:
-        user = getUserInCookie(request)
+        user = util.user.getCookieLogin(request)
     # get user's gravatar
     if user:
         unread_count = user.getChats('unread').count()
