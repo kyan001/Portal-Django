@@ -273,7 +273,7 @@ def forgetAnswer(request):
     return render(request, 'user/forgetanswer.html', context)
 
 
-def forgetusername(request):
+def forgetUsername(request):
     email = request.POST.get('email')
     if not email:
         return render(request, 'user/forgetusername.html')
