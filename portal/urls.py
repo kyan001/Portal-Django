@@ -27,8 +27,8 @@ urlpatterns = [
     url(r'^user/signin$', main.views.user.signin),  # get
     url(r'^user/signup$', main.views.user.signup),
     url(r'^user/headimgupdate$', main.views.user.headimgUpdate),  # POST
-    url(r'^user/forgetanswer/$', main.views.user.forgetanswer),
-    url(r'^user/forgetusername$', main.views.user.forgetusername),  # POST
+    url(r'^user/forgetanswer/$', main.views.user.forgetAnswer),
+    url(r'^user/forgetusername$', main.views.user.forgetUsername),  # POST
     url(r'^user/checklogin/$', main.views.user.checkLogin),  # POST
     url(r'^user/getunreadcount/$', main.views.user.getUnreadCount),
     url(r'^user/newuser/$', main.views.user.newUser),  # POST

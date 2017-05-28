@@ -267,7 +267,7 @@ def signin(request):
     return render(request, 'user/signin.html', context)
 
 
-def forgetanswer(request):
+def forgetAnswer(request):
     '登入页面点击忘记回答'
     context = {}
     return render(request, 'user/forgetanswer.html', context)
