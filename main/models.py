@@ -186,7 +186,7 @@ class UserExp(BaseModel):
     category = models.CharField(max_length=255, blank=False, null=False, choices=CATEGORIES)
     exp = models.IntegerField(default=0, blank=False, null=False)
     def __str__(self):
-        return "{self.id}) @{self.user.nickname} - {self.get_category_display}: {self.exp} - Lv.{self.level}".format(self=self)
+        return "{self.id}) @{self.user.nickname} - {category_name}: {self.exp} - Lv.{self.level}".format(self=self, category_name=self.get_category_display())
 
     @property
     def level(self):
@@ -229,7 +229,7 @@ class ExpHistory(BaseModel):
         return UserExp.objects.get(id=self.userexpid)
 
     def __str__(self):
-        return "{self.id}) {created} - @{self.userexp.user.nickname}: [{self.userexp.get_category_display}] {self.operation} +{self.change}".format(self=self, created=util.time.formatDate(self.created))
+        return "{self.id}) {created} - @{self.userexp.user.nickname}: [{category_name}] {self.operation} +{self.change}".format(self=self, created=util.time.formatDate(self.created), category_name=self.userexp.get_category_display())
 
 
 class OpusManager(models.Manager):
