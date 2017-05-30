@@ -95,6 +95,7 @@ class User(BaseModel):
 
     # progress related
     def getProgressStatics(self):
+        """Get uses's progress statics for all status"""
         result = {}
         for st in Progress.STATUSES.keys():
             result[st] = Progress.objects.getStatusStatics(userid=self.id, status=st)
@@ -282,10 +283,12 @@ class Opus(BaseModel):
 
 class ProgressManager(models.Manager):
     def getStatusName(self, status):
+        """Get a status' Chinese translation"""
         status_name = Progress.STATUSES.get(status)
         return status_name or status
 
     def getStatusStatics(self, status, userid):
+        """Get the statics for one status"""
         result = {}
         if status in Progress.STATUSES.keys():
             records = Progress.objects.filter(userid=userid, status=status)
