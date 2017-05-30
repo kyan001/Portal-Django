@@ -23,6 +23,15 @@ class BaseModel(models.Model):
         return model_to_dict(self)
 
 
+class UserManager(models.Manager):
+    def get_or_none(self, *args, **kwargs):
+        try:
+            user = User.objects.get(*args, **kwargs)
+        except User.DoesNotExist:
+            user = None
+        return user
+
+
 class User(BaseModel):
     def headimg_upload_to(self, filename):
         """return the path for headimg(ImageField) use
@@ -41,6 +50,7 @@ class User(BaseModel):
     tip = models.TextField(blank=True, null=True)
     email = models.EmailField()
     headimg = models.ImageField(default='', upload_to=headimg_upload_to, blank=True)
+    objects = UserManager()
 
     @property
     def headimg_url(self):
@@ -132,7 +142,7 @@ class UserPermission(BaseModel):
 
     @property
     def user(self):
-        return User.objects.get(id=self.userid)
+        return User.objects.get_or_none(id=self.userid)
 
     @property
     def badge(self):
@@ -143,7 +153,10 @@ class UserPermission(BaseModel):
             return None
 
     def __str__(self):
-        return "{self.id}) @{self.user.nickname} - {self.category} : {self.isallowed}".format(self=self)
+        if self.user:
+            return "{self.id}) @{self.user.nickname} - {self.category} : {self.isallowed}".format(self=self)
+        else:
+            return "USER_DELETED"
 
 
 class UserPermissionBadge(BaseModel):
@@ -158,11 +171,7 @@ class UserPermissionBadge(BaseModel):
     def designer(self):
         if not self.designernname:
             return None
-        try:
-            user = User.objects.get(nickname=self.designernname)
-            return user
-        except User.DoesNotExist:
-            return None
+        return User.objects.get_or_none(nickname=self.designernname)
 
     def __str__(self):
         return "{self.id}) {self.category}:{self.isallowed} - ({self.image}) @{dnn}".format(self=self, dnn=self.designernname)
@@ -186,7 +195,10 @@ class UserExp(BaseModel):
     category = models.CharField(max_length=255, blank=False, null=False, choices=CATEGORIES)
     exp = models.IntegerField(default=0, blank=False, null=False)
     def __str__(self):
-        return "{self.id}) @{self.user.nickname} - {category_name}: {self.exp} - Lv.{self.level}".format(self=self, category_name=self.get_category_display())
+        if self.user:
+            return "{self.id}) @{self.user.nickname} - {category_name}: {self.exp} - Lv.{self.level}".format(self=self, category_name=self.get_category_display())
+        else:
+            return "USER_DELETED"
 
     @property
     def level(self):
@@ -194,7 +206,7 @@ class UserExp(BaseModel):
 
     @property
     def user(self):
-        return User.objects.get(id=self.userid)
+        return User.objects.get_or_none(id=self.userid)
 
     @property
     def persent(self):
@@ -229,7 +241,10 @@ class ExpHistory(BaseModel):
         return UserExp.objects.get(id=self.userexpid)
 
     def __str__(self):
-        return "{self.id}) {created} - @{self.userexp.user.nickname}: [{category_name}] {self.operation} +{self.change}".format(self=self, created=util.time.formatDate(self.created), category_name=self.userexp.get_category_display())
+        if self.userexp.user:
+            return "{self.id}) {created} - @{self.userexp.user.nickname}: [{category_name}] {self.operation} +{self.change}".format(self=self, created=util.time.formatDate(self.created), category_name=self.userexp.get_category_display())
+        else:
+            return "USER_DELETED"
 
 
 class OpusManager(models.Manager):
@@ -334,14 +349,17 @@ class Progress(BaseModel):
 
     @property
     def user(self):
-        return User.objects.get(id=self.userid)
+        return User.objects.get_or_none(id=self.userid)
 
     @property
     def link(self):
         return "<a href='/progress/detail?id={id}'>{name}</a>".format(id=self.id, name=self.opus.name)
 
     def __str__(self):
-        return "{self.id}) @{self.user.nickname} -《 {self.opus.name} 》 ({self.current}/{self.opus.total})".format(self=self)
+        if self.user:
+            return "{self.id}) @{self.user.nickname} -《 {self.opus.name} 》 ({self.current}/{self.opus.total})".format(self=self)
+        else:
+            return "USER_DELETED"
 
     # time spent
     def getTimedelta(self, mode='default'):
@@ -433,16 +451,19 @@ class Chat(BaseModel):
 
     @property
     def sender(self):
-        return User.objects.get(id=self.senderid)
+        return User.objects.get_or_none(id=self.senderid)
 
     @property
     def receiver(self):
-        return User.objects.get(id=self.receiverid)
+        return User.objects.get_or_none(id=self.receiverid)
 
     def __str__(self):
-        unread = "" if self.isread else "[unread]"
-        content = (self.content[:40] + '..') if len(self.content) > 40 else self.content
-        return "{self.id}) {created} - @{self.sender.nickname}→@{self.receiver.nickname} : {unread} {content}".format(self=self, created=util.time.formatDate(self.created), content=content, unread=unread)
+        if self.sender and self.receiver:
+            unread = "" if self.isread else "[unread]"
+            content = (self.content[:40] + '..') if len(self.content) > 40 else self.content
+            return "{self.id}) {created} - @{self.sender.nickname}→@{self.receiver.nickname} : {unread} {content}".format(self=self, created=util.time.formatDate(self.created), content=content, unread=unread)
+        else:
+            return "USER_DELETED"
 
     # send / receive / isread
     def markRead(self):

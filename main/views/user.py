@@ -351,13 +351,13 @@ def getUnreadCount(request):  # AJAX
         if unread_count:
             unread_chats = user.getChats('unread')
             for uc in unread_chats:
-                sender = User.objects.get(id=uc.senderid)
+                sender = User.objects.get_or_none(id=uc.senderid)
                 words = uc.title or uc.content
                 words = django.utils.html.strip_tags(words)
                 if len(words) > 12:
                     words = words[0:12] + '...'
                 result['msgs'].append({
-                    'sender': sender.nickname,
+                    'sender': sender.nickname if sender else "USER_DELETED",
                     'words': words,
                     })
         return util.ctrl.returnJson(result)
