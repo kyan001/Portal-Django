@@ -316,16 +316,15 @@ class Progress(BaseModel):
         'giveup': '冻结中',
         'error': '出错',
     }
+    STATUS_ROLE = {
+        'active': ('inprogress', 'follow', 'todo', 'error'),
+        'archive': ('done', 'giveup'),
+    }
     userid = models.IntegerField(default=0)
     opusid = models.IntegerField(default=0)
     current = models.IntegerField(default=0)
     status = models.CharField(max_length=50, choices=tuple(STATUSES.items()))
     weblink = models.URLField(max_length=2083, blank=True, default="")
-    status_pool = {
-        'all': ('inprogress', 'follow', 'todo', 'done', 'giveup', 'error'),
-        'active': ('inprogress', 'follow', 'todo', 'error'),
-        'archive': ('done', 'giveup'),
-    }
     objects = ProgressManager()
 
     @property
