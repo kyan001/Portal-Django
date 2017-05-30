@@ -96,8 +96,8 @@ class User(BaseModel):
     # progress related
     def getProgressStatics(self):
         result = {}
-        for st in Progress.status_pool.get('all'):
-            result[st] = Progress.objects.getProgressStatics(userid=self.id, status=st)
+        for st in Progress.STATUSES.keys():
+            result[st] = Progress.objects.getStatusStatics(userid=self.id, status=st)
             result[st]['name'] = Progress.objects.getStatusName(st)
         return result
 
@@ -282,14 +282,12 @@ class Opus(BaseModel):
 
 class ProgressManager(models.Manager):
     def getStatusName(self, status):
-        status_name = Progress.status_name.get(status)
-        if status_name:
-            return status_name
-        return status
+        status_name = Progress.STATUSES.get(status)
+        return status_name or status
 
-    def getProgressStatics(self, status, userid):
+    def getStatusStatics(self, status, userid):
         result = {}
-        if status in Progress.status_pool.get('all'):
+        if status in Progress.STATUSES.keys():
             records = Progress.objects.filter(userid=userid, status=status)
             # count
             count = records.count()
@@ -325,20 +323,11 @@ class Progress(BaseModel):
         'active': ('inprogress', 'follow', 'todo', 'error'),
         'archive': ('done', 'giveup'),
     }
-    status_name = {
-        'done': '已完成',
-        'inprogress': '进行中',
-        'giveup': '冻结中',
-        'error': '出错',
-        'todo': '待阅读',
-        'follow': '追剧中',
-    }
     objects = ProgressManager()
 
     @property
     def status_zh(self):
-        status_name = self.status_name.get(self.status)
-        return status_name or self.status
+        return Progress.objects.getStatusName(self.status)
 
     @property
     def persent(self):
