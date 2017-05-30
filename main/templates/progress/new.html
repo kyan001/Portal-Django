@@ -30,7 +30,7 @@
             padding: 5px;
             width: 255px;
         }
-        .catagory {
+        .category {
             margin: 5px;
             float: right;
         }
@@ -88,16 +88,16 @@
                                                     <span class="caret"></span>
                                                  </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                    <span class='btn btn-default catagory'>书</span>
-                                                    <span class='btn btn-default catagory'>PDF</span>
-                                                    <span class='btn btn-default catagory'>漫画</span>
-                                                    <span class='btn btn-default catagory'>动画</span>
-                                                    <span class='btn btn-default catagory'>电视剧</span>
-                                                    <span class='btn btn-default catagory'>公开课</span>
-                                                    <span class='btn btn-default catagory'>纪录片</span>
-                                                    <span class='btn btn-default catagory'>视频</span>
-                                                    <span class='btn btn-default catagory'>小说</span>
-                                                    <span class='btn btn-default catagory'>朋友推荐</span>
+                                                    <span class='btn btn-default category'>书</span>
+                                                    <span class='btn btn-default category'>PDF</span>
+                                                    <span class='btn btn-default category'>漫画</span>
+                                                    <span class='btn btn-default category'>动画</span>
+                                                    <span class='btn btn-default category'>电视剧</span>
+                                                    <span class='btn btn-default category'>公开课</span>
+                                                    <span class='btn btn-default category'>纪录片</span>
+                                                    <span class='btn btn-default category'>视频</span>
+                                                    <span class='btn btn-default category'>小说</span>
+                                                    <span class='btn btn-default category'>朋友推荐</span>
                                                 </ul>
                                             </div><!-- /btn-group -->
                                         </div>
@@ -180,7 +180,7 @@
 {% block js %}
 <script>
     $(function(){
-        $('.catagory').click(function(){
+        $('.category').click(function(){
             $('input[name="subtitle"]').val($(this).text())
         })
         $("#barcode-input").on("change", function(e) {
