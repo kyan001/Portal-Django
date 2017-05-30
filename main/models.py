@@ -175,22 +175,26 @@ class UserPermissionBadge(BaseModel):
 
 
 class UserExp(BaseModel):
-    userid = models.IntegerField(default=0, blank=False, null=False)
-    category = models.CharField(max_length=255, blank=False, null=False)
-    exp = models.IntegerField(default=0, blank=False, null=False)
-    category_name = {
+    CATEGORIES = {
         'progress': '进度活跃度',
         'user': '用户活跃度',
         'chat': '消息活跃度',
         'error': '错误类别',
     }
-
+    userid = models.IntegerField(default=0, blank=False, null=False)
+    category = models.CharField(
+        max_length=255,
+        blank=False,
+        null=False,
+        choices=tuple(CATEGORIES.items())
+    )
+    exp = models.IntegerField(default=0, blank=False, null=False)
     def __str__(self):
         return "{self.id}) @{self.user.nickname} - {self.category_zh}: {self.exp} - Lv.{self.level}".format(self=self)
 
     @property
     def category_zh(self):
-        category_name = self.category_name.get(self.category)
+        category_name = self.CATEGORIES.get(self.category)
         return category_name or self.category
 
     @property
