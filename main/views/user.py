@@ -108,7 +108,7 @@ def profile(request):
         if cached_lv:  # has cached category:level
             new_lv = ue.level
             if new_lv > cached_lv:
-                lv_noticelet = (ue.category_zh(), cached_lv, new_lv)
+                lv_noticelet = (ue.get_category_display(), cached_lv, new_lv)
                 lv_notice.append(lv_noticelet)
         cache.set(cache_key, ue.level, cache_timeout)
     # get user progress counts

@@ -176,27 +176,17 @@ class UserPermissionBadge(BaseModel):
 
 
 class UserExp(BaseModel):
-    CATEGORIES = {
-        'progress': '进度活跃度',
-        'user': '用户活跃度',
-        'chat': '消息活跃度',
-        'error': '错误类别',
-    }
-    userid = models.IntegerField(default=0, blank=False, null=False)
-    category = models.CharField(
-        max_length=255,
-        blank=False,
-        null=False,
-        choices=tuple(CATEGORIES.items())
+    CATEGORIES = (
+        ('progress', '进度活跃度'),
+        ('user', '用户活跃度'),
+        ('chat', '消息活跃度'),
+        ('error', '错误类别'),
     )
+    userid = models.IntegerField(default=0, blank=False, null=False)
+    category = models.CharField(max_length=255, blank=False, null=False, choices=CATEGORIES)
     exp = models.IntegerField(default=0, blank=False, null=False)
     def __str__(self):
-        return "{self.id}) @{self.user.nickname} - {self.category_zh}: {self.exp} - Lv.{self.level}".format(self=self)
-
-    @property
-    def category_zh(self):
-        category_name = self.CATEGORIES.get(self.category)
-        return category_name or self.category
+        return "{self.id}) @{self.user.nickname} - {self.get_category_display}: {self.exp} - Lv.{self.level}".format(self=self)
 
     @property
     def level(self):
@@ -239,7 +229,7 @@ class ExpHistory(BaseModel):
         return UserExp.objects.get(id=self.userexpid)
 
     def __str__(self):
-        return "{self.id}) {created} - @{self.userexp.user.nickname}: [{self.userexp.category_zh}] {self.operation} +{self.change}".format(self=self, created=util.time.formatDate(self.created))
+        return "{self.id}) {created} - @{self.userexp.user.nickname}: [{self.userexp.get_category_display}] {self.operation} +{self.change}".format(self=self, created=util.time.formatDate(self.created))
 
 
 class OpusManager(models.Manager):

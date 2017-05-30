@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ userexp.category_zh }}{% endblock title %}
+{% block title %}{{ userexp.get_category_display }}{% endblock title %}
 
 {% block css %}
 <style>
@@ -31,7 +31,7 @@
         <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1">
             <div class="page-header">
                 <h3>
-                    {{ userexp.category_zh }}
+                    {{ userexp.get_category_display }}
                     <small>@{{ cuser.nickname }}</small>
                 </h3>
             </div>
