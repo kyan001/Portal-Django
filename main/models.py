@@ -299,27 +299,23 @@ class ProgressManager(models.Manager):
 
 class Progress(BaseModel):
     STATUSES = {
-        'inprogress': '进行中',
-        'follow': '追剧中',
-        'todo': '待阅读',
-        'done': '已完成',
-        'giveup': '冻结中',
-        'error': '出错',
-    }
-    STATUS_ROLE = {
-        'active': ('inprogress', 'follow', 'todo', 'error'),
-        'archive': ('done', 'giveup'),
+        'active': (
+            ('inprogress', '进行中'),
+            ('follow', '追剧中'),
+            ('todo', '待阅读'),
+            ('error', '出错'),
+        ),
+        'archive': (
+            ('done', '已完成'),
+            ('giveup', '冻结中'),
+        ),
     }
     userid = models.IntegerField(default=0)
     opusid = models.IntegerField(default=0)
     current = models.IntegerField(default=0)
-    status = models.CharField(max_length=50, choices=tuple(STATUSES.items()))
+    status = models.CharField(max_length=50, choices=STATUSES.items())
     weblink = models.URLField(max_length=2083, blank=True, default="")
     objects = ProgressManager()
-
-    @property
-    def status_zh(self):
-        return Progress.objects.getStatusName(self.status)
 
     @property
     def persent(self):

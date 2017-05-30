@@ -23,7 +23,7 @@ def list(request):
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     prg_list = {}
     if len(progresses):
-        for st in Progress.STATUS_ROLE.get('active'):
+        for st, stzh in Progress.STATUSES.get('active'):
             prg_list[st] = progresses.filter(status=st)
     else:
         if not user.getChats('received').filter(senderid=Chat.objects.getSyschatUser().id, title='欢迎使用「我的进度」系统').exists():
@@ -53,7 +53,7 @@ def archive(request):
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     prg_list = {}
     if len(progresses):
-        for st in Progress.STATUS_ROLE.get('archive'):
+        for st, stzh in Progress.STATUSES.get('archive'):
             prg_list[st] = progresses.filter(status=st)
     # add exps
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
