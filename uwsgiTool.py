@@ -11,20 +11,22 @@ import consoleiotools as cit
 import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
-__version__ = '1.1.1'
+__version__ = '1.2.1'
 
 
 def main():
     # precheck
     ktk.needPlatform("linux")
     # defines
-    uwsgi_xml = "./uwsgi.xml"  # uwsgi config file
+    uwsgi_xml = get_config_file("./uwsgi.xml")  # uwsgi config file
     pid_file = get_pid_file()  # exist when running
     # run
-    check_config_file(uwsgi_xml)
-    check_pid_file(pid_file)
-    operation = get_operation()
-    run_operation(operation, uwsgi_xml, pid_file)
+    if pid_file and uwsgi_xml:
+        check_pid_file(pid_file)
+        operation = get_operation()
+        run_operation(operation, uwsgi_xml, pid_file)
+    else:
+        cit.bye()
 
 
 def get_pid_file():
@@ -37,12 +39,18 @@ def get_pid_file():
     return "/var/run/uwsgi_{}.pid".format(dir_name)
 
 
-def check_config_file(xml_file):
+def get_config_file(xml_file='./uwsgi.xml'):
     """check if uswgi config file exists"""
-    if os.path.isfile(xml_file):
+    dir_path = os.path.dirname(os.path.abspath(__file__))
+    default_xml_file = "{}/uwsgi.xml".format(dir_path)
+    if xml_file and os.path.isfile(xml_file):
         cit.info("uwsgi config file: " + xml_file)
+        return xml_file
+    elif os.path.isfile(default_xml_file):
+        return get_config_file(default_xml_file)
     else:
         cit.err("uwsgi config file not found: " + xml_file)
+        return None
 
 
 def check_pid_file(pid_file):
@@ -51,7 +59,6 @@ def check_pid_file(pid_file):
         cit.warn("uwsgi is running @ " + pid_file)
     else:
         cit.info("No uwsgi running")
-    return pid_file
 
 
 def get_operation():
