@@ -11,7 +11,7 @@ import consoleiotools as cit
 import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
-__version__ = '1.2.1'
+__version__ = '1.3.1'
 
 
 def main():
@@ -22,7 +22,7 @@ def main():
     pid_file = get_pid_file()  # exist when running
     # run
     if pid_file and uwsgi_xml:
-        check_pid_file(pid_file)
+        show_running_status(pid_file)
         operation = get_operation()
         run_operation(operation, uwsgi_xml, pid_file)
     else:
@@ -53,12 +53,14 @@ def get_config_file(xml_file='./uwsgi.xml'):
         return None
 
 
-def check_pid_file(pid_file):
+def show_running_status(pid_file):
     """check if this uwsgi is already running"""
     if os.path.exists(pid_file):
         cit.warn("uwsgi is running @ " + pid_file)
+        return True
     else:
         cit.info("No uwsgi running")
+        return False
 
 
 def get_operation():
@@ -75,6 +77,11 @@ def get_operation():
 
 def run_operation(oprtn, config_file, pid_file):
     if "start" == oprtn:
+        if os.path.exists(pid_file):
+            cit.ask('uwsgi is already running, start a new one will overwrite pid_file, continue?')
+            if cit.get_choice(['Yes', 'No']) == 'No':
+                cit.info('User canceled start operation')
+                break
         ktk.runCmd("sudo echo ''")
         ktk.runCmd("sudo uwsgi -x '{c}' --pidfile '{p}'".format(c=config_file, p=pid_file))
     elif "stop" == oprtn:
