@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.utils import timezone
+from django.db import transaction
 from main.models import User, UserExp, Opus, Progress, Chat
 from django.db.models import Q
 from django.core.cache import cache
@@ -232,11 +233,12 @@ def update(request):
     opus.subtitle = subtitle
     progress.weblink = weblink
     opus.total = total
-    opus.save()
-    if(progress.setStatusAuto()):
-        progress.save()
-    else:
-        return util.ctrl.infoMsg("储存进度时失败，可能是状态导致的问题", title="存储 progress 出错")
+    with transaction.atomic():
+        opus.save()
+        if(progress.setStatusAuto()):
+            progress.save()
+        else:
+            return util.ctrl.infoMsg("储存进度时失败，可能是状态导致的问题", title="存储 progress 出错")
     # render
     return redirect('/progress/detail?id={progress.id}'.format(progress=progress))
 
@@ -378,13 +380,13 @@ def add(request):
     userexp.addExp(2, '新增进度《{name}》成功'.format(name=name))
     # save
     opus = Opus(name=name, subtitle=subtitle, total=total)
-    opus.save()
-    progress = Progress(current=current, opusid=opus.id, userid=user.id, weblink=weblink)
-    if(progress.setStatusAuto()):
-        progress.save()
-    else:
-        return util.ctrl.infoMsg("储存进度时失败，可能是状态导致的问题", title="存储 progress 出错")
-    progress.save()
+    with transaction.atomic():
+        opus.save()
+        progress = Progress(current=current, opusid=opus.id, userid=user.id, weblink=weblink)
+        if(progress.setStatusAuto()):
+            progress.save()
+        else:
+            return util.ctrl.infoMsg("储存进度时失败，可能是状态导致的问题", title="存储 progress 出错")
     # render
     return redirect('/progress/detail?id={progress.id}'.format(progress=progress))
 
