@@ -266,7 +266,7 @@ class OpusManager(models.Manager):
 
 class Opus(BaseModel):
     name = models.CharField(max_length=255)
-    subtitle = models.CharField(max_length=255, blank=True, null=True)
+    subtitle = models.CharField(max_length=255, blank=True, default='')
     total = models.IntegerField(default=0)
     objects = OpusManager()
 
