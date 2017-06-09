@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-if 'win' in sys.platform:  # 测试环境下
+if 'darwin' in sys.platform or 'win' in sys.platform:  # 测试环境下
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'test.sqlite3'),
+            'NAME': os.path.join(BASE_DIR, 'tests/test.sqlite3'),
             'HOST': 'localhost',
         }
     }
