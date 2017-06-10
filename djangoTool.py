@@ -130,9 +130,14 @@ def show_menu():
         'DB Data Load (datadump.json)': load_data,
         'Git Assume Unchanged': assume_unchanged,
         'Exit': cit.bye,
-    })
-    cit.echo('Select one of these:')
-    selection = cit.get_choice(sorted(commands.keys()))
+    }
+    menu = sorted(commands.keys())
+    if len(sys.argv) > 1:
+        arg = sys.argv.pop()
+        selection = arg if arg in commands else menu[int(arg) - 1]
+    else:
+        cit.echo('Select one of these:')
+        selection = cit.get_choice(menu)
     return commands.get(selection)
 
 
