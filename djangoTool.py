@@ -8,7 +8,7 @@ import consoleiotools as cit
 from KyanToolKit import KyanToolKit as ktk
 
 
-__version__ = '1.3.1'
+__version__ = '1.4.1'
 
 
 def manage_file_exist():
