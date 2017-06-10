@@ -2,7 +2,6 @@
 """Run develop commands for django project"""
 import os
 import sys
-import collections
 import socket
 
 import consoleiotools as cit
@@ -109,7 +108,7 @@ def show_menu():
     returns:
         a callable function name
     """
-    commands = collections.OrderedDict({
+    commands = {
         'Install Requirements Modules': requirements_install,
         'Make & migrate database': migrate_db,
         'Create superuser account': create_superuser,
