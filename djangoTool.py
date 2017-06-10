@@ -70,10 +70,18 @@ def runserver_lan():
     run_by_py3('manage.py runserver 0.0.0.0:8000')
 
 
+@cit.as_session('Run Testcases')
+def run_testcases():
+    """Run Django testcases"""
+    start_dir = 'main.tests'
+    run_by_py3('-Wall manage.py test {} --verbosity 2'.format(start_dir))
+
+
 @cit.as_session('System Checking')
 def system_check():
     """Check if django projects has a problem"""
     run_by_py3('manage.py check')
+
 
 @cit.as_session('Dump Data')
 def dump_data():
@@ -116,6 +124,7 @@ def show_menu():
         'Runserver (LAN ip:8000)': runserver_lan,
         'Shell: Interactive': interactive_shell,
         'Shell: DB': db_shell,
+        'Run Testcases': run_testcases,
         'Django system check': system_check,
         'DB Data Dump (App:main)': dump_data,
         'DB Data Load (datadump.json)': load_data,
