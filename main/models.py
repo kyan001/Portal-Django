@@ -41,15 +41,6 @@ class BaseModel(models.Model):
         return model_to_dict(self)
 
 
-class UserManager(models.Manager):
-    def get_or_none(self, *args, **kwargs):
-        try:
-            user = User.objects.get(*args, **kwargs)
-        except User.DoesNotExist:
-            user = None
-        return user
-
-
 class User(BaseModel):
     def headimg_upload_to(self, filename):
         """return the path for headimg(ImageField) use
@@ -68,7 +59,6 @@ class User(BaseModel):
     tip = models.TextField(blank=True, null=True)
     email = models.EmailField()
     headimg = models.ImageField(default='', upload_to=headimg_upload_to, blank=True)
-    objects = UserManager()
 
     @property
     def headimg_url(self):
