@@ -3,7 +3,7 @@ from django.core.cache import cache
 from django.http import HttpResponse
 import urllib.request
 import urllib.parse
-from main.models import Opus, Progress, User
+from main.models import Opus
 import util.ctrl
 
 import KyanToolKit
