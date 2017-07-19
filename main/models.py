@@ -1,6 +1,7 @@
 import os
 import datetime
 
+from django.http import Http404
 from django.db import models
 from django.forms.models import model_to_dict
 from django.utils import timezone
@@ -10,9 +11,26 @@ import util.ctrl
 import util.time
 
 
+class BaseManager(models.Manager):
+    def get_or_none(self, *args, **kwargs):
+        try:
+            data = self.get(*args, **kwargs)
+        except self.model.DoesNotExist:
+            data = None
+        return data
+
+    def get_or_404(self, *args, **kwargs):
+        try:
+            return self.get(*args, **kwargs)
+        except self.model.DoesNotExist:
+            filter_args = args or kwargs
+            raise Http404('在数据库的 {t} 表中找不到参数为 {fa} 的数据项'.format(t=self.model.__name__, fa=filter_args))
+
+
 class BaseModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+    objects = BaseManager()
 
     class Meta:
         abstract = True
