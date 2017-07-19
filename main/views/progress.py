@@ -122,18 +122,12 @@ def detail(request):
     if not progressid:
         return util.ctrl.infoMsg("请输入进度 ID")
     # get progress
-    try:
-        progress = Progress.objects.get(id=progressid)
-    except Opus.DoesNotExist:
-        return util.ctrl.infoMsg("未找到 id 为 {id} 的进度".format(id=str(progressid)))
+    progress = Progress.objects.get_or_404(id=progressid)
     # check owner
     if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能查看该进度", url='/progress/list')
     # get opus
-    try:
-        opus = Opus.objects.get(id=progress.opusid)
-    except Opus.DoesNotExist:
-        return util.ctrl.infoMsg("未找到 id 为 {id} 的作品".format(id=str(progress.opusid)))
+    opus = Opus.objects.get_or_404(id=progress.opusid)
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(1, '查看进度《{opus.name}》的详情'.format(opus=opus))
@@ -212,18 +206,12 @@ def update(request):
     if total > 0 and current > total:
         return util.ctrl.infoMsg("初始进度 {current} 不能大于总页数 {total}".format(current=current, total=total))
     # get progress
-    try:
-        progress = Progress.objects.get(id=progressid)
-    except Opus.DoesNotExist:
-        return util.ctrl.infoMsg("未找到 id 为 {id} 的进度".format(id=str(progressid)))
+    progress = Progress.objects.get_or_404(id=progressid)
     # check owner
     if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能更新该进度")
     # get opus
-    try:
-        opus = Opus.objects.get(id=progress.opusid)
-    except Opus.DoesNotExist:
-        return util.ctrl.infoMsg("未找到 id 为 {id} 的作品".format(id=str(progress.opusid)))
+    opus = Opus.objects.get_or_404(id=progress.opusid)
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(2, '编辑进度《{opus.name}》成功'.format(opus=opus))
@@ -253,18 +241,12 @@ def delete(request):
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
     # get progress
-    try:
-        progress = Progress.objects.get(id=progressid)
-    except Opus.DoesNotExist:
-        return util.ctrl.infoMsg("未找到 id 为 {id} 的进度".format(id=str(progressid)))
+    progress = Progress.objects.get_or_404(id=progressid)
     # check owner
     if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能删除该进度")
     # get opus
-    try:
-        opus = Opus.objects.get(id=progress.opusid)
-    except Opus.DoesNotExist:
-        return util.ctrl.infoMsg("未找到 id 为 {id} 的作品".format(id=str(progress.opusid)))
+    opus = Opus.objects.get_or_404(id=progress.opusid)
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(2, '删除进度《{opus.name}》'.format(opus=opus))
@@ -284,19 +266,12 @@ def giveup(request):
     progressid = request.POST.get('id')
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
-    # get progress
-    try:
-        progress = Progress.objects.get(id=progressid)
-    except Opus.DoesNotExist:
-        return util.ctrl.infoMsg("未找到 id 为 {id} 的进度".format(id=str(progressid)))
-    # check owner
+    # get progress and check owner
+    progress = Progress.objects.get_or_404(id=progressid)
     if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能删除该进度")
     # get opus
-    try:
-        opus = Opus.objects.get(id=progress.opusid)
-    except Opus.DoesNotExist:
-        return util.ctrl.infoMsg("未找到 id 为 {progress.opusid} 的作品".format(progress=progress))
+    opus = Opus.objects.get_or_404(id=progress.opusid)
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(2, '冻结进度《{opus.name}》'.format(opus=opus))
@@ -316,19 +291,12 @@ def reset(request):
     progressid = request.POST.get('id')
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
-    # get progress
-    try:
-        progress = Progress.objects.get(id=progressid)
-    except Opus.DoesNotExist:
-        return util.ctrl.infoMsg("未找到 id 为 {id} 的进度".format(id=str(progressid)))
-    # check owner
+    # get progress and check owner
+    progress = Progress.objects.get_or_404(id=progressid)
     if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能删除该进度")
     # get opus
-    try:
-        opus = Opus.objects.get(id=progress.opusid)
-    except Opus.DoesNotExist:
-        return util.ctrl.infoMsg("未找到 id 为 {progress.opusid} 的作品".format(progress=progress))
+    opus = Opus.objects.get_or_404(id=progress.opusid)
     # add exp
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
     userexp.addExp(2, '恢复已冻结的进度《{opus.name}》'.format(opus=opus))
@@ -406,10 +374,7 @@ def ical(request):  # GET
     '''生成 ical 字符串加入 google calendar'''
     userid = request.GET.get('userid')
     privatekey = request.GET.get('private') or None
-    try:
-        user = User.objects.get(id=userid)
-    except User.DoesNotExist:
-        return util.ctrl.infoMsg("用户 userid={id} 不存在".format(id=userid), title='找不到用户')
+    user = User.objects.get_or_404(id=userid)
     if privatekey:  # private mode
         if privatekey != user.privatekey:
             return util.ctrl.infoMsg("用户的私钥不合法", title='无法读取')

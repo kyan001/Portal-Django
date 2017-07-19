@@ -67,10 +67,7 @@ def delete(request):
     if not chat_id:
         return util.ctrl.infoMsg("您输入的网址不完整，缺少参数 id")
     # get chat
-    try:
-        chat = Chat.objects.get(id=chat_id)
-    except Chat.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的消息 id：{id} 并不存在".format(id=str(chat_id)))
+    chat = Chat.objects.get_or_404(id=chat_id)
     if user.id != chat.receiverid and (not user.getUserpermission('superuser')):
         return util.ctrl.infoMsg("只有消息的接收者可以删除消息")
     chat.delete()
@@ -94,10 +91,7 @@ def conversation(request):
     receiver_nickname = request.GET.get('receiver')
     if receiver_nickname:
         # get receiver
-        try:
-            receiver = User.objects.get(nickname=receiver_nickname)
-        except User.DoesNotExist:
-            return util.ctrl.infoMsg("您查找的用户 @{nickname} 并不存在".format(nickname=str(receiver_nickname)))
+        receiver = User.objects.get_or_404(nickname=receiver_nickname)
         # get history
         condition1 = Q(receiverid=receiver.id) & Q(senderid=user.id)
         condition2 = Q(senderid=receiver.id) & Q(receiverid=user.id)
@@ -128,10 +122,7 @@ def send(request):
     if not receiver_nickname:
         return util.ctrl.infoMsg("您输入的网址不完整，缺少参数 receiver_nickname")
     # get receiver
-    try:
-        receiver = User.objects.get(nickname=receiver_nickname)
-    except User.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的用户 @{nickname} 并不存在".format(nickname=str(receiver_nickname)))
+    receiver = User.objects.get_or_404(nickname=receiver_nickname)
     # send chat
     user.sendChat(receiver, title=title, content=content)
     # add exps

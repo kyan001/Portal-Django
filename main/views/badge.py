@@ -22,10 +22,7 @@ def detail(request):
     if not badgeid:
         return util.ctrl.infoMsg("需要一个徽章 id")
     # 获得作品
-    try:
-        badge = UserPermissionBadge.objects.get(id=badgeid)
-    except UserPermissionBadge.DoesNotExist:
-        return util.ctrl.infoMsg("未找到 id 为 {id} 的徽章".format(id=str(badgeid)))
+    badge = UserPermissionBadge.objects.get_or_404(id=badgeid)
     # render
     context['badge'] = badge
     return render(request, 'badge/detail.html', context)
