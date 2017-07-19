@@ -255,7 +255,7 @@ class ExpHistory(BaseModel):
             return "USER_DELETED"
 
 
-class OpusManager(models.Manager):
+class OpusManager(BaseManager):
     def getTopSubtitles(self):
         """Count and return the top common subtitles
 
@@ -294,7 +294,7 @@ class Opus(BaseModel):
         return "{self.id}) 《 {self.name} 》 {subtext} [{total}]".format(self=self, subtext=subtext, total=total)
 
 
-class ProgressManager(models.Manager):
+class ProgressManager(BaseManager):
     def getStatusName(self, status):
         """Get a status' Chinese translation"""
         status_names = dict(Progress.STATUSES.get('active') + Progress.STATUSES.get('archive'))
@@ -427,7 +427,7 @@ class Progress(BaseModel):
         return contextual_type
 
 
-class ChatManager(models.Manager):
+class ChatManager(BaseManager):
     def sendBySys(self, receiver, title="", content=""):
         if not receiver:
             return False
