@@ -14,10 +14,9 @@ import util.time
 class BaseManager(models.Manager):
     def get_or_none(self, *args, **kwargs):
         try:
-            data = self.get(*args, **kwargs)
+            return self.get(*args, **kwargs)
         except self.model.DoesNotExist:
-            data = None
-        return data
+            return None
 
     def get_or_404(self, *args, **kwargs):
         try:
