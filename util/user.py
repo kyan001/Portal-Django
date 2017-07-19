@@ -21,11 +21,7 @@ def checkAnswer(user, answer_raw):
     if not answer_raw:
         raise Exception("answer 不能为空")
     answer_md5 = util.ctrl.salty(answer_raw)
-    if user.answer1 == answer_md5:
-        return True
-    if user.answer2 == answer_md5:
-        return True
-    return False
+    return (user.answer1 == answer_md5) or (user.answer2 == answer_md5)
 
 
 def rememberLogin(request, user):

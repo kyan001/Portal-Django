@@ -379,11 +379,7 @@ def validateNickname(request):  # AJAX
     result = {}
     if not nickname:
         return util.ctrl.returnJsonError('昵称不能为空')
-    users = User.objects.filter(nickname=nickname)
-    if len(users) != 0:
-        result['exist'] = True
-    else:
-        result['exist'] = False
+    result['exist'] = User.objects.filter(nickname=nickname).exists()
     return util.ctrl.returnJson(result)
 
 
@@ -393,9 +389,5 @@ def validateEmail(request):  # AJAX
     result = {}
     if not email:
         return util.ctrl.returnJsonError('邮箱不能为空')
-    users = User.objects.filter(email=email)
-    if len(users) != 0:
-        result['exist'] = True
-    else:
-        result['exist'] = False
+    result['exist'] = User.objects.filter(email=email).exists()
     return util.ctrl.returnJson(result)
