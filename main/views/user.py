@@ -56,10 +56,7 @@ def public(request):  # public
     nickname = request.GET.get('nickname')
     if not nickname:
         return util.ctrl.infoMsg("被查看用户的昵称不在参数中", title='参数错误')
-    try:
-        user = User.objects.get(nickname=nickname)
-    except User.DoesNotExist:
-        return util.ctrl.infoMsg("用户 @{nickname} 不存在".format(nickname=nickname), title='找不到用户')
+    user = User.objects.get_or_404(nickname=nickname)
     # get user progress counts
     progress_statics = user.getProgressStatics()
     progress_statics_group = []
@@ -272,9 +269,8 @@ def checkLogin(request):  # POST
         messages.error(request, "登入失败：答案不能为空")
         return redirect(_failto)
     # check username vs. answer
-    try:
-        user = User.objects.get(username=username)
-    except User.DoesNotExist:
+    user = User.objects.get_or_none(username=username)
+    if not user:
         messages.error(request, "登入失败：找不到用户名为 {} 的用户".format(username))
         return redirect(_failto)
     if user.getUserpermission('signin') is False:  # None is OK, True is OK, False is not OK
@@ -320,9 +316,8 @@ def getQuestionAndTip(request):  # AJAX
     username = request.GET.get('username')
     if not username:
         return util.ctrl.returnJsonError('用户名不能为空')
-    try:
-        user = User.objects.get(username=username)
-    except User.DoesNotExist:
+    user = User.objects.get_or_none(username=username)
+    if not user:
         return util.ctrl.returnJsonError("登入失败：找不到用户名为 {} 的用户".format(username))
     if user:
         question = user.question

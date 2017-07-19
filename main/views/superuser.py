@@ -10,11 +10,8 @@ def index(request):
     if not user:
         return util.user.loginToContinue(request)
     # get superuser user
-    superuser_nickname = '唯笑竹'
-    try:
-        superuser = User.objects.get(nickname=superuser_nickname)
-    except User.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的用户 @{nickname} 并不存在".format(nickname=superuser_nickname))
+    superuser_nickname = '唯笑竹'  # hardcode
+    superuser = User.objects.get_or_404(nickname=superuser_nickname)
     # send commands
     title = "《超级管理员操作手册》".format()
     content = '''
@@ -49,10 +46,7 @@ def broadcast(request):
     if not user:
         return util.user.loginToContinue(request)
     # get syschat
-    try:
-        sysuser = User.objects.get(username='syschat')
-    except User.DoesNotExist:
-        return util.ctrl.infoMsg("您查找的用户 username：'syschat' 并不存在")
+    sysuser = User.objects.get_or_404(username='syschat')
     # check superuser
     if not user.getUserpermission('superuser'):
         return util.ctrl.infoMsg("您不具有 超级管理员 权限")

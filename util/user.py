@@ -10,11 +10,8 @@ def getCurrentUser(request):
     userid = request.session.get(User.LOGIN_SESSION_KEY)
     if not userid:
         return None
-    try:
-        user = User.objects.get(id=userid)
-    except User.DoesNotExist:
-        return False
-    return user
+    user = User.objects.get_or_none(id=userid)
+    return user or False
 
 
 def checkAnswer(user, answer_raw):
@@ -58,14 +55,12 @@ def getCookieLogin(request):
     '''将 cookie 中存的 user 信息存入 session 并返回'''
     user_id = request.COOKIES.get('user_id')
     user_answer = request.COOKIES.get('user_answer')
-    if user_id and user_answer:
-        try:
-            user = User.objects.get(id=user_id)
-        except User.DoesNotExist:
-            return None
-        if checkAnswer(user, user_answer):
-            rememberLogin(request, user)
-            return user
+    if not user_id or not user_answer:
+        return None
+    user = User.objects.get_or_none(id=user_id)
+    if user and checkAnswer(user, user_answer):
+        rememberLogin(request, user)
+        return user
     return None
 
 

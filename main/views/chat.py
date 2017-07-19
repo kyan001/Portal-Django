@@ -139,9 +139,8 @@ def markread(request):  # AJAX
         return util.ctrl.returnJsonError("您还没有登入，请先登入")
     # get chat
     chatid = request.GET.get('chatid')
-    try:
-        chat = Chat.objects.get(id=chatid)
-    except Chat.DoesNotExist:
+    chat = Chat.objects.get_or_none(id=chatid)
+    if not chat:
         return util.ctrl.returnJsonError("您查找的消息 id: {id} 并不存在".format(id=str(chatid)))
     if chat.receiverid != user.id and (not user.getUserpermission('superuser')):
         return util.ctrl.returnJsonError('你没有权限修改 id: {chat.id} 的消息'.format(chat=chat))
