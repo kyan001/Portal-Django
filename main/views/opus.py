@@ -21,19 +21,7 @@ def detail(request):
     opus = Opus.objects.get_or_404(id=opusid)
     # 获得进度列表
     opus_list = Opus.objects.filter(name=opus.name)
-    item_list = []
-    for opuslet in opus_list:
-        # 获得进度
-        try:
-            progress = opuslet.progress
-        except Progress.DoesNotExist:
-            return util.ctrl.infoMsg("未找到 opusid 为 {id} 的进度".format(id=str(opusid)))
-        # 获得用户
-        try:
-            user = progress.user
-        except User.DoesNotExist:
-            return util.ctrl.infoMsg("未找到 id 为 {progress.userid} 的进度".format(progress=progress))
-        item_list.append({'progress': progress, 'user': user, 'opus': opuslet})
+    item_list = [{'progress': opuslet.progress, 'user': opuslet.progress.user, 'opus': opuslet} for opuslet in opus_list]
     # render
     context['opus'] = opus
     context['itemlist'] = item_list
