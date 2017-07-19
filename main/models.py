@@ -22,8 +22,7 @@ class BaseManager(models.Manager):
         try:
             return self.get(*args, **kwargs)
         except self.model.DoesNotExist:
-            filter_args = args or kwargs
-            raise Http404('在数据库的 {t} 表中找不到参数为 {fa} 的数据项'.format(t=self.model.__name__, fa=filter_args))
+            raise Http404('您查找的 {t} 并不存在。（查询参数 {a} {k}）'.format(t=self.model.__name__, a=args or '', k=kwargs or ''))
 
 
 class BaseModel(models.Model):
