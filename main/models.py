@@ -86,11 +86,8 @@ class User(BaseModel):
 
     # permission related
     def getUserpermission(self, category):
-        try:
-            up = UserPermission.objects.get(userid=self.id, category=category)
-            return up.isallowed
-        except UserPermission.DoesNotExist:
-            return None
+        up = UserPermission.objects.get_or_none(userid=self.id, category=category)
+        return up.isallowed if up else None
 
     def setUserpermission(self, category, isallowed):
         up, iscreated = UserPermission.objects.update_or_create(
@@ -152,11 +149,8 @@ class UserPermission(BaseModel):
 
     @property
     def badge(self):
-        try:
-            badge = UserPermissionBadge.objects.get(category=self.category, isallowed=self.isallowed)
-            return badge
-        except UserPermissionBadge.DoesNotExist:
-            return None
+        badge = UserPermissionBadge.objects.get_or_none(category=self.category, isallowed=self.isallowed)
+        return badge or None
 
     def __str__(self):
         if self.user:
@@ -183,11 +177,7 @@ class UserPermissionBadge(BaseModel):
         return "{self.id}) {self.category}:{self.isallowed} - ({self.image}) @{dnn}".format(self=self, dnn=self.designernname)
 
     def userCount(self):
-        try:
-            user_permissions = UserPermission.objects.filter(category=self.category, isallowed=self.isallowed)
-            return user_permissions.count()
-        except UserPermission.DoesNotExist:
-            return 0
+        UserPermission.objects.filter(category=self.category, isallowed=self.isallowed).count()
 
 
 class UserExp(BaseModel):
