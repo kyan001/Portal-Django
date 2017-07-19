@@ -11,7 +11,7 @@ ktk = KyanToolKit.KyanToolKit()
 
 
 def detail(request):
-    '''TODO 获得作品的详情'''
+    '''获得作品的详情'''
     context = {}
     # 获得参数
     opusid = request.GET.get('id')
