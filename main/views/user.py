@@ -351,7 +351,7 @@ def getUnreadCount(request):  # AJAX
         if unread_count:
             unread_chats = user.getChats('unread')
             for uc in unread_chats:
-                sender = User.objects.get_or_none(id=uc.senderid)
+                sender = uc.sender
                 words = uc.title or uc.content
                 words = django.utils.html.strip_tags(words)
                 if len(words) > 12:
@@ -372,16 +372,9 @@ def validateUsername(request):  # AJAX
     result = {}
     if not username:
         return util.ctrl.returnJsonError('用户名不能为空')
-    users = User.objects.filter(username=username)
-    if len(users) == 1:
-        result['exist'] = True
-        potential_users = User.objects.filter(username__startswith=username)
-        if len(potential_users) == 1:
-            result['unique'] = True
-        else:
-            result['unique'] = False
-    else:
-        result['exist'] = False
+    result['exist'] = User.objects.filter(username=username).exists()
+    if result['exist']:
+        result['unique'] = User.objects.filter(username__startswith=username).count() == 1
     return util.ctrl.returnJson(result)
 
 
