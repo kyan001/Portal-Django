@@ -364,7 +364,7 @@ class Progress(BaseModel):
         return "<a href='/progress/detail?id={id}'>{name}</a>".format(id=self.id, name=self.opus.name)
 
     def __str__(self):
-        if self.user:
+        if User.objects.filter(id=self.userid).exists():
             return "{self.id}) @{self.user.nickname} -《 {self.opus.name} 》 ({self.current}/{self.opus.total})".format(self=self)
         else:
             return "USER_DELETED"
