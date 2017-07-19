@@ -18,10 +18,7 @@ def detail(request):
     if not opusid:
         return util.ctrl.infoMsg("需要一个作品id")
     # 获得作品
-    try:
-        opus = Opus.objects.get(id=opusid)
-    except Opus.DoesNotExist:
-        return util.ctrl.infoMsg("未找到 id 为 {id} 的作品".format(id=str(opusid)))
+    opus = Opus.objects.get_or_404(id=opusid)
     # 获得进度列表
     opus_list = Opus.objects.filter(name=opus.name)
     item_list = []
