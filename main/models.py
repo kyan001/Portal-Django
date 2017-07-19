@@ -145,7 +145,7 @@ class UserPermission(BaseModel):
 
     @property
     def user(self):
-        return User.objects.get_or_none(id=self.userid)
+        return User.objects.get_or_404(id=self.userid)
 
     @property
     def badge(self):
@@ -153,7 +153,7 @@ class UserPermission(BaseModel):
         return badge or None
 
     def __str__(self):
-        if self.user:
+        if User.objects.filter(id=self.userid).exists():
             return "{self.id}) @{self.user.nickname} - {self.category} : {self.isallowed}".format(self=self)
         else:
             return "USER_DELETED"
@@ -168,7 +168,7 @@ class UserPermissionBadge(BaseModel):
     designernname = models.CharField(default="", max_length=128, blank=True, null=True)
 
     @property
-    def designer(self):
+    def designer(self):  # may not have a designer user but only a designer nickname
         if not self.designernname:
             return None
         return User.objects.get_or_none(nickname=self.designernname)
@@ -190,8 +190,9 @@ class UserExp(BaseModel):
     userid = models.IntegerField(default=0, blank=False, null=False)
     category = models.CharField(max_length=255, blank=False, null=False, choices=CATEGORIES)
     exp = models.IntegerField(default=0, blank=False, null=False)
+
     def __str__(self):
-        if self.user:
+        if User.objects.filter(id=self.userid).exists():
             return "{self.id}) @{self.user.nickname} - {category_name}: {self.exp} - Lv.{self.level}".format(self=self, category_name=self.get_category_display())
         else:
             return "USER_DELETED"
@@ -202,7 +203,7 @@ class UserExp(BaseModel):
 
     @property
     def user(self):
-        return User.objects.get_or_none(id=self.userid)
+        return User.objects.get_or_404(id=self.userid)
 
     @property
     def persent(self):
@@ -234,10 +235,10 @@ class ExpHistory(BaseModel):
 
     @property
     def userexp(self):
-        return UserExp.objects.get(id=self.userexpid)
+        return UserExp.objects.get_or_404(id=self.userexpid)
 
     def __str__(self):
-        if self.userexp.user:
+        if UserExp.objects.filter(id=self.userexpid).exists() and User.objects.filter(id=self.userexp.userid).exist():
             return "{self.id}) {created} - @{self.userexp.user.nickname}: [{category_name}] {self.operation} +{self.change}".format(self=self, created=util.time.formatDate(self.created), category_name=self.userexp.get_category_display())
         else:
             return "USER_DELETED"
@@ -268,7 +269,7 @@ class Opus(BaseModel):
 
     @property
     def progress(self):
-        return Progress.objects.get(opusid=self.id)
+        return Progress.objects.get_or_404(opusid=self.id)
 
     @property
     def covercolor(self):
@@ -341,11 +342,11 @@ class Progress(BaseModel):
 
     @property
     def opus(self):
-        return Opus.objects.get(id=self.opusid)
+        return Opus.objects.get_or_404(id=self.opusid)
 
     @property
     def user(self):
-        return User.objects.get_or_none(id=self.userid)
+        return User.objects.get_or_404(id=self.userid)
 
     @property
     def link(self):
@@ -447,14 +448,14 @@ class Chat(BaseModel):
 
     @property
     def sender(self):
-        return User.objects.get_or_none(id=self.senderid)
+        return User.objects.get_or_404(id=self.senderid)
 
     @property
     def receiver(self):
-        return User.objects.get_or_none(id=self.receiverid)
+        return User.objects.get_or_404(id=self.receiverid)
 
     def __str__(self):
-        if self.sender and self.receiver:
+        if User.objects.filter(id=self.senderid).exists() and User.objects.filter(id=self.receiverid).exists():
             unread = "" if self.isread else "[unread]"
             content = (self.content[:40] + '..') if len(self.content) > 40 else self.content
             return "{self.id}) {created} - @{self.sender.nickname}→@{self.receiver.nickname} : {unread} {content}".format(self=self, created=util.time.formatDate(self.created), content=content, unread=unread)
