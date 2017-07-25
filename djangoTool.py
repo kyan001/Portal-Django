@@ -8,7 +8,7 @@ import consoleiotools as cit
 from KyanToolKit import KyanToolKit as ktk
 
 
-__version__ = '1.4.1'
+__version__ = '1.4.2'
 
 
 def manage_file_exist():
@@ -93,6 +93,7 @@ def dump_data():
 def load_data():
     """Load Database data from a json file"""
     run_by_py3('manage.py loaddata datadump.json')
+
 
 @cit.as_session('Git Assume Unchanged')
 def assume_unchanged():
