@@ -97,7 +97,7 @@
                         <a class="btn btn-primary btn-xs pull-left" data-toggle="tooltip" data-placement="top" data-container='body' href="/opus/detail?id={{opus.id}}" title="看看还有谁在看这本书">
                             <span class="glyphicon glyphicon-qrcode"></span>
                         </a>
-                        《<b>{{ opus.name }}</b>》
+                        《<b id='opus-name'>{{ opus.name }}</b>》
                         {% if opus.subtitle %}
                             <em class="subtitle small">
                                 {{ opus.subtitle }}
@@ -401,6 +401,7 @@
         getOpusInfo()
         checkEditMode()
         syncTotal()
+        replaceSeasonInfo('#opus-name')
         $('[data-toggle="tooltip"]').tooltip();
         $('input.editable').keydown(function(){
             if(event.keyCode==13){
@@ -654,6 +655,11 @@
         }
         inputs.current.val(parseInt(inputs.current.val()) + 1);
         checkEditMode()
+    }
+    function replaceSeasonInfo(ele){
+        var opus_name = $(ele).text()
+        var new_opus_name = opus_name.replace(/[\s（\(](第*[0-9一二三四五六七八九十上下]+[季册卷集])[\s\)）]*/, '<span class="badge">$1</span>')
+        $(ele).text('').append(new_opus_name)
     }
 </script>
 {% endblock js %}
