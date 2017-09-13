@@ -56,8 +56,7 @@ def searchOpusInfo(request):  # get # ajax
     return HttpResponse(info, content_type='application/json')
 
 
-@csrf_exempt
-def getWordCloud(request):  # post # ajax # public
+def getWordCloud(txt, height=500, width=500):
     """从 txt 获得词云，返回 png 图片"""
     if not txt:
         return HttpResponse("参数 txt 不能为空", content_type='text/plain')
