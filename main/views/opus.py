@@ -57,9 +57,6 @@ def searchOpusInfo(request):  # get # ajax
 @csrf_exempt
 def getWordCloud(request):  # post # ajax # public
     """从 txt 获得词云，返回 png 图片"""
-    txt = request.GET.get('txt') or request.POST.get('txt')
-    height = request.GET.get('height') or "500"
-    width = request.GET.get('width') or "500"
     if not txt:
         return HttpResponse("参数 txt 不能为空", content_type='text/plain')
     # read cache
@@ -74,14 +71,15 @@ def getWordCloud(request):  # post # ajax # public
     else:
         seg_list = jieba.cut(txt, cut_all=False)
         seg_str = " ".join(seg_list)
-        cloud = wordcloud.WordCloud(relative_scaling=0.95, width=int(width), height=int(height), font_path="static/fonts/SourceHanSansSC-Medium.otf", background_color=None, mode='RGBA').generate(seg_str)
+        cloud = wordcloud.WordCloud(relative_scaling=0.5, scale=5, width=width, height=height, font_path="static/fonts/SourceHanSansSC-Medium.otf", background_color=None, mode='RGBA').generate(seg_str)
         cloud_image = cloud.to_image()  # or cloud.to_file(path)
         # save to cache
         buf = io.BytesIO()
         cloud_image.save(buf, 'png')
-        cache.set(cache_key, buf.getvalue(), cache_timeout)
         wrdcld_img = buf.getvalue()
+        cache.set(cache_key, wrdcld_img, cache_timeout)
         buf.close()
+    return wrdcld_img
     # render
     response = HttpResponse(wrdcld_img, content_type='image/png')
     return response
