@@ -56,7 +56,7 @@ def searchOpusInfo(request):  # get # ajax
     return HttpResponse(info, content_type='application/json')
 
 
-def getWordCloud(txt, height=500, width=500):
+def generateWordCloud(txt, height=500, width=500):
     """从 txt 获得词云，返回 png 图片"""
     if not txt:
         return HttpResponse("参数 txt 不能为空", content_type='text/plain')
@@ -105,6 +105,7 @@ def getOpusWordCloud(request):  # get # ajax
         raise Http404("opus 的 info 不存在")
     summary = info['books'][0]['summary']
     wrdcld_img = getWordCloud(summary, width=int(width), height=int(height))
+        wrdcld_img = generateWordCloud(summary, width=int(width), height=int(height))
     # render
     response = HttpResponse(wrdcld_img, content_type='image/png')
     return response
