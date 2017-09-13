@@ -1,8 +1,13 @@
 from django.shortcuts import render
 from django.core.cache import cache
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+import io
 import urllib.request
 import urllib.parse
+import jieba
+import wordcloud
+
 from main.models import Opus
 import util.ctrl
 
@@ -47,3 +52,36 @@ def searchOpusInfo(request):  # get # ajax
         info = response.read()
         cache.set(cache_key, info, cache_timeout)
     return HttpResponse(info, content_type='application/json')
+
+
+@csrf_exempt
+def getWordCloud(request):  # post # ajax # public
+    """从 txt 获得词云，返回 png 图片"""
+    txt = request.GET.get('txt') or request.POST.get('txt')
+    height = request.GET.get('height') or "500"
+    width = request.GET.get('width') or "500"
+    if not txt:
+        return HttpResponse("参数 txt 不能为空", content_type='text/plain')
+    # read cache
+    txt_hashed = util.ctrl.salty(txt)
+    cache_key = '{txthash}:{hght}x{wdth}:wordcloud'.format(txthash=txt_hashed, hght=height, wdth=width)
+    cache_timeout = 60 * 60 * 24 * 30 * 2  # 2 months
+    cached_data = cache.get(cache_key)
+    if cached_data:
+        buf = io.BytesIO(cached_data)
+        wrdcld_img = buf.getvalue()
+        buf.close()
+    else:
+        seg_list = jieba.cut(txt, cut_all=False)
+        seg_str = " ".join(seg_list)
+        cloud = wordcloud.WordCloud(relative_scaling=0.95, width=int(width), height=int(height), font_path="static/fonts/SourceHanSansSC-Medium.otf", background_color=None, mode='RGBA').generate(seg_str)
+        cloud_image = cloud.to_image()  # or cloud.to_file(path)
+        # save to cache
+        buf = io.BytesIO()
+        cloud_image.save(buf, 'png')
+        cache.set(cache_key, buf.getvalue(), cache_timeout)
+        wrdcld_img = buf.getvalue()
+        buf.close()
+    # render
+    response = HttpResponse(wrdcld_img, content_type='image/png')
+    return response
