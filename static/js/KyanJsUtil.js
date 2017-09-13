@@ -44,6 +44,7 @@ var OpusInfoGetter = {
                     info.pages = data.books[0].pages
                     info.url = data.books[0].alt
                     info.tags = new Array()
+                    info.summary = data.books[0].summary
                     if(data.books[0].tags[0]){
                         info.tags.push(data.books[0].tags[0].name)
                     }
@@ -86,6 +87,7 @@ var OpusInfoGetter = {
                     info.subtype = data.subjects[0].subtype  // movie only
                     info.url = data.subjects[0].alt;
                     info.tags = new Array(data.subjects[0].genres);
+                    info.summary = data.subjects[0].summary
                     if(data.subjects[0].images){
                         info.images = {};
                         info.images.small = data.subjects[0].images.small
