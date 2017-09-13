@@ -53,7 +53,7 @@ var OpusInfoGetter = {
                     if(data.books[0].tags[2]){
                         info.tags.push(data.books[0].tags[2].name)
                     }
-                    info.images = {};
+                    info.images = {}
                     if(data.books[0].images){
                         info.images.small = data.books[0].images.small
                         info.images.medium = data.books[0].images.medium
