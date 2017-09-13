@@ -6,3 +6,5 @@ Pillow
 icalendar
 django-cleanup
 tld
+jieba
+wordcloud
