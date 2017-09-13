@@ -1,10 +1,12 @@
+import io
+import json
+import urllib.request
+import urllib.parse
 from django.shortcuts import render
 from django.core.cache import cache
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-import io
-import urllib.request
-import urllib.parse
+from django.http import Http404
 import jieba
 import wordcloud
 
