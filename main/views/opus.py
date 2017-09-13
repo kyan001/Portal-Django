@@ -58,41 +58,21 @@ def searchOpusInfo(request):  # get # ajax
 
 def generateWordCloud(txt, height=500, width=500):
     """从 txt 获得词云，返回 png 图片"""
-    if not txt:
-        return HttpResponse("参数 txt 不能为空", content_type='text/plain')
-    # read cache
-    txt_hashed = util.ctrl.salty(txt)
-    cache_key = '{txthash}:{hght}x{wdth}:wordcloud'.format(txthash=txt_hashed, hght=height, wdth=width)
-    cache_timeout = 60 * 60 * 24 * 30 * 2  # 2 months
-    cached_data = cache.get(cache_key)
-    if cached_data:
-        buf = io.BytesIO(cached_data)
-        wrdcld_img = buf.getvalue()
-        buf.close()
-    else:
-        seg_list = jieba.cut(txt, cut_all=False)
-        seg_str = " ".join(seg_list)
-        cloud = wordcloud.WordCloud(relative_scaling=0.5, scale=5, width=width, height=height, font_path="static/fonts/SourceHanSansSC-Medium.otf", background_color=None, mode='RGBA').generate(seg_str)
-        cloud_image = cloud.to_image()  # or cloud.to_file(path)
-        # save to cache
-        buf = io.BytesIO()
-        cloud_image.save(buf, 'png')
-        wrdcld_img = buf.getvalue()
-        cache.set(cache_key, wrdcld_img, cache_timeout)
-        buf.close()
+    seg_list = jieba.cut(txt, cut_all=False)
+    seg_str = " ".join(seg_list)
+    cloud = wordcloud.WordCloud(relative_scaling=0.5, scale=5, width=width, height=height, font_path="static/fonts/SourceHanSansSC-Medium.otf", background_color=None, mode='RGBA').generate(seg_str)
+    cloud_image = cloud.to_image()  # or cloud.to_file(path)
+    # save to cache
+    buf = io.BytesIO()
+    cloud_image.save(buf, 'png')
+    wrdcld_img = buf.getvalue()
+    buf.close()
     return wrdcld_img
 
 
 @csrf_exempt
 def getOpusWordCloud(request):  # get # ajax
     """从 opus 的 summary 获得词云，返回 png 图片"""
-    opus_name = request.GET.get('name')
-    opus_type = request.GET.get('type')
-    height = request.GET.get('height') or "500"
-    width = request.GET.get('width') or "500"
-    if not (opus_name and opus_type):
-        raise Http404("opus 的参数 name 和 opustype 不能为空")
-
     def getOpusCachedInfo(opustype, keyword):
         cache_key = '{typ}:{kw}:info'.format(typ=opustype, kw=keyword.replace(' ', '_'))
         cached_info = cache.get(cache_key)
@@ -100,12 +80,27 @@ def getOpusWordCloud(request):  # get # ajax
             cached_info = cached_info.decode()
         return json.loads(cached_info) if cached_info else None
 
-    info = getOpusCachedInfo(opus_type, opus_name)
-    if not info:
-        raise Http404("opus 的 info 不存在")
-    summary = info['books'][0]['summary']
-    wrdcld_img = getWordCloud(summary, width=int(width), height=int(height))
+    opus_name = request.GET.get('name')
+    opus_type = request.GET.get('type')
+    height = request.GET.get('height') or "500"
+    width = request.GET.get('width') or "500"
+    if not (opus_name and opus_type):
+        raise Http404("opus 的参数 name 和 opustype 不能为空")
+    # check cached
+    cache_key = '{typ}:{name}:{hght}x{wdth}:wordcloud'.format(typ=opus_type, name=opus_name, hght=height, wdth=width)
+    cache_timeout = 60 * 60 * 24 * 30 * 2  # 2 months
+    cached_data = cache.get(cache_key)
+    if cached_data:
+        buf = io.BytesIO(cached_data)
+        wrdcld_img = buf.getvalue()
+        buf.close()
+    else:
+        info = getOpusCachedInfo(opus_type, opus_name)
+        if not info:
+            raise Http404("opus 的 info 不存在")
+        summary = info['books'][0]['summary']
         wrdcld_img = generateWordCloud(summary, width=int(width), height=int(height))
+        cache.set(cache_key, wrdcld_img, cache_timeout)
     # render
     response = HttpResponse(wrdcld_img, content_type='image/png')
     return response
