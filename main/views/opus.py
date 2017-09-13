@@ -6,9 +6,6 @@ import urllib.parse
 from main.models import Opus
 import util.ctrl
 
-import KyanToolKit
-ktk = KyanToolKit.KyanToolKit()
-
 
 def detail(request):
     '''获得作品的详情'''
