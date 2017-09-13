@@ -56,7 +56,7 @@ urlpatterns = [
     # OPUS
     url(r'^opus/detail$', main.views.opus.detail),
     url(r'^opus/searchopusinfo$', main.views.opus.searchOpusInfo),  # get Ajax
-    url(r'^opus/getwordcloud$', main.views.opus.getWordCloud),  # post Ajax
+    url(r'^opus/getopuswordcloud$', main.views.opus.getOpusWordCloud),  # get Ajax
     # CHAT
     url(r'^chat/inbox$', main.views.chat.inbox),
     url(r'^chat/markread$', main.views.chat.markread),

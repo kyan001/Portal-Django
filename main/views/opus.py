@@ -81,6 +81,29 @@ def getWordCloud(txt, height=500, width=500):
         cache.set(cache_key, wrdcld_img, cache_timeout)
         buf.close()
     return wrdcld_img
+
+
+@csrf_exempt
+def getOpusWordCloud(request):  # get # ajax
+    """从 opus 的 summary 获得词云，返回 png 图片"""
+    opus_name = request.GET.get('name')
+    opus_type = request.GET.get('type')
+    height = request.GET.get('height') or "500"
+    width = request.GET.get('width') or "500"
+    if not (opus_name and opus_type):
+        raise Http404("opus 的参数 name 和 opustype 不能为空")
+
+    def getOpusCachedInfo(opustype, keyword):
+        cache_key = '{typ}:{kw}:info'.format(typ=opustype, kw=keyword.replace(' ', '_'))
+        cached_info_bytes = cache.get(cache_key)
+        cached_info_string = cached_info_bytes.decode() if cached_info_bytes else None
+        return json.loads(cached_info_string) if cached_info_string else None
+
+    info = getOpusCachedInfo(opus_type, opus_name)
+    if not info:
+        raise Http404("opus 的 info 不存在")
+    summary = info['books'][0]['summary']
+    wrdcld_img = getWordCloud(summary, width=int(width), height=int(height))
     # render
     response = HttpResponse(wrdcld_img, content_type='image/png')
     return response

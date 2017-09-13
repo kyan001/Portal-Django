@@ -496,7 +496,7 @@
             placement: "top",
         })
         if(info.summary){
-            $('#opus-wordcloud').attr('src', '/opus/getwordcloud?height=100&width=500&txt=' + info.summary)
+            $('#opus-wordcloud').attr('src', '/opus/getopuswordcloud?height=100&width=500&type=' + info.type + '&name=' + info.title)
         }
         $('#tag-tag').text(info.tags.join('，'))
         $('#rating-av').text(info.rating)
