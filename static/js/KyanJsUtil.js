@@ -31,7 +31,7 @@ var OpusInfoGetter = {
         var book_search_api = '/opus/searchopusinfo'
         var book_search_api_douban = 'https://api.douban.com/v2/book/search'
         if(name !== ''){
-            $.get(book_search_api, {'count':'1','q':name, 'type':'book'}, function(data){
+            $.get(book_search_api, {'count':'1', 'q':name, 'type':'book'}, function(data){
                 var info = {}
                 info.exist = data.books[0] ? true : false
                 info.type = 'book'
@@ -41,9 +41,9 @@ var OpusInfoGetter = {
                     info.origin_title = data.books[0].origin_title  // book only, optional
                     info.numrater = data.books[0].rating.numRaters  // book only
                     info.rating = data.books[0].rating.average;
-                    info.pages = data.books[0].pages;
-                    info.url = data.books[0].alt;
-                    info.tags = new Array();
+                    info.pages = data.books[0].pages
+                    info.url = data.books[0].alt
+                    info.tags = new Array()
                     if(data.books[0].tags[0]){
                         info.tags.push(data.books[0].tags[0].name)
                     }
