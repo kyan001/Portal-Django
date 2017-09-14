@@ -403,10 +403,10 @@
             total: $('input[name="total"]'),
             current: $('input[name="current"]')
         }
-        getOpusInfo()
+        replaceSeasonInfo('#opus-name')
+        getOpusInfo(inputs.name.val())
         checkEditMode()
         syncTotal()
-        replaceSeasonInfo('#opus-name')
         $('[data-toggle="tooltip"]').tooltip();
         $('input.editable').keydown(function(){
             if(event.keyCode==13){
@@ -426,17 +426,17 @@
             target_ele.text(inputs.total.val())
         }
     }
-    function getOpusInfo(){
+    function getOpusInfo(opus_name){
         var book_subs = ['书','书籍','book','pdf','漫画','comic','文字','doc','txt','小说']
         var movie_subs = ['动画','anime','电影','movie','电视剧','tv','show','美剧','英剧','韩剧','日剧','公开课','视频']
         var sub = inputs.subtitle.val().toLowerCase()
         if(book_subs.indexOf(sub) >= 0){
-            getBookInfo('book')
+            getBookInfo(opus_name, 'book')
         } else if(movie_subs.indexOf(sub) >= 0) {
-            getMovieInfo('movie')
+            getMovieInfo(opus_name, 'movie')
         } else {
-            getBookInfo('compare')
-            getMovieInfo('compare')
+            getBookInfo(opus_name, 'compare')
+            getMovieInfo(opus_name, 'compare')
         }
     }
     function checkInfoVisibility(info){
@@ -562,8 +562,7 @@
                 break;
         }
     }
-    function getBookInfo(setType){
-        var bookname = inputs.name.val()
+    function getBookInfo(bookname, setType){
         if(bookname){
             OpusInfoGetter.getBookInfo(bookname, function(info){
                 infos.book = info;
@@ -572,8 +571,7 @@
             });
         }
     }
-    function getMovieInfo(setType){
-        var moviename = inputs.name.val()
+    function getMovieInfo(moviename, setType){
         if(moviename){
             OpusInfoGetter.getMovieInfo(moviename, function(info){
                 infos.movie = info;
