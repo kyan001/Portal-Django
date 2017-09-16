@@ -100,7 +100,7 @@
                         <a class="btn btn-primary btn-xs pull-left" data-toggle="tooltip" data-placement="top" data-container='body' href="/opus/detail?id={{opus.id}}" title="看看还有谁在看这本书">
                             <span class="glyphicon glyphicon-qrcode"></span>
                         </a>
-                        《<b id='opus-name'>{{ opus.name }}</b>》
+                        《<b id='opus-name'>{{ opus.name }}</b>》<span id='opus-chapter' class='badge'></span>
                         {% if opus.subtitle %}
                             <em class="subtitle small">
                                 {{ opus.subtitle }}
