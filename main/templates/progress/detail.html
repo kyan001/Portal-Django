@@ -408,8 +408,18 @@
             total: $('input[name="total"]'),
             current: $('input[name="current"]')
         }
-        replaceSeasonInfo('#opus-name')
-        getOpusInfo(inputs.name.val())
+        window.infos = {
+            // 全局存放当前作品的信息
+            book: {},
+            movie: {},
+            guess: {},
+            opus: {
+                name: inputs.name.val()  // 后面将保存去除章节信息后的名字
+            }
+        }
+
+        purifyOpusName()
+        getOpusInfo()
         checkEditMode()
         syncTotal()
         $('[data-toggle="tooltip"]').tooltip();
@@ -684,11 +694,17 @@
         inputs.current.val(parseInt(inputs.current.val()) + 1);
         checkEditMode()
     }
-    function replaceSeasonInfo(ele){
-        var opus_name = $(ele).text()
-        var re = /[\s（\(](第*[0-9一二三四五六七八九十上下]+[季册卷集章])[\s\)）]*/i
-        var new_opus_name = opus_name.replace(re, '<span class="badge chapter">$1</span>')
-        $(ele).text('').append(new_opus_name)
+    function purifyOpusName(){
+        // 去除作品名称中的章节信息，并将其显示在旁边
+        var opus_name = $('#opus-name').text()
+        var re = /[\s（\(](第*[0-9一二三四五六七八九十上下]+[季册卷集章])[\)）]*/i
+        var chapters = opus_name.match(re)  // chapters[0] -> 包含符号的章节信息, chapters[1] -> 干净的章节信息
+        if(chapters){
+            infos.opus.name = opus_name.replace(chapters[0], '')
+            var chapter_chars = chapters[1]
+            $('#opus-name').text(infos.opus.name)
+            $('#opus-chapter').text(chapter_chars)
+        }
     }
 </script>
 {% endblock js %}
