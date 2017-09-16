@@ -394,12 +394,6 @@
 {% block js %}
 <script>
     $(function(){
-        window.infos = {
-            // 全局存放当前作品的信息
-            book: {},
-            movie: {},
-            guess: {}
-        }
         window.inputs = {
             // 全局定义输入框，主要用于代码可读性
             name: $('input[name="name"]'),
@@ -442,8 +436,9 @@
             target_ele.text(inputs.total.val())
         }
     }
-    function getOpusInfo(opus_name){
+    function getOpusInfo(){
         // 获取作品信息的入口，负责分辨作品的类别
+        var opus_name = infos.opus.name
         var book_subs = ['书','书籍','book','pdf','漫画','comic','文字','doc','txt','小说']
         var movie_subs = ['动画','anime','电影','movie','电视剧','tv','show','美剧','英剧','韩剧','日剧','公开课','视频']
         var sub = inputs.subtitle.val().toLowerCase()
