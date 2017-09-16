@@ -549,7 +549,7 @@
         checkInfoVisibility(info)
     }
     function showGuess(info){
-        // 将猜测的可能的作品信息显示在网页上
+        // 将猜测的可能的作品信息显示在网页上，并根据去除章节信息后的作品名查询作品信息
         infos.guess = info
         var title_a = '<a href="' + infos.guess.url + '" target="_blank">' + infos.guess.title + '</a>'
         var guess_title = '《' + title_a + '》'
@@ -565,6 +565,7 @@
                 return content_html
             },
         });
+        getOpusInfo()
     }
     function applyGuess(){
         // 当用户应用猜测作品信息时
