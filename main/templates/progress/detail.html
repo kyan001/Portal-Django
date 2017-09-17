@@ -412,9 +412,8 @@
                 purified_name: ''  // 保存去除章节信息后的名字
             }
         }
-
         purifyOpusName()
-        getOpusInfo()
+        getOpusInfo(infos.opus.original_name)
         checkEditMode()
         syncTotal()
         $('[data-toggle="tooltip"]').tooltip();
@@ -437,9 +436,8 @@
             target_ele.text(inputs.total.val())
         }
     }
-    function getOpusInfo(){
+    function getOpusInfo(opus_name){
         // 获取作品信息的入口，负责分辨作品的类别
-        var opus_name = infos.opus.name
         var book_subs = ['书','书籍','book','pdf','漫画','comic','文字','doc','txt','小说']
         var movie_subs = ['动画','anime','电影','movie','电视剧','tv','show','美剧','英剧','韩剧','日剧','公开课','视频']
         var sub = inputs.subtitle.val().toLowerCase()
@@ -566,7 +564,7 @@
                 return content_html
             },
         });
-        getOpusInfo()
+        getOpusInfo(infos.opus.purified_name)
     }
     function applyGuess(){
         // 当用户应用猜测作品信息时
