@@ -3,12 +3,13 @@
 import os
 import sys
 import socket
+import webbrowser
 
 import consoleiotools as cit
 from KyanToolKit import KyanToolKit as ktk
 
 
-__version__ = '1.4.2'
+__version__ = '1.5.1'
 
 
 def manage_file_exist():
@@ -59,6 +60,7 @@ def interactive_shell():
 @cit.as_session('Runserver localhost')
 def runserver_dev():
     """Runserver in development environment, only for localhost debug use"""
+    webbrowser.open('http://127.0.0.1:8000/')
     run_by_py3('manage.py runserver')
 
 
