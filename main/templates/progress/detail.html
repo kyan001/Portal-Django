@@ -471,6 +471,10 @@
         // 获取作品信息的入口，负责分辨作品的类别
         // getOpusInfo -> getBookInfo/getMovieInfo -> judgeInfoType -> showInfo -> showImageColor/checkInfoVisibility
         // getOpusInfo -> getBookInfo/getMovieInfo -> judgeInfoType -> showGuess -> getOpusInfo
+        console.debug('getOpusInfo:' + opus_name)
+        infos.book = {}
+        infos.movie = {}
+        infos.guess = {}
         if(opus_name){
             $('#loading-icon').fadeIn()
             var book_subs = ['书','书籍','book','pdf','漫画','comic','文字','doc','txt','小说']
@@ -488,6 +492,7 @@
     }
     function getBookInfo(bookname, setType){
         // 从豆瓣获得书类的信息并存入全局变量，透明传递 setType
+        console.debug('getBookInfo:' + bookname + '@' + setType)
         if(bookname){
             OpusInfoGetter.getBookInfo(bookname, function(info){
                 infos.book = info;
@@ -498,6 +503,7 @@
     }
     function getMovieInfo(moviename, setType){
         // 从豆瓣获得影视类的信息并存入全局变量，透明传递 setType
+        console.debug('getMovieInfo:' + moviename + '@' + setType)
         if(moviename){
             OpusInfoGetter.getMovieInfo(moviename, function(info){
                 infos.movie = info;
@@ -508,6 +514,7 @@
     }
     function judgeInfoType(setType){
         // 智能判断作品信息的类别。setType 是选择显示哪个信息
+        console.debug('judgeInfoType:' + setType)
         $('#loading-icon').fadeOut()
         var total = inputs.total.val()
         if(total == ""){
@@ -555,6 +562,7 @@
     }
     function showInfo(info){
         // 将全局变量中的某个作品信息显示在网页上
+        console.debug('showInfo:' + info.title)
         $('#title-link').attr('href', info.url)
         $('#title-link').text(info.title)
         var img_in_title = info.images.small ? '<img src="' + info.images.small + '" style="width: 100%">' : '作品详细信息'
@@ -586,6 +594,7 @@
     }
     function showGuess(info){
         // 将猜测的可能的作品信息显示在网页上，并根据去除章节信息后的作品名查询作品信息
+        console.debug('showGuess:' + info.title)
         infos.guess = info
         var title_a = '<a href="' + infos.guess.url + '" target="_blank">' + infos.guess.title + '</a>'
         var guess_title = '《' + title_a + '》'
