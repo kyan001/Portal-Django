@@ -60,7 +60,7 @@ def generateWordCloud(txt, height=500, width=500):
     """从 txt 获得词云，返回 png 图片"""
     seg_list = jieba.cut(txt, cut_all=False)
     seg_str = " ".join(seg_list)
-    cloud = wordcloud.WordCloud(relative_scaling=0.5, scale=1, width=width, height=height, font_path="static/fonts/SourceHanSansSC-Medium.otf", background_color=None, mode='RGBA').generate(seg_str)
+    cloud = wordcloud.WordCloud(relative_scaling=0.5, scale=1.5, width=int(width/1.5), height=int(height/1.5), font_path="static/fonts/SourceHanSansSC-Medium.otf", background_color=None, mode='RGBA').generate(seg_str)
     cloud_image = cloud.to_image()  # or cloud.to_file(path)
     # save to cache
     buf = io.BytesIO()
@@ -89,7 +89,7 @@ def getOpusWordCloud(request):  # get # ajax
     # check cached
     cache_key = '{typ}:{name}:{hght}x{wdth}:wordcloud'.format(typ=opus_type, name=opus_name, hght=height, wdth=width)
     cache_timeout = 60 * 60 * 24 * 30 * 2  # 2 months
-    cached_data = cache.get(cache_key)
+    cached_data = None; cache.get(cache_key)
     if cached_data:
         buf = io.BytesIO(cached_data)
         wrdcld_img = buf.getvalue()
