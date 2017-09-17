@@ -238,7 +238,7 @@ class ExpHistory(BaseModel):
         return UserExp.objects.get_or_404(id=self.userexpid)
 
     def __str__(self):
-        if UserExp.objects.filter(id=self.userexpid).exists() and User.objects.filter(id=self.userexp.userid).exist():
+        if UserExp.objects.filter(id=self.userexpid).exists() and User.objects.filter(id=self.userexp.userid).exists():
             return "{self.id}) {created} - @{self.userexp.user.nickname}: [{category_name}] {self.operation} +{self.change}".format(self=self, created=util.time.formatDate(self.created), category_name=self.userexp.get_category_display())
         else:
             return "USER_DELETED"
