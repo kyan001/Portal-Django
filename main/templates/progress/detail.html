@@ -408,7 +408,8 @@
             movie: {},
             guess: {},
             opus: {
-                name: inputs.name.val()  // 后面将保存去除章节信息后的名字
+                original_name: inputs.name.val(),  // 作品数据库名
+                purified_name: ''  // 保存去除章节信息后的名字
             }
         }
 
@@ -696,7 +697,7 @@
         var re = /[\s（\(](第*[0-9一二三四五六七八九十上下]+[季册卷集章])[\)）]*/i
         var chapters = opus_name.match(re)  // chapters[0] -> 包含符号的章节信息, chapters[1] -> 干净的章节信息
         if(chapters){
-            infos.opus.name = opus_name.replace(chapters[0], '')
+            infos.opus.purified_name = opus_name.replace(chapters[0], '')
             var chapter_chars = chapters[1]
             $('#opus-name').text(infos.opus.name)
             $('#opus-chapter').text(chapter_chars)
