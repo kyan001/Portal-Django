@@ -178,14 +178,18 @@
                                             <tr class="text-info" id='name-tr' data-toggle="popover" data-placement='top' data-container='body'>
                                                 <th>名称</th>
                                                 <td class="text-info">
-                                                    <input class="editable form-control"
-                                                      name="name"
-                                                      type="text"
-                                                      value="{{opus.name}}"
-                                                      data-original="{{opus.name}}"
-                                                      autocomplete="off"
-                                                      placeholder="{{opus.name}}"
-                                                      required="required">
+                                                    <div class='input-group'>
+                                                        <span class="input-group-addon">《</span>
+                                                        <input class="editable form-control"
+                                                          name="name"
+                                                          type="text"
+                                                          value="{{opus.name}}"
+                                                          data-original="{{opus.name}}"
+                                                          autocomplete="off"
+                                                          placeholder="{{opus.name}}"
+                                                          required="required">
+                                                        <span class="input-group-addon">》</span>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr class="text-info">
