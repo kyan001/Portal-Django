@@ -62,10 +62,10 @@
                         <div class='row'>
                             <div class='col-xs-12 col-sm-10 col-sm-offset-1'>
                                 <div class="row">
-                                    <span class="col-sm-8 col-xs-12">
+                                    <span class="col-xs-12">
                                         <div class="input-group input-group-lg">
                                             <span class="input-group-addon text-muted">名称</span>
-                                            <input type="text" class='form-control' placeholder="不用加书名号" name="name" class="editable clearable" onchange="Guess.getInfo()">
+                                            <input type="text" class='form-control' placeholder="作品名称" name="name" class="editable clearable" onchange="Guess.getInfo()">
                                             <span class="input-group-btn">
                                                 <span class="btn btn-default" onclick='$("#barcode-input").click()'>
                                                     <span class='glyphicon glyphicon-barcode'></span>
@@ -73,16 +73,13 @@
                                             </span>
                                         </div>
                                     </span>
-                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                        <span class="text-muted">动漫名、电视剧名、书名</span>
-                                    </span>
                                 </div>
                                 <span class='text-muted'>选填：</span>
                                 <div class="row">
-                                    <span class="col-sm-8 col-xs-12">
+                                    <span class="col-xs-12">
                                         <div id='subtitle-group' class="input-group">
                                             <span class="input-group-addon text-muted">备注</span>
-                                            <input type="text" class='form-control' placeholder="任何" name="subtitle" class="editable clearable">
+                                            <input type="text" class='form-control' placeholder="作品的分类或备注" name="subtitle" class="editable clearable">
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                                     <span class="caret"></span>
@@ -102,15 +99,12 @@
                                             </div><!-- /btn-group -->
                                         </div>
                                     </span>
-                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                        <span class='text-muted'>作品的分类、备注</span>
-                                    </span>
                                 </div>
                                 <div class="row">
-                                    <span class="col-sm-8 col-xs-12">
+                                    <span class="col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon text-muted">总共</span>
-                                            <input type="number" class='form-control' placeholder="纯数字，追剧请填 0" name="total" class="editable clearable">
+                                            <input type="number" class='form-control' placeholder="总页数／总集数（追剧请填 0）" name="total" class="editable clearable">
                                             <span class="input-group-btn">
                                                 <span id='guess-total' class="btn btn-default" onclick='Guess.ask()'>
                                                     <span class='guess-icon glyphicon glyphicon-cloud text-muted'></span>
@@ -118,34 +112,25 @@
                                             </span>
                                         </div>
                                     </span>
-                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                        <span class='text-muted'>总共几页、总共几集？</span>
-                                    </span>
                                 </div>
                                 <div class="row">
-                                    <span class="col-sm-8 col-xs-12">
+                                    <span class="col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon text-muted">当前进度</span>
-                                            <input type="number" class='form-control' placeholder="纯数字，默认 0" name="current" class="editable clearable">
+                                            <input type="number" class='form-control' placeholder="当前页数／集数" name="current" class="editable clearable">
                                             <span class="input-group-btn">
                                                 <span class="btn btn-default" onclick='addOneCurrent()'>+</span>
                                             </span>
                                         </div>
                                     </span>
-                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                        <span class='text-muted'>已看到第几集</span>
-                                    </span>
                                 </div>
                                 <div class="row">
-                                    <span class="col-sm-8 col-xs-12">
+                                    <span class="col-xs-12">
                                         <div class="input-group has-feedback">
-                                            <span class="input-group-addon text-muted">链接</span>
-                                            <input type="text" class='form-control' placeholder="以 http 开头" name="weblink" class="editable clearable">
+                                            <span class="input-group-addon text-muted">作品链接</span>
+                                            <input type="text" class='form-control' placeholder="（请以 http 开头）" name="weblink" class="editable clearable">
                                             <span class="glyphicon glyphicon-link form-control-feedback"></span>
                                         </div>
-                                    </span>
-                                    <span class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-9 col-xs-offset-3">
-                                        <span class='text-muted'>作品的链接地址</span>
                                     </span>
                                 </div>
                             </div>
