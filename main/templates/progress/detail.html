@@ -604,7 +604,7 @@
         var title_a = '<a href="' + infos.guess.url + '" target="_blank">' + infos.guess.title + '</a>'
         var guess_title = '《' + title_a + '》'
         var guess_subtype = infos.guess.subtype ? "（" + infos.guess.subtype.toUpperCase() + "）" : ''
-        var apply_guess = "<span id='apply-guess' class='text-success bg-warning glyphicon glyphicon-ok' onclick='applyGuess()'></span>"
+        var apply_guess = "<span id='apply-guess' class='text-success glyphicon glyphicon-ok img-thumbnail' onclick='applyGuess()'></span>"
         var content_html = '是' + guess_title + guess_subtype + '吗？' + apply_guess
         $('#name-tr').popover({
             delay: {'show':0, 'hide':0},
