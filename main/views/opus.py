@@ -89,7 +89,7 @@ def getOpusWordCloud(request):  # get # ajax
     # check cached
     cache_key = '{typ}:{name}:{hght}x{wdth}:wordcloud'.format(typ=opus_type, name=opus_name, hght=height, wdth=width)
     cache_timeout = 60 * 60 * 24 * 30 * 2  # 2 months
-    cached_data = None; cache.get(cache_key)
+    cached_data = cache.get(cache_key)
     if cached_data:
         buf = io.BytesIO(cached_data)
         wrdcld_img = buf.getvalue()
