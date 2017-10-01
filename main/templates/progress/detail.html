@@ -95,14 +95,14 @@
 <div class="btn-group">
     {% if prg.status == 'giveup' or prg.status == 'done' %}
         <a class="btn btn-warning btn-sm" href="/progress/archive">
-            <span class="glyphicon glyphicon-inbox"></span> 进度存档
+            <span class="glyphicon glyphicon-arrow-left"></span> 进度存档
         </a>
     {% else %}
         <a class="btn btn-warning btn-sm" href="/progress/list">
-            <span class="glyphicon glyphicon-th-list"></span> 进度列表
+            <span class="glyphicon glyphicon-arrow-left"></span> 进度列表
         </a>
     {% endif %}
-    <a class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a class="btn btn-warning btn-sm dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="caret"></span>
     </a>
     {% include 'progress/navlink.html' %}
@@ -224,7 +224,7 @@
                                                     <div class="form-group form-group-lg has-feedback">
                                                         <div class='input-group'>
                                                             <span class="input-group-btn">
-                                                                <div class="btn btn-lg btn-default" onclick="addOneCurrent()">
+                                                                <div class="btn btn-lg btn-default" role="button" onclick="addOneCurrent()">
                                                                     <span class='glyphicon glyphicon-plus'></span>
                                                                 </div>
                                                             </span>
@@ -289,10 +289,10 @@
                                     <div class='row'>
                                         <div class='col-xs-12'>
                                             <div class='btn-group btn-group-justified show-when-edit'>
-                                                <a id="cancel" class="btn btn-default" onclick="cancelEdit()">
+                                                <a id="cancel" class="btn btn-default" role="button" onclick="cancelEdit()">
                                                     <span class="glyphicon glyphicon-remove"></span> 取消编辑
                                                 </a>
-                                                <a id="save" class="btn btn-success" onclick="saveEdit()">
+                                                <a id="save" class="btn btn-success" role="button" onclick="saveEdit()">
                                                     <span class="glyphicon glyphicon-ok"></span> 保存
                                                 </a>
                                             </div>
@@ -399,16 +399,16 @@
                 <div class='panel-footer hide-when-edit'>
                     <div class="row">
                         <div class='col-xs-12'>
-                            <a class="btn btn-danger" id='delete' onclick="confirmDelete()">
+                            <a class="btn btn-danger" id='delete' role="button" onclick="confirmDelete()">
                                 <span class="glyphicon glyphicon-trash"></span> 彻底删除
                             </a>
                             <span class='pull-right'>
                                 {% if prg.status == 'giveup' %}
-                                    <a id='reset' class="btn btn-warning" onclick="$('#resetform').submit()">
+                                    <a id='reset' class="btn btn-warning" role="button" onclick="$('#resetform').submit()">
                                         <span class="glyphicon glyphicon-ok-circle"></span> 激活
                                     </a>
                                 {% else %}
-                                    <a id='giveup' class="btn btn-warning" onclick="$('#giveupform').submit()">
+                                    <a id='giveup' class="btn btn-warning" role="button" onclick="$('#giveupform').submit()">
                                         <span class="glyphicon glyphicon-ban-circle"></span> 冻结
                                     </a>
                                 {% endif %}

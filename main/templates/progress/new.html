@@ -67,7 +67,7 @@
                                             <span class="input-group-addon text-muted">名称</span>
                                             <input type="text" class='form-control' placeholder="作品名称" name="name" class="editable clearable" onchange="Guess.getInfo()">
                                             <span class="input-group-btn">
-                                                <span class="btn btn-default" onclick='$("#barcode-input").click()'>
+                                                <span class="btn btn-default" role="button" onclick='$("#barcode-input").click()'>
                                                     <span class='glyphicon glyphicon-barcode'></span>
                                                 </span>
                                             </span>
@@ -81,20 +81,40 @@
                                             <span class="input-group-addon text-muted">备注</span>
                                             <input type="text" class='form-control' placeholder="作品的分类或备注" name="subtitle" class="editable clearable">
                                             <div class="input-group-btn">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                <button type="button" class="btn btn-default dropdown-toggle" role="button" data-toggle="dropdown">
                                                     <span class="caret"></span>
                                                  </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                    <span class='btn btn-default category'>书</span>
-                                                    <span class='btn btn-default category'>PDF</span>
-                                                    <span class='btn btn-default category'>漫画</span>
-                                                    <span class='btn btn-default category'>动画</span>
-                                                    <span class='btn btn-default category'>电视剧</span>
-                                                    <span class='btn btn-default category'>公开课</span>
-                                                    <span class='btn btn-default category'>纪录片</span>
-                                                    <span class='btn btn-default category'>视频</span>
-                                                    <span class='btn btn-default category'>小说</span>
-                                                    <span class='btn btn-default category'>朋友推荐</span>
+                                                    <span class='btn btn-default category' role="button">
+                                                        书
+                                                    </span>
+                                                    <span class='btn btn-default category' role="button">
+                                                        PDF
+                                                    </span>
+                                                    <span class='btn btn-default category' role="button">
+                                                        漫画
+                                                    </span>
+                                                    <span class='btn btn-default category' role="button">
+                                                        动画
+                                                    </span>
+                                                    <span class='btn btn-default category' role="button">
+                                                        电视剧
+                                                    </span>
+                                                    <span class='btn btn-default category' role="button">
+                                                        公开课
+                                                    </span>
+                                                    <span class='btn btn-default category' role="button">
+                                                        纪录片
+                                                    </span>
+                                                    <span class='btn btn-default category' role="button">
+                                                        视频
+                                                    </span>
+                                                    <span class='btn btn-default category' role="button">
+                                                        小说
+                                                    </span>
+                                                    <span class='btn btn-default category' role="button">
+                                                        朋友推荐
+                                                    </span>
                                                 </ul>
                                             </div><!-- /btn-group -->
                                         </div>
@@ -106,7 +126,7 @@
                                             <span class="input-group-addon text-muted">总共</span>
                                             <input type="number" class='form-control' placeholder="总页数／总集数（追剧请填 0）" name="total" class="editable clearable">
                                             <span class="input-group-btn">
-                                                <span id='guess-total' class="btn btn-default" onclick='Guess.ask()'>
+                                                <span id='guess-total' class="btn btn-default" role="button" onclick='Guess.ask()'>
                                                     <span class='guess-icon glyphicon glyphicon-cloud text-muted'></span>
                                                 </span>
                                             </span>
@@ -119,7 +139,7 @@
                                             <span class="input-group-addon text-muted">当前进度</span>
                                             <input type="number" class='form-control' placeholder="当前页数／集数" name="current" class="editable clearable">
                                             <span class="input-group-btn">
-                                                <span class="btn btn-default" onclick='addOneCurrent()'>+</span>
+                                                <span class="btn btn-default" role="button" onclick='addOneCurrent()'>+</span>
                                             </span>
                                         </div>
                                     </span>
@@ -146,10 +166,10 @@
                         </div>
                         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 text-right">
                             <div class="text-right">
-                                <button class="btn btn-warning" onclick="Form.clear()">
+                                <button class="btn btn-warning" role="button" onclick="Form.clear()">
                                     <span class="glyphicon glyphicon-refresh"></span> 清空
                                 </button>
-                                <button class="btn btn-success" onclick="Form.submit()">
+                                <button class="btn btn-success" role="button" onclick="Form.submit()">
                                         <span class="glyphicon glyphicon-ok"></span> 保存
                                 </button>
                             </div>
