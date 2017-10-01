@@ -285,19 +285,16 @@
                                             </tr>
                                         </table>
                                     </div><!--.panel-body-->
+
                                     <div class='row'>
                                         <div class='col-xs-12'>
-                                            <div class='btn-group btn-group-justified'>
-                                                <div class="btn-group" role="group">
-                                                    <a id="save" class="btn btn-success" onclick="saveEdit()">
-                                                        <span class="glyphicon glyphicon-ok"></span> 保存
-                                                    </a>
-                                                </div>
-                                                <div class="btn-group" role="group">
-                                                    <a id="cancel" class="btn btn-default" onclick="cancelEdit()">
-                                                        <span class="glyphicon glyphicon-remove"></span> 取消编辑
-                                                    </a>
-                                                </div>
+                                            <div class='btn-group btn-group-justified show-when-edit'>
+                                                <a id="cancel" class="btn btn-default" onclick="cancelEdit()">
+                                                    <span class="glyphicon glyphicon-remove"></span> 取消编辑
+                                                </a>
+                                                <a id="save" class="btn btn-success" onclick="saveEdit()">
+                                                    <span class="glyphicon glyphicon-ok"></span> 保存
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -398,24 +395,28 @@
                             </div><!--.panel-->
                         </div><!--.col#right-half-panel-->
                     </div><!--.row-->
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 hide-when-edit">
-                        <button class="btn btn-danger" id='delete' onclick="confirmDelete()">
-                            <span class="glyphicon glyphicon-trash"></span> 彻底删除
-                        </button>
-                        {% if prg.status == 'giveup' %}
-                            <a id='reset' class="btn btn-warning" onclick="$('#resetform').submit()">
-                                <span class="glyphicon glyphicon-ok-circle"></span> 激活
+                </div><!-- .panel-body -->
+                <div class='panel-footer hide-when-edit'>
+                    <div class="row">
+                        <div class='col-xs-12'>
+                            <a class="btn btn-danger" id='delete' onclick="confirmDelete()">
+                                <span class="glyphicon glyphicon-trash"></span> 彻底删除
                             </a>
-                        {% else %}
-                            <a id='giveup' class="btn btn-warning" onclick="$('#giveupform').submit()">
-                                <span class="glyphicon glyphicon-ban-circle"></span> 冻结
-                            </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+                            <span class='pull-right'>
+                                {% if prg.status == 'giveup' %}
+                                    <a id='reset' class="btn btn-warning" onclick="$('#resetform').submit()">
+                                        <span class="glyphicon glyphicon-ok-circle"></span> 激活
+                                    </a>
+                                {% else %}
+                                    <a id='giveup' class="btn btn-warning" onclick="$('#giveupform').submit()">
+                                        <span class="glyphicon glyphicon-ban-circle"></span> 冻结
+                                    </a>
+                                {% endif %}
+                            </span>
+                        </div><!-- .col -->
+                    </div><!-- .row -->
+                </div><!-- panel-footer -->
+            </div><!-- .panel -->
         </div><!--col-->
     </div><!--row-->
     <form id="deleteform" action="/progress/delete/" method="post">
@@ -688,14 +689,12 @@
     function enterEdit(){
         // 进入编辑模式，隐藏不是编辑时的锁用到的栏，并显示保存、取消按钮
         $('.hide-when-edit').hide()
-        $('#save').fadeIn()
-        $('#cancel').fadeIn()
+        $('.show-when-edit').fadeIn()
     }
     function exitEdit(){
         // 退出编辑模式，显示所有栏，并隐藏保存、取消按钮
         $('.hide-when-edit').fadeIn()
-        $('#save').hide()
-        $('#cancel').hide()
+        $('.show-when-edit').hide()
     }
     function cancelEdit(){
         // 取消编辑，还原所有输入框至编辑前
