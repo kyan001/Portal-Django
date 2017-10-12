@@ -85,36 +85,16 @@
                                                     <span class="caret"></span>
                                                  </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                    <span class='btn btn-default category' role="button">
-                                                        书
-                                                    </span>
-                                                    <span class='btn btn-default category' role="button">
-                                                        PDF
-                                                    </span>
-                                                    <span class='btn btn-default category' role="button">
-                                                        漫画
-                                                    </span>
-                                                    <span class='btn btn-default category' role="button">
-                                                        动画
-                                                    </span>
-                                                    <span class='btn btn-default category' role="button">
-                                                        电视剧
-                                                    </span>
-                                                    <span class='btn btn-default category' role="button">
-                                                        公开课
-                                                    </span>
-                                                    <span class='btn btn-default category' role="button">
-                                                        纪录片
-                                                    </span>
-                                                    <span class='btn btn-default category' role="button">
-                                                        视频
-                                                    </span>
-                                                    <span class='btn btn-default category' role="button">
-                                                        小说
-                                                    </span>
-                                                    <span class='btn btn-default category' role="button">
-                                                        朋友推荐
-                                                    </span>
+                                                    <span class='btn btn-default category' role="button">书</span>
+                                                    <span class='btn btn-default category' role="button">PDF</span>
+                                                    <span class='btn btn-default category' role="button">漫画</span>
+                                                    <span class='btn btn-default category' role="button">动画</span>
+                                                    <span class='btn btn-default category' role="button">电视剧</span>
+                                                    <span class='btn btn-default category' role="button">公开课</span>
+                                                    <span class='btn btn-default category' role="button">纪录片</span>
+                                                    <span class='btn btn-default category' role="button">视频</span>
+                                                    <span class='btn btn-default category' role="button">小说</span>
+                                                    <span class='btn btn-default category' role="button">朋友推荐</span>
                                                 </ul>
                                             </div><!-- /btn-group -->
                                         </div>
@@ -186,7 +166,7 @@
 <script>
     $(function(){
         $('.category').click(function(){
-            $('input[name="subtitle"]').val($(this).text())
+            $('input[name="subtitle"]').val($(this).text().trim())
         })
         $("#barcode-input").on("change", function(e) {
             if (e.target.files && e.target.files.length) {
