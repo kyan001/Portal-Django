@@ -492,9 +492,18 @@
             var book_subs = ['书','书籍','book','pdf','漫画','comic','文字','doc','txt','小说']
             var movie_subs = ['动画','anime','电影','movie','电视剧','tv','show','美剧','英剧','韩剧','日剧','公开课','视频']
             var sub = inputs.subtitle.val().toLowerCase()
-            if(book_subs.indexOf(sub) >= 0){
+            function isInSubs(sub, subs){
+                // 用于判断 sub:str 内是否包含 subs:list 里的元素
+                for(var i in subs){
+                    if(sub.indexOf(subs[i]) >= 0){
+                        return true
+                    }
+                }
+                return false
+            }
+            if(isInSubs(sub, book_subs)){
                 getBookInfo(opus_name, 'book')
-            } else if(movie_subs.indexOf(sub) >= 0) {
+            } else if(isInSubs(sub, movie_subs)) {
                 getMovieInfo(opus_name, 'movie')
             } else {
                 getBookInfo(opus_name, 'compare')
