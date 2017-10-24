@@ -4,17 +4,18 @@ from main.models import User
 import util.ctrl
 import util.user
 
+
 class UserTestCase(TestCase):
     def setUp(self):
         User.objects.create(
-            username = 'tester',
-            nickname = '测试员',
-            question = 'question1',
-            answer1 = util.ctrl.salty('password1'),
-            answer2 = util.ctrl.salty('password2'),
-            tip = '',
-            email = 'test@kyan001.com',
-            headimg = ''
+            username='tester',
+            nickname='测试员',
+            question='question1',
+            answer1=util.ctrl.salty('password1'),
+            answer2=util.ctrl.salty('password2'),
+            tip='',
+            email='test@kyan001.com',
+            headimg=''
         )
 
     def test_check_answer(self):
