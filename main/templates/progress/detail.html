@@ -513,7 +513,7 @@
     }
     function getBookInfo(bookname, setType){
         // 从豆瓣获得书类的信息并存入全局变量，透明传递 setType
-        console.debug('getBookInfo:' + bookname + '@' + setType)
+        console.debug('getBookInfo: ' + bookname + '@' + setType)
         if(bookname){
             OpusInfoGetter.getBookInfo(bookname, function(info){
                 infos.book = info;
@@ -524,7 +524,7 @@
     }
     function getMovieInfo(moviename, setType){
         // 从豆瓣获得影视类的信息并存入全局变量，透明传递 setType
-        console.debug('getMovieInfo:' + moviename + '@' + setType)
+        console.debug('getMovieInfo: ' + moviename + '@' + setType)
         if(moviename){
             OpusInfoGetter.getMovieInfo(moviename, function(info){
                 infos.movie = info;
@@ -535,7 +535,7 @@
     }
     function judgeInfoType(setType){
         // 智能判断作品信息的类别。setType 是选择显示哪个信息
-        console.debug('judgeInfoType:' + setType)
+        console.debug('judgeInfoType: ' + setType)
         $('#loading-icon').fadeOut()
         var total = inputs.total.val()
         if(total == ""){
@@ -583,7 +583,7 @@
     }
     function showInfo(info){
         // 将全局变量中的某个作品信息显示在网页上
-        console.debug('showInfo:' + info.title)
+        console.debug('showInfo: ' + info.title)
         $('#title-link').attr('href', info.url)
         $('#title-link').text(info.title)
         var img_in_title = info.images.small ? '<img src="' + info.images.small + '" style="width: 100%">' : '作品详细信息'
