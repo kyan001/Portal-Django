@@ -479,7 +479,7 @@
         function purifyOpusName(){
             // 去除作品名称中的章节信息，并将其显示在旁边
             var opus_name = $('#opus-name').text()
-            var re = /[\s（\(](第*[0-9一二三四五六七八九十上下]+[季册卷集章])[\)）]*/i
+            var re = /[\s（\(](第*[0-9一二三四五六七八九十上下]+[季册卷集章本节课])[\)）]*/i
             var chapters = opus_name.match(re)  // chapters[0] -> 包含符号的章节信息, chapters[1] -> 干净的章节信息
             if(chapters){
                 INFOSET.purified.name = opus_name.replace(chapters[0], '')
