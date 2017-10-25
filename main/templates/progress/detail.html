@@ -624,6 +624,8 @@
                     setOpusType('movie')
                 } else if(parseInt(total) == parseInt(infos.book.pages)){  // 页数相同
                     setOpusType('book')
+                } else {  // 都存在且均 match 或不 match
+                    return false
                 }
             } else if(infos.book.exist && !infos.movie.exist){  // 只有书存在
                 setOpusType('book')
