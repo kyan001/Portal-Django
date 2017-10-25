@@ -60,7 +60,7 @@ def generateWordCloud(txt, height=500, width=500):
     """从 txt 获得词云，返回 png 图片"""
     seg_list = jieba.cut(txt, cut_all=False)
     seg_str = " ".join(seg_list)
-    cloud = wordcloud.WordCloud(relative_scaling=0.5, scale=1.5, width=int(width/1.5), height=int(height/1.5), font_path="static/fonts/SourceHanSansSC-Medium.otf", background_color=None, mode='RGBA').generate(seg_str)
+    cloud = wordcloud.WordCloud(relative_scaling=0.5, scale=1.5, width=int(width / 1.5), height=int(height / 1.5), font_path="static/fonts/SourceHanSansSC-Medium.otf", background_color=None, mode='RGBA').generate(seg_str)
     cloud_image = cloud.to_image()  # or cloud.to_file(path)
     # save to cache
     buf = io.BytesIO()
