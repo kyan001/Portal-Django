@@ -80,12 +80,12 @@ def getOpusWordCloud(request):  # get # ajax
             cached_info = cached_info.decode()
         return json.loads(cached_info) if cached_info else None
 
-    opus_name = request.GET.get('name')
+    opus_name = request.GET.get('name')  # 用户存的名字
     opus_type = request.GET.get('type')
     height = request.GET.get('height') or "500"
     width = request.GET.get('width') or "500"
     if not (opus_name and opus_type):
-        raise Http404("opus 的参数 name 和 opustype 不能为空")
+        raise Http404("opus 的参数 name 和 type 不能为空")
     # check cached
     cache_key = '{typ}:{name}:{hght}x{wdth}:wordcloud'.format(typ=opus_type, name=opus_name, hght=height, wdth=width)
     cache_timeout = 60 * 60 * 24 * 30 * 2  # 2 months
