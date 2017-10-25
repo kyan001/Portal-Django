@@ -86,6 +86,9 @@ def getOpusWordCloud(request):  # get # ajax
     width = request.GET.get('width') or "500"
     if not (opus_name and opus_type):
         raise Http404("opus 的参数 name 和 type 不能为空")
+    info = getOpusCachedInfo(opus_type, opus_name)
+    if not info:
+        raise Http404("opus 的 info 不存在")
     # check cached
     cache_key = '{typ}:{name}:{hght}x{wdth}:wordcloud'.format(typ=opus_type, name=opus_name, hght=height, wdth=width)
     cache_timeout = 60 * 60 * 24 * 30 * 2  # 2 months
@@ -95,9 +98,6 @@ def getOpusWordCloud(request):  # get # ajax
         wrdcld_img = buf.getvalue()
         buf.close()
     else:
-        info = getOpusCachedInfo(opus_type, opus_name)
-        if not info:
-            raise Http404("opus 的 info 不存在")
         summary = info['books'][0]['summary']
         wrdcld_img = generateWordCloud(summary, width=int(width), height=int(height))
         cache.set(cache_key, wrdcld_img, cache_timeout)
