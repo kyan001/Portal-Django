@@ -495,7 +495,7 @@
         getOpusInfo(INFOSET.purified)
     }
     function setOpusType(opustype){
-        console.debug('setOpusType: ' + opustype)
+        console.info('setOpusType: ' + opustype)
         // 判断作品的类型
         function isInSubs(sub, subs){
             // 用于判断 sub:str 内是否包含 subs:list 里的元素
@@ -527,7 +527,7 @@
     function getOpusInfo(infos){
         // 获取作品信息的入口，负责分辨作品的类别
         // 参考印象笔记
-        console.debug('getOpusInfo: ' + infos.name)
+        console.debug('getOpusInfo: %s @ %s', infos.name, INFOSET.type)
         infos.book = {}
         infos.movie = {}
         infos.guess = {}
@@ -545,7 +545,7 @@
     }
     function getBookInfo(infos){
         // 从豆瓣获得书类的信息并存入全局变量
-        console.debug('getBookInfo: ' + infos.name + ' @ ' + INFOSET.type)
+        console.debug('  getBookInfo: ' + infos.name + ' @ ' + INFOSET.type)
         if(infos.name){
             OpusInfoGetter.getBookInfo(infos.name, function(info){
                 infos.book = info;
@@ -556,7 +556,7 @@
     }
     function getMovieInfo(infos){
         // 从豆瓣获得影视类的信息并存入全局变量
-        console.debug('getMovieInfo: ' + infos.name + ' @ ' + INFOSET.type)
+        console.debug('  getMovieInfo: ' + infos.name + ' @ ' + INFOSET.type)
         if(infos.name){
             OpusInfoGetter.getMovieInfo(infos.name, function(info){
                 infos.movie = info;
@@ -568,7 +568,7 @@
     function opusInfoManager(){
         // 获得的 Info 集中在这里管理
         function isInfoReady(set, typ){
-            console.debug('isInfoReady: ' + set + ' @ ' + typ)
+            console.debug('  isInfoReady: %s @ %s', set, typ)
             /* 判断信息是否完全取回来了
              * set -- 'original'/'purified'
              * typ -- 'book'/'movie'/else
@@ -590,9 +590,10 @@
             return false
         }
 
-        console.debug('opusInfoManager:')
+        console.count('opusInfoManager')
         $('#loading-icon').fadeOut()
         if(!isInfoReady('original', INFOSET.type) || !isInfoReady('purified', INFOSET.type)){  // 请求尚未完成
+            console.debug('opusInfoManager: not ready')
             return false
         }
         if(INFOSET.type == 'book' || INFOSET.type == 'movie'){
@@ -634,7 +635,7 @@
             return true
         }
 
-        console.debug('judgeOpusType: ' + INFOSET.type)
+        console.debug('judgeOpusType: %s', INFOSET.type)
         var total = inputs.total.val()
         if(total == ""){
             total = 0;
