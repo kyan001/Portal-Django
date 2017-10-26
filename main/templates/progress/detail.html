@@ -567,6 +567,8 @@
     }
     function opusInfoManager(){
         // 获得的 Info 集中在这里管理
+        // 已知 opus 类型，则在原名信息与去余名信息之间选择
+        // 未知 opus 类型，交给 judgeOpusType 判断类型
         function isInfoReady(set, typ){
             console.debug('  isInfoReady: %s @ %s', set, typ)
             /* 判断信息是否完全取回来了
@@ -614,6 +616,7 @@
     }
     function judgeOpusType(){
         // 智能判断作品信息的类别。
+        // 先进行原名信息的判断，后进行去余名信息的判断，判断过程没有满足特定条件则跳过，最终默认为影视
         function judgeInfoType(infos){
             if(infos.book.exist && infos.movie.exist){  // 都存在
                 if(infos.book.match && !infos.movie.match){  // 书精确，电影不精确
