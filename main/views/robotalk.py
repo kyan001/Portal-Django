@@ -74,6 +74,7 @@ def getResponse(request):  # AJAX
         if content:
             content.replace('{br}', '<br/>')
         return content
+
     # ROBOS list(dictionary)
     ROBOS = {
         'simsimi': {
@@ -113,7 +114,7 @@ def getResponse(request):  # AJAX
             'param': {
                 'format': 'json',
                 'bot_id': '6',
-                'convo_id': request.session.get('key'),
+                'convo_id': request.session.session_key[0:6],  # first 6 digits of session_key as the conversation identifier
                 'say': userinput,
             },
             'getContent': extractProgramo,
