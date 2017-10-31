@@ -284,8 +284,20 @@
                         console.debug("\t机器人 %s 出错", i)
                         for(j in ROBOS){
                             if(ROBOS[j].key == i){
-                                console.log("机器人 " + ROBOS[j].name + " 已被移除")
-                                addChat('呃，我先走了，你们聊~', ROBOS[j].key)
+                                console.debug("\t机器人 %s 已被移除", ROBOS[j].name)
+                                addChat('呃，我先走了，你们聊～', ROBOS[j].key)
+                                ROBOS.splice(j, 1)
+                            }
+                        }
+                    }
+                }
+                if(data.disabled){
+                    for(i in data.disabed){
+                        console.debug("\t机器人 %s 被禁用", i)
+                        for(i in ROBOS){
+                            if(ROBOS[j].key == i){
+                                console.debug("\t机器人 %s 已被移除", ROBOS[j].name)
+                                addChat('呃，我已被禁用，你们聊～', ROBOS[j].key)
                                 ROBOS.splice(j, 1)
                             }
                         }
