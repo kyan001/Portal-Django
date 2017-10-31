@@ -161,7 +161,7 @@
         // check who is qualified to be talker
         var qualified = []
         for(i in ROBOS){
-            r = ROBOS[i].key
+            r = ROBOS[i]
             if(lastchat[r.key] && lastchat[r.key].length < 25 && lastchat['whotalk'] != r.key){  // 发言长度筛选
                 qualified.push(ROBOS[i])
             }
