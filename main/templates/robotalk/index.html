@@ -306,7 +306,9 @@
                 for (robo in data.result){
                     addChat(data.result[robo].txt, robo, to_)
                 }
-                $('#counts').text(data.count)
+                $('#counts').fadeOut("normal", function(){
+                    $('#counts').text(data.count).fadeIn()
+                })
                 showLoading(false)
                 randomEvents()
             },
