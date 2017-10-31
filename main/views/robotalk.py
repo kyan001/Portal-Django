@@ -121,6 +121,7 @@ def getResponse(request):  # AJAX
             'disabled': True,
         },
     }
+
     # save count into cache
     def getTotalMessageCounts():
         """服务器启动后一共进行过多少次对话"""
@@ -132,6 +133,7 @@ def getResponse(request):  # AJAX
         return cache_count
 
     def getFullurl(robo):
+        """根据每个 robo 的参数和地址生成完整的字符串请求 url"""
         if not (robo and robo.get('param') and robo.get('url')):
             return None
         param = urllib.parse.urlencode(robo.get('param'))
@@ -139,6 +141,11 @@ def getResponse(request):  # AJAX
         return fullurl
 
     def getRoboResponse(robo):
+        """获得某个 robo 的回复
+
+        Args:
+            robo: ROBOS[i]
+        """
         fullurl = getFullurl(robo)
         u = urllib.request.urlopen(fullurl)
         u_resp = u.read()
@@ -147,6 +154,12 @@ def getResponse(request):  # AJAX
         return u_resp.decode()
 
     def addToResult(robo, result):
+        """将某个 robo 的回复及元数据加入到结果集中
+
+        Args:
+            robo: ROBOS[i]
+            r: RESULT, which will be modified
+        """
         key = robo.get('from')
         time_now = datetime.datetime.now()
         resp = getRoboResponse(robo)
