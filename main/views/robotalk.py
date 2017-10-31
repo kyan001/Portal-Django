@@ -153,7 +153,7 @@ def getResponse(request):  # AJAX
             return None
         return u_resp.decode()
 
-    def addToResult(robo, result):
+    def addResponseToResult(robo, r):
         """将某个 robo 的回复及元数据加入到结果集中
 
         Args:
@@ -172,9 +172,22 @@ def getResponse(request):  # AJAX
             'rtt': time_rtt,
         }
         if not txt:
-            result['failed'][key] = value
+            r['failed'][key] = value
         else:
-            result['result'][key] = value
+            r['result'][key] = value
+
+    def addDisabledToResult(robo, r):
+        """将已禁用的 robo 加入到结果集中
+
+        Args:
+            robo: ROBOS[i]
+            r: RESULT, which will be modified
+        """
+        key = robo.get('from')
+        time_now = datetime.datetime.now()
+        r['disabled'][key] = {
+            'time': time_now,  # not necessary
+        }
 
     # get results
     RESULT = {
@@ -185,11 +198,13 @@ def getResponse(request):  # AJAX
     }
     if from_:
         robo = ROBOS.get(from_)
-        addToResult(robo, result)
+        addResponseToResult(robo, RESULT)
     else:
         for i in ROBOS:
-            if not ROBOS.get(i).get('disabled'):
-                addToResult(ROBOS.get(i), result)
+            robo = ROBOS.get(i)
+            if robo.get('disabled'):  # disabled 的机器人加入结果的 disabled 中
+                addDisabledToResult(robo, RESULT)
+            else:  # 未 disabled 的加入结果的 result 或 failed 中
+                addResponseToResult(robo, RESULT)
     # render
-    result['count'] = cache_count
-    return util.ctrl.returnJson(result)
+    return util.ctrl.returnJson(RESULT)
