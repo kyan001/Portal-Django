@@ -68,7 +68,7 @@ urlpatterns = [
     url(r'^badge/detail$', main.views.badge.detail),  # get
     # robo talk
     url(r'^robotalk$', main.views.robotalk.index),
-    url(r'^robotalk/getresponse$', main.views.robotalk.getresponse),  # get
+    url(r'^robotalk/getresponse$', main.views.robotalk.getResponse),  # get
     # SUPERUSER
     url(r'^superuser/index$', main.views.superuser.index),
     url(r'^superuser/broadcast$', main.views.superuser.broadcast),

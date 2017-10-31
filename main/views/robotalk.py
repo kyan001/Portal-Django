@@ -28,7 +28,7 @@ def index(request):
     return render(request, 'robotalk/index.html', context)
 
 
-def getresponse(request):  # AJAX
+def getResponse(request):  # AJAX
     """Get input and take back request via AJAX"""
     userinput = request.GET.get('txt')
     if not userinput:
@@ -134,7 +134,7 @@ def getresponse(request):  # AJAX
         fullurl = "{u}?{p}".format(u=robo.get('url'), p=param)
         return fullurl
 
-    def getResponse(robo):
+    def getRoboResponse(robo):
         fullurl = getFullurl(robo)
         u = urllib.request.urlopen(fullurl)
         u_resp = u.read()
@@ -145,7 +145,7 @@ def getresponse(request):  # AJAX
     def addToResult(robo, result):
         key = robo.get('from')
         time_now = datetime.datetime.now()
-        resp = getResponse(robo)
+        resp = getRoboResponse(robo)
         txt = robo.get('getContent')(resp)
         time_rtt = int((datetime.datetime.now() - time_now).microseconds / 1000)  # milliseconds
         value = {
