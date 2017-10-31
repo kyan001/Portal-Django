@@ -162,31 +162,64 @@
     }
 
     function roboChatToEachEvent(){
-        // check who is qualified to be talker
-        var qualified = []
-        for(i in ROBOS){
-            r = ROBOS[i]
-            if(lastchat[r.key] && lastchat[r.key].length < 25 && lastchat['whotalk'] != r.key){  // 发言长度筛选
-                qualified.push(ROBOS[i])
-            }
-        }
-        // judge whotalk
-        if(!qualified.length){  // no enough qualified robos
-            return null
-        }
+        // Robos chat to each other
+        console.debug('roboChatToEachEvent: 触发事件：机器人之间对话')
         function randomsort(a, b) {
+            // a random sort for randomsorting the ROBOS and qualified_robos
             return Math.random() > 0.5 ? -1 : 1;
         }
-        qualified = qualified.sort(randomsort)
-        var whotalk = qualified.pop()
-        // judge wholiston
-        do {
-            var wholisten = ROBOS.sort(randomsort)[0]
-        } while (wholisten == whotalk)
-        if(lastchat['whotalk'] != whotalk.key){  // same person cannot talk twice
-            getResponse(lastchat[wholisten.key], whotalk.key, wholisten.key)  // talk
+
+        function qualifyTalker(){
+            // check who is qualified to be talker
+            var qualified_talker = []
+            for(i in ROBOS){
+                r = ROBOS[i]
+                if(lastchat[r.key] && lastchat[r.key].length < 25 && lastchat['whotalk'] != r.key){  // 曾发言，且发言长度小于 25，且不是最后发言者
+                    qualified_talker.push(ROBOS[i])
+                }
+            }
+            return qualified_talker
         }
-        console.log('触发事件：机器人之间对话，由 ' + whotalk.name + ' 对 ' + wholisten.name + ' 说')
+
+        function qualifyListener(){
+            // check who is qualified to be listener
+            var qualified_listener = []
+            for(i in ROBOS){
+                r = ROBOS[i]
+                if(lastchat[r.key]){  // 曾发言，且不能是将要发言者
+                    qualified_listener.push(ROBOS[i])
+                }
+            }
+            return qualified_listener
+        }
+
+        function decideWhoWillTalk(qualified_talkers){
+            // decide who is the next talker in RCTE from all qualified talkers
+            if(!qualified_talkers.length){  // no qualified talkers
+                return null
+            }
+            return qualified_talkers.sort(randomsort).pop()  // random select one out of all
+        }
+
+        function decideWhoWillListen(qualified_listeners, whotalk){
+            // decide who will be the listener in RCTE from all qualified listeners
+            if(!qualified_listeners.length){  // no qualified listeners
+                return null
+            }
+            listeners = qualified_listeners.sort(randomsort)
+            var wholisten = listeners.pop()  // random select one out of all
+            if(wholisten == whotalk){
+                wholisten = listeners.pop()  // reselect wholisten if talker is the listener
+            }
+            return wholisten
+        }
+
+        var qualified_talkers = qualifyTalker()
+        var whotalk = decideWhoWillTalk(qualified_talkers)
+        var qualified_listeners = qualifyListener()
+        var wholisten = decideWhoWillListen(qualified_listeners, whotalk)
+        getResponse(lastchat[wholisten.key], whotalk.key, wholisten.key)  // talk
+        console.debug('\t由 %s 对 %s 说', whotalk.name, wholisten.name)
     }
 
     function showLoading(enable){
@@ -201,6 +234,7 @@
     }
 
     function sendmsg(){
+
         var input_ele = $('input[name="userinput"]')
         var input_txt = input_ele.val()
 
@@ -209,7 +243,7 @@
             var to = ''
             for(i in ROBOS){
                 if(input_txt.indexOf(ROBOS[i].name) != -1 || input_txt.indexOf(ROBOS[i].key) != -1){
-                    console.log('触发事件：只询问某个机器人：' + ROBOS[i].name)
+                    console.debug('触发事件：只询问某个机器人：' + ROBOS[i].name)
                     to = ROBOS[i].key
                     break
                 }
@@ -241,12 +275,13 @@
             url: '/robotalk/getresponse',
             data: param,
             success: function(data){
+                console.count('/robotalk/getresponse success')
                 if(data.error){
-                    alert("Error:"+data.error)
+                    alert("Error: " + data.error)
                 }
                 if(data.failed){
                     for(i in data.failed){
-                        console.log("机器人 " + i + " 出错")
+                        console.debug("\t机器人 %s 出错", i)
                         for(j in ROBOS){
                             if(ROBOS[j].key == i){
                                 console.log("机器人 " + ROBOS[j].name + " 已被移除")
