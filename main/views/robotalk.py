@@ -122,11 +122,14 @@ def getResponse(request):  # AJAX
         },
     }
     # save count into cache
-    cache_key = 'robotalk:count'
-    cache_timeout = 60 * 60 * 24 * 7 * 4  # 1 month
-    cache_count = cache.get(cache_key, 0)
-    cache_count += 1
-    cache.set(cache_key, cache_count, cache_timeout)
+    def getTotalMessageCounts():
+        """服务器启动后一共进行过多少次对话"""
+        cache_key = 'robotalk:count'
+        cache_timeout = 60 * 60 * 24 * 7 * 4  # 1 month
+        cache_count = cache.get(cache_key, 0)
+        cache_count += 1
+        cache.set(cache_key, cache_count, cache_timeout)
+        return cache_count
 
     def getFullurl(robo):
         if not (robo and robo.get('param') and robo.get('url')):
@@ -161,9 +164,11 @@ def getResponse(request):  # AJAX
             result['result'][key] = value
 
     # get results
-    result = {
-        'result': {},
-        'failed': {},
+    RESULT = {
+        'result': {},  # 可用的结果，Available results
+        'failed': {},  # 发送了请求但未返回内容的，responsed but no txt
+        'disabled': {},  # 不可用的，force to not request
+        'count': getTotalMessageCounts(),  # 对话总数，message number from cache
     }
     if from_:
         robo = ROBOS.get(from_)
