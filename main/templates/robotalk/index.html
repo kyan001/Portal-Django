@@ -141,7 +141,8 @@
         new Robo('programo', 'Program-O', 'danger', 'fromrobo3.png'),
     ]
     var lastchat = {
-        'whotalk': '',  // last chat from who
+        'whotalk': '',  // who gave the latest chat
+        'RCTE': false,  // Robo is Chatting To Each other
     }
 
     function randomNum(){ // 0-100
@@ -149,8 +150,11 @@
     }
 
     function randomEvents(){
+        // RCTE
+        console.debug('randomEvents:')
         var RCTE_rate = lastchat['RCTE'] ? 55 : 30  // 30% chance to start a RCTE, 55% chance to reply a robo
-        var isRoboChatToEach = randomNum() < RCTE_rate
+        var isRoboChatToEach = randomNum() < RCTE_rate  // roll the dice to decide
+        console.debug('\tRCTE: %s, isRoboChatToEach: %s', lastchat['RCTE'], isRoboChatToEach)
         lastchat['RCTE'] = isRoboChatToEach
         if(isRoboChatToEach){
             roboChatToEachEvent()
@@ -268,23 +272,33 @@
         if(word == ''){
             return
         }
-        lastchat[from_] = word// remember last words eachone said
+        lastchat[from_] = word  // remember last words eachone said
         lastchat['whotalk'] = from_
         to_ = arguments[2] || 'all'
-        // Create chat-row
-        var crow = $("<div class='row'></div>")
-        // Create chat-col
-        var ccol = $('<div></div>').addClass('col-xs-9 col-sm-8 col')
+        /* Create chat html
+            <.row>
+                <.col>
+                    <ul.list-group>
+                        <span.list-group-item.chat-li>
+                            <span.text-quote></span> 引用的话
+                            {{word}} 说的话
+                        </span>
+                    </ul>
+                </.col>
+                <.col> ucol
+                    <img.user-img> 用户头像
+                </.col> ucol
+            </.row>
+        */
+        var crow = $("<div class='row'></div>")  // .row
+        var ccol = $('<div></div>').addClass('col-xs-9 col-sm-8 col')  // .row .col
         if(from_=='me'){
             ccol.addClass('col-xs-offset-1 col-sm-offset-3')
         }
-        // Create user-img
-        var ucol = $('<div></div>').addClass('col-xs-2 col-sm-1 col')
-        var uimg = $('<img>').addClass('user-img befast')
-        // Create chat-ul
-        var cul = $('<ul></ul>').addClass('list-group')
-        // Create chat-ele
-        var cele = $('<span></span>').addClass('list-group-item chat-li')
+        var ucol = $('<div></div>').addClass('col-xs-2 col-sm-1 col')  // (user).col
+        var uimg = $('<img>').addClass('user-img befast')  // (user).col img.user-img
+        var cul = $('<ul></ul>').addClass('list-group')  // .row .col ul.list-group
+        var cele = $('<span></span>').addClass('list-group-item chat-li')  //chat-ele
         for (i in ROBOS){
             if(ROBOS[i].key == from_){
                 uimg.attr('title', ROBOS[i].name)
