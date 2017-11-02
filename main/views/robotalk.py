@@ -28,7 +28,7 @@ def index(request):
     return render(request, 'robotalk/index.html', context)
 
 
-def getresponse(request):  # AJAX
+def getResponse(request):  # AJAX
     """Get input and take back request via AJAX"""
     userinput = request.GET.get('txt')
     if not userinput:
@@ -74,6 +74,7 @@ def getresponse(request):  # AJAX
         if content:
             content.replace('{br}', '<br/>')
         return content
+
     # ROBOS list(dictionary)
     ROBOS = {
         'simsimi': {
@@ -113,28 +114,38 @@ def getresponse(request):  # AJAX
             'param': {
                 'format': 'json',
                 'bot_id': '6',
-                'convo_id': request.session.get('key'),
+                'convo_id': request.session.session_key[0:6],  # first 6 digits of session_key as the conversation identifier
                 'say': userinput,
             },
             'getContent': extractProgramo,
             'disabled': True,
         },
     }
+
     # save count into cache
-    cache_key = 'robotalk:count'
-    cache_timeout = 60 * 60 * 24 * 7 * 4  # 1 month
-    cache_count = cache.get(cache_key, 0)
-    cache_count += 1
-    cache.set(cache_key, cache_count, cache_timeout)
+    def getTotalMessageCounts():
+        """服务器启动后一共进行过多少次对话"""
+        cache_key = 'robotalk:count'
+        cache_timeout = 60 * 60 * 24 * 7 * 4  # 1 month
+        cache_count = cache.get(cache_key, 0)
+        cache_count += 1
+        cache.set(cache_key, cache_count, cache_timeout)
+        return cache_count
 
     def getFullurl(robo):
+        """根据每个 robo 的参数和地址生成完整的字符串请求 url"""
         if not (robo and robo.get('param') and robo.get('url')):
             return None
         param = urllib.parse.urlencode(robo.get('param'))
         fullurl = "{u}?{p}".format(u=robo.get('url'), p=param)
         return fullurl
 
-    def getResponse(robo):
+    def getRoboResponse(robo):
+        """获得某个 robo 的回复
+
+        Args:
+            robo: ROBOS[i]
+        """
         fullurl = getFullurl(robo)
         u = urllib.request.urlopen(fullurl)
         u_resp = u.read()
@@ -142,10 +153,16 @@ def getresponse(request):  # AJAX
             return None
         return u_resp.decode()
 
-    def addToResult(robo, result):
+    def addResponseToResult(robo, r):
+        """将某个 robo 的回复及元数据加入到结果集中
+
+        Args:
+            robo: ROBOS[i]
+            r: RESULT, which will be modified
+        """
         key = robo.get('from')
         time_now = datetime.datetime.now()
-        resp = getResponse(robo)
+        resp = getRoboResponse(robo)
         txt = robo.get('getContent')(resp)
         time_rtt = int((datetime.datetime.now() - time_now).microseconds / 1000)  # milliseconds
         value = {
@@ -155,22 +172,39 @@ def getresponse(request):  # AJAX
             'rtt': time_rtt,
         }
         if not txt:
-            result['failed'][key] = value
+            r['failed'][key] = value
         else:
-            result['result'][key] = value
+            r['result'][key] = value
+
+    def addDisabledToResult(robo, r):
+        """将已禁用的 robo 加入到结果集中
+
+        Args:
+            robo: ROBOS[i]
+            r: RESULT, which will be modified
+        """
+        key = robo.get('from')
+        time_now = datetime.datetime.now()
+        r['disabled'][key] = {
+            'time': time_now,  # not necessary
+        }
 
     # get results
-    result = {
-        'result': {},
-        'failed': {},
+    RESULT = {
+        'result': {},  # 可用的结果，Available results
+        'failed': {},  # 发送了请求但未返回内容的，responsed but no txt
+        'disabled': {},  # 不可用的，force to not request
+        'count': getTotalMessageCounts(),  # 对话总数，message number from cache
     }
     if from_:
         robo = ROBOS.get(from_)
-        addToResult(robo, result)
+        addResponseToResult(robo, RESULT)
     else:
         for i in ROBOS:
-            if not ROBOS.get(i).get('disabled'):
-                addToResult(ROBOS.get(i), result)
+            robo = ROBOS.get(i)
+            if robo.get('disabled'):  # disabled 的机器人加入结果的 disabled 中
+                addDisabledToResult(robo, RESULT)
+            else:  # 未 disabled 的加入结果的 result 或 failed 中
+                addResponseToResult(robo, RESULT)
     # render
-    result['count'] = cache_count
-    return util.ctrl.returnJson(result)
+    return util.ctrl.returnJson(RESULT)

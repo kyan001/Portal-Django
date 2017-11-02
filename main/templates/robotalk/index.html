@@ -141,7 +141,8 @@
         new Robo('programo', 'Program-O', 'danger', 'fromrobo3.png'),
     ]
     var lastchat = {
-        'whotalk': '',  // last chat from who
+        'whotalk': '',  // who gave the latest chat
+        'RCTE': false,  // Robo is Chatting To Each other
     }
 
     function randomNum(){ // 0-100
@@ -149,8 +150,11 @@
     }
 
     function randomEvents(){
+        // RCTE
+        console.debug('randomEvents:')
         var RCTE_rate = lastchat['RCTE'] ? 55 : 30  // 30% chance to start a RCTE, 55% chance to reply a robo
-        var isRoboChatToEach = randomNum() < RCTE_rate
+        var isRoboChatToEach = randomNum() < RCTE_rate  // roll the dice to decide
+        console.debug('\tRCTE: %s, isRoboChatToEach: %s', lastchat['RCTE'], isRoboChatToEach)
         lastchat['RCTE'] = isRoboChatToEach
         if(isRoboChatToEach){
             roboChatToEachEvent()
@@ -158,31 +162,64 @@
     }
 
     function roboChatToEachEvent(){
-        // check who is qualified to be talker
-        var qualified = []
-        for(i in ROBOS){
-            r = ROBOS[i].key
-            if(lastchat[r.key] && lastchat[r.key].length < 25 && lastchat['whotalk'] != r.key){  // 发言长度筛选
-                qualified.push(ROBOS[i])
-            }
-        }
-        // judge whotalk
-        if(!qualified.length){  // no enough qualified robos
-            return null
-        }
+        // Robos chat to each other
+        console.debug('roboChatToEachEvent: 触发事件：机器人之间对话')
         function randomsort(a, b) {
+            // a random sort for randomsorting the ROBOS and qualified_robos
             return Math.random() > 0.5 ? -1 : 1;
         }
-        qualified = qualified.sort(randomsort)
-        var whotalk = qualified.pop()
-        // judge wholiston
-        do {
-            var wholisten = ROBOS.sort(randomsort)[0]
-        } while (wholisten == whotalk)
-        if(lastchat['whotalk'] != whotalk.key){  // same person cannot talk twice
-            getResponse(lastchat[wholisten.key], whotalk.key, wholisten.key)  // talk
+
+        function qualifyTalker(){
+            // check who is qualified to be talker
+            var qualified_talker = []
+            for(i in ROBOS){
+                r = ROBOS[i]
+                if(lastchat[r.key] && lastchat[r.key].length < 25 && lastchat['whotalk'] != r.key){  // 曾发言，且发言长度小于 25，且不是最后发言者
+                    qualified_talker.push(ROBOS[i])
+                }
+            }
+            return qualified_talker
         }
-        console.log('触发事件：机器人之间对话，由 ' + whotalk.name + ' 对 ' + wholisten.name + ' 说')
+
+        function qualifyListener(){
+            // check who is qualified to be listener
+            var qualified_listener = []
+            for(i in ROBOS){
+                r = ROBOS[i]
+                if(lastchat[r.key]){  // 曾发言，且不能是将要发言者
+                    qualified_listener.push(ROBOS[i])
+                }
+            }
+            return qualified_listener
+        }
+
+        function decideWhoWillTalk(qualified_talkers){
+            // decide who is the next talker in RCTE from all qualified talkers
+            if(!qualified_talkers.length){  // no qualified talkers
+                return null
+            }
+            return qualified_talkers.sort(randomsort).pop()  // random select one out of all
+        }
+
+        function decideWhoWillListen(qualified_listeners, whotalk){
+            // decide who will be the listener in RCTE from all qualified listeners
+            if(!qualified_listeners.length){  // no qualified listeners
+                return null
+            }
+            listeners = qualified_listeners.sort(randomsort)
+            var wholisten = listeners.pop()  // random select one out of all
+            if(wholisten == whotalk){
+                wholisten = listeners.pop()  // reselect wholisten if talker is the listener
+            }
+            return wholisten
+        }
+
+        var qualified_talkers = qualifyTalker()
+        var whotalk = decideWhoWillTalk(qualified_talkers)
+        var qualified_listeners = qualifyListener()
+        var wholisten = decideWhoWillListen(qualified_listeners, whotalk)
+        getResponse(lastchat[wholisten.key], whotalk.key, wholisten.key)  // talk
+        console.debug('\t由 %s 对 %s 说', whotalk.name, wholisten.name)
     }
 
     function showLoading(enable){
@@ -197,6 +234,7 @@
     }
 
     function sendmsg(){
+
         var input_ele = $('input[name="userinput"]')
         var input_txt = input_ele.val()
 
@@ -205,7 +243,7 @@
             var to = ''
             for(i in ROBOS){
                 if(input_txt.indexOf(ROBOS[i].name) != -1 || input_txt.indexOf(ROBOS[i].key) != -1){
-                    console.log('触发事件：只询问某个机器人：' + ROBOS[i].name)
+                    console.debug('触发事件：只询问某个机器人：' + ROBOS[i].name)
                     to = ROBOS[i].key
                     break
                 }
@@ -237,16 +275,29 @@
             url: '/robotalk/getresponse',
             data: param,
             success: function(data){
+                console.count('/robotalk/getresponse success')
                 if(data.error){
-                    alert("Error:"+data.error)
+                    alert("Error: " + data.error)
                 }
                 if(data.failed){
                     for(i in data.failed){
-                        console.log("机器人 " + i + " 出错")
+                        console.debug("\t机器人 %s 出错", i)
                         for(j in ROBOS){
                             if(ROBOS[j].key == i){
-                                console.log("机器人 " + ROBOS[j].name + " 已被移除")
-                                addChat('呃，我先走了，你们聊~', ROBOS[j].key)
+                                console.debug("\t机器人 %s 已被移除", ROBOS[j].name)
+                                addChat('呃，我先走了，你们聊～', ROBOS[j].key)
+                                ROBOS.splice(j, 1)
+                            }
+                        }
+                    }
+                }
+                if(data.disabled){
+                    for(i in data.disabed){
+                        console.debug("\t机器人 %s 被禁用", i)
+                        for(i in ROBOS){
+                            if(ROBOS[j].key == i){
+                                console.debug("\t机器人 %s 已被移除", ROBOS[j].name)
+                                addChat('呃，我已被禁用，你们聊～', ROBOS[j].key)
                                 ROBOS.splice(j, 1)
                             }
                         }
@@ -255,7 +306,9 @@
                 for (robo in data.result){
                     addChat(data.result[robo].txt, robo, to_)
                 }
-                $('#counts').text(data.count)
+                $('#counts').fadeOut("normal", function(){
+                    $('#counts').text(data.count).fadeIn()
+                })
                 showLoading(false)
                 randomEvents()
             },
@@ -268,23 +321,33 @@
         if(word == ''){
             return
         }
-        lastchat[from_] = word// remember last words eachone said
+        lastchat[from_] = word  // remember last words eachone said
         lastchat['whotalk'] = from_
         to_ = arguments[2] || 'all'
-        // Create chat-row
-        var crow = $("<div class='row'></div>")
-        // Create chat-col
-        var ccol = $('<div></div>').addClass('col-xs-9 col-sm-8 col')
+        /* Create chat html
+            <.row>
+                <.col>
+                    <ul.list-group>
+                        <span.list-group-item.chat-li>
+                            <span.text-quote></span> 引用的话
+                            {{word}} 说的话
+                        </span>
+                    </ul>
+                </.col>
+                <.col> ucol
+                    <img.user-img> 用户头像
+                </.col> ucol
+            </.row>
+        */
+        var crow = $("<div class='row'></div>")  // .row
+        var ccol = $('<div></div>').addClass('col-xs-9 col-sm-8 col')  // .row .col
         if(from_=='me'){
             ccol.addClass('col-xs-offset-1 col-sm-offset-3')
         }
-        // Create user-img
-        var ucol = $('<div></div>').addClass('col-xs-2 col-sm-1 col')
-        var uimg = $('<img>').addClass('user-img befast')
-        // Create chat-ul
-        var cul = $('<ul></ul>').addClass('list-group')
-        // Create chat-ele
-        var cele = $('<span></span>').addClass('list-group-item chat-li')
+        var ucol = $('<div></div>').addClass('col-xs-2 col-sm-1 col')  // (user).col
+        var uimg = $('<img>').addClass('user-img befast')  // (user).col img.user-img
+        var cul = $('<ul></ul>').addClass('list-group')  // .row .col ul.list-group
+        var cele = $('<span></span>').addClass('list-group-item chat-li')  //chat-ele
         for (i in ROBOS){
             if(ROBOS[i].key == from_){
                 uimg.attr('title', ROBOS[i].name)
