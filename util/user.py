@@ -41,9 +41,9 @@ def cookieLogout(response):
 
 def addCookieLogin(response, user, answer_raw):
     """add login info into cookie"""
-    oneweek = 60 * 60 * 24 * 7
-    response.set_cookie('user_id', user.id, max_age=oneweek)
-    response.set_cookie('user_answer', answer_raw, max_age=oneweek)
+    expire_time = 60 * 60 * 24 * 180  # half year
+    response.set_cookie('user_id', user.id, max_age=expire_time)
+    response.set_cookie('user_answer', answer_raw, max_age=expire_time)
     return response
 
 
