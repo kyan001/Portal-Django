@@ -56,26 +56,28 @@
             <div class="page-header">
                 <h3>
                     <span class="glyphicon glyphicon-inbox"></span> 收信箱
-                    <small>({{chats.paginator.count}})</small>
-                    <span class='pull-right'>
-                        <div class='visible-xs-inline-block'>
+                    <small>({{ chats.paginator.count }})</small>
+                    <span id='show-by-type' class='pull-right'>
+                        <div id='show-by-type-mobile' class='visible-xs-inline-block'>
                             <div class="btn-group">
                                 <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ types.thiszh }} <span class="caret"></span>
+                                    {{ msg_types.thiszh }} <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    {% for tt, tn in types.all.items %}
-                                        <li class="{% if types.this == tt %}active{% endif %}">
-                                            <a href='?type={{ tt }}'>{{ tn }}</a>
+                                    {% for msg_typ, typ_name in msg_types.all.items %}
+                                        <li class="{% if msg_types.this == msg_typ %}active{% endif %}">
+                                            <a href='?type={{ msg_typ }}'>{{ typ_name }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>
                             </div>
                         </div>
-                        <div class='hidden-xs'>
-                            {% for tt, tn in types.all.items %}
-                                <a class='btn btn-sm {% if types.this == tt %}btn-info{% else %}btn-default{% endif %}' href='?type={{ tt }}'>{{ tn }}</a>
-                            {% endfor %}
+                        <div id='show-by-type-nonmobile' class='hidden-xs'>
+                            <div class="btn-group" role="group">
+                                {% for msg_typ, typ_name in msg_types.all.items %}
+                                    <a class='btn btn-sm {% if msg_types.this == msg_typ %}btn-info{% else %}btn-default{% endif %}' href='?type={{ msg_typ }}'>{{ typ_name }}</a>
+                                {% endfor %}
+                            </div>
                         </div>
                     </span>
                 </h3>
