@@ -87,6 +87,7 @@ def conversation(request):
     mode = request.GET.get('mode')
     if mode == 'quicknote':
         return redirect('/chat/conversation?receiver={user.nickname}'.format(user=user))
+    title = request.GET.get('title')
     receiver_nickname = request.GET.get('receiver')
     if receiver_nickname:
         # get receiver
@@ -97,7 +98,6 @@ def conversation(request):
         chats = Chat.objects.filter(condition1 | condition2).order_by('-created')  # [0:10]
         context['chats'] = chats
         context['receiver'] = receiver
-    title = request.GET.get('title')
         # add exp
         util.userexp.addExp(user, 'chat', 1, '查看与 @{receiver.nickname} 的对话'.format(receiver=receiver))
     # render
