@@ -18,7 +18,7 @@ def inbox(request):
     if not user:
         return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
     # get inputs
-    chat_type = request.GET.get('type') or 'received'
+    filter_type = request.GET.get('type') or 'received'
 
     # get chats
     MSG_FILTERS = collections.OrderedDict()
@@ -27,7 +27,7 @@ def inbox(request):
     MSG_FILTERS['fromsys'] = '系统'
     MSG_FILTERS['fromhuman'] = '朋友'
     MSG_FILTERS['sent'] = '已发送'
-    chat_list = user.getChats(chat_type) if chat_type in MSG_FILTERS.keys() else user.getChats('received')
+    chat_list = user.getChats(filter_type) if filter_type in MSG_FILTERS.keys() else user.getChats('received')
     # paginator
     paginator = Paginator(chat_list, per_page=15)
     page = request.GET.get('page')
@@ -48,8 +48,8 @@ def inbox(request):
     context['chats'] = chats
     context['chaters'] = chaters
     context['msg_filters'] = {
-        'this': chat_type,
-        'thiszh': MSG_FILTERS.get(chat_type),
+        'this': filter_type,
+        'thiszh': MSG_FILTERS.get(filter_type),
         'all': MSG_FILTERS,
     }
     return render(request, 'chat/inbox.html', context)

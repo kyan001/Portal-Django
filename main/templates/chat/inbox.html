@@ -69,7 +69,7 @@
                     </a>
                 {% empty %}
                     <div class='well'>
-                        聊天对象会显示在这里
+                        没有相关好友
                     </div>
                 {% endfor %}
             </div>
@@ -96,7 +96,7 @@
                                             </a>
                                         </li>
                                     {% empty %}
-                                        <li class="dropdown-header">暂时没有好友</li>
+                                        <li class="dropdown-header">没有相关好友</li>
                                     {% endfor %}
                                 </ul>
                             </div>
@@ -123,7 +123,10 @@
                         <div id='show-by-type-nonmobile' class='hidden-xs'>
                             <div class="btn-group" role="group">
                                 {% for fltr_typ, fltr_name in msg_filters.all.items %}
-                                    <a class='btn btn-sm {% if msg_filters.this == fltr_typ %}btn-primary{% else %}btn-default{% endif %}' href='?type={{ fltr_typ }}'>{{ fltr_name }}</a>
+                                    <a class='btn btn-sm {% if msg_filters.this == fltr_typ %}btn-primary{% else %}btn-default{% endif %}' href='?type={{ fltr_typ }}'>
+                                        <span class='glyphicon glyphicon-filter'></span>
+                                        {{ fltr_name }}
+                                    </a>
                                 {% endfor %}
                             </div>
                         </div>
