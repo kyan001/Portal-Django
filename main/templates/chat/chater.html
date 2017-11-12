@@ -1,22 +1,22 @@
-{% if chat.sender.username == 'syschat' %}
+{% if sender.username == 'syschat' %}
     {# syschat -> me #}
     <span class="text-danger">
         <span class="glyphicon glyphicon-flag"></span>
-        @{{ chat.sender.nickname }}
+        @{{ sender.nickname }}
     </span>
-{% elif chat.senderid == cuser.id and chat.receiverid == cuser.id %}
+{% elif sender.id == cuser.id and receiver.id == cuser.id %}
     {# me -> me #}
     <span class="glyphicon glyphicon-list-alt"></span>
     <span class="text-muted">临时笔记</span>
-{% elif chat.senderid == cuser.id %}
+{% elif sender.id == cuser.id %}
     {# me -> someone #}
     <span class="text-primary">我</span>
     <span class='text-muted'>></span>
-    <span class='text-muted'>@{{ chat.receiver.nickname }}</span>
+    <span class='text-muted'>@{{ receiver.nickname }}</span>
 {% else %}
     {# someone -> me #}
     <span class="text-primary">
         <span class="glyphicon glyphicon-comment"></span>
-        @{{ chat.sender.nickname }}
+        @{{ sender.nickname }}
     </span>
 {% endif %}
