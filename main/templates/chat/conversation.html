@@ -7,9 +7,6 @@
 
 {% block css %}
 <style>
-    .container {
-        font-family: "微软雅黑","Microsoft Yahei","Helvetica Neue",Helvetica,"Hiragino Sans GB","Segoe UI",Tahoma,Arial,STHeiti,sans-serif !important;
-    }
     .page-header {
         margin: 0px;
     }
@@ -22,8 +19,8 @@
     .chat-content {
         word-break: break-all;
     }
-    #nickname-group .input-group-addon {
-        padding-right: 1px;
+    #nickname-group {
+
     }
 </style>
 {% endblock css %}
@@ -54,39 +51,46 @@
                 {% csrf_token %}
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <textarea name='content' class="form-control" rows="2" placeholder="请输入内容" autocomplete="off" {%if receiver%}autofocus{%endif%} oninput="validateContent()" tabindex="2"></textarea>
-                    </div>
-                    <div class="panel-footer">
                         <div class="row">
-                            <div class="col-md-3 col-sm-4 col-xs-12">
-                                <div class="input-group" id="nickname-group">
-                                    <div class="input-group-addon">
-                                        <span class="text-muted">To:</span> @
-                                    </div>
-                                    {% if receiver %}
-                                        <input type='text' name='receiver' class="form-control" placeholder="用户" value="{{receiver.nickname}}" readonly>
-                                    {%else%}
-                                        <input type='text' name='receiver' class="form-control" placeholder="用户" oninput="validateNickname()" tabindex="1" autofocus>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="col-md-9 col-sm-8 col-xs-12">
-                                <div class="input-group">
+                            <div class="col-md-7 col-sm-6 col-xs-12">
+                                <div class="form-group">
                                     <input type="text" name='title' class="form-control" id="input-title" autocomplete="off" placeholder="标题（选填）" tabindex="3" {%if title%}value="{{title}}"{%endif%}>
-                                    <span class="input-group-btn">
-                                        <a id='send-btn' class="btn btn-primary" onclick="submitSend()" disabled tabindex="4">
-                                            发送
-                                        </a>
-                                    </span>
-                                </div>
+                                </div><!--.form-group-->
                             </div>
-                        </div>
-                    </div>
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <div id="nickname-group" class="input-group">
+                                        <div class="input-group-addon">@</div>
+                                        {% if receiver %}
+                                            <input type='text' name='receiver' class="form-control" placeholder="用户昵称" value="{{receiver.nickname}}" readonly>
+                                        {%else%}
+                                            <input type='text' name='receiver' class="form-control" placeholder="用户昵称" oninput="validateNickname()" tabindex="1" autofocus>
+                                        {% endif %}
+                                        <div class="input-group-btn">
+                                            <a id='send-btn' class="btn btn-success btn-block" onclick="submitSend()" disabled tabindex="4">
+                                                <span class='glyphicon glyphicon-send'></span>
+                                                <span>发送</span>
+                                            </a>
+                                        </div>
+                                    </div><!--.input-group-->
+                                </div><!--.form-group-->
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <textarea name='content' class="form-control" rows="2" placeholder="请输入内容" autocomplete="off" {%if receiver%}autofocus{%endif%} oninput="validateContent()" tabindex="2"></textarea>
+                                </div><!--.form-group-->
+                            </div><!--.col-->
+                        </div><!--.row-->
+                    </div><!--.panel-body-->
                 </div>
             </form>
-
             <hr/>
-
+            <h3 class='text-center'>
+                <span class='glyphicon glyphicon-time'></span>
+            </h3>
+            <div class='text-muted'>
+                <span class='glyphicon glyphicon-sort-by-attributes-alt'></span>
+            </div>
             <div class="panel-group">
                 {% for chat in chats %}
                     {% include 'chat/chatlet.html' with chat=chat conversation=True %}
