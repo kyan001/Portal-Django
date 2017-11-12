@@ -53,21 +53,68 @@
 {% block content %}
 <div class='container'>
     <div class='row'>
-        <div class='col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12'>
+        <div id='chaters-list-nonmobile' class='col-xs-12 col-sm-3 hidden-xs'>
+            <div class="page-header">
+                <h3>
+                    <span class="glyphicon glyphicon-star"></span>
+                    好友
+                    <small>({{ chaters|length }})</small>
+                </h3>
+            </div><!--.page-header-->
+            <div class='list-group'>
+                {% for chtr, cht_cnt in chaters %}
+                    <a class="list-group-item" href="/chat/conversation?receiver={{chtr.nickname}}" onclick="disableAllBtn()">
+                        {% include 'chat/chater.html' with sender=chtr receiver=cuser %}
+                        <span class='text-muted small'>({{ cht_cnt }})</span>
+                    </a>
+                {% empty %}
+                    <div class='well'>
+                        聊天对象会显示在这里
+                    </div>
+                {% endfor %}
+            </div>
+        </div><!--.col-->
+        <div class='col-xs-12 col-sm-9'>
             <div class="page-header">
                 <h3>
                     <span class="glyphicon glyphicon-inbox"></span> 收信箱
                     <small>({{ chats.paginator.count }})</small>
                     <span id='show-by-type' class='pull-right'>
+                        <div id='chaters-list-mobile' class='visible-xs-inline-block'>
+                            <div class="btn-group">
+                                <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    好友
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    {% for chtr, cht_cnt in chaters %}
+                                        <li>
+                                            <a href="/chat/conversation?receiver={{chtr.nickname}}" onclick="disableAllBtn()">
+                                                {% include 'chat/chater.html' with sender=chtr receiver=cuser %}
+                                                <span class='text-muted small'>({{ cht_cnt }})</span>
+                                            </a>
+                                        </li>
+                                    {% empty %}
+                                        <li class="dropdown-header">暂时没有好友</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
                         <div id='show-by-type-mobile' class='visible-xs-inline-block'>
                             <div class="btn-group">
                                 <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ msg_types.thiszh }} <span class="caret"></span>
+                                    <span class='glyphicon glyphicon-filter'></span>
+                                    {{ msg_types.thiszh }}
+                                    <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     {% for msg_typ, typ_name in msg_types.all.items %}
                                         <li class="{% if msg_types.this == msg_typ %}active{% endif %}">
-                                            <a href='?type={{ msg_typ }}'>{{ typ_name }}</a>
+                                            <a href='?type={{ msg_typ }}'>
+                                                <span class='glyphicon glyphicon-filter'></span>
+                                                {{ typ_name }}
+                                            </a>
                                         </li>
                                     {% endfor %}
                                 </ul>
@@ -76,14 +123,14 @@
                         <div id='show-by-type-nonmobile' class='hidden-xs'>
                             <div class="btn-group" role="group">
                                 {% for msg_typ, typ_name in msg_types.all.items %}
-                                    <a class='btn btn-sm {% if msg_types.this == msg_typ %}btn-info{% else %}btn-default{% endif %}' href='?type={{ msg_typ }}'>{{ typ_name }}</a>
+                                    <a class='btn btn-sm {% if msg_types.this == msg_typ %}btn-primary{% else %}btn-default{% endif %}' href='?type={{ msg_typ }}'>{{ typ_name }}</a>
                                 {% endfor %}
                             </div>
                         </div>
                     </span>
                 </h3>
-            </div>
-            <div class="panel-group" id="msg-group" role="tablist" aria-multiselectable="true">
+            </div><!--.page-header-->
+            <div id="msgs-panel" class="panel-group" role="tablist" aria-multiselectable="true">
                 {% for chat in chats %}
                     {% include 'chat/chatlet.html' with chat=chat parent='#msgs-panel' %}
                 {% empty %}
@@ -92,39 +139,39 @@
                     </div>
                 {% endfor %}
             </div><!--.panel-group-->
+            <nav id='paginator_for_chats'>
+                <ul class="pager">
+                    {% if chats.has_previous %}
+                        <li>
+                            <a href="?type={{ msg_types.this }}&page={{ chats.previous_page_number }}">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if chats.has_other_pages %}
+                        <li title='跳到最后一页/第一页'>
+                            {% if chats.has_previous %}
+                                <a href="?type={{ msg_types.this }}&page=1">
+                                    <span>{{ chats.number }} / {{ chats.paginator.num_pages }}</span>
+                                </a>
+                            {% else %}
+                                <a href="?type={{ msg_types.this }}&page={{ chats.paginator.num_pages }}">
+                                    <span>{{ chats.number }} / {{ chats.paginator.num_pages }}</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                    {% if chats.has_next %}
+                        <li>
+                            <a href="?type={{ msg_types.this }}&page={{ chats.next_page_number }}">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
         </div><!--.col-->
     </div><!--.row-->
-    <nav>
-        <ul class="pager">
-            {% if chats.has_previous %}
-                <li>
-                    <a href="?type={{ types.this }}&page={{ chats.previous_page_number }}">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </a>
-                </li>
-            {% endif %}
-            {% if chats.has_other_pages %}
-                <li title='跳到最后一页/第一页'>
-                    {% if chats.has_previous %}
-                        <a href="?type={{ types.this }}&page=1">
-                            <span>{{ chats.number }} / {{ chats.paginator.num_pages }}</span>
-                        </a>
-                    {% else %}
-                        <a href="?type={{ types.this }}&page={{ chats.paginator.num_pages }}">
-                            <span>{{ chats.number }} / {{ chats.paginator.num_pages }}</span>
-                        </a>
-                    {% endif %}
-                </li>
-            {% endif %}
-            {% if chats.has_next %}
-                <li>
-                    <a href="?type={{ types.this }}&page={{ chats.next_page_number }}">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
-                </li>
-            {% endif %}
-        </ul>
-    </nav>
 </div><!--.container-->
 
 {% endblock content %}
