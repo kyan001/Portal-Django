@@ -39,10 +39,14 @@ def inbox(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         chats = paginator.page(paginator.num_pages)
+    # chaters
+    chaters_list = {chat.sender for chat in chat_list} | {chat.receiver for chat in chat_list}  # users in sender or receiver or both
+    chaters = [(chater, chat_list.filter(Q(senderid=chater.id) | Q(receiverid=chater.id)).count()) for chater in chaters_list]
     # add exp
     util.userexp.addExp(user, 'chat', 1, '查看收件箱')
     # render
     context['chats'] = chats
+    context['chaters'] = chaters
     context['msg_types'] = {
         'this': chat_type,
         'thiszh': ALL_MSG_TYPES.get(chat_type),
