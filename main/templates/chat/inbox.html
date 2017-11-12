@@ -110,6 +110,9 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     {% for fltr_typ, fltr_name in msg_filters.all.items %}
+                                        {% if forloop.last %}
+                                            <li role="separator" class="divider"></li>
+                                        {% endif %}
                                         <li class="{% if msg_filters.this == fltr_typ %}active{% endif %}">
                                             <a href='?type={{ fltr_typ }}'>
                                                 <span class='glyphicon glyphicon-filter'></span>
@@ -121,13 +124,19 @@
                             </div>
                         </div>
                         <div id='show-by-type-nonmobile' class='hidden-xs'>
-                            <div class="btn-group" role="group">
-                                {% for fltr_typ, fltr_name in msg_filters.all.items %}
-                                    <a class='btn btn-sm {% if msg_filters.this == fltr_typ %}btn-primary{% else %}btn-default{% endif %}' href='?type={{ fltr_typ }}'>
-                                        <span class='glyphicon glyphicon-filter'></span>
-                                        {{ fltr_name }}
-                                    </a>
-                                {% endfor %}
+                            <div class="btn-toolbar" role="toolbar">
+                                <div class="btn-group" role="group">
+                                    {% for fltr_typ, fltr_name in msg_filters.all.items %}
+                                        {% if forloop.last %}
+                                </div>
+                                <div class='btn-group' role='group'>
+                                        {% endif %}
+                                        <a class='btn btn-sm {% if msg_filters.this == fltr_typ %}btn-primary{% else %}btn-default{% endif %}' href='?type={{ fltr_typ }}'>
+                                            <span class='glyphicon glyphicon-filter'></span>
+                                            {{ fltr_name }}
+                                        </a>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </span>
