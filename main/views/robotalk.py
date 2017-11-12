@@ -6,7 +6,6 @@ import datetime
 from django.shortcuts import render
 from django.core.cache import cache
 from django.utils import timezone
-from main.models import UserExp
 
 import util.ctrl
 
@@ -14,9 +13,9 @@ import util.ctrl
 def index(request):
     context = {}
     user = util.user.getCurrentUser(request)
+    # add exp
     if user:
-        userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
-        userexp.addExp(1, '与 RoboTalk 对话')
+        util.userexp.addExp(user, 'chat', 1, '与 RoboTalk 对话')
     # save/get counter start time
     cache_key = 'robotalk:starttime'
     cache_timeout = 60 * 60 * 24 * 7 * 4  # 1 month

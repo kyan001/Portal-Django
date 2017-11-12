@@ -3,13 +3,14 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.utils import timezone
 from django.db import transaction
-from main.models import User, UserExp, Opus, Progress, Chat
+from main.models import User, Opus, Progress, Chat
 from django.db.models import Q
 from django.core.cache import cache
 import icalendar
 import util.ctrl
 import util.time
 import util.user
+import util.userexp
 
 import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
@@ -36,8 +37,7 @@ def list(request):
             '''
             Chat.objects.sendBySys(user, title='欢迎使用「我的进度」系统', content=chat_content)
     # add exps
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
-    userexp.addExp(1, '访问「进度列表」页面')
+    util.userexp.addExp(user, 'progress', 1, '访问「进度列表」页面')
     # render
     context = {
         'prglist': prg_list,
@@ -57,8 +57,7 @@ def archive(request):
         for st, stzh in Progress.STATUSES.get('archive'):
             prg_list[st] = progresses.filter(status=st)
     # add exps
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
-    userexp.addExp(1, '访问「进度存档」页面')
+    util.userexp.addExp(user, 'progress', 1, '访问「进度存档」页面')
     # render
     context = {
         'prglist': prg_list,
@@ -79,8 +78,7 @@ def search(request):
     # pass searched keyword
     keyword = request.GET.get('kw') or ""
     # add exps
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
-    userexp.addExp(1, '访问「进度搜索」页面')
+    util.userexp.addExp(user, 'progress', 1, '访问「进度搜索」页面')
     # render
     context = {
         'prglist': progresses,
@@ -105,8 +103,7 @@ def timeline(request):
     context['prg_timeline_last_year'] = progresses.filter(Q(created__year=last_year) | Q(modified__year=last_year))  # created or modified in this year
     context['prglist'] = progresses
     # add exps
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
-    userexp.addExp(1, '访问「进度列表」页面')
+    util.userexp.addExp(user, 'progress', 1, '访问「进度列表」页面')
     # render
     return render(request, 'progress/timeline.html', context)
 
@@ -129,8 +126,7 @@ def detail(request):
     # get opus
     opus = Opus.objects.get_or_404(id=progress.opusid)
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
-    userexp.addExp(1, '查看进度《{opus.name}》的详情'.format(opus=opus))
+    util.userexp.addExp(user, 'progress', 1, '查看进度《{opus.name}》的详情'.format(opus=opus))
     # calcs
     aux = {
         'time': {},
@@ -213,8 +209,7 @@ def update(request):
     # get opus
     opus = Opus.objects.get_or_404(id=progress.opusid)
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
-    userexp.addExp(2, '编辑进度《{opus.name}》成功'.format(opus=opus))
+    util.userexp.addExp(user, 'progress', 5, '编辑进度《{opus.name}》成功'.format(opus=opus))
     # save
     progress.current = current
     opus.name = name
@@ -248,8 +243,7 @@ def delete(request):
     # get opus
     opus = Opus.objects.get_or_404(id=progress.opusid)
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
-    userexp.addExp(2, '删除进度《{opus.name}》'.format(opus=opus))
+    util.userexp.addExp(user, 'progress', 5, '删除进度《{opus.name}》'.format(opus=opus))
     # save
     progress.delete()
     opus.delete()
@@ -273,8 +267,7 @@ def giveup(request):
     # get opus
     opus = Opus.objects.get_or_404(id=progress.opusid)
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
-    userexp.addExp(2, '冻结进度《{opus.name}》'.format(opus=opus))
+    util.userexp.addExp(user, 'progress', 5, '冻结进度《{opus.name}》'.format(opus=opus))
     # save
     progress.status = 'giveup'
     progress.save()
@@ -298,8 +291,7 @@ def reset(request):
     # get opus
     opus = Opus.objects.get_or_404(id=progress.opusid)
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
-    userexp.addExp(2, '恢复已冻结的进度《{opus.name}》'.format(opus=opus))
+    util.userexp.addExp(user, 'progress', 5, '恢复已冻结的进度《{opus.name}》'.format(opus=opus))
     # save
     progress.resetStatus()
     progress.save()
@@ -315,8 +307,7 @@ def new(request):
     if not user:
         return util.user.loginToContinue(request)
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
-    userexp.addExp(2, '尝试新增进度')
+    util.userexp.addExp(user, 'progress', 2, '尝试新增进度')
     # render
     return render(request, 'progress/new.html', context)
 
@@ -344,8 +335,7 @@ def add(request):
     if total > 0 and current > total:
         return util.ctrl.infoMsg("初始进度 {current} 不能大于总页数 {total}".format(current=current, total=total))
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='progress')
-    userexp.addExp(2, '新增进度《{name}》成功'.format(name=name))
+    util.userexp.addExp(user, 'progress', 10, '新增进度《{name}》成功'.format(name=name))
     # save
     opus = Opus(name=name, subtitle=subtitle, total=total)
     with transaction.atomic():

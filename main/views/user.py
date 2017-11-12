@@ -4,9 +4,10 @@ from django.core.cache import cache
 from django.contrib import messages
 import django.utils.html
 
-from main.models import User, UserExp, Progress, Chat
+from main.models import User, Progress, Chat
 import util.ctrl
 import util.user
+import util.userexp
 
 import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
@@ -64,9 +65,8 @@ def public(request):  # public
         item = (Progress.objects.getStatusName(k), v['count'])
         progress_statics_group.append(item)
     # add exp to 被查看人
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
     _by = request.META.get('REMOTE_HOST') or request.META.get('REMOTE_ADDR')
-    userexp.addExp(1, '{} 访问了你的「公开页」'.format(_by))
+    util.userexp.addExp(user, 'user', 1, '{} 访问了你的「公开页」'.format(_by))
     # render
     context['user'] = user
     context['prgcounts'] = progress_statics_group
@@ -114,8 +114,7 @@ def profile(request):
     if done_prg_count >= 25:
         user.setUserpermission('wellread', True)
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
-    userexp.addExp(1, '查看用户个人信息')
+    util.userexp.addExp(user, 'user', 1, '查看用户个人信息')
     # render
     context['prgstatics'] = progress_statics.values()
     context['exps'] = exps
@@ -177,8 +176,7 @@ def newUser(request):  # POST
     # add betauser badge
     user.setUserpermission('betauser', True)
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
-    userexp.addExp(1, '注册成功')
+    util.userexp.addExp(user, 'user', 1, '注册成功')
     # render
     return util.ctrl.infoMsg(" {user.username} 注册成功！\n您是网站第 {user.id} 位用户。\n请登入以便我们记住您！".format(user=user), url='/user/signin', title="欢迎加入")
 
@@ -285,8 +283,7 @@ def checkLogin(request):  # POST
     to_ = from_ or '/'
     response = redirect(to_)
     # add exp
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
-    userexp.addExp(1, '登入成功')
+    util.userexp.addExp(user, 'user', 1, '登入成功')
     # remove old msgs
     msg_title = 'Hi, @{user.nickname}'.format(user=user)
     sysuser = Chat.objects.getSyschatUser()

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from main.models import UserExp
 import util.ctrl
 import util.user
+import util.userexp
 
 
 def index(request):
@@ -38,8 +38,7 @@ def settheme(request):
     # add exp if logged in.
     if user:
         theme_name_smart = theme_name or '默认主题'
-        userexp, created = UserExp.objects.get_or_create(userid=user.id, category='user')
-        userexp.addExp(2, '尝试主题：{theme_name}'.format(theme_name=theme_name_smart.title()))
+        util.userexp.addExp(user, 'user', 2, '尝试主题：{theme_name}'.format(theme_name=theme_name_smart.title()))
     return response
 
 

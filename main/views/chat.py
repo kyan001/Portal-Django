@@ -5,9 +5,10 @@ from django.shortcuts import redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
-from main.models import UserExp, Chat, User
+from main.models import Chat, User
 import util.ctrl
 import util.user
+import util.userexp
 
 
 def inbox(request):
@@ -38,9 +39,8 @@ def inbox(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         chats = paginator.page(paginator.num_pages)
-    # add exps
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
-    userexp.addExp(1, '查看收件箱')
+    # add exp
+    util.userexp.addExp(user, 'chat', 1, '查看收件箱')
     # render
     context['chats'] = chats
     context['types'] = {
@@ -71,9 +71,8 @@ def delete(request):
     if user.id != chat.receiverid and (not user.getUserpermission('superuser')):
         return util.ctrl.infoMsg("只有消息的接收者可以删除消息")
     chat.delete()
-    # add exps
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
-    userexp.addExp(1, '删除了一条来自 @{sender.nickname} 的消息'.format(sender=chat.sender))
+    # add exp
+    util.userexp.addExp(user, 'chat', 1, '删除了一条来自 @{sender.nickname} 的消息'.format(sender=chat.sender))
     # render
     return response
 
@@ -99,10 +98,8 @@ def conversation(request):
         context['chats'] = chats
         context['receiver'] = receiver
     title = request.GET.get('title')
-    # add exps
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
-    if receiver_nickname:
-        userexp.addExp(1, '查看与 @{receiver.nickname} 的对话'.format(receiver=receiver))
+        # add exp
+        util.userexp.addExp(user, 'chat', 1, '查看与 @{receiver.nickname} 的对话'.format(receiver=receiver))
     # render
     context['title'] = title
     return render(request, 'chat/conversation.html', context)
@@ -125,9 +122,8 @@ def send(request):
     receiver = User.objects.get_or_404(nickname=receiver_nickname)
     # send chat
     user.sendChat(receiver, title=title, content=content)
-    # add exps
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
-    userexp.addExp(2, '向 @{receiver.nickname} 发送消息'.format(receiver=receiver))
+    # add exp
+    util.userexp.addExp(user, 'chat', 2, '向 @{receiver.nickname} 发送消息'.format(receiver=receiver))
     # render
     return redirect('/chat/conversation?receiver={receiver.nickname}'.format(receiver=receiver))
 
@@ -144,9 +140,8 @@ def markread(request):  # AJAX
         return util.ctrl.returnJsonError("您查找的消息 id: {id} 并不存在".format(id=str(chatid)))
     if chat.receiverid != user.id and (not user.getUserpermission('superuser')):
         return util.ctrl.returnJsonError('你没有权限修改 id: {chat.id} 的消息'.format(chat=chat))
-    # add exps
-    userexp, created = UserExp.objects.get_or_create(userid=user.id, category='chat')
-    userexp.addExp(2, '阅读来自 @{sender.nickname} 的消息'.format(sender=chat.sender))
+    # add exp
+    util.userexp.addExp(user, 'chat', 2, '阅读来自 @{sender.nickname} 的消息'.format(sender=chat.sender))
     # markread
     isSuccessed = chat.markRead()
     return util.ctrl.returnJsonResult(isSuccessed)
