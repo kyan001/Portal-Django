@@ -105,15 +105,15 @@
                             <div class="btn-group">
                                 <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class='glyphicon glyphicon-filter'></span>
-                                    {{ msg_types.thiszh }}
+                                    {{ msg_filters.thiszh }}
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    {% for msg_typ, typ_name in msg_types.all.items %}
-                                        <li class="{% if msg_types.this == msg_typ %}active{% endif %}">
-                                            <a href='?type={{ msg_typ }}'>
+                                    {% for fltr_typ, fltr_name in msg_filters.all.items %}
+                                        <li class="{% if msg_filters.this == fltr_typ %}active{% endif %}">
+                                            <a href='?type={{ fltr_typ }}'>
                                                 <span class='glyphicon glyphicon-filter'></span>
-                                                {{ typ_name }}
+                                                {{ fltr_name }}
                                             </a>
                                         </li>
                                     {% endfor %}
@@ -122,8 +122,8 @@
                         </div>
                         <div id='show-by-type-nonmobile' class='hidden-xs'>
                             <div class="btn-group" role="group">
-                                {% for msg_typ, typ_name in msg_types.all.items %}
-                                    <a class='btn btn-sm {% if msg_types.this == msg_typ %}btn-primary{% else %}btn-default{% endif %}' href='?type={{ msg_typ }}'>{{ typ_name }}</a>
+                                {% for fltr_typ, fltr_name in msg_filters.all.items %}
+                                    <a class='btn btn-sm {% if msg_filters.this == fltr_typ %}btn-primary{% else %}btn-default{% endif %}' href='?type={{ fltr_typ }}'>{{ fltr_name }}</a>
                                 {% endfor %}
                             </div>
                         </div>
@@ -143,7 +143,7 @@
                 <ul class="pager">
                     {% if chats.has_previous %}
                         <li>
-                            <a href="?type={{ msg_types.this }}&page={{ chats.previous_page_number }}">
+                            <a href="?type={{ msg_filters.this }}&page={{ chats.previous_page_number }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         </li>
@@ -151,11 +151,11 @@
                     {% if chats.has_other_pages %}
                         <li title='跳到最后一页/第一页'>
                             {% if chats.has_previous %}
-                                <a href="?type={{ msg_types.this }}&page=1">
+                                <a href="?type={{ msg_filters.this }}&page=1">
                                     <span>{{ chats.number }} / {{ chats.paginator.num_pages }}</span>
                                 </a>
                             {% else %}
-                                <a href="?type={{ msg_types.this }}&page={{ chats.paginator.num_pages }}">
+                                <a href="?type={{ msg_filters.this }}&page={{ chats.paginator.num_pages }}">
                                     <span>{{ chats.number }} / {{ chats.paginator.num_pages }}</span>
                                 </a>
                             {% endif %}
@@ -163,7 +163,7 @@
                     {% endif %}
                     {% if chats.has_next %}
                         <li>
-                            <a href="?type={{ msg_types.this }}&page={{ chats.next_page_number }}">
+                            <a href="?type={{ msg_filters.this }}&page={{ chats.next_page_number }}">
                                 <span class="glyphicon glyphicon-chevron-right"></span>
                             </a>
                         </li>

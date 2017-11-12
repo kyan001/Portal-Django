@@ -21,13 +21,13 @@ def inbox(request):
     chat_type = request.GET.get('type') or 'received'
 
     # get chats
-    ALL_MSG_TYPES = collections.OrderedDict()
-    ALL_MSG_TYPES['received'] = '所有'
-    ALL_MSG_TYPES['unread'] = '未读'
-    ALL_MSG_TYPES['fromsys'] = '系统'
-    ALL_MSG_TYPES['fromhuman'] = '朋友'
-    ALL_MSG_TYPES['sent'] = '已发送'
-    chat_list = user.getChats(chat_type) if chat_type in ALL_MSG_TYPES.keys() else user.getChats('received')
+    MSG_FILTERS = collections.OrderedDict()
+    MSG_FILTERS['received'] = '所有'
+    MSG_FILTERS['unread'] = '未读'
+    MSG_FILTERS['fromsys'] = '系统'
+    MSG_FILTERS['fromhuman'] = '朋友'
+    MSG_FILTERS['sent'] = '已发送'
+    chat_list = user.getChats(chat_type) if chat_type in MSG_FILTERS.keys() else user.getChats('received')
     # paginator
     paginator = Paginator(chat_list, per_page=15)
     page = request.GET.get('page')
@@ -47,10 +47,10 @@ def inbox(request):
     # render
     context['chats'] = chats
     context['chaters'] = chaters
-    context['msg_types'] = {
+    context['msg_filters'] = {
         'this': chat_type,
-        'thiszh': ALL_MSG_TYPES.get(chat_type),
-        'all': ALL_MSG_TYPES,
+        'thiszh': MSG_FILTERS.get(chat_type),
+        'all': MSG_FILTERS,
     }
     return render(request, 'chat/inbox.html', context)
 
