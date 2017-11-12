@@ -1,26 +1,8 @@
-
 {% load parse_msg_content %}
 
 <div class="panel panel-default {% if not chat.isread %}unread{% endif %} chat-record beveryfast hover-shadow" chatid="{{chat.id}}" {% if chat.receiverid == cuser.id %}onclick="markread(this)"{% endif %}>
     <div class="panel-heading beveryfast" data-toggle="collapse" data-target="#chat-{{chat.id}}" data-parent="{{ parent }}">
-        {% if chat.sender.username == 'syschat' %}
-            <span class="text-danger">
-                <span class="glyphicon glyphicon-flag"></span>
-                @{{ chat.sender.nickname }}
-            </span>
-        {% elif chat.sender.username == user.username and chat.receiverid == user.id %}
-            <span class="glyphicon glyphicon-list-alt"></span>
-            <span class="text-muted">临时笔记</span>
-        {% elif chat.sender.username == user.username %}
-            <span class="text-primary">我</span>
-            <span class='text-muted'>></span>
-            <span class='text-muted'>@{{ chat.receiver.nickname }}</span>
-        {% else %}
-            <span class="text-primary">
-                <span class="glyphicon glyphicon-comment"></span>
-                @{{ chat.sender.nickname }}
-            </span>
-        {% endif %}
+        {% include 'chat/chater.html' with chat=chat%}
         <span>:</span>
         {% if chat.title %}
             {{ chat.title|striptags }}
