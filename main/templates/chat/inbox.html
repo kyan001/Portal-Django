@@ -85,7 +85,7 @@
             </div>
             <div class="panel-group" id="msg-group" role="tablist" aria-multiselectable="true">
                 {% for chat in chats %}
-                    {% include 'chat/chatlet.html' with chat=chat user=cuser parent='#msg-group' %}
+                    {% include 'chat/chatlet.html' with chat=chat parent='#msgs-panel' %}
                 {% empty %}
                     <div class="well">
                         没有任何消息
