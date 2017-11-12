@@ -3,6 +3,7 @@ import datetime
 
 from django.http import Http404
 from django.db import models
+from django.db import transaction
 from django.forms.models import model_to_dict
 from django.utils import timezone
 from django.core.cache import cache
@@ -215,11 +216,12 @@ class UserExp(BaseModel):
         persent = exp_have / exp_need * 100
         return int(persent)
 
-    def addExp(self, exp, operation):
-        self.exp += exp
-        history = ExpHistory(userexpid=self.id, operation=operation, change=exp)
-        self.save()
-        history.save()
+    def add(self, incr, operation):
+        with transaction.atomic():
+            self.exp += incr
+            self.save()
+            history = ExpHistory(userexpid=self.id, operation=operation, change=incr)
+            history.save()
 
     def getExpHistory(self, count=0):
         result = ExpHistory.objects.filter(userexpid=self.id).order_by('-created')
