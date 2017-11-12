@@ -134,7 +134,7 @@ class User(BaseModel):
             return Chat.objects.filter(senderid=syschatuser.id, receiverid=self.id).order_by('-created')
         elif mode == 'fromhuman':
             syschatuser = Chat.objects.getSyschatUser()
-            return Chat.objects.filter(receiverid=self.id).exclude(senderid=syschatuser.id).order_by('-created')
+            return Chat.objects.filter(receiverid=self.id).exclude(senderid=syschatuser.id).exclude(senderid=self.id).order_by('-created')
         else:
             return Chat.objects.filter(receiverid=self.id)
 
