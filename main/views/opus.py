@@ -133,5 +133,6 @@ def importFrom(request):
     }
     param_encoded = urllib.parse.urlencode(param)
     url_final = url + '?' + param_encoded  # ?name=xxx&total=xxx&weblink=xxx
-    messages.info(request, '已从 @{} 处导入进度信息，请确认后点击“保存”'.format(user.nickname, opus.name))
+    messages.success(request, '已从 @{} 导入进度《{}》的信息'.format(user.nickname, opus.name))
+    messages.warning(request, '请确认后点击“保存”')
     return redirect(url_final)
