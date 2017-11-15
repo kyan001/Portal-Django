@@ -49,8 +49,13 @@ def searchOpusInfo(request):  # get # ajax
             url = 'https://api.douban.com/v2/book/search'
         else:
             raise Exception('Wrong opus type')
-        url += '?count={cnt}&q={kw}'.format(cnt=count, kw=urllib.parse.quote(keyword))
-        response = urllib.request.urlopen(url)
+        param = {
+            'count': count,
+            'q': keyword,
+        }
+        param_encoded = urllib.parse.urlencode(param)
+        url_final = url + '?' + param_encoded  # ?count=1&q=xxx
+        response = urllib.request.urlopen(url_final)
         info = response.read()
         cache.set(cache_key, info, cache_timeout)
     return HttpResponse(info, content_type='application/json')
