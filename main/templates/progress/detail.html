@@ -125,7 +125,7 @@
             <div class="panel panel-primary" id="main-panel">
                 <div class="panel-heading text-nowrap">
                     <span class="panel-title">
-                        <a class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" data-container='body' href="/opus/detail?id={{opus.id}}" title="分享你的进度信息">
+                        <a class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="right" data-container='body' href="/opus/detail?id={{opus.id}}" title="分享你的进度信息">
                             <span class="glyphicon glyphicon-qrcode"></span>
                         </a>
                         《<b id='opus-name'>{{ opus.name }}</b>》
@@ -357,8 +357,9 @@
                                 <div class="panel-heading">
                                     <span><b>作品信息</b></span>
                                     <span class='pull-right'>
-                                        <a id='opus-cover' class='btn btn-xs btn-primary' tabindex='0' role='button'>
-                                            <span class='glyphicon glyphicon-picture' title='作品封面' data-toggle='tooltip' data-placement='left'></span>
+                                        <a id='opus-cover' class='btn btn-xs btn-primary' role='button'>
+                                            <span class='glyphicon glyphicon-picture'></span>
+                                            封面
                                         </a>
                                         <a id="opus-type-a" class='btn btn-xs btn-primary' href="" target="_blank">
                                             <span id='opus-type-icon' class="glyphicon"></span>
@@ -665,12 +666,19 @@
         var img_container = $('<div></div>')
         var img_a = $('<a></a>').attr('href', info.images.large).attr('target', '_blank').appendTo(img_container)
         var img_sm = $('<img>').attr('src', info.images.small).width('100%').appendTo(img_a)
-        $('#opus-cover').tooltip({
+        var cover_ele = $('#opus-cover')
+        cover_ele.tooltip({
             html: true,
             container: 'body',
             title: img_container.html(),
             placement: 'bottom',
-            trigger: 'focus',
+            trigger: 'hover click',
+        })
+        cover_ele.on('show.bs.tooltip', function(){
+            $(this).addClass('active')
+        })
+        cover_ele.on('hide.bs.tooltip', function(){
+            $(this).removeClass('active')
         })
         if(info.summary){
             $('#opus-wordcloud').attr('src', '/opus/getopuswordcloud?height=100&width=500&type=' + info.type + '&name=' + infos.name)
