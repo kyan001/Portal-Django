@@ -54,9 +54,10 @@ urlpatterns = [
     url(r'^progress/ical$', main.views.progress.ical),  # get
     url(r'^progress/setical$', main.views.progress.setical),  # post
     # OPUS
-    url(r'^opus/detail$', main.views.opus.detail),
+    url(r'^opus/detail$', main.views.opus.detail),  # get
     url(r'^opus/searchopusinfo$', main.views.opus.searchOpusInfo),  # get Ajax
     url(r'^opus/getopuswordcloud$', main.views.opus.getOpusWordCloud),  # get Ajax
+    url(r'^opus/importfrom$', main.views.opus.importFrom),  # get
     # CHAT
     url(r'^chat/inbox$', main.views.chat.inbox),
     url(r'^chat/markread$', main.views.chat.markread),

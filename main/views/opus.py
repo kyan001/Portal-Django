@@ -3,10 +3,12 @@ import json
 import urllib.request
 import urllib.parse
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.core.cache import cache
 from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.http import Http404
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
 import jieba
 import wordcloud
 
@@ -20,15 +22,11 @@ def detail(request):
     # 获得参数
     opusid = request.GET.get('id')
     if not opusid:
-        return util.ctrl.infoMsg("需要一个作品id")
+        return util.ctrl.infoMsg("作品 ID 为空，请联系管理员", title="作品 ID 为空")
     # 获得作品
     opus = Opus.objects.get_or_404(id=opusid)
-    # 获得进度列表
-    opus_list = Opus.objects.filter(name=opus.name)
-    item_list = [{'progress': opuslet.progress, 'user': opuslet.progress.user, 'opus': opuslet} for opuslet in opus_list]
     # render
     context['opus'] = opus
-    context['itemlist'] = item_list
     return render(request, 'opus/detail.html', context)
 
 
@@ -109,3 +107,31 @@ def getOpusWordCloud(request):  # get # ajax
     # render
     response = HttpResponse(wrdcld_img, content_type='image/png')
     return response
+
+
+def importFrom(request):
+    """将别人的进度导入至自己的进度列表
+
+    Args:
+        id: str，作为被导入的 opus id
+    """
+    user = util.user.getCurrentUser(request)
+    if not user:
+        return util.user.loginToContinue(request)
+    opusid = request.GET.get('id')
+    if not opusid:
+        return util.ctrl.infoMsg("作品 ID 为空，请联系管理员", title="作品 ID 为空")
+    opus = Opus.objects.get_or_404(id=int(opusid))  # 获得作品
+    if opus.progress.userid == user.id:  # 判断是否是自己的进度
+        return util.ctrl.infoMsg("您已拥有该进度，请不要重复添加", title='添加失败')
+    # 生成 url
+    url = '/progress/new'
+    param = {
+        'name': opus.name,
+        'total': opus.total,
+        'weblink': opus.progress.weblink,
+    }
+    param_encoded = urllib.parse.urlencode(param)
+    url_final = url + '?' + param_encoded  # ?name=xxx&total=xxx&weblink=xxx
+    messages.info(request, '已从 @{} 处导入进度信息，请确认后点击“保存”'.format(user.nickname, opus.name))
+    return redirect(url_final)
