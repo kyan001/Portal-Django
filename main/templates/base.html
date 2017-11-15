@@ -205,7 +205,7 @@
                         <div class="btn-group bootswatch-btn" style="display:none;">
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {% if request.COOKIES.theme %}
-                                    当前主题：{{ request.COOKIES.theme }}
+                                    当前主题：{{ request.COOKIES.theme|capfirst }}
                                 {% else %}
                                     当前：默认主题
                                 {% endif %}
