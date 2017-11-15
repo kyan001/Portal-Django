@@ -41,7 +41,7 @@ def list(request):
     # render
     context = {
         'prglist': prg_list,
-        }
+    }
     return render(request, 'progress/list.html', context)
 
 
@@ -301,14 +301,21 @@ def reset(request):
 
 def new(request):
     '''list/detail 界面点击新增按钮'''
-    context = {}
     # get inputs
     user = util.user.getCurrentUser(request)
     if not user:
         return util.user.loginToContinue(request)
+    name = request.GET.get('name') or ''
+    total = request.GET.get('total') or ''
+    weblink = request.GET.get('weblink') or ''
     # add exp
     util.userexp.addExp(user, 'progress', 2, '尝试新增进度')
     # render
+    context = {
+        'name': name,
+        'total': total,
+        'weblink': weblink,
+    }
     return render(request, 'progress/new.html', context)
 
 
