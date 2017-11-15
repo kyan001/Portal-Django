@@ -31,10 +31,13 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class='col-md-4 col-sm-6 col-xs-12'>
+            <div id='qrcode-col' class='col-md-4 col-sm-6 col-xs-12'>
                 <div class="panel panel-primary">
                     <div class='panel-heading'>
                         当前页面的二维码
+                        <a class='btn btn-primary btn-xs pull-right' onclick='$("#qrcode-col").slideUp("slow")'>
+                            <span class='glyphicon glyphicon-remove'></span>
+                        </a>
                     </div>
                     <div class='panel-body'>
                         <img src='http://pan.baidu.com/share/qrcode?w=150&h=150&url={{request.build_absolute_uri}}' title='当前页面的二维码'>
@@ -58,18 +61,22 @@
                                     <b>《{{ opus.name }}》</b>
                                 </td>
                             </tr>
+                            <!-- hide for privacy
                             <tr>
                                 <td class='attrname'>备注</td>
                                 <td>{{ opus.subtitle }}</td>
                             </tr>
+                            -->
                             <tr>
                                 <td class='attrname'>总共</td>
                                 <td>{{ opus.total }}</td>
                             </tr>
-                            <!-- <tr>
+                            <!-- hide for privacy
+                            <tr>
                                 <td class='attrname'>当前进度</td>
                                 <td>{{ opus.progress.current }} / {{ opus.total }}</td>
-                            </tr> -->
+                            </tr>
+                            -->
                             <tr>
                                 <td class='attrname'>开始时间</td>
                                 <td>{{ opus.progress.created|date:'Y-m-d H:i' }}</td>
