@@ -48,7 +48,7 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12" progressid="{{ prg.id }}">
+        <div class="col-md-8 col-md-offset-2 col-xs-12" progressid="{{ prg.id }}">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <span class="panel-title">
@@ -65,7 +65,12 @@
                                     <span class="col-xs-12">
                                         <div class="input-group input-group-lg">
                                             <span class="input-group-addon text-muted">名称</span>
-                                            <input type="text" class='form-control' placeholder="作品名称" name="name" class="editable clearable" onchange="Guess.getInfo()">
+                                            <input type="text"
+                                                class='form-control editable clearable'
+                                                placeholder="作品名称"
+                                                name="name"
+                                                value='{{ name }}'
+                                                onchange="Guess.getInfo()">
                                             <span class="input-group-btn">
                                                 <span class="btn btn-default" role="button" onclick='$("#barcode-input").click()'>
                                                     <span class='glyphicon glyphicon-barcode'></span>
@@ -79,7 +84,10 @@
                                     <span class="col-xs-12">
                                         <div id='subtitle-group' class="input-group">
                                             <span class="input-group-addon text-muted">备注</span>
-                                            <input type="text" class='form-control' placeholder="作品的分类或备注" name="subtitle" class="editable clearable">
+                                            <input type="text"
+                                                class='form-control editable clearable'
+                                                placeholder="作品的分类或备注"
+                                                name="subtitle">
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn btn-default dropdown-toggle" role="button" data-toggle="dropdown">
                                                     <span class="caret"></span>
@@ -104,7 +112,11 @@
                                     <span class="col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon text-muted">总共</span>
-                                            <input type="number" class='form-control' placeholder="总页数／总集数（追剧请填 0）" name="total" class="editable clearable">
+                                            <input type="number"
+                                                class='form-control editable clearable'
+                                                placeholder="总页数／总集数（追剧请填 0）"
+                                                name="total"
+                                                value='{{ total }}'>
                                             <span class="input-group-btn">
                                                 <span id='guess-total' class="btn btn-default" role="button" onclick='Guess.ask()'>
                                                     <span class='guess-icon glyphicon glyphicon-cloud text-muted'></span>
@@ -117,7 +129,10 @@
                                     <span class="col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon text-muted">当前进度</span>
-                                            <input type="number" class='form-control' placeholder="当前页数／集数" name="current" class="editable clearable">
+                                            <input type="number"
+                                                class='form-control editable clearable'
+                                                placeholder="当前页数／集数"
+                                                name="current">
                                             <span class="input-group-btn">
                                                 <span class="btn btn-default" role="button" onclick='addOneCurrent()'>+</span>
                                             </span>
@@ -128,7 +143,11 @@
                                     <span class="col-xs-12">
                                         <div class="input-group has-feedback">
                                             <span class="input-group-addon text-muted">作品链接</span>
-                                            <input type="text" class='form-control' placeholder="（请以 http 开头）" name="weblink" class="editable clearable">
+                                            <input type="text"
+                                                class='form-control editable clearable'
+                                                placeholder="（请以 http 开头）"
+                                                name="weblink"
+                                                value='{{ weblink }}'>
                                             <span class="glyphicon glyphicon-link form-control-feedback"></span>
                                         </div>
                                     </span>
