@@ -27,10 +27,11 @@
             });
         </script>
         <link rel="stylesheet" href="/static/css/KyanCssUtil.css">
-        <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
         {% block theme %}
             {% if request.COOKIES.theme %}
-                <link class="bootswatcher" rel="stylesheet" href="//bootswatch.com/3/{{request.COOKIES.theme}}/bootstrap.min.css">
+                <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-{{request.COOKIES.theme}}.min.css">
+            {% else %}
+                <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
             {% endif %}
         {% endblock theme %}
         <style>
@@ -194,7 +195,7 @@
                                         <span class="glyphicon glyphicon-tower"></span> 徽章列表
                                     </a>
                                 </li>
-                                <li data-toggle="tooltip" data-placement="top" data-container='body' title="实验功能。可能会导致访问变慢、界面异常等现象">
+                                <li>
                                     <a href="javascript:void(0)" onclick="$('.bootswatch-btn').fadeIn()">
                                         <span class="glyphicon glyphicon-leaf text-muted"></span> 切换主题
                                     </a>
