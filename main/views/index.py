@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 import util.ctrl
 import util.user
 import util.userexp
+import random
 
 
 def index(request):
@@ -27,6 +28,9 @@ def settheme(request):
     theme_key = 'theme'
     # get input
     theme_name = request.GET.get('name')
+    mode = request.GET.get('mode')
+    if mode == 'random':  # 随机主题
+        theme_name = random.choice(theme_name_pool)
     if not theme_name:  # 清除已设置的主题
         response.delete_cookie(theme_key)
     else:  # 设置主题
