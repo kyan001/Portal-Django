@@ -1,0 +1,197 @@
+<style>
+    #the-very-div {
+        height: 100%;
+    }
+    .container {
+        padding-top: 51px;
+    }
+    .container-fluid {
+        padding-top: 51px;
+    }
+    #user-bar {
+        position: fixed;
+        top: 10px;
+        right: 5%;
+        z-index: 800;
+        font-size: 15px;
+    }
+    #user-bar img {
+        max-height: 19px;
+        max-width: 19px;
+    }
+    #user-bar a {
+        text-decoration: none;
+    }
+    #user-bar .dropdown-menu {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    #user-bar .dropdown-menu > li > a {
+        line-height: 40px;
+    }
+</style>
+<nav id='user-bar'>
+    {% if not cuser %}
+        <span class="pull-right">
+            <a href="/" class="btn btn-info btn-sm" title="Home Page" data-toggle="tooltip" data-placement="left">
+                <span class="glyphicon glyphicon-home"></span>
+            </a>
+            <a href="/user/signup" class="btn btn-primary btn-sm">注册</a>
+            <span> </span>
+            <a href="/user/signin" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-log-in"></span> 登入
+            </a>
+        </span>
+    {% else %}
+        <span class="pull-right">
+            <a href="/" class="btn btn-info btn-sm hidden-xs" title="Home Page" data-toggle="tooltip" data-placement="left">
+                <span class="glyphicon glyphicon-home"></span>
+            </a>
+            <a href="/chat/inbox" class="btn btn-default btn-sm" id='inbox-btn'>
+                <span class="glyphicon glyphicon-envelope"></span>
+                <b id="unread-count"></b>
+            </a>
+            <div class="btn-group">
+                <a type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="profile-nikename">
+                        @<b>{{ cuser.nickname }}</b>
+                    </span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a href='/user/profile'>
+                            <span class="glyphicon glyphicon-user"></span> 个人信息
+                        </a>
+                    </li>
+                    <li>
+                        <a href='/user/setting'>
+                            <span class="glyphicon glyphicon-cog"></span> 个人设置
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/user/logout">
+                            <span class="glyphicon glyphicon-log-out"></span>
+                            <span class='text-danger'>登出</span>
+                        </a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li class="visible-xs-block">
+                        <a href="/">
+                            <span class="glyphicon glyphicon-home"></span>
+                            <span class='text-info'>首页</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/progress/list">
+                            <span class="glyphicon glyphicon-th-list"></span>
+                            <span class='text-primary'>我的进度</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/chat/conversation?mode=quicknote">
+                            <span class="glyphicon glyphicon-list-alt"></span> 临时笔记
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/robotalk">
+                            <span class="glyphicon glyphicon-comment"></span> 聊天机器人
+                        </a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a href='/badge/list'>
+                            <span class="glyphicon glyphicon-tower"></span> 徽章列表
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" onclick="$('.bootswatch-btn').fadeIn()">
+                            <span class="glyphicon glyphicon-leaf"></span> 切换主题
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn-group bootswatch-btn" style="display:none;">
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% if request.COOKIES.theme %}
+                        当前主题：{{ request.COOKIES.theme|capfirst }}
+                    {% else %}
+                        当前：默认主题
+                    {% endif %}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a href="/index/settheme">
+                            <span class="glyphicon glyphicon-repeat"></span>
+                            默认主题
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/index/settheme?mode=random">
+                            <span class="glyphicon glyphicon-random"></span>
+                            随机主题
+                        </a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/index/settheme?name=cerulean">蔚蓝 Cerulean</a></li>
+                    <li><a href="/index/settheme?name=cosmo">宇宙 Cosmo</a></li>
+                    <li><a href="/index/settheme?name=cyborg">半机械 Cyborg</a></li>
+                    <li><a href="/index/settheme?name=darkly">暗色 Darkly</a></li>
+                    <li><a href="/index/settheme?name=flatly">扁平 Flatly</a></li>
+                    <li><a href="/index/settheme?name=journal">日志 Journal</a></li>
+                    <li><a href="/index/settheme?name=lumen">流明 Lumen</a></li>
+                    <li><a href="/index/settheme?name=paper">纸 Paper</a></li>
+                    <li><a href="/index/settheme?name=readable">易读 Readable</a></li>
+                    <li><a href="/index/settheme?name=sandstone">砂岩 Sandstone</a></li>
+                    <li><a href="/index/settheme?name=simplex">简约 Simplex</a></li>
+                    <li><a href="/index/settheme?name=slate">页岩 Slate</a></li>
+                    <li><a href="/index/settheme?name=spacelab">空间站 Spacelab</a></li>
+                    <li><a href="/index/settheme?name=superhero">英雄 Superhero</a></li>
+                    <li><a href="/index/settheme?name=united">统一 United</a></li>
+                    <li><a href="/index/settheme?name=yeti">雪人 Yeti</a></li>
+                </ul>
+            </div>
+        </span>
+    {% endif %}
+</nav>
+<script>
+    $(document).ready(function(){
+        $('#user-bar [data-toggle="tooltip"]').tooltip();
+        updateUnreadCount();
+    });
+    function updateUnreadCount(){
+        $.ajax({
+            type: "GET",
+            url: "/user/getunreadcount/",
+            data: {},
+            success: function (data) {
+                var result = data;
+                if (result.error) {
+                    alert(result.error);
+                } else if (result.unreadcount > 0) {
+                    var msg_prvw_container = $('<div></div>')
+                    for (i in result.msgs){
+                        var msg_prvw_sender = $('<span></span>').addClass('text-primary').text('@' + result.msgs[i].sender)
+                        var msg_prvw_word = $('<span></span>').text('：' + result.msgs[i].words)
+                        $('<div></div>').append(msg_prvw_sender).append(msg_prvw_word).appendTo(msg_prvw_container)
+                    }
+                    $("#user-bar #unread-count").text(result.unreadcount);
+                    $("#user-bar #inbox-btn").popover({
+                        'container': 'body',
+                        'html': 'true',
+                        'placement': 'bottom',
+                        //'title': '未读消息：',
+                        'content': msg_prvw_container.html(),
+                        'trigger': 'hover',
+                    });
+                    //force refresh the content
+                    $("#user-bar #inbox-btn").data('bs.popover').options.content = msg_prvw_container.html()
+                } else if (result.unreadcount == 0) {
+                    $("#user-bar #unread-count").text('')
+                    $("#user-bar #inbox-btn").popover('destroy')
+                }
+            },
+        });
+    }
+</script>
