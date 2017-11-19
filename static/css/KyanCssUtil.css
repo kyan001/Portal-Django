@@ -115,6 +115,38 @@ a.no-decoration:hover {
             animation: rotate360 1s linear infinite;
 }
 
+@keyframes rotateY360 {
+    from {transform: rotateY(0deg);}
+    to {transform: rotateY(360deg);}
+}
+@-webkit-keyframes rotateY360 {
+    from {-webkit-transform: rotateY(0deg);}
+    to {-webkit-transform: rotateY(360deg);}
+}
+@-moz-keyframes rotateY360 {
+    from {-moz-transform: rotateY(0deg);}
+    to {-moz-transform: rotateY(360deg);}
+}
+@-ms-keyframes rotateY360 {
+    from {-ms-transform: rotateY(0deg);}
+    to {-ms-transform: rotateY(360deg);}
+}
+@-o-keyframes rotateY360 {
+    from {-o-transform: rotateY(0deg);}
+    to {-o-transform: rotateY(360deg);}
+}
+.turning,
+.hover-turning:hover,
+.hover-turning-container:hover * {
+    -webkit-animation: rotateY360 1s linear infinite;
+       -moz-animation: rotateY360 1s linear infinite;
+        -ms-animation: rotateY360 1s linear infinite;
+         -o-animation: rotateY360 1s linear infinite;
+            animation: rotateY360 1s linear infinite;
+}
+
+
+
 /* colors */
 .silver { color: silver; }
 .gray { color: gray; }
