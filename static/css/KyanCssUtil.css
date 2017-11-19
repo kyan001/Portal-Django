@@ -11,7 +11,7 @@ a.no-decoration:hover {
 .fullscreen {
     height: 100% !important;
     width: 100% !important;
-    background-size: cover !important;/*撑开图片*/
+    background-size: cover !important;  /*撑开图片*/
     background-position: 50% 50% !important;
 }
 
