@@ -1,8 +1,8 @@
 {% load tags_url %}
 
-<div class="{{size}} progress-card befast" progressid="{{prg.id}}" progressname="{{prg.opus.name}}">
+<div class="{{size}} progress-card ani-fast" progressid="{{prg.id}}" progressname="{{prg.opus.name}}">
     <a href="/progress/detail?id={{prg.id}}" class="no-decoration">
-        <div class="panel panel-{{ prg.getContextualType|default:'default' }} beveryfast hover-shadow">
+        <div class="panel panel-{{ prg.getContextualType|default:'default' }} ani-veryfast hover-shadow">
             <div class="panel-heading no-bottom-border progress-title text-nowrap">
                 <span class="panel-title">
                     <span class="opus-name">

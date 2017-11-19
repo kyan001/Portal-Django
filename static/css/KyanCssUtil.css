@@ -60,25 +60,25 @@ a.no-decoration:hover {
 }
 
 /* animations */
-.beveryfast {
+.ani-veryfast {
     -webkit-transition: all 0.2s ease;
        -moz-transition: all 0.2s ease;
          -o-transition: all 0.2s ease;
             transition: all 0.2s ease;
 }
-.befast {
+.ani-fast {
     -webkit-transition: all 0.5s ease;
        -moz-transition: all 0.5s ease;
          -o-transition: all 0.5s ease;
             transition: all 0.5s ease;
 }
-.benormal {
+.ani-normal {
     -webkit-transition: all 1s ease;
        -moz-transition: all 1s ease;
          -o-transition: all 1s ease;
             transition: all 1s ease;
 }
-.beslow {
+.ani-slow {
     -webkit-transition: all 2s ease;
        -moz-transition: all 2s ease;
          -o-transition: all 2s ease;
