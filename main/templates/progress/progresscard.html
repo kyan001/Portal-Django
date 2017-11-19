@@ -5,19 +5,21 @@
         <div class="panel panel-{{ prg.getContextualType|default:'default' }} beveryfast hover-shadow">
             <div class="panel-heading no-bottom-border progress-title text-nowrap">
                 <span class="panel-title">
-                    {% if prg.weblink and prg.weblink|isurl %}
-                        <span class="weblink btn btn-default btn-xs pull-left" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
-                            <span class="glyphicon glyphicon-link"></span>
-                        </span>
+                    <span class='opus-name'>
+                        《<strong>{{ prg.opus.name|truncatechars:25 }}</strong>》
+                    </span>
+                    {% if prg.opus.covercolor %}
+                        <span class='small glyphicon glyphicon-tint' style="color: {{prg.opus.covercolor}}" title="《{{prg.opus.name}}》的封面颜色"></span>
                     {% endif %}
-                    <span class='opus-name'>《<b>{{ prg.opus.name|truncatechars:25 }}</b>》</span>
                     {% if prg.opus.subtitle %}
                         <em class="subtitle small">
                             {{ prg.opus.subtitle|truncatechars:9 }}
                         </em>
                     {% endif %}
-                    {% if prg.opus.covercolor %}
-                        <span class='pull-right glyphicon glyphicon-tint' style="color: {{prg.opus.covercolor}}" title="《{{prg.opus.name}}》的封面颜色"></span>
+                    {% if prg.weblink and prg.weblink|isurl %}
+                        <span class="weblink pull-right btn btn-{{ prg.getContextualType|default:'default' }} btn-xs" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
+                            <span class="glyphicon glyphicon-link"></span>
+                        </span>
                     {% endif %}
                 </span>
             </div>
