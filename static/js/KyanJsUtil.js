@@ -1,3 +1,17 @@
+$(function(){
+    $('.innerlink').click(function(){
+        // 在 <a> 中的 <span>，点击和 <a> 效果一致
+        var href = $(this).attr('href')
+        var target = $(this).attr('target')
+        if(target == '_blank'){
+            window.open(href)
+        } else {
+            window.location.href=href;
+        }
+        return false
+    })
+})
+
 var OpusInfoGetter = {
     /**
      * get book info from douban by isbn number

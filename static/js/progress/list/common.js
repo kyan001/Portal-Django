@@ -5,12 +5,6 @@ $(function(){
     $('.progress-card .panel').mouseout(function(){
         $(this).find('.progress').removeClass('active progress-striped');
     });
-    $('.progress-card .panel .weblink').click(function(){
-        var href = $(this).attr('href')
-        //window.location.href=href;
-        window.open(href)
-        return false
-    });
     $('.collapse').on('hide.bs.collapse', function () {
         $(this).parent().find('.page-header').find('span.glyphicon').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down')
     })
