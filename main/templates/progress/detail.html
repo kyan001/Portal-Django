@@ -113,7 +113,7 @@
 {% block function-btn %}
     <a href="/progress/new" class="btn btn-success btn-sm hide-when-edit">
         <span class="glyphicon glyphicon-plus"></span>
-        <span class='hidden-xs'>新增进度</span>
+        <span class="hidden-xs">新增进度</span>
     </a>
 {% endblock function-btn %}
 
@@ -125,12 +125,17 @@
             <div class="panel panel-primary" id="main-panel">
                 <div class="panel-heading text-nowrap">
                     <span class="panel-title">
-                        <a class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="right" data-container='body' href="/opus/detail?id={{opus.id}}" title="分享你的进度信息">
+                        <a class="btn btn-primary btn-xs"
+                          data-toggle="tooltip"
+                          data-placement="right"
+                          data-container="body"
+                          href="/opus/detail?id={{opus.id}}"
+                          title="分享你的进度信息">
                             <span class="glyphicon glyphicon-qrcode"></span>
                         </a>
-                        《<b id='opus-name'>{{ opus.name }}</b>》
-                        <span id='opus-chapter' class='badge'></span>
-                        <span id='loading-icon' hidden>
+                        《<strong id="opus-name">{{ opus.name }}</strong>》
+                        <span id="opus-chapter" class="badge"></span>
+                        <span id="loading-icon" hidden>
                             <span class="loading glyphicon glyphicon-refresh"></span>
                         </span>
                         {% if opus.subtitle %}
@@ -143,16 +148,16 @@
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped active progress-bar-{{prg.getContextualType}}" style="width: {{prg.persent}}%; min-width: 7em;">
                         {% if opus.total == 0 %}
-                            <b>{{prg.current}} / ∞</b>
+                            <strong>{{prg.current}} / ∞</strong>
                         {% else %}
-                            <b>{{prg.current}} / {{opus.total}}</b>
-                            <span class='pull-right'>{{ prg.persent }}%</span>
+                            <strong>{{prg.current}} / {{opus.total}}</strong>
+                            <span class="pull-right">{{ prg.persent }}%</span>
                         {% endif %}
                     </div>
                 </div>
                 <div class="panel-body second-panel-body">
                     <div class="row">
-                        <div id='left-half-panel' class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div id="left-half-panel" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <form id="saveform" action="/progress/update/" method="post">
                                 {% csrf_token %}
                                 <input name="id" type="hidden" value="{{prg.id}}">
@@ -161,7 +166,7 @@
                                         <span>进度信息</span>
                                     </div>
                                     <div class="panel-body">
-                                        {% if prg.status == 'giveup' %}
+                                        {% if prg.status == "giveup" %}
                                             <span class="label label-danger center-block">已冻结</span>
                                         {% endif %}
                                         <table class="table table-condensed table-hover">
@@ -176,10 +181,10 @@
                                                 <th>百分比</th>
                                                 <td>{{prg.persent}}%</td>
                                             </tr>
-                                            <tr class="text-info" id='name-tr' data-toggle="popover" data-placement='top' data-container='body'>
+                                            <tr class="text-info" id="name-tr" data-toggle="popover" data-placement="top" data-container="body">
                                                 <th>名称</th>
                                                 <td class="text-info">
-                                                    <div class='input-group'>
+                                                    <div class="input-group">
                                                         <span class="input-group-addon input-sm">《</span>
                                                         <input class="editable form-control"
                                                           name="name"
@@ -216,17 +221,17 @@
                                                       value="{{opus.total}}"
                                                       data-original="{{opus.total}}"
                                                       autocomplete="off"
-                                                      oninput='syncTotal()'>
+                                                      oninput="syncTotal()">
                                                 </td>
                                             </tr>
                                             <tr class="text-info">
                                                 <th>当前进度</th>
                                                 <td class="text-info">
                                                     <div class="form-group form-group-lg has-feedback">
-                                                        <div class='input-group'>
+                                                        <div class="input-group">
                                                             <span class="input-group-btn">
                                                                 <div class="btn btn-lg btn-default" role="button" onclick="addOneCurrent()">
-                                                                    <span class='glyphicon glyphicon-plus'></span>
+                                                                    <span class="glyphicon glyphicon-plus"></span>
                                                                 </div>
                                                             </span>
                                                             <input class="editable form-control"
@@ -235,13 +240,13 @@
                                                               min="0"
                                                               max="{{opus.total|default:''}}"
                                                               value="{{prg.current}}"
-                                                              data-original='{{prg.current}}'
+                                                              data-original="{{prg.current}}"
                                                               onfocus="if(this.value==this.dataset.original){this.value=''}"
                                                               onblur="if(this.value==''){this.value=this.dataset.original}"
                                                               placeholder="{{prg.current}}">
                                                             <span class="form-control-feedback" aria-hidden="true">
                                                                 <span>/</span>
-                                                                <span id='total-as-feedback'></span>
+                                                                <span id="total-as-feedback"></span>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -250,26 +255,26 @@
                                             <tr class="text-info" title="{{prg.weblink}}">
                                                 <th>链接</th>
                                                 <td class="text-info">
-                                                    <div class='input-group'>
+                                                    <div class="input-group">
                                                         {% if prg.weblink and prg.weblink|isurl %}
                                                             <span class="input-group-btn">
                                                                 <a class="btn btn-default"
                                                                   data-toggle="tooltip"
                                                                   data-placement="right"
-                                                                  data-container='body'
+                                                                  data-container="body"
                                                                   title="在新窗口打开链接"
-                                                                  href='{{prg.weblink}}'
-                                                                  target='_blank'>
-                                                                    <span class='glyphicon glyphicon-link'></span>
-                                                                    <span class='glyphicon glyphicon-new-window'></span>
+                                                                  href="{{prg.weblink}}"
+                                                                  target="_blank">
+                                                                    <span class="glyphicon glyphicon-link"></span>
+                                                                    <span class="glyphicon glyphicon-new-window"></span>
                                                                 </a>
                                                             </span>
                                                         {% else %}
                                                             <span class="input-group-addon">
-                                                                <span class='glyphicon glyphicon-link'
+                                                                <span class="glyphicon glyphicon-link"
                                                                   data-toggle="tooltip"
                                                                   data-placement="right"
-                                                                  data-container='body'
+                                                                  data-container="body"
                                                                   title="请以 http 或 https 开头">
                                                                 </span>
                                                             </span>
@@ -278,18 +283,17 @@
                                                           name="weblink"
                                                           type="text"
                                                           value="{{prg.weblink}}"
-                                                          placeholder="http://"
                                                           data-original="{{prg.weblink}}"
-                                                          placeholder="{{prg.weblink}}">
+                                                          placeholder="{{prg.weblink|default:'http://'}}">
                                                     </div>
                                                 </td>
                                             </tr>
                                         </table>
                                     </div><!--.panel-body-->
 
-                                    <div class='row'>
-                                        <div class='col-xs-12'>
-                                            <div class='btn-group btn-group-justified show-when-edit'>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="btn-group btn-group-justified show-when-edit">
                                                 <a id="cancel" class="btn btn-default" role="button" onclick="cancelEdit()">
                                                     <span class="glyphicon glyphicon-remove"></span> 取消编辑
                                                 </a>
@@ -302,7 +306,7 @@
                                 </div><!--.panel-->
                             </form>
                         </div><!--.col#left-half-panel-->
-                        <div id='right-half-panel' class="col-xs-12 col-sm-12 col-md-6 col-lg-6 hide-when-edit">
+                        <div id="right-half-panel" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 hide-when-edit">
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     <span>时间信息</span>
@@ -312,8 +316,8 @@
                                         <tr>
                                             <th>开始时间</th>
                                             <td>
-                                                <span>{{prg.created|date:'Y-m-d H:i'}}</span>
-                                                <small class='text-muted'>{{aux.time.c2n}}</small>
+                                                <span>{{prg.created|date:"Y-m-d H:i"}}</span>
+                                                <small class="text-muted">{{aux.time.c2n}}</small>
                                             </td>
                                         </tr>
                                         <tr>
@@ -323,7 +327,7 @@
                                                 <th>上次更新</th>
                                             {% endifequal %}
                                             <td>
-                                                <span>{{prg.modified|date:'Y-m-d H:i' }}</span>
+                                                <span>{{prg.modified|date:"Y-m-d H:i" }}</span>
                                                 <small class="text-muted">{{aux.time.m2n}}</small>
                                             </td>
                                         </tr>
@@ -336,7 +340,7 @@
                                                 </td>
                                             </tr>
                                         {% endif %}
-                                        {% if prg.status == 'done' %}
+                                        {% if prg.status == "done" %}
                                             <tr class="text-success">
                                                 <td>用时</td>
                                                 <td>{{ aux.time.c2m }}</td>
@@ -345,7 +349,7 @@
                                             <tr class="text-success">
                                                 <td>预计完成</td>
                                                 <td>
-                                                    <span>{{aux.esti.finish_date|date:'Y-m-d'}}</span>
+                                                    <span>{{aux.esti.finish_date|date:"Y-m-d"}}</span>
                                                     <small class="text-muted">{{aux.esti.finish_time}}</small>
                                                 </td>
                                             </tr>
@@ -355,41 +359,41 @@
                             </div><!--.panel-->
                             <div id="douban-info-panel" class="panel panel-primary">
                                 <div class="panel-heading">
-                                    <span><b>作品信息</b></span>
-                                    <span class='pull-right'>
-                                        <a id='opus-cover' class='btn btn-xs btn-primary' role='button'>
-                                            <span class='glyphicon glyphicon-picture'></span>
+                                    <span><strong>作品信息</strong></span>
+                                    <span class="pull-right">
+                                        <a id="opus-cover" class="btn btn-xs btn-primary" role="button">
+                                            <span class="glyphicon glyphicon-picture"></span>
                                             封面
                                         </a>
-                                        <a id="opus-type-a" class='btn btn-xs btn-primary' href="" target="_blank">
-                                            <span id='opus-type-icon' class="glyphicon"></span>
+                                        <a id="opus-type-a" class="btn btn-xs btn-primary" href="" target="_blank">
+                                            <span id="opus-type-icon" class="glyphicon"></span>
                                         </a>
                                     </span>
                                 </div>
                                 <div class="panel-body">
-                                    <div id='opus-image-row' class='row'>
-                                        <div class='col-xs-12'>
-                                            <img id='opus-wordcloud' class='img-responsive center-block' src=''>
+                                    <div id="opus-image-row" class="row">
+                                        <div class="col-xs-12">
+                                            <img id="opus-wordcloud" class="img-responsive center-block">
                                         </div>
                                     </div>
                                     <table class="table table-condensed table-hover">
                                         <tr id="title-tr">
                                             <td colspan="2">
                                                 《<a id="title-link" href="" target="_blank"></a>》
-                                                <span class='text-muted' id="original-title"></span>
-                                                <span id='color-indicator' class='btn btn-xs btn-link pull-right' title='作品代表色' data-toggle="tooltip" data-placement="left">
-                                                    <span class='glyphicon glyphicon-tint'></span>
+                                                <span class="text-muted" id="original-title"></span>
+                                                <span id="color-indicator" class="btn btn-xs btn-link pull-right" title="作品代表色" data-toggle="tooltip" data-placement="left">
+                                                    <span class="glyphicon glyphicon-tint"></span>
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr id="rating-tr">
                                             <td>豆瓣评分</td>
                                             <td>
-                                                <b id="rating-av"></b>
+                                                <strong id="rating-av"></strong>
                                                 <span class="text-muted rating-aux"> / 10</span>
-                                                <span class='text-muted small hidden'>
+                                                <span class="text-muted small hidden">
                                                     （<span class="glyphicon"></span>
-                                                    <span id='rate-number'></span>）
+                                                    <span id="rate-number"></span>）
                                                 </span>
                                             </td>
                                         </tr>
@@ -403,19 +407,19 @@
                         </div><!--.col#right-half-panel-->
                     </div><!--.row-->
                 </div><!-- .panel-body -->
-                <div class='panel-footer hide-when-edit'>
+                <div class="panel-footer hide-when-edit">
                     <div class="row">
-                        <div class='col-xs-12'>
-                            <a class="btn btn-danger" id='delete' role="button" onclick="confirmDelete()">
+                        <div class="col-xs-12">
+                            <a class="btn btn-danger" id="delete" role="button" onclick="confirmDelete()">
                                 <span class="glyphicon glyphicon-trash"></span> 彻底删除
                             </a>
-                            <span class='pull-right'>
-                                {% if prg.status == 'giveup' %}
-                                    <a id='reset' class="btn btn-warning" role="button" onclick="$('#resetform').submit()">
+                            <span class="pull-right">
+                                {% if prg.status == "giveup" %}
+                                    <a id="reset" class="btn btn-warning" role="button" onclick="$('#resetform').submit()">
                                         <span class="glyphicon glyphicon-ok-circle"></span> 激活
                                     </a>
                                 {% else %}
-                                    <a id='giveup' class="btn btn-warning" role="button" onclick="$('#giveupform').submit()">
+                                    <a id="giveup" class="btn btn-warning" role="button" onclick="$('#giveupform').submit()">
                                         <span class="glyphicon glyphicon-ban-circle"></span> 冻结
                                     </a>
                                 {% endif %}
