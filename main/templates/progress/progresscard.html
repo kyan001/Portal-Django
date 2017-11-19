@@ -5,11 +5,11 @@
         <div class="panel panel-{{ prg.getContextualType|default:'default' }} beveryfast hover-shadow">
             <div class="panel-heading no-bottom-border progress-title text-nowrap">
                 <span class="panel-title">
-                    <span class='opus-name'>
+                    <span class="opus-name">
                         《<strong>{{ prg.opus.name|truncatechars:25 }}</strong>》
                     </span>
                     {% if prg.opus.covercolor %}
-                        <span class='small glyphicon glyphicon-tint' style="color: {{prg.opus.covercolor}}" title="《{{prg.opus.name}}》的封面颜色"></span>
+                        <span class="small glyphicon glyphicon-tint" style="color: {{prg.opus.covercolor}}" title="《{{prg.opus.name}}》的封面颜色"></span>
                     {% endif %}
                     {% if prg.opus.subtitle %}
                         <em class="subtitle small">
@@ -23,20 +23,20 @@
                     {% endif %}
                 </span>
             </div>
-            <table class='hidden-xs table table-condensed table-responsive small text-{{ prg.getContextualType|default:"muted" }}'>
+            <table class="hidden-xs table table-condensed table-responsive small text-{{ prg.getContextualType|default:'muted' }}">
                 <tr>
                     {% if prg.current == prg.opus.total and prg.current != 0 %}
                         <td class="text-center bg-primary">
-                            <span class='glyphicon glyphicon-ok'></span>
-                            <span title='完成时间'>{{ prg.modified|date:'Y-m-d' }}</span>
+                            <span class="glyphicon glyphicon-ok"></span>
+                            <span title="完成时间">{{ prg.modified|date:'Y-m-d' }}</span>
                         </td>
                     {% else %}
                         <td class="text-left {{ prg.getContextualType|default:'active' }}">
-                            <span class='glyphicon glyphicon-play'></span>
+                            <span class="glyphicon glyphicon-play"></span>
                             <span title="开始时间">{{ prg.created|date:'Y-m-d' }}</span>
                         </td>
                         <td class="text-right {{ prg.getContextualType|default:'active' }}">
-                            <span class='glyphicon glyphicon-pause'></span>
+                            <span class="glyphicon glyphicon-pause"></span>
                             <span title="上次更新">{{ prg.modified|date:'Y-m-d' }}</span>
                         </td>
                     {% endif %}
@@ -48,15 +48,15 @@
                         <b>{{prg.current}}</b> / <b>{% if prg.opus.total != 0 %}{{prg.opus.total}}{% else %}∞{% endif %}</b>
                     {% endif %}
                     {% if prg.persent > 50 and prg.persent < 100 %}
-                        <span class='pull-right'>{{ prg.persent }}%</span>
+                        <span class="pull-right">{{ prg.persent }}%</span>
                     {% endif %}
                 </div>
-                <div class='small'>
+                <div class="small">
                     {% if prg.persent < 25 %}
                         <b>{{prg.current}}</b> / <b>{% if prg.opus.total != 0 %}{{prg.opus.total}}{% else %}∞{% endif %}</b>
                     {% endif %}
                     {% if prg.persent > 0 and prg.persent < 50 %}
-                        <span class='pull-left'>{{ prg.persent }}%</span>
+                        <span class="pull-left">{{ prg.persent }}%</span>
                     {% endif %}
                 </div>
             </div>
