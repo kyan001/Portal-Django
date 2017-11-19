@@ -32,3 +32,6 @@
 .progress-card .progress .progress-bar {
     line-height: inherit;
 }
+.progress-card .weblink {
+    line-height: normal;
+}

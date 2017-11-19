@@ -12,9 +12,6 @@
 .prg-counts {
     color: inherit;
 }
-.btn.weblink {
-    line-height: 1.22;
-}
 @media (min-width: 992px) {
     .right-bordered {
         border-right: 1px solid #eeeeee;
