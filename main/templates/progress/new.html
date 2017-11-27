@@ -59,33 +59,33 @@
                 <div class="panel-body">
                     <form id="theform" action="/progress/add/" method="post">
                         {% csrf_token %}
-                        <div class='row'>
-                            <div class='col-xs-12 col-sm-10 col-sm-offset-1'>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                                 <div class="row">
                                     <span class="col-xs-12">
                                         <div class="input-group input-group-lg {% if name %}has-warning{% endif %}">
                                             <span class="input-group-addon">名称</span>
                                             <input type="text"
-                                                class='form-control editable clearable'
+                                                class="form-control editable clearable"
                                                 placeholder="作品名称"
                                                 name="name"
-                                                value='{{ name }}'
+                                                value="{{ name }}"
                                                 onchange="Guess.getInfo()">
                                             <span class="input-group-btn">
-                                                <span class="btn btn-default" role="button" onclick='$("#barcode-input").click()'>
-                                                    <span class='glyphicon glyphicon-barcode'></span>
+                                                <span class="btn btn-default" role="button" onclick="$('#barcode-input').click()">
+                                                    <span class="glyphicon glyphicon-barcode"></span>
                                                 </span>
                                             </span>
                                         </div>
                                     </span>
                                 </div>
-                                <span class='text-muted'>选填：</span>
+                                <span class="text-muted">选填：</span>
                                 <div class="row">
                                     <span class="col-xs-12">
-                                        <div id='subtitle-group' class="input-group">
+                                        <div id="subtitle-group" class="input-group">
                                             <span class="input-group-addon">备注</span>
                                             <input type="text"
-                                                class='form-control editable clearable'
+                                                class="form-control editable clearable"
                                                 placeholder="作品的分类或备注"
                                                 name="subtitle">
                                             <div class="input-group-btn">
@@ -93,16 +93,16 @@
                                                     <span class="caret"></span>
                                                  </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                    <span class='btn btn-default category' role="button">书</span>
-                                                    <span class='btn btn-default category' role="button">PDF</span>
-                                                    <span class='btn btn-default category' role="button">漫画</span>
-                                                    <span class='btn btn-default category' role="button">动画</span>
-                                                    <span class='btn btn-default category' role="button">电视剧</span>
-                                                    <span class='btn btn-default category' role="button">公开课</span>
-                                                    <span class='btn btn-default category' role="button">纪录片</span>
-                                                    <span class='btn btn-default category' role="button">视频</span>
-                                                    <span class='btn btn-default category' role="button">小说</span>
-                                                    <span class='btn btn-default category' role="button">Kindle</span>
+                                                    <span class="btn btn-default category" role="button">书</span>
+                                                    <span class="btn btn-default category" role="button">PDF</span>
+                                                    <span class="btn btn-default category" role="button">漫画</span>
+                                                    <span class="btn btn-default category" role="button">动画</span>
+                                                    <span class="btn btn-default category" role="button">电视剧</span>
+                                                    <span class="btn btn-default category" role="button">公开课</span>
+                                                    <span class="btn btn-default category" role="button">纪录片</span>
+                                                    <span class="btn btn-default category" role="button">视频</span>
+                                                    <span class="btn btn-default category" role="button">小说</span>
+                                                    <span class="btn btn-default category" role="button">Kindle</span>
                                                 </ul>
                                             </div><!-- /btn-group -->
                                         </div>
@@ -113,13 +113,13 @@
                                         <div class="input-group {% if total %}has-warning{% endif %}">
                                             <span class="input-group-addon">总共</span>
                                             <input type="number"
-                                                class='form-control editable clearable'
+                                                class="form-control editable clearable"
                                                 placeholder="总页数／总集数（追剧请填 0）"
                                                 name="total"
-                                                value='{{ total }}'>
+                                                value="{{ total }}">
                                             <span class="input-group-btn">
-                                                <span id='guess-total' class="btn btn-default" role="button" onclick='Guess.ask()'>
-                                                    <span class='guess-icon glyphicon glyphicon-cloud text-muted'></span>
+                                                <span id="guess-total" class="btn btn-default" role="button" onclick="Guess.ask()">
+                                                    <span class="guess-icon glyphicon glyphicon-cloud text-muted"></span>
                                                 </span>
                                             </span>
                                         </div>
@@ -130,11 +130,11 @@
                                         <div class="input-group">
                                             <span class="input-group-addon">当前进度</span>
                                             <input type="number"
-                                                class='form-control editable clearable'
+                                                class="form-control editable clearable"
                                                 placeholder="当前页数／集数"
                                                 name="current">
                                             <span class="input-group-btn">
-                                                <span class="btn btn-default" role="button" onclick='addOneCurrent()'>+</span>
+                                                <span class="btn btn-default" role="button" onclick="addOneCurrent()">+</span>
                                             </span>
                                         </div>
                                     </span>
@@ -144,10 +144,10 @@
                                         <div class="input-group has-feedback {% if weblink %}has-warning{% endif %}">
                                             <span class="input-group-addon text-muted">作品链接</span>
                                             <input type="text"
-                                                class='form-control editable clearable'
+                                                class="form-control editable clearable"
                                                 placeholder="http://"
                                                 name="weblink"
-                                                value='{{ weblink }}'>
+                                                value="{{ weblink }}">
                                             <span class="glyphicon glyphicon-link form-control-feedback"></span>
                                         </div>
                                     </span>
@@ -159,7 +159,7 @@
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <a class="btn btn-default" href="javascript:history.back()" onclick='disableAllBtn()'>
+                            <a class="btn btn-default" href="javascript:history.back()" onclick="disableAllBtn()">
                                 <span class="glyphicon glyphicon-remove"></span> 取消
                             </a>
                         </div>
@@ -178,14 +178,14 @@
             </div>
         </div><!--col-->
     </div><!--row-->
-    <input id='barcode-input' class='hidden' type='file' accept="image/*" capture="camera">
+    <input id="barcode-input" class="hidden" type="file" accept="image/*" capture="camera">
 {% endblock content %}
 
 {% block js %}
 <script>
     $(function(){
-        $('.category').click(function(){
-            $('input[name="subtitle"]').val($(this).text().trim())
+        $(".category").click(function(){
+            $("input[name='subtitle']").val($(this).text().trim())
         })
         $("#barcode-input").on("change", function(e) {
             if (e.target.files && e.target.files.length) {
@@ -209,13 +209,13 @@
                 }, function(data){
                     if(data && data.codeResult && data.codeResult.code){
                         OpusInfoGetter.getIsbnInfo(data.codeResult.code, function(result){
-                            $('input[name="name"]').val(result.title)
-                            $('input[name="total"]').val(result.pages)
+                            $("input[name='name']").val(result.title)
+                            $("input[name='total']").val(result.pages)
                         }, function(){
-                            $.warning('未找到 ISBN:' + data.codeResult.code + ' 的书籍')
+                            $.warning("未找到 ISBN:" + data.codeResult.code + " 的书籍")
                         })
                     } else {
-                        $.warning('未能解析条形码')
+                        $.warning("未能解析条形码")
                     }
                 })
             }
@@ -223,56 +223,56 @@
     });
 
     var Form = {
-        'clear': function(){
-            $('input.form-control').val('')
+        "clear": function(){
+            $("input.form-control").val("")
         },
-        'submit': function(){
-            var name = $('input[name="name"]').val()
-            var subtitle = $('input[name="subtitle"]').val()
-            var total = $('input[name="total"]').val()
-            var current = $('input[name="current"]').val()
+        "submit": function(){
+            var name = $("input[name='name']").val()
+            var subtitle = $("input[name='subtitle']").val()
+            var total = $("input[name='total']").val()
+            var current = $("input[name='current']").val()
             if(name == ""){
-                $.danger('名称不能为空')
+                $.danger("名称不能为空")
                 return false;
             }
             if(current == ""){
                 current = 0;
-                $('input[name="current"]').val(current)
+                $("input[name='current']").val(current)
             }
             if(total == ""){
                 total = 0
-                $('input[name="total"]').val(total)
+                $("input[name='total']").val(total)
             }
             if(total!=0){
                 if(parseInt(current) > parseInt(total)){
-                    $.danger('初始进度不能大于总页数')
+                    $.danger("初始进度不能大于总页数")
                     return false;
                 }
             }
             disableAllBtn()
-            $('#theform').submit();
+            $("#theform").submit();
         }
     }
 
     var Guess = {  // 根据书名猜测页数
-        'bookinfo': null,
-        'clear': function(){
-            $('#guess-total .guess-icon').addClass('text-muted')  // 还原图标颜色
-            $('#guess-total .guess-icon').addClass('glyphicon-cloud').removeClass('glyphicon-cloud-download')  // 还原图标
-            $('input[name="name"]').attr('title', '')  // 还原名称处 title
+        "bookinfo": null,
+        "clear": function(){
+            $("#guess-total .guess-icon").addClass("text-muted")  // 还原图标颜色
+            $("#guess-total .guess-icon").addClass("glyphicon-cloud").removeClass("glyphicon-cloud-download")  // 还原图标
+            $("input[name='name']").attr("title", "")  // 还原名称处 title
             Guess.bookinfo = null  // 清空
         },
         'ask': function(){
             if(!Guess.bookinfo){
-                var bookname = $('input[name="name"]').val()
+                var bookname = $("input[name='name']").val()
                 if(!bookname){
-                    $.warning('请先填写进度名称')
+                    $.warning("请先填写进度名称")
                 } else {
-                    $.danger('未获取到《' + bookname + '》的信息')
+                    $.danger("未获取到《" + bookname + "》的信息")
                 }
                 return false
             }
-            question_txt = '\n《'+ Guess.bookinfo.title + '》'
+            question_txt = "\n《"+ Guess.bookinfo.title + "》"
             if(Guess.bookinfo.tags.length > 0){  // 有 tag
                 question_txt += '\n(' + Guess.bookinfo.tags.join('，') + ')'
             }
