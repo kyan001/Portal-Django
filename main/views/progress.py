@@ -6,6 +6,7 @@ from django.db import transaction
 from main.models import User, Opus, Progress, Chat
 from django.db.models import Q
 from django.core.cache import cache
+from django.contrib import messages
 import icalendar
 import util.ctrl
 import util.time
@@ -135,12 +136,12 @@ def detail(request):
     aux['time']['c2n'] = util.time.formatDateToNow(progress.created, 'largest')
     aux['time']['m2n'] = util.time.formatDateToNow(progress.modified, 'largest')
     aux['time']['c2m'] = util.time.formatTimedelta(progress.getTimedelta('c2m'))
-    if opus.total and progress.current:  # 非追剧中、非待开始有预计完成时间
+    if opus.total and progress.current:  # 非追剧中、非待开始有预计完成时间.
         esti_finish_timedelta = progress.getTimedelta('c2n') / progress.current * (opus.total - progress.current)
         esti_finish_date = progress.modified + esti_finish_timedelta
         aux['esti']['finish_date'] = esti_finish_date
         aux['esti']['finish_time'] = util.time.formatDateToNow(esti_finish_date, 'largest')
-    if progress.current:  # 平均阅读速度
+    if progress.current:  # 平均阅读速度.
         speed = progress.getTimedelta('speed')
         if speed:
             aux['time']['speed'] = util.time.formatTimedelta(speed)
@@ -201,13 +202,12 @@ def update(request):
         current = 0
     if total > 0 and current > total:
         return util.ctrl.infoMsg("初始进度 {current} 不能大于总页数 {total}".format(current=current, total=total))
-    # get progress
+    # get progress and opus
     progress = Progress.objects.get_or_404(id=progressid)
+    opus = progress.opus
     # check owner
     if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能更新该进度")
-    # get opus
-    opus = Opus.objects.get_or_404(id=progress.opusid)
     # add exp
     util.userexp.addExp(user, 'progress', 5, '编辑进度《{opus.name}》成功'.format(opus=opus))
     # save
@@ -223,6 +223,7 @@ def update(request):
         else:
             return util.ctrl.infoMsg("储存进度时失败，可能是状态导致的问题", title="存储 progress 出错")
     # render
+    messages.success(request, '进度《{opus.name}》已更新'.format(opus=opus))
     return redirect('/progress/detail?id={progress.id}'.format(progress=progress))
 
 
@@ -235,19 +236,19 @@ def delete(request):
     progressid = request.POST.get('id')
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
-    # get progress
+    # get progress and opus
     progress = Progress.objects.get_or_404(id=progressid)
+    opus = progress.opus
     # check owner
     if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能删除该进度")
-    # get opus
-    opus = Opus.objects.get_or_404(id=progress.opusid)
     # add exp
     util.userexp.addExp(user, 'progress', 5, '删除进度《{opus.name}》'.format(opus=opus))
     # save
     progress.delete()
     opus.delete()
     # render
+    messages.success(request, '进度《{opus.name}》已删除'.format(opus=opus))
     return redirect('/progress/list')
 
 
@@ -260,18 +261,19 @@ def giveup(request):
     progressid = request.POST.get('id')
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
-    # get progress and check owner
+    # get progress and opus
     progress = Progress.objects.get_or_404(id=progressid)
+    opus = progress.opus
+    # check owner
     if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能删除该进度")
-    # get opus
-    opus = Opus.objects.get_or_404(id=progress.opusid)
-    # add exp
-    util.userexp.addExp(user, 'progress', 5, '冻结进度《{opus.name}》'.format(opus=opus))
     # save
     progress.status = 'giveup'
     progress.save()
+    # add exp
+    util.userexp.addExp(user, 'progress', 5, '冻结进度《{opus.name}》'.format(opus=opus))
     # render
+    messages.success(request, '进度《{opus.name}》已冻结'.format(opus=opus))
     return redirect('/progress/detail?id=' + str(progress.id))
 
 
@@ -284,18 +286,19 @@ def reset(request):
     progressid = request.POST.get('id')
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
-    # get progress and check owner
+    # get progress and opus
     progress = Progress.objects.get_or_404(id=progressid)
+    opus = progress.opus
+    # check owner
     if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能删除该进度")
-    # get opus
-    opus = Opus.objects.get_or_404(id=progress.opusid)
-    # add exp
-    util.userexp.addExp(user, 'progress', 5, '恢复已冻结的进度《{opus.name}》'.format(opus=opus))
     # save
     progress.resetStatus()
     progress.save()
+    # add exp
+    util.userexp.addExp(user, 'progress', 5, '恢复已冻结的进度《{opus.name}》'.format(opus=opus))
     # render
+    messages.success(request, '进度《{opus.name}》已激活'.format(opus=opus))
     return redirect('/progress/detail?id=' + str(progress.id))
 
 
