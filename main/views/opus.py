@@ -18,15 +18,15 @@ import util.ctrl
 
 def detail(request):
     '''获得作品的详情'''
-    context = {}
-    # 获得参数
     opusid = request.GET.get('id')
     if not opusid:
         return util.ctrl.infoMsg("作品 ID 为空，请联系管理员", title="作品 ID 为空")
-    # 获得作品
+    # get opus
     opus = Opus.objects.get_or_404(id=opusid)
     # render
-    context['opus'] = opus
+    context = {
+        'opus': opus,
+    }
     return render(request, 'opus/detail.html', context)
 
 
