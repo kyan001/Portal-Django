@@ -2,12 +2,12 @@
 <div class="messages-div">
     {% if messages %}
         {% for msg in messages %}
-            <div class='row messages-row'>
+            <div class="row messages-row">
                 <div class="messages alert alert-{{msg.tags}} alert-dismissible fade in pull-right" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true" class='dismiss-btn'>×</span>
+                        <span aria-hidden="true" class="dismiss-btn">×</span>
                     </button>
-                    <span class='glyphicon glyphicon-bell'></span>
+                    <span class="glyphicon glyphicon-bell"></span>
                     <span>{{ msg|safe }}</span>
                 </div>
             </div>
@@ -32,21 +32,21 @@
     }
 </style>
 <script>
-    $('.messages').delay(7777).slideUp()  // for existing messages: 7.777s before slideup
+    $(".messages").delay(7777).slideUp()  // for existing messages: 7.777s before slideup
     function msgAlert(word, type) {
-        var html = $('<div class="row messages-row"></div>')
-        var msg = $('<div class="messages alert alert-dismissible fade in pull-right" role="alert"></div>').addClass('alert-' + type)
-        var button = $('<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>')
-        var dismiss = $('<span aria-hidden="true" class="dismiss-btn">×</span>')
-        var icon = $('<span class="glyphicon glyphicon-bell"></span>')
-        var txt = $('<span> ' + word + '</span>')
+        var html = $("<div class='row messages-row'></div>")
+        var msg = $("<div class='messages alert alert-dismissible fade in pull-right' role='alert'></div>").addClass("alert-" + type)
+        var button = $("<button type='button' class='close' data-dismiss='alert' aria-label='Close'></button>")
+        var dismiss = $("<span aria-hidden='true' class='dismiss-btn'>×</span>")
+        var icon = $("<span class='glyphicon glyphicon-bell'></span>")
+        var txt = $("<span> " + word + "</span>")
         button.append(dismiss)
         msg.append(button)
         msg.append(icon)
         msg.append(txt)
         html.append(msg)
         html.delay(word.length * 300).fadeOut(word.length * 300)  // for each char: 0.3s before fadeout, and fadeout last 0.3s
-        $('.messages-div').prepend(html)
+        $(".messages-div").prepend(html)
     };
     $.extend({
         warning: function(word) {
