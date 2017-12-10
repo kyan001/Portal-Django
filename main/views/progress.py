@@ -242,11 +242,12 @@ def delete(request):
     # check owner
     if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能删除该进度")
+    # save
+    with transaction.atomic():
+        progress.delete()
+        opus.delete()
     # add exp
     util.userexp.addExp(user, 'progress', 5, '删除进度《{opus.name}》'.format(opus=opus))
-    # save
-    progress.delete()
-    opus.delete()
     # render
     messages.success(request, '进度《{opus.name}》已删除'.format(opus=opus))
     return redirect('/progress/list')
