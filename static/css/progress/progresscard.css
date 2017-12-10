@@ -18,7 +18,6 @@
         overflow-x: auto;
     }
 }
-
 .progress-card .progress {
     height: 25px;
     line-height: 25px;
@@ -31,7 +30,4 @@
 }
 .progress-card .progress .progress-bar {
     line-height: inherit;
-}
-.progress-card .weblink {
-    line-height: normal;
 }
