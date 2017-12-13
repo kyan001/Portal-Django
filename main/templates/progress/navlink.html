@@ -1,22 +1,33 @@
 <ul class="dropdown-menu">
-    <li>
+    <li class="progress-dropdown-li">
         <a href="/progress/list">
-            <span class="glyphicon glyphicon-th-list"></span> 列表
+            <span class="glyphicon glyphicon-th-list"></span> 进度列表
         </a>
     </li>
-    <li>
+    <li class="progress-dropdown-li">
         <a href="/progress/archive">
-            <span class="glyphicon glyphicon-inbox"></span> 存档
+            <span class="glyphicon glyphicon-inbox"></span> 进度存档
         </a>
     </li>
-    <li>
+    <li class="progress-dropdown-li">
         <a href="/progress/search">
-            <span class="glyphicon glyphicon-search"></span> 搜索
+            <span class="glyphicon glyphicon-search"></span> 进度搜索
         </a>
     </li>
-    <li>
+    <li class="progress-dropdown-li">
         <a href="/progress/timeline">
-            <span class="glyphicon glyphicon-time"></span> 历程
+            <span class="glyphicon glyphicon-time"></span> 进度历程
         </a>
     </li>
 </ul>
+<script>
+    $(function(){
+        $(".progress-dropdown-li").each(function(){
+            var current_path = "{{ request.path }}".replace(/\/$/, "")
+            var current_a_href = $(this).find("a").attr("href").replace(/\/$/, "")
+            if(current_path == current_a_href){
+                $(this).addClass("active")
+            }
+        })
+    })
+</script>
