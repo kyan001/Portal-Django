@@ -6,7 +6,7 @@
 
 {% block content %}
     <div class="container">
-        <div class='row'>
+        <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-8 right-bordered">
                 <div class="page-header" data-toggle="collapse" data-target="#list-inprogress">
                     <h5>
@@ -19,7 +19,7 @@
                 <div class="collapse in" id="list-inprogress">
                     <div class="row">
                         {% for prg in prglist.inprogress %}
-                            {% include 'progress/progresscard.html' with prg=prg size='col-sm-6 col-xs-12' %}
+                            {% include "progress/progresscard.html" with prg=prg size="col-sm-6 col-xs-12" %}
                         {% empty %}
                             <div class="well">
                                 您还没有任何进度哦~
@@ -41,7 +41,7 @@
                 <div class="collapse in" id="list-follow">
                     <div class="row">
                     {% for prg in prglist.follow %}
-                        {% include 'progress/progresscard.html' with prg=prg size='col-xs-12 col-sm-6 col-md-12' %}
+                        {% include "progress/progresscard.html" with prg=prg size="col-xs-12 col-sm-6 col-md-12" %}
                     {% empty %}
                         <div class="well">
                             您没有在追剧的进度哦~
@@ -52,9 +52,9 @@
             </div><!--.row-->
         </div>
 
-        <div class='row'>
-            <div class='col-xs-12'>
-                <div class="page-header" data-toggle="collapse" data-target="#list-todo" onmouseover='$("#list-todo").collapse("show");'>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-header" data-toggle="collapse" data-target="#list-todo" onmouseover="$('#list-todo').collapse('show');">
                     <h5>
                         <span class="glyphicon glyphicon-chevron-up text-muted"></span>
                         待阅读
@@ -66,7 +66,7 @@
                     <div class="col-xs-12">
                         <div class="row">
                         {% for prg in prglist.todo %}
-                            {% include 'progress/progresscard.html' with prg=prg size='col-md-4 col-sm-6 col-xs-12' %}
+                            {% include "progress/progresscard.html" with prg=prg size="col-md-4 col-sm-6 col-xs-12" %}
                         {% empty %}
                             <div class="well">
                                 您没有尚未开始的进度哦~
@@ -79,8 +79,8 @@
         </div>
 
         {% if prglist.error %}
-            <div class='row'>
-                <div class='col-xs-12'>
+            <div class="row">
+                <div class="col-xs-12">
                     <div class="page-header" data-toggle="collapse" data-target="#list-error">
                         <h5>
                             <span class="glyphicon glyphicon-plus text-muted"></span>
@@ -93,7 +93,7 @@
                         <div class="col-xs-12">
                             <div class="row">
                             {% for prgrg in prglist.error %}
-                                {% include 'progress/progresscard.html' with prg=prg size='col-md-4 col-sm-6 col-xs-12'%}
+                                {% include "progress/progresscard.html" with prg=prg size="col-md-4 col-sm-6 col-xs-12"%}
                             {% endfor %}
                             </div><!--.row-->
                         </div><!--.col-->
