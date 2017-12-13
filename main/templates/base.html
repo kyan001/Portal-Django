@@ -13,7 +13,7 @@
             <link rel="icon" href="/static/img/favicon.png">
             <link href="/static/img/favicon.png" rel="apple-touch-icon">
         {% endblock icon %}
-        <title>{% block title %}{% endblock %} - {{ tld|default:'!' }}</title>
+        <title>{% block title %}{% endblock %} - {{ tld|default:"!" }}</title>
         <script src="/static/js/jquery-2.1.3.min.js"></script>
         <script src="/static/bootstrap/js/bootstrap.min.js"></script>
         <script src="/static/js/KyanJsUtil.js"></script>
@@ -58,7 +58,7 @@
         <!-- ############ MESSAGES ############-->
         {% include "messages.html" %}
         <!-- ############ NAVIGATIONS ############-->
-        <div id='nav-btn-zone'>
+        <div id="nav-btn-zone">
             {% block nav-btn %}{% endblock nav-btn %}
             <span id="function-btn-zone">
                 {% block function-btn %}{% endblock %}
@@ -90,17 +90,17 @@
         </style>
         <!-- ############ USER BAR ############-->
         {% block userbar %}
-            {% include 'userbar.html' %}
+            {% include "userbar.html" %}
         {% endblock userbar %}
         <!-- ############ CONTENT ############-->
-        <div id='the-very-div'>
+        <div id="the-very-div">
             {% block content %}
             {% endblock content %}
         </div>
 
         <!-- ############ FOOTER ############-->
         {% block footer %}
-        <div id='footer-div'>
+        <div id="footer-div">
             <blockquote class="footer hidden-xs blockquote-reverse">
                 <div id="behappy" class="ani-normal">
                     <strong>Be happy.</strong>
