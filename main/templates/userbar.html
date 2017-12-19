@@ -30,7 +30,7 @@
         line-height: 40px;
     }
 </style>
-<nav id='user-bar'>
+<nav id="user-bar">
     {% if not cuser %}
         <span class="pull-right">
             <a href="/" class="btn btn-info btn-sm" title="Home Page" data-toggle="tooltip" data-placement="left">
@@ -47,7 +47,7 @@
             <a href="/" class="btn btn-info btn-sm hidden-xs" title="Home Page" data-toggle="tooltip" data-placement="left">
                 <span class="glyphicon glyphicon-home"></span>
             </a>
-            <a href="/chat/inbox" class="btn btn-default btn-sm" id='inbox-btn'>
+            <a id="inbox-btn" class="btn btn-default btn-sm" href="/chat/inbox">
                 <span class="glyphicon glyphicon-envelope"></span>
                 <b id="unread-count"></b>
             </a>
@@ -60,32 +60,32 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li>
-                        <a href='/user/profile'>
+                        <a href="/user/profile">
                             <span class="glyphicon glyphicon-user"></span> 个人信息
                         </a>
                     </li>
                     <li>
-                        <a href='/user/setting'>
+                        <a href="/user/setting">
                             <span class="glyphicon glyphicon-cog"></span> 个人设置
                         </a>
                     </li>
                     <li>
                         <a href="/user/logout">
                             <span class="glyphicon glyphicon-log-out"></span>
-                            <span class='text-danger'>登出</span>
+                            <span class="text-danger">登出</span>
                         </a>
                     </li>
                     <li role="separator" class="divider"></li>
                     <li class="visible-xs-block">
                         <a href="/">
                             <span class="glyphicon glyphicon-home"></span>
-                            <span class='text-info'>首页</span>
+                            <span class="text-info">首页</span>
                         </a>
                     </li>
                     <li>
                         <a href="/progress/list">
                             <span class="glyphicon glyphicon-th-list"></span>
-                            <span class='text-primary'>我的进度</span>
+                            <span class="text-primary">我的进度</span>
                         </a>
                     </li>
                     <li>
@@ -100,14 +100,14 @@
                     </li>
                     <li role="separator" class="divider"></li>
                     <li>
-                        <a href='/badge/list'>
+                        <a href="/badge/list">
                             <span class="glyphicon glyphicon-tower"></span> 徽章列表
                         </a>
                     </li>
                     <li>
                         <a href="javascript:void(0)" onclick="$('.bootswatch-btn').fadeIn()">
                             <span class="glyphicon glyphicon-leaf"></span> 切换主题
-                            <span class='btn btn-link innerlink' href='/index/settheme?mode=random'>
+                            <span class='btn btn-link innerlink' href="/index/settheme?mode=random">
                                 <span class="glyphicon glyphicon-random"></span>
                             </span>
                         </a>
@@ -161,7 +161,7 @@
 </nav>
 <script>
     $(document).ready(function(){
-        $('#user-bar [data-toggle="tooltip"]').tooltip();
+        $("#user-bar [data-toggle="tooltip"]").tooltip();
         updateUnreadCount();
     });
     function updateUnreadCount(){
@@ -174,26 +174,26 @@
                 if (result.error) {
                     alert(result.error);
                 } else if (result.unreadcount > 0) {
-                    var msg_prvw_container = $('<div></div>')
+                    var msg_prvw_container = $("<div></div>")
                     for (i in result.msgs){
-                        var msg_prvw_sender = $('<span></span>').addClass('text-primary').text('@' + result.msgs[i].sender)
-                        var msg_prvw_word = $('<span></span>').text('：' + result.msgs[i].words)
-                        $('<div></div>').append(msg_prvw_sender).append(msg_prvw_word).appendTo(msg_prvw_container)
+                        var msg_prvw_sender = $("<span></span>").addClass("text-primary").text("@" + result.msgs[i].sender)
+                        var msg_prvw_word = $("<span></span>").text("：" + result.msgs[i].words)
+                        $("<div></div>").append(msg_prvw_sender).append(msg_prvw_word).appendTo(msg_prvw_container)
                     }
                     $("#user-bar #unread-count").text(result.unreadcount);
                     $("#user-bar #inbox-btn").popover({
-                        'container': 'body',
-                        'html': 'true',
-                        'placement': 'bottom',
-                        //'title': '未读消息：',
-                        'content': msg_prvw_container.html(),
-                        'trigger': 'hover',
+                        "container": "body",
+                        "html": "true",
+                        "placement": "bottom",
+                        //"title": "未读消息：",
+                        "content": msg_prvw_container.html(),
+                        "trigger": "hover",
                     });
                     //force refresh the content
-                    $("#user-bar #inbox-btn").data('bs.popover').options.content = msg_prvw_container.html()
+                    $("#user-bar #inbox-btn").data("bs.popover").options.content = msg_prvw_container.html()
                 } else if (result.unreadcount == 0) {
-                    $("#user-bar #unread-count").text('')
-                    $("#user-bar #inbox-btn").popover('destroy')
+                    $("#user-bar #unread-count").text("")
+                    $("#user-bar #inbox-btn").popover("destroy")
                 }
             },
         });
