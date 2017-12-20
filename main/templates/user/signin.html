@@ -72,7 +72,7 @@
                     </span>
                     <input id="rememberme-content" type="text" class="form-control" value="记住我" readonly="readonly">
                 </div>
-                <input type="hidden" name="from" value="{{from}}">
+                <input type="hidden" name="next" value="{{ next }}">
             </form>
             <div class="row">
                 <div class="col-xs-12">
@@ -173,7 +173,7 @@
         var timer_vUn
         function validateUsername(option){
             clearHasClass($("#username-group"));
-            if( $("input[name="username"]").val() == "" ){
+            if( $("input[name='username']").val() == "" ){
                 $("#username-group").addClass("has-warning")
                 foldOptions()
                 return
