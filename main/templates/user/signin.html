@@ -8,7 +8,7 @@
 {% block css %}
 <style>
     .container {
-        background: url('/static/img/user/signin.jpg');
+        background: url("/static/img/user/signin.jpg");
         display: table;
     }
     #form-wrap {
@@ -35,47 +35,47 @@
 {% endblock css %}
 
 {% block nav-btn %}
-    {% include 'user/signindropdown.html' %}
+    {% include "user/signindropdown.html" %}
 {% endblock nav-btn %}
 
 {% block content %}
 <div class="container fullscreen">
     <div id="form-wrap" class="row">
-        <div id="form-div" class='col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-xs-12'>
+        <div id="form-div" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-xs-12">
             <form id="login-form" action="/user/checklogin/" method="post" autocomplete="off">
                 {% csrf_token %}
                 <div id="username-group" class="one-group input-group">
-                    <span class="input-group-addon text-muted" title='必填，只能包含“英文字母”、“数字”和“英文句号' data-toggle="tooltip" data-placement="top">
-                        <span class='glyphicon glyphicon-user'></span>
+                    <span class="input-group-addon text-muted" title="必填，只能包含“英文字母”、“数字”和“英文句号" data-toggle="tooltip" data-placement="top">
+                        <span class="glyphicon glyphicon-user"></span>
                     </span>
-                    <input type="text" class="form-control" name="username" placeholder="用户名" autofocus="autofocus" onblur="validateUsername('onblur')" autocomplete='username'>
+                    <input type="text" class="form-control" name="username" placeholder="用户名" autofocus="autofocus" onblur="validateUsername('onblur')" autocomplete="username">
                 </div>
                 <div id="question-group" class="one-group well well-sm">
-                    <span class='glyphicon glyphicon-comment'></span>
-                    <span id='question-content' class='clean-when-fold'></span>
+                    <span class="glyphicon glyphicon-comment"></span>
+                    <span id="question-content" class="clean-when-fold"></span>
                 </div>
                 <div id="answer-group" class="one-group input-group">
-                    <span class="input-group-addon text-muted" title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="top">
-                        <span class='glyphicon glyphicon-credit-card'></span>
+                    <span class="input-group-addon text-muted" title="必填，回答 “答案” 或 “备选答案” 均可正常登入" data-toggle="tooltip" data-placement="top">
+                        <span class="glyphicon glyphicon-credit-card"></span>
                     </span>
-                    <input type="password" class="form-control clean-when-fold" name="answer" placeholder="密码或答案" autocomplete='password'>
-                    <span class="input-group-addon text-muted" onmouseover='$(this).siblings("input").attr("type","text")' onmouseout='$(this).siblings("input").attr("type","password")'>
-                        <span class='glyphicon glyphicon-eye-open'></span>
+                    <input type="password" class="form-control clean-when-fold" name="answer" placeholder="密码或答案" autocomplete="password">
+                    <span class="input-group-addon text-muted" onmouseover="$(this).siblings('input').attr('type','text')" onmouseout="$(this).siblings('input').attr('type','password')">
+                        <span class="glyphicon glyphicon-eye-open"></span>
                     </span>
                 </div>
                 <div id="tip-group" class="one-group well well-sm">
-                    <span id='tip-content' class='small clean-when-fold'></span>
+                    <span id="tip-content" class="small clean-when-fold"></span>
                 </div>
                 <div id="rememberme-group" class="one-group input-group">
-                    <span class="input-group-addon" title='两周内免登入，公共电脑请勿勾选此项' data-toggle="tooltip" data-placement="top">
-                        <input id="rememberme" type="checkbox" name='rememberme' value='on' checked>
+                    <span class="input-group-addon" title="两周内免登入，公共电脑请勿勾选此项" data-toggle="tooltip" data-placement="top">
+                        <input id="rememberme" type="checkbox" name="rememberme" value="on" checked>
                     </span>
-                    <input id='rememberme-content' type='text' class="form-control" value="记住我" readonly='readonly'>
+                    <input id="rememberme-content" type="text" class="form-control" value="记住我" readonly="readonly">
                 </div>
                 <input type="hidden" name="from" value="{{from}}">
             </form>
-            <div class='row'>
-                <div class='col-xs-12'>
+            <div class="row">
+                <div class="col-xs-12">
                     <button id="submit-button" class="btn btn-success btn-block" onclick="submitForm()">
                         登入 / Login
                     </button>
@@ -92,63 +92,63 @@
 {% block js %}
     <script>
         $(function(){
-            $('#rememberme').attr('data-html',true)
-            $('[data-toggle="tooltip"]').tooltip()
-            $('#question-group').hide()
-            $('#tip-group').hide()
+            $("#rememberme").attr("data-html",true)
+            $("[data-toggle='tooltip']").tooltip()
+            $("#question-group").hide()
+            $("#tip-group").hide()
             eventBinds()
         });
         function eventBinds(){
             $('input').keydown(function(){
                 if(event.keyCode==13){
-                    if($(this).attr('name') == 'username'){
-                        $('input[name="answer"]').focus()
+                    if($(this).attr("name") == "username"){
+                        $("input[name='answer']").focus()
                         return false
                     }
-                    if ($(this).attr('name') == 'answer'){
-                        $('#submit-button').focus().click()
+                    if ($(this).attr("name") == "answer"){
+                        $("#submit-button").focus().click()
                         return false
                     }
                 }
             })
-            $('input[name="username"]').change(function(){
-                $('input[name="answer"]').val('')
+            $("input[name='username']").change(function(){
+                $("input[name='answer']").val('')
             })
         }
         function clearHasClass(ele){
-            ele.removeClass('has-warning')
-            ele.removeClass('has-success')
-            ele.removeClass('has-error')
+            ele.removeClass("has-warning")
+            ele.removeClass("has-success")
+            ele.removeClass("has-error")
         }
         function foldOptions(){
-            $('input.clean-when-fold').val('')
-            $('span.clean-when-fold').text('')
-            $('#question-group').slideUp('fast')
-            $('#tip-group').slideUp('fast')
+            $("input.clean-when-fold").val("")
+            $("span.clean-when-fold").text("")
+            $("#question-group").slideUp("fast")
+            $("#tip-group").slideUp("fast")
         }
         function unfoldOptions(option){
             $.ajax({
                 type: "GET",
                 url: "/user/getquestionandtip",
                 data: {
-                    'username': $('input[name="username"]').val()
+                    'username': $("input[name='username']").val()
                 },
                 success: function (data) {
                     var result = data;
                     if( result.error ){
                         $.danger(result.error)
                     } else {
-                        $('#question-content').text(result.question)
-                        $('#question-group').slideDown('fast')
+                        $("#question-content").text(result.question)
+                        $("#question-group").slideDown("fast")
                         if(result.tip){
-                            $('#tip-content').text('提示：'+result.tip)
-                            $('#tip-group').slideDown('fast')
+                            $("#tip-content").text("提示："+result.tip)
+                            $("#tip-group").slideDown("fast")
                         } else {
-                            $('#tip-content').text('')
-                            $('#tip-group').slideUp('fast')
+                            $("#tip-content").text("")
+                            $("#tip-group").slideUp("fast")
                         }
-                        if(option == 'unique'){
-                            $('input[name="answer"]').focus()
+                        if(option == "unique"){
+                            $("input[name='answer']").focus()
                         }
                     }
                 },
@@ -156,40 +156,40 @@
         }
 
         function showStatus(mode, word){
-            var ele = $('#submit-button')
-            if('off'==mode){
-                ele.text('登入 / Login')
-                ele.addClass('btn-success')
-                ele.removeClass('btn-warning')
-                ele.removeClass('disabled')
+            var ele = $("#submit-button")
+            if("off"==mode){
+                ele.text("登入 / Login")
+                ele.addClass("btn-success")
+                ele.removeClass("btn-warning")
+                ele.removeClass("disabled")
             } else {
                 ele.text(word)
-                ele.removeClass('btn-success')
-                ele.addClass('btn-warning')
-                ele.addClass('disabled')
+                ele.removeClass("btn-success")
+                ele.addClass("btn-warning")
+                ele.addClass("disabled")
             }
         }
 
         var timer_vUn
         function validateUsername(option){
-            clearHasClass($('#username-group'));
-            if( $('input[name="username"]').val() == '' ){
-                $('#username-group').addClass('has-warning')
+            clearHasClass($("#username-group"));
+            if( $("input[name="username"]").val() == "" ){
+                $("#username-group").addClass("has-warning")
                 foldOptions()
                 return
             }
-            showStatus('off')
+            showStatus("off")
             clearTimeout(timer_vUn)
             timer_vUn = setTimeout(function(){
-                showStatus('on', 'LOADING ...')
+                showStatus("on", "LOADING ...")
                 $.ajax({
                     type: "GET",
                     url: "/user/validateusername",
                     data: {
-                        'username':$('input[name="username"]').val()
+                        "username":$("input[name='username']").val()
                     },
                     success: function (data) {
-                        showStatus('off', 'LOADING ...')
+                        showStatus("off", "LOADING ...")
                         var result = data
                         if(result.error){
                             $.danger(result.error)
@@ -198,14 +198,14 @@
                         }
                         if (result.exist) {
                             if(result.unique){
-                                unfoldOptions('unique')
+                                unfoldOptions("unique")
                             } else {
-                                unfoldOptions('normal')
+                                unfoldOptions("normal")
                             }
                         } else {
-                            if(option=='onblur' || option=='onchange'){
-                                $('#username-group').addClass('has-error')
-                                $.danger('用户 “'+ $('input[name="username"]').val() +'” 不存在')
+                            if(option=="onblur" || option=="onchange"){
+                                $("#username-group").addClass("has-error")
+                                $.danger("用户 “"+ $("input[name='username']").val() +"” 不存在")
                             }
                             foldOptions()
                         }
@@ -214,19 +214,19 @@
             }, 500)
         }
         function submitForm(){
-            if( $('input[name="answer"]').val() == '' ){
-                $('#answer-group').addClass('has-error')
-                $.danger('密码/答案不能为空')
+            if( $("input[name='answer']").val() == "" ){
+                $("#answer-group").addClass("has-error")
+                $.danger("密码/答案不能为空")
                 return false
             }
-            if( $('input[name="username"]').val() == '' ){
-                $('#username-group').addClass('has-error')
-                $.danger('用户名不能为空')
+            if( $("input[name='username']").val() == "" ){
+                $("#username-group").addClass("has-error")
+                $.danger("用户名不能为空")
                 return false
             }
             clearTimeout(timer_vUn)
             disableAllBtn()
-            showStatus('on', '登入中 ...')
+            showStatus("on", "登入中 ...")
             $("#login-form").submit()
         }
     </script>
