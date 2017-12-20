@@ -75,4 +75,4 @@ def loginToContinue(request):
     """Show a message, goto login page, and then go back to current page"""
     messages.error(request, '此页面需要用户信息，\n请登入/注册后再访问。')
     _from = request.get_full_path()
-    return redirect('/user/signin?from={}'.format(_from))
+    return redirect('/user/signin?next={}'.format(_from))
