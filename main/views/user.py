@@ -82,7 +82,7 @@ def setting(request):
     context = {
         'icalon': icalon,
         'privatekey': user.privatekey,
-        }
+    }
     return render(request, 'user/setting.html', context)
 
 
@@ -197,15 +197,15 @@ def headimgUpdate(request):
 def signin(request):
     '''点击登入后的页面，供输入用户名/密码'''
     # check if already logged in
-    from_ = request.GET.get("from") or ""
+    next_ = request.GET.get("next") or ""
     current_user = util.user.getCurrentUser(request)
     if current_user:
         return util.ctrl.infoMsg("您已经以 {username} 的身份登入了，请勿重复登入".format(username=current_user.username), title="登入失败", url="/")
     # render
     context = {
         'request': request,
-        'from': from_,
-        }
+        'next': next_,
+    }
     if 'HTTP_REFERER' in request.META:
         context['redirect'] = request.META.get('HTTP_REFERER')
     return render(request, 'user/signin.html', context)
@@ -258,7 +258,7 @@ def checkLogin(request):  # POST
     username = request.POST.get('username')
     answer = request.POST.get('answer')
     rememberme = request.POST.get('rememberme') or 'off'
-    from_ = request.POST.get('from') or ''
+    next_ = request.POST.get('next') or ''
     _failto = request.META.get('HTTP_REFERER', "/user/signin")
     if not username:
         messages.error(request, "登入失败：用户名不能为空")
@@ -280,7 +280,7 @@ def checkLogin(request):  # POST
         messages.error(request, "登入失败：用户名与答案不匹配")
         return redirect(_failto)
     # redirections
-    to_ = from_ or '/'
+    to_ = next_ or '/'
     response = redirect(to_)
     # add exp
     util.userexp.addExp(user, 'user', 1, '登入成功')
