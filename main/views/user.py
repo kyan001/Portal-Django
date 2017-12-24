@@ -73,11 +73,10 @@ def public(request):  # public
     return render(request, 'user/public.html', context)
 
 
+@util.user.login_required
 def setting(request):
     '''修改用户设置'''
     user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     icalon = user.getUserpermission('progressical')
     context = {
         'icalon': icalon,
@@ -86,15 +85,14 @@ def setting(request):
     return render(request, 'user/setting.html', context)
 
 
+@util.user.login_required
 def profile(request):
     '''查看当前用户的个人信息，点击右上角昵称进入'''
     context = {}
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     # get user exps
     exps = []
     lv_notice = []
+    user = util.user.getCurrentUser(request)
     userexps = user.getUserExp()
     for ue in userexps:
         explet = (ue, ue.getExpHistory(5))
@@ -181,12 +179,11 @@ def newUser(request):  # POST
     return util.ctrl.infoMsg(" {user.username} 注册成功！\n您是网站第 {user.id} 位用户。\n请登入以便我们记住您！".format(user=user), url='/user/signin', title="欢迎加入")
 
 
+@util.user.login_required
 def headimgUpdate(request):
     '''点击修改头像后处理更换头像'''
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.artist.loginToContinue(request)
     headimg = request.FILES.get('headimg')
+    user = util.user.getCurrentUser(request)
     user.headimg = headimg
     user.save()
     messages.success(request, '修改头像成功')
@@ -322,7 +319,7 @@ def getQuestionAndTip(request):  # AJAX
         return util.ctrl.returnJson({
             'question': question,
             'tip': tip,
-            })
+        })
     else:
         return util.ctrl.returnJsonError('用户未找到：{username}'.format(username=username))
 
@@ -351,7 +348,7 @@ def getUnreadCount(request):  # AJAX
                 result['msgs'].append({
                     'sender': sender.nickname if sender else "USER_DELETED",
                     'words': words,
-                    })
+                })
         return util.ctrl.returnJson(result)
     else:
         return util.ctrl.returnJsonResult('nologinuser')

@@ -109,18 +109,17 @@ def getOpusWordCloud(request):  # get # ajax
     return response
 
 
+@util.user.login_required
 def importFrom(request):
     """将别人的进度导入至自己的进度列表
 
     Args:
         id: str，作为被导入的 opus id
     """
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     opusid = request.GET.get('id')
     if not opusid:
         return util.ctrl.infoMsg("作品 ID 为空，请联系管理员", title="作品 ID 为空")
+    user = util.user.getCurrentUser(request)
     opus = Opus.objects.get_or_404(id=int(opusid))  # 获得作品
     if opus.progress.userid == user.id:  # 判断是否是自己的进度
         return util.ctrl.infoMsg("您已拥有该进度，请不要重复添加", title='添加失败')

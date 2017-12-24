@@ -11,16 +11,14 @@ import util.user
 import util.userexp
 
 
+@util.user.login_required
 def inbox(request):
     '''用户查看自己的 inbox'''
     context = {}
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.ctrl.infoMsg("您还没有登入，请先登入", title='请先登入', url='/user/signin')
     # get inputs
     filter_type = request.GET.get('type') or 'received'
-
     # get chats
+    user = util.user.getCurrentUser(request)
     MSG_FILTERS = collections.OrderedDict()
     MSG_FILTERS['received'] = '所有'
     MSG_FILTERS['unread'] = '未读'
@@ -55,11 +53,9 @@ def inbox(request):
     return render(request, 'chat/inbox.html', context)
 
 
+@util.user.login_required
 def delete(request):
     '''在 inbox 界面删除某条消息'''
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     # get history.back
     if 'HTTP_REFERER' in request.META:
         href_back = request.META.get('HTTP_REFERER')
@@ -71,6 +67,7 @@ def delete(request):
     if not chat_id:
         return util.ctrl.infoMsg("您输入的网址不完整，缺少参数 id")
     # get chat
+    user = util.user.getCurrentUser(request)
     chat = Chat.objects.get_or_404(id=chat_id)
     if user.id != chat.receiverid and (not user.getUserpermission('superuser')):
         return util.ctrl.infoMsg("只有消息的接收者可以删除消息")
@@ -81,14 +78,13 @@ def delete(request):
     return response
 
 
+@util.user.login_required
 def conversation(request):
     '''进入一对一聊天页面'''
     context = {}
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     # get inputs
     mode = request.GET.get('mode')
+    user = util.user.getCurrentUser(request)
     if mode == 'quicknote':
         return redirect('/chat/conversation?receiver={user.nickname}'.format(user=user))
     title = request.GET.get('title')
@@ -109,11 +105,9 @@ def conversation(request):
     return render(request, 'chat/conversation.html', context)
 
 
+@util.user.login_required
 def send(request):
     '''点击对话界面中的发送按钮后'''
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     # get inputs
     title = request.POST.get('title')
     content = request.POST.get('content')
@@ -125,6 +119,7 @@ def send(request):
     # get receiver
     receiver = User.objects.get_or_404(nickname=receiver_nickname)
     # send chat
+    user = util.user.getCurrentUser(request)
     user.sendChat(receiver, title=title, content=content)
     # add exp
     util.userexp.addExp(user, 'chat', 2, '向 @{receiver.nickname} 发送消息'.format(receiver=receiver))
@@ -132,13 +127,12 @@ def send(request):
     return redirect('/chat/conversation?receiver={receiver.nickname}'.format(receiver=receiver))
 
 
+@util.user.login_required
 def markread(request):  # AJAX
     '''用户标记自己的 chat 消息为已读'''
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.ctrl.returnJsonError("您还没有登入，请先登入")
     # get chat
     chatid = request.GET.get('chatid')
+    user = util.user.getCurrentUser(request)
     chat = Chat.objects.get_or_none(id=chatid)
     if not chat:
         return util.ctrl.returnJsonError("您查找的消息 id: {id} 并不存在".format(id=str(chatid)))

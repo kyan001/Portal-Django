@@ -12,11 +12,9 @@ def index(request):
     return render(request, 'index/index.html', context)
 
 
+@util.user.login_required
 def settheme(request):
     '''保存/清除用户的 theme 到 cookies 里'''
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     # get history.back
     if 'HTTP_REFERER' in request.META:
         href_back = request.META.get('HTTP_REFERER')
@@ -39,10 +37,10 @@ def settheme(request):
             return util.ctrl.infoMsg("您请求的主题：{theme_name} 不存在".format(theme_name=theme_name), title="设置主题失败")
         oneweek = 60 * 60 * 24 * 7
         response.set_cookie(theme_key, theme_name, max_age=oneweek)
-    # add exp if logged in.
-    if user:
-        theme_name_smart = theme_name or '默认主题'
-        util.userexp.addExp(user, 'user', 2, '尝试主题：{theme_name}'.format(theme_name=theme_name_smart.title()))
+    # add exp
+    user = util.user.getCurrentUser(request)
+    theme_name_smart = theme_name or '默认主题'
+    util.userexp.addExp(user, 'user', 2, '尝试主题：{theme_name}'.format(theme_name=theme_name_smart.title()))
     return response
 
 
