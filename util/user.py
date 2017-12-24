@@ -1,6 +1,10 @@
 import random
+from functools import wraps
+
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.utils.decorators import available_attrs
+
 from main.models import User
 import util.ctrl
 
@@ -76,3 +80,14 @@ def loginToContinue(request):
     messages.error(request, '此页面需要用户信息，\n请登入/注册后再访问。')
     _from = request.get_full_path()
     return redirect('/user/signin?next={}'.format(_from))
+
+
+def login_required(func):
+    """Decorator. If not logged in, goto login page."""
+    @wraps(func)
+    def wrapper(request, *args, **kwargs):
+        user = getCurrentUser(request)
+        if not user:
+            return util.user.loginToContinue(request)
+        return func(request, *args, **kwargs)
+    return wrapper
