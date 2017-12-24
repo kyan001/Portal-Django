@@ -53,7 +53,6 @@
             left: 0;
         }
         #chat-container {
-            height: 80vh;
             overflow-y: scroll;
             overflow-x: auto;
         }
@@ -107,6 +106,7 @@
                 $("#sendbtn").click()
             }
         })
+        $("#chat-container").css("height", $(document).height() - 51 - 43 - 49 - 15 - 15)  // Userbar:51px, panel-heading:43px, input-box: 49px, padding:15px
         getResponse("你好")
     })
     function Robo(key, name, style, headimg){
@@ -215,10 +215,8 @@
     }
 
     function sendmsg(){
-
         var input_ele = $("input[name='userinput']")
         var input_txt = input_ele.val()
-
         if(input_txt != ""){
             addChat(input_txt, "me")  // show this chat on screen
             var to = ""
@@ -367,14 +365,15 @@
         ucol.append(uimg)
         cul.append(cele)
         ccol.append(cul)
-        // crow.hide()
         if(from_=="me"){
             crow.append(ccol).append(ucol)
         } else {
             crow.append(ucol).append(ccol)
         }
         $("#chat-zone").append(crow)
-        crow[0].scrollIntoView()
+        if(!isMobile()){
+            crow[0].scrollIntoView()
+        }
     }
 </script>
 {% endblock js %}
