@@ -17,11 +17,10 @@ import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
 
+@util.user.login_required
 def list(request):
     '''进度列表：显示所有进行中、待开始、追剧中的进度'''
     user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     prg_list = {}
@@ -46,11 +45,10 @@ def list(request):
     return render(request, 'progress/list.html', context)
 
 
+@util.user.login_required
 def archive(request):
     '''进度存档：显示所有已完成、已冻结的进度'''
     user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     prg_list = {}
@@ -66,13 +64,12 @@ def archive(request):
     return render(request, 'progress/archive.html', context)
 
 
+@util.user.login_required
 def search(request):
     '''进度搜索：筛选所有进度'''
     context = {}
     # get user
     user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('created')
     context['prglist'] = progresses
@@ -88,13 +85,12 @@ def search(request):
     return render(request, 'progress/search.html', context)
 
 
+@util.user.login_required
 def timeline(request):
     '''进度历程：显示所有进度的时间轴'''
     context = {}
     # get user
     user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     # add timeline info
@@ -109,13 +105,12 @@ def timeline(request):
     return render(request, 'progress/timeline.html', context)
 
 
+@util.user.login_required
 def detail(request):
     '''进度详情页'''
     context = {}
     # get inputs
     user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     progressid = request.GET.get('id')
     if not progressid:
         return util.ctrl.infoMsg("请输入进度 ID")
@@ -178,12 +173,10 @@ def imagecolor(request):  # AJAX #PUBLIC
     return util.ctrl.returnJson(result)
 
 
+@util.user.login_required
 def update(request):
     '''detail页面，编辑模式的保存'''
     # get inputs
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     progressid = request.POST.get('id')
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
@@ -206,6 +199,7 @@ def update(request):
     progress = Progress.objects.get_or_404(id=progressid)
     opus = progress.opus
     # check owner
+    user = util.user.getCurrentUser(request)
     if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能更新该进度")
     # add exp
@@ -227,12 +221,10 @@ def update(request):
     return redirect('/progress/detail?id={progress.id}'.format(progress=progress))
 
 
+@util.user.login_required
 def delete(request):
     '''detail 界面点击删除按钮'''
     # get inputs
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     progressid = request.POST.get('id')
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
@@ -240,6 +232,7 @@ def delete(request):
     progress = Progress.objects.get_or_404(id=progressid)
     opus = progress.opus
     # check owner
+    user = util.user.getCurrentUser(request)
     if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能删除该进度")
     # save
@@ -253,12 +246,10 @@ def delete(request):
     return redirect('/progress/list')
 
 
+@util.user.login_required
 def giveup(request):
     '''detail 界面点击冻结按钮'''
     # get inputs
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     progressid = request.POST.get('id')
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
@@ -266,6 +257,7 @@ def giveup(request):
     progress = Progress.objects.get_or_404(id=progressid)
     opus = progress.opus
     # check owner
+    user = util.user.getCurrentUser(request)
     if progress.userid != user.id:
         return util.ctrl.infoMsg("这个进度不属于您，因此您不能删除该进度")
     # save
@@ -278,12 +270,10 @@ def giveup(request):
     return redirect('/progress/detail?id=' + str(progress.id))
 
 
+@util.user.login_required
 def reset(request):
     '''detail 界面点击激活进度按钮'''
     # get inputs
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     progressid = request.POST.get('id')
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
@@ -291,8 +281,9 @@ def reset(request):
     progress = Progress.objects.get_or_404(id=progressid)
     opus = progress.opus
     # check owner
+    user = util.user.getCurrentUser(request)
     if progress.userid != user.id:
-        return util.ctrl.infoMsg("这个进度不属于您，因此您不能删除该进度")
+        return util.ctrl.infoMsg("这个进度不属于您，因此您不能激活该进度")
     # save
     progress.resetStatus()
     progress.save()
@@ -303,16 +294,15 @@ def reset(request):
     return redirect('/progress/detail?id=' + str(progress.id))
 
 
+@util.user.login_required
 def new(request):
     '''list/detail 界面点击新增按钮'''
     # get inputs
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     name = request.GET.get('name') or ''
     total = request.GET.get('total') or ''
     weblink = request.GET.get('weblink') or ''
     # add exp
+    user = util.user.getCurrentUser(request)
     util.userexp.addExp(user, 'progress', 2, '尝试新增进度')
     # render
     context = {
@@ -323,12 +313,10 @@ def new(request):
     return render(request, 'progress/new.html', context)
 
 
+@util.user.login_required
 def add(request):
     '''新增界面点击保存按钮'''
     # get inputs
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     name = request.POST.get('name')
     subtitle = request.POST.get('subtitle')
     weblink = request.POST.get('weblink')
@@ -346,10 +334,11 @@ def add(request):
     if total > 0 and current > total:
         return util.ctrl.infoMsg("初始进度 {current} 不能大于总页数 {total}".format(current=current, total=total))
     # add exp
+    user = util.user.getCurrentUser(request)
     util.userexp.addExp(user, 'progress', 10, '新增进度《{name}》成功'.format(name=name))
     # save
-    opus = Opus(name=name, subtitle=subtitle, total=total)
     with transaction.atomic():
+        opus = Opus(name=name, subtitle=subtitle, total=total)
         opus.save()
         progress = Progress(current=current, opusid=opus.id, userid=user.id, weblink=weblink)
         if(progress.setStatusAuto()):
@@ -360,13 +349,12 @@ def add(request):
     return redirect('/progress/detail?id={progress.id}'.format(progress=progress))
 
 
+@util.user.login_required
 def setical(request):  # POST
     '''用户设置进度日历的界面'''
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     use_ical = request.POST.get('useical') or 'off'
     icalon = (use_ical == 'on')
+    user = util.user.getCurrentUser(request)
     user.setUserpermission('progressical', icalon)
     return redirect('/user/setting')
 
