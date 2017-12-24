@@ -221,3 +221,12 @@ function square_this(ele){
     var width = $(ele).width()
     $(ele).height(width)
 }
+
+function isMobile(){
+    // 判断是否有 mobile 于 user-agent
+    if(navigator.userAgent.toLowerCase().match(/mobile/i) == "mobile"){
+        return true
+    } else {
+        return false
+    }
+}
