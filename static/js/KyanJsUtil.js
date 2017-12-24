@@ -1,9 +1,9 @@
 $(function(){
-    $('.innerlink').click(function(){
+    $(".innerlink").click(function(){
         // 在 <a> 中的 <span>，点击和 <a> 效果一致
-        var href = $(this).attr('href')
-        var target = $(this).attr('target')
-        if(target == '_blank'){
+        var href = $(this).attr("href")
+        var target = $(this).attr("target")
+        if(target == "_blank"){
             window.open(href)
         } else {
             window.location.href=href;
@@ -19,14 +19,14 @@ var OpusInfoGetter = {
      * @param  {Function}   callback [call this function after got the data]
      * @param  {Function}   callback [call this function if has a error ]
      */
-    'getIsbnInfo': function(isbn, callback, callback404){
-        var isbn_search_api = 'https://api.douban.com/v2/book/isbn/' + isbn
-        if(isbn !== ''){
+    "getIsbnInfo": function(isbn, callback, callback404){
+        var isbn_search_api = "https://api.douban.com/v2/book/isbn/" + isbn
+        if(isbn !== ""){
             $.ajax({
                 type: "GET",
                 url: isbn_search_api,
                 data: {},
-                dataType: 'jsonp',
+                dataType: "jsonp",
                 error: function(){
                     callback404()
                 },
@@ -42,9 +42,9 @@ var OpusInfoGetter = {
      * @param  {Function}   callback [call this function after got the data]
      */
     'getBookInfo': function(name, callback){
-        var book_search_api = '/opus/searchopusinfo'
-        var book_search_api_douban = 'https://api.douban.com/v2/book/search'
-        if(name !== ''){
+        var book_search_api = "/opus/searchopusinfo"
+        var book_search_api_douban = "https://api.douban.com/v2/book/search"
+        if(name !== ""){
             $.get(book_search_api, {'count':'1', 'q':name, 'type':'book'}, function(data){
                 var info = {}
                 info.exist = data.books[0] ? true : false
@@ -90,8 +90,8 @@ var OpusInfoGetter = {
         var movie_search_api = '/opus/searchopusinfo'
         var movie_search_api_douban = 'https://api.douban.com/v2/movie/search'
         var movie_info_api = 'https://api.douban.com/v2/movie/subject/'
-        if(name != ''){
-            $.get(movie_search_api, {'count':'1','q':name, 'type':'movie'}, function(data){
+        if(name != ""){
+            $.get(movie_search_api, {"count": "1","q": name, "type": "movie"}, function(data){
                 var info = {}
                 if( data.subjects[0] ){
                     info.title = data.subjects[0].title;
@@ -110,12 +110,12 @@ var OpusInfoGetter = {
                         info.image = data.subjects[0].images.medium
                     }
                 }
-                info.api = movie_search_api_douban + '?count=1&q=' + name
-                info.type = 'movie'
+                info.api = movie_search_api_douban + "?count=1&q=" + name
+                info.type = "movie"
                 info.match = OpusInfoGetter.checkHas(name, data.subjects[0])
                 info.exist = data.subjects[0]?true:false
                 callback(info)
-            }, 'json');
+            }, "json");
         }
     },
     /**
@@ -124,16 +124,16 @@ var OpusInfoGetter = {
      * @param  {string}     name     [the opus's title which contains the image]
      * @param  {Function}   callback [call this function after got the data]
      */
-    'getImageColor': function(url, opusid, callback){
+    "getImageColor": function(url, opusid, callback){
         var request_data = {}
         if(url==""){
             request_data = {
-                'opusid': opusid,
+                "opusid": opusid,
             };
         } else {
             request_data = {
-                'url': url,
-                'opusid': opusid,
+                "url": url,
+                "opusid": opusid,
             };
         }
         $.ajax({
@@ -141,7 +141,7 @@ var OpusInfoGetter = {
             url: "/progress/imagecolor",
             data: request_data,
             async: true,
-            dataType: 'json',
+            dataType: "json",
             success: function(result) {
                 callback(result)
             }
@@ -153,11 +153,11 @@ var OpusInfoGetter = {
      * @param  {opusinfo}   bookOrMovie [the opus's info, should include a title or original_title]
      * @return {bool}                   [if the keyword is in the opus names]
      */
-    'checkHas': function(keyword, bookOrMovie){
+    "checkHas": function(keyword, bookOrMovie){
         if(!keyword || !bookOrMovie){
             return false;
         }
-        var kw = keyword.toLowerCase().split(' ')
+        var kw = keyword.toLowerCase().split(" ")
         var isInOriginalTitle = true;
         var isInTitle = true;
         if(bookOrMovie.original_title){  // 有英文名
@@ -186,14 +186,14 @@ var OpusInfoGetter = {
 
 function disableAllBtn(){
     // submit() 前应禁用所有按钮。
-    $('.btn').attr('disabled','disabled')
-    $('.btn').click(function(){
+    $(".btn").attr("disabled", "disabled")
+    $(".btn").click(function(){
         return false;
     })
 }
 
 function markread(ele){
-    chatid = $(ele).attr('chatid')
+    chatid = $(ele).attr("chatid")
     if(chatid<0){
         return;
     }
@@ -203,14 +203,14 @@ function markread(ele){
     $.ajax({
         type: "GET",
         url: "/chat/markread",
-        data: {'chatid': chatid},
+        data: {"chatid": chatid},
         async: true,
-        dataType: 'json',
+        dataType: "json",
         success: function(result) {
             if(result.error){
                 alert(result.error)
             } else {
-                $("div[chatid="+chatid+"]").removeClass('unread')
+                $("div[chatid="+chatid+"]").removeClass("unread")
             }
             updateUnreadCount()
         }
