@@ -9,7 +9,7 @@
 
 {% block css %}
     <style>
-        html {
+        /* html {
             overflow: scroll;
         }
         html,
@@ -17,7 +17,7 @@
         #the-very-div,
         .container-fluid {
             height: auto;
-        }
+        } */
         .user-img {
             width: 100%;
         }
@@ -47,6 +47,16 @@
         #input-box {
             margin-bottom: 15px;
         }
+        #input-row {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+        .#chat-container {
+            height: 80vh;
+            overflow-y: scroll;
+            overflow-x: auto;
+        }
     </style>
 {% endblock css %}
 
@@ -65,13 +75,15 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
-                <img class="visible-xs-block img-responsive" src="/static/img/index/slide_robotalk.jpg">
-                <hr class="visible-xs-block"/>
+            <div id="chat-container" class="panel-body">
                 <div id="chat-zone">
                 </div>
             </div>
-            <div id="input-box" class="input-group keep-in-view">
+        </div><!--.col-->
+    </div><!--.row-->
+    <div id="input-row" class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+            <div id="input-box" class="input-group">
                 <span class="input-group-addon">
                     <span id="loading-icon" class="glyphicon glyphicon-comment"></span>
                 </span>
@@ -82,8 +94,8 @@
                     </button>
                 </span>
             </div><!-- /input-group -->
-        </div>
-    </div>
+        </div><!--.col-->
+    </div><!--.row-->
 </div>
 {% endblock content %}
 
@@ -323,13 +335,6 @@
                 break
             }
         }
-        function isInView (element) {
-            var pageTop = $(window).scrollTop();
-            var pageBottom = pageTop + $(window).height();
-            var elementTop = $(element).offset().top;
-            var elementBottom = elementTop + $(element).height();
-            return ((pageTop < elementTop) && (pageBottom > elementBottom));
-        }
         function styleByFrom(from){
             switch (from) {
                 case "me":
@@ -362,17 +367,14 @@
         ucol.append(uimg)
         cul.append(cele)
         ccol.append(cul)
-        crow.hide()
+        // crow.hide()
         if(from_=="me"){
             crow.append(ccol).append(ucol)
         } else {
             crow.append(ucol).append(ccol)
         }
         $("#chat-zone").append(crow)
-        // crow.slideDown(100)
-        crow.slideDown("normal", function(){
-            $("html, body").animate({scrollTop: $(document).height()}, "normal")
-        })
+        crow[0].scrollIntoView()
     }
 </script>
 {% endblock js %}
