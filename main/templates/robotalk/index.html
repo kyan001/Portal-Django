@@ -66,18 +66,18 @@
                 </div>
             </div>
             <div class="panel-body">
-                <img class='visible-xs-block img-responsive' src='/static/img/index/slide_robotalk.jpg'>
-                <hr class='visible-xs-block'/>
+                <img class="visible-xs-block img-responsive" src="/static/img/index/slide_robotalk.jpg">
+                <hr class="visible-xs-block"/>
                 <div id="chat-zone">
                 </div>
             </div>
-            <div id='input-box' class="input-group keep-in-view">
+            <div id="input-box" class="input-group keep-in-view">
                 <span class="input-group-addon">
-                    <span id='loading-icon' class="glyphicon glyphicon-comment"></span>
+                    <span id="loading-icon" class="glyphicon glyphicon-comment"></span>
                 </span>
                 <input type="text" name="userinput" class="form-control" placeholder="说点儿什么" autofocus="true">
                 <span class="input-group-btn">
-                    <button id='sendbtn' class="btn btn-success" type="button" onclick='sendmsg()'>
+                    <button id="sendbtn" class="btn btn-success" type="button" onclick="sendmsg()">
                         发送
                     </button>
                 </span>
@@ -90,12 +90,12 @@
 {% block js %}
 <script>
     $(function(){
-        $('input[name="userinput"]').keydown(function(event){
+        $("input[name='userinput']").keydown(function(event){
             if(event.keyCode == 13){ // press enter
-                $('#sendbtn').click()
+                $("#sendbtn").click()
             }
         })
-        getResponse('你好')
+        getResponse("你好")
     })
     function Robo(key, name, style, headimg){
         this.key = key
@@ -104,14 +104,14 @@
         this.headimg = headimg
     }
     var ROBOS = [
-        new Robo('feifei', '菲菲', 'info', 'fromrobo1.png'),
-        new Robo('tuling', '图酱', 'warning', 'fromrobo2.png'),
-        new Robo('simsimi', 'Simsimi', 'danger', 'fromrobo3.png'),
-        new Robo('programo', 'Program-O', 'danger', 'fromrobo3.png'),
+        new Robo("feifei", "菲菲", "info", "fromrobo1.png"),
+        new Robo("tuling", "图酱", "warning", "fromrobo2.png"),
+        new Robo("simsimi", "Simsimi", "danger", "fromrobo3.png"),
+        new Robo("programo", "Program-O", "danger", "fromrobo3.png"),
     ]
     var lastchat = {
-        'whotalk': '',  // who gave the latest chat
-        'RCTE': false,  // Robo is Chatting To Each other
+        "whotalk": "",  // who gave the latest chat
+        "RCTE": false,  // Robo is Chatting To Each other
     }
 
     function randomNum(){ // 0-100
@@ -120,11 +120,11 @@
 
     function randomEvents(){
         // RCTE
-        console.debug('randomEvents:')
-        var RCTE_rate = lastchat['RCTE'] ? 55 : 30  // 30% chance to start a RCTE, 55% chance to reply a robo
+        console.debug("randomEvents:")
+        var RCTE_rate = lastchat["RCTE"] ? 55 : 30  // 30% chance to start a RCTE, 55% chance to reply a robo
         var isRoboChatToEach = randomNum() < RCTE_rate  // roll the dice to decide
-        console.debug('\tRCTE: %s, isRoboChatToEach: %s', lastchat['RCTE'], isRoboChatToEach)
-        lastchat['RCTE'] = isRoboChatToEach
+        console.debug("\tRCTE: %s, isRoboChatToEach: %s", lastchat["RCTE"], isRoboChatToEach)
+        lastchat["RCTE"] = isRoboChatToEach
         if(isRoboChatToEach){
             roboChatToEachEvent()
         }
@@ -132,7 +132,7 @@
 
     function roboChatToEachEvent(){
         // Robos chat to each other
-        console.debug('roboChatToEachEvent: 触发事件：机器人之间对话')
+        console.debug("roboChatToEachEvent: 触发事件：机器人之间对话")
         function randomsort(a, b) {
             // a random sort for randomsorting the ROBOS and qualified_robos
             return Math.random() > 0.5 ? -1 : 1;
@@ -143,7 +143,7 @@
             var qualified_talker = []
             for(i in ROBOS){
                 r = ROBOS[i]
-                if(lastchat[r.key] && lastchat[r.key].length < 25 && lastchat['whotalk'] != r.key){  // 曾发言，且发言长度小于 25，且不是最后发言者
+                if(lastchat[r.key] && lastchat[r.key].length < 25 && lastchat["whotalk"] != r.key){  // 曾发言，且发言长度小于 25，且不是最后发言者
                     qualified_talker.push(ROBOS[i])
                 }
             }
@@ -188,63 +188,63 @@
         var qualified_listeners = qualifyListener()
         var wholisten = decideWhoWillListen(qualified_listeners, whotalk)
         getResponse(lastchat[wholisten.key], whotalk.key, wholisten.key)  // talk
-        console.debug('\t由 %s 对 %s 说', whotalk.name, wholisten.name)
+        console.debug("\t由 %s 对 %s 说", whotalk.name, wholisten.name)
     }
 
     function showLoading(enable){
-        $('#loading-icon').removeClass('glyphicon-refresh').removeClass('glyphicon-comment')
+        $("#loading-icon").removeClass("glyphicon-refresh").removeClass("glyphicon-comment")
         if(enable){
-            $('#loading-icon').addClass('glyphicon-refresh')
-            $('#loading-icon').addClass('loading circling text-danger')
+            $("#loading-icon").addClass("glyphicon-refresh")
+            $("#loading-icon").addClass("loading circling text-danger")
         } else {
-            $('#loading-icon').addClass('glyphicon-comment')
-            $('#loading-icon').removeClass('loading circling text-danger')
+            $("#loading-icon").addClass("glyphicon-comment")
+            $("#loading-icon").removeClass("loading circling text-danger")
         }
     }
 
     function sendmsg(){
 
-        var input_ele = $('input[name="userinput"]')
+        var input_ele = $("input[name='userinput']")
         var input_txt = input_ele.val()
 
-        if(input_txt != ''){
-            addChat(input_txt, 'me')  // show this chat on screen
-            var to = ''
+        if(input_txt != ""){
+            addChat(input_txt, "me")  // show this chat on screen
+            var to = ""
             for(i in ROBOS){
                 if(input_txt.indexOf(ROBOS[i].name) != -1 || input_txt.indexOf(ROBOS[i].key) != -1){
-                    console.debug('触发事件：只询问某个机器人：' + ROBOS[i].name)
+                    console.debug("触发事件：只询问某个机器人：" + ROBOS[i].name)
                     to = ROBOS[i].key
                     break
                 }
             }
             to ? getResponse(input_txt, to) : getResponse(input_txt)  // ask for robo responses
         }
-        input_ele.val('').focus()
+        input_ele.val("").focus()
     }
 
     function getResponse(userinput, from_, to_){
         // get inputs
-        if(userinput==''){
+        if(userinput==""){
             return false
         }
-        var from_ = arguments[1] || 'all'
-        var to_ = arguments[2] || 'all'
+        var from_ = arguments[1] || "all"
+        var to_ = arguments[2] || "all"
 
         showLoading(true)
 
         var param ={
-            'txt': userinput,
+            "txt": userinput,
         }
-        if(from_ != 'all' && from_ != 'all'){
-            param['from'] = from_
+        if(from_ != "all" && from_ != "all"){
+            param["from"] = from_
         }
         // remote get
         $.ajax({
-            type: 'GET',
-            url: '/robotalk/getresponse',
+            type: "GET",
+            url: "/robotalk/getresponse",
             data: param,
             success: function(data){
-                console.count('/robotalk/getresponse success')
+                console.count("/robotalk/getresponse success")
                 if(data.error){
                     alert("Error: " + data.error)
                 }
@@ -254,7 +254,7 @@
                         for(j in ROBOS){
                             if(ROBOS[j].key == i){
                                 console.debug("\t机器人 %s 已被移除", ROBOS[j].name)
-                                addChat('呃，我先走了，你们聊～', ROBOS[j].key)
+                                addChat("呃，我先走了，你们聊～", ROBOS[j].key)
                                 ROBOS.splice(j, 1)
                             }
                         }
@@ -266,7 +266,7 @@
                         for(i in ROBOS){
                             if(ROBOS[j].key == i){
                                 console.debug("\t机器人 %s 已被移除", ROBOS[j].name)
-                                addChat('呃，我已被禁用，你们聊～', ROBOS[j].key)
+                                addChat("呃，我已被禁用，你们聊～", ROBOS[j].key)
                                 ROBOS.splice(j, 1)
                             }
                         }
@@ -275,24 +275,24 @@
                 for (robo in data.result){
                     addChat(data.result[robo].txt, robo, to_)
                 }
-                $('#counts').fadeOut("normal", function(){
-                    $('#counts').text(data.count).fadeIn()
+                $("#counts").fadeOut("normal", function(){
+                    $("#counts").text(data.count).fadeIn()
                 })
                 showLoading(false)
                 randomEvents()
             },
-            dataType: 'json',
+            dataType: "json",
         })
     }
 
 
     function addChat(word, from_, to_){
-        if(word == ''){
+        if(word == ""){
             return
         }
         lastchat[from_] = word  // remember last words eachone said
-        lastchat['whotalk'] = from_
-        to_ = arguments[2] || 'all'
+        lastchat["whotalk"] = from_
+        to_ = arguments[2] || "all"
         /* Create chat html
             <.row>
                 <.col>
@@ -309,17 +309,17 @@
             </.row>
         */
         var crow = $("<div class='row'></div>")  // .row
-        var ccol = $('<div></div>').addClass('col-xs-9 col-sm-8 col')  // .row .col
-        if(from_=='me'){
-            ccol.addClass('col-xs-offset-1 col-sm-offset-3')
+        var ccol = $("<div></div>").addClass("col-xs-9 col-sm-8 col")  // .row .col
+        if(from_=="me"){
+            ccol.addClass("col-xs-offset-1 col-sm-offset-3")
         }
-        var ucol = $('<div></div>').addClass('col-xs-2 col-sm-1 col')  // (user).col
-        var uimg = $('<img>').addClass('user-img ani-fast')  // (user).col img.user-img
-        var cul = $('<ul></ul>').addClass('list-group')  // .row .col ul.list-group
-        var cele = $('<span></span>').addClass('list-group-item chat-li')  //chat-ele
+        var ucol = $("<div></div>").addClass("col-xs-2 col-sm-1 col")  // (user).col
+        var uimg = $("<img>").addClass("user-img ani-fast")  // (user).col img.user-img
+        var cul = $("<ul></ul>").addClass("list-group")  // .row .col ul.list-group
+        var cele = $("<span></span>").addClass("list-group-item chat-li")  //chat-ele
         for (i in ROBOS){
             if(ROBOS[i].key == from_){
-                uimg.attr('title', ROBOS[i].name)
+                uimg.attr("title", ROBOS[i].name)
                 break
             }
         }
@@ -332,29 +332,29 @@
         }
         function styleByFrom(from){
             switch (from) {
-                case 'me':
-                    cul.addClass('text-right')
-                    cele.addClass('list-group-item-success')
-                    uimg.attr('src', "/static/img/robotalk/fromme.png")
+                case "me":
+                    cul.addClass("text-right")
+                    cele.addClass("list-group-item-success")
+                    uimg.attr("src", "/static/img/robotalk/fromme.png")
                     return
-                case 'kyan001.com':
-                    cele.addClass('list-group-item-primary')
-                    uimg.attr('src', "/static/img/Logo_Robotalk.png")
+                case "kyan001.com":
+                    cele.addClass("list-group-item-primary")
+                    uimg.attr("src", "/static/img/Logo_Robotalk.png")
                     return
             }
             for(i in ROBOS){
                 if(from == ROBOS[i].key){
-                    cele.addClass('list-group-item-' + ROBOS[i].style)
-                    uimg.attr('src', "/static/img/robotalk/" + ROBOS[i].headimg)
+                    cele.addClass("list-group-item-" + ROBOS[i].style)
+                    uimg.attr("src", "/static/img/robotalk/" + ROBOS[i].headimg)
                     return
                 }
             }
-            uimg.attr('src', "/static/img/robotalk/fromunknown.png")
+            uimg.attr("src", "/static/img/robotalk/fromunknown.png")
         }
         styleByFrom(from_)
         // Create reply quote
-        var cquote = $('<span class="text-quote"></span>')
-        if(to_ != 'all'){
+        var cquote = $("<span class='text-quote'></span>")
+        if(to_ != "all"){
             cquote.append("“" + lastchat[to_] + "”<br/>")
         }
         // Appends
@@ -363,15 +363,15 @@
         cul.append(cele)
         ccol.append(cul)
         crow.hide()
-        if(from_=='me'){
+        if(from_=="me"){
             crow.append(ccol).append(ucol)
         } else {
             crow.append(ucol).append(ccol)
         }
-        $('#chat-zone').append(crow)
+        $("#chat-zone").append(crow)
         // crow.slideDown(100)
-        crow.slideDown('normal', function(){
-            $("html, body").animate({scrollTop: $(document).height()}, 'normal')
+        crow.slideDown("normal", function(){
+            $("html, body").animate({scrollTop: $(document).height()}, "normal")
         })
     }
 </script>
