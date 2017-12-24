@@ -4,11 +4,10 @@ import util.ctrl
 import util.user
 
 
+@util.user.login_required
 def index(request):
     '设置超级管理员'
     user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     # get superuser user
     superuser_nickname = '唯笑竹'  # hardcode
     superuser = User.objects.get_or_404(nickname=superuser_nickname)
@@ -39,17 +38,14 @@ def index(request):
     return util.ctrl.infoMsg("@{user.nickname} 已是 超级管理员，无需更改".format(user=superuser))
 
 
+@util.user.login_required
+@util.user.superuser_required
 def broadcast(request):
     '''su 发送给所有人的私信'''
     context = {}
     user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
     # get syschat
     sysuser = User.objects.get_or_404(username='syschat')
-    # check superuser
-    if not user.getUserpermission('superuser'):
-        return util.ctrl.infoMsg("您不具有 超级管理员 权限")
     # get received chats
     chats = Chat.objects.filter(receiverid=sysuser.id).order_by('-created')
     # render
@@ -58,14 +54,10 @@ def broadcast(request):
     return render(request, 'superuser/broadcast.html', context)
 
 
+@util.user.login_required
+@util.user.superuser_required
 def updatedb(request):
     '''su 更新数据库'''
-    user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
-    # check superuser
-    if not user.getUserpermission('superuser'):
-        return util.ctrl.infoMsg("您不具有 {category} 权限".format(category='superuser'))
     # get mode
     mode = request.GET.get('mode')
     if not mode:
@@ -140,14 +132,11 @@ def updatedb(request):
     return util.ctrl.infoMsg("数据库更新完毕，模式 {}".format(mode))
 
 
+@util.user.login_required
+@util.user.superuser_required
 def sendbroadcast(request):
     '''点击 superuser/broadcast 界面中的发送按钮后'''
     user = util.user.getCurrentUser(request)
-    if not user:
-        return util.user.loginToContinue(request)
-    # check superuser
-    if not user.getUserpermission('superuser'):
-        return util.ctrl.infoMsg("您不具有 {category} 权限".format(category='superuser'))
     # get inputs
     title = request.POST.get('title')
     content = request.POST.get('content')

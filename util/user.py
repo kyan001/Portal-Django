@@ -83,11 +83,22 @@ def loginToContinue(request):
 
 
 def login_required(func):
-    """Decorator. If not logged in, goto login page."""
+    """Decorator. If not logged in, goto login page. Should be on the top of decorators"""
     @wraps(func)
     def wrapper(request, *args, **kwargs):
         user = getCurrentUser(request)
         if not user:
             return util.user.loginToContinue(request)
+        return func(request, *args, **kwargs)
+    return wrapper
+
+
+def superuser_required(func):
+    """Decorator. If logged in but not superuser, block."""
+    @wraps(func)
+    def wrapper(request, *args, **kwargs):
+        user = getCurrentUser(request)
+        if not user.getUserpermission('superuser'):
+            return util.ctrl.infoMsg("您不具有 {category} 权限".format(category='superuser'))
         return func(request, *args, **kwargs)
     return wrapper
