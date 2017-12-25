@@ -23,15 +23,15 @@
 {% block content %}
     <div class="container">
         <div class="well">
-            <div id='search-div' class='row'>
+            <div id="search-div" class="row">
                 <div class="col-sm-6 col-xs-12">
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-search"></span>
                         </span>
-                        <input id="search-input" type='text' class="form-control" placeholder="搜索标题、备注" value="{{keyword}}" autocomplete='off' oninput="searchProgress()">
+                        <input id="search-input" type="text" class="form-control" placeholder="搜索标题、备注" value="{{keyword}}" autocomplete="off" oninput="searchProgress()">
                         <span class="input-group-addon">
-                            <span id='clear-search-btn' class="hover-pointer" onclick='resetSearch()'>
+                            <span id="clear-search-btn" class="hover-pointer" onclick="resetSearch()">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </span>
                         </span>
@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-        <div id='show-all-header' class="page-header">
+        <div id="show-all-header" class="page-header">
             <h5>
                 <span class="glyphicon glyphicon-th-list text-muted"></span>
                 所有进度
@@ -53,11 +53,11 @@
                 <small class="prg-counts">({{ prglist|length }})</small>
             </h5>
         </div>
-        <div id='search-result-header' class="page-header">
+        <div id="search-result-header" class="page-header">
             <h5>
                 <span class="glyphicon glyphicon-th-list text-muted"></span>
                 <span id="search-result-title">包含 「XXX」 的进度：</span>
-                <small id='search-result-count' class="prg-counts">(0)</small>
+                <small id="search-result-count" class="prg-counts">(0)</small>
                 <small>
                     <a id="search-result-link" class="no-decoration">(生成连接)</a>
                 </small>
@@ -67,7 +67,7 @@
             <div class="col-xs-12">
                 <div class="row">
                     {% for prg in prglist %}
-                        {% include 'progress/progresscard.html' with prg=prg size='col-xs-12 col-sm-6 col-lg-4' %}
+                        {% include "progress/progresscard.html" with prg=prg size="col-xs-12 col-sm-6 col-lg-4" %}
                     {% empty %}
                         <div class="well">
                             您还没有进度哦，请先添加一个进度
@@ -85,13 +85,13 @@
         $(function(){
             searchProgress()
             initSpeechRec()
-            $('[data-toggle="tooltip"]').tooltip()
+            $("[data-toggle='tooltip']").tooltip()
         });
 
         function initSpeechRec(){
             var speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.oSpeechRecognition || window.msSpeechRecognition
             if(!speechRecognition){
-                $('#start-speech-btn').parent('.input-group-addon').hide()
+                $("#start-speech-btn").parent(".input-group-addon").hide()
                 return
             }
             recognition = new speechRecognition();
@@ -100,28 +100,28 @@
             recognition.interimResults = false; // word already recognized can not change.
             recognition.onstart = function() {
                 recognizing = true;
-                $('#start-speech-btn').css('color', 'red')
-                $.info('正在语音识别中...')
+                $("#start-speech-btn").css("color", "red")
+                $.info("正在语音识别中...")
             };
             recognition.onend = function() {
                 recognizing = false;
-                $('#start-speech-btn').css('color', 'black')
-                $.info('语音识别已停止')
+                $("#start-speech-btn").css("color", "black")
+                $.info("语音识别已停止")
             };
             recognition.onerror = function(event) {
                 $.danger("语音识别错误：" + event.error)
             };
             recognition.onresult = function(event) {
-                var final_txt = '';
+                var final_txt = "";
                 for (var i = event.resultIndex; i < event.results.length; ++i) {
                     final_txt += event.results[i][0].transcript;
                 }
-                if(['取消', '停止', 'cancel', 'stop'].indexOf(final_txt)>=0){
+                if(["取消", "停止", "cancel", "stop"].indexOf(final_txt)>=0){
                     recognition.stop();
                     resetSearch();
                     return
                 }
-                $('#search-input').val(final_txt)
+                $("#search-input").val(final_txt)
                 searchProgress()
             };
         }
@@ -131,27 +131,27 @@
                 recognition.stop();
                 return;
             }
-            recognition.lang = 'cmn-Hans-CN';
+            recognition.lang = "cmn-Hans-CN";
             recognition.start();
         }
 
         function resetSearch(){
             $("#search-input").val("")
-            $('.progress-card').show()
-            $('#clear-search-btn').parent('.input-group-addon').hide()
-            $('#show-all-header').show()
-            $('#search-result-header').hide()
-            $('#search-input').focus()
+            $(".progress-card").show()
+            $("#clear-search-btn").parent(".input-group-addon").hide()
+            $("#show-all-header").show()
+            $("#search-result-header").hide()
+            $("#search-input").focus()
         }
         function searchProgress(){
-            var kw = $.trim($('#search-input').val()).toLowerCase();
-            if(kw == ''){
+            var kw = $.trim($("#search-input").val()).toLowerCase();
+            if(kw == ""){
                 resetSearch()
             } else {
                 var count = 0
-                $('.progress-card').each(function(){
-                    var opusname = $(this).find('.opus-name').text().toLowerCase()
-                    var opussubtitle = $(this).find('.subtitle').text().toLowerCase()
+                $(".progress-card").each(function(){
+                    var opusname = $(this).find(".opus-name").text().toLowerCase()
+                    var opussubtitle = $(this).find(".subtitle").text().toLowerCase()
                     if(opusname.indexOf(kw)>=0 || opussubtitle.indexOf(kw)>=0){
                         $(this).show()
                         count++
@@ -159,12 +159,12 @@
                         $(this).hide()
                     }
                 })
-                $('#search-result-title').text('包含 「'+ kw +'」的进度：')
-                $('#search-result-link').attr('href','/progress/search?kw='+kw)
-                $('#search-result-count').text('('+ count +')')
-                $('#clear-search-btn').parent('.input-group-addon').show()
-                $('#show-all-header').hide()
-                $('#search-result-header').show()
+                $("#search-result-title").text("包含 「" + kw + "」的进度：")
+                $("#search-result-link").attr("href", "/progress/search?kw=" + kw)
+                $("#search-result-count").text("(" + count + ")")
+                $("#clear-search-btn").parent(".input-group-addon").show()
+                $("#show-all-header").hide()
+                $("#search-result-header").show()
             }
         }
     </script>
