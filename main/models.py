@@ -59,6 +59,9 @@ class User(BaseModel):
     email = models.EmailField()
     headimg = models.ImageField(default='', upload_to=headimg_upload_to, blank=True)
 
+    def __str__(self):
+        return "@{self.nickname} : {self.username}".format(self=self, created=util.time.formatDate(self.created))
+
     @property
     def headimg_url(self):
         if self.headimg and hasattr(self.headimg, 'url'):
@@ -81,9 +84,6 @@ class User(BaseModel):
         if user_permissions.exists():
             return [up.badge for up in user_permissions]
         return None
-
-    def __str__(self):
-        return "{self.id}) {created} - @{self.nickname} : {self.username}".format(self=self, created=util.time.formatDate(self.created))
 
     # permission related
     def getUserpermission(self, category):
@@ -155,7 +155,7 @@ class UserPermission(BaseModel):
 
     def __str__(self):
         if User.objects.filter(id=self.userid).exists():
-            return "{self.id}) @{self.user.nickname} - {self.category} : {self.isallowed}".format(self=self)
+            return "@{self.user.nickname} - {self.category} : {self.isallowed}".format(self=self)
         else:
             return "USER_DELETED"
 
@@ -175,7 +175,7 @@ class UserPermissionBadge(BaseModel):
         return User.objects.get_or_none(nickname=self.designernname)
 
     def __str__(self):
-        return "{self.id}) {self.category}:{self.isallowed} - ({self.image}) @{dnn}".format(self=self, dnn=self.designernname)
+        return "{self.category}: {self.isallowed}".format(self=self)
 
     def userCount(self):
         UserPermission.objects.filter(category=self.category, isallowed=self.isallowed).count()
@@ -194,7 +194,7 @@ class UserExp(BaseModel):
 
     def __str__(self):
         if User.objects.filter(id=self.userid).exists():
-            return "{self.id}) @{self.user.nickname} - {category_name}: {self.exp} - Lv.{self.level}".format(self=self, category_name=self.get_category_display())
+            return "@{self.user.nickname} - {category_name}".format(self=self, category_name=self.get_category_display())
         else:
             return "USER_DELETED"
 
@@ -282,7 +282,7 @@ class Opus(BaseModel):
     def __str__(self):
         subtext = "({self.subtitle})".format(self=self) if self.subtitle else ""
         total = self.total if self.total else '∞'
-        return "{self.id}) 《 {self.name} 》 {subtext} [{total}]".format(self=self, subtext=subtext, total=total)
+        return "《 {self.name} 》 {subtext} [{total}]".format(self=self, subtext=subtext, total=total)
 
 
 class ProgressManager(BaseManager):
@@ -356,7 +356,7 @@ class Progress(BaseModel):
 
     def __str__(self):
         if User.objects.filter(id=self.userid).exists():
-            return "{self.id}) @{self.user.nickname} -《 {self.opus.name} 》 ({self.current}/{self.opus.total})".format(self=self)
+            return "《 {self.opus.name} 》 ({self.current}/{self.opus.total}) {self.status}".format(self=self)
         else:
             return "USER_DELETED"
 
@@ -460,7 +460,7 @@ class Chat(BaseModel):
         if User.objects.filter(id=self.senderid).exists() and User.objects.filter(id=self.receiverid).exists():
             unread = "" if self.isread else "[unread]"
             content = (self.content[:40] + '..') if len(self.content) > 40 else self.content
-            return "{self.id}) {created} - @{self.sender.nickname}→@{self.receiver.nickname} : {unread} {content}".format(self=self, created=util.time.formatDate(self.created), content=content, unread=unread)
+            return "@{self.sender.nickname}→@{self.receiver.nickname} : {unread} {content}".format(self=self, created=util.time.formatDate(self.created), content=content, unread=unread)
         else:
             return "USER_DELETED"
 
