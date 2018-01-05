@@ -60,7 +60,7 @@ class User(BaseModel):
     headimg = models.ImageField(default='', upload_to=headimg_upload_to, blank=True)
 
     def __str__(self):
-        return "@{self.nickname} : {self.username}".format(self=self, created=util.time.formatDate(self.created))
+        return "@{self.nickname}({self.username})".format(self=self, created=util.time.formatDate(self.created))
 
     @property
     def headimg_url(self):
@@ -282,7 +282,7 @@ class Opus(BaseModel):
     def __str__(self):
         subtext = "({self.subtitle})".format(self=self) if self.subtitle else ""
         total = self.total if self.total else '∞'
-        return "《 {self.name} 》 {subtext} [{total}]".format(self=self, subtext=subtext, total=total)
+        return "《{self.name}》{subtext}[{total}]".format(self=self, subtext=subtext, total=total)
 
 
 class ProgressManager(BaseManager):
@@ -356,7 +356,7 @@ class Progress(BaseModel):
 
     def __str__(self):
         if User.objects.filter(id=self.userid).exists():
-            return "《 {self.opus.name} 》 ({self.current}/{self.opus.total}) {self.status}".format(self=self)
+            return "《{self.opus.name}》({self.current}/{self.opus.total}) {self.status}".format(self=self)
         else:
             return "USER_DELETED"
 
