@@ -15,7 +15,7 @@ urlpatterns = [
     # url(r'^$', 'portal.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
     # INDEX
     url(r'^$', main.views.index.index, name='index'),
     url(r'^index/settheme$', main.views.index.settheme),
