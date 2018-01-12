@@ -40,13 +40,13 @@
                 </div>
                 <div class="collapse in" id="list-follow">
                     <div class="row">
-                    {% for prg in prglist.follow %}
-                        {% include "progress/progresscard.html" with prg=prg size="col-xs-12 col-sm-6 col-md-12" %}
-                    {% empty %}
-                        <div class="well">
-                            您没有在追剧的进度哦~
-                        </div>
-                    {% endfor %}
+                        {% for prg in prglist.follow %}
+                            {% include "progress/progresscard.html" with prg=prg size="col-xs-12 col-sm-6 col-md-12" %}
+                        {% empty %}
+                            <div class="well">
+                                您没有在追剧的进度哦~
+                            </div>
+                        {% endfor %}
                     </div><!--.row-->
                 </div><!--.col-->
             </div><!--.row-->
@@ -65,13 +65,13 @@
                 <div class="row collapse in" id="list-todo">
                     <div class="col-xs-12">
                         <div class="row">
-                        {% for prg in prglist.todo %}
-                            {% include "progress/progresscard.html" with prg=prg size="col-md-4 col-sm-6 col-xs-12" %}
-                        {% empty %}
-                            <div class="well">
-                                您没有尚未开始的进度哦~
-                            </div>
-                        {% endfor %}
+                            {% for prg in prglist.todo %}
+                                {% include "progress/progresscard.html" with prg=prg size="col-md-4 col-sm-6 col-xs-12" %}
+                            {% empty %}
+                                <div class="well">
+                                    您没有尚未开始的进度哦~
+                                </div>
+                            {% endfor %}
                         </div><!--.row-->
                     </div><!--.col-->
                 </div><!--.row-->
@@ -92,9 +92,9 @@
                     <div class="row collapse" id="list-giveup">
                         <div class="col-xs-12">
                             <div class="row">
-                            {% for prgrg in prglist.error %}
-                                {% include "progress/progresscard.html" with prg=prg size="col-md-4 col-sm-6 col-xs-12"%}
-                            {% endfor %}
+                                {% for prgrg in prglist.error %}
+                                    {% include "progress/progresscard.html" with prg=prg size="col-md-4 col-sm-6 col-xs-12"%}
+                                {% endfor %}
                             </div><!--.row-->
                         </div><!--.col-->
                     </div><!--.row-->

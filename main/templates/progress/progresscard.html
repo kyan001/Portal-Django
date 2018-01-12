@@ -1,8 +1,8 @@
 {% load tags_url %}
 
-<div class="{{size}} progress-card ani-fast" progressid="{{prg.id}}" progressname="{{prg.opus.name}}">
+<div class="{{size}} progress-card ani-fast-container ani-fast" progressid="{{prg.id}}" progressname="{{prg.opus.name}}">
     <a href="/progress/detail?id={{prg.id}}" class="no-decoration">
-        <div class="panel panel-{{ prg.getContextualType|default:'default' }} ani-veryfast hover-shadow">
+        <div class="panel panel-{{ prg.getContextualType|default:'default' }} hover-shadow">
             <div class="panel-heading no-bottom-border progress-title text-nowrap">
                 <span class="panel-title">
                     <span class="opus-name">
@@ -17,7 +17,7 @@
                         </em>
                     {% endif %}
                     {% if prg.weblink and prg.weblink|isurl %}
-                        <span class="weblink innerlink pull-right badge hover-turning-container ani-veryfast" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
+                        <span class="weblink innerlink pull-right badge hover-turning-container" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
                             <span class="glyphicon glyphicon-link"></span>
                         </span>
                     {% endif %}
