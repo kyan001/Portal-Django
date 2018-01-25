@@ -7,6 +7,7 @@ from django.db import transaction
 from django.forms.models import model_to_dict
 from django.utils import timezone
 from django.core.cache import cache
+from django.utils.translation import gettext_lazy as _
 
 import util.ctrl
 import util.time
@@ -23,7 +24,7 @@ class BaseManager(models.Manager):
         try:
             return self.get(*args, **kwargs)
         except self.model.DoesNotExist:
-            raise Http404('您查找的 {t} 并不存在。（查询参数 {a} {k}）'.format(t=self.model.__name__, a=args or '', k=kwargs or ''))
+            raise Http404(_('您查找的 {t} 并不存在。（查询参数 {a} {k}）').format(t=self.model.__name__, a=args or '', k=kwargs or ''))
 
 
 class BaseModel(models.Model):
@@ -183,10 +184,10 @@ class UserPermissionBadge(BaseModel):
 
 class UserExp(BaseModel):
     CATEGORIES = (
-        ('progress', '进度活跃度'),
-        ('user', '用户活跃度'),
-        ('chat', '消息活跃度'),
-        ('error', '错误类别'),
+        ('progress', _('进度活跃度')),
+        ('user', _('用户活跃度')),
+        ('chat', _('消息活跃度')),
+        ('error', _('错误类别')),
     )
     userid = models.IntegerField(default=0, blank=False, null=False)
     category = models.CharField(max_length=255, blank=False, null=False, choices=CATEGORIES)
@@ -315,14 +316,14 @@ class ProgressManager(BaseManager):
 class Progress(BaseModel):
     STATUSES = {
         'active': (
-            ('inprogress', '进行中'),
-            ('follow', '追剧中'),
-            ('todo', '待阅读'),
-            ('error', '出错'),
+            ('inprogress', _('进行中')),
+            ('follow', _('追剧中')),
+            ('todo', _('待阅读')),
+            ('error', _('出错')),
         ),
         'archive': (
-            ('done', '已完成'),
-            ('giveup', '冻结中'),
+            ('done', _('已完成')),
+            ('giveup', _('冻结中')),
         ),
     }
     userid = models.IntegerField(default=0)
