@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load i18n %}
+
 {% block title %}{{ userexp.get_category_display }}{% endblock title %}
 
 {% block css %}
@@ -18,7 +20,8 @@
 
 {% block nav-btn %}
     <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
-        <span class="glyphicon glyphicon-arrow-left"></span> 回到上一页
+        <span class="glyphicon glyphicon-arrow-left"></span>
+        {% trans "回到上一页" %}
     </a>
 {% endblock nav-btn %}
 
@@ -47,8 +50,9 @@
             {% endfor %}
             </table>
             {% if view != "full" %}
-            <a class="btn btn-default view-full-btn" href="exphistory?category={{userexp.category}}&view=full" title="查看完整记录">
-                <span class="glyphicon glyphicon-resize-full"></span> 查看完整记录
+            <a class="btn btn-default view-full-btn" href="exphistory?category={{userexp.category}}&view=full" title="{% trans '查看完整记录' %}">
+                <span class="glyphicon glyphicon-resize-full"></span>
+                {% trans "查看完整记录" %}
             </a>
             {% endif %}
         </div>

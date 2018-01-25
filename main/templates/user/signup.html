@@ -493,16 +493,16 @@
                         <input type="email" name="email" class="form-control needverify" placeholder="{% trans '邮箱' %}" onblur="validateEmail()">
                         <span class="input-group-addon tips hidden-xs"
                             title="{% trans '邮箱' %} <span class='label label-primary'>{% trans '必填' %}</span>"
-                            data-content="<li class='text-primary'>{% trans '用于找回密码' %}</li>
+                            data-content="<li class='text-primary'>{% trans '用于找回密码或答案' %}</li>
                             <li class='text-danger'>{% trans '邮箱验证通过后方可生效' %}</li>
-                            <li class='text-danger'>{% trans '邮箱验证生效前，无法找回密码' %}</li>">
+                            <li class='text-danger'>{% trans '邮箱验证生效前，无法找回密码或答案' %}</li>">
                             <span class="glyphicon glyphicon-question-sign"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
-                        <li><ins>{% trans "用于找回密码" %}</ins></li>
+                        <li><ins>{% trans "用于找回密码或答案" %}</ins></li>
                         <li><em>{% trans "邮箱验证通过后方可生效" %}</em></li>
-                        <li><em>{% trans "邮箱验证生效前，无法找回密码" %}</em></li>
+                        <li><em>{% trans "邮箱验证生效前，无法找回密码或答案" %}</em></li>
                     </span>
                 </div>
                 <div id="nickname-group">

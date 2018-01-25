@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block title %}找回用户名{% endblock title %}
+{% load i18n %}
+
+{% block title %}{% trans "找回密码或答案" %}{% endblock title %}
 
 {% block theme %}
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
@@ -12,13 +14,16 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class='col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-xs-12'>
-            <div class='well small'>请用注册邮箱 <a class='btn btn-sm btn-default' href='mailto:kai@kyan001.com'>写信</a> 给 <strong>kai@kyan001.com</strong> 说明情况</div>
+        <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+            <div class="jumbotron">
+                <h1>{% trans "找回密码或答案" %}</h1>
+                <h3>{% trans "请用注册邮箱发信至：" %}</h3>
+                <a class="btn btn-primary btn-lg" href="mailto:kai@kyan001.com">kai@kyan001.com</a>
+                <h4>{% trans "提供越详细的信息，找回密码或答案的机会越大" %}</h4>
+            </div>
         </div>
     </div>
 </div>
 {% endblock content %}
-
-
 
 {% block footer %}{% endblock footer %}

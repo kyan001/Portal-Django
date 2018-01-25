@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block title %}@{{ user.nickname }}的公开页{% endblock title %}
+{% load i18n %}
+
+{% block title %}@{{ user.nickname }} {% trans "的公开页" %}{% endblock title %}
 
 {% block css %}
 <style>
@@ -34,30 +36,33 @@
 
 {% block nav-btn %}
 <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
-    <span class="glyphicon glyphicon-arrow-left"></span> 回到上一页
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    {% trans "回到上一页" %}
 </a>
 {% endblock nav-btn %}
 
 {% block content %}
 <div class="container">
-    <div class='row'>
-        <div class='hidden-xs col-sm-4 col-md-3 col-md-offset-1' id='gravatar'>
+    <div class="row">
+        <div class="hidden-xs col-sm-4 col-md-3 col-md-offset-1">
             <div class="panel panel-primary ani-veryfast hover-shadow">
                 <div class="panel-body">
-                    <a href="{{ user.headimg_url|default:'/static/img/user/default_headimg.jpg' }}">
-                        <div id="headimg" class='img-square img-rounded' style='background-image: url("{{ user.headimg_url|default:'/static/img/user/default_headimg.jpg' }}")'></div>
-                    </a>
+                    {% with head_img=user.headimg_url|default:"/static/img/user/default_headimg.jpg" %}
+                        <a href="{{ head_img }}">
+                            <div id="headimg" class="img-square img-rounded" style="background-image: url('{{ head_img }}')"></div>
+                        </a>
+                    {% endwith %}
                 </div>
             </div>
         </div>
-        <div class='col-xs-12 col-sm-8 col-md-7' id='main-info'>
+        <div id="main-info" class="col-xs-12 col-sm-8 col-md-7">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
-                    <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab">个人信息</a>
+                    <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab">{% trans "个人信息" %}</a>
                 </li>
                 <li role="presentation">
-                    <a href="#progress-info" aria-controls="progress-info" role="tab" data-toggle="tab">进度信息</a>
+                    <a href="#progress-info" aria-controls="progress-info" role="tab" data-toggle="tab">{% trans "进度信息" %}</a>
                 </li>
             </ul>
             <!-- Tab panes -->
@@ -65,22 +70,23 @@
                 <div role="tabpanel" class="tab-pane active" id="personal-info">
                     <table class="table table-condensed table-hover">
                         <tr>
-                            <th>昵称</th>
+                            <th>{% trans "昵称" %}</th>
                             <td>
                                 @{{ user.nickname }}
                                 <a class="pull-right btn btn-success btn-sm" href="/chat/conversation?receiver={{user.nickname}}">
-                                    <span class="glyphicon glyphicon-envelope"></span> 发消息
+                                    <span class="glyphicon glyphicon-envelope"></span>
+                                    {% trans "发消息" %}
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <th>活跃等级</th>
+                            <th>{% trans "活跃等级" %}</th>
                             <td>
                                 Lv.{{ user.level }}
                             </td>
                         </tr>
                         <tr>
-                            <th>创建时间</th>
+                            <th>{% trans "创建时间" %}</th>
                             <td>{{ user.created|date:'Y-m-d' }}</td>
                         </tr>
                     </table>
@@ -88,11 +94,12 @@
                 <div role="tabpanel" class="tab-pane" id="progress-info">
                      <table class="table table-condensed table-hover">
                     {% for name, count in prgcounts %}
-                        {% if name != '出错' %}
-                        <tr>
-                            <th class="progress-status">{{ name }}:</th>
-                            <td>{{ count }}</td>
-                        </tr>
+                        {% trans "出错" as t_error %}
+                        {% if name != t_error %}
+                            <tr>
+                                <th class="progress-status">{{ name }}:</th>
+                                <td>{{ count }}</td>
+                            </tr>
                         {% endif %}
                     {% endfor %}
                     </table>

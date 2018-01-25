@@ -1,16 +1,22 @@
+{% load i18n %}
+
 <div class="btn-group">
     <a class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="glyphicon glyphicon-exclamation-sign"></span> 我忘记了… <span class="caret"></span>
+        <span class="glyphicon glyphicon-alert"></span>
+        {% trans "我忘记了..." %}
+        <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
         <li>
             <a href="/user/forgetusername">
-                <span class="glyphicon glyphicon-exclamation-sign"></span> 找回用户名
+                <span class="glyphicon glyphicon-alert"></span>
+                {% trans "用户名" %}
             </a>
         </li>
         <li>
             <a href="/user/forgetanswer">
-                <span class="glyphicon glyphicon-exclamation-sign"></span> 忘记密码或答案
+                <span class="glyphicon glyphicon-alert"></span>
+                {% trans "密码或答案" %}
             </a>
         </li>
     </ul>

@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load i18n %}
+
 {% block title %}{{ cuser.nickname }}{% endblock title %}
 
 {% block inhead %}
@@ -38,37 +40,41 @@
 
 {% block nav-btn %}
 <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
-    <span class="glyphicon glyphicon-arrow-left"></span> 回到上一页
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    {% trans "回到上一页" %}
 </a>
 {% endblock nav-btn %}
 
 {% block content %}
 <div class="container">
-    <div class='row'>
-        <div class='hidden-xs col-sm-4 col-md-3 col-md-offset-1' id='gravatar'>
+    <div class="row">
+        <div id="gravatar" class="hidden-xs col-sm-4 col-md-3 col-md-offset-1">
             <div class="panel panel-primary ani-fast hover-shadow">
                 <div class="panel-body">
-                    <a href="javascript:;" onclick='changeHeadimg()' title='修改头像'>
-                        <div id="headimg" class='img-square img-rounded' style='background-image: url("{{ cuser.headimg_url|default:'/static/img/user/default_headimg.jpg' }}")'></div>
-                    </a>
-                    <form id="headimg-form" action="/user/headimgupdate" method='post' role="form" enctype="multipart/form-data">
+                    {% with chead_img=cuser.headimg_url|default:'/static/img/user/default_headimg.jpg' %}
+                        <a href="javascript:;" role="button" onclick="changeHeadimg()" title="{% trans '修改头像' %}">
+                            <div id="headimg" class="img-square img-rounded" style="background-image: url('{{ chead_img }}')"></div>
+                        </a>
+                    {% endwith %}
+
+                    <form id="headimg-form" action="/user/headimgupdate" method="post" role="form" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <input type='file' name='headimg' onchange="$('#headimg-form').submit();"/>
+                        <input type="file" name="headimg" onchange="$('#headimg-form').submit();"/>
                     </form>
                 </div>
             </div>
         </div>
-        <div class='col-xs-12 col-sm-8 col-md-7' id='main-info'>
+        <div id="main-info" class="col-xs-12 col-sm-8 col-md-7">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
-                    <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab">个人信息</a>
+                    <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab">{% trans "个人信息" %}</a>
                 </li>
                 <li role="presentation">
-                    <a href="#register-info" aria-controls="register-info" role="tab" data-toggle="tab">注册信息</a>
+                    <a href="#register-info" aria-controls="register-info" role="tab" data-toggle="tab">{% trans "注册信息" %}</a>
                 </li>
                 <li role="presentation">
-                    <a href="#progress-info" aria-controls="progress-info" role="tab" data-toggle="tab">进度信息</a>
+                    <a href="#progress-info" aria-controls="progress-info" role="tab" data-toggle="tab">{% trans "进度信息" %}</a>
                 </li>
             </ul>
             <!-- Tab panes -->
@@ -76,97 +82,103 @@
                 <div role="tabpanel" class="tab-pane active" id="personal-info">
                     <table class="table table-condensed table-hover">
                         <tr>
-                            <th>id：</th>
+                            <th>ID{% trans "：" %}</th>
                             <td>{{ cuser.id }}</td>
                         </tr>
                         <tr>
-                            <th>用户名：</th>
+                            <th>{% trans "用户名" %}{% trans "：" %}</th>
                             <td>{{ cuser.username }}</td>
                         </tr>
                         <tr>
-                            <th>昵称：</th>
+                            <th>{% trans "昵称" %}{% trans "：" %}</th>
                             <td>
                                 <a href="/user/public?nickname={{ cuser.nickname }}">
-                                    @<abbr title="我的公开页，任何人都可以查看" data-toggle="tooltip" data-placement="right">{{ cuser.nickname }}</abbr>
+                                    @<abbr title="{% trans '我的公开页，任何人都可以查看' %}" data-toggle="tooltip" data-placement="right">{{ cuser.nickname }}</abbr>
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <th>邮箱：</th>
+                            <th>{% trans "邮箱" %}{% trans "：" %}</th>
                             <td>{{ cuser.email }}</td>
                         </tr>
                         <tr>
-                            <th>活跃等级：</th>
+                            <th>{% trans "活跃等级" %}{% trans "：" %}</th>
                             <td>
-                                <abbr title="根据“总活跃度”计算" data-toggle="tooltip" data-placement="right">Lv.{{ cuser.level }}</abbr>
+                                <abbr title="{% trans '根据“总活跃度”计算' %}" data-toggle="tooltip" data-placement="right">Lv.{{ cuser.level }}</abbr>
                             </td>
                         </tr>
                     </table>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="register-info">
+                <div id="register-info" class="tab-pane" role="tabpanel">
                     <table class="table table-condensed table-hover">
                         <tr>
-                            <th>问题：</th>
+                            <th>{% trans "问题" %}{% trans "：" %}</th>
                             <td>{{ cuser.question }}</td>
                         </tr>
                         <tr>
-                            <th>答案1：</th>
+                            <th>{% trans "答案1" %}{% trans "：" %}</th>
                             {% if cuser.answer1 %}
-                            <td><i>[已加密]</i></td>
+                                <td><i>{% trans "[已加密]" %}</i></td>
                             {% else %}
-                            <td>无</td>
+                                <td>{% trans "无" %}</td>
                             {% endif %}
                         </tr>
                         <tr>
-                            <th>答案2：</th>
+                            <th>{% trans "答案2" %}{% trans "：" %}</th>
                             {% if cuser.answer2 %}
-                            <td><i>[已加密]</i></td>
+                                <td><i>{% trans "[已加密]" %}</i></td>
                             {% else %}
-                            <td>无</td>
+                                <td>{% trans "无" %}</td>
                             {% endif %}
                         </tr>
                         <tr>
-                            <th>提示：</th>
+                            <th>{% trans "提示" %}{% trans "：" %}</th>
                             {% if cuser.tip %}
-                            <td>{{ cuser.tip }}</td>
+                                <td>{{ cuser.tip }}</td>
                             {% else %}
-                            <td>无</td>
+                                <td>{% trans "无" %}</td>
                             {% endif %}
                         </tr>
                         <tr>
-                            <th>创建时间：</th>
+                            <th>{% trans "创建时间" %}{% trans "：" %}</th>
                             <td>{{ cuser.created|date:'Y-m-d H:i' }}</td>
                         </tr>
                     </table>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="progress-info">
                     <table class="table table-condensed table-hover">
+                    {% trans '出错' as t_error %}
+                    {% trans "已完成" as t_done %}
+                    {% trans "冻结中" as t_giveup %}
+                    {% trans "进行中" as t_inprogress %}
+                    {% trans "待阅读" as t_todo %}
+                    {% trans "追剧中" as t_follow %}
                     {% for p in prgstatics %}
-                        {% if p.name != '出错' %}
-                        <tr>
-                            <th class='text-right'>{{ p.name }}：</th>
-                            <td>{{ p.count }}</td>
-                            {% if p.name == '已完成' %}
-                            <th class='text-right'>平均花费：</th>
-                            <td class=''>{{ p.average_created_modified }}</td>
-                            {% endif %}
-                            {% if p.name == '冻结中' %}
-                            <th class='text-right'>平均尝试：</th>
-                            <td class=''>{{ p.average_created_modified }}</td>
-                            {% endif %}
-                            {% if p.name == '进行中' %}
-                            <th class='text-right'>平均已用：</th>
-                            <td class=''>{{ p.average_created_modified }}</td>
-                            {% endif %}
-                            {% if p.name == '待阅读' %}
-                            <th class='text-right'>平均等待：</th>
-                            <td class=''>{{ p.average_created_now }}</td>
-                            {% endif %}
-                            {% if p.name == '追剧中' %}
-                            <th class='text-right'>平均待更：</th>
-                            <td class=''>{{ p.average_modified_now }}</td>
-                            {% endif %}
-                        </tr>
+                        {% if p.name != t_error %}
+                            <tr>
+                                <th class="text-right">{{ p.name }}{% trans "：" %}</th>
+                                <td>{{ p.count }}</td>
+                                {% if p.name == t_done %}
+                                    <th class="text-right">{% trans "平均花费" %}{% trans "：" %}</th>
+                                    <td>{{ p.average_created_modified }}</td>
+                                {% endif %}
+                                {% if p.name == t_giveup %}
+                                    <th class="text-right">{% trans "平均尝试" %}{% trans "：" %}</th>
+                                    <td>{{ p.average_created_modified }}</td>
+                                {% endif %}
+                                {% if p.name == t_inprogress %}
+                                    <th class="text-right">{% trans "平均已用" %}{% trans "：" %}</th>
+                                    <td>{{ p.average_created_modified }}</td>
+                                {% endif %}
+                                {% if p.name == t_todo %}
+                                    <th class="text-right">{% trans "平均等待" %}{% trans "：" %}</th>
+                                    <td>{{ p.average_created_now }}</td>
+                                {% endif %}
+                                {% if p.name == t_follow %}
+                                    <th class="text-right">{% trans "平均待更" %}{% trans "：" %}</th>
+                                    <td>{{ p.average_modified_now }}</td>
+                                {% endif %}
+                            </tr>
                         {% endif %}
                     {% endfor %}
                     </table>
@@ -174,9 +186,9 @@
             </div>
         </div><!--.col-->
     </div><!--.row-->
-    {% include 'user/badges.html' with user=cuser %}
+    {% include "user/badges.html" with user=cuser %}
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-0" id='exp-info'>
+        <div id="exp-info" class="col-xs-12 col-sm-12 col-md-12 col-md-offset-0">
             {% for exp, exphistory in exps %}
             <div class="col-xs-12 col-sm-12 col-md-4">
                 <a class="no-decoration" href="/user/exphistory?category={{exp.category}}">
@@ -215,12 +227,12 @@
 <script>
     $(function(){
         {% for category, oldlv, newlv in lvnotice %}
-            $.success("恭喜升级！「{{category}}」从 Lv.{{oldlv}} 升级到 Lv.{{newlv}}！")
+            $.success("{% blocktrans %}恭喜升级！「{{category}}」从 Lv.{{oldlv}} 升级到 Lv.{{newlv}}！{% endblocktrans %}")
         {% endfor %}
         $("[data-toggle='tooltip']").tooltip()
     })
     function changeHeadimg(){
-        $('#headimg-form input[name="headimg"]').click()
+        $("#headimg-form input[name='headimg']").click()
     }
 </script>
 {% endblock js %}

@@ -1,36 +1,39 @@
 {% extends "base.html" %}
-{% block title %}个人设置{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "个人设置" %}{% endblock %}
 
 {% block nav-btn %}
 <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
-    <span class="glyphicon glyphicon-arrow-left"></span> 回到上一页
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    {% trans "回到上一页" %}
 </a>
 {% endblock nav-btn %}
 
 {% block content %}
-<div class='container'>
-    <div class='row'>
+<div class="container">
+    <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6 col-sm-offset-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    进度日历设置
+                    {% trans "进度日历设置" %}
                 </div>
                 <div class="panel-body">
-                    <form id='ical-form' action="/progress/setical" method="post">
+                    <form id="ical-form" action="/progress/setical" method="post">
                         {% csrf_token %}
-                        <div class='checkbox'>
+                        <div class="checkbox">
                             <label>
-                                <input type="checkbox" name='useical' value='on' {%if icalon%}checked{%endif%} onchange='$("#ical-form").submit()'/>
-                                公开进度日历
+                                <input type="checkbox" name="useical" value="on" {%if icalon%}checked{%endif%} onchange="$('#ical-form').submit()"/>
+                                {% trans "公开进度日历" %}
                             </label>
-                            <span class='text-muted'>（公开时私人仍可用）</span>
+                            <span class="text-muted">{% trans "（公开时私人仍可用）" %}</span>
                             {% if icalon %}
-                                <a class='pull-right' href='/progress/ical?userid={{ cuser.id }}'>
-                                    「进度日历」地址（公开）
+                                <a class="pull-right" href="/progress/ical?userid={{ cuser.id }}">
+                                    {% trans "「进度日历」地址（公开）" %}
                                 </a>
                             {% else %}
-                                <a class='pull-right' href='/progress/ical?userid={{ cuser.id }}&private={{ privatekey }}'>
-                                    「进度日历」地址（私人）
+                                <a class="pull-right" href="/progress/ical?userid={{ cuser.id }}&private={{ privatekey }}">
+                                    {% trans "「进度日历」地址（私人）" %}
                                 </a>
                             {% endif %}
                         </div>

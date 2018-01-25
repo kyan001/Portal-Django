@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-25 14:09+0800\n"
+"POT-Creation-Date: 2018-01-25 19:14+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: FULL NAME <EMILL@ADDRESS>\n"
 "Language-Team: Japanese <i18n@kyan001.com>\n"
@@ -51,7 +51,7 @@ msgstr ""
 msgid "待阅读"
 msgstr ""
 
-#: .\main\models.py:322
+#: .\main\models.py:322 .\main\templates\user\public.html:97
 msgid "出错"
 msgstr ""
 
@@ -88,13 +88,113 @@ msgstr ""
 msgid "提示信息"
 msgstr ""
 
-#: .\main\templates\msg.html:31 .\main\templates\user\signin.html:146
-#: .\main\templates\user\signin.html:210 .\main\templates\user\signup.html:196
+#: .\main\templates\msg.html:31 .\main\templates\user\forgetusername.html:42
+#: .\main\templates\user\signin.html:146 .\main\templates\user\signin.html:210
+#: .\main\templates\user\signup.html:196
 msgid "："
 msgstr ""
 
 #: .\main\templates\msg.html:45
 msgid "点此跳转至"
+msgstr ""
+
+#: .\main\templates\user\exphistory.html:24
+#: .\main\templates\user\public.html:40 .\main\templates\user\setting.html:9
+msgid "回到上一页"
+msgstr ""
+
+#: .\main\templates\user\exphistory.html:53
+#: .\main\templates\user\exphistory.html:55
+msgid "查看完整记录"
+msgstr ""
+
+#: .\main\templates\user\forgetanswer.html:4
+#: .\main\templates\user\forgetanswer.html:19
+msgid "找回密码或答案"
+msgstr ""
+
+#: .\main\templates\user\forgetanswer.html:20
+msgid "请用注册邮箱发信至："
+msgstr ""
+
+#: .\main\templates\user\forgetanswer.html:22
+msgid "提供越详细的信息，找回密码或答案的机会越大"
+msgstr ""
+
+#: .\main\templates\user\forgetusername.html:4
+#: .\main\templates\user\forgetusername.html:57 .\main\views\user.py:220
+#: .\main\views\user.py:247
+msgid "找回用户名"
+msgstr ""
+
+#: .\main\templates\user\forgetusername.html:42
+msgid "注意"
+msgstr ""
+
+#: .\main\templates\user\forgetusername.html:43
+msgid "找回用户名的同时，系统会向该用户发送一封站内信，告知此次找回尝试。"
+msgstr ""
+
+#: .\main\templates\user\forgetusername.html:49
+#: .\main\templates\user\forgetusername.html:51
+msgid "请输入注册时填写的邮箱"
+msgstr ""
+
+#: .\main\templates\user\forgetusername.html:71 .\main\views\user.py:383
+msgid "邮箱不能为空"
+msgstr ""
+
+#: .\main\templates\user\public.html:4
+msgid "的公开页"
+msgstr ""
+
+#: .\main\templates\user\public.html:62 .\main\templates\userbar.html:67
+msgid "个人信息"
+msgstr ""
+
+#: .\main\templates\user\public.html:65
+msgid "进度信息"
+msgstr ""
+
+#: .\main\templates\user\public.html:73 .\main\templates\user\signup.html:270
+#: .\main\templates\user\signup.html:513 .\main\templates\user\signup.html:515
+msgid "昵称"
+msgstr ""
+
+#: .\main\templates\user\public.html:78
+msgid "发消息"
+msgstr ""
+
+#: .\main\templates\user\public.html:83
+msgid "活跃等级"
+msgstr ""
+
+#: .\main\templates\user\public.html:89
+msgid "创建时间"
+msgstr ""
+
+#: .\main\templates\user\setting.html:4 .\main\templates\userbar.html:72
+msgid "个人设置"
+msgstr ""
+
+#: .\main\templates\user\setting.html:19
+msgid "进度日历设置"
+msgstr ""
+
+#: .\main\templates\user\setting.html:27
+msgid "公开进度日历"
+msgstr ""
+
+#: .\main\templates\user\setting.html:29
+msgid "（公开时私人仍可用）"
+msgstr ""
+
+#: .\main\templates\user\setting.html:32
+msgid "「进度日历」地址（公开）"
+msgstr ""
+
+#: .\main\templates\user\setting.html:36
+msgid "「进度日历」地址（私人）"
 msgstr ""
 
 #: .\main\templates\user\signin.html:4
@@ -120,9 +220,11 @@ msgstr ""
 msgid "只能包含“英文字母”、“数字”和“英文句号”"
 msgstr ""
 
-#: .\main\templates\user\signin.html:53 .\main\templates\user\signup.html:233
-#: .\main\templates\user\signup.html:326 .\main\templates\user\signup.html:363
-#: .\main\templates\user\signup.html:365 .\main\views\user.py:142
+#: .\main\templates\user\signin.html:53
+#: .\main\templates\user\signindropdown.html:13
+#: .\main\templates\user\signup.html:233 .\main\templates\user\signup.html:326
+#: .\main\templates\user\signup.html:363 .\main\templates\user\signup.html:365
+#: .\main\views\user.py:142
 msgid "用户名"
 msgstr ""
 
@@ -132,7 +234,9 @@ msgstr ""
 msgid "回答 “答案” 或 “备选答案” 均可正常登入"
 msgstr ""
 
-#: .\main\templates\user\signin.html:63 .\main\templates\user\signup.html:328
+#: .\main\templates\user\signin.html:63
+#: .\main\templates\user\signindropdown.html:19
+#: .\main\templates\user\signup.html:328
 msgid "密码或答案"
 msgstr ""
 
@@ -172,6 +276,10 @@ msgstr ""
 
 #: .\main\templates\user\signin.html:231
 msgid "登入中 ..."
+msgstr ""
+
+#: .\main\templates\user\signindropdown.html:6
+msgid "我忘记了..."
 msgstr ""
 
 #: .\main\templates\user\signup.html:4
@@ -304,11 +412,6 @@ msgstr ""
 #: .\main\templates\user\signup.html:233 .\main\templates\user\signup.html:270
 #: .\main\templates\user\signup.html:306
 msgid "已存在"
-msgstr ""
-
-#: .\main\templates\user\signup.html:270 .\main\templates\user\signup.html:513
-#: .\main\templates\user\signup.html:515
-msgid "昵称"
 msgstr ""
 
 #: .\main\templates\user\signup.html:306 .\main\templates\user\signup.html:329
@@ -465,7 +568,7 @@ msgid "请不要将答案直接放在这里"
 msgstr ""
 
 #: .\main\templates\user\signup.html:496 .\main\templates\user\signup.html:503
-msgid "用于找回密码"
+msgid "用于找回密码或答案"
 msgstr ""
 
 #: .\main\templates\user\signup.html:497 .\main\templates\user\signup.html:504
@@ -473,7 +576,7 @@ msgid "邮箱验证通过后方可生效"
 msgstr ""
 
 #: .\main\templates\user\signup.html:498 .\main\templates\user\signup.html:505
-msgid "邮箱验证生效前，无法找回密码"
+msgid "邮箱验证生效前，无法找回密码或答案"
 msgstr ""
 
 #: .\main\templates\user\signup.html:516 .\main\templates\user\signup.html:524
@@ -494,14 +597,6 @@ msgstr ""
 
 #: .\main\templates\userbar.html:41
 msgid "注册"
-msgstr ""
-
-#: .\main\templates\userbar.html:67
-msgid "个人信息"
-msgstr ""
-
-#: .\main\templates\userbar.html:72
-msgid "个人设置"
 msgstr ""
 
 #: .\main\templates\userbar.html:78
@@ -693,10 +788,6 @@ msgstr ""
 msgid "此邮箱（{}）尚未被注册"
 msgstr ""
 
-#: .\main\views\user.py:220 .\main\views\user.py:247
-msgid "找回用户名"
-msgstr ""
-
 #: .\main\views\user.py:229
 #, python-brace-format
 msgid ""
@@ -769,10 +860,6 @@ msgstr ""
 
 #: .\main\views\user.py:373
 msgid "昵称不能为空"
-msgstr ""
-
-#: .\main\views\user.py:383
-msgid "邮箱不能为空"
 msgstr ""
 
 #: .\util\user.py:24
