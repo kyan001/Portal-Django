@@ -1,0 +1,830 @@
+# I18N Translation File.
+# Copyright (C) 2018 kyan001.com
+# This file is distributed under the same license as the kyan001.com package.
+# Kyan <kai@kyan001.com>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-25 14:09+0800\n"
+"PO-Revision-Date: 2018-01-25 09:59+0800\n"
+"Last-Translator: Kyan <kai@kyan001.com>\n"
+"Language-Team: English <i18n@kyan001.com>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\main\models.py:27
+#, python-brace-format
+msgid "您查找的 {t} 并不存在。（查询参数 {a} {k}）"
+msgstr ""
+"The {t} you are looking for does not exist. (Request arguments {a} {k})"
+
+#: .\main\models.py:187
+msgid "进度活跃度"
+msgstr "Progress Activity"
+
+#: .\main\models.py:188
+msgid "用户活跃度"
+msgstr "User Activity"
+
+#: .\main\models.py:189
+msgid "消息活跃度"
+msgstr "Chat Activity"
+
+#: .\main\models.py:190
+msgid "错误类别"
+msgstr "Error Category"
+
+#: .\main\models.py:319
+msgid "进行中"
+msgstr "In Progress"
+
+#: .\main\models.py:320
+msgid "追剧中"
+msgstr "Following"
+
+#: .\main\models.py:321
+msgid "待阅读"
+msgstr "To Do"
+
+#: .\main\models.py:322
+msgid "出错"
+msgstr "Error"
+
+#: .\main\models.py:325
+msgid "已完成"
+msgstr "Done"
+
+#: .\main\models.py:326
+msgid "冻结中"
+msgstr "Frozen"
+
+#: .\main\templates\404.html:27
+msgid "你来到了一个不存在的地方"
+msgstr "You come to a place that does not exist"
+
+#: .\main\templates\404.html:31
+msgid "你要访问的页面不存在"
+msgstr "The page you visit does not exist"
+
+#: .\main\templates\404.html:37 .\main\templates\500.html:36
+#: .\main\templates\msg.html:51
+msgid "点此回到上个页面"
+msgstr "Back to previous page"
+
+#: .\main\templates\500.html:27
+msgid "服务器出现了一个小问题"
+msgstr "Server has met a little problem"
+
+#: .\main\templates\500.html:31
+msgid "服务器内部错误，请联系服务器管理员"
+msgstr "Server internal error. Please contact server administrator"
+
+#: .\main\templates\msg.html:5 .\main\templates\msg.html:31
+msgid "提示信息"
+msgstr "Notice"
+
+#: .\main\templates\msg.html:31 .\main\templates\user\signin.html:146
+#: .\main\templates\user\signin.html:210 .\main\templates\user\signup.html:196
+msgid "："
+msgstr ": "
+
+#: .\main\templates\msg.html:45
+msgid "点此跳转至"
+msgstr "Jump to"
+
+#: .\main\templates\user\signin.html:4
+msgid "用户登入"
+msgstr "User Log In"
+
+#: .\main\templates\user\signin.html:50 .\main\templates\user\signin.html:60
+#: .\main\templates\user\signup.html:361 .\main\templates\user\signup.html:365
+#: .\main\templates\user\signup.html:385 .\main\templates\user\signup.html:406
+#: .\main\templates\user\signup.html:410 .\main\templates\user\signup.html:437
+#: .\main\templates\user\signup.html:495
+msgid "必填"
+msgstr "Required"
+
+#: .\main\templates\user\signin.html:50 .\main\templates\user\signin.html:60
+#: .\main\templates\user\signup.html:361 .\main\templates\user\signup.html:406
+#: .\main\templates\user\signup.html:421 .\main\templates\user\signup.html:437
+msgid "，"
+msgstr ", "
+
+#: .\main\templates\user\signin.html:50 .\main\templates\user\signup.html:361
+#: .\main\templates\user\signup.html:367 .\main\templates\user\signup.html:374
+msgid "只能包含“英文字母”、“数字”和“英文句号”"
+msgstr "Should only contain letters, number and '.'"
+
+#: .\main\templates\user\signin.html:53 .\main\templates\user\signup.html:233
+#: .\main\templates\user\signup.html:326 .\main\templates\user\signup.html:363
+#: .\main\templates\user\signup.html:365 .\main\views\user.py:142
+msgid "用户名"
+msgstr "Username"
+
+#: .\main\templates\user\signin.html:60 .\main\templates\user\signup.html:406
+#: .\main\templates\user\signup.html:414 .\main\templates\user\signup.html:437
+#: .\main\templates\user\signup.html:443 .\main\templates\user\signup.html:459
+msgid "回答 “答案” 或 “备选答案” 均可正常登入"
+msgstr "Provide either 'Answer' or 'Alternative Answer' can log in"
+
+#: .\main\templates\user\signin.html:63 .\main\templates\user\signup.html:328
+msgid "密码或答案"
+msgstr "Password or Answer"
+
+#: .\main\templates\user\signin.html:72
+msgid "下次访问免登入，公共电脑请勿勾选此项"
+msgstr "Keep logged in. Do not check this option on a public computer."
+
+#: .\main\templates\user\signin.html:75
+msgid "记住我"
+msgstr "Remember me"
+
+#: .\main\templates\user\signin.html:82 .\main\templates\user\signin.html:163
+#: .\main\templates\userbar.html:44
+msgid "登入"
+msgstr "Log in"
+
+#: .\main\templates\user\signin.html:146
+msgid "提示"
+msgstr "Tips"
+
+#: .\main\templates\user\signin.html:186 .\main\templates\user\signin.html:194
+msgid "加载中 ..."
+msgstr "Loading ..."
+
+#: .\main\templates\user\signin.html:210
+msgid "用户不存在"
+msgstr "User does not exist"
+
+#: .\main\templates\user\signin.html:221
+msgid "密码/答案不能为空"
+msgstr "Password/Answer cannot be empty"
+
+#: .\main\templates\user\signin.html:226 .\main\views\user.py:310
+#: .\main\views\user.py:361
+msgid "用户名不能为空"
+msgstr "Username cannot be empty"
+
+#: .\main\templates\user\signin.html:231
+msgid "登入中 ..."
+msgstr "Logging in ..."
+
+#: .\main\templates\user\signup.html:4
+msgid "用户注册"
+msgstr "User Sign Up"
+
+#: .\main\templates\user\signup.html:69 .\main\templates\user\signup.html:82
+#: .\main\templates\user\signup.html:535
+msgid "提交注册"
+msgstr "Submit"
+
+#: .\main\templates\user\signup.html:84
+msgid "提交中"
+msgstr "Submitting"
+
+#: .\main\templates\user\signup.html:100 .\main\templates\user\signup.html:348
+msgid "问答"
+msgstr "Q&A"
+
+#: .\main\templates\user\signup.html:103 .\main\templates\user\signup.html:421
+msgid "请输入密码"
+msgstr "Please enter the password"
+
+#: .\main\templates\user\signup.html:105 .\main\templates\user\signup.html:408
+#: .\main\templates\user\signup.html:410
+msgid "密码"
+msgstr "Password"
+
+#: .\main\templates\user\signup.html:110
+msgid "传统"
+msgstr "Classic"
+
+#: .\main\templates\user\signup.html:113 .\main\templates\user\signup.html:410
+#: .\main\views\user.py:146
+msgid "答案"
+msgstr "Answer"
+
+#: .\main\templates\user\signup.html:154
+msgid "英文字母"
+msgstr "Letter"
+
+#: .\main\templates\user\signup.html:155
+msgid "汉字"
+msgstr "Chinese Charactor"
+
+#: .\main\templates\user\signup.html:156
+msgid "数字"
+msgstr "Number"
+
+#: .\main\templates\user\signup.html:169
+msgid "正数第"
+msgstr "from left the "
+
+#: .\main\templates\user\signup.html:169 .\main\templates\user\signup.html:173
+msgid "位字符"
+msgstr "th charactor"
+
+#: .\main\templates\user\signup.html:171
+msgid "最后一位字符"
+msgstr "the last charactor"
+
+#: .\main\templates\user\signup.html:173
+msgid "倒数第"
+msgstr "from right the "
+
+#: .\main\templates\user\signup.html:175 .\main\templates\user\signup.html:176
+#: .\main\templates\user\signup.html:182 .\main\templates\user\signup.html:233
+#: .\main\templates\user\signup.html:270 .\main\templates\user\signup.html:306
+#: .\main\views\user.py:142 .\main\views\user.py:144 .\main\views\user.py:146
+#: .\main\views\user.py:148
+msgid "“"
+msgstr " '"
+
+#: .\main\templates\user\signup.html:175 .\main\templates\user\signup.html:176
+#: .\main\templates\user\signup.html:182 .\main\templates\user\signup.html:233
+#: .\main\templates\user\signup.html:270 .\main\templates\user\signup.html:306
+#: .\main\views\user.py:142 .\main\views\user.py:144 .\main\views\user.py:146
+#: .\main\views\user.py:148
+msgid "”"
+msgstr "' "
+
+#: .\main\templates\user\signup.html:178 .\main\templates\user\signup.html:182
+msgid "是"
+msgstr "is"
+
+#: .\main\templates\user\signup.html:180
+msgid "不包含"
+msgstr "does not contain"
+
+#: .\main\templates\user\signup.html:180
+msgid "包含"
+msgstr "contains"
+
+#: .\main\templates\user\signup.html:180
+msgid "个"
+msgstr "of"
+
+#: .\main\templates\user\signup.html:183
+msgid "一共"
+msgstr "total"
+
+#: .\main\templates\user\signup.html:183
+msgid "个字符"
+msgstr "charactors"
+
+#: .\main\templates\user\signup.html:195
+msgid "、"
+msgstr ", "
+
+#: .\main\templates\user\signup.html:195
+msgid "并且"
+msgstr ", and "
+
+#: .\main\templates\user\signup.html:195
+msgid "且"
+msgstr " and "
+
+#: .\main\templates\user\signup.html:195
+msgid "而且"
+msgstr " yet "
+
+#: .\main\templates\user\signup.html:195
+msgid "同时"
+msgstr " while "
+
+#: .\main\templates\user\signup.html:196
+msgid "答案中"
+msgstr "In the answer"
+
+#: .\main\templates\user\signup.html:233 .\main\templates\user\signup.html:270
+#: .\main\templates\user\signup.html:306
+msgid "已存在"
+msgstr "is already taken"
+
+#: .\main\templates\user\signup.html:270 .\main\templates\user\signup.html:513
+#: .\main\templates\user\signup.html:515
+msgid "昵称"
+msgstr "Nickname"
+
+#: .\main\templates\user\signup.html:306 .\main\templates\user\signup.html:329
+#: .\main\templates\user\signup.html:493 .\main\templates\user\signup.html:495
+#: .\main\views\user.py:148
+msgid "邮箱"
+msgstr "Email"
+
+#: .\main\templates\user\signup.html:320 .\main\views\user.py:142
+#: .\main\views\user.py:144 .\main\views\user.py:146 .\main\views\user.py:148
+msgid "不能为空"
+msgstr "cannot be empty"
+
+#: .\main\templates\user\signup.html:327 .\main\templates\user\signup.html:383
+#: .\main\views\user.py:144
+msgid "问题"
+msgstr "Question"
+
+#: .\main\templates\user\signup.html:348
+msgid "切换到"
+msgstr "Swtich to"
+
+#: .\main\templates\user\signup.html:348
+msgid "模式"
+msgstr "Mode"
+
+#: .\main\templates\user\signup.html:366 .\main\templates\user\signup.html:373
+msgid "登入时的凭证之一"
+msgstr "Needed when logging in"
+
+#: .\main\templates\user\signup.html:368 .\main\templates\user\signup.html:375
+msgid "不能同其他人的用户名重复"
+msgstr "Should not same as another user's username"
+
+#: .\main\templates\user\signup.html:386 .\main\templates\user\signup.html:398
+msgid "登入时会问您的问题"
+msgstr "Question will be asked when logging in"
+
+#: .\main\templates\user\signup.html:387
+msgid "我们用 “问题+回答” 来代替传统密码"
+msgstr "We use 'Question + Answer' instead of traditional password"
+
+#: .\main\templates\user\signup.html:388
+msgid "一些常用的问题包括："
+msgstr "Common questions include: "
+
+#: .\main\templates\user\signup.html:390
+msgid "“最常用的8位密码”"
+msgstr "'My most used 8 digits password"
+
+#: .\main\templates\user\signup.html:391
+msgid "“最想获得的超能力”"
+msgstr "'Most wantted super power'"
+
+#: .\main\templates\user\signup.html:392
+msgid "“家里保险柜的数量”"
+msgstr "'How many safe boxes in my home'"
+
+#: .\main\templates\user\signup.html:399
+msgid "在这里写下问题，在下面写下答案"
+msgstr "Put 'question' here, put 'answer' below"
+
+#: .\main\templates\user\signup.html:400
+msgid "尽量不要包含空格或标点符号"
+msgstr ""
+
+#: .\main\templates\user\signup.html:413 .\main\templates\user\signup.html:428
+msgid "登入时您需要回答的内容"
+msgstr "The 'answer' of the 'question' when logging in"
+
+#: .\main\templates\user\signup.html:415 .\main\templates\user\signup.html:429
+msgid "一般应与上面的问题相对应"
+msgstr "Normally answered the 'question' above"
+
+#: .\main\templates\user\signup.html:416 .\main\templates\user\signup.html:430
+msgid "中英文、标点、数字均可"
+msgstr "Can be letters, punctuations or numbers"
+
+#: .\main\templates\user\signup.html:417 .\main\templates\user\signup.html:431
+msgid "任何人（包括管理员）均无法查看您的回答"
+msgstr "Anyone (include administrator) cannot see your 'answer'"
+
+#: .\main\templates\user\signup.html:419
+msgid "传统模式时："
+msgstr "In Classic mode: "
+
+#: .\main\templates\user\signup.html:421
+msgid "长度、字符不限"
+msgstr "No length limitation or charactor restriction"
+
+#: .\main\templates\user\signup.html:439 .\main\templates\user\signup.html:441
+msgid "备选答案"
+msgstr "Alternative Answer"
+
+#: .\main\templates\user\signup.html:441 .\main\templates\user\signup.html:473
+#: .\main\templates\user\signup.html:515
+msgid "选填"
+msgstr "Optional"
+
+#: .\main\templates\user\signup.html:442 .\main\templates\user\signup.html:458
+msgid "同样作为正常答案生效"
+msgstr "Also valid as the 'answer'"
+
+#: .\main\templates\user\signup.html:444
+msgid "常见的 “答案” 与 “备选答案” 的组合有："
+msgstr "Common 'Answer' and 'Alternative Answer' combinations are: "
+
+#: .\main\templates\user\signup.html:446
+msgid "中文答案 + 英文答案"
+msgstr "Answer in Chinese versus answer in English"
+
+#: .\main\templates\user\signup.html:447
+msgid "（北京 vs. beijing）"
+msgstr "(北京 vs. beijing)"
+
+#: .\main\templates\user\signup.html:448
+msgid "容易混淆的答案"
+msgstr "Easily confused answers"
+
+#: .\main\templates\user\signup.html:449
+msgid "（8月15日 vs. 08-15）"
+msgstr "(08/15 vs. 08-15)"
+
+#: .\main\templates\user\signup.html:450
+msgid "自己也拿不准的答案"
+msgstr "Not sure of the answer"
+
+#: .\main\templates\user\signup.html:451
+msgid "（炸鸡 vs. 烧烤）"
+msgstr "(fried chicken vs. barbecue)"
+
+#: .\main\templates\user\signup.html:460
+msgid "不需要与 “答案” 相同"
+msgstr "No need to be same as the 'Answer'"
+
+#: .\main\templates\user\signup.html:468 .\main\templates\user\signup.html:473
+msgid "答案提示"
+msgstr "Tips for 'answer'"
+
+#: .\main\templates\user\signup.html:469
+msgid "生成提示"
+msgstr "Generate Tips"
+
+#: .\main\templates\user\signup.html:474 .\main\templates\user\signup.html:482
+msgid "登入时，问题答案的提示信息"
+msgstr "Tips for the 'answer' when logging in"
+
+#: .\main\templates\user\signup.html:475 .\main\templates\user\signup.html:483
+msgid "在登入界面您需要时自动显示"
+msgstr "Will show up automatically when logging in"
+
+#: .\main\templates\user\signup.html:476 .\main\templates\user\signup.html:484
+msgid "请不要将答案直接放在这里"
+msgstr "Do not put your 'answer' here"
+
+#: .\main\templates\user\signup.html:496 .\main\templates\user\signup.html:503
+msgid "用于找回密码"
+msgstr "Needed when retrieving password"
+
+#: .\main\templates\user\signup.html:497 .\main\templates\user\signup.html:504
+msgid "邮箱验证通过后方可生效"
+msgstr "Available after verified"
+
+#: .\main\templates\user\signup.html:498 .\main\templates\user\signup.html:505
+msgid "邮箱验证生效前，无法找回密码"
+msgstr "Cannot retrieve password before email verified"
+
+#: .\main\templates\user\signup.html:516 .\main\templates\user\signup.html:524
+msgid "你希望他人看到的名称"
+msgstr "The name other users will see"
+
+#: .\main\templates\user\signup.html:517 .\main\templates\user\signup.html:525
+msgid "昵称只能是 “汉字” 和 “字母”"
+msgstr "Nickname should only contain letters"
+
+#: .\main\templates\user\signup.html:518 .\main\templates\user\signup.html:526
+msgid "昵称不可与他人重复"
+msgstr "Should not same as another user's nickname"
+
+#: .\main\templates\user\signup.html:519 .\main\templates\user\signup.html:527
+msgid "昵称为空时，我们将自动帮您生成"
+msgstr "Will generate one when nickname is empty"
+
+#: .\main\templates\userbar.html:41
+msgid "注册"
+msgstr "Sign up"
+
+#: .\main\templates\userbar.html:67
+msgid "个人信息"
+msgstr "Profile"
+
+#: .\main\templates\userbar.html:72
+msgid "个人设置"
+msgstr "Settings"
+
+#: .\main\templates\userbar.html:78
+msgid "登出"
+msgstr "Log out"
+
+#: .\main\templates\userbar.html:85
+msgid "首页"
+msgstr "Home page"
+
+#: .\main\templates\userbar.html:91
+msgid "我的进度"
+msgstr "MyProgress"
+
+#: .\main\templates\userbar.html:97
+msgid "临时笔记"
+msgstr "TempNote"
+
+#: .\main\templates\userbar.html:103
+msgid "聊天机器人"
+msgstr "RoboTalk"
+
+#: .\main\templates\userbar.html:116
+msgid "徽章列表"
+msgstr "Badge list"
+
+#: .\main\templates\userbar.html:122
+msgid "切换主题"
+msgstr "Themes"
+
+#: .\main\templates\userbar.html:137 .\main\templates\userbar.html:145
+msgid "默认主题"
+msgstr "Default Theme"
+
+#: .\main\templates\userbar.html:151
+msgid "随机主题"
+msgstr "Random Theme"
+
+#: .\main\templates\userbar.html:155
+msgid "蔚蓝"
+msgstr "Cerulean"
+
+#: .\main\templates\userbar.html:156
+msgid "宇宙"
+msgstr "Cosmo"
+
+#: .\main\templates\userbar.html:157
+msgid "半机械"
+msgstr "Cyborg"
+
+#: .\main\templates\userbar.html:158
+msgid "暗色"
+msgstr "Darkly"
+
+#: .\main\templates\userbar.html:159
+msgid "扁平"
+msgstr "Flatly"
+
+#: .\main\templates\userbar.html:160
+msgid "日志"
+msgstr "Journal"
+
+#: .\main\templates\userbar.html:161
+msgid "流明"
+msgstr "Lumen"
+
+#: .\main\templates\userbar.html:162
+msgid "纸"
+msgstr "Paper"
+
+#: .\main\templates\userbar.html:163
+msgid "易读"
+msgstr "Readable"
+
+#: .\main\templates\userbar.html:164
+msgid "砂岩"
+msgstr "Sandstone"
+
+#: .\main\templates\userbar.html:165
+msgid "简约"
+msgstr "Simplex"
+
+#: .\main\templates\userbar.html:166
+msgid "页岩"
+msgstr "Slate"
+
+#: .\main\templates\userbar.html:167
+msgid "空间站"
+msgstr "Spacelab"
+
+#: .\main\templates\userbar.html:168
+msgid "英雄"
+msgstr "Superhero"
+
+#: .\main\templates\userbar.html:169
+msgid "统一"
+msgstr "United"
+
+#: .\main\templates\userbar.html:170
+msgid "雪人"
+msgstr "Yeti"
+
+#: .\main\views\user.py:37
+#, python-brace-format
+msgid "请求的分类（{category}）不存在"
+msgstr "The requested category ({category}) does not exist"
+
+#: .\main\views\user.py:37 .\main\views\user.py:43 .\main\views\user.py:56
+msgid "错误"
+msgstr "Error"
+
+#: .\main\views\user.py:43
+msgid "Category 参数不能为空"
+msgstr "Argument 'Category' cannot be empty"
+
+#: .\main\views\user.py:56
+msgid "Nickname 参数不能为空"
+msgstr "Argument 'Nickname' cannot be empty"
+
+#: .\main\views\user.py:66
+msgid "{} 访问了你的公开页"
+msgstr "{} visited your public page"
+
+#: .\main\views\user.py:112
+msgid "查看用户个人信息"
+msgstr "View user profile"
+
+#: .\main\views\user.py:142 .\main\views\user.py:144 .\main\views\user.py:146
+#: .\main\views\user.py:148 .\main\views\user.py:158 .\main\views\user.py:160
+#: .\main\views\user.py:162 .\main\views\user.py:165 .\main\views\user.py:167
+msgid "注册失败"
+msgstr "Sign up failed"
+
+#: .\main\views\user.py:158
+#, python-brace-format
+msgid "用户名 '{username}' 已存在！"
+msgstr "Username '{username}' is already taken!"
+
+#: .\main\views\user.py:160
+#, python-brace-format
+msgid "昵称 '{nickname}' 已存在！"
+msgstr "Nickname '{nickname}' is already taken!"
+
+#: .\main\views\user.py:162
+#, python-brace-format
+msgid "邮箱 '{email}' 已存在！"
+msgstr "Email '{email}' is already taken!"
+
+#: .\main\views\user.py:165
+#, python-brace-format
+msgid "用户名 '{username}' 只应包含数字、字母、和英文句号！"
+msgstr "Username '{username}' should only contain numbers, letters and '.'!"
+
+#: .\main\views\user.py:167
+#, python-brace-format
+msgid "昵称 '{nickname}' 只应包含字母和汉字！"
+msgstr "Nickname '{nickname}' should only contain letters"
+
+#: .\main\views\user.py:174
+msgid "注册成功"
+msgstr "Sign up success"
+
+#: .\main\views\user.py:176
+#, python-brace-format
+msgid ""
+" {user.username} 注册成功！\n"
+"您是网站第 {user.id} 位用户。\n"
+"请登入以便我们记住您！"
+msgstr ""
+" {user.username} sign up success! \n"
+"You are the No.{user.id} user. \n"
+"Please log in to let us remember you!"
+
+#: .\main\views\user.py:176
+msgid "欢迎加入"
+msgstr "Welcome aboard"
+
+#: .\main\views\user.py:186
+msgid "修改头像成功"
+msgstr "Change head image success"
+
+#: .\main\views\user.py:197
+#, python-brace-format
+msgid "您已经以 {username} 的身份登入了，请勿重复登入"
+msgstr "You already logged in as '{username}', please do not log in again"
+
+#: .\main\views\user.py:197
+msgid "登入失败"
+msgstr "Log in failed"
+
+#: .\main\views\user.py:220
+msgid "此邮箱（{}）尚未被注册"
+msgstr "This email ({}) has not signed up"
+
+#: .\main\views\user.py:220 .\main\views\user.py:247
+msgid "找回用户名"
+msgstr "Forget username"
+
+#: .\main\views\user.py:229
+#, python-brace-format
+msgid ""
+"\n"
+"            有人正在通过邮件的方式找回您的用户名。\n"
+"            <hr/>\n"
+"            他输入的邮件是：<pre>{eml}</pre>\n"
+"            他得到的用户名是：<pre>{un}</pre>\n"
+"            <hr/>\n"
+"            若此操作不是您所为，请联系管理员 @系统消息\n"
+"        "
+msgstr ""
+"\n"
+"            Someone is retrieving your username by email.\n"
+"            <hr/>\n"
+"            Requested email：<pre>{eml}</pre>\n"
+"            Retrieved username：<pre>{un}</pre>\n"
+"            <hr/>\n"
+"            If this operation is not launched by you, please contact "
+"administrator @系统消息\n"
+"        "
+
+#: .\main\views\user.py:237
+msgid "有人正在通过邮件的方式找回您的用户名"
+msgstr "Someone is retrieving your username by email"
+
+#: .\main\views\user.py:239
+msgid ""
+"\n"
+"            出于安全考虑，您的用户名未全部显示，\n"
+"            每个 <code>*</code> 代表一个字符。\n"
+"            <hr/>\n"
+"            你的用户名是：<pre>{}</pre>\n"
+"            <hr/>\n"
+"            一封包含此次操作信息的站内信已经发送给您。\n"
+"        "
+msgstr ""
+"\n"
+"            For security concern, your username will not reveal fully. \n"
+"            Every <code>*</code> represents 1 charactor. \n"
+"            <hr/>\n"
+"            Your username is: <pre>{}</pre>\n"
+"            <hr/>\n"
+"            A message indicates this operation is sent to you.\n"
+"        "
+
+#: .\main\views\user.py:259
+msgid "登入失败：用户名不能为空"
+msgstr "Log in failed. Username cannot be empty"
+
+#: .\main\views\user.py:262
+msgid "登入失败：答案不能为空"
+msgstr "Log in failed. Answer cannot be empty"
+
+#: .\main\views\user.py:267 .\main\views\user.py:313
+msgid "登入失败：找不到用户名为 {} 的用户"
+msgstr "Log in failed. Cannot find user with username {}"
+
+#: .\main\views\user.py:270
+msgid "登入失败：您已被禁止登入，请联系管理员"
+msgstr ""
+"Log in failed. You are forbidden to log in. Please contact administrator"
+
+#: .\main\views\user.py:275
+msgid "登入失败：用户名与答案不匹配"
+msgstr "Log in failed. Incorrect username / password combination"
+
+#: .\main\views\user.py:281
+msgid "登入成功"
+msgstr "Log in success"
+
+#: .\main\views\user.py:289
+msgid ""
+"\n"
+"        欢迎您归来，开始您的网站之旅吧！<br/>\n"
+"        <li>访问 <a href='/progress/list'>我的进度</a> 查看进度列表</li>\n"
+"        <li>访问 <a href='/user/profile'>我的账号信息</a> 查看您的活跃度、进"
+"度统计</li>\n"
+"        <li>访问 <a href='/chat/conversation?mode=quicknote'>临时笔记</a> 随"
+"手记录您的想法</li>\n"
+"        <li>遇到问题或想 #提建议 ，请发消息给 @系统消息 ！</li>\n"
+"    "
+msgstr ""
+"\n"
+"        Welcome back. Start your surfing now.<br/>\n"
+"        <li>Visit <a href='/progress/list'>MyProgress</a> for Progress List</"
+"li>\n"
+"        <li>Visit <a href='/user/profile'>My Profile</a> for your "
+"activities, Progress Statistics</li>\n"
+"        <li>visit <a href='/chat/conversation?mode=quicknote'>TempNote</a> "
+"Write down your ideas anytime</li>\n"
+"        <li>If you have any problems or #suggest , please send a message to @"
+"系统消息 !</li>\n"
+"    "
+
+#: .\main\views\user.py:322
+msgid "用户未找到：{}"
+msgstr "Username not found: {}"
+
+#: .\main\views\user.py:373
+msgid "昵称不能为空"
+msgstr "Nickname cannot be empty"
+
+#: .\main\views\user.py:383
+msgid "邮箱不能为空"
+msgstr "Email cannot be empty"
+
+#: .\util\user.py:24
+msgid "User 参数不能为空"
+msgstr "Argument 'User' cannot be empty"
+
+#: .\util\user.py:26
+msgid "Answer 参数不能为空"
+msgstr "Argument 'Answer' cannot be empty"
+
+#: .\util\user.py:80
+msgid ""
+"此页面需要用户信息，\n"
+"请登入/注册后再访问。"
+msgstr ""
+"This page required user infomation, \n"
+"Please login/signup first."
+
+#: .\util\user.py:102
+#, python-brace-format
+msgid "您不具有 {category} 权限"
+msgstr "You don't have {category} permission"
