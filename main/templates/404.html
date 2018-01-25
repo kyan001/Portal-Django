@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load i18n %}
+
 {% block userbar %}{% endblock userbar %}
 {% block title %}404{% endblock title %}
 
@@ -22,15 +24,17 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        你来到了一个不存在的地方
+                        {% trans "你来到了一个不存在的地方" %}
                     </h3>
                 </div>
                 <div class="panel-body">
-                    {{ exception|default:'你要访问的页面不存在' }}
+                    {% trans "你要访问的页面不存在" as t_notexist %}
+                    {{ exception|default:t_notexist }}
                 </div>
                 <div class="panel-footer text-right">
                     <a href="javascript:history.back()" class="btn btn-primary">
-                        点此回到上个页面
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                        {% trans "点此回到上个页面" %}
                     </a>
                 </div>
             </div>

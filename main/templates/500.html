@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load i18n %}
+
 {% block userbar %}{% endblock userbar %}
 {% block title %}500{% endblock title %}
 
@@ -22,15 +24,16 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        服务器出现了一个小问题
+                        {% trans "服务器出现了一个小问题" %}
                     </h3>
                 </div>
                 <div class="panel-body">
-                    服务器内部错误，请联系服务器管理员
+                    {% trans "服务器内部错误，请联系服务器管理员" %}
                 </div>
                 <div class="panel-footer text-right">
                     <a href="javascript:history.back()" class="btn btn-primary">
-                        点此回到上个页面
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                        {% trans "点此回到上个页面" %}
                     </a>
                 </div>
             </div>

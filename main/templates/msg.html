@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% load i18n %}
+
 {% block userbar %}{% endblock userbar %}
-{% block title %}提示信息{% endblock title %}
+{% block title %}{% trans "提示信息" %}{% endblock title %}
 
 {% block css %}
     <style>
@@ -22,10 +24,11 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-info-sign"></span>
                         {% if title %}
                             {{title}}
                         {% else %}
-                            提示信息：
+                            {% trans "提示信息" %}{% trans "：" %}
                         {% endif %}
                     </h3>
                 </div>
@@ -38,12 +41,14 @@
                             {% if button %}
                                 {{ button }}
                             {% else %}
-                                点此跳转至 {{url}}
+                                <span class="glyphicon glyphicon-arrow-right"></span>
+                                {% trans "点此跳转至" %} {{url}}
                             {% endif %}
                         </a>
                     {% else %}
                         <a href="javascript:history.back()" class="btn btn-primary">
-                            点此回到上个页面
+                            <span class="glyphicon glyphicon-arrow-left"></span>
+                            {% trans "点此回到上个页面" %}
                         </a>
                     {% endif %}
                 </div>
