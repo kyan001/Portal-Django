@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-25 20:10+0800\n"
+"POT-Creation-Date: 2018-01-25 21:30+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -159,10 +159,8 @@ msgid "邮箱不能为空"
 msgstr "Email cannot be empty"
 
 #: main/templates/user/profile.html:55
-#, fuzzy
-#| msgid "修改头像成功"
 msgid "修改头像"
-msgstr "Change head image success"
+msgstr "Change head image"
 
 #: main/templates/user/profile.html:71 main/templates/user/public.html:62
 #: main/templates/userbar.html:67
@@ -171,7 +169,7 @@ msgstr "Profile"
 
 #: main/templates/user/profile.html:74
 msgid "注册信息"
-msgstr ""
+msgstr "Account Info"
 
 #: main/templates/user/profile.html:77 main/templates/user/public.html:65
 msgid "进度信息"
@@ -193,7 +191,7 @@ msgstr "Nickname"
 
 #: main/templates/user/profile.html:96
 msgid "我的公开页，任何人都可以查看"
-msgstr ""
+msgstr "My Public Page, anyone can visit"
 
 #: main/templates/user/profile.html:101 main/templates/user/signup.html:306
 #: main/templates/user/signup.html:329 main/templates/user/signup.html:493
@@ -207,7 +205,7 @@ msgstr "Activity Level"
 
 #: main/templates/user/profile.html:107
 msgid "根据“总活跃度”计算"
-msgstr ""
+msgstr "According to 'Total Activities'"
 
 #: main/templates/user/profile.html:115 main/templates/user/signup.html:327
 #: main/templates/user/signup.html:383 main/views/user.py:144
@@ -215,25 +213,21 @@ msgid "问题"
 msgstr "Question"
 
 #: main/templates/user/profile.html:119
-#, fuzzy
-#| msgid "答案"
 msgid "答案1"
-msgstr "Answer"
+msgstr "Answer 1"
 
 #: main/templates/user/profile.html:121 main/templates/user/profile.html:129
 msgid "[已加密]"
-msgstr ""
+msgstr "[ENCRYPTED]"
 
 #: main/templates/user/profile.html:123 main/templates/user/profile.html:131
 #: main/templates/user/profile.html:139
 msgid "无"
-msgstr ""
+msgstr "None"
 
 #: main/templates/user/profile.html:127
-#, fuzzy
-#| msgid "答案"
 msgid "答案2"
-msgstr "Answer"
+msgstr "Answer 2"
 
 #: main/templates/user/profile.html:135 main/templates/user/signin.html:146
 msgid "提示"
@@ -245,28 +239,28 @@ msgstr "Created"
 
 #: main/templates/user/profile.html:162
 msgid "平均花费"
-msgstr ""
+msgstr "Average Done"
 
 #: main/templates/user/profile.html:166
 msgid "平均尝试"
-msgstr ""
+msgstr "Average Before Giveup"
 
 #: main/templates/user/profile.html:170
 msgid "平均已用"
-msgstr ""
+msgstr "Average In Progress"
 
 #: main/templates/user/profile.html:174
 msgid "平均等待"
-msgstr ""
+msgstr "Average To Do"
 
 #: main/templates/user/profile.html:178
 msgid "平均待更"
-msgstr ""
+msgstr "Average Following"
 
 #: main/templates/user/profile.html:230
 #, python-format
 msgid "恭喜升级！「%(category)s」从 Lv.%(oldlv)s 升级到 Lv.%(newlv)s！"
-msgstr ""
+msgstr "Congratulations! '%(category)s' leveled up from Lv.%(oldlv)s to Lv.%(newlv)s!"
 
 #: main/templates/user/public.html:4
 msgid "的公开页"
