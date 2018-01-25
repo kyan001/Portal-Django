@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block title %}用户注册{% endblock title %}
+{% load i18n %}
+
+{% block title %}{% trans "用户注册" %}{% endblock title %}
 
 {% block theme %}
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
@@ -64,7 +66,7 @@
     function showLoading(mode){
         var ele = $('#submit-button')
         if('off'==mode){
-            ele.text('提交注册 / Submit')
+            ele.text("{% trans '提交注册' %}")
             ele.addClass('btn-success')
             ele.removeClass('btn-warning')
         } else {
@@ -77,9 +79,9 @@
     function showSubmitting(mode){
         var ele = $('#submit-button')
         if('off'==mode){
-            ele.text('提交注册 / Submit')
+            ele.text("{% trans '提交注册' %}")
         } else {
-            ele.text('提交中 / Submitting')
+            ele.text("{% trans '提交中' %}")
         }
     }
 
@@ -95,20 +97,20 @@
         switch(mode){
             case 'old':
                 $('#mode-toggle').attr('mode','old');
-                $('#mode-toggle-text').text('问答');
+                $('#mode-toggle-text').text("{% trans '问答' %}");
                 $('.oldmode').fadeIn()
                 $('.newmode').fadeOut()
-                $('input[name="question"]').val('请输入密码');
+                $('input[name="question"]').val("{% trans '请输入密码' %}");
                 $('input[name="tip"]').val('')
-                $('input[name="answer1"]').attr('placeholder','密码 / Password')
+                $('input[name="answer1"]').attr('placeholder', "{% trans '密码' %}")
                 $('input[name="answer1"]').attr('type','password')
                 break;
             case 'new':
                 $('#mode-toggle').attr('mode','new');
-                $('#mode-toggle-text').text('传统');
+                $('#mode-toggle-text').text("{% trans '传统' %}");
                 $('input[name="question"]').val('');
                 $('input[name="tip"]').val('')
-                $('input[name="answer1"]').attr('placeholder','答案 / Answer')
+                $('input[name="answer1"]').attr('placeholder', "{% trans '答案' %}")
                 $('input[name="answer1"]').attr('type','text')
                 $('.oldmode').fadeOut()
                 $('.newmode').fadeIn()
@@ -149,9 +151,9 @@
         var tips = new Array()
         var stat = {}
         var pattern = {}
-        pattern["英文字母"] = /[a-zA-Z]/g
-        pattern["汉字"] = /[\u4e00-\u9fa5]/g
-        pattern["数字"] = /[0-9]/g
+        pattern["{% trans '英文字母' %}"] = /[a-zA-Z]/g
+        pattern["{% trans '汉字' %}"] = /[\u4e00-\u9fa5]/g
+        pattern["{% trans '数字' %}"] = /[0-9]/g
         /* 不常用
         pattern["空格"] = / /g
         */
@@ -164,19 +166,21 @@
         random_i = Math.floor(Math.random()*(answer.length))
         for(k in pattern){
             if(random_i < (answer.length / 2)){
-                var nth = "第 " + (random_i + 1) + ' 位'
+                var nth = "{% trans '正数第' %}" + " " + (random_i + 1) + " " + "{% trans '位字符' %}"
             } else if(random_i == answer.length) {
-                var nth = "最后一位"
+                var nth = "{% trans '最后一位字符' %}"
             } else {
-                var nth = "倒数第 " + (answer.length - random_i) + ' 位'
+                var nth = "{% trans '倒数第' %}" + " " + (answer.length - random_i) + " " + "{% trans '位字符' %}"
             }
+            var translated_k = "{% trans '“' %}" + k + "{% trans '”' %}"
+            var translated_nth = "{% trans '“' %}" + nth + "{% trans '”' %}"
             if(answer[random_i].match(pattern[k])){
-                stat['nth_has_' + k] = nth + "是" + k
+                stat['nth_has_' + k] = translated_nth + "{% trans '是' %}" + translated_k
             }
-            stat['has_' + k] = count[k] == 0 ? '不包含' + k : '包含 ' + count[k] + ' 个' + k
+            stat['has_' + k] = count[k] == 0 ? "{% trans '不包含' %}" + translated_k: "{% trans '包含' %}" + " " + count[k] + " " + "{% trans '个' %}" + translated_k
         }
-        stat['nth_is'] = nth + "是「" + answer[random_i] + "」"
-        stat['count_all'] = '一共 ' + answer.length + ' 个字符'
+        stat['nth_is'] = translated_nth + "{% trans '是' %}" + "{% trans '“' %}" + answer[random_i] + "{% trans '”' %}"
+        stat['count_all'] = "{% trans '一共' %}" + " " + answer.length + " " + "{% trans '个字符' %}"
         for(k in stat){
             tips.push(stat[k])
         }
@@ -188,8 +192,8 @@
         tip1 = tips.pop()
         tips = tips.sort(randomsort)
         tip2 = tips.pop()
-        var conjs = ['、', '并且', '且', '而且', '同时']
-        var tip = "答案中" + tip1 + conjs[Math.floor(Math.random()*conjs.length)] + tip2
+        var conjs = ["{% trans '、' %}", "{% trans '并且' %}", "{% trans '且' %}", "{% trans '而且' %}", "{% trans '同时' %}"]
+        var tip = "{% trans '答案中' %}" + "{% trans '：' %}" + tip1 + conjs[Math.floor(Math.random()*conjs.length)] + tip2
         // write tip input
         if($('#mode-toggle').attr('mode') == 'new'){  // only show in new mode
             $('input[name="tip"]').val(tip)
@@ -226,7 +230,7 @@
                     }
                     if (result.exist) {
                         $('#username-group .input-group').addClass('has-error');
-                        $.danger('用户名 “'+ $('input[name="username"]').val() +'” 已存在')
+                        $.danger("{% trans '用户名' %}" + "{% trans '“' %}" + $('input[name="username"]').val() + "{% trans '”' %}" + "{% trans '已存在' %}")
                         $('input[name="username"]').focus()
                         disableSubmit()
                     } else {
@@ -263,7 +267,7 @@
                     }
                     if (result.exist) {
                         $('#nickname-group .input-group').addClass('has-error');
-                        $.danger('昵称 “'+ $('input[name="nickname"]').val() +'” 已存在')
+                        $.danger("{% trans '昵称' %}" + "{% trans '“' %}" + $('input[name="nickname"]').val() + "{% trans '”' %}" + "{% trans '已存在' %}")
                         disableSubmit()
                     } else {
                         $('#nickname-group .input-group').addClass('has-success');
@@ -299,7 +303,7 @@
                     }
                     if (result.exist) {
                         $('#email-group .input-group').addClass('has-error');
-                        $.danger('邮箱 “'+ $('input[name="email"]').val() +'” 已存在')
+                        $.danger("{% trans '邮箱' %}" + "{% trans '“' %}" + $('input[name="email"]').val() + "{% trans '”' %}" + "{% trans '已存在' %}")
                         disableSubmit()
                     } else {
                         $('#email-group .input-group').addClass('has-success');
@@ -313,16 +317,16 @@
         function checkIsEmpty(selector, word){
             if( $(selector).find('input').val() == '' ){
                 $(selector).addClass('has-error');
-                $.danger(word + '不能为空')
+                $.danger(word + "{% trans '不能为空' %}")
                 return false;
             }
             return true;
         }
         var checklist = {
-            '#username-group .input-group': '用户名',
-            '#question-group .input-group': '问题',
-            '#answer1-group .input-group': '答案 / 密码',
-            '#email-group .input-group': '邮箱',
+            '#username-group .input-group': "{% trans '用户名' %}",
+            '#question-group .input-group': "{% trans '问题' %}",
+            '#answer1-group .input-group': "{% trans '密码或答案' %}",
+            '#email-group .input-group': "{% trans '邮箱' %}",
         }
         for (var k in checklist) {
             if (checkIsEmpty(k, checklist[k])){
@@ -339,8 +343,9 @@
 {% endblock js %}
 
 {% block nav-btn %}
-<div id="mode-toggle" class="btn btn-warning btn-sm" mode="old" onclick='modeToggle()'>
-    <span class="glyphicon glyphicon-retweet"></span> 切换到「<b id="mode-toggle-text">问答</b>」模式
+<div id="mode-toggle" class="btn btn-warning btn-sm" mode="old" onclick="modeToggle()">
+    <span class="glyphicon glyphicon-retweet"></span>
+    {% trans "切换到" %}「<b id="mode-toggle-text">{% trans "问答" %}</b>」{% trans "模式" %}
 </div>
 {% endblock nav-btn %}
 
@@ -350,176 +355,176 @@
         <div id="form-div" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-xs-12">
             <form id="the-form" action="/user/newuser/" method="post" autocomplete="off">
                 {% csrf_token %}
-                <div id='username-group'>
+                <div id="username-group">
                     <div class="input-group">
                         <span class="input-group-addon text-muted">
-                            <span class='glyphicon glyphicon-user' title='必填，只能包含“英文字母”、“数字”和“英文句号' data-toggle="tooltip" data-placement="top"></span>
+                            <span class="glyphicon glyphicon-user" title="{% trans '必填' %}{% trans '，' %}{% trans '只能包含“英文字母”、“数字”和“英文句号”' %}" data-toggle="tooltip" data-placement="top"></span>
                         </span>
-                        <input type="text" name="username" class="form-control needverify" placeholder="用户名 / Username" autofocus="autofocus" onblur='validateUsername()'>
+                        <input type="text" name="username" class="form-control needverify" placeholder="{% trans '用户名' %}" autofocus="autofocus" onblur="validateUsername()">
                         <span class="input-group-addon tips hidden-xs"
-                            title="用户名 / Username <span class='label label-primary'>必填</span>"
-                            data-content="<li class='text-primary'>登入时的凭证之一</li>
-                            <li class='text-danger'>只能包含“英文字母”、“数字”和“英文句号”</li>
-                            <li class='text-danger'>不能同其他人的用户名重复。</li>">
-                            <span class='glyphicon glyphicon-question-sign'></span>
+                            title="{% trans '用户名' %} <span class='label label-primary'>{% trans '必填' %}</span>"
+                            data-content="<li class='text-primary'>{% trans '登入时的凭证之一' %}</li>
+                            <li class='text-danger'>{% trans '只能包含“英文字母”、“数字”和“英文句号”' %}</li>
+                            <li class='text-danger'>{% trans '不能同其他人的用户名重复' %}</li>">
+                            <span class="glyphicon glyphicon-question-sign"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
-                        <li><ins>登入时的凭证之一</ins></li>
-                        <li>只能包含“英文字母”、“数字”和“英文句号”</li>
-                        <li>不能同其他人的用户名重复。</li>
+                        <li><ins>{% trans "登入时的凭证之一" %}</ins></li>
+                        <li>{% trans "只能包含“英文字母”、“数字”和“英文句号”" %}</li>
+                        <li>{% trans "不能同其他人的用户名重复" %}</li>
                     </span>
                 </div>
                 <div id="question-group">
                     <div class="input-group newmode">
                         <span class="input-group-addon text-muted">
-                            <span class='glyphicon glyphicon-comment'></span>
+                            <span class="glyphicon glyphicon-comment"></span>
                         </span>
-                        <input type="text" name="question" class="form-control" placeholder="问题 / Question">
+                        <input type="text" name="question" class="form-control" placeholder="{% trans '问题' %}">
                         <span class="input-group-addon tips hidden-xs"
-                            title="问题 / Question <span class='label label-primary'>必填</span>"
-                            data-content="<li class='text-primary'>登入时会问您的问题</li>
-                            <li class='text-success'>我们用 “问题+回答” 来代替传统密码。</li>
-                            <li>一些常用的问题包括：</li>
+                            title="问题 / Question <span class='label label-primary'>{% trans '必填' %}</span>"
+                            data-content="<li class='text-primary'>{% trans '登入时会问您的问题' %}</li>
+                            <li class='text-success'>{% trans '我们用 “问题+回答” 来代替传统密码' %}</li>
+                            <li>{% trans '一些常用的问题包括：' %}</li>
                             <ul>
-                            <li>“最常用的8位密码”</li>
-                            <li>“最想获得的超能力”</li>
-                            <li>“家里保险柜的数量”</li>
+                            <li>{% trans '“最常用的8位密码”' %}</li>
+                            <li>{% trans '“最想获得的超能力”' %}</li>
+                            <li>{% trans '“家里保险柜的数量”' %}</li>
                             </ul>">
-                            <span class='glyphicon glyphicon-question-sign'></span>
+                            <span class="glyphicon glyphicon-question-sign"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
-                        <li><ins>登入时会问您的问题</ins></li>
-                        <li>在这里写下问题，在下面写下答案</li>
-                        <li>尽量不要包含空格或标点符号</li>
+                        <li><ins>{% trans "登入时会问您的问题" %}</ins></li>
+                        <li>{% trans "在这里写下问题，在下面写下答案" %}</li>
+                        <li>{% trans "尽量不要包含空格或标点符号" %}</li>
                     </span>
                 </div>
                 <div id="answer1-group">
                     <div class="input-group">
                         <span class="input-group-addon text-muted">
-                            <span class='glyphicon glyphicon-credit-card' title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="top"></span>
+                            <span class="glyphicon glyphicon-credit-card" title="{% trans '必填' %}{% trans '，' %}{% trans '回答 “答案” 或 “备选答案” 均可正常登入' %}" data-toggle="tooltip" data-placement="top"></span>
                         </span>
-                        <input type="text" name="answer1" class="form-control" placeholder="答案 / Answer" onchange='generateTip()'>
+                        <input type="text" name="answer1" class="form-control" placeholder="{% trans '密码' %}" onchange="generateTip()">
                         <span class="input-group-addon tips hidden-xs"
-                            title="答案 / 密码 <span class='label label-primary'>必填</span>"
-                            data-content="<li>问答模式时：</li>
+                            title="{% trans '答案' %} / {% trans '密码' %} <span class='label label-primary'>{% trans '必填' %}</span>"
+                            data-content="<li>{% trans '问答模式时：</li>
                             <ul>
-                            <li class='text-primary'>登入时您需要回答的内容</li>
-                            <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登入</li>
-                            <li class='text-success'>一般应与上面的问题相对应。</li>
-                            <li class='text-success'>中英文、标点、数字均可</li>
-                            <li class='text-warning'>任何人（包括管理员）均无法查看您的回答。</li>
+                            <li class='text-primary'>{% trans '登入时您需要回答的内容' %}</li>
+                            <li class='text-danger'>{% trans '回答 “答案” 或 “备选答案” 均可正常登入' %}</li>
+                            <li class='text-success'>{% trans '一般应与上面的问题相对应' %}</li>
+                            <li class='text-success'>{% trans '中英文、标点、数字均可' %}</li>
+                            <li class='text-warning'>{% trans '任何人（包括管理员）均无法查看您的回答' %}</li>
                             </ul>
-                            <li>传统模式时：</li>
+                            <li>{% trans '传统模式时：' %}</li>
                             <ul>
-                            <li class='text-danger'>请输入密码，长度、字符不限</li>
+                            <li class='text-danger'>{% trans '请输入密码' %}{% trans '，' %}{% trans '长度、字符不限' %}</li>
                             </ul>
                             ">
-                            <span class='glyphicon glyphicon-question-sign'></span>
+                            <span class="glyphicon glyphicon-question-sign"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
-                        <li><ins>登入时您需要回答的内容</ins></li>
-                        <li>应与上面的问题相对应</li>
-                        <li>中英文、标点、数字均可</li>
-                        <li><em>任何人（包括管理员）均无法查看您的回答。</em></li>
+                        <li><ins>{% trans "登入时您需要回答的内容" %}</ins></li>
+                        <li>{% trans "一般应与上面的问题相对应" %}</li>
+                        <li>{% trans "中英文、标点、数字均可" %}</li>
+                        <li><em>{% trans "任何人（包括管理员）均无法查看您的回答" %}</em></li>
                     </span>
                 </div>
                 <div id="answer2-group">
                     <div class="input-group newmode">
                         <span class="input-group-addon text-muted">
-                            <span class='glyphicon glyphicon-credit-card' title='必填，回答 “答案” 或 “备选答案” 均可正常登入' data-toggle="tooltip" data-placement="top"></span>
+                            <span class="glyphicon glyphicon-credit-card" title="{% trans '必填' %}{% trans '，' %}{% trans '回答 “答案” 或 “备选答案” 均可正常登入' %}" data-toggle="tooltip" data-placement="top"></span>
                         </span>
-                        <input type="text" name="answer2" class="form-control" placeholder="备选答案 / Alternative Answer">
+                        <input type="text" name="answer2" class="form-control" placeholder="{% trans '备选答案' %}">
                         <span class="input-group-addon tips hidden-xs"
-                            title="备选答案 / Alternative Answer <span class='label label-success'>选填</span>"
-                            data-content="<li class='text-primary'>同样作为正常答案生效</li>
-                            <li class='text-danger'>回答 “答案” 或 “备选答案” 均可正常登入</li>
-                            <li>常见的 “答案” 与 “备选答案” 的组合有：</li>
+                            title="{% trans '备选答案' %} <span class='label label-success{% trans '选填' %}</span>"
+                            data-content="<li class='text-primary'>{% trans '同样作为正常答案生效' %}</li>
+                            <li class='text-danger'>{% trans '回答 “答案” 或 “备选答案” 均可正常登入' %}</li>
+                            <li>{% trans '常见的 “答案” 与 “备选答案” 的组合有：' %}</li>
                             <ul>
-                            <li><span style='color:brown'>中文答案 + 英文答案</span>
-                            <div>（北京 vs. beijing）</div></li>
-                            <li><span style='color:brown'>容易混淆的答案</span>
-                            <div>（8月15日 vs. 08-15）</div></li>
-                            <li><span style='color:brown'>自己也拿不准的答案</span>
-                            <div>（炸鸡 vs. 烧烤）</div></li>
+                            <li><span style='color:brown'>{% trans '中文答案 + 英文答案' %}</span>
+                            <div>{% trans '（北京 vs. beijing）' %}</div></li>
+                            <li><span style='color:brown'>{% trans '容易混淆的答案' %}</span>
+                            <div>{% trans '（8月15日 vs. 08-15）' %}</div></li>
+                            <li><span style='color:brown'>{% trans '自己也拿不准的答案' %}</span>
+                            <div>{% trans '（炸鸡 vs. 烧烤）' %}</div></li>
                             </ul>
                             ">
-                            <span class='glyphicon glyphicon-question-sign'></span>
+                            <span class="glyphicon glyphicon-question-sign"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
-                        <li><ins>同样作为正常答案生效</ins></li>
-                        <li>回答 “答案” 或 “备选答案” 均可正常登入</li>
-                        <li>不需要与 “答案” 相同</li>
+                        <li><ins>{% trans "同样作为正常答案生效" %}</ins></li>
+                        <li>{% trans "回答 “答案” 或 “备选答案” 均可正常登入" %}</li>
+                        <li>{% trans "不需要与 “答案” 相同" %}</li>
                     </span>
                 </div>
                 <div id="tip-group">
                     <div class="input-group newmode">
                         <span class="input-group-addon text-muted">
-                            <span class='glyphicon glyphicon-magnet'></span>
+                            <span class="glyphicon glyphicon-magnet"></span>
                         </span>
-                        <input type="text" name="tip" class="form-control" placeholder="回答提示 / Tip">
-                        <span class="input-group-addon btn btn-default" onclick='generateTip()' title='生成提示'>
-                            <span class='glyphicon glyphicon-refresh'></span>
+                        <input type="text" name="tip" class="form-control" placeholder="{% trans '答案提示' %}">
+                        <span class="input-group-addon btn btn-default" onclick="generateTip()" title="{% trans '生成提示' %}">
+                            <span class="glyphicon glyphicon-refresh"></span>
                         </span>
                         <span class="input-group-addon tips hidden-xs"
-                            title="回答提示 / Tip <span class='label label-success'>选填</span>"
-                            data-content="<li class='text-primary'>登入时，问题答案的提示信息</li>
-                            <li class='text-success'>在登入界面您需要时自动显示</li>
-                            <li class='text-warning'>请不要将答案直接放在这里</li>
+                            title="{% trans '答案提示' %}<span class='label label-success'>{% trans '选填' %}</span>"
+                            data-content="<li class='text-primary'>{% trans '登入时，问题答案的提示信息' %}</li>
+                            <li class='text-success'>{% trans '在登入界面您需要时自动显示' %}</li>
+                            <li class='text-warning'>{% trans '请不要将答案直接放在这里' %}</li>
                             ">
-                            <span class='glyphicon glyphicon-question-sign'></span>
+                            <span class="glyphicon glyphicon-question-sign"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
-                        <li><ins>登入时，问题答案的提示信息</ins></li>
-                        <li>在登入界面您需要时自动显示</li>
-                        <li>请不要将答案直接放在这里</li>
+                        <li><ins>{% trans "登入时，问题答案的提示信息" %}</ins></li>
+                        <li>{% trans "在登入界面您需要时自动显示" %}</li>
+                        <li>{% trans "请不要将答案直接放在这里" %}</li>
                     </span>
                 </div>
                 <hr/>
                 <div id="email-group">
                     <div class="input-group">
                         <span class="input-group-addon text-muted">
-                            <span class='glyphicon glyphicon-envelope'></span>
+                            <span class="glyphicon glyphicon-envelope"></span>
                         </span>
-                        <input type="email" name="email" class="form-control needverify" placeholder="邮箱 / Email" onblur='validateEmail()'>
+                        <input type="email" name="email" class="form-control needverify" placeholder="{% trans '邮箱' %}" onblur="validateEmail()">
                         <span class="input-group-addon tips hidden-xs"
-                            title="邮箱 / Email <span class='label label-primary'>必填</span>"
-                            data-content="<li class='text-primary'>用于找回密码</li>
-                            <li class='text-danger'>邮箱验证通过后方可生效</li>
-                            <li class='text-danger'>邮箱验证生效前，无法找回密码</li>">
-                            <span class='glyphicon glyphicon-question-sign'></span>
+                            title="{% trans '邮箱' %} <span class='label label-primary'>{% trans '必填' %}</span>"
+                            data-content="<li class='text-primary'>{% trans '用于找回密码' %}</li>
+                            <li class='text-danger'>{% trans '邮箱验证通过后方可生效' %}</li>
+                            <li class='text-danger'>{% trans '邮箱验证生效前，无法找回密码' %}</li>">
+                            <span class="glyphicon glyphicon-question-sign"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
-                        <li><ins>用于找回密码</ins></li>
-                        <li><em>邮箱验证通过后方可生效</em></li>
-                        <li><em>邮箱验证生效前，无法找回密码</em></li>
+                        <li><ins>{% trans "用于找回密码" %}</ins></li>
+                        <li><em>{% trans "邮箱验证通过后方可生效" %}</em></li>
+                        <li><em>{% trans "邮箱验证生效前，无法找回密码" %}</em></li>
                     </span>
                 </div>
                 <div id="nickname-group">
                     <div class="input-group">
                         <span class="input-group-addon text-muted">
-                            <span class='glyphicon glyphicon-music'></span>
+                            <span class="glyphicon glyphicon-music"></span>
                         </span>
-                        <input type="text" name="nickname" class="form-control needverify" placeholder="昵称 / Nickname" onblur='validateNickname()'>
+                        <input type="text" name="nickname" class="form-control needverify" placeholder="{% trans '昵称' %}" onblur="validateNickname()">
                         <span class="input-group-addon tips hidden-xs"
-                        title="昵称 / Nickname <span class='label label-success'>选填</span>"
-                        data-content="<li class='text-primary'>你希望他人看到的名称</li>
-                        <li class='text-danger'>昵称只能是 “汉字” 和 “字母”</li>
-                        <li class='text-danger'>昵称不可与他人重复</li>
-                        <li>昵称为空时，我们将自动帮您生成</li>">
-                        <span class='glyphicon glyphicon-question-sign'></span>
+                        title="{% trans '昵称' %} <span class='label label-success'>{% trans '选填' %}</span>"
+                        data-content="<li class='text-primary'>{% trans '你希望他人看到的名称' %}</li>
+                        <li class='text-danger'>{% trans '昵称只能是 “汉字” 和 “字母”' %}</li>
+                        <li class='text-danger'>{% trans '昵称不可与他人重复' %}</li>
+                        <li>{% trans '昵称为空时，我们将自动帮您生成' %}</li>">
+                        <span class="glyphicon glyphicon-question-sign"></span>
                     </span>
                 </div>
                 <span class="xs-tips">
-                    <li><ins>你希望他人看到的名称</ins></li>
-                    <li>昵称只能是 “汉字” 和 “字母”</li>
-                    <li>昵称不可与他人重复</li>
-                    <li><em>昵称为空时，我们将自动帮您生成</em></li>
+                    <li><ins>{% trans "你希望他人看到的名称" %}</ins></li>
+                    <li>{% trans "昵称只能是 “汉字” 和 “字母”" %}</li>
+                    <li>{% trans "昵称不可与他人重复" %}</li>
+                    <li><em>{% trans "昵称为空时，我们将自动帮您生成" %}</em></li>
                 </span>
             </div>
                 {% if redirect %}
@@ -527,7 +532,7 @@
                 {% endif %}
             </form>
             <button id="submit-button" class="btn btn-success btn-block" onclick="submitForm()">
-                提交注册 / Submit
+                {% trans "提交注册" %}
             </button>
         </div>
     </div>

@@ -3,7 +3,7 @@ from functools import wraps
 
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.utils.decorators import available_attrs
+from django.utils.translation import gettext as _
 
 from main.models import User
 import util.ctrl
@@ -19,11 +19,11 @@ def getCurrentUser(request):
 
 
 def checkAnswer(user, answer_raw):
-    '''传入用户对象，返回答案对不对'''
+    """传入用户对象，返回答案对不对"""
     if not user:
-        raise Exception("user 不能为空")
+        raise Exception(_("User 参数不能为空"))
     if not answer_raw:
-        raise Exception("answer 不能为空")
+        raise Exception(_("Answer 参数不能为空"))
     answer_md5 = util.ctrl.salty(answer_raw)
     return (user.answer1 == answer_md5) or (user.answer2 == answer_md5)
 
@@ -52,7 +52,7 @@ def addCookieLogin(response, user, answer_raw):
 
 
 def getCookieLogin(request):
-    '''将 cookie 中存的 user 信息存入 session 并返回'''
+    """将 cookie 中存的 user 信息存入 session 并返回"""
     user_id = request.COOKIES.get('user_id')
     user_answer = request.COOKIES.get('user_answer')
     if not user_id or not user_answer:
@@ -65,7 +65,7 @@ def getCookieLogin(request):
 
 
 def getRandomName():
-    '''生成用户昵称'''
+    """生成用户昵称"""
     shengmu = ['a', 'i', 'u', 'e', 'o']
     yunmu = ['s', 'k', 'm', 'n', 'r', 'g', 'h', 'p', 'b', 'z', 't', 'd']
     nickname = random.choice(yunmu).upper() + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu)
@@ -77,7 +77,7 @@ def getRandomName():
 
 def loginToContinue(request):
     """Show a message, goto login page, and then go back to current page"""
-    messages.error(request, '此页面需要用户信息，\n请登入/注册后再访问。')
+    messages.error(request, _('此页面需要用户信息，\n请登入/注册后再访问。'))
     _from = request.get_full_path()
     return redirect('/user/signin?next={}'.format(_from))
 
@@ -99,6 +99,6 @@ def superuser_required(func):
     def wrapper(request, *args, **kwargs):
         user = getCurrentUser(request)
         if not user.getUserpermission('superuser'):
-            return util.ctrl.infoMsg("您不具有 {category} 权限".format(category='superuser'))
+            return util.ctrl.infoMsg(_("您不具有 {category} 权限").format(category='superuser'))
         return func(request, *args, **kwargs)
     return wrapper
