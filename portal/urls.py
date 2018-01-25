@@ -1,4 +1,5 @@
 from django.conf.urls import include, url
+from django.urls import path
 from django.contrib import admin
 import main.views.index
 import main.views.user
@@ -16,6 +17,8 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', admin.site.urls),
+    # I18N
+    path('i18n/', include('django.conf.urls.i18n')),
     # INDEX
     url(r'^$', main.views.index.index, name='index'),
     url(r'^index/settheme$', main.views.index.settheme),

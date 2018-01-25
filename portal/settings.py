@@ -49,6 +49,7 @@ INSTALLED_APPS = (
 
 MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -124,7 +125,7 @@ else:
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -144,6 +145,14 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 MEDIA_URL = '/static/media/'
+
+# i18n
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
+LANGUAGES = (
+    ('zh-hans', 'Chinese'),
+    ('en', 'English'),
+    ('ja', 'Japanese'),
+)
 
 # MESSAGE MIDDLEWARE CONFIG
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
