@@ -1,22 +1,23 @@
 {% load parse_msg_content %}
+{% load i18n %}
 
-<div class="panel panel-default {% if not chat.isread %}unread{% endif %} chat-record ani-veryfast hover-shadow" chatid="{{chat.id}}" {% if chat.receiverid == cuser.id %}onclick="markread(this)"{% endif %}>
+<div class="panel panel-default {% if not chat.isread %}unread{% endif %} chat-record ani-fast hover-shadow" chatid="{{ chat.id }}" {% if chat.receiverid == cuser.id %}onclick="markread(this)"{% endif %}>
     <div class="panel-heading ani-veryfast" data-toggle="collapse" data-target="#chat-{{chat.id}}" data-parent="{{ parent }}">
-        {% include 'chat/chater.html' with sender=chat.sender receiver=chat.receiver %}
+        {% include "chat/chater.html" with sender=chat.sender receiver=chat.receiver %}
         <span>:</span>
         {% if chat.title %}
             {{ chat.title|striptags }}
         {% else %}
             {{ chat.content|striptags|truncatechars:12 }}
         {% endif %}
-        <div class="pull-right text-muted hidden-xs">{{ chat.created|date:'Y-m-d H:i' }}</div>
+        <div class="pull-right text-muted hidden-xs">{{ chat.created|date:"Y-m-d H:i" }}</div>
     </div>
     <div id="chat-{{chat.id}}" class="panel-collapse collapse {% if conversation %}in{% endif %}" role="tabpanel">
         <div class="panel-body">
-            <div class="text-muted visible-xs-block">{{ chat.created|date:'Y-m-d H:i' }}</div>
-            <div class='chat-content pull-left'>
-                {% if chat.sender.username == 'syschat' %}
-                    <p>{{ chat.content|highlightlink:'sys'|safe }}</p>
+            <div class="text-muted visible-xs-block">{{ chat.created|date:"Y-m-d H:i" }}</div>
+            <div class="chat-content pull-left">
+                {% if chat.sender.username == "syschat" %}
+                    <p>{{ chat.content|highlightlink:"sys"|safe }}</p>
                 {% else %}
                     <p>{{ chat.content|force_escape|highlightlink|safe }}</p>
                 {% endif %}

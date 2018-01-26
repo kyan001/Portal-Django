@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-26 20:58+0800\n"
+"POT-Creation-Date: 2018-01-26 23:41+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -24,44 +24,44 @@ msgid "您查找的 {t} 并不存在。（查询参数 {a} {k}）"
 msgstr ""
 "The {t} you are looking for does not exist. (Request arguments {a} {k})"
 
-#: main/models.py:187
+#: main/models.py:190
 msgid "进度活跃度"
 msgstr "Progress Activity"
 
-#: main/models.py:188
+#: main/models.py:191
 msgid "用户活跃度"
 msgstr "User Activity"
 
-#: main/models.py:189
+#: main/models.py:192
 msgid "消息活跃度"
 msgstr "Chat Activity"
 
-#: main/models.py:190
+#: main/models.py:193
 msgid "错误类别"
 msgstr "Error Category"
 
-#: main/models.py:319 main/templates/user/profile.html:153
+#: main/models.py:322 main/templates/user/profile.html:153
 msgid "进行中"
 msgstr "In Progress"
 
-#: main/models.py:320 main/templates/user/profile.html:155
+#: main/models.py:323 main/templates/user/profile.html:155
 msgid "追剧中"
 msgstr "Following"
 
-#: main/models.py:321 main/templates/user/profile.html:154
+#: main/models.py:324 main/templates/user/profile.html:154
 msgid "待阅读"
 msgstr "To Do"
 
-#: main/models.py:322 main/templates/user/profile.html:150
+#: main/models.py:325 main/templates/user/profile.html:150
 #: main/templates/user/public.html:97
 msgid "出错"
 msgstr "Error"
 
-#: main/models.py:325 main/templates/user/profile.html:151
+#: main/models.py:328 main/templates/user/profile.html:151
 msgid "已完成"
 msgstr "Done"
 
-#: main/models.py:326 main/templates/user/profile.html:152
+#: main/models.py:329 main/templates/user/profile.html:152
 msgid "冻结中"
 msgstr "Give Up"
 
@@ -100,8 +100,8 @@ msgstr "Designer"
 
 #: main/templates/badge/detail.html:42 main/templates/badge/detail.html:50
 #: main/templates/badge/detail.html:54 main/templates/badge/list.html:56
-#: main/templates/badge/list.html:60 main/templates/msg.html:31
-#: main/templates/user/forgetusername.html:42
+#: main/templates/badge/list.html:60 main/templates/chat/conversation.html:4
+#: main/templates/msg.html:31 main/templates/user/forgetusername.html:42
 #: main/templates/user/profile.html:85 main/templates/user/profile.html:89
 #: main/templates/user/profile.html:93 main/templates/user/profile.html:101
 #: main/templates/user/profile.html:105 main/templates/user/profile.html:115
@@ -127,28 +127,114 @@ msgstr "Number of Owners"
 msgid "徽章列表"
 msgstr "Badge List"
 
-#: main/templates/badge/list.html:22 main/templates/user/exphistory.html:24
-#: main/templates/user/profile.html:44 main/templates/user/public.html:40
-#: main/templates/user/setting.html:9
+#: main/templates/badge/list.html:22 main/templates/chat/inbox.html:42
+#: main/templates/user/exphistory.html:24 main/templates/user/profile.html:44
+#: main/templates/user/public.html:40 main/templates/user/setting.html:9
 msgid "回到上一页"
 msgstr "Back"
+
+#: main/templates/chat/chater.html:12 main/templates/index/index.html:358
+#: main/templates/index/index.html:450 main/views/chat.py:26
+#: main/views/user.py:284
+msgid "临时笔记"
+msgstr "QuickNote"
+
+#: main/templates/chat/chater.html:15
+msgctxt "宾格"
+msgid "我"
+msgstr "Me"
+
+#: main/templates/chat/conversation.html:4
+msgid "对话"
+msgstr "Conversation"
+
+#: main/templates/chat/conversation.html:30
+msgid "回到收信箱"
+msgstr "Back to Inbox"
+
+#: main/templates/chat/conversation.html:44
+msgid "发送消息"
+msgstr "Send Message"
+
+#: main/templates/chat/conversation.html:46
+msgid "来自"
+msgstr "From"
+
+#: main/templates/chat/conversation.html:60
+msgid "标题（选填）"
+msgstr "Title (Optional)"
+
+#: main/templates/chat/conversation.html:68
+#: main/templates/chat/conversation.html:70
+msgid "用户昵称"
+msgstr "User Nickname"
+
+#: main/templates/chat/conversation.html:75
+msgid "发送"
+msgstr "Send"
+
+#: main/templates/chat/conversation.html:83
+msgid "消息内容"
+msgstr "Message Body"
+
+#: main/templates/chat/conversation.html:103
+msgid "你与 @{{receiver.nickname}} 还没有说过话"
+msgstr "You and @{{receiver.nickname}} have not talked yet"
+
+#: main/templates/chat/conversation.html:107
+msgid "对话的历史记录会显示在这里"
+msgstr "Conversation history will be shown here"
+
+#: main/templates/chat/conversation.html:189
+msgid "错误：用户昵称不能为空"
+msgstr "Error: User nickname cannot be empty"
+
+#: main/templates/chat/conversation.html:193
+msgid "错误：用户昵称不存在"
+msgstr "Error: User nickname does not exist"
+
+#: main/templates/chat/conversation.html:198
+msgid "错误：消息内容不能为空"
+msgstr "Error: Message body cannot be empty"
+
+#: main/templates/chat/inbox.html:4 main/templates/chat/inbox.html:81
+msgid "收信箱"
+msgstr "Inbox"
+
+#: main/templates/chat/inbox.html:49
+msgid "发新消息"
+msgstr "Send Message"
+
+#: main/templates/chat/inbox.html:60 main/templates/chat/inbox.html:88
+msgid "人"
+msgstr "People"
+
+#: main/templates/chat/inbox.html:72 main/templates/chat/inbox.html:100
+#: main/templates/user/profile.html:123 main/templates/user/profile.html:131
+#: main/templates/user/profile.html:139
+msgid "无"
+msgstr "None"
+
+#: main/templates/chat/inbox.html:151
+msgid "没有任何消息"
+msgstr "No Message"
+
+#: main/templates/chat/inbox.html:165
+msgid "跳到最后一页/第一页"
+msgstr "Jump to last/first page"
 
 #: main/templates/index/index.html:4
 msgid "欢迎"
 msgstr "Welcome"
 
 #: main/templates/index/index.html:351 main/templates/index/index.html:396
-#: main/templates/userbar.html:91
+#: main/templates/userbar.html:91 main/views/user.py:284
 msgid "我的进度"
 msgstr "MyProgress"
 
-#: main/templates/index/index.html:358 main/templates/index/index.html:450
-msgid "临时笔记"
-msgstr "TempNote"
-
 #: main/templates/index/index.html:364 main/templates/index/index.html:492
 #: main/templates/userbar.html:97
-msgid "聊天机器人"
+msgid "智械聊天"
 msgstr "RoboTalk"
 
 #: main/templates/index/index.html:375
@@ -317,7 +403,7 @@ msgid "修改头像"
 msgstr "Change head image"
 
 #: main/templates/user/profile.html:71 main/templates/user/public.html:62
-#: main/templates/userbar.html:67
+#: main/templates/userbar.html:67 main/views/user.py:284
 msgid "个人信息"
 msgstr "Profile"
 
@@ -373,11 +459,6 @@ msgstr "Answer 1"
 #: main/templates/user/profile.html:121 main/templates/user/profile.html:129
 msgid "[已加密]"
 msgstr "[ENCRYPTED]"
-
-#: main/templates/user/profile.html:123 main/templates/user/profile.html:131
-#: main/templates/user/profile.html:139
-msgid "无"
-msgstr "None"
 
 #: main/templates/user/profile.html:127
 msgid "答案2"
@@ -906,6 +987,30 @@ msgstr "United"
 msgid "雪人"
 msgstr "Yeti"
 
+#: main/views/chat.py:24
+msgid "所有"
+msgstr "All"
+
+#: main/views/chat.py:25
+msgid "未读"
+msgstr "Unread"
+
+#: main/views/chat.py:27
+msgid "系统"
+msgstr "System"
+
+#: main/views/chat.py:28
+msgid "好友"
+msgstr "Friend"
+
+#: main/views/chat.py:29
+msgid "已发送"
+msgstr "Sent"
+
+#: main/views/chat.py:49
+msgid "查看收信箱"
+msgstr "Check Inbox"
+
 #: main/views/user.py:37
 #, python-brace-format
 msgid "请求的分类（{category}）不存在"
@@ -1070,25 +1175,27 @@ msgid "登入成功"
 msgstr "Log in success"
 
 #: main/views/user.py:278
+#, python-brace-format
 msgid ""
 "\n"
 "        欢迎您归来，开始您的网站之旅吧！<br/>\n"
-"        <li>访问 <a href='/progress/list'>我的进度</a> 查看进度列表</li>\n"
-"        <li>访问 <a href='/user/profile'>我的账号信息</a> 查看您的活跃度、进"
-"度统计</li>\n"
-"        <li>访问 <a href='/chat/conversation?mode=quicknote'>临时笔记</a> 随"
-"手记录您的想法</li>\n"
+"        <li>访问 <a href='/progress/list'>{myprogress}</a> 查看进度列表</"
+"li>\n"
+"        <li>访问 <a href='/user/profile'>{myprofile}</a> 查看您的活跃度、进度"
+"统计</li>\n"
+"        <li>访问 <a href='/chat/conversation?mode=quicknote'>{quicknote}</a> "
+"随手记录您的想法</li>\n"
 "        <li>遇到问题或想 #提建议 ，请发消息给 @系统消息 ！</li>\n"
 "    "
 msgstr ""
 "\n"
 "        Welcome back. Start your surfing now.<br/>\n"
-"        <li>Visit <a href='/progress/list'>MyProgress</a> for Progress List</"
-"li>\n"
-"        <li>Visit <a href='/user/profile'>My Profile</a> for your "
-"activities, Progress Statistics</li>\n"
-"        <li>visit <a href='/chat/conversation?mode=quicknote'>TempNote</a> "
-"Write down your ideas anytime</li>\n"
+"        <li>Visit <a href='/progress/list'>{myprogress}</a> for progress "
+"list</li>\n"
+"        <li>Visit <a href='/user/profile'>{myprofile}</a> for your "
+"activities, progress statistics</li>\n"
+"        <li>Visit <a href='/chat/conversation?mode=quicknote'>{quicknote}</"
+"a> write down your ideas anytime</li>\n"
 "        <li>If you have any problems or #suggest , please send a message to @"
 "系统消息 !</li>\n"
 "    "
@@ -1121,6 +1228,3 @@ msgstr ""
 #, python-brace-format
 msgid "您不具有 {category} 权限"
 msgstr "You don't have {category} permission"
-
-#~ msgid "。"
-#~ msgstr ". "

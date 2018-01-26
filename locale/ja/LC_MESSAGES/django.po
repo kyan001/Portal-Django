@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-26 20:58+0800\n"
+"POT-Creation-Date: 2018-01-26 23:41+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: FULL NAME <EMILL@ADDRESS>\n"
 "Language-Team: Japanese <i18n@kyan001.com>\n"
@@ -23,44 +23,44 @@ msgstr ""
 msgid "您查找的 {t} 并不存在。（查询参数 {a} {k}）"
 msgstr ""
 
-#: main/models.py:187
+#: main/models.py:190
 msgid "进度活跃度"
 msgstr ""
 
-#: main/models.py:188
+#: main/models.py:191
 msgid "用户活跃度"
 msgstr ""
 
-#: main/models.py:189
+#: main/models.py:192
 msgid "消息活跃度"
 msgstr ""
 
-#: main/models.py:190
+#: main/models.py:193
 msgid "错误类别"
 msgstr ""
 
-#: main/models.py:319 main/templates/user/profile.html:153
+#: main/models.py:322 main/templates/user/profile.html:153
 msgid "进行中"
 msgstr ""
 
-#: main/models.py:320 main/templates/user/profile.html:155
+#: main/models.py:323 main/templates/user/profile.html:155
 msgid "追剧中"
 msgstr ""
 
-#: main/models.py:321 main/templates/user/profile.html:154
+#: main/models.py:324 main/templates/user/profile.html:154
 msgid "待阅读"
 msgstr ""
 
-#: main/models.py:322 main/templates/user/profile.html:150
+#: main/models.py:325 main/templates/user/profile.html:150
 #: main/templates/user/public.html:97
 msgid "出错"
 msgstr ""
 
-#: main/models.py:325 main/templates/user/profile.html:151
+#: main/models.py:328 main/templates/user/profile.html:151
 msgid "已完成"
 msgstr ""
 
-#: main/models.py:326 main/templates/user/profile.html:152
+#: main/models.py:329 main/templates/user/profile.html:152
 msgid "冻结中"
 msgstr ""
 
@@ -99,8 +99,8 @@ msgstr ""
 
 #: main/templates/badge/detail.html:42 main/templates/badge/detail.html:50
 #: main/templates/badge/detail.html:54 main/templates/badge/list.html:56
-#: main/templates/badge/list.html:60 main/templates/msg.html:31
-#: main/templates/user/forgetusername.html:42
+#: main/templates/badge/list.html:60 main/templates/chat/conversation.html:4
+#: main/templates/msg.html:31 main/templates/user/forgetusername.html:42
 #: main/templates/user/profile.html:85 main/templates/user/profile.html:89
 #: main/templates/user/profile.html:93 main/templates/user/profile.html:101
 #: main/templates/user/profile.html:105 main/templates/user/profile.html:115
@@ -126,10 +126,100 @@ msgstr ""
 msgid "徽章列表"
 msgstr ""
 
-#: main/templates/badge/list.html:22 main/templates/user/exphistory.html:24
-#: main/templates/user/profile.html:44 main/templates/user/public.html:40
-#: main/templates/user/setting.html:9
+#: main/templates/badge/list.html:22 main/templates/chat/inbox.html:42
+#: main/templates/user/exphistory.html:24 main/templates/user/profile.html:44
+#: main/templates/user/public.html:40 main/templates/user/setting.html:9
 msgid "回到上一页"
+msgstr ""
+
+#: main/templates/chat/chater.html:12 main/templates/index/index.html:358
+#: main/templates/index/index.html:450 main/views/chat.py:26
+#: main/views/user.py:284
+msgid "临时笔记"
+msgstr ""
+
+#: main/templates/chat/chater.html:15
+msgctxt "宾格"
+msgid "我"
+msgstr ""
+
+#: main/templates/chat/conversation.html:4
+msgid "对话"
+msgstr ""
+
+#: main/templates/chat/conversation.html:30
+msgid "回到收信箱"
+msgstr ""
+
+#: main/templates/chat/conversation.html:44
+msgid "发送消息"
+msgstr ""
+
+#: main/templates/chat/conversation.html:46
+msgid "来自"
+msgstr ""
+
+#: main/templates/chat/conversation.html:60
+msgid "标题（选填）"
+msgstr ""
+
+#: main/templates/chat/conversation.html:68
+#: main/templates/chat/conversation.html:70
+msgid "用户昵称"
+msgstr ""
+
+#: main/templates/chat/conversation.html:75
+msgid "发送"
+msgstr ""
+
+#: main/templates/chat/conversation.html:83
+msgid "消息内容"
+msgstr ""
+
+#: main/templates/chat/conversation.html:103
+msgid "你与 @{{receiver.nickname}} 还没有说过话"
+msgstr ""
+
+#: main/templates/chat/conversation.html:107
+msgid "对话的历史记录会显示在这里"
+msgstr ""
+
+#: main/templates/chat/conversation.html:189
+msgid "错误：用户昵称不能为空"
+msgstr ""
+
+#: main/templates/chat/conversation.html:193
+msgid "错误：用户昵称不存在"
+msgstr ""
+
+#: main/templates/chat/conversation.html:198
+msgid "错误：消息内容不能为空"
+msgstr ""
+
+#: main/templates/chat/inbox.html:4 main/templates/chat/inbox.html:81
+msgid "收信箱"
+msgstr ""
+
+#: main/templates/chat/inbox.html:49
+msgid "发新消息"
+msgstr ""
+
+#: main/templates/chat/inbox.html:60 main/templates/chat/inbox.html:88
+msgid "人"
+msgstr ""
+
+#: main/templates/chat/inbox.html:72 main/templates/chat/inbox.html:100
+#: main/templates/user/profile.html:123 main/templates/user/profile.html:131
+#: main/templates/user/profile.html:139
+msgid "无"
+msgstr ""
+
+#: main/templates/chat/inbox.html:151
+msgid "没有任何消息"
+msgstr ""
+
+#: main/templates/chat/inbox.html:165
+msgid "跳到最后一页/第一页"
 msgstr ""
 
 #: main/templates/index/index.html:4
@@ -137,17 +227,13 @@ msgid "欢迎"
 msgstr ""
 
 #: main/templates/index/index.html:351 main/templates/index/index.html:396
-#: main/templates/userbar.html:91
+#: main/templates/userbar.html:91 main/views/user.py:284
 msgid "我的进度"
-msgstr ""
-
-#: main/templates/index/index.html:358 main/templates/index/index.html:450
-msgid "临时笔记"
 msgstr ""
 
 #: main/templates/index/index.html:364 main/templates/index/index.html:492
 #: main/templates/userbar.html:97
-msgid "聊天机器人"
+msgid "智械聊天"
 msgstr ""
 
 #: main/templates/index/index.html:375
@@ -312,7 +398,7 @@ msgid "修改头像"
 msgstr ""
 
 #: main/templates/user/profile.html:71 main/templates/user/public.html:62
-#: main/templates/userbar.html:67
+#: main/templates/userbar.html:67 main/views/user.py:284
 msgid "个人信息"
 msgstr ""
 
@@ -367,11 +453,6 @@ msgstr ""
 
 #: main/templates/user/profile.html:121 main/templates/user/profile.html:129
 msgid "[已加密]"
-msgstr ""
-
-#: main/templates/user/profile.html:123 main/templates/user/profile.html:131
-#: main/templates/user/profile.html:139
-msgid "无"
 msgstr ""
 
 #: main/templates/user/profile.html:127
@@ -901,6 +982,30 @@ msgstr ""
 msgid "雪人"
 msgstr ""
 
+#: main/views/chat.py:24
+msgid "所有"
+msgstr ""
+
+#: main/views/chat.py:25
+msgid "未读"
+msgstr ""
+
+#: main/views/chat.py:27
+msgid "系统"
+msgstr ""
+
+#: main/views/chat.py:28
+msgid "好友"
+msgstr ""
+
+#: main/views/chat.py:29
+msgid "已发送"
+msgstr ""
+
+#: main/views/chat.py:49
+msgid "查看收信箱"
+msgstr ""
+
 #: main/views/user.py:37
 #, python-brace-format
 msgid "请求的分类（{category}）不存在"
@@ -1044,14 +1149,16 @@ msgid "登入成功"
 msgstr ""
 
 #: main/views/user.py:278
+#, python-brace-format
 msgid ""
 "\n"
 "        欢迎您归来，开始您的网站之旅吧！<br/>\n"
-"        <li>访问 <a href='/progress/list'>我的进度</a> 查看进度列表</li>\n"
-"        <li>访问 <a href='/user/profile'>我的账号信息</a> 查看您的活跃度、进"
-"度统计</li>\n"
-"        <li>访问 <a href='/chat/conversation?mode=quicknote'>临时笔记</a> 随"
-"手记录您的想法</li>\n"
+"        <li>访问 <a href='/progress/list'>{myprogress}</a> 查看进度列表</"
+"li>\n"
+"        <li>访问 <a href='/user/profile'>{myprofile}</a> 查看您的活跃度、进度"
+"统计</li>\n"
+"        <li>访问 <a href='/chat/conversation?mode=quicknote'>{quicknote}</a> "
+"随手记录您的想法</li>\n"
 "        <li>遇到问题或想 #提建议 ，请发消息给 @系统消息 ！</li>\n"
 "    "
 msgstr ""

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block title %}对话：@{{ receiver.nickname|default:'_@' }}{% endblock title %}
+{% load i18n %}
+
+{% block title %}{% trans "对话" %}{% trans "：" %}@{{ receiver.nickname|default:'?' }}{% endblock title %}
 
 {% block inhead %}
     <meta http-equiv="Cache-Control" content="no-cache" />
@@ -24,34 +26,38 @@
 
 {% block nav-btn %}
     <a href="/chat/inbox" class="btn btn-warning btn-sm">
-        <span class="glyphicon glyphicon-arrow-left"></span> 回到收信箱
+        <span class="glyphicon glyphicon-arrow-left"></span>
+        {% trans "回到收信箱" %}
     </a>
 {% endblock nav-btn %}
 
 {% block content %}
-<div class='container'>
-    <div class='row'>
-        <div class='col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12'>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
             <div class="page-header">
                 <h3>
                     {% if receiver %}
                         <a href="/user/public?nickname={{ receiver.nickname }}">@{{ receiver.nickname }}</a>
                         <small><span class="glyphicon glyphicon-transfer"></span> @{{ cuser.nickname }}</small>
                     {% else %}
-                        <span>发送消息</span>
-                        <small><span class="text-muted">From:</span> @{{ cuser.nickname }}</small>
+                        <span>{% trans "发送消息" %}</span>
+                        <small>
+                            <span class="text-muted">{% trans "来自" %}</span>
+                            @{{ cuser.nickname }}
+                        </small>
                     {% endif %}
                 </h3>
             </div>
 
-            <form id='form-send' action="/chat/send" method="post">
+            <form id="form-send" action="/chat/send" method="post">
                 {% csrf_token %}
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-7 col-sm-6 col-xs-12">
                                 <div class="form-group">
-                                    <input type="text" name='title' class="form-control" id="input-title" autocomplete="off" placeholder="标题（选填）" tabindex="3" {%if title%}value="{{title}}"{%endif%}>
+                                    <input type="text" name="title" class="form-control" id="input-title" autocomplete="off" placeholder="{% trans '标题（选填）' %}" tabindex="3" {% if title %}value="{{ title }}"{% endif %}>
                                 </div><!--.form-group-->
                             </div>
                             <div class="col-md-5 col-sm-6 col-xs-12">
@@ -59,14 +65,14 @@
                                     <div id="nickname-group" class="input-group">
                                         <div class="input-group-addon">@</div>
                                         {% if receiver %}
-                                            <input type='text' name='receiver' class="form-control" placeholder="用户昵称" value="{{receiver.nickname}}" readonly>
+                                            <input type="text" name="receiver" class="form-control" placeholder="{% trans '用户昵称' %}" value="{{receiver.nickname}}" readonly>
                                         {%else%}
-                                            <input type='text' name='receiver' class="form-control" placeholder="用户昵称" oninput="validateNickname()" tabindex="1" autofocus>
+                                            <input type="text" name="receiver" class="form-control" placeholder="{% trans '用户昵称' %}" oninput="validateNickname()" tabindex="1" autofocus>
                                         {% endif %}
                                         <div class="input-group-btn">
-                                            <a id='send-btn' class="btn btn-success btn-block" onclick="submitSend()" disabled tabindex="4">
-                                                <span class='glyphicon glyphicon-send'></span>
-                                                <span>发送</span>
+                                            <a id="send-btn" class="btn btn-success btn-block" onclick="submitSend()" disabled tabindex="4">
+                                                <span class="glyphicon glyphicon-send"></span>
+                                                <span>{% trans "发送" %}</span>
                                             </a>
                                         </div>
                                     </div><!--.input-group-->
@@ -74,7 +80,7 @@
                             </div>
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <textarea name='content' class="form-control" rows="2" placeholder="请输入内容" autocomplete="off" {%if receiver%}autofocus{%endif%} oninput="validateContent()" tabindex="2"></textarea>
+                                    <textarea name="content" class="form-control" rows="2" placeholder="{% trans '消息内容' %}" autocomplete="off" {%if receiver%}autofocus{%endif%} oninput="validateContent()" tabindex="2"></textarea>
                                 </div><!--.form-group-->
                             </div><!--.col-->
                         </div><!--.row-->
@@ -82,23 +88,23 @@
                 </div>
             </form>
             <hr/>
-            <h3 class='text-center'>
-                <span class='glyphicon glyphicon-time'></span>
+            <h3 class="text-center">
+                <span class="glyphicon glyphicon-time"></span>
             </h3>
-            <div class='text-muted'>
-                <span class='glyphicon glyphicon-sort-by-attributes-alt'></span>
+            <div class="text-muted">
+                <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
             </div>
             <div class="panel-group">
                 {% for chat in chats %}
-                    {% include 'chat/chatlet.html' with chat=chat conversation=True %}
+                    {% include "chat/chatlet.html" with chat=chat conversation=True %}
                 {% empty %}
                     {% if receiver %}
                         <div class="well">
-                            你与 @{{receiver.nickname}} 还没有说过话
+                            {% trans "你与 @{{receiver.nickname}} 还没有说过话" %}
                         </div>
                     {% else %}
                         <div class="well">
-                            消息的历史记录会显示在这里
+                            {% trans "对话的历史记录会显示在这里" %}
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -180,16 +186,16 @@
         var nickname = $("input[name='receiver']").val()
         if(nickname==''){
             $('#nickname-group').addClass('has-warning')
-            $.danger('错误：用户昵称为空')
+            $.danger("{% trans '错误：用户昵称不能为空' %}")
             return
         }
         if(!isNicknameOk){
-            $.danger('错误：用户昵称不存在')
+            $.danger("{% trans '错误：用户昵称不存在' %}")
             $('input[name="receiver"]').focus()
             return
         }
         if(!isContentOk) {
-            $.danger('错误：发送内容尚未填写')
+            $.danger("{% trans '错误：消息内容不能为空' %}")
             $('textarea[name="content"]').focus()
             return
         }
