@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block title %}徽章列表{% endblock title %}
+{% load i18n %}
+
+{% block title %}{% trans "徽章列表" %}{% endblock title %}
 
 {% block css %}
 <style>
@@ -16,7 +18,8 @@
 
 {% block nav-btn %}
 <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
-    <span class="glyphicon glyphicon-arrow-left"></span> 回到上一页
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    {% trans "回到上一页" %}
 </a>
 {% endblock nav-btn %}
 
@@ -25,35 +28,36 @@
     <div class="row">
         {% for badge in upbs %}
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                <a class="no-decoration" href='/badge/detail?id={{badge.id}}' title='{{badge.description}}'>
+                <a class="no-decoration" href="/badge/detail?id={{badge.id}}" title="{{badge.description}}">
                     <div class="panel panel-default hover-shadow">
-                        <div class='panel-heading'>
+                        <div class="panel-heading">
                             <span class="panel-title">
                                 {% if not badge.isallowed %}
-                                    <span class='glyphicon glyphicon-ban-circle'></span>
+                                    <span class="glyphicon glyphicon-ban-circle"></span>
                                 {% endif %}
-                                {{badge.category|upper|truncatechars:17}}
+                                {{ badge.category|upper|truncatechars:17 }}
                             </span>
-                            <span class='pull-right'>
+                            <span class="pull-right">
                                 <span class="glyphicon glyphicon-user"></span>
-                                <span>{{badge.userCount}}</span>
+                                <span>{{ badge.userCount }}</span>
                             </span>
                         </div>
-                        <div class='row'>
-                            <div class='col-xs-12 text-center'>
-                                <img class='userbadge' src='{{badge.image}}'/>
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <img class="userbadge" src="{{ badge.image }}"/>
                             </div>
                         </div>
                         <div class="panel-body">
-                            <h5 class='text-info badge-desc'>
-                                {{badge.description}}
+                            <h5 class="text-info badge-desc">
+                                {{ badge.description }}
                             </h5>
-                            <li hidden>{{badge.requirement|linebreaks}}</li>
-                            <li class="text-muted">设计师：
-                                <span class="text-primary">@{{badge.designernname}}</span>
+                            <li hidden>{{ badge.requirement|linebreaks }}</li>
+                            <li class="text-muted">
+                                {% trans "设计师" %}{% trans "：" %}
+                                <span class="text-primary">@{{ badge.designernname }}</span>
                             </li>
                             <li class="text-muted">
-                                加入时间：{{badge.created|date:'Y-m-d H:i'}}
+                                {% trans "加入时间" %}{% trans "：" %}{{ badge.created|date:"Y-m-d H:i" }}
                             </li>
                         </div>
                     </div>

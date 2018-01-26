@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-26 13:26+0800\n"
+"POT-Creation-Date: 2018-01-26 13:30+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: FULL NAME <EMILL@ADDRESS>\n"
 "Language-Team: Japanese <i18n@kyan001.com>\n"
@@ -93,12 +93,13 @@ msgstr ""
 msgid "回到徽章列表"
 msgstr ""
 
-#: main/templates/badge/detail.html:42
+#: main/templates/badge/detail.html:42 main/templates/badge/list.html:56
 msgid "设计师"
 msgstr ""
 
 #: main/templates/badge/detail.html:42 main/templates/badge/detail.html:50
-#: main/templates/badge/detail.html:54 main/templates/msg.html:31
+#: main/templates/badge/detail.html:54 main/templates/badge/list.html:56
+#: main/templates/badge/list.html:60 main/templates/msg.html:31
 #: main/templates/user/forgetusername.html:42
 #: main/templates/user/profile.html:85 main/templates/user/profile.html:89
 #: main/templates/user/profile.html:93 main/templates/user/profile.html:101
@@ -113,12 +114,22 @@ msgstr ""
 msgid "："
 msgstr ""
 
-#: main/templates/badge/detail.html:50
+#: main/templates/badge/detail.html:50 main/templates/badge/list.html:60
 msgid "加入时间"
 msgstr ""
 
 #: main/templates/badge/detail.html:54
 msgid "拥有人数"
+msgstr ""
+
+#: main/templates/badge/list.html:4 main/templates/userbar.html:116
+msgid "徽章列表"
+msgstr ""
+
+#: main/templates/badge/list.html:22 main/templates/user/exphistory.html:24
+#: main/templates/user/profile.html:44 main/templates/user/public.html:40
+#: main/templates/user/setting.html:9
+msgid "回到上一页"
 msgstr ""
 
 #: main/templates/msg.html:5 main/templates/msg.html:31
@@ -127,11 +138,6 @@ msgstr ""
 
 #: main/templates/msg.html:45
 msgid "点此跳转至"
-msgstr ""
-
-#: main/templates/user/exphistory.html:24 main/templates/user/profile.html:44
-#: main/templates/user/public.html:40 main/templates/user/setting.html:9
-msgid "回到上一页"
 msgstr ""
 
 #: main/templates/user/exphistory.html:53
@@ -708,10 +714,6 @@ msgstr ""
 
 #: main/templates/userbar.html:103
 msgid "聊天机器人"
-msgstr ""
-
-#: main/templates/userbar.html:116
-msgid "徽章列表"
 msgstr ""
 
 #: main/templates/userbar.html:122
