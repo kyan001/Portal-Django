@@ -125,19 +125,22 @@ class User(BaseModel):
 
     def getChats(self, mode=None):
         if mode == 'received':
-            return Chat.objects.filter(receiverid=self.id).order_by('-created')
+            chats = Chat.objects.filter(receiverid=self.id)
         elif mode == 'sent':
-            return Chat.objects.filter(senderid=self.id).order_by('-created')
+            chats = Chat.objects.filter(senderid=self.id).exclude(receiverid=self.id)
         elif mode == 'unread':
-            return Chat.objects.filter(receiverid=self.id, isread=False).order_by('-created')
+            chats = Chat.objects.filter(receiverid=self.id, isread=False)
         elif mode == 'fromsys':
             syschatuser = Chat.objects.getSyschatUser()
-            return Chat.objects.filter(senderid=syschatuser.id, receiverid=self.id).order_by('-created')
+            chats = Chat.objects.filter(senderid=syschatuser.id, receiverid=self.id)
         elif mode == 'fromhuman':
             syschatuser = Chat.objects.getSyschatUser()
-            return Chat.objects.filter(receiverid=self.id).exclude(senderid=syschatuser.id).exclude(senderid=self.id).order_by('-created')
+            chats = Chat.objects.filter(receiverid=self.id).exclude(senderid=syschatuser.id).exclude(senderid=self.id)
+        elif mode == 'quicknote':
+            chats = Chat.objects.filter(receiverid=self.id, senderid=self.id)
         else:
-            return Chat.objects.filter(receiverid=self.id)
+            chats = Chat.objects.filter(receiverid=self.id)
+        return chats.order_by('-created')
 
 
 class UserPermission(BaseModel):
