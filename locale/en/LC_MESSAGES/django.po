@@ -63,7 +63,7 @@ msgstr "Done"
 
 #: main/models.py:326 main/templates/user/profile.html:152
 msgid "冻结中"
-msgstr "Frozen"
+msgstr "Give Up"
 
 #: main/templates/404.html:27
 msgid "你来到了一个不存在的地方"
