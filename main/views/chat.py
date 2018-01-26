@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.utils.translation import gettext as _
 
 from main.models import Chat, User
 import util.ctrl
@@ -20,11 +21,12 @@ def inbox(request):
     # get chats
     user = util.user.getCurrentUser(request)
     MSG_FILTERS = collections.OrderedDict()
-    MSG_FILTERS['received'] = '所有'
-    MSG_FILTERS['unread'] = '未读'
-    MSG_FILTERS['fromsys'] = '系统'
-    MSG_FILTERS['fromhuman'] = '朋友'
-    MSG_FILTERS['sent'] = '已发送'
+    MSG_FILTERS['received'] = _('所有')
+    MSG_FILTERS['unread'] = _('未读')
+    MSG_FILTERS['quicknote'] = _('临时笔记')
+    MSG_FILTERS['fromsys'] = _('系统')
+    MSG_FILTERS['fromhuman'] = _('好友')
+    MSG_FILTERS['sent'] = _('已发送')
     chat_list = user.getChats(filter_type) if filter_type in MSG_FILTERS.keys() else user.getChats('received')
     # paginator
     paginator = Paginator(chat_list, per_page=15)
@@ -37,14 +39,17 @@ def inbox(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         chats = paginator.page(paginator.num_pages)
-    # chaters
-    chaters_list = {chat.sender for chat in chat_list} | {chat.receiver for chat in chat_list}  # users in sender or receiver or both
-    chaters = [(chater, chat_list.filter(Q(senderid=chater.id) | Q(receiverid=chater.id)).count()) for chater in chaters_list]
+    # users in sender or receiver but not both
+    chaters = {chat.sender for chat in chat_list} | {chat.receiver for chat in chat_list}
+    chaters -= {user}
+    chater_and_counts = [(ctr, chat_list.filter(
+        Q(senderid=ctr.id) | Q(receiverid=ctr.id)
+    ).count()) for ctr in chaters]
     # add exp
-    util.userexp.addExp(user, 'chat', 1, '查看收件箱')
+    util.userexp.addExp(user, 'chat', 1, _('查看收信箱'))
     # render
     context['chats'] = chats
-    context['chaters'] = chaters
+    context['chater_and_counts'] = chater_and_counts
     context['msg_filters'] = {
         'this': filter_type,
         'thiszh': MSG_FILTERS.get(filter_type),
