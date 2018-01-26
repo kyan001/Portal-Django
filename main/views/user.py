@@ -88,21 +88,11 @@ def profile(request):
     context = {}
     # get user exps
     exps = []
-    lv_notice = []
     user = util.user.getCurrentUser(request)
     userexps = user.getUserExp()
     for ue in userexps:
         explet = (ue, ue.getExpHistory(5))
         exps.append(explet)
-        cache_key = 'userexp:{ue.id}:{ue.category}:level'.format(ue=ue)
-        cache_timeout = 60 * 60 * 24 * 7 * 2  # 2 weeks
-        cached_lv = cache.get(cache_key)
-        if cached_lv:  # has cached category:level
-            new_lv = ue.level
-            if new_lv > cached_lv:
-                lv_noticelet = (ue.get_category_display(), cached_lv, new_lv)
-                lv_notice.append(lv_noticelet)
-        cache.set(cache_key, ue.level, cache_timeout)
     # get user progress counts
     progress_statics = user.getProgressStatics()
     done_prg_count = Progress.objects.filter(status='done').count()
@@ -113,7 +103,6 @@ def profile(request):
     # render
     context['prgstatics'] = progress_statics.values()
     context['exps'] = exps
-    context['lvnotice'] = lv_notice
     return render(request, 'user/profile.html', context)
 
 

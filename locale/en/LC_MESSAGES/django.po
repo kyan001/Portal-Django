@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-26 13:30+0800\n"
+"POT-Creation-Date: 2018-01-26 14:37+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -162,8 +162,8 @@ msgstr ""
 "answer"
 
 #: main/templates/user/forgetusername.html:4
-#: main/templates/user/forgetusername.html:57 main/views/user.py:220
-#: main/views/user.py:247
+#: main/templates/user/forgetusername.html:57 main/views/user.py:209
+#: main/views/user.py:236
 msgid "找回用户名"
 msgstr "Retrieve username"
 
@@ -182,7 +182,7 @@ msgstr ""
 msgid "请输入注册时填写的邮箱"
 msgstr "Please enter user's email"
 
-#: main/templates/user/forgetusername.html:71 main/views/user.py:383
+#: main/templates/user/forgetusername.html:71 main/views/user.py:372
 msgid "邮箱不能为空"
 msgstr "Email cannot be empty"
 
@@ -207,7 +207,7 @@ msgstr "Progress Info"
 #: main/templates/user/signindropdown.html:13
 #: main/templates/user/signup.html:233 main/templates/user/signup.html:326
 #: main/templates/user/signup.html:363 main/templates/user/signup.html:365
-#: main/views/user.py:142
+#: main/views/user.py:131
 msgid "用户名"
 msgstr "Username"
 
@@ -223,7 +223,7 @@ msgstr "My Public Page, anyone can visit"
 
 #: main/templates/user/profile.html:101 main/templates/user/signup.html:306
 #: main/templates/user/signup.html:329 main/templates/user/signup.html:493
-#: main/templates/user/signup.html:495 main/views/user.py:148
+#: main/templates/user/signup.html:495 main/views/user.py:137
 msgid "邮箱"
 msgstr "Email"
 
@@ -236,7 +236,7 @@ msgid "根据“总活跃度”计算"
 msgstr "According to 'Total Activities'"
 
 #: main/templates/user/profile.html:115 main/templates/user/signup.html:327
-#: main/templates/user/signup.html:383 main/views/user.py:144
+#: main/templates/user/signup.html:383 main/views/user.py:133
 msgid "问题"
 msgstr "Question"
 
@@ -284,12 +284,6 @@ msgstr "Average To Do"
 #: main/templates/user/profile.html:178
 msgid "平均待更"
 msgstr "Average Following"
-
-#: main/templates/user/profile.html:230
-#, python-format
-msgid "恭喜升级！「%(category)s」从 Lv.%(oldlv)s 升级到 Lv.%(newlv)s！"
-msgstr ""
-"Congratulations! '%(category)s' leveled up from Lv.%(oldlv)s to Lv.%(newlv)s!"
 
 #: main/templates/user/public.html:4
 msgid "的公开页"
@@ -383,8 +377,8 @@ msgstr "User does not exist"
 msgid "密码/答案不能为空"
 msgstr "Password/Answer cannot be empty"
 
-#: main/templates/user/signin.html:226 main/views/user.py:310
-#: main/views/user.py:361
+#: main/templates/user/signin.html:226 main/views/user.py:299
+#: main/views/user.py:350
 msgid "用户名不能为空"
 msgstr "Username cannot be empty"
 
@@ -427,7 +421,7 @@ msgid "传统"
 msgstr "Classic"
 
 #: main/templates/user/signup.html:113 main/templates/user/signup.html:410
-#: main/views/user.py:146
+#: main/views/user.py:135
 msgid "答案"
 msgstr "Answer"
 
@@ -462,16 +456,16 @@ msgstr "from right the "
 #: main/templates/user/signup.html:175 main/templates/user/signup.html:176
 #: main/templates/user/signup.html:182 main/templates/user/signup.html:233
 #: main/templates/user/signup.html:270 main/templates/user/signup.html:306
-#: main/views/user.py:142 main/views/user.py:144 main/views/user.py:146
-#: main/views/user.py:148
+#: main/views/user.py:131 main/views/user.py:133 main/views/user.py:135
+#: main/views/user.py:137
 msgid "“"
 msgstr " '"
 
 #: main/templates/user/signup.html:175 main/templates/user/signup.html:176
 #: main/templates/user/signup.html:182 main/templates/user/signup.html:233
 #: main/templates/user/signup.html:270 main/templates/user/signup.html:306
-#: main/views/user.py:142 main/views/user.py:144 main/views/user.py:146
-#: main/views/user.py:148
+#: main/views/user.py:131 main/views/user.py:133 main/views/user.py:135
+#: main/views/user.py:137
 msgid "”"
 msgstr "' "
 
@@ -528,8 +522,8 @@ msgstr "In the answer"
 msgid "已存在"
 msgstr "is already taken"
 
-#: main/templates/user/signup.html:320 main/views/user.py:142
-#: main/views/user.py:144 main/views/user.py:146 main/views/user.py:148
+#: main/templates/user/signup.html:320 main/views/user.py:131
+#: main/views/user.py:133 main/views/user.py:135 main/views/user.py:137
 msgid "不能为空"
 msgstr "cannot be empty"
 
@@ -819,46 +813,46 @@ msgstr "Argument 'Nickname' cannot be empty"
 msgid "{} 访问了你的公开页"
 msgstr "{} visited your public page"
 
-#: main/views/user.py:112
+#: main/views/user.py:102
 msgid "查看用户个人信息"
 msgstr "View user profile"
 
-#: main/views/user.py:142 main/views/user.py:144 main/views/user.py:146
-#: main/views/user.py:148 main/views/user.py:158 main/views/user.py:160
-#: main/views/user.py:162 main/views/user.py:165 main/views/user.py:167
+#: main/views/user.py:131 main/views/user.py:133 main/views/user.py:135
+#: main/views/user.py:137 main/views/user.py:147 main/views/user.py:149
+#: main/views/user.py:151 main/views/user.py:154 main/views/user.py:156
 msgid "注册失败"
 msgstr "Sign up failed"
 
-#: main/views/user.py:158
+#: main/views/user.py:147
 #, python-brace-format
 msgid "用户名 '{username}' 已存在！"
 msgstr "Username '{username}' is already taken!"
 
-#: main/views/user.py:160
+#: main/views/user.py:149
 #, python-brace-format
 msgid "昵称 '{nickname}' 已存在！"
 msgstr "Nickname '{nickname}' is already taken!"
 
-#: main/views/user.py:162
+#: main/views/user.py:151
 #, python-brace-format
 msgid "邮箱 '{email}' 已存在！"
 msgstr "Email '{email}' is already taken!"
 
-#: main/views/user.py:165
+#: main/views/user.py:154
 #, python-brace-format
 msgid "用户名 '{username}' 只应包含数字、字母、和英文句号！"
 msgstr "Username '{username}' should only contain numbers, letters and '.'!"
 
-#: main/views/user.py:167
+#: main/views/user.py:156
 #, python-brace-format
 msgid "昵称 '{nickname}' 只应包含字母和汉字！"
 msgstr "Nickname '{nickname}' should only contain letters"
 
-#: main/views/user.py:174
+#: main/views/user.py:163
 msgid "注册成功"
 msgstr "Sign up success"
 
-#: main/views/user.py:176
+#: main/views/user.py:165
 #, python-brace-format
 msgid ""
 " {user.username} 注册成功！\n"
@@ -869,28 +863,28 @@ msgstr ""
 "You are the No.{user.id} user. \n"
 "Please log in to let us remember you!"
 
-#: main/views/user.py:176
+#: main/views/user.py:165
 msgid "欢迎加入"
 msgstr "Welcome aboard"
 
-#: main/views/user.py:186
+#: main/views/user.py:175
 msgid "修改头像成功"
 msgstr "Change head image success"
 
-#: main/views/user.py:197
+#: main/views/user.py:186
 #, python-brace-format
 msgid "您已经以 {username} 的身份登入了，请勿重复登入"
 msgstr "You already logged in as '{username}', please do not log in again"
 
-#: main/views/user.py:197
+#: main/views/user.py:186
 msgid "登入失败"
 msgstr "Log in failed"
 
-#: main/views/user.py:220
+#: main/views/user.py:209
 msgid "此邮箱（{}）尚未被注册"
 msgstr "This email ({}) has not signed up"
 
-#: main/views/user.py:229
+#: main/views/user.py:218
 #, python-brace-format
 msgid ""
 "\n"
@@ -912,11 +906,11 @@ msgstr ""
 "administrator @系统消息\n"
 "        "
 
-#: main/views/user.py:237
+#: main/views/user.py:226
 msgid "有人正在通过邮件的方式找回您的用户名"
 msgstr "Someone is retrieving your username by email"
 
-#: main/views/user.py:239
+#: main/views/user.py:228
 msgid ""
 "\n"
 "            出于安全考虑，您的用户名未全部显示，\n"
@@ -936,32 +930,32 @@ msgstr ""
 "            A message indicates this operation is sent to you.\n"
 "        "
 
-#: main/views/user.py:259
+#: main/views/user.py:248
 msgid "登入失败：用户名不能为空"
 msgstr "Log in failed. Username cannot be empty"
 
-#: main/views/user.py:262
+#: main/views/user.py:251
 msgid "登入失败：答案不能为空"
 msgstr "Log in failed. Answer cannot be empty"
 
-#: main/views/user.py:267 main/views/user.py:313
+#: main/views/user.py:256 main/views/user.py:302
 msgid "登入失败：找不到用户名为 {} 的用户"
 msgstr "Log in failed. Cannot find user with username {}"
 
-#: main/views/user.py:270
+#: main/views/user.py:259
 msgid "登入失败：您已被禁止登入，请联系管理员"
 msgstr ""
 "Log in failed. You are forbidden to log in. Please contact administrator"
 
-#: main/views/user.py:275
+#: main/views/user.py:264
 msgid "登入失败：用户名与答案不匹配"
 msgstr "Log in failed. Incorrect username / password combination"
 
-#: main/views/user.py:281
+#: main/views/user.py:270
 msgid "登入成功"
 msgstr "Log in success"
 
-#: main/views/user.py:289
+#: main/views/user.py:278
 msgid ""
 "\n"
 "        欢迎您归来，开始您的网站之旅吧！<br/>\n"
@@ -985,11 +979,11 @@ msgstr ""
 "系统消息 !</li>\n"
 "    "
 
-#: main/views/user.py:322
+#: main/views/user.py:311
 msgid "用户未找到：{}"
 msgstr "Username not found: {}"
 
-#: main/views/user.py:373
+#: main/views/user.py:362
 msgid "昵称不能为空"
 msgstr "Nickname cannot be empty"
 

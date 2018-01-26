@@ -226,9 +226,6 @@
 {% block js %}
 <script>
     $(function(){
-        {% for category, oldlv, newlv in lvnotice %}
-            $.success("{% blocktrans %}恭喜升级！「{{category}}」从 Lv.{{oldlv}} 升级到 Lv.{{newlv}}！{% endblocktrans %}")
-        {% endfor %}
         $("[data-toggle='tooltip']").tooltip()
     })
     function changeHeadimg(){
