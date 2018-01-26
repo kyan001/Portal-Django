@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-26 14:37+0800\n"
+"POT-Creation-Date: 2018-01-26 20:58+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -123,7 +123,7 @@ msgstr "Created"
 msgid "拥有人数"
 msgstr "Number of Owners"
 
-#: main/templates/badge/list.html:4 main/templates/userbar.html:116
+#: main/templates/badge/list.html:4 main/templates/userbar.html:110
 msgid "徽章列表"
 msgstr "Badge List"
 
@@ -132,6 +132,132 @@ msgstr "Badge List"
 #: main/templates/user/setting.html:9
 msgid "回到上一页"
 msgstr "Back"
+
+#: main/templates/index/index.html:4
+msgid "欢迎"
+msgstr "Welcome"
+
+#: main/templates/index/index.html:351 main/templates/index/index.html:396
+#: main/templates/userbar.html:91
+msgid "我的进度"
+msgstr "MyProgress"
+
+#: main/templates/index/index.html:358 main/templates/index/index.html:450
+msgid "临时笔记"
+msgstr "TempNote"
+
+#: main/templates/index/index.html:364 main/templates/index/index.html:492
+#: main/templates/userbar.html:97
+msgid "聊天机器人"
+msgstr "RoboTalk"
+
+#: main/templates/index/index.html:375
+msgid "生活的战争，并不总是为那些更强壮或更迅速的人而存在。"
+msgstr "Life's battle doesn't always go to the stronger or faster man."
+
+#: main/templates/index/index.html:376
+msgid "但或迟或早，胜利的人"
+msgstr "But sooner or later, the man who wins,"
+
+#: main/templates/index/index.html:377
+msgid "始终坚信"
+msgstr "is the man"
+
+#: main/templates/index/index.html:378
+msgid "“我会赢”。"
+msgstr "who believes he can."
+
+#: main/templates/index/index.html:381
+msgid "尽情享受"
+msgstr "Enjoy"
+
+#: main/templates/index/index.html:381 main/templates/index/index.html:383
+msgid "！"
+msgstr "! "
+
+#: main/templates/index/index.html:382
+msgid "欢迎来到"
+msgstr "Welcome to"
+
+#: main/templates/index/index.html:383
+msgid "我要加入"
+msgstr "I'm in"
+
+#: main/templates/index/index.html:397
+msgid "管理您的进度"
+msgstr "Manage your progresses"
+
+#: main/templates/index/index.html:451
+msgid "随手记录您的想法"
+msgstr "Write down your ideas anytime"
+
+#: main/templates/index/index.html:493
+msgid "快来加入我们的聊天吧"
+msgstr "Join our group chat now"
+
+#: main/templates/index/index.html:588
+msgid "网站主人，"
+msgstr "Owner of the website, "
+
+#: main/templates/index/index.html:589
+msgid "深沉的爱着一切美好的事物。"
+msgstr "Drenched in the love of wonderful things. "
+
+#: main/templates/index/index.html:592
+msgid "我的网站"
+msgstr "My website"
+
+#: main/templates/index/index.html:593
+msgid "邮件"
+msgstr "Email"
+
+#: main/templates/index/index.html:602
+msgid "音乐"
+msgstr "Music"
+
+#: main/templates/index/index.html:604
+msgid "吉他，钢琴，声音。"
+msgstr "Guitar, Piano, Voice. "
+
+#: main/templates/index/index.html:605
+msgid "当言语渐弱，音乐响起。"
+msgstr "When words fail, music speaks. "
+
+#: main/templates/index/index.html:608
+msgid "我的音乐"
+msgstr "My Music"
+
+#: main/templates/index/index.html:618
+msgid "成就"
+msgstr "Achievement"
+
+#: main/templates/index/index.html:620
+msgid "创造，可能，"
+msgstr "Creativity, Possibility,"
+
+#: main/templates/index/index.html:621
+msgid "热忱，意志。"
+msgstr "Enthusiasm, Willpower."
+
+#: main/templates/index/index.html:624
+msgid "我的"
+msgstr "My"
+
+#: main/templates/index/index.html:634
+msgid "想法"
+msgstr "Ideas"
+
+#: main/templates/index/index.html:636
+msgid "我思，"
+msgstr "Keep Thinking,"
+
+#: main/templates/index/index.html:637
+msgid "我酷。"
+msgstr "Keep Cool."
+
+#: main/templates/index/index.html:641
+msgid "与我对话"
+msgstr "Talk to me"
 
 #: main/templates/msg.html:5 main/templates/msg.html:31
 msgid "提示信息"
@@ -704,91 +830,79 @@ msgstr "Log out"
 msgid "首页"
 msgstr "Home page"
 
-#: main/templates/userbar.html:91
-msgid "我的进度"
-msgstr "MyProgress"
-
-#: main/templates/userbar.html:97
-msgid "临时笔记"
-msgstr "TempNote"
-
-#: main/templates/userbar.html:103
-msgid "聊天机器人"
-msgstr "RoboTalk"
-
-#: main/templates/userbar.html:122
+#: main/templates/userbar.html:116
 msgid "切换主题"
 msgstr "Themes"
 
-#: main/templates/userbar.html:137 main/templates/userbar.html:145
+#: main/templates/userbar.html:131 main/templates/userbar.html:139
 msgid "默认主题"
 msgstr "Default Theme"
 
-#: main/templates/userbar.html:151
+#: main/templates/userbar.html:145
 msgid "随机主题"
 msgstr "Random Theme"
 
-#: main/templates/userbar.html:155
+#: main/templates/userbar.html:149
 msgid "蔚蓝"
 msgstr "Cerulean"
 
-#: main/templates/userbar.html:156
+#: main/templates/userbar.html:150
 msgid "宇宙"
 msgstr "Cosmo"
 
-#: main/templates/userbar.html:157
+#: main/templates/userbar.html:151
 msgid "半机械"
 msgstr "Cyborg"
 
-#: main/templates/userbar.html:158
+#: main/templates/userbar.html:152
 msgid "暗色"
 msgstr "Darkly"
 
-#: main/templates/userbar.html:159
+#: main/templates/userbar.html:153
 msgid "扁平"
 msgstr "Flatly"
 
-#: main/templates/userbar.html:160
+#: main/templates/userbar.html:154
 msgid "日志"
 msgstr "Journal"
 
-#: main/templates/userbar.html:161
+#: main/templates/userbar.html:155
 msgid "流明"
 msgstr "Lumen"
 
-#: main/templates/userbar.html:162
+#: main/templates/userbar.html:156
 msgid "纸"
 msgstr "Paper"
 
-#: main/templates/userbar.html:163
+#: main/templates/userbar.html:157
 msgid "易读"
 msgstr "Readable"
 
-#: main/templates/userbar.html:164
+#: main/templates/userbar.html:158
 msgid "砂岩"
 msgstr "Sandstone"
 
-#: main/templates/userbar.html:165
+#: main/templates/userbar.html:159
 msgid "简约"
 msgstr "Simplex"
 
-#: main/templates/userbar.html:166
+#: main/templates/userbar.html:160
 msgid "页岩"
 msgstr "Slate"
 
-#: main/templates/userbar.html:167
+#: main/templates/userbar.html:161
 msgid "空间站"
 msgstr "Spacelab"
 
-#: main/templates/userbar.html:168
+#: main/templates/userbar.html:162
 msgid "英雄"
 msgstr "Superhero"
 
-#: main/templates/userbar.html:169
+#: main/templates/userbar.html:163
 msgid "统一"
 msgstr "United"
 
-#: main/templates/userbar.html:170
+#: main/templates/userbar.html:164
 msgid "雪人"
 msgstr "Yeti"
 
@@ -1007,3 +1121,6 @@ msgstr ""
 #, python-brace-format
 msgid "您不具有 {category} 权限"
 msgstr "You don't have {category} permission"
+
+#~ msgid "。"
+#~ msgstr ". "

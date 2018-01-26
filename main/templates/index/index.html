@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block title %}Welcome 欢迎{% endblock title %}
+{% load i18n %}
+
+{% block title %}{% trans "欢迎" %}{% endblock title %}
 
 {% block inhead %}
     <script src="/static/js/jquery.lazyload.min.js"></script>
@@ -180,7 +182,7 @@
             height: auto;
         }
         #div-card .thumbnail {
-            background-color: rgba(255,255,255,0.6);
+            background-color: rgba(255,255,255,0.6) ;
             opacity: 0;
             position: relative;
             top: 0;
@@ -340,28 +342,26 @@
 {% block nav-btn %}
 <div class="btn-group">
     <a class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="glyphicon glyphicon-list-alt"></span> Web Apps <span class="caret"></span>
+        <span class="glyphicon glyphicon-th-large"></span> Apps <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
         <li>
             <a href="/progress/list">
-                <span class="glyphicon glyphicon-th-list"></span> 我的进度
-            </a>
-        </li>
-        <li>
-            <a href="/chat/conversation?mode=quicknote">
-                <span class="glyphicon glyphicon-list-alt"></span> 临时笔记
-            </a>
-        </li>
-        <li>
-            <a href="/robotalk">
-                <span class="glyphicon glyphicon-comment"></span> 聊天机器人
+                <span class="glyphicon glyphicon-th-list"></span>
+                {% trans "我的进度" %}
             </a>
         </li>
         <li role="separator" class="divider"></li>
         <li>
-            <a href="http://www.duetime.cn/beijingmore">
-                <span class="glyphicon glyphicon-bold"></span> 北京·默
+            <a href="/chat/conversation?mode=quicknote">
+                <span class="glyphicon glyphicon-list-alt"></span>
+                {% trans "临时笔记" %}
+            </a>
+        </li>
+        <li>
+            <a href="/robotalk">
+                <span class="glyphicon glyphicon-comment"></span>
+                {% trans "聊天机器人" %}
             </a>
         </li>
     </ul>
@@ -370,29 +370,32 @@
 
 {% block content %}
 <div class="container">
-    <div class="fg-div lazyload hidden-xs" id="div1" data-original='/static/img/index/div1_bg.jpg' onmouseover="$('#div1 .no-see').addClass('entered');">
+    <div id="div1" class="fg-div lazyload hidden-xs" data-original="/static/img/index/div1_bg.jpg" onmouseover="$('#div1 .no-see').addClass('entered');">
         <div class="left-half">
-            <p id="d1-word1" class="no-see">Life's battle doesn't always go to the stronger or faster man.</p>
-            <p id="d1-word2" class="no-see">But sooner or later, the man who wins,</p>
-            <h1 id="d1-word3" class="no-see">is the man</h1>
-            <h1 id="d1-word4" class="no-see">who believes he can.</h1>
+            <p id="d1-word1" class="no-see">{% trans "生活的战争，并不总是为那些更强壮或更迅速的人而存在。" %}</p>
+            <p id="d1-word2" class="no-see">{% trans "但或迟或早，胜利的人" %}</p>
+            <h1 id="d1-word3" class="no-see">{% trans "始终坚信" %}</h1>
+            <h1 id="d1-word4" class="no-see">{% trans "“我会赢”。" %}</h1>
         </div>
         <div class="right-half">
-            <h1>Enjoy!</h1>
-            <p>Welcome to <b>{{ tld }}</b></p>
-            <p><a class="btn btn-primary btn-lg" href="/user/signup" role="button">I'm in!</a></p>
+            <h1>{% trans "尽情享受" %}{% trans "！" %}</h1>
+            <p>{% trans "欢迎来到" %} <b>{{ tld }}</b></p>
+            <p><a class="btn btn-primary btn-lg" href="/user/signup" role="button">{% trans "我要加入" %}{% trans "！" %}</a></p>
         </div>
     </div><!--#div1-->
 
     <div class="fg-div" id="div-apps">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide" id='slide-progress'>
+                <div id="slide-progress" class="swiper-slide">
                     <div class="row">
                         <div class="col-xs-10 col-xs-offset-1 col-md-9">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4>「<a class="no-decoration" href="/progress/list">我的进度</a>」<small>管理您的进度</small></h4>
+                                    <h4>
+                                        「<a class="no-decoration" href="/progress/list">{% trans "我的进度" %}</a>」
+                                        <small>{% trans "管理您的进度" %}</small>
+                                    </h4>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
@@ -443,7 +446,10 @@
                         <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-5">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4>「<a class="no-decoration" href="/chat/conversation?mode=quicknote">临时笔记</a>」<small>随手记笔记</small></h4>
+                                    <h4>
+                                        「<a class="no-decoration" href="/chat/conversation?mode=quicknote">{% trans "临时笔记" %}</a>」
+                                        <small>{% trans "随手记录您的想法" %}</small>
+                                    </h4>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
@@ -477,12 +483,14 @@
                         </div>
                     </div>
                 </div><!--.swiper-slide-->
-                <div class="swiper-slide" id='slide-robotalk'>
+                <div id="slide-robotalk" class="swiper-slide">
                     <div class="row">
                         <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4>「<a class="no-decoration" href="/robotalk">聊天机器人</a>」<small>RoboTalk</small></h4>
+                                    <h4>
+                                        「<a class="no-decoration" href="/robotalk">{% trans "聊天机器人" %}</a>」
+                                        <small>{% trans "快来加入我们的聊天吧" %}</small></h4>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
@@ -516,12 +524,15 @@
                         </div>
                     </div>
                 </div><!--.swiper-slide-->
-                <div class="swiper-slide" id='slide-bjmore'>
+                <div id="slide-bjmore" class="swiper-slide">
                     <div class="row">
                         <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-1">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4>「<a class="no-decoration" href="http://www.duetime.cn/beijingmore">北京·默</a>」<small>BeijingMore</small></h4>
+                                    <h4>
+                                        「<a class="no-decoration" href="http://www.duetime.cn/beijingmore">Beijing More</a>」
+                                        <small>Local Beijing Guide</small>
+                                    </h4>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
@@ -563,10 +574,10 @@
         </div>
     </div><!--#div-apps-->
 
-    <div class="bg-div lazyload hidden-xs" id="div2" data-original='/static/img/index/div2_bg.jpg'>
+    <div id="div2" class="bg-div lazyload hidden-xs" data-original="/static/img/index/div2_bg.jpg">
     </div><!--#div2-->
 
-    <div class="fg-div lazyload hidden-xs" id="div-card" data-original='/static/img/index/div_card_bg.jpg' onmouseover="$('#div-card .thumbnail').addClass('entered');">
+    <div id="div-card" class="fg-div lazyload hidden-xs" data-original="/static/img/index/div_card_bg.jpg" onmouseover="$('#div-card .thumbnail').addClass('entered');">
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                 <div class="thumbnail" id="d3-thumb1">
@@ -574,60 +585,60 @@
                     <div class="caption">
                         <h3>Kyan</h3>
                         <p>
-                            网站主人<br/>
-                            深沉的爱着一切美好的事物。
+                            <div>{% trans "网站主人，" %}</div>
+                            <div>{% trans "深沉的爱着一切美好的事物。" %}</div>
                         </p>
                         <p>
-                            <a href="http://www.kyan001.com" class="btn btn-primary" role="button">My Site</a>
-                            <a href="mailto: kai@kyan001.com" class="btn btn-default" role="button">Email</a>
+                            <a href="http://www.kyan001.com" class="btn btn-primary" role="button">{% trans "我的网站" %}</a>
+                            <a href="mailto: kai@kyan001.com" class="btn btn-default" role="button">{% trans "邮件" %}</a>
                         </p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                <div class="thumbnail" id="d3-thumb2">
+                <div id="d3-thumb2" class="thumbnail">
                     <img src="/static/img/index/div_card_music.png" alt="My Music">
                     <div class="caption">
-                        <h3>音乐</h3>
+                        <h3>{% trans "音乐" %}</h3>
                         <p>
-                            Guitar, Voice, Piano.<br/>
-                            When Words Fail, Music Speaks
+                            <div>{% trans "吉他，钢琴，声音。" %}</div>
+                            <div>{% trans "当言语渐弱，音乐响起。" %}</div>
                         </p>
                         <p>
-                            <a href="http://thinking.kyan001.com/?cat=19" class="btn btn-primary" role="button">My Musics</a>
-                            <a href="http://thinking.kyan001.com/?p=175" class="btn btn-default" role="button">《牧城少年》</a>
+                            <a href="#div-song" class="btn btn-primary" role="button">{% trans "我的音乐" %}</a>
+                            <a href="/static/audio/muchengshaonian.mp3" class="btn btn-default" role="button">《牧城少年》</a>
                         </p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                <div class="thumbnail" id="d3-thumb3">
+                <div id="d3-thumb3" class="thumbnail">
                     <img src="/static/img/index/div_card_products.png" alt="My Products">
                     <div class="caption">
-                        <h3>成就</h3>
+                        <h3>{% trans "成就" %}</h3>
                         <p>
-                            Creativity, Possibility,<br/>
-                            Enthusiasm, Willpower.
+                            <div>{% trans "创造，可能，" %}</div>
+                            <div>{% trans "热忱，意志。" %}</div>
                         </p>
                         <p>
-                            <a href="https://github.com/kyan001" class="btn btn-primary" role="button">My Github</a>
-                            <a href="https://chrome.google.com/webstore/detail/timer-25/gmdbcklinofignhfmibchnmgjcocccbh" class="btn btn-default" role="button">Timer25</a>
+                            <a href="https://github.com/kyan001" class="btn btn-primary" role="button">{% trans "我的" %} Github</a>
+                            <a href="https://chrome.google.com/webstore/detail/timer-25/gmdbcklinofignhfmibchnmgjcocccbh" class="btn btn-default" role="button">Timer 25</a>
                         </p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                <div class="thumbnail" id="d3-thumb4">
+                <div id="d3-thumb4" class="thumbnail">
                     <img src="/static/img/index/div_card_ideas.png" alt="My Thoughts">
                     <div class="caption">
-                        <h3>想法</h3>
+                        <h3>{% trans "想法" %}</h3>
                         <p>
-                            Keep Thinking,<br/>
-                            Keep Cool.
+                            <div>{% trans "我思，" %}</div>
+                            <div>{% trans "我酷。" %}</div>
                         </p>
                         <p>
-                            <a href="http://thinking.kyan001.com/" class="btn btn-primary" role="button">My Blog</a>
-                            <a href="http://www.{{ tld }}/chat/conversation?receiver=%E5%94%AF%E7%AC%91%E7%AB%B9" class="btn btn-default" role="button">Talk To Me</a>
+                            <a href="http://www.duetime.cn" class="btn btn-primary" role="button">Duetime Studio</a>
+                            <a href="/chat/conversation?receiver=%E5%94%AF%E7%AC%91%E7%AB%B9" class="btn btn-default" role="button">{% trans "与我对话" %}</a>
                         </p>
                     </div>
                 </div>
@@ -635,7 +646,7 @@
         </div>
     </div><!--#div-card-->
 
-    <div class="bg-div lazyload hidden-xs" id="div-song" data-original='/static/img/index/div_song_bg.jpg'>
+    <div id="div-song" class="bg-div lazyload hidden-xs" data-original="/static/img/index/div_song_bg.jpg">
         <div id="mucheng">
             <div id="mucheng-title" class="mucheng-top">
                 <span>《牧城少年》</span>
@@ -689,7 +700,7 @@
         </div>
     </div><!--#div-song-->
 
-    <div class="bg-div lazyload hidden-xs" id="div-last" data-original='/static/img/index/div_last_bg.jpg'>
+    <div id="div-last" class="bg-div lazyload hidden-xs" data-original="/static/img/index/div_last_bg.jpg">
     </div>
 </div>
 {% endblock content %}
