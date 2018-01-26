@@ -21,20 +21,20 @@
     <div class="row">
         <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
-                <div class='panel-heading'>
+                <div class="panel-heading">
                     <span class="panel-title">
                         {% if not badge.isallowed %}
-                            <span class='glyphicon glyphicon-ban-circle'></span>
+                            <span class="glyphicon glyphicon-ban-circle"></span>
                         {% endif %}
                         {{badge.category|upper}}
                     </span>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 text-center">
-                        <img class='userbadge' src='{{badge.image}}'>
+                        <img class="userbadge" src="{{ badge.image }}">
                     </div>
                     <div class="col-xs-12 col-sm-6">
-                        <table class='table'>
+                        <table class="table">
                             <tr>
                                 <td>设计师：</td>
                                 <td>
@@ -45,7 +45,7 @@
                             </tr>
                             <tr>
                                 <td>加入时间：</td>
-                                <td>{{badge.created|date:'Y-m-d H:i'}}</td>
+                                <td>{{badge.created|date:"Y-m-d H:i"}}</td>
                             </tr>
                             <tr>
                                 <td>拥有人数：</td>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <h4 class='text-info'>{{badge.description}}</h4>
+                    <h4 class="text-info">{{badge.description}}</h4>
                     <li>{{badge.requirement|linebreaks}}</li>
                 </div>
             </div>
