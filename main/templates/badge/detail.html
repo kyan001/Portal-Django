@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block title %}徽章：{{badge.category|capfirst}}{% endblock title %}
+{% load i18n %}
+
+{% block title %}{% trans "徽章详情" %}{% endblock title %}
 
 {% block css %}
 <style>
@@ -12,7 +14,8 @@
 
 {% block nav-btn %}
 <a href="/badge/list" class="btn btn-warning btn-sm">
-    <span class="glyphicon glyphicon-arrow-left"></span> 回到徽章列表
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    {% trans "回到徽章列表" %}
 </a>
 {% endblock nav-btn %}
 
@@ -36,7 +39,7 @@
                     <div class="col-xs-12 col-sm-6">
                         <table class="table">
                             <tr>
-                                <td>设计师：</td>
+                                <td>{% trans "设计师" %}{% trans "：" %}</td>
                                 <td>
                                     <a href="/user/public?nickname={{badge.designernname}}">
                                         @{{badge.designernname}}
@@ -44,11 +47,11 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>加入时间：</td>
+                                <td>{% trans "加入时间" %}{% trans "：" %}</td>
                                 <td>{{badge.created|date:"Y-m-d H:i"}}</td>
                             </tr>
                             <tr>
-                                <td>拥有人数：</td>
+                                <td>{% trans "拥有人数" %}{% trans "：" %}</td>
                                 <td>
                                     <span class="glyphicon glyphicon-user"></span>
                                     <span>{{badge.userCount}}</span>
@@ -58,8 +61,8 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <h4 class="text-info">{{badge.description}}</h4>
-                    <li>{{badge.requirement|linebreaks}}</li>
+                    <h4 class="text-info">{{ badge.description }}</h4>
+                    <li>{{ badge.requirement|linebreaks }}</li>
                 </div>
             </div>
         </div>

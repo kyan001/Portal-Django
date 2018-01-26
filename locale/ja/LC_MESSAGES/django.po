@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-25 21:30+0800\n"
+"POT-Creation-Date: 2018-01-26 13:26+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: FULL NAME <EMILL@ADDRESS>\n"
 "Language-Team: Japanese <i18n@kyan001.com>\n"
@@ -85,11 +85,21 @@ msgstr ""
 msgid "服务器内部错误，请联系服务器管理员"
 msgstr ""
 
-#: main/templates/msg.html:5 main/templates/msg.html:31
-msgid "提示信息"
+#: main/templates/badge/detail.html:4
+msgid "徽章详情"
 msgstr ""
 
-#: main/templates/msg.html:31 main/templates/user/forgetusername.html:42
+#: main/templates/badge/detail.html:18
+msgid "回到徽章列表"
+msgstr ""
+
+#: main/templates/badge/detail.html:42
+msgid "设计师"
+msgstr ""
+
+#: main/templates/badge/detail.html:42 main/templates/badge/detail.html:50
+#: main/templates/badge/detail.html:54 main/templates/msg.html:31
+#: main/templates/user/forgetusername.html:42
 #: main/templates/user/profile.html:85 main/templates/user/profile.html:89
 #: main/templates/user/profile.html:93 main/templates/user/profile.html:101
 #: main/templates/user/profile.html:105 main/templates/user/profile.html:115
@@ -101,6 +111,18 @@ msgstr ""
 #: main/templates/user/signin.html:146 main/templates/user/signin.html:210
 #: main/templates/user/signup.html:196
 msgid "："
+msgstr ""
+
+#: main/templates/badge/detail.html:50
+msgid "加入时间"
+msgstr ""
+
+#: main/templates/badge/detail.html:54
+msgid "拥有人数"
+msgstr ""
+
+#: main/templates/msg.html:5 main/templates/msg.html:31
+msgid "提示信息"
 msgstr ""
 
 #: main/templates/msg.html:45

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-25 21:30+0800\n"
+"POT-Creation-Date: 2018-01-26 13:26+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -86,11 +86,21 @@ msgstr "Server has met a little problem"
 msgid "服务器内部错误，请联系服务器管理员"
 msgstr "Server internal error. Please contact server administrator"
 
-#: main/templates/msg.html:5 main/templates/msg.html:31
-msgid "提示信息"
-msgstr "Notice"
+#: main/templates/badge/detail.html:4
+msgid "徽章详情"
+msgstr "Badge Detail"
 
-#: main/templates/msg.html:31 main/templates/user/forgetusername.html:42
+#: main/templates/badge/detail.html:18
+msgid "回到徽章列表"
+msgstr "Back to Badge list"
+
+#: main/templates/badge/detail.html:42
+msgid "设计师"
+msgstr "Designer"
+
+#: main/templates/badge/detail.html:42 main/templates/badge/detail.html:50
+#: main/templates/badge/detail.html:54 main/templates/msg.html:31
+#: main/templates/user/forgetusername.html:42
 #: main/templates/user/profile.html:85 main/templates/user/profile.html:89
 #: main/templates/user/profile.html:93 main/templates/user/profile.html:101
 #: main/templates/user/profile.html:105 main/templates/user/profile.html:115
@@ -103,6 +113,18 @@ msgstr "Notice"
 #: main/templates/user/signup.html:196
 msgid "："
 msgstr ": "
+
+#: main/templates/badge/detail.html:50
+msgid "加入时间"
+msgstr "Created"
+
+#: main/templates/badge/detail.html:54
+msgid "拥有人数"
+msgstr "Number of Owners"
+
+#: main/templates/msg.html:5 main/templates/msg.html:31
+msgid "提示信息"
+msgstr "Notice"
 
 #: main/templates/msg.html:45
 msgid "点此跳转至"
@@ -260,7 +282,8 @@ msgstr "Average Following"
 #: main/templates/user/profile.html:230
 #, python-format
 msgid "恭喜升级！「%(category)s」从 Lv.%(oldlv)s 升级到 Lv.%(newlv)s！"
-msgstr "Congratulations! '%(category)s' leveled up from Lv.%(oldlv)s to Lv.%(newlv)s!"
+msgstr ""
+"Congratulations! '%(category)s' leveled up from Lv.%(oldlv)s to Lv.%(newlv)s!"
 
 #: main/templates/user/public.html:4
 msgid "的公开页"
