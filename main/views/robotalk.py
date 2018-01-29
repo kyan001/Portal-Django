@@ -6,6 +6,7 @@ import datetime
 from django.shortcuts import render
 from django.core.cache import cache
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
 import util.ctrl
 
@@ -15,7 +16,7 @@ def index(request):
     user = util.user.getCurrentUser(request)
     # add exp
     if user:
-        util.userexp.addExp(user, 'chat', 1, '与 RoboTalk 对话')
+        util.userexp.addExp(user, 'chat', 1, _('在智械聊天中对话'))
     # save/get counter start time
     cache_key = 'robotalk:starttime'
     cache_timeout = 60 * 60 * 24 * 7 * 4  # 1 month
@@ -23,7 +24,8 @@ def index(request):
     if not cache_starttime:
         cache_starttime = timezone.now()
         cache.set(cache_key, cache_starttime, cache_timeout)
-    context['starttime'] = str(timezone.now() - cache_starttime)
+    delta = timezone.now() - cache_starttime
+    context['runningtime'] = _("{d} 天 {h} 小时").format(d=delta.days, h=int(delta.seconds / 3600))
     return render(request, 'robotalk/index.html', context)
 
 

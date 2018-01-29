@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}RoboTalk{% endblock %}
+{% block title %}{% trans "智械聊天" %}{% endblock %}
 
 {% block nav-btn %}{% endblock nav-btn %}
 
@@ -69,8 +70,8 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="panel-title">
-                        RoboTalk
-                        <span class="pull-right" title="已运行 {{starttime}}">
+                        {% trans "智械聊天" %}
+                        <span class="pull-right" title="{% trans '已运行' %} {{ runningtime }}">
                             <span class="glyphicon glyphicon-comment"></span>
                             <span id="counts"></span>
                         </span>
@@ -89,10 +90,10 @@
                 <span class="input-group-addon">
                     <span id="loading-icon" class="glyphicon glyphicon-comment"></span>
                 </span>
-                <input type="text" name="userinput" class="form-control" placeholder="说点儿什么" autofocus="true">
+                <input type="text" name="userinput" class="form-control" placeholder="{% trans '说点儿什么' %}" autofocus="true">
                 <span class="input-group-btn">
                     <button id="sendbtn" class="btn btn-success" type="button" onclick="sendmsg()">
-                        发送
+                        {% trans "发送" %}
                     </button>
                 </span>
             </div><!-- /input-group -->
@@ -136,7 +137,7 @@
     function randomEvents(){
         // RCTE
         console.debug("randomEvents:")
-        var RCTE_rate = lastchat["RCTE"] ? 55 : 30  // 30% chance to start a RCTE, 55% chance to reply a robo
+        var RCTE_rate = lastchat["RCTE"] ? 65 : 40  // 40% chance to start a RCTE, 65% chance to reply a robo
         var isRoboChatToEach = randomNum() < RCTE_rate  // roll the dice to decide
         console.debug("\tRCTE: %s, isRoboChatToEach: %s", lastchat["RCTE"], isRoboChatToEach)
         lastchat["RCTE"] = isRoboChatToEach

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-29 12:56+0800\n"
+"POT-Creation-Date: 2018-01-29 13:53+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -168,6 +168,7 @@ msgid "用户昵称"
 msgstr "User Nickname"
 
 #: main/templates/chat/conversation.html:75
+#: main/templates/robotalk/index.html:96
 msgid "发送"
 msgstr "Send"
 
@@ -231,6 +232,7 @@ msgid "我的进度"
 msgstr "MyProgress"
 
 #: main/templates/index/index.html:364 main/templates/index/index.html:492
+#: main/templates/robotalk/index.html:4 main/templates/robotalk/index.html:73
 #: main/templates/userbar.html:97
 msgid "智械聊天"
 msgstr "RoboTalk"
@@ -367,9 +369,17 @@ msgstr "'s Progresses"
 msgid "名称"
 msgstr "Name"
 
+#: main/templates/opus/detail.html:60
+msgid "备注"
+msgstr "Comment"
+
 #: main/templates/opus/detail.html:65
 msgid "总共"
 msgstr "Total"
+
+#: main/templates/opus/detail.html:70
+msgid "当前进度"
+msgstr "Current"
 
 #: main/templates/opus/detail.html:75
 msgid "开始时间"
@@ -394,6 +404,14 @@ msgstr "Link"
 #: main/templates/opus/detail.html:112
 msgid "进度连接二维码"
 msgstr "QR code for progress link"
+
+#: main/templates/robotalk/index.html:74
+msgid "已运行"
+msgstr "Running"
+
+#: main/templates/robotalk/index.html:93
+msgid "说点儿什么"
+msgstr "Say something"
 
 #: main/templates/user/exphistory.html:47
 #: main/templates/user/exphistory.html:49
@@ -1052,6 +1070,15 @@ msgstr "Sent"
 #: main/views/chat.py:49
 msgid "查看收信箱"
 msgstr "Check Inbox"
+
+#: main/views/robotalk.py:19
+msgid "在智械聊天中对话"
+msgstr "Chat in RoboTalk"
+
+#: main/views/robotalk.py:28
+#, python-brace-format
+msgid "{d} 天 {h} 小时"
+msgstr "{d} days {h} hours"
 
 #: main/views/user.py:37
 #, python-brace-format

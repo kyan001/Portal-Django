@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-29 12:56+0800\n"
+"POT-Creation-Date: 2018-01-29 13:53+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: FULL NAME <EMILL@ADDRESS>\n"
 "Language-Team: Japanese <i18n@kyan001.com>\n"
@@ -167,6 +167,7 @@ msgid "用户昵称"
 msgstr ""
 
 #: main/templates/chat/conversation.html:75
+#: main/templates/robotalk/index.html:96
 msgid "发送"
 msgstr ""
 
@@ -230,6 +231,7 @@ msgid "我的进度"
 msgstr ""
 
 #: main/templates/index/index.html:364 main/templates/index/index.html:492
+#: main/templates/robotalk/index.html:4 main/templates/robotalk/index.html:73
 #: main/templates/userbar.html:97
 msgid "智械聊天"
 msgstr ""
@@ -366,8 +368,16 @@ msgstr ""
 msgid "名称"
 msgstr ""
 
+#: main/templates/opus/detail.html:60
+msgid "备注"
+msgstr ""
+
 #: main/templates/opus/detail.html:65
 msgid "总共"
+msgstr ""
+
+#: main/templates/opus/detail.html:70
+msgid "当前进度"
 msgstr ""
 
 #: main/templates/opus/detail.html:75
@@ -392,6 +402,14 @@ msgstr ""
 
 #: main/templates/opus/detail.html:112
 msgid "进度连接二维码"
+msgstr ""
+
+#: main/templates/robotalk/index.html:74
+msgid "已运行"
+msgstr ""
+
+#: main/templates/robotalk/index.html:93
+msgid "说点儿什么"
 msgstr ""
 
 #: main/templates/user/exphistory.html:47
@@ -1046,6 +1064,15 @@ msgstr ""
 
 #: main/views/chat.py:49
 msgid "查看收信箱"
+msgstr ""
+
+#: main/views/robotalk.py:19
+msgid "在智械聊天中对话"
+msgstr ""
+
+#: main/views/robotalk.py:28
+#, python-brace-format
+msgid "{d} 天 {h} 小时"
 msgstr ""
 
 #: main/views/user.py:37
