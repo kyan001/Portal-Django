@@ -1,28 +1,27 @@
 {% extends "progress/base-list.html" %}
+{% load i18n %}
 
-
-{% block title %}进度存档{% endblock title %}
+{% block title %}{% trans "进度存档" %}{% endblock title %}
 
 
 {% block content %}
     <div class="container">
-        <div class='row'>
+        <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-8 right-bordered">
                 <div class="page-header" data-toggle="collapse" data-target="#list-done">
                     <h5>
                         <span class="glyphicon glyphicon-chevron-up text-muted"></span>
-                        已完成
-                        <small>Done</small>
+                        {% trans "已完成" %}
                         <small class="prg-counts">({{ prglist.done|length }})</small>
                     </h5>
                 </div>
                 <div class="collapse in" id="list-done">
                     <div class="row">
                         {% for prg in prglist.done %}
-                            {% include 'progress/progresscard.html' with prg=prg size='col-sm-6 col-xs-12' %}
+                            {% include "progress/progresscard.html" with prg=prg size="col-sm-6 col-xs-12" %}
                         {% empty %}
                             <div class="well">
-                                进度完成后，会自动显示在这里~
+                                {% trans "进度完成后，会自动显示在这里" %}
                             </div>
                         {% endfor %}
                     </div><!--.row-->
@@ -33,18 +32,17 @@
                 <div class="page-header" data-toggle="collapse" data-target="#list-giveup">
                     <h5>
                         <span class="glyphicon glyphicon-chevron-up text-muted"></span>
-                        冻结中
-                        <small>Giveup</small>
+                        {% trans "冻结中" %}
                         <small class="prg-counts">({{ prglist.giveup|length }})</small>
                     </h5>
                 </div>
                 <div class="collapse in" id="list-giveup">
                     <div class="row">
                         {% for prg in prglist.giveup %}
-                            {% include 'progress/progresscard.html' with prg=prg size='col-xs-12' %}
+                            {% include "progress/progresscard.html" with prg=prg size="col-xs-12" %}
                         {% empty %}
                             <div class="well">
-                                冻结中的进度，会自动显示在这里，可以随时再继续阅读。
+                                {% trans "冻结中的进度，会自动显示在这里，可以随时再继续阅读。" %}
                             </div>
                         {% endfor %}
                     </div><!--.row-->

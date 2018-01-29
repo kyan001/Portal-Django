@@ -1,5 +1,5 @@
 {% extends "progress/base.html" %}
-
+{% load i18n %}
 
 {% block inhead %}
     <link rel="stylesheet" href="/static/css/progress/list/common.css">
@@ -16,6 +16,6 @@
 {% block function-btn %}
     <a href="/progress/new" class="btn btn-success btn-sm">
         <span class="glyphicon glyphicon-plus"></span>
-        <span class="hidden-xs">新增进度</span>
+        <span class="hidden-xs">{% trans "新增进度" %}</span>
     </a>
 {% endblock function-btn %}

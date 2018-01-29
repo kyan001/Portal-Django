@@ -1,5 +1,8 @@
 {% extends "progress/base.html" %}
-{% block title %}新增进度{% endblock title %}
+{% load i18n %}
+
+
+{% block title %}{% trans "新增进度" %}{% endblock title %}
 
 
 {% block inhead %}
@@ -43,7 +46,7 @@
                 <div class="panel-heading">
                     <span class="panel-title">
                         <span class="glyphicon glyphicon-plus"></span>
-                        新增进度
+                        {% trans "新增进度" %}
                     </span>
                 </div>
                 <div class="panel-body">
@@ -54,10 +57,10 @@
                                 <div class="row">
                                     <span class="col-xs-12">
                                         <div class="input-group input-group-lg {% if name %}has-warning{% endif %}">
-                                            <span class="input-group-addon">名称</span>
+                                            <span class="input-group-addon">{% trans "名称" %}</span>
                                             <input type="text"
                                                 class="form-control editable clearable"
-                                                placeholder="作品名称"
+                                                placeholder="{% trans '作品名称' %} / {% trans '进度名称' %}"
                                                 name="name"
                                                 value="{{ name }}"
                                                 onchange="Guess.getInfo()">
@@ -69,29 +72,29 @@
                                         </div>
                                     </span>
                                 </div>
-                                <span class="text-muted">选填：</span>
+                                <span class="text-muted">{% trans "选填" %}{% trans "：" %}</span>
                                 <div class="row">
                                     <span class="col-xs-12">
                                         <div id="comment-group" class="input-group">
-                                            <span class="input-group-addon">备注</span>
+                                            <span class="input-group-addon">{% trans "备注" %}</span>
                                             <input type="text"
                                                 class="form-control editable clearable"
-                                                placeholder="作品的分类或备注"
+                                                placeholder="{% trans '作品的分类或备注' %}"
                                                 name="comment">
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn btn-default dropdown-toggle" role="button" data-toggle="dropdown">
                                                     <span class="caret"></span>
                                                  </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                    <span class="btn btn-default category" role="button">书</span>
+                                                    <span class="btn btn-default category" role="button">{% trans "书" %}</span>
                                                     <span class="btn btn-default category" role="button">PDF</span>
-                                                    <span class="btn btn-default category" role="button">漫画</span>
-                                                    <span class="btn btn-default category" role="button">动画</span>
-                                                    <span class="btn btn-default category" role="button">电视剧</span>
-                                                    <span class="btn btn-default category" role="button">公开课</span>
-                                                    <span class="btn btn-default category" role="button">纪录片</span>
-                                                    <span class="btn btn-default category" role="button">视频</span>
-                                                    <span class="btn btn-default category" role="button">小说</span>
+                                                    <span class="btn btn-default category" role="button">{% trans "漫画" %}</span>
+                                                    <span class="btn btn-default category" role="button">{% trans "动画" %}</span>
+                                                    <span class="btn btn-default category" role="button">{% trans "电视剧" %}</span>
+                                                    <span class="btn btn-default category" role="button">{% trans "公开课" %}</span>
+                                                    <span class="btn btn-default category" role="button">{% trans "纪录片" %}</span>
+                                                    <span class="btn btn-default category" role="button">{% trans "视频" %}</span>
+                                                    <span class="btn btn-default category" role="button">{% trans "小说" %}</span>
                                                     <span class="btn btn-default category" role="button">Kindle</span>
                                                 </ul>
                                             </div><!-- /btn-group -->
@@ -101,10 +104,10 @@
                                 <div class="row">
                                     <span class="col-xs-12">
                                         <div class="input-group {% if total %}has-warning{% endif %}">
-                                            <span class="input-group-addon">总共</span>
+                                            <span class="input-group-addon">{% trans "总共" %}</span>
                                             <input type="number"
                                                 class="form-control editable clearable"
-                                                placeholder="总页数／总集数（追剧请填 0）"
+                                                placeholder="{% trans '总页数／总集数（追剧请填 0）' %}"
                                                 name="total"
                                                 value="{{ total }}">
                                             <span class="input-group-btn">
@@ -118,10 +121,10 @@
                                 <div class="row">
                                     <span class="col-xs-12">
                                         <div class="input-group">
-                                            <span class="input-group-addon">当前进度</span>
+                                            <span class="input-group-addon">{% trans "当前进度" %}</span>
                                             <input type="number"
                                                 class="form-control editable clearable"
-                                                placeholder="当前页数／集数"
+                                                placeholder="{% trans '当前页数／集数' %}"
                                                 name="current">
                                             <span class="input-group-btn">
                                                 <span class="btn btn-default" role="button" onclick="addOneCurrent()">+</span>
@@ -132,7 +135,7 @@
                                 <div class="row">
                                     <span class="col-xs-12">
                                         <div class="input-group has-feedback {% if weblink %}has-warning{% endif %}">
-                                            <span class="input-group-addon text-muted">作品链接</span>
+                                            <span class="input-group-addon text-muted">{% trans "作品链接" %}</span>
                                             <input type="text"
                                                 class="form-control editable clearable"
                                                 placeholder="http://"
@@ -150,16 +153,19 @@
                     <div class="row">
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                             <a class="btn btn-default" href="javascript:history.back()" onclick="disableAllBtn()">
-                                <span class="glyphicon glyphicon-remove"></span> 取消
+                                <span class="glyphicon glyphicon-remove"></span>
+                                {% trans "取消" %}
                             </a>
                         </div>
                         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 text-right">
                             <div class="text-right">
                                 <button class="btn btn-warning" role="button" onclick="Form.clear()">
-                                    <span class="glyphicon glyphicon-refresh"></span> 清空
+                                    <span class="glyphicon glyphicon-refresh"></span>
+                                    {% trans "清空" %}
                                 </button>
                                 <button class="btn btn-success" role="button" onclick="Form.submit()">
-                                        <span class="glyphicon glyphicon-ok"></span> 保存
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                        {% trans "保存" %}
                                 </button>
                             </div>
                         </div>
@@ -203,10 +209,10 @@
                             $("input[name='name']").val(result.title)
                             $("input[name='total']").val(result.pages)
                         }, function(){
-                            $.warning("未找到 ISBN:" + data.codeResult.code + " 的书籍")
+                            $.warning("{% trans '书籍' %} (ISBN:" + data.codeResult.code + ") {% trans '未找到' %}")
                         })
                     } else {
-                        $.warning("未能解析条形码")
+                        $.warning("{% trans '未能解析条形码' %}")
                     }
                 })
             }
@@ -223,7 +229,7 @@
             var total = $("input[name='total']").val()
             var current = $("input[name='current']").val()
             if(name == ""){
-                $.danger("名称不能为空")
+                $.danger("{% trans '名称不能为空' %}")
                 return false;
             }
             if(current == ""){
@@ -236,7 +242,7 @@
             }
             if(total!=0){
                 if(parseInt(current) > parseInt(total)){
-                    $.danger("初始进度不能大于总页数")
+                    $.danger("{% trans '初始进度不能大于总页数' %}")
                     return false;
                 }
             }
@@ -257,9 +263,9 @@
             if(!Guess.bookinfo){
                 var bookname = $("input[name='name']").val()
                 if(!bookname){
-                    $.warning("请先填写进度名称")
+                    $.warning("{% trans '名称不能为空' %}")
                 } else {
-                    $.danger("未获取到《" + bookname + "》的信息")
+                    $.danger("{% trans '书籍' %} 《" + bookname + "》 {% trans '信息未获取到' %}")
                 }
                 return false
             }
@@ -267,8 +273,8 @@
             if(Guess.bookinfo.tags.length > 0){  // 有 tag
                 question_txt += '\n(' + Guess.bookinfo.tags.join('，') + ')'
             }
-            question_txt += '\n页数：' + Guess.bookinfo.pages
-            question_txt += '\n\n“书籍信息正确吗？”\n'
+            question_txt += "\n{% trans '页数' %}{% trans '：' %}" + Guess.bookinfo.pages
+            question_txt += '\n\n' + "{% trans '书籍信息正确吗？' %}" + "\n"
             if(confirm(question_txt)){
                 Guess.apply(Guess.bookinfo.title, parseInt(Guess.bookinfo.pages))
             }
@@ -289,9 +295,9 @@
                     $('#guess-total .guess-icon').removeClass('text-muted')
                     if(info.match){  // 精确匹配
                         $('#guess-total .guess-icon').addClass('glyphicon-cloud-download').removeClass('glyphicon-cloud')
-                        $('input[name="name"]').attr('title', '《' + info.title + '》')
+                        $("input[name='name']").attr("title", "《" + info.title + "》")
                     } else {  // 非精确匹配
-                        $('input[name="name"]').attr('title', '是《' + info.title + '》吗？')
+                        $("input[name='name']").attr("title", "{% trans '是' %} 《" + info.title + "》 {%trans '吗？' %}")
                     }
                 }
             })

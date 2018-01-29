@@ -1,8 +1,7 @@
 {% extends "progress/base-list.html" %}
+{% load i18n %}
 
-
-{% block title %}进度搜索{% endblock title %}
-
+{% block title %}{% trans "进度搜索" %}{% endblock title %}
 
 {% block css %}
 <style>
@@ -29,13 +28,13 @@
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-search"></span>
                         </span>
-                        <input id="search-input" type="text" class="form-control" placeholder="搜索标题、备注" value="{{keyword}}" autocomplete="off" oninput="searchProgress()">
+                        <input id="search-input" type="text" class="form-control" placeholder="{% trans '搜索' %}{% trans '名称' %}{% trans '和' %}{% trans '备注' %}" value="{{ keyword }}" autocomplete="off" oninput="searchProgress()">
                         <span class="input-group-addon">
                             <span id="clear-search-btn" class="hover-pointer" onclick="resetSearch()">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </span>
                         </span>
-                        <span class="input-group-addon" title="需要访问 Google" data-toggle="tooltip" data-placement="top" data-container="body">
+                        <span class="input-group-addon" title="{% trans '需要访问 Google' %}" data-toggle="tooltip" data-placement="top" data-container="body">
                             <span id="start-speech-btn" class="hover-pointer" onclick="startSpeech()">
                                 <span class="glyphicon glyphicon-headphones"></span>
                             </span>
@@ -48,18 +47,17 @@
         <div id="show-all-header" class="page-header">
             <h5>
                 <span class="glyphicon glyphicon-th-list text-muted"></span>
-                所有进度
-                <small>All</small>
+                {% trans "所有进度" %}
                 <small class="prg-counts">({{ prglist|length }})</small>
             </h5>
         </div>
         <div id="search-result-header" class="page-header">
             <h5>
                 <span class="glyphicon glyphicon-th-list text-muted"></span>
-                <span id="search-result-title">包含 「XXX」 的进度：</span>
+                <span id="search-result-title">{% trans "进度搜索" %}{% trans "：" %}「XXX」</span>
                 <small id="search-result-count" class="prg-counts">(0)</small>
                 <small>
-                    <a id="search-result-link" class="no-decoration">(生成连接)</a>
+                    <a id="search-result-link" class="no-decoration">({% trans "生成连接" %})</a>
                 </small>
             </h5>
         </div>
@@ -70,7 +68,7 @@
                         {% include "progress/progresscard.html" with prg=prg size="col-xs-12 col-sm-6 col-lg-4" %}
                     {% empty %}
                         <div class="well">
-                            您还没有进度哦，请先添加一个进度
+                            {% trans "您还没有进度哦，请先添加一个进度" %}
                         </div>
                     {% endfor %}
                 </div><!--.row-->
@@ -101,15 +99,15 @@
             recognition.onstart = function() {
                 recognizing = true;
                 $("#start-speech-btn").css("color", "red")
-                $.info("正在语音识别中...")
+                $.info("{% trans '正在语音识别中' %} ...")
             };
             recognition.onend = function() {
                 recognizing = false;
                 $("#start-speech-btn").css("color", "black")
-                $.info("语音识别已停止")
+                $.info("{% trans '语音识别已停止' %}")
             };
             recognition.onerror = function(event) {
-                $.danger("语音识别错误：" + event.error)
+                $.danger("{% trans '语音识别错误' %}{% trans '：' %}" + event.error)
             };
             recognition.onresult = function(event) {
                 var final_txt = "";
@@ -159,7 +157,7 @@
                         $(this).hide()
                     }
                 })
-                $("#search-result-title").text("包含 「" + kw + "」的进度：")
+                $("#search-result-title").text("{% trans '进度搜索' %}{% trans '：' %}「" + kw + "」")
                 $("#search-result-link").attr("href", "/progress/search?kw=" + kw)
                 $("#search-result-count").text("(" + count + ")")
                 $("#clear-search-btn").parent(".input-group-addon").show()

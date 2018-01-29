@@ -42,10 +42,10 @@
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a class="no-decoration" href="/user/public?nickname={{ item.user.nickname }}" title="查看 @{{ opus.progress.user.nickname }} 的进度">
+                        {% trans "所有者" %}{% trans "：" %}
+                        <a class="no-decoration" href="/user/public?nickname={{ opus.progress.user.nickname }}">
                             <b>@{{ opus.progress.user.nickname }}</b>
                         </a>
-                        {% trans "的进度" %}
                     </div>
                     <table class="table table-hover">
                         <tbody>

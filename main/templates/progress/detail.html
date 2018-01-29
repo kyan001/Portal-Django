@@ -1,7 +1,8 @@
 {% extends "progress/base.html" %}
+{% load i18n %}
 
 
-{% block title %}进度：{{ opus.name }}{% endblock title %}
+{% block title %}{% trans "进度" %}{% trans "：" %}{{ opus.name }}{% endblock title %}
 
 
 {% load tags_url %}
@@ -68,11 +69,13 @@
     <div class="btn-group">
         {% if prg.status == 'giveup' or prg.status == 'done' %}
             <a class="btn btn-warning btn-sm" href="/progress/archive">
-                <span class="glyphicon glyphicon-arrow-left"></span> 进度存档
+                <span class="glyphicon glyphicon-arrow-left"></span>
+                {% trans "进度存档" %}
             </a>
         {% else %}
             <a class="btn btn-warning btn-sm" href="/progress/list">
-                <span class="glyphicon glyphicon-arrow-left"></span> 进度列表
+                <span class="glyphicon glyphicon-arrow-left"></span>
+                {% trans "进度列表" %}
             </a>
         {% endif %}
         <a class="btn btn-warning btn-sm dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -86,7 +89,7 @@
 {% block function-btn %}
     <a href="/progress/new" class="btn btn-success btn-sm hide-when-edit">
         <span class="glyphicon glyphicon-plus"></span>
-        <span class="hidden-xs">新增进度</span>
+        <span class="hidden-xs">{% trans "新增进度" %}</span>
     </a>
 {% endblock function-btn %}
 
@@ -103,7 +106,7 @@
                           data-placement="right"
                           data-container="body"
                           href="/opus/detail?id={{opus.id}}"
-                          title="分享你的进度信息">
+                          title="{% trans '分享你的进度信息' %}">
                             <span class="glyphicon glyphicon-qrcode"></span>
                         </a>
                         《<strong id="opus-name">{{ opus.name }}</strong>》
@@ -136,26 +139,26 @@
                                 <input name="id" type="hidden" value="{{prg.id}}">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
-                                        <span>进度信息</span>
+                                        <span>{% trans "进度信息" %}</span>
                                     </div>
                                     <div class="panel-body">
                                         {% if prg.status == "giveup" %}
-                                            <span class="label label-danger center-block">已冻结</span>
+                                            <span class="label label-danger center-block">{% trans "已冻结" %}</span>
                                         {% endif %}
                                         <table class="table table-condensed table-hover">
                                             <tr>
-                                                <th>状态</th>
+                                                <th>{% trans "状态" %}</th>
                                                 <td>
                                                     {{ prg.get_status_display }}
                                                     <span class="text-muted text-capitalize">{{ prg.status }}</span>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th>百分比</th>
+                                                <th>{% trans "百分比" %}</th>
                                                 <td>{{prg.persent}}%</td>
                                             </tr>
                                             <tr class="text-info" id="name-tr" data-toggle="popover" data-placement="top" data-container="body">
-                                                <th>名称</th>
+                                                <th>{% trans "名称" %}</th>
                                                 <td class="text-info">
                                                     <div class="input-group">
                                                         <span class="input-group-addon input-sm">《</span>
@@ -172,7 +175,7 @@
                                                 </td>
                                             </tr>
                                             <tr class="text-info">
-                                                <th>备注</th>
+                                                <th>{% trans "备注" %}</th>
                                                 <td class="text-info">
                                                     <input class="editable form-control"
                                                       name="comment"
@@ -184,7 +187,7 @@
                                                 </td>
                                             </tr>
                                             <tr class="text-info">
-                                                <th>总共</th>
+                                                <th>{% trans "总共" %}</th>
                                                 <td class="text-info">
                                                     <input class="editable form-control"
                                                       name="total"
@@ -198,7 +201,7 @@
                                                 </td>
                                             </tr>
                                             <tr class="text-info">
-                                                <th>当前进度</th>
+                                                <th>{% trans "当前进度" %}</th>
                                                 <td class="text-info">
                                                     <div class="form-group form-group-lg has-feedback">
                                                         <div class="input-group">
@@ -226,7 +229,7 @@
                                                 </td>
                                             </tr>
                                             <tr class="text-info" title="{{prg.weblink}}">
-                                                <th>链接</th>
+                                                <th>{% trans "链接" %}</th>
                                                 <td class="text-info">
                                                     <div class="input-group">
                                                         {% if prg.weblink and prg.weblink|isurl %}
@@ -235,7 +238,7 @@
                                                                   data-toggle="tooltip"
                                                                   data-placement="right"
                                                                   data-container="body"
-                                                                  title="在新窗口打开链接"
+                                                                  title="{% trans '在新窗口打开链接' %}"
                                                                   href="{{prg.weblink}}"
                                                                   target="_blank">
                                                                     <span class="glyphicon glyphicon-link"></span>
@@ -266,7 +269,8 @@
                                     <div id="edit-btn" class="show-when-edit">
                                         <div class="btn-group btn-group-flex">
                                             <a id="save" class="btn flex-10 btn-success" role="button" onclick="saveEdit()">
-                                                <span class="glyphicon glyphicon-ok"></span> 保存
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                                {% trans "保存" %}
                                             </a>
                                             <a id="cancel" class="btn flex-2 btn-default" role="button" onclick="cancelEdit()">
                                                 <span class="glyphicon glyphicon-remove"></span>
@@ -279,12 +283,12 @@
                         <div id="right-half-panel" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 hide-when-edit">
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
-                                    <span>时间信息</span>
+                                    <span>{% trans "时间信息" %}</span>
                                 </div>
                                 <div class="panel-body">
                                     <table class="table table-condensed table-hover">
                                         <tr>
-                                            <th>开始时间</th>
+                                            <th>{% trans "开始时间" %}</th>
                                             <td>
                                                 <span>{{prg.created|date:"Y-m-d H:i"}}</span>
                                                 <small class="text-muted">{{aux.time.c2n}}</small>
@@ -292,9 +296,9 @@
                                         </tr>
                                         <tr>
                                             {% ifequal prg.status "done" %}
-                                                <th>完成时间</th>
+                                                <th>{% trans "完成时间" %}</th>
                                             {% else %}
-                                                <th>上次更新</th>
+                                                <th>{% trans "上次更新" %}</th>
                                             {% endifequal %}
                                             <td>
                                                 <span>{{prg.modified|date:"Y-m-d H:i" }}</span>
@@ -303,21 +307,23 @@
                                         </tr>
                                         {% if aux.time.speed %}
                                             <tr class="text-success">
-                                                <td>平均速度</td>
+                                                <td>{% trans "平均速度" %}</td>
                                                 <td>
                                                     {{ aux.time.speed }}
-                                                    <small id="speed-unit" class="text-muted">每个</small>
+                                                    <small id="speed-unit" class="text-muted">
+                                                        {% trans "每个" %}
+                                                    </small>
                                                 </td>
                                             </tr>
                                         {% endif %}
                                         {% if prg.status == "done" %}
                                             <tr class="text-success">
-                                                <td>用时</td>
+                                                <td>{% trans "用时" %}</td>
                                                 <td>{{ aux.time.c2m }}</td>
                                             </tr>
                                         {% elif aux.esti.finish_date %}
                                             <tr class="text-success">
-                                                <td>预计完成</td>
+                                                <td>{% trans "预计完成" %}</td>
                                                 <td>
                                                     <span>{{aux.esti.finish_date|date:"Y-m-d"}}</span>
                                                     <small class="text-muted">{{aux.esti.finish_time}}</small>
@@ -329,11 +335,11 @@
                             </div><!--.panel-->
                             <div id="douban-info-panel" class="panel panel-primary">
                                 <div class="panel-heading">
-                                    <span><strong>作品信息</strong></span>
+                                    <span><strong>{% trans "作品信息" %}</strong></span>
                                     <span class="pull-right">
                                         <a id="opus-cover" class="btn btn-xs btn-primary" role="button">
                                             <span class="glyphicon glyphicon-picture"></span>
-                                            封面
+                                            {% trans "封面" %}
                                         </a>
                                         <a id="opus-type-a" class="btn btn-xs btn-primary" href="" target="_blank">
                                             <span id="opus-type-icon" class="glyphicon"></span>
@@ -351,13 +357,13 @@
                                             <td colspan="2">
                                                 《<a id="title-link" href="" target="_blank"></a>》
                                                 <span class="text-muted" id="original-title"></span>
-                                                <span id="color-indicator" class="btn btn-xs btn-link pull-right" title="作品代表色" data-toggle="tooltip" data-placement="left">
+                                                <span id="color-indicator" class="btn btn-xs btn-link pull-right" title="{% trans '作品代表色' %}" data-toggle="tooltip" data-placement="left">
                                                     <span class="glyphicon glyphicon-tint"></span>
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr id="rating-tr">
-                                            <td>豆瓣评分</td>
+                                            <td>{% trans "豆瓣评分" %}</td>
                                             <td>
                                                 <strong id="rating-av"></strong>
                                                 <span class="text-muted rating-aux"> / 10</span>
@@ -368,8 +374,8 @@
                                             </td>
                                         </tr>
                                         <tr id="tag-tr">
-                                            <td id="tag-label">标签</td>
-                                            <td id="tag-tag">无</td>
+                                            <td id="tag-label">{% trans "标签" %}</td>
+                                            <td id="tag-tag">{% trans "无" %}</td>
                                         </tr>
                                     </table>
                                 </div><!--.panel-body-->
@@ -381,16 +387,19 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <a class="btn btn-danger" id="delete" role="button" onclick="confirmDelete()">
-                                <span class="glyphicon glyphicon-trash"></span> 彻底删除
+                                <span class="glyphicon glyphicon-trash"></span>
+                                {% trans "彻底删除" %}
                             </a>
                             <span class="pull-right">
                                 {% if prg.status == "giveup" %}
                                     <a id="reset" class="btn btn-warning" role="button" onclick="$('#resetform').submit()">
-                                        <span class="glyphicon glyphicon-ok-circle"></span> 激活
+                                        <span class="glyphicon glyphicon-ok-circle"></span>
+                                        {% trans "激活" %}
                                     </a>
                                 {% else %}
                                     <a id="giveup" class="btn btn-warning" role="button" onclick="$('#giveupform').submit()">
-                                        <span class="glyphicon glyphicon-ban-circle"></span> 冻结
+                                        <span class="glyphicon glyphicon-ban-circle"></span>
+                                        {% trans "冻结" %}
                                     </a>
                                 {% endif %}
                             </span>
@@ -490,8 +499,22 @@
 
         if(opustype == 'init'){
             var SUBS = {
-                'book': ['书', 'book', 'pdf', '漫画', 'comic', '文字', 'doc', 'txt', '小说', 'kindle', '小说'],
-                'movie': ['动画', 'anime', '电影', 'movie', 'mv', '电视剧', 'tv', 'show', '美剧', '英剧', '韩剧', '日剧', '公开课', '视频', '纪录片'],
+                "book": [
+                    "书", "book", "{% trans '书' %}",
+                    "pdf",
+                    "漫画", "comic", "{% trans '漫画' %}",
+                    "文字", "doc", "txt",
+                    "小说", "novel", "{% trans '小说' %}",
+                    "kindle"
+                ],
+                "movie": [
+                    "动画", "anime", "{% trans '动画' %}",
+                    "电视剧", "tv", "show", "series", "{% trans '电视剧' %}",
+                    "公开课", "lesson", "{% trans '公开课' %}",
+                    "纪录片", "documentary", "{% trans '纪录片' %}",
+                    "视频", "video", "{% trans '视频' %}",
+                    "电影", "movie", "mv", "美剧", "英剧", "韩剧", "日剧"
+                ],
             }
             var sub = inputs.comment.val().toLowerCase()
             if(isInSubs(sub, SUBS.book)){
@@ -663,12 +686,12 @@
             $('#original-title').text(info.origin_title)
             $('#rate-number').text(info.numrater).siblings('.glyphicon').addClass('glyphicon-user')
             $('#opus-type-icon').addClass('glyphicon-book')
-            $('#speed-unit').text('每页')
+            $('#speed-unit').text("{% trans '每页' %}")
         } else if(info.type == 'movie'){
             $('#original-title').text(info.original_title)
             $('#rate-number').text(info.stars).siblings('.glyphicon').addClass('glyphicon-star')
             $('#opus-type-icon').addClass('glyphicon-film')
-            $('#speed-unit').text('每集')
+            $('#speed-unit').text("{% trans '每集' %}")
         }
         $('#opus-type-a').attr('title', info.title)
         $('#opus-type-a').attr('href', info.api)
@@ -680,10 +703,10 @@
         console.debug('showGuess:' + infos[typ].title)
         infos.guess = infos[typ]
         var title_a = '<a href="' + infos.guess.url + '" target="_blank">' + infos.guess.title + '</a>'
-        var guess_title = '《' + title_a + '》'
-        var guess_subtype = infos.guess.subtype ? "（" + infos.guess.subtype.toUpperCase() + "）" : ''
+        var guess_title = "《" + title_a + "》"
+        var guess_subtype = infos.guess.subtype ? "{% trans '（' %}" + infos.guess.subtype.toUpperCase() + "{% trans '）' %}" : ''
         var apply_guess = "<span id='apply-guess' class='text-success glyphicon glyphicon-ok img-thumbnail' onclick='applyGuess(\"" + infos.guess.title + "\")'></span>"
-        var content_html = '是' + guess_title + guess_subtype + '吗？' + apply_guess
+        var content_html = "{% trans '是' %} " + guess_title + guess_subtype + " {% trans '吗？' %}" + apply_guess
         $('#name-tr').popover({
             delay: {'show':0, 'hide':0},
             html: true,
@@ -738,12 +761,12 @@
     }
     function confirmDelete(){
         // 点击删除时，最后确认的框
-        var result = confirm("确定删除此进度？\n（删除操作不可恢复）")
+        var result = confirm("{% trans '确定删除此进度？' %}\n{% trans '（' %}{% trans '删除操作不可恢复' %}{% trans '）' %}")
         if(result){
             disableAllBtn()
             $("#deleteform").submit();
         } else {
-            $.info("删除操作已取消")
+            $.info("{% trans '删除操作已取消' %}")
         }
     }
     function checkEditMode(){
@@ -795,7 +818,7 @@
     function fullValidation(){
         // 验证所有输入框的合法性
         if(inputs.name.val() == ""){
-            $.danger('名称不能为空')
+            $.danger("{% trans '名称不能为空' %}")
             return false;
         }
         if(inputs.total.val() == '∞' || inputs.total.val() == ""){
@@ -805,11 +828,11 @@
             inputs.current.val(0)
         }
         if(isNaN(inputs.current.val())){
-            $.danger('输入的更新的进度 ' + inputs.current.val() +' 必须是纯数字！')
+            $.danger("{% trans '输入的更新的进度' %} " +  inputs.current.val() + " {% trans '必须是纯数字' %}{% trans '！' %}")
             return false;
         }
         if(parseInt(inputs.total.val()) > 0 && parseInt(inputs.current.val()) > parseInt(inputs.total.val())){
-            $.danger('错误：当前进度 ' + inputs.current.val() + ' 大于总共 ' + inputs.total.val())
+            $.danger("{% trans '错误' %}{% trans '：' %}{% trans '当前进度' %} " + inputs.current.val() + " " + "{% trans '大于' %}{% trans '总共' %}" + " " + inputs.total.val())
             return false;
         }
         return true
@@ -820,7 +843,7 @@
             return false
         }
         if(parseInt(inputs.total.val()) > 0 && parseInt(inputs.current.val()) == parseInt(inputs.total.val())){
-            $.warning('进度已达到最大值');
+            $.warning("{% trans '进度已达到最大值' %}");
             return false;
         }
         inputs.current.val(parseInt(inputs.current.val()) + 1);

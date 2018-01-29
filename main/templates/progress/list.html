@@ -1,7 +1,7 @@
 {% extends "progress/base-list.html" %}
+{% load i18n %}
 
-
-{% block title %}进度列表{% endblock title %}
+{% block title %}{% trans "进度列表" %}{% endblock title %}
 
 
 {% block content %}
@@ -11,8 +11,7 @@
                 <div class="page-header" data-toggle="collapse" data-target="#list-inprogress">
                     <h5>
                         <span class="glyphicon glyphicon-chevron-up text-muted"></span>
-                        进行中
-                        <small>Inprogress</small>
+                        {% trans "进行中" %}
                         <small class="prg-counts">({{ prglist.inprogress|length }})</small>
                     </h5>
                 </div>
@@ -22,7 +21,7 @@
                             {% include "progress/progresscard.html" with prg=prg size="col-sm-6 col-xs-12" %}
                         {% empty %}
                             <div class="well">
-                                您还没有任何进度哦~
+                                {% trans "您还没有任何进行中的进度" %}
                             </div>
                         {% endfor %}
                     </div><!--.row-->
@@ -33,8 +32,7 @@
                 <div class="page-header" data-toggle="collapse" data-target="#list-follow">
                     <h5>
                         <span class="glyphicon glyphicon-chevron-up text-muted"></span>
-                        追剧中
-                        <small>Follow</small>
+                        {% trans "追剧中" %}
                         <small class="prg-counts">({{ prglist.follow|length }})</small>
                     </h5>
                 </div>
@@ -44,7 +42,7 @@
                             {% include "progress/progresscard.html" with prg=prg size="col-xs-12 col-sm-6 col-md-12" %}
                         {% empty %}
                             <div class="well">
-                                您没有在追剧的进度哦~
+                                {% trans "您没有在追剧的进度" %}
                             </div>
                         {% endfor %}
                     </div><!--.row-->
@@ -57,8 +55,7 @@
                 <div class="page-header" data-toggle="collapse" data-target="#list-todo" onmouseover="$('#list-todo').collapse('show');">
                     <h5>
                         <span class="glyphicon glyphicon-chevron-up text-muted"></span>
-                        待阅读
-                        <small>Todo</small>
+                        {% trans "待阅读" %}
                         <small class="prg-counts">({{ prglist.todo|length }})</small>
                     </h5>
                 </div>
@@ -69,7 +66,7 @@
                                 {% include "progress/progresscard.html" with prg=prg size="col-md-4 col-sm-6 col-xs-12" %}
                             {% empty %}
                                 <div class="well">
-                                    您没有尚未开始的进度哦~
+                                    {% trans "您没有尚未开始的进度" %}
                                 </div>
                             {% endfor %}
                         </div><!--.row-->
@@ -84,8 +81,7 @@
                     <div class="page-header" data-toggle="collapse" data-target="#list-error">
                         <h5>
                             <span class="glyphicon glyphicon-plus text-muted"></span>
-                            出错
-                            <small>Error</small>
+                            {% trans "出错" %}
                             <small class="prg-counts">({{ prglist.error|length }})</small>
                         </h5>
                     </div>

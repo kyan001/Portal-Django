@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-29 16:49+0800\n"
+"POT-Creation-Date: 2018-01-30 00:15+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -40,28 +40,34 @@ msgstr "Chat Activity"
 msgid "错误类别"
 msgstr "Error Category"
 
-#: main/models.py:322 main/templates/user/profile.html:147
+#: main/models.py:322 main/templates/progress/list.html:14
+#: main/templates/user/profile.html:147
 msgid "进行中"
 msgstr "In Progress"
 
-#: main/models.py:323 main/templates/user/profile.html:149
+#: main/models.py:323 main/templates/progress/list.html:35
+#: main/templates/user/profile.html:149
 msgid "追剧中"
 msgstr "Following"
 
-#: main/models.py:324 main/templates/user/profile.html:148
+#: main/models.py:324 main/templates/progress/list.html:58
+#: main/templates/progress/timeline.html:221
+#: main/templates/user/profile.html:148
 msgid "待阅读"
 msgstr "To Do"
 
-#: main/models.py:325 main/templates/user/profile.html:144
-#: main/templates/user/public.html:91
+#: main/models.py:325 main/templates/progress/list.html:84
+#: main/templates/user/profile.html:144 main/templates/user/public.html:91
 msgid "出错"
 msgstr "Error"
 
-#: main/models.py:328 main/templates/user/profile.html:145
+#: main/models.py:328 main/templates/progress/archive.html:14
+#: main/templates/user/profile.html:145
 msgid "已完成"
 msgstr "Done"
 
-#: main/models.py:329 main/templates/user/profile.html:146
+#: main/models.py:329 main/templates/progress/archive.html:35
+#: main/templates/user/profile.html:146
 msgid "冻结中"
 msgstr "Give Up"
 
@@ -102,7 +108,13 @@ msgstr "Designer"
 #: main/templates/badge/detail.html:42 main/templates/badge/detail.html:50
 #: main/templates/badge/detail.html:54 main/templates/badge/list.html:50
 #: main/templates/badge/list.html:54 main/templates/chat/conversation.html:4
-#: main/templates/msg.html:32 main/templates/superuser/broadcast.html:4
+#: main/templates/msg.html:32 main/templates/opus/detail.html:45
+#: main/templates/progress/detail.html:5
+#: main/templates/progress/detail.html:835 main/templates/progress/new.html:75
+#: main/templates/progress/new.html:276 main/templates/progress/search.html:57
+#: main/templates/progress/search.html:110
+#: main/templates/progress/search.html:160
+#: main/templates/superuser/broadcast.html:4
 #: main/templates/user/forgetusername.html:42
 #: main/templates/user/profile.html:79 main/templates/user/profile.html:83
 #: main/templates/user/profile.html:87 main/templates/user/profile.html:95
@@ -211,8 +223,8 @@ msgid "人"
 msgstr "People"
 
 #: main/templates/chat/inbox.html:66 main/templates/chat/inbox.html:94
-#: main/templates/user/profile.html:117 main/templates/user/profile.html:125
-#: main/templates/user/profile.html:133
+#: main/templates/progress/detail.html:378 main/templates/user/profile.html:117
+#: main/templates/user/profile.html:125 main/templates/user/profile.html:133
 msgid "无"
 msgstr "None"
 
@@ -229,7 +241,8 @@ msgid "欢迎"
 msgstr "Welcome"
 
 #: main/templates/index/index.html:351 main/templates/index/index.html:396
-#: main/templates/userbar.html:91 main/views/user.py:281
+#: main/templates/progress/navdropdown.html:26 main/templates/userbar.html:91
+#: main/views/user.py:281
 msgid "我的进度"
 msgstr "MyProgress"
 
@@ -260,6 +273,7 @@ msgid "尽情享受"
 msgstr "Enjoy"
 
 #: main/templates/index/index.html:381 main/templates/index/index.html:383
+#: main/templates/progress/detail.html:831
 msgid "！"
 msgstr "! "
 
@@ -363,35 +377,41 @@ msgstr "QR code for current page"
 msgid "一键添加到我的进度"
 msgstr "1-Click adding to MyProgress"
 
-#: main/templates/opus/detail.html:48
-msgid "的进度"
-msgstr "'s Progresses"
+#: main/templates/opus/detail.html:45
+msgid "所有者"
+msgstr "Owner"
 
-#: main/templates/opus/detail.html:53
+#: main/templates/opus/detail.html:53 main/templates/progress/detail.html:161
+#: main/templates/progress/new.html:60 main/templates/progress/search.html:31
 msgid "名称"
 msgstr "Name"
 
-#: main/templates/opus/detail.html:60
+#: main/templates/opus/detail.html:60 main/templates/progress/detail.html:178
+#: main/templates/progress/new.html:79 main/templates/progress/search.html:31
 msgid "备注"
 msgstr "Comment"
 
-#: main/templates/opus/detail.html:65
+#: main/templates/opus/detail.html:65 main/templates/progress/detail.html:190
+#: main/templates/progress/detail.html:835 main/templates/progress/new.html:107
 msgid "总共"
 msgstr "Total"
 
-#: main/templates/opus/detail.html:70
+#: main/templates/opus/detail.html:70 main/templates/progress/detail.html:204
+#: main/templates/progress/detail.html:835 main/templates/progress/new.html:124
 msgid "当前进度"
 msgstr "Current"
 
-#: main/templates/opus/detail.html:75
+#: main/templates/opus/detail.html:75 main/templates/progress/detail.html:291
+#: main/templates/progress/progresscard.html:37
 msgid "开始时间"
 msgstr "Created"
 
-#: main/templates/opus/detail.html:79
+#: main/templates/opus/detail.html:79 main/templates/progress/detail.html:301
+#: main/templates/progress/progresscard.html:41
 msgid "上次更新"
 msgstr "Last Updated"
 
-#: main/templates/opus/detail.html:83
+#: main/templates/opus/detail.html:83 main/templates/progress/detail.html:150
 msgid "状态"
 msgstr "Status"
 
@@ -400,12 +420,395 @@ msgid "进度链接"
 msgstr "Progress Link"
 
 #: main/templates/opus/detail.html:99 main/templates/opus/detail.html:108
+#: main/templates/progress/detail.html:232
 msgid "链接"
 msgstr "Link"
 
 #: main/templates/opus/detail.html:112
 msgid "进度连接二维码"
 msgstr "QR code for progress link"
+
+#: main/templates/progress/archive.html:4
+#: main/templates/progress/detail.html:73
+#: main/templates/progress/navdropdown.html:20
+msgid "进度存档"
+msgstr "Progress Archive"
+
+#: main/templates/progress/archive.html:24
+msgid "进度完成后，会自动显示在这里"
+msgstr "Completed progresses are shown here"
+
+#: main/templates/progress/archive.html:45
+msgid "冻结中的进度，会自动显示在这里，可以随时再继续阅读。"
+msgstr "Gived up progresses are shown here. You can restart it anytime. "
+
+#: main/templates/progress/base-list.html:19
+#: main/templates/progress/detail.html:92 main/templates/progress/new.html:5
+#: main/templates/progress/new.html:49
+msgid "新增进度"
+msgstr "New Progress"
+
+#: main/templates/progress/detail.html:5
+msgid "进度"
+msgstr "Progress"
+
+#: main/templates/progress/detail.html:78 main/templates/progress/list.html:4
+#: main/templates/progress/navdropdown.html:16
+msgid "进度列表"
+msgstr "Progress List"
+
+#: main/templates/progress/detail.html:109
+msgid "分享你的进度信息"
+msgstr "Share your progress"
+
+#: main/templates/progress/detail.html:142 main/templates/user/profile.html:71
+#: main/templates/user/public.html:59
+msgid "进度信息"
+msgstr "Progress Info"
+
+#: main/templates/progress/detail.html:146
+msgid "已冻结"
+msgstr "Gived Up"
+
+#: main/templates/progress/detail.html:157
+msgid "百分比"
+msgstr "Percentage"
+
+#: main/templates/progress/detail.html:241
+msgid "在新窗口打开链接"
+msgstr "Open link in new window"
+
+#: main/templates/progress/detail.html:273 main/templates/progress/new.html:168
+msgid "保存"
+msgstr "Save"
+
+#: main/templates/progress/detail.html:286
+msgid "时间信息"
+msgstr "Time Information"
+
+#: main/templates/progress/detail.html:299
+#: main/templates/progress/progresscard.html:32
+msgid "完成时间"
+msgstr "Finished"
+
+#: main/templates/progress/detail.html:310
+msgid "平均速度"
+msgstr "Average"
+
+#: main/templates/progress/detail.html:314
+msgid "每个"
+msgstr "per 1"
+
+#: main/templates/progress/detail.html:321
+msgid "用时"
+msgstr "Spent"
+
+#: main/templates/progress/detail.html:326
+msgid "预计完成"
+msgstr "Estimated"
+
+#: main/templates/progress/detail.html:338
+msgid "作品信息"
+msgstr "Opus Info"
+
+#: main/templates/progress/detail.html:342
+msgid "封面"
+msgstr "Cover"
+
+#: main/templates/progress/detail.html:360
+#: main/templates/progress/progresscard.html:13
+msgid "作品代表色"
+msgstr "Representative Color"
+
+#: main/templates/progress/detail.html:366
+msgid "豆瓣评分"
+msgstr "Douban Rating"
+
+#: main/templates/progress/detail.html:377
+msgid "标签"
+msgstr "Tags"
+
+#: main/templates/progress/detail.html:391
+msgid "彻底删除"
+msgstr "Delete"
+
+#: main/templates/progress/detail.html:397
+msgid "激活"
+msgstr "Reactivate"
+
+#: main/templates/progress/detail.html:402
+msgid "冻结"
+msgstr "Deactivate"
+
+#: main/templates/progress/detail.html:503 main/templates/progress/new.html:89
+msgid "书"
+msgstr "Book"
+
+#: main/templates/progress/detail.html:505 main/templates/progress/new.html:91
+msgid "漫画"
+msgstr "Comic"
+
+#: main/templates/progress/detail.html:507 main/templates/progress/new.html:97
+msgid "小说"
+msgstr "Novel"
+
+#: main/templates/progress/detail.html:511 main/templates/progress/new.html:92
+msgid "动画"
+msgstr "Anime"
+
+#: main/templates/progress/detail.html:512 main/templates/progress/new.html:93
+msgid "电视剧"
+msgstr "TV Series"
+
+#: main/templates/progress/detail.html:513 main/templates/progress/new.html:94
+msgid "公开课"
+msgstr "Lesson"
+
+#: main/templates/progress/detail.html:514 main/templates/progress/new.html:95
+msgid "纪录片"
+msgstr "Documentary"
+
+#: main/templates/progress/detail.html:515 main/templates/progress/new.html:96
+msgid "视频"
+msgstr "Video"
+
+#: main/templates/progress/detail.html:689
+msgid "每页"
+msgstr "per page"
+
+#: main/templates/progress/detail.html:694
+msgid "每集"
+msgstr "per episode"
+
+#: main/templates/progress/detail.html:707
+#: main/templates/progress/detail.html:764
+msgid "（"
+msgstr " ("
+
+#: main/templates/progress/detail.html:707
+#: main/templates/progress/detail.html:764
+msgid "）"
+msgstr ") "
+
+#: main/templates/progress/detail.html:709 main/templates/progress/new.html:300
+#: main/templates/user/signup.html:189 main/templates/user/signup.html:193
+msgid "是"
+msgstr "is"
+
+#: main/templates/progress/detail.html:709 main/templates/progress/new.html:300
+msgid "吗？"
+msgstr "right? "
+
+#: main/templates/progress/detail.html:764
+msgid "确定删除此进度？"
+msgstr "Are you sure to delete this progress? "
+
+#: main/templates/progress/detail.html:764
+msgid "删除操作不可恢复"
+msgstr "Delete cannot be undo"
+
+#: main/templates/progress/detail.html:769
+msgid "删除操作已取消"
+msgstr "Delete is canceled"
+
+#: main/templates/progress/detail.html:821 main/templates/progress/new.html:232
+#: main/templates/progress/new.html:266
+msgid "名称不能为空"
+msgstr "Name cannot be empty"
+
+#: main/templates/progress/detail.html:831
+msgid "输入的更新的进度"
+msgstr "new value of current"
+
+#: main/templates/progress/detail.html:831
+msgid "必须是纯数字"
+msgstr "must be a number"
+
+#: main/templates/progress/detail.html:835 main/views/user.py:39
+#: main/views/user.py:45 main/views/user.py:58
+msgid "错误"
+msgstr "Error"
+
+#: main/templates/progress/detail.html:835
+msgid "大于"
+msgstr "is larger than"
+
+#: main/templates/progress/detail.html:846
+msgid "进度已达到最大值"
+msgstr "Max of the range reached"
+
+#: main/templates/progress/list.html:24
+msgid "您还没有任何进行中的进度"
+msgstr "You do not have any on-going progress"
+
+#: main/templates/progress/list.html:45
+msgid "您没有在追剧的进度"
+msgstr "You do not have any following progress"
+
+#: main/templates/progress/list.html:69
+msgid "您没有尚未开始的进度"
+msgstr "You do not have any to-do progress"
+
+#: main/templates/progress/navdropdown.html:18
+msgid "进度详情"
+msgstr "Progress Detail"
+
+#: main/templates/progress/navdropdown.html:22
+#: main/templates/progress/search.html:4 main/templates/progress/search.html:57
+#: main/templates/progress/search.html:160
+msgid "进度搜索"
+msgstr "Progress Search"
+
+#: main/templates/progress/navdropdown.html:24
+#: main/templates/progress/timeline.html:4
+msgid "进度历程"
+msgstr "Progress Timeline"
+
+#: main/templates/progress/new.html:63
+msgid "作品名称"
+msgstr "Opus Name"
+
+#: main/templates/progress/new.html:63
+msgid "进度名称"
+msgstr "Progress name"
+
+#: main/templates/progress/new.html:75 main/templates/user/signup.html:446
+#: main/templates/user/signup.html:478 main/templates/user/signup.html:520
+msgid "选填"
+msgstr "Optional"
+
+#: main/templates/progress/new.html:82
+msgid "作品的分类或备注"
+msgstr "Category or Comment"
+
+#: main/templates/progress/new.html:110
+msgid "总页数／总集数（追剧请填 0）"
+msgstr "Total pages / episodes (0 for following)"
+
+#: main/templates/progress/new.html:127
+msgid "当前页数／集数"
+msgstr "Current page / episode"
+
+#: main/templates/progress/new.html:138
+msgid "作品链接"
+msgstr "Opus Link"
+
+#: main/templates/progress/new.html:157
+msgid "取消"
+msgstr "Cancel"
+
+#: main/templates/progress/new.html:164
+msgid "清空"
+msgstr "Clear"
+
+#: main/templates/progress/new.html:212 main/templates/progress/new.html:268
+msgid "书籍"
+msgstr "Book"
+
+#: main/templates/progress/new.html:212
+msgid "未找到"
+msgstr "not found"
+
+#: main/templates/progress/new.html:215
+msgid "未能解析条形码"
+msgstr "Cannot decode the barcode"
+
+#: main/templates/progress/new.html:245
+msgid "初始进度不能大于总页数"
+msgstr "Initial 'Current' should not be larger than 'Total'"
+
+#: main/templates/progress/new.html:268
+msgid "信息未获取到"
+msgstr "information not found"
+
+#: main/templates/progress/new.html:276
+msgid "页数"
+msgstr "Page"
+
+#: main/templates/progress/new.html:277
+msgid "书籍信息正确吗？"
+msgstr "Is book information correct? "
+
+#: main/templates/progress/search.html:31
+msgid "搜索"
+msgstr "Search"
+
+#: main/templates/progress/search.html:31
+msgid "和"
+msgstr " and "
+
+#: main/templates/progress/search.html:37
+msgid "需要访问 Google"
+msgstr "Need google.com access"
+
+#: main/templates/progress/search.html:50
+msgid "所有进度"
+msgstr "All progresses"
+
+#: main/templates/progress/search.html:60
+msgid "生成连接"
+msgstr "Search result link"
+
+#: main/templates/progress/search.html:71
+msgid "您还没有进度哦，请先添加一个进度"
+msgstr "You do not have any progress. Add one first."
+
+#: main/templates/progress/search.html:102
+msgid "正在语音识别中"
+msgstr "Speech Recognizing"
+
+#: main/templates/progress/search.html:107
+msgid "语音识别已停止"
+msgstr "Speech Recognize stopped"
+
+#: main/templates/progress/search.html:110
+msgid "语音识别错误"
+msgstr "Speech Recognition Error"
+
+#: main/templates/progress/timeline.html:94
+#: main/templates/progress/timeline.html:128
+msgid "开始看"
+msgstr "Started"
+
+#: main/templates/progress/timeline.html:100
+#: main/templates/progress/timeline.html:134
+#: main/templates/progress/timeline.html:206
+msgid "完成了"
+msgstr "Completed"
+
+#: main/templates/progress/timeline.html:106
+#: main/templates/progress/timeline.html:140
+#: main/templates/progress/timeline.html:210
+msgid "冻结了"
+msgstr "Deactivated"
+
+#: main/templates/progress/timeline.html:112
+#: main/templates/progress/timeline.html:146
+#: main/templates/progress/timeline.html:214
+msgid "进行至"
+msgstr "Proceeded to"
+
+#: main/templates/progress/timeline.html:118
+#: main/templates/progress/timeline.html:152
+#: main/templates/progress/timeline.html:217
+msgid "追剧至"
+msgstr "Followed to"
+
+#: main/templates/progress/timeline.html:118
+#: main/templates/progress/timeline.html:152
+#: main/templates/progress/timeline.html:217
+msgid "第"
+msgstr "No."
+
+#: main/templates/progress/timeline.html:118
+#: main/templates/progress/timeline.html:152
+#: main/templates/progress/timeline.html:217
+msgid "集"
+msgstr "episode"
+
+#: main/templates/progress/timeline.html:221
+msgid "加入至"
+msgstr "Added to"
 
 #: main/templates/robotalk/index.html:74
 msgid "已运行"
@@ -450,7 +853,7 @@ msgstr "Please use user's email to send a message to: "
 #: main/templates/user/forgetanswer.html:22
 msgid "提供越详细的信息，找回密码或答案的机会越大"
 msgstr ""
-"The more infomation provide, the more chance to get back the password or "
+"The more information provide, the more chance to get back the password or "
 "answer"
 
 #: main/templates/user/forgetusername.html:4
@@ -490,10 +893,6 @@ msgstr "Profile"
 #: main/templates/user/profile.html:68
 msgid "注册信息"
 msgstr "Account Info"
-
-#: main/templates/user/profile.html:71 main/templates/user/public.html:59
-msgid "进度信息"
-msgstr "Progress Info"
 
 #: main/templates/user/profile.html:83 main/templates/user/signin.html:53
 #: main/templates/user/signindropdown.html:13
@@ -764,10 +1163,6 @@ msgstr " '"
 msgid "”"
 msgstr "' "
 
-#: main/templates/user/signup.html:189 main/templates/user/signup.html:193
-msgid "是"
-msgstr "is"
-
 #: main/templates/user/signup.html:191
 msgid "不包含"
 msgstr "does not contain"
@@ -889,11 +1284,6 @@ msgstr "No length limitation or charactor restriction"
 #: main/templates/user/signup.html:444 main/templates/user/signup.html:446
 msgid "备选答案"
 msgstr "Alternative Answer"
-
-#: main/templates/user/signup.html:446 main/templates/user/signup.html:478
-#: main/templates/user/signup.html:520
-msgid "选填"
-msgstr "Optional"
 
 #: main/templates/user/signup.html:447 main/templates/user/signup.html:463
 msgid "同样作为正常答案生效"
@@ -1178,10 +1568,6 @@ msgstr "Sending success"
 msgid "请求的分类（{category}）不存在"
 msgstr "The requested category ({category}) does not exist"
 
-#: main/views/user.py:39 main/views/user.py:45 main/views/user.py:58
-msgid "错误"
-msgstr "Error"
-
 #: main/views/user.py:68
 msgid "{} 访问了你的公开页"
 msgstr "{} visited your public page"
@@ -1343,7 +1729,7 @@ msgid ""
 "此页面需要用户信息，\n"
 "请登入/注册后再访问。"
 msgstr ""
-"This page required user infomation, \n"
+"This page required user information, \n"
 "Please login/signup first."
 
 #: util/user.py:102

@@ -1,22 +1,28 @@
+{% load i18n %}
+
 <ul class="dropdown-menu">
     <li class="progress-dropdown-li">
         <a href="/progress/list">
-            <span class="glyphicon glyphicon-th-list"></span> 进度列表
+            <span class="glyphicon glyphicon-th-list"></span>
+            {% trans "进度列表" %}
         </a>
     </li>
     <li class="progress-dropdown-li">
         <a href="/progress/archive">
-            <span class="glyphicon glyphicon-inbox"></span> 进度存档
+            <span class="glyphicon glyphicon-inbox"></span>
+            {% trans "进度存档" %}
         </a>
     </li>
     <li class="progress-dropdown-li">
         <a href="/progress/search">
-            <span class="glyphicon glyphicon-search"></span> 进度搜索
+            <span class="glyphicon glyphicon-search"></span>
+            {% trans "进度搜索" %}
         </a>
     </li>
     <li class="progress-dropdown-li">
         <a href="/progress/timeline">
-            <span class="glyphicon glyphicon-time"></span> 进度历程
+            <span class="glyphicon glyphicon-time"></span>
+            {% trans "进度历程" %}
         </a>
     </li>
 </ul>

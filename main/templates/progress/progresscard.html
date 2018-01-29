@@ -1,7 +1,8 @@
 {% load tags_url %}
+{% load i18n %}
 
-<div class="{{size}} progress-card ani-fast-container ani-fast" progressid="{{prg.id}}" progressname="{{prg.opus.name}}">
-    <a href="/progress/detail?id={{prg.id}}" class="no-decoration">
+<div class="{{size}} progress-card ani-fast-container ani-fast" progressid="{{prg.id}}" progressname="{{ prg.opus.name }}">
+    <a href="/progress/detail?id={{ prg.id }}" class="no-decoration">
         <div class="panel panel-{{ prg.getContextualType|default:'default' }} hover-shadow">
             <div class="panel-heading no-bottom-border progress-title text-nowrap">
                 <span class="panel-title">
@@ -9,7 +10,7 @@
                         《<strong>{{ prg.opus.name|truncatechars:25 }}</strong>》
                     </span>
                     {% if prg.opus.covercolor %}
-                        <span class="small glyphicon glyphicon-tint" style="color: {{prg.opus.covercolor}}" title="《{{prg.opus.name}}》的封面颜色"></span>
+                        <span class="small glyphicon glyphicon-tint" style="color: {{ prg.opus.covercolor }}" title="《{{ prg.opus.name }}》 {% trans '作品代表色' %}"></span>
                     {% endif %}
                     {% if prg.opus.comment %}
                         <em class="comment small">
@@ -28,16 +29,16 @@
                     {% if prg.current == prg.opus.total and prg.current != 0 %}
                         <td class="text-center bg-primary">
                             <span class="glyphicon glyphicon-ok"></span>
-                            <span title="完成时间">{{ prg.modified|date:'Y-m-d' }}</span>
+                            <span title="{% trans '完成时间' %}">{{ prg.modified|date:'Y-m-d' }}</span>
                         </td>
                     {% else %}
                         <td class="text-left {{ prg.getContextualType|default:'active' }}">
                             <span class="glyphicon glyphicon-play"></span>
-                            <span title="开始时间">{{ prg.created|date:'Y-m-d' }}</span>
+                            <span title="{% trans '开始时间' %}">{{ prg.created|date:'Y-m-d' }}</span>
                         </td>
                         <td class="text-right {{ prg.getContextualType|default:'active' }}">
                             <span class="glyphicon glyphicon-pause"></span>
-                            <span title="上次更新">{{ prg.modified|date:'Y-m-d' }}</span>
+                            <span title="{% trans '上次更新' %}">{{ prg.modified|date:'Y-m-d' }}</span>
                         </td>
                     {% endif %}
                 </tr>
