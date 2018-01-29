@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-26 23:41+0800\n"
+"POT-Creation-Date: 2018-01-29 12:56+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: FULL NAME <EMILL@ADDRESS>\n"
 "Language-Team: Japanese <i18n@kyan001.com>\n"
@@ -39,49 +39,49 @@ msgstr ""
 msgid "错误类别"
 msgstr ""
 
-#: main/models.py:322 main/templates/user/profile.html:153
+#: main/models.py:322 main/templates/user/profile.html:147
 msgid "进行中"
 msgstr ""
 
-#: main/models.py:323 main/templates/user/profile.html:155
+#: main/models.py:323 main/templates/user/profile.html:149
 msgid "追剧中"
 msgstr ""
 
-#: main/models.py:324 main/templates/user/profile.html:154
+#: main/models.py:324 main/templates/user/profile.html:148
 msgid "待阅读"
 msgstr ""
 
-#: main/models.py:325 main/templates/user/profile.html:150
-#: main/templates/user/public.html:97
+#: main/models.py:325 main/templates/user/profile.html:144
+#: main/templates/user/public.html:91
 msgid "出错"
 msgstr ""
 
-#: main/models.py:328 main/templates/user/profile.html:151
+#: main/models.py:328 main/templates/user/profile.html:145
 msgid "已完成"
 msgstr ""
 
-#: main/models.py:329 main/templates/user/profile.html:152
+#: main/models.py:329 main/templates/user/profile.html:146
 msgid "冻结中"
 msgstr ""
 
-#: main/templates/404.html:27
+#: main/templates/404.html:29
 msgid "你来到了一个不存在的地方"
 msgstr ""
 
-#: main/templates/404.html:31
+#: main/templates/404.html:33
 msgid "你要访问的页面不存在"
 msgstr ""
 
-#: main/templates/404.html:37 main/templates/500.html:36
-#: main/templates/msg.html:51
+#: main/templates/404.html:39 main/templates/500.html:38
+#: main/templates/msg.html:52
 msgid "点此回到上个页面"
 msgstr ""
 
-#: main/templates/500.html:27
+#: main/templates/500.html:29
 msgid "服务器出现了一个小问题"
 msgstr ""
 
-#: main/templates/500.html:31
+#: main/templates/500.html:33
 msgid "服务器内部错误，请联系服务器管理员"
 msgstr ""
 
@@ -93,28 +93,28 @@ msgstr ""
 msgid "回到徽章列表"
 msgstr ""
 
-#: main/templates/badge/detail.html:42 main/templates/badge/list.html:56
+#: main/templates/badge/detail.html:42 main/templates/badge/list.html:50
 msgid "设计师"
 msgstr ""
 
 #: main/templates/badge/detail.html:42 main/templates/badge/detail.html:50
-#: main/templates/badge/detail.html:54 main/templates/badge/list.html:56
-#: main/templates/badge/list.html:60 main/templates/chat/conversation.html:4
-#: main/templates/msg.html:31 main/templates/user/forgetusername.html:42
-#: main/templates/user/profile.html:85 main/templates/user/profile.html:89
-#: main/templates/user/profile.html:93 main/templates/user/profile.html:101
-#: main/templates/user/profile.html:105 main/templates/user/profile.html:115
-#: main/templates/user/profile.html:119 main/templates/user/profile.html:127
-#: main/templates/user/profile.html:135 main/templates/user/profile.html:143
-#: main/templates/user/profile.html:159 main/templates/user/profile.html:162
-#: main/templates/user/profile.html:166 main/templates/user/profile.html:170
-#: main/templates/user/profile.html:174 main/templates/user/profile.html:178
+#: main/templates/badge/detail.html:54 main/templates/badge/list.html:50
+#: main/templates/badge/list.html:54 main/templates/chat/conversation.html:4
+#: main/templates/msg.html:32 main/templates/user/forgetusername.html:42
+#: main/templates/user/profile.html:79 main/templates/user/profile.html:83
+#: main/templates/user/profile.html:87 main/templates/user/profile.html:95
+#: main/templates/user/profile.html:99 main/templates/user/profile.html:109
+#: main/templates/user/profile.html:113 main/templates/user/profile.html:121
+#: main/templates/user/profile.html:129 main/templates/user/profile.html:137
+#: main/templates/user/profile.html:153 main/templates/user/profile.html:156
+#: main/templates/user/profile.html:160 main/templates/user/profile.html:164
+#: main/templates/user/profile.html:168 main/templates/user/profile.html:172
 #: main/templates/user/signin.html:146 main/templates/user/signin.html:210
-#: main/templates/user/signup.html:196
+#: main/templates/user/signup.html:207
 msgid "："
 msgstr ""
 
-#: main/templates/badge/detail.html:50 main/templates/badge/list.html:60
+#: main/templates/badge/detail.html:50 main/templates/badge/list.html:54
 msgid "加入时间"
 msgstr ""
 
@@ -126,9 +126,7 @@ msgstr ""
 msgid "徽章列表"
 msgstr ""
 
-#: main/templates/badge/list.html:22 main/templates/chat/inbox.html:42
-#: main/templates/user/exphistory.html:24 main/templates/user/profile.html:44
-#: main/templates/user/public.html:40 main/templates/user/setting.html:9
+#: main/templates/base.html:66
 msgid "回到上一页"
 msgstr ""
 
@@ -196,29 +194,29 @@ msgstr ""
 msgid "错误：消息内容不能为空"
 msgstr ""
 
-#: main/templates/chat/inbox.html:4 main/templates/chat/inbox.html:81
+#: main/templates/chat/inbox.html:4 main/templates/chat/inbox.html:75
 msgid "收信箱"
 msgstr ""
 
-#: main/templates/chat/inbox.html:49
+#: main/templates/chat/inbox.html:43
 msgid "发新消息"
 msgstr ""
 
-#: main/templates/chat/inbox.html:60 main/templates/chat/inbox.html:88
+#: main/templates/chat/inbox.html:54 main/templates/chat/inbox.html:82
 msgid "人"
 msgstr ""
 
-#: main/templates/chat/inbox.html:72 main/templates/chat/inbox.html:100
-#: main/templates/user/profile.html:123 main/templates/user/profile.html:131
-#: main/templates/user/profile.html:139
+#: main/templates/chat/inbox.html:66 main/templates/chat/inbox.html:94
+#: main/templates/user/profile.html:117 main/templates/user/profile.html:125
+#: main/templates/user/profile.html:133
 msgid "无"
 msgstr ""
 
-#: main/templates/chat/inbox.html:151
+#: main/templates/chat/inbox.html:145
 msgid "没有任何消息"
 msgstr ""
 
-#: main/templates/chat/inbox.html:165
+#: main/templates/chat/inbox.html:159
 msgid "跳到最后一页/第一页"
 msgstr ""
 
@@ -344,16 +342,60 @@ msgstr ""
 msgid "与我对话"
 msgstr ""
 
-#: main/templates/msg.html:5 main/templates/msg.html:31
+#: main/templates/msg.html:5 main/templates/msg.html:32
 msgid "提示信息"
 msgstr ""
 
-#: main/templates/msg.html:45
+#: main/templates/msg.html:46
 msgid "点此跳转至"
 msgstr ""
 
-#: main/templates/user/exphistory.html:53
-#: main/templates/user/exphistory.html:55
+#: main/templates/opus/detail.html:29 main/templates/opus/detail.html:35
+msgid "当前页面的二维码"
+msgstr ""
+
+#: main/templates/opus/detail.html:37
+msgid "一键添加到我的进度"
+msgstr ""
+
+#: main/templates/opus/detail.html:48
+msgid "的进度"
+msgstr ""
+
+#: main/templates/opus/detail.html:53
+msgid "名称"
+msgstr ""
+
+#: main/templates/opus/detail.html:65
+msgid "总共"
+msgstr ""
+
+#: main/templates/opus/detail.html:75
+msgid "开始时间"
+msgstr ""
+
+#: main/templates/opus/detail.html:79
+msgid "上次更新"
+msgstr ""
+
+#: main/templates/opus/detail.html:83
+msgid "状态"
+msgstr ""
+
+#: main/templates/opus/detail.html:94
+msgid "进度链接"
+msgstr ""
+
+#: main/templates/opus/detail.html:99 main/templates/opus/detail.html:108
+msgid "链接"
+msgstr ""
+
+#: main/templates/opus/detail.html:112
+msgid "进度连接二维码"
+msgstr ""
+
+#: main/templates/user/exphistory.html:47
+#: main/templates/user/exphistory.html:49
 msgid "查看完整记录"
 msgstr ""
 
@@ -393,97 +435,97 @@ msgstr ""
 msgid "邮箱不能为空"
 msgstr ""
 
-#: main/templates/user/profile.html:55
+#: main/templates/user/profile.html:49
 msgid "修改头像"
 msgstr ""
 
-#: main/templates/user/profile.html:71 main/templates/user/public.html:62
+#: main/templates/user/profile.html:65 main/templates/user/public.html:56
 #: main/templates/userbar.html:67 main/views/user.py:284
 msgid "个人信息"
 msgstr ""
 
-#: main/templates/user/profile.html:74
+#: main/templates/user/profile.html:68
 msgid "注册信息"
 msgstr ""
 
-#: main/templates/user/profile.html:77 main/templates/user/public.html:65
+#: main/templates/user/profile.html:71 main/templates/user/public.html:59
 msgid "进度信息"
 msgstr ""
 
-#: main/templates/user/profile.html:89 main/templates/user/signin.html:53
+#: main/templates/user/profile.html:83 main/templates/user/signin.html:53
 #: main/templates/user/signindropdown.html:13
-#: main/templates/user/signup.html:233 main/templates/user/signup.html:326
-#: main/templates/user/signup.html:363 main/templates/user/signup.html:365
+#: main/templates/user/signup.html:244 main/templates/user/signup.html:337
+#: main/templates/user/signup.html:368 main/templates/user/signup.html:370
 #: main/views/user.py:131
 msgid "用户名"
 msgstr ""
 
-#: main/templates/user/profile.html:93 main/templates/user/public.html:73
-#: main/templates/user/signup.html:270 main/templates/user/signup.html:513
-#: main/templates/user/signup.html:515
+#: main/templates/user/profile.html:87 main/templates/user/public.html:67
+#: main/templates/user/signup.html:281 main/templates/user/signup.html:518
+#: main/templates/user/signup.html:520
 msgid "昵称"
 msgstr ""
 
-#: main/templates/user/profile.html:96
+#: main/templates/user/profile.html:90
 msgid "我的公开页，任何人都可以查看"
 msgstr ""
 
-#: main/templates/user/profile.html:101 main/templates/user/signup.html:306
-#: main/templates/user/signup.html:329 main/templates/user/signup.html:493
-#: main/templates/user/signup.html:495 main/views/user.py:137
+#: main/templates/user/profile.html:95 main/templates/user/signup.html:317
+#: main/templates/user/signup.html:340 main/templates/user/signup.html:498
+#: main/templates/user/signup.html:500 main/views/user.py:137
 msgid "邮箱"
 msgstr ""
 
-#: main/templates/user/profile.html:105 main/templates/user/public.html:83
+#: main/templates/user/profile.html:99 main/templates/user/public.html:77
 msgid "活跃等级"
 msgstr ""
 
-#: main/templates/user/profile.html:107
+#: main/templates/user/profile.html:101
 msgid "根据“总活跃度”计算"
 msgstr ""
 
-#: main/templates/user/profile.html:115 main/templates/user/signup.html:327
-#: main/templates/user/signup.html:383 main/views/user.py:133
+#: main/templates/user/profile.html:109 main/templates/user/signup.html:338
+#: main/templates/user/signup.html:388 main/views/user.py:133
 msgid "问题"
 msgstr ""
 
-#: main/templates/user/profile.html:119
+#: main/templates/user/profile.html:113
 msgid "答案1"
 msgstr ""
 
-#: main/templates/user/profile.html:121 main/templates/user/profile.html:129
+#: main/templates/user/profile.html:115 main/templates/user/profile.html:123
 msgid "[已加密]"
 msgstr ""
 
-#: main/templates/user/profile.html:127
+#: main/templates/user/profile.html:121
 msgid "答案2"
 msgstr ""
 
-#: main/templates/user/profile.html:135 main/templates/user/signin.html:146
+#: main/templates/user/profile.html:129 main/templates/user/signin.html:146
 msgid "提示"
 msgstr ""
 
-#: main/templates/user/profile.html:143 main/templates/user/public.html:89
+#: main/templates/user/profile.html:137 main/templates/user/public.html:83
 msgid "创建时间"
 msgstr ""
 
-#: main/templates/user/profile.html:162
+#: main/templates/user/profile.html:156
 msgid "平均花费"
 msgstr ""
 
-#: main/templates/user/profile.html:166
+#: main/templates/user/profile.html:160
 msgid "平均尝试"
 msgstr ""
 
-#: main/templates/user/profile.html:170
+#: main/templates/user/profile.html:164
 msgid "平均已用"
 msgstr ""
 
-#: main/templates/user/profile.html:174
+#: main/templates/user/profile.html:168
 msgid "平均等待"
 msgstr ""
 
-#: main/templates/user/profile.html:178
+#: main/templates/user/profile.html:172
 msgid "平均待更"
 msgstr ""
 
@@ -491,7 +533,7 @@ msgstr ""
 msgid "的公开页"
 msgstr ""
 
-#: main/templates/user/public.html:78
+#: main/templates/user/public.html:72
 msgid "发消息"
 msgstr ""
 
@@ -499,23 +541,23 @@ msgstr ""
 msgid "个人设置"
 msgstr ""
 
-#: main/templates/user/setting.html:19
+#: main/templates/user/setting.html:12
 msgid "进度日历设置"
 msgstr ""
 
-#: main/templates/user/setting.html:27
+#: main/templates/user/setting.html:20
 msgid "公开进度日历"
 msgstr ""
 
-#: main/templates/user/setting.html:29
+#: main/templates/user/setting.html:22
 msgid "（公开时私人仍可用）"
 msgstr ""
 
-#: main/templates/user/setting.html:32
+#: main/templates/user/setting.html:25
 msgid "「进度日历」地址（公开）"
 msgstr ""
 
-#: main/templates/user/setting.html:36
+#: main/templates/user/setting.html:29
 msgid "「进度日历」地址（私人）"
 msgstr ""
 
@@ -524,33 +566,33 @@ msgid "用户登入"
 msgstr ""
 
 #: main/templates/user/signin.html:50 main/templates/user/signin.html:60
-#: main/templates/user/signup.html:361 main/templates/user/signup.html:365
-#: main/templates/user/signup.html:385 main/templates/user/signup.html:406
-#: main/templates/user/signup.html:410 main/templates/user/signup.html:437
-#: main/templates/user/signup.html:495
+#: main/templates/user/signup.html:366 main/templates/user/signup.html:370
+#: main/templates/user/signup.html:390 main/templates/user/signup.html:411
+#: main/templates/user/signup.html:415 main/templates/user/signup.html:442
+#: main/templates/user/signup.html:500
 msgid "必填"
 msgstr ""
 
 #: main/templates/user/signin.html:50 main/templates/user/signin.html:60
-#: main/templates/user/signup.html:361 main/templates/user/signup.html:406
-#: main/templates/user/signup.html:421 main/templates/user/signup.html:437
+#: main/templates/user/signup.html:366 main/templates/user/signup.html:411
+#: main/templates/user/signup.html:426 main/templates/user/signup.html:442
 msgid "，"
 msgstr ""
 
-#: main/templates/user/signin.html:50 main/templates/user/signup.html:361
-#: main/templates/user/signup.html:367 main/templates/user/signup.html:374
+#: main/templates/user/signin.html:50 main/templates/user/signup.html:366
+#: main/templates/user/signup.html:372 main/templates/user/signup.html:379
 msgid "只能包含“英文字母”、“数字”和“英文句号”"
 msgstr ""
 
-#: main/templates/user/signin.html:60 main/templates/user/signup.html:406
-#: main/templates/user/signup.html:414 main/templates/user/signup.html:437
-#: main/templates/user/signup.html:443 main/templates/user/signup.html:459
+#: main/templates/user/signin.html:60 main/templates/user/signup.html:411
+#: main/templates/user/signup.html:419 main/templates/user/signup.html:442
+#: main/templates/user/signup.html:448 main/templates/user/signup.html:464
 msgid "回答 “答案” 或 “备选答案” 均可正常登入"
 msgstr ""
 
 #: main/templates/user/signin.html:63
 #: main/templates/user/signindropdown.html:19
-#: main/templates/user/signup.html:328
+#: main/templates/user/signup.html:339
 msgid "密码或答案"
 msgstr ""
 
@@ -592,305 +634,305 @@ msgstr ""
 msgid "我忘记了..."
 msgstr ""
 
-#: main/templates/user/signup.html:4
+#: main/templates/user/signup.html:5
 msgid "用户注册"
 msgstr ""
 
-#: main/templates/user/signup.html:69 main/templates/user/signup.html:82
-#: main/templates/user/signup.html:535
-msgid "提交注册"
+#: main/templates/user/signup.html:16
+msgid "切换到"
 msgstr ""
 
-#: main/templates/user/signup.html:84
-msgid "提交中"
-msgstr ""
-
-#: main/templates/user/signup.html:100 main/templates/user/signup.html:348
+#: main/templates/user/signup.html:16 main/templates/user/signup.html:111
 msgid "问答"
 msgstr ""
 
-#: main/templates/user/signup.html:103 main/templates/user/signup.html:421
+#: main/templates/user/signup.html:16
+msgid "模式"
+msgstr ""
+
+#: main/templates/user/signup.html:80 main/templates/user/signup.html:93
+#: main/templates/user/signup.html:540
+msgid "提交注册"
+msgstr ""
+
+#: main/templates/user/signup.html:95
+msgid "提交中"
+msgstr ""
+
+#: main/templates/user/signup.html:114 main/templates/user/signup.html:426
 msgid "请输入密码"
 msgstr ""
 
-#: main/templates/user/signup.html:105 main/templates/user/signup.html:408
-#: main/templates/user/signup.html:410
+#: main/templates/user/signup.html:116 main/templates/user/signup.html:413
+#: main/templates/user/signup.html:415
 msgid "密码"
 msgstr ""
 
-#: main/templates/user/signup.html:110
+#: main/templates/user/signup.html:121
 msgid "传统"
 msgstr ""
 
-#: main/templates/user/signup.html:113 main/templates/user/signup.html:410
+#: main/templates/user/signup.html:124 main/templates/user/signup.html:415
 #: main/views/user.py:135
 msgid "答案"
 msgstr ""
 
-#: main/templates/user/signup.html:154
+#: main/templates/user/signup.html:165
 msgid "英文字母"
 msgstr ""
 
-#: main/templates/user/signup.html:155
+#: main/templates/user/signup.html:166
 msgid "汉字"
 msgstr ""
 
-#: main/templates/user/signup.html:156
+#: main/templates/user/signup.html:167
 msgid "数字"
 msgstr ""
 
-#: main/templates/user/signup.html:169
+#: main/templates/user/signup.html:180
 msgid "正数第"
 msgstr ""
 
-#: main/templates/user/signup.html:169 main/templates/user/signup.html:173
+#: main/templates/user/signup.html:180 main/templates/user/signup.html:184
 msgid "位字符"
 msgstr ""
 
-#: main/templates/user/signup.html:171
+#: main/templates/user/signup.html:182
 msgid "最后一位字符"
 msgstr ""
 
-#: main/templates/user/signup.html:173
+#: main/templates/user/signup.html:184
 msgid "倒数第"
 msgstr ""
 
-#: main/templates/user/signup.html:175 main/templates/user/signup.html:176
-#: main/templates/user/signup.html:182 main/templates/user/signup.html:233
-#: main/templates/user/signup.html:270 main/templates/user/signup.html:306
+#: main/templates/user/signup.html:186 main/templates/user/signup.html:187
+#: main/templates/user/signup.html:193 main/templates/user/signup.html:244
+#: main/templates/user/signup.html:281 main/templates/user/signup.html:317
 #: main/views/user.py:131 main/views/user.py:133 main/views/user.py:135
 #: main/views/user.py:137
 msgid "“"
 msgstr ""
 
-#: main/templates/user/signup.html:175 main/templates/user/signup.html:176
-#: main/templates/user/signup.html:182 main/templates/user/signup.html:233
-#: main/templates/user/signup.html:270 main/templates/user/signup.html:306
+#: main/templates/user/signup.html:186 main/templates/user/signup.html:187
+#: main/templates/user/signup.html:193 main/templates/user/signup.html:244
+#: main/templates/user/signup.html:281 main/templates/user/signup.html:317
 #: main/views/user.py:131 main/views/user.py:133 main/views/user.py:135
 #: main/views/user.py:137
 msgid "”"
 msgstr ""
 
-#: main/templates/user/signup.html:178 main/templates/user/signup.html:182
+#: main/templates/user/signup.html:189 main/templates/user/signup.html:193
 msgid "是"
 msgstr ""
 
-#: main/templates/user/signup.html:180
+#: main/templates/user/signup.html:191
 msgid "不包含"
 msgstr ""
 
-#: main/templates/user/signup.html:180
+#: main/templates/user/signup.html:191
 msgid "包含"
 msgstr ""
 
-#: main/templates/user/signup.html:180
+#: main/templates/user/signup.html:191
 msgid "个"
 msgstr ""
 
-#: main/templates/user/signup.html:183
+#: main/templates/user/signup.html:194
 msgid "一共"
 msgstr ""
 
-#: main/templates/user/signup.html:183
+#: main/templates/user/signup.html:194
 msgid "个字符"
 msgstr ""
 
-#: main/templates/user/signup.html:195
+#: main/templates/user/signup.html:206
 msgid "、"
 msgstr ""
 
-#: main/templates/user/signup.html:195
+#: main/templates/user/signup.html:206
 msgid "并且"
 msgstr ""
 
-#: main/templates/user/signup.html:195
+#: main/templates/user/signup.html:206
 msgid "且"
 msgstr ""
 
-#: main/templates/user/signup.html:195
+#: main/templates/user/signup.html:206
 msgid "而且"
 msgstr ""
 
-#: main/templates/user/signup.html:195
+#: main/templates/user/signup.html:206
 msgid "同时"
 msgstr ""
 
-#: main/templates/user/signup.html:196
+#: main/templates/user/signup.html:207
 msgid "答案中"
 msgstr ""
 
-#: main/templates/user/signup.html:233 main/templates/user/signup.html:270
-#: main/templates/user/signup.html:306
+#: main/templates/user/signup.html:244 main/templates/user/signup.html:281
+#: main/templates/user/signup.html:317
 msgid "已存在"
 msgstr ""
 
-#: main/templates/user/signup.html:320 main/views/user.py:131
+#: main/templates/user/signup.html:331 main/views/user.py:131
 #: main/views/user.py:133 main/views/user.py:135 main/views/user.py:137
 msgid "不能为空"
 msgstr ""
 
-#: main/templates/user/signup.html:348
-msgid "切换到"
-msgstr ""
-
-#: main/templates/user/signup.html:348
-msgid "模式"
-msgstr ""
-
-#: main/templates/user/signup.html:366 main/templates/user/signup.html:373
+#: main/templates/user/signup.html:371 main/templates/user/signup.html:378
 msgid "登入时的凭证之一"
 msgstr ""
 
-#: main/templates/user/signup.html:368 main/templates/user/signup.html:375
+#: main/templates/user/signup.html:373 main/templates/user/signup.html:380
 msgid "不能同其他人的用户名重复"
 msgstr ""
 
-#: main/templates/user/signup.html:386 main/templates/user/signup.html:398
+#: main/templates/user/signup.html:391 main/templates/user/signup.html:403
 msgid "登入时会问您的问题"
 msgstr ""
 
-#: main/templates/user/signup.html:387
+#: main/templates/user/signup.html:392
 msgid "我们用 “问题+回答” 来代替传统密码"
 msgstr ""
 
-#: main/templates/user/signup.html:388
+#: main/templates/user/signup.html:393
 msgid "一些常用的问题包括："
 msgstr ""
 
-#: main/templates/user/signup.html:390
+#: main/templates/user/signup.html:395
 msgid "“最常用的8位密码”"
 msgstr ""
 
-#: main/templates/user/signup.html:391
+#: main/templates/user/signup.html:396
 msgid "“最想获得的超能力”"
 msgstr ""
 
-#: main/templates/user/signup.html:392
+#: main/templates/user/signup.html:397
 msgid "“家里保险柜的数量”"
 msgstr ""
 
-#: main/templates/user/signup.html:399
+#: main/templates/user/signup.html:404
 msgid "在这里写下问题，在下面写下答案"
 msgstr ""
 
-#: main/templates/user/signup.html:400
+#: main/templates/user/signup.html:405
 msgid "尽量不要包含空格或标点符号"
 msgstr ""
 
-#: main/templates/user/signup.html:413 main/templates/user/signup.html:428
+#: main/templates/user/signup.html:418 main/templates/user/signup.html:433
 msgid "登入时您需要回答的内容"
 msgstr ""
 
-#: main/templates/user/signup.html:415 main/templates/user/signup.html:429
+#: main/templates/user/signup.html:420 main/templates/user/signup.html:434
 msgid "一般应与上面的问题相对应"
 msgstr ""
 
-#: main/templates/user/signup.html:416 main/templates/user/signup.html:430
+#: main/templates/user/signup.html:421 main/templates/user/signup.html:435
 msgid "中英文、标点、数字均可"
 msgstr ""
 
-#: main/templates/user/signup.html:417 main/templates/user/signup.html:431
+#: main/templates/user/signup.html:422 main/templates/user/signup.html:436
 msgid "任何人（包括管理员）均无法查看您的回答"
 msgstr ""
 
-#: main/templates/user/signup.html:419
+#: main/templates/user/signup.html:424
 msgid "传统模式时："
 msgstr ""
 
-#: main/templates/user/signup.html:421
+#: main/templates/user/signup.html:426
 msgid "长度、字符不限"
 msgstr ""
 
-#: main/templates/user/signup.html:439 main/templates/user/signup.html:441
+#: main/templates/user/signup.html:444 main/templates/user/signup.html:446
 msgid "备选答案"
 msgstr ""
 
-#: main/templates/user/signup.html:441 main/templates/user/signup.html:473
-#: main/templates/user/signup.html:515
+#: main/templates/user/signup.html:446 main/templates/user/signup.html:478
+#: main/templates/user/signup.html:520
 msgid "选填"
 msgstr ""
 
-#: main/templates/user/signup.html:442 main/templates/user/signup.html:458
+#: main/templates/user/signup.html:447 main/templates/user/signup.html:463
 msgid "同样作为正常答案生效"
 msgstr ""
 
-#: main/templates/user/signup.html:444
+#: main/templates/user/signup.html:449
 msgid "常见的 “答案” 与 “备选答案” 的组合有："
 msgstr ""
 
-#: main/templates/user/signup.html:446
+#: main/templates/user/signup.html:451
 msgid "中文答案 + 英文答案"
 msgstr ""
 
-#: main/templates/user/signup.html:447
+#: main/templates/user/signup.html:452
 msgid "（北京 vs. beijing）"
 msgstr ""
 
-#: main/templates/user/signup.html:448
+#: main/templates/user/signup.html:453
 msgid "容易混淆的答案"
 msgstr ""
 
-#: main/templates/user/signup.html:449
+#: main/templates/user/signup.html:454
 msgid "（8月15日 vs. 08-15）"
 msgstr ""
 
-#: main/templates/user/signup.html:450
+#: main/templates/user/signup.html:455
 msgid "自己也拿不准的答案"
 msgstr ""
 
-#: main/templates/user/signup.html:451
+#: main/templates/user/signup.html:456
 msgid "（炸鸡 vs. 烧烤）"
 msgstr ""
 
-#: main/templates/user/signup.html:460
+#: main/templates/user/signup.html:465
 msgid "不需要与 “答案” 相同"
 msgstr ""
 
-#: main/templates/user/signup.html:468 main/templates/user/signup.html:473
+#: main/templates/user/signup.html:473 main/templates/user/signup.html:478
 msgid "答案提示"
 msgstr ""
 
-#: main/templates/user/signup.html:469
+#: main/templates/user/signup.html:474
 msgid "生成提示"
 msgstr ""
 
-#: main/templates/user/signup.html:474 main/templates/user/signup.html:482
+#: main/templates/user/signup.html:479 main/templates/user/signup.html:487
 msgid "登入时，问题答案的提示信息"
 msgstr ""
 
-#: main/templates/user/signup.html:475 main/templates/user/signup.html:483
+#: main/templates/user/signup.html:480 main/templates/user/signup.html:488
 msgid "在登入界面您需要时自动显示"
 msgstr ""
 
-#: main/templates/user/signup.html:476 main/templates/user/signup.html:484
+#: main/templates/user/signup.html:481 main/templates/user/signup.html:489
 msgid "请不要将答案直接放在这里"
 msgstr ""
 
-#: main/templates/user/signup.html:496 main/templates/user/signup.html:503
+#: main/templates/user/signup.html:501 main/templates/user/signup.html:508
 msgid "用于找回密码或答案"
 msgstr ""
 
-#: main/templates/user/signup.html:497 main/templates/user/signup.html:504
+#: main/templates/user/signup.html:502 main/templates/user/signup.html:509
 msgid "邮箱验证通过后方可生效"
 msgstr ""
 
-#: main/templates/user/signup.html:498 main/templates/user/signup.html:505
+#: main/templates/user/signup.html:503 main/templates/user/signup.html:510
 msgid "邮箱验证生效前，无法找回密码或答案"
 msgstr ""
 
-#: main/templates/user/signup.html:516 main/templates/user/signup.html:524
+#: main/templates/user/signup.html:521 main/templates/user/signup.html:529
 msgid "你希望他人看到的名称"
 msgstr ""
 
-#: main/templates/user/signup.html:517 main/templates/user/signup.html:525
+#: main/templates/user/signup.html:522 main/templates/user/signup.html:530
 msgid "昵称只能是 “汉字” 和 “字母”"
 msgstr ""
 
-#: main/templates/user/signup.html:518 main/templates/user/signup.html:526
+#: main/templates/user/signup.html:523 main/templates/user/signup.html:531
 msgid "昵称不可与他人重复"
 msgstr ""
 
-#: main/templates/user/signup.html:519 main/templates/user/signup.html:527
+#: main/templates/user/signup.html:524 main/templates/user/signup.html:532
 msgid "昵称为空时，我们将自动帮您生成"
 msgstr ""
 
