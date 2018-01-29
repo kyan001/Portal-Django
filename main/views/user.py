@@ -42,7 +42,7 @@ def exphistory(request):
         else:
             exphistorys = userexp.getExpHistory(22)
     else:
-        return util.ctrl.infoMsg(_("Category 参数不能为空"), title=_('错误'))
+        return util.ctrl.infoMsg(_("{} 参数不能为空").format("Category"), title=_('错误'))
     # render
     context['userexp'] = userexp
     context['exphistorys'] = exphistorys
@@ -55,7 +55,7 @@ def public(request):  # public
     context = {}
     nickname = request.GET.get('nickname')
     if not nickname:
-        return util.ctrl.infoMsg(_("Nickname 参数不能为空"), title=_('错误'))
+        return util.ctrl.infoMsg(_("{} 参数不能为空").format("Nickname"), title=_('错误'))
     user = User.objects.get_or_404(nickname=nickname)
     # get user progress counts
     progress_statics = user.getProgressStatics()

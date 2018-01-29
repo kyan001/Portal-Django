@@ -21,9 +21,9 @@ def getCurrentUser(request):
 def checkAnswer(user, answer_raw):
     """传入用户对象，返回答案对不对"""
     if not user:
-        raise Exception(_("User 参数不能为空"))
+        raise Exception(_("{} 参数不能为空").format('User'))
     if not answer_raw:
-        raise Exception(_("Answer 参数不能为空"))
+        raise Exception(_("{} 参数不能为空").format('Answer'))
     answer_md5 = util.ctrl.salty(answer_raw)
     return (user.answer1 == answer_md5) or (user.answer2 == answer_md5)
 
