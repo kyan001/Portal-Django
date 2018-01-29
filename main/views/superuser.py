@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.utils.translation import gettext as _
+
 from main.models import User, UserPermission, Chat, UserPermissionBadge
 import util.ctrl
 import util.user
@@ -6,36 +8,34 @@ import util.user
 
 @util.user.login_required
 def index(request):
-    '设置超级管理员'
+    """设置超级管理员"""
     user = util.user.getCurrentUser(request)
     # get superuser user
     superuser_nickname = '唯笑竹'  # hardcode
     superuser = User.objects.get_or_404(nickname=superuser_nickname)
     # send commands
-    title = "《超级管理员操作手册》".format()
-    content = '''
-        <li class="text-muted">@{user.nickname} 执行了 {category} 的初始化。</li>
-        <h5>
-            超级管理员操作连接：
-        </h5>
-        <div class="well">
-            <li><a class="" href="/superuser/index">初始化</a></li>
-            <li><a class="" href="/superuser/broadcast">广播系统消息</a></li>
-            <li><a class="" href="/superuser/updatedb?mode=initbadges">初始化所有徽章</a></li>
-            <li><a class="" href='/superuser/updatedb?mode=betauser'>分发 betauser 徽章</a></li>
-            <li><a class="" href='/superuser/updatedb?mode=badgedesigner'>分发设计师徽章</a></li>
+    title = _("《{}操作手册》").format(_("超级管理员"))
+    content = _("""
+        <li class='text-muted'>@{user.nickname} 执行了 {category} 的初始化。</li>
+        <h5>超级管理员操作连接：</h5>
+        <div class='well'>
+            <li><a href='/superuser/index'>初始化</a></li>
+            <li><a href='/superuser/broadcast'>广播系统消息</a></li>
+            <li><a href='/superuser/updatedb?mode=initbadges'>初始化所有徽章</a></li>
+            <li><a href='/superuser/updatedb?mode=betauser'>分发 betauser 徽章</a></li>
+            <li><a href='/superuser/updatedb?mode=badgedesigner'>分发设计师徽章</a></li>
         </div>
-        <li><b>初始化</b>：默认@{superuser.nickname} ，并发送此邮件</li>
-        <li><b>广播系统消息</b>：处理、广播系统消息</li>
-    '''.format(user=user, superuser=superuser, category='superuser')
+        <li><b>初始化</b>：默认设置 @{superuser.nickname} 为超级管理员，并向其发送此邮件</li>
+        <li><b>广播系统消息</b>：查看发给系统的消息，广播消息</li>
+    """).format(user=user, superuser=superuser, category='superuser')
     isSuccessed = Chat.objects.sendBySys(superuser, title=title, content=content)
     if not isSuccessed:
-        return util.ctrl.infoMsg("发送失败，未知原因，对方用户：@{user.nickname}".format(user=superuser))
+        return util.ctrl.infoMsg(_("发送失败，未知原因。用户：@{}").format(superuser.nickname))
     # add superuser permission
     if not superuser.getUserpermission('superuser'):
         superuser.setUserpermission('superuser', True)
-        return util.ctrl.infoMsg("@{user.nickname} 已设置为 超级管理员".format(user=superuser))
-    return util.ctrl.infoMsg("@{user.nickname} 已是 超级管理员，无需更改".format(user=superuser))
+        return util.ctrl.infoMsg(_("@{} 已设置为超级管理员").format(superuser.nickname))
+    return util.ctrl.infoMsg(_("@{} 已是超级管理员，无需更改").format(superuser.nickname))
 
 
 @util.user.login_required
@@ -61,7 +61,7 @@ def updatedb(request):
     # get mode
     mode = request.GET.get('mode')
     if not mode:
-        return util.ctrl.infoMsg("需要 Mode 信息")
+        return util.ctrl.infoMsg(_("Mode 参数不能为空"))
     # main codes
     if 'initbadges' == mode:
         # update userPermissionBadge
@@ -129,7 +129,7 @@ def updatedb(request):
         for u in top100users:
             u.setUserpermission('betauser', True)
     # render
-    return util.ctrl.infoMsg("数据库更新完毕，模式 {}".format(mode))
+    return util.ctrl.infoMsg(_("数据库更新完毕，模式 {}").format(mode))
 
 
 @util.user.login_required
@@ -141,14 +141,14 @@ def sendbroadcast(request):
     title = request.POST.get('title')
     content = request.POST.get('content')
     if not content:
-        return util.ctrl.infoMsg("请填写发送的内容，缺少参数 content")
+        return util.ctrl.infoMsg("Content 参数不能为空")
     # send chat
     receiver_nicknames = []
     receivers = User.objects.exclude(username='syschat')
     for r in receivers:
         isSuccessed = Chat.objects.sendBySys(r, title=title, content=content)
         if not isSuccessed:
-            return util.ctrl.infoMsg("发送失败，未知原因，对方用户：@{user.nickname}".format(user=r))
+            return util.ctrl.infoMsg(_("发送失败，未知原因。用户：@{}").format(r.nickname))
         receiver_nicknames.append(r.nickname)
     # render
-    return util.ctrl.infoMsg("发送成功：{}".format(str(receiver_nicknames)), url="/chat/inbox")
+    return util.ctrl.infoMsg(_("发送成功") + _("：") + str(receiver_nicknames), url="/chat/inbox")

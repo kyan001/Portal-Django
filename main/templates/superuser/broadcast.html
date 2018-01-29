@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block title %}超级用户：广播系统消息{% endblock title %}
+{% load i18n %}
+
+{% block title %}{% trans "超级管理员" %}{% trans "：" %}{% trans "广播系统消息" %}{% endblock title %}
 
 
 {% block css %}
@@ -24,44 +26,54 @@
 
 
 {% block content %}
-<div class='container'>
-    <div class='row'>
-        <div class='col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12'>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
             <div class="page-header">
                 <h3>
-                    所有人
+                    {% trans "所有人" %}
                     <small><span class="glyphicon glyphicon-transfer"></span> @系统消息</small>
                 </h3>
             </div>
 
-            <form id='form-send' action="/superuser/sendbroadcast" method="post">
+            <form id="form-send" action="/superuser/sendbroadcast" method="post">
                 {% csrf_token %}
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <textarea name='content' class="form-control" rows="6" placeholder="请输入内容" autocomplete="off" oninput="validateContent()" tabindex="2"></textarea>
-                    </div>
-                    <div class="panel-footer">
                         <div class="row">
-                            <div class="col-md-3 col-sm-4 col-xs-12">
-                                <div class="input-group" id="nickname-group">
-                                    <div class="input-group-addon">
-                                        <span class="text-muted">To:</span> @
-                                    </div>
-                                    <input type='text' name='receiver' class="form-control" value="所有人" placeholder="用户" readonly oninput="validateNickname()" tabindex="1">
-                                </div>
+                            <div class="col-md-7 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <input id="input-title"
+                                      type="text"
+                                      name="title"
+                                      class="form-control"
+                                      autocomplete="off"
+                                      placeholder="{% trans '标题（选填）' %}"
+                                      tabindex="3"
+                                      {% if title %}value="{{ title }}"{% endif %}>
+                                </div><!--.form-group-->
                             </div>
-                            <div class="col-md-9 col-sm-8 col-xs-12">
-                                <div class="input-group">
-                                    <input type="text" name='title' class="form-control" id="input-title" autocomplete="off" placeholder="标题" tabindex="3">
-                                    <span class="input-group-btn">
-                                        <a id='send-btn' class="btn btn-primary" onclick="submitSend()" disabled tabindex="4">
-                                            发送
-                                        </a>
-                                    </span>
-                                </div>
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <div id="nickname-group" class="input-group">
+                                        <div class="input-group-addon">@</div>
+                                        <input type="text" class="form-control" value="{% trans '所有人' %}" readonly>
+                                        <div class="input-group-btn">
+                                            <a id="send-btn" class="btn btn-success btn-block" onclick="submitSend()" disabled tabindex="4">
+                                                <span class="glyphicon glyphicon-send"></span>
+                                                <span>{% trans "发送" %}</span>
+                                            </a>
+                                        </div>
+                                    </div><!--.input-group-->
+                                </div><!--.form-group-->
                             </div>
-                        </div>
-                    </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <textarea name="content" class="form-control" rows="6" placeholder="{% trans '消息内容' %}" autocomplete="off" oninput="validateContent()" tabindex="2"></textarea>
+                                </div><!--.form-group-->
+                            </div><!--.col-->
+                        </div><!--.row-->
+                    </div><!--.panel-body-->
                 </div>
             </form>
 
@@ -69,10 +81,10 @@
 
             <div class="panel-group">
                 {% for chat in chats %}
-                    {% include 'chat/chatlet.html' with chat=chat cuser=sysuser %}
+                    {% include "chat/chatlet.html" with chat=chat cuser=sysuser %}
                 {% empty %}
                     <div class="well">
-                        @系统消息 尚未收到任何消息
+                        @系统消息 {% trans "尚未收到任何消息" %}
                     </div>
                 {% endfor %}
             </div><!--.panel-group-->
@@ -86,7 +98,7 @@
     var isContentOk = false
     function validateContent(){
         isContentOk = false
-        var content = $.trim($('textarea[name="content"]').val())
+        var content = $.trim($("textarea[name='content']").val())
         if(content==""){
             isContentOk = false
         } else {
@@ -98,27 +110,27 @@
 
     function isSendOk(){
         if(isContentOk){
-            $('#send-btn').removeAttr('disabled')
+            $("#send-btn").removeAttr("disabled")
             return true
         } else {
-            $('#send-btn').attr('disabled','disabled')
+            $("#send-btn").attr("disabled","disabled")
             return false
         }
     }
 
     function submitSend(){
-        $('#send-btn').attr('disabled','disabled')
-        var content = $.trim($('textarea[name="content"]').val())
-        var title = $.trim($('input[name="title"]').val())
+        $("#send-btn").attr("disabled","disabled")
+        var content = $.trim($("textarea[name='content']").val())
+        var title = $.trim($("input[name='title']").val())
         if(!isContentOk) {
-            $.danger('错误：发送内容尚未填写')
-            $('textarea[name="content"]').focus()
+            $.danger("{% trans '错误：消息内容不能为空' %}")
+            $("textarea[name='content']").focus()
             return
         }
-        $('input[name="title"]').val(title)
-        $('textarea[name="content"]').val(content)
+        $("input[name='title']").val(title)
+        $("textarea[name='content']").val(content)
         disableAllBtn()
-        $('#form-send').submit()
+        $("#form-send").submit()
     }
 </script>
 {% endblock js %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-29 13:53+0800\n"
+"POT-Creation-Date: 2018-01-29 15:02+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -101,7 +101,8 @@ msgstr "Designer"
 #: main/templates/badge/detail.html:42 main/templates/badge/detail.html:50
 #: main/templates/badge/detail.html:54 main/templates/badge/list.html:50
 #: main/templates/badge/list.html:54 main/templates/chat/conversation.html:4
-#: main/templates/msg.html:32 main/templates/user/forgetusername.html:42
+#: main/templates/msg.html:32 main/templates/superuser/broadcast.html:4
+#: main/templates/user/forgetusername.html:42
 #: main/templates/user/profile.html:79 main/templates/user/profile.html:83
 #: main/templates/user/profile.html:87 main/templates/user/profile.html:95
 #: main/templates/user/profile.html:99 main/templates/user/profile.html:109
@@ -111,7 +112,7 @@ msgstr "Designer"
 #: main/templates/user/profile.html:160 main/templates/user/profile.html:164
 #: main/templates/user/profile.html:168 main/templates/user/profile.html:172
 #: main/templates/user/signin.html:146 main/templates/user/signin.html:210
-#: main/templates/user/signup.html:207
+#: main/templates/user/signup.html:207 main/views/superuser.py:154
 msgid "："
 msgstr ": "
 
@@ -158,41 +159,45 @@ msgstr "Send Message"
 msgid "来自"
 msgstr "From"
 
-#: main/templates/chat/conversation.html:60
+#: main/templates/chat/conversation.html:65
+#: main/templates/superuser/broadcast.html:51
 msgid "标题（选填）"
 msgstr "Title (Optional)"
 
-#: main/templates/chat/conversation.html:68
-#: main/templates/chat/conversation.html:70
+#: main/templates/chat/conversation.html:75
+#: main/templates/chat/conversation.html:77
 msgid "用户昵称"
 msgstr "User Nickname"
 
-#: main/templates/chat/conversation.html:75
+#: main/templates/chat/conversation.html:82
 #: main/templates/robotalk/index.html:96
+#: main/templates/superuser/broadcast.html:64
 msgid "发送"
 msgstr "Send"
 
-#: main/templates/chat/conversation.html:83
+#: main/templates/chat/conversation.html:90
+#: main/templates/superuser/broadcast.html:72
 msgid "消息内容"
 msgstr "Message Body"
 
-#: main/templates/chat/conversation.html:103
+#: main/templates/chat/conversation.html:110
 msgid "你与 @{{receiver.nickname}} 还没有说过话"
 msgstr "You and @{{receiver.nickname}} have not talked yet"
 
-#: main/templates/chat/conversation.html:107
+#: main/templates/chat/conversation.html:114
 msgid "对话的历史记录会显示在这里"
 msgstr "Conversation history will be shown here"
 
-#: main/templates/chat/conversation.html:189
+#: main/templates/chat/conversation.html:196
 msgid "错误：用户昵称不能为空"
 msgstr "Error: User nickname cannot be empty"
 
-#: main/templates/chat/conversation.html:193
+#: main/templates/chat/conversation.html:200
 msgid "错误：用户昵称不存在"
 msgstr "Error: User nickname does not exist"
 
-#: main/templates/chat/conversation.html:198
+#: main/templates/chat/conversation.html:205
+#: main/templates/superuser/broadcast.html:126
 msgid "错误：消息内容不能为空"
 msgstr "Error: Message body cannot be empty"
 
@@ -412,6 +417,23 @@ msgstr "Running"
 #: main/templates/robotalk/index.html:93
 msgid "说点儿什么"
 msgstr "Say something"
+
+#: main/templates/superuser/broadcast.html:4 main/views/superuser.py:17
+msgid "超级管理员"
+msgstr "Superuser"
+
+#: main/templates/superuser/broadcast.html:4
+msgid "广播系统消息"
+msgstr "Broadcast System Message"
+
+#: main/templates/superuser/broadcast.html:34
+#: main/templates/superuser/broadcast.html:60
+msgid "所有人"
+msgstr "Everyone"
+
+#: main/templates/superuser/broadcast.html:87
+msgid "尚未收到任何消息"
+msgstr "does not receive any messages yet"
 
 #: main/templates/user/exphistory.html:47
 #: main/templates/user/exphistory.html:49
@@ -1080,6 +1102,77 @@ msgstr "Chat in RoboTalk"
 msgid "{d} 天 {h} 小时"
 msgstr "{d} days {h} hours"
 
+#: main/views/superuser.py:17
+msgid "《{}操作手册》"
+msgstr "《{} Operation Handbook》"
+
+#: main/views/superuser.py:18
+#, python-brace-format
+msgid ""
+"\n"
+"        <li class='text-muted'>@{user.nickname} 执行了 {category} 的初始化。"
+"</li>\n"
+"        <h5>超级管理员操作连接：</h5>\n"
+"        <div class='well'>\n"
+"            <li><a href='/superuser/index'>初始化</a></li>\n"
+"            <li><a href='/superuser/broadcast'>广播系统消息</a></li>\n"
+"            <li><a href='/superuser/updatedb?mode=initbadges'>初始化所有徽章"
+"</a></li>\n"
+"            <li><a href='/superuser/updatedb?mode=betauser'>分发 betauser 徽"
+"章</a></li>\n"
+"            <li><a href='/superuser/updatedb?mode=badgedesigner'>分发设计师徽"
+"章</a></li>\n"
+"        </div>\n"
+"        <li><b>初始化</b>：默认设置 @{superuser.nickname} 为超级管理员，并向"
+"其发送此邮件</li>\n"
+"        <li><b>广播系统消息</b>：查看发给系统的消息，广播消息</li>\n"
+"    "
+msgstr ""
+"\n"
+"        <li class='text-muted'>@{user.nickname} ran '{category}' "
+"initialization.</li>\n"
+"        <h5>Superuser operation links: </h5>\n"
+"        <div class='well'>\n"
+"            <li><a href='/superuser/index'>Initialization</a></li>\n"
+"            <li><a href='/superuser/broadcast'>Broadcast System Message</a></"
+"li>\n"
+"            <li><a href='/superuser/updatedb?mode=initbadges'>Init all "
+"badges</a></li>\n"
+"            <li><a href='/superuser/updatedb?mode=betauser'>Distribute "
+"Betauser Badges</a></li>\n"
+"            <li><a href='/superuser/updatedb?mode=badgedesigner'>Distribute "
+"Designer Badges</a></li>\n"
+"        </div>\n"
+"        <li><b>Initialization</b>：By default, set @{superuser.nickname} as "
+"superuser, and send this message to him.</li>\n"
+"        <li><b>Broadcast System Message</b>：Check messages sent to system, "
+"broadcast message</li>\n"
+"    "
+
+#: main/views/superuser.py:33 main/views/superuser.py:151
+msgid "发送失败，未知原因。用户：@{}"
+msgstr "Sending failed. Unknown reason. User: @{}"
+
+#: main/views/superuser.py:37
+msgid "@{} 已设置为超级管理员"
+msgstr "@{} is set as superuser"
+
+#: main/views/superuser.py:38
+msgid "@{} 已是超级管理员，无需更改"
+msgstr "@{} is already set as superuser, no need to change."
+
+#: main/views/superuser.py:64
+msgid "Mode 参数不能为空"
+msgstr "Argument 'Mode' cannot be empty"
+
+#: main/views/superuser.py:132
+msgid "数据库更新完毕，模式 {}"
+msgstr "Database updated. Mode {}"
+
+#: main/views/superuser.py:154
+msgid "发送成功"
+msgstr "Sending success"
+
 #: main/views/user.py:37
 #, python-brace-format
 msgid "请求的分类（{category}）不存在"
@@ -1297,3 +1390,6 @@ msgstr ""
 #, python-brace-format
 msgid "您不具有 {category} 权限"
 msgstr "You don't have {category} permission"
+
+#~ msgid "初始化"
+#~ msgstr "Initialization"
