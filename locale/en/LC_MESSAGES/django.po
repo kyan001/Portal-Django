@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-29 15:02+0800\n"
+"POT-Creation-Date: 2018-01-29 16:49+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -90,9 +90,10 @@ msgstr "Server internal error. Please contact server administrator"
 msgid "徽章详情"
 msgstr "Badge Detail"
 
-#: main/templates/badge/detail.html:18
-msgid "回到徽章列表"
-msgstr "Back to Badge List"
+#: main/templates/badge/detail.html:18 main/templates/badge/list.html:4
+#: main/templates/userbar.html:110
+msgid "徽章列表"
+msgstr "Badge List"
 
 #: main/templates/badge/detail.html:42 main/templates/badge/list.html:50
 msgid "设计师"
@@ -112,7 +113,7 @@ msgstr "Designer"
 #: main/templates/user/profile.html:160 main/templates/user/profile.html:164
 #: main/templates/user/profile.html:168 main/templates/user/profile.html:172
 #: main/templates/user/signin.html:146 main/templates/user/signin.html:210
-#: main/templates/user/signup.html:207 main/views/superuser.py:154
+#: main/templates/user/signup.html:207 main/views/superuser.py:176
 msgid "："
 msgstr ": "
 
@@ -124,17 +125,13 @@ msgstr "Created"
 msgid "拥有人数"
 msgstr "Number of Owners"
 
-#: main/templates/badge/list.html:4 main/templates/userbar.html:110
-msgid "徽章列表"
-msgstr "Badge List"
-
 #: main/templates/base.html:66
 msgid "回到上一页"
 msgstr "Back"
 
 #: main/templates/chat/chater.html:12 main/templates/index/index.html:358
 #: main/templates/index/index.html:450 main/views/chat.py:26
-#: main/views/user.py:284
+#: main/views/user.py:291
 msgid "临时笔记"
 msgstr "QuickNote"
 
@@ -232,7 +229,7 @@ msgid "欢迎"
 msgstr "Welcome"
 
 #: main/templates/index/index.html:351 main/templates/index/index.html:396
-#: main/templates/userbar.html:91 main/views/user.py:284
+#: main/templates/userbar.html:91 main/views/user.py:281
 msgid "我的进度"
 msgstr "MyProgress"
 
@@ -278,7 +275,7 @@ msgstr "I'm in"
 msgid "管理您的进度"
 msgstr "Manage your progresses"
 
-#: main/templates/index/index.html:451
+#: main/templates/index/index.html:451 main/views/user.py:293
 msgid "随手记录您的想法"
 msgstr "Write down your ideas anytime"
 
@@ -419,10 +416,11 @@ msgid "说点儿什么"
 msgstr "Say something"
 
 #: main/templates/superuser/broadcast.html:4 main/views/superuser.py:17
+#: util/user.py:102
 msgid "超级管理员"
 msgstr "Superuser"
 
-#: main/templates/superuser/broadcast.html:4
+#: main/templates/superuser/broadcast.html:4 main/views/superuser.py:25
 msgid "广播系统消息"
 msgstr "Broadcast System Message"
 
@@ -456,8 +454,8 @@ msgstr ""
 "answer"
 
 #: main/templates/user/forgetusername.html:4
-#: main/templates/user/forgetusername.html:57 main/views/user.py:209
-#: main/views/user.py:236
+#: main/templates/user/forgetusername.html:57 main/views/user.py:211
+#: main/views/user.py:237
 msgid "找回用户名"
 msgstr "Retrieve username"
 
@@ -476,7 +474,7 @@ msgstr ""
 msgid "请输入注册时填写的邮箱"
 msgstr "Please enter user's email"
 
-#: main/templates/user/forgetusername.html:71 main/views/user.py:372
+#: main/templates/user/forgetusername.html:71 main/views/user.py:389
 msgid "邮箱不能为空"
 msgstr "Email cannot be empty"
 
@@ -485,7 +483,7 @@ msgid "修改头像"
 msgstr "Change head image"
 
 #: main/templates/user/profile.html:65 main/templates/user/public.html:56
-#: main/templates/userbar.html:67 main/views/user.py:284
+#: main/templates/userbar.html:67 main/views/user.py:286
 msgid "个人信息"
 msgstr "Profile"
 
@@ -501,7 +499,7 @@ msgstr "Progress Info"
 #: main/templates/user/signindropdown.html:13
 #: main/templates/user/signup.html:244 main/templates/user/signup.html:337
 #: main/templates/user/signup.html:368 main/templates/user/signup.html:370
-#: main/views/user.py:131
+#: main/views/user.py:133
 msgid "用户名"
 msgstr "Username"
 
@@ -517,7 +515,7 @@ msgstr "My Public Page, anyone can visit"
 
 #: main/templates/user/profile.html:95 main/templates/user/signup.html:317
 #: main/templates/user/signup.html:340 main/templates/user/signup.html:498
-#: main/templates/user/signup.html:500 main/views/user.py:137
+#: main/templates/user/signup.html:500 main/views/user.py:139
 msgid "邮箱"
 msgstr "Email"
 
@@ -530,7 +528,7 @@ msgid "根据“总活跃度”计算"
 msgstr "According to 'Total Activities'"
 
 #: main/templates/user/profile.html:109 main/templates/user/signup.html:338
-#: main/templates/user/signup.html:388 main/views/user.py:133
+#: main/templates/user/signup.html:388 main/views/user.py:135
 msgid "问题"
 msgstr "Question"
 
@@ -666,8 +664,8 @@ msgstr "User does not exist"
 msgid "密码/答案不能为空"
 msgstr "Password/Answer cannot be empty"
 
-#: main/templates/user/signin.html:226 main/views/user.py:299
-#: main/views/user.py:350
+#: main/templates/user/signin.html:226 main/views/user.py:316
+#: main/views/user.py:367
 msgid "用户名不能为空"
 msgstr "Username cannot be empty"
 
@@ -718,7 +716,7 @@ msgid "传统"
 msgstr "Classic"
 
 #: main/templates/user/signup.html:124 main/templates/user/signup.html:415
-#: main/views/user.py:135
+#: main/views/user.py:137
 msgid "答案"
 msgstr "Answer"
 
@@ -753,16 +751,16 @@ msgstr "from right the "
 #: main/templates/user/signup.html:186 main/templates/user/signup.html:187
 #: main/templates/user/signup.html:193 main/templates/user/signup.html:244
 #: main/templates/user/signup.html:281 main/templates/user/signup.html:317
-#: main/views/user.py:131 main/views/user.py:133 main/views/user.py:135
-#: main/views/user.py:137
+#: main/views/user.py:133 main/views/user.py:135 main/views/user.py:137
+#: main/views/user.py:139
 msgid "“"
 msgstr " '"
 
 #: main/templates/user/signup.html:186 main/templates/user/signup.html:187
 #: main/templates/user/signup.html:193 main/templates/user/signup.html:244
 #: main/templates/user/signup.html:281 main/templates/user/signup.html:317
-#: main/views/user.py:131 main/views/user.py:133 main/views/user.py:135
-#: main/views/user.py:137
+#: main/views/user.py:133 main/views/user.py:135 main/views/user.py:137
+#: main/views/user.py:139
 msgid "”"
 msgstr "' "
 
@@ -819,8 +817,8 @@ msgstr "In the answer"
 msgid "已存在"
 msgstr "is already taken"
 
-#: main/templates/user/signup.html:331 main/views/user.py:131
-#: main/views/user.py:133 main/views/user.py:135 main/views/user.py:137
+#: main/templates/user/signup.html:331 main/views/user.py:133
+#: main/views/user.py:135 main/views/user.py:137 main/views/user.py:139
 msgid "不能为空"
 msgstr "cannot be empty"
 
@@ -1106,134 +1104,128 @@ msgstr "{d} days {h} hours"
 msgid "《{}操作手册》"
 msgstr "《{} Operation Handbook》"
 
-#: main/views/superuser.py:18
-#, python-brace-format
-msgid ""
-"\n"
-"        <li class='text-muted'>@{user.nickname} 执行了 {category} 的初始化。"
-"</li>\n"
-"        <h5>超级管理员操作连接：</h5>\n"
-"        <div class='well'>\n"
-"            <li><a href='/superuser/index'>初始化</a></li>\n"
-"            <li><a href='/superuser/broadcast'>广播系统消息</a></li>\n"
-"            <li><a href='/superuser/updatedb?mode=initbadges'>初始化所有徽章"
-"</a></li>\n"
-"            <li><a href='/superuser/updatedb?mode=betauser'>分发 betauser 徽"
-"章</a></li>\n"
-"            <li><a href='/superuser/updatedb?mode=badgedesigner'>分发设计师徽"
-"章</a></li>\n"
-"        </div>\n"
-"        <li><b>初始化</b>：默认设置 @{superuser.nickname} 为超级管理员，并向"
-"其发送此邮件</li>\n"
-"        <li><b>广播系统消息</b>：查看发给系统的消息，广播消息</li>\n"
-"    "
-msgstr ""
-"\n"
-"        <li class='text-muted'>@{user.nickname} ran '{category}' "
-"initialization.</li>\n"
-"        <h5>Superuser operation links: </h5>\n"
-"        <div class='well'>\n"
-"            <li><a href='/superuser/index'>Initialization</a></li>\n"
-"            <li><a href='/superuser/broadcast'>Broadcast System Message</a></"
-"li>\n"
-"            <li><a href='/superuser/updatedb?mode=initbadges'>Init all "
-"badges</a></li>\n"
-"            <li><a href='/superuser/updatedb?mode=betauser'>Distribute "
-"Betauser Badges</a></li>\n"
-"            <li><a href='/superuser/updatedb?mode=badgedesigner'>Distribute "
-"Designer Badges</a></li>\n"
-"        </div>\n"
-"        <li><b>Initialization</b>：By default, set @{superuser.nickname} as "
-"superuser, and send this message to him.</li>\n"
-"        <li><b>Broadcast System Message</b>：Check messages sent to system, "
-"broadcast message</li>\n"
-"    "
+#: main/views/superuser.py:20
+msgid "初始化"
+msgstr "Initialization"
 
-#: main/views/superuser.py:33 main/views/superuser.py:151
+#: main/views/superuser.py:22
+msgid "默认设置 @{} 为超级管理员，并向其发送此邮件"
+msgstr "By default, set @{} as superuser, and send this message to him."
+
+#: main/views/superuser.py:27
+msgid "查看发给系统的消息，广播消息"
+msgstr "Check messages sent to system, broadcast messages"
+
+#: main/views/superuser.py:30
+msgid "初始化所有徽章"
+msgstr "Initialization all badges"
+
+#: main/views/superuser.py:32
+msgid "刷新数据库中徽章的信息"
+msgstr "Refresh all badges information in database"
+
+#: main/views/superuser.py:35
+msgid "分发 Betauser 徽章"
+msgstr "Set betausers badges"
+
+#: main/views/superuser.py:37
+msgid "对网站前 100 名用户添加 Betauser 徽章"
+msgstr "Add 'Betauser' badge to first 100 users"
+
+#: main/views/superuser.py:40
+msgid "分发设计师徽章"
+msgstr "Set designers badges"
+
+#: main/views/superuser.py:42
+msgid "对所有徽章的设计师添加 Designer 徽章"
+msgstr "Add 'Designer' badge to all badge designers"
+
+#: main/views/superuser.py:48
+msgid "执行了超级管理员的初始化。"
+msgstr "ran superuser initialization"
+
+#: main/views/superuser.py:49
+msgid "超级管理员操作连接："
+msgstr "Superuser operation links: "
+
+#: main/views/superuser.py:55 main/views/superuser.py:173
 msgid "发送失败，未知原因。用户：@{}"
 msgstr "Sending failed. Unknown reason. User: @{}"
 
-#: main/views/superuser.py:37
+#: main/views/superuser.py:59
 msgid "@{} 已设置为超级管理员"
 msgstr "@{} is set as superuser"
 
-#: main/views/superuser.py:38
+#: main/views/superuser.py:60
 msgid "@{} 已是超级管理员，无需更改"
 msgstr "@{} is already set as superuser, no need to change."
 
-#: main/views/superuser.py:64
-msgid "Mode 参数不能为空"
-msgstr "Argument 'Mode' cannot be empty"
-
-#: main/views/superuser.py:132
-msgid "数据库更新完毕，模式 {}"
-msgstr "Database updated. Mode {}"
+#: main/views/superuser.py:86 main/views/user.py:45 main/views/user.py:58
+#: util/user.py:24 util/user.py:26
+msgid "{} 参数不能为空"
+msgstr "Argument '{}' cannot be empty"
 
 #: main/views/superuser.py:154
+msgid "数据库更新完毕，模式 {}"
+msgstr "Database updated. Mode '{}'"
+
+#: main/views/superuser.py:176
 msgid "发送成功"
 msgstr "Sending success"
 
-#: main/views/user.py:37
+#: main/views/user.py:39
 #, python-brace-format
 msgid "请求的分类（{category}）不存在"
 msgstr "The requested category ({category}) does not exist"
 
-#: main/views/user.py:37 main/views/user.py:43 main/views/user.py:56
+#: main/views/user.py:39 main/views/user.py:45 main/views/user.py:58
 msgid "错误"
 msgstr "Error"
 
-#: main/views/user.py:43
-msgid "Category 参数不能为空"
-msgstr "Argument 'Category' cannot be empty"
-
-#: main/views/user.py:56
-msgid "Nickname 参数不能为空"
-msgstr "Argument 'Nickname' cannot be empty"
-
-#: main/views/user.py:66
+#: main/views/user.py:68
 msgid "{} 访问了你的公开页"
 msgstr "{} visited your public page"
 
-#: main/views/user.py:102
+#: main/views/user.py:104
 msgid "查看用户个人信息"
 msgstr "View user profile"
 
-#: main/views/user.py:131 main/views/user.py:133 main/views/user.py:135
-#: main/views/user.py:137 main/views/user.py:147 main/views/user.py:149
-#: main/views/user.py:151 main/views/user.py:154 main/views/user.py:156
+#: main/views/user.py:133 main/views/user.py:135 main/views/user.py:137
+#: main/views/user.py:139 main/views/user.py:149 main/views/user.py:151
+#: main/views/user.py:153 main/views/user.py:156 main/views/user.py:158
 msgid "注册失败"
 msgstr "Sign up failed"
 
-#: main/views/user.py:147
+#: main/views/user.py:149
 #, python-brace-format
 msgid "用户名 '{username}' 已存在！"
 msgstr "Username '{username}' is already taken!"
 
-#: main/views/user.py:149
+#: main/views/user.py:151
 #, python-brace-format
 msgid "昵称 '{nickname}' 已存在！"
 msgstr "Nickname '{nickname}' is already taken!"
 
-#: main/views/user.py:151
+#: main/views/user.py:153
 #, python-brace-format
 msgid "邮箱 '{email}' 已存在！"
 msgstr "Email '{email}' is already taken!"
 
-#: main/views/user.py:154
+#: main/views/user.py:156
 #, python-brace-format
 msgid "用户名 '{username}' 只应包含数字、字母、和英文句号！"
 msgstr "Username '{username}' should only contain numbers, letters and '.'!"
 
-#: main/views/user.py:156
+#: main/views/user.py:158
 #, python-brace-format
 msgid "昵称 '{nickname}' 只应包含字母和汉字！"
 msgstr "Nickname '{nickname}' should only contain letters"
 
-#: main/views/user.py:163
+#: main/views/user.py:165
 msgid "注册成功"
 msgstr "Sign up success"
 
-#: main/views/user.py:165
+#: main/views/user.py:167
 #, python-brace-format
 msgid ""
 " {user.username} 注册成功！\n"
@@ -1244,139 +1236,107 @@ msgstr ""
 "You are the No.{user.id} user. \n"
 "Please log in to let us remember you!"
 
-#: main/views/user.py:165
+#: main/views/user.py:167
 msgid "欢迎加入"
 msgstr "Welcome aboard"
 
-#: main/views/user.py:175
+#: main/views/user.py:177
 msgid "修改头像成功"
 msgstr "Change head image success"
 
-#: main/views/user.py:186
+#: main/views/user.py:188
 #, python-brace-format
 msgid "您已经以 {username} 的身份登入了，请勿重复登入"
 msgstr "You already logged in as '{username}', please do not log in again"
 
-#: main/views/user.py:186
+#: main/views/user.py:188
 msgid "登入失败"
 msgstr "Log in failed"
 
-#: main/views/user.py:209
+#: main/views/user.py:211
 msgid "此邮箱（{}）尚未被注册"
 msgstr "This email ({}) has not signed up"
 
-#: main/views/user.py:218
-#, python-brace-format
-msgid ""
-"\n"
-"            有人正在通过邮件的方式找回您的用户名。\n"
-"            <hr/>\n"
-"            他输入的邮件是：<pre>{eml}</pre>\n"
-"            他得到的用户名是：<pre>{un}</pre>\n"
-"            <hr/>\n"
-"            若此操作不是您所为，请联系管理员 @系统消息\n"
-"        "
-msgstr ""
-"\n"
-"            Someone is retrieving your username by email.\n"
-"            <hr/>\n"
-"            Requested email：<pre>{eml}</pre>\n"
-"            Retrieved username：<pre>{un}</pre>\n"
-"            <hr/>\n"
-"            If this operation is not launched by you, please contact "
-"administrator @系统消息\n"
-"        "
-
-#: main/views/user.py:226
+#: main/views/user.py:221 main/views/user.py:227
 msgid "有人正在通过邮件的方式找回您的用户名"
 msgstr "Someone is retrieving your username by email"
 
-#: main/views/user.py:228
-msgid ""
-"\n"
-"            出于安全考虑，您的用户名未全部显示，\n"
-"            每个 <code>*</code> 代表一个字符。\n"
-"            <hr/>\n"
-"            你的用户名是：<pre>{}</pre>\n"
-"            <hr/>\n"
-"            一封包含此次操作信息的站内信已经发送给您。\n"
-"        "
-msgstr ""
-"\n"
-"            For security concern, your username will not reveal fully. \n"
-"            Every <code>*</code> represents 1 charactor. \n"
-"            <hr/>\n"
-"            Your username is: <pre>{}</pre>\n"
-"            <hr/>\n"
-"            A message indicates this operation is sent to you.\n"
-"        "
+#: main/views/user.py:223
+msgid "他输入的邮件是："
+msgstr "Requested email："
 
-#: main/views/user.py:248
+#: main/views/user.py:224
+msgid "他得到的用户名是："
+msgstr "Retrieved username："
+
+#: main/views/user.py:225
+msgid "若此操作不是您所为，请联系管理员"
+msgstr "If this operation is not launched by you, please contact administrator"
+
+#: main/views/user.py:230
+msgid "出于安全考虑，您的用户名未全部显示，"
+msgstr "For security concern, your username will not fully revealed. "
+
+#: main/views/user.py:231
+msgid "每个 <code>*</code> 代表一个字符。"
+msgstr "Every <code>*</code> represents 1 charactor. "
+
+#: main/views/user.py:233
+msgid "你的用户名是："
+msgstr "Your username is: "
+
+#: main/views/user.py:235
+msgid "一封包含此次操作信息的站内信已经发送给您。"
+msgstr "A message indicates this operation is sent to you."
+
+#: main/views/user.py:249
 msgid "登入失败：用户名不能为空"
 msgstr "Log in failed. Username cannot be empty"
 
-#: main/views/user.py:251
+#: main/views/user.py:252
 msgid "登入失败：答案不能为空"
 msgstr "Log in failed. Answer cannot be empty"
 
-#: main/views/user.py:256 main/views/user.py:302
+#: main/views/user.py:257 main/views/user.py:319
 msgid "登入失败：找不到用户名为 {} 的用户"
 msgstr "Log in failed. Cannot find user with username {}"
 
-#: main/views/user.py:259
+#: main/views/user.py:260
 msgid "登入失败：您已被禁止登入，请联系管理员"
 msgstr ""
 "Log in failed. You are forbidden to log in. Please contact administrator"
 
-#: main/views/user.py:264
+#: main/views/user.py:265
 msgid "登入失败：用户名与答案不匹配"
 msgstr "Log in failed. Incorrect username / password combination"
 
-#: main/views/user.py:270
+#: main/views/user.py:271
 msgid "登入成功"
 msgstr "Log in success"
 
-#: main/views/user.py:278
-#, python-brace-format
-msgid ""
-"\n"
-"        欢迎您归来，开始您的网站之旅吧！<br/>\n"
-"        <li>访问 <a href='/progress/list'>{myprogress}</a> 查看进度列表</"
-"li>\n"
-"        <li>访问 <a href='/user/profile'>{myprofile}</a> 查看您的活跃度、进度"
-"统计</li>\n"
-"        <li>访问 <a href='/chat/conversation?mode=quicknote'>{quicknote}</a> "
-"随手记录您的想法</li>\n"
-"        <li>遇到问题或想 #提建议 ，请发消息给 @系统消息 ！</li>\n"
-"    "
-msgstr ""
-"\n"
-"        Welcome back. Start your surfing now.<br/>\n"
-"        <li>Visit <a href='/progress/list'>{myprogress}</a> for progress "
-"list</li>\n"
-"        <li>Visit <a href='/user/profile'>{myprofile}</a> for your "
-"activities, progress statistics</li>\n"
-"        <li>Visit <a href='/chat/conversation?mode=quicknote'>{quicknote}</"
-"a> write down your ideas anytime</li>\n"
-"        <li>If you have any problems or #suggest , please send a message to @"
-"系统消息 !</li>\n"
-"    "
+#: main/views/user.py:283
+msgid "查看进度列表"
+msgstr "for progress list"
 
-#: main/views/user.py:311
+#: main/views/user.py:288
+msgid "查看您的活跃度、进度统计"
+msgstr "for your activities, progress statistics"
+
+#: main/views/user.py:298
+msgid "欢迎您归来，开始您的网站之旅吧！"
+msgstr "Welcome back. Start your surfing now! "
+
+#: main/views/user.py:300
+msgid "遇到问题或想 #提建议 ，请发消息给"
+msgstr "If you have any problems or #suggest , please send a message to"
+
+#: main/views/user.py:328
 msgid "用户未找到：{}"
 msgstr "Username not found: {}"
 
-#: main/views/user.py:362
+#: main/views/user.py:379
 msgid "昵称不能为空"
 msgstr "Nickname cannot be empty"
-
-#: util/user.py:24
-msgid "User 参数不能为空"
-msgstr "Argument 'User' cannot be empty"
-
-#: util/user.py:26
-msgid "Answer 参数不能为空"
-msgstr "Argument 'Answer' cannot be empty"
 
 #: util/user.py:80
 msgid ""
@@ -1387,9 +1347,5 @@ msgstr ""
 "Please login/signup first."
 
 #: util/user.py:102
-#, python-brace-format
-msgid "您不具有 {category} 权限"
-msgstr "You don't have {category} permission"
-
-#~ msgid "初始化"
-#~ msgstr "Initialization"
+msgid "您不具有{}权限"
+msgstr "You don't have {} permission"

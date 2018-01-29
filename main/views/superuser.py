@@ -15,19 +15,41 @@ def index(request):
     superuser = User.objects.get_or_404(nickname=superuser_nickname)
     # send commands
     title = _("《{}操作手册》").format(_("超级管理员"))
-    content = _("""
-        <li class='text-muted'>@{user.nickname} 执行了 {category} 的初始化。</li>
-        <h5>超级管理员操作连接：</h5>
-        <div class='well'>
-            <li><a href='/superuser/index'>初始化</a></li>
-            <li><a href='/superuser/broadcast'>广播系统消息</a></li>
-            <li><a href='/superuser/updatedb?mode=initbadges'>初始化所有徽章</a></li>
-            <li><a href='/superuser/updatedb?mode=betauser'>分发 betauser 徽章</a></li>
-            <li><a href='/superuser/updatedb?mode=badgedesigner'>分发设计师徽章</a></li>
-        </div>
-        <li><b>初始化</b>：默认设置 @{superuser.nickname} 为超级管理员，并向其发送此邮件</li>
-        <li><b>广播系统消息</b>：查看发给系统的消息，广播消息</li>
-    """).format(user=user, superuser=superuser, category='superuser')
+    operations = [
+        {
+            "name": _("初始化"),
+            "href": "/superuser/index",
+            "desc": _("默认设置 @{} 为超级管理员，并向其发送此邮件").format(superuser.nickname),
+        },
+        {
+            "name": _("广播系统消息"),
+            "href": "/superuser/broadcast",
+            "desc": _("查看发给系统的消息，广播消息"),
+        },
+        {
+            "name": _("初始化所有徽章"),
+            "href": "/superuser/updatedb?mode=initbadges",
+            "desc": _("刷新数据库中徽章的信息"),
+        },
+        {
+            "name": _("分发 Betauser 徽章"),
+            "href": "/superuser/updatedb?mode=betauser",
+            "desc": _("对网站前 100 名用户添加 Betauser 徽章"),
+        },
+        {
+            "name": _("分发设计师徽章"),
+            "href": "/superuser/updatedb?mode=badgedesigner",
+            "desc": _("对所有徽章的设计师添加 Designer 徽章"),
+        },
+    ]
+    # generate html
+    content_links = "".join(["<li><a href='{h}'>{n}</a></li> <ul><li>{d}</li></ul>".format(h=o.get("href"), n=o.get("name"), d=o.get("desc")) for o in operations])
+    content = "".join([
+        "<li class='text-muted'>@{u} {d}</li>".format(u=user.nickname, d=_("执行了超级管理员的初始化。")),
+        "<h5>{}</h5>".format(_("超级管理员操作连接：")),
+        "<div class='well'>{}</div>".format(content_links),
+    ])
+    # send message to suepruser
     isSuccessed = Chat.objects.sendBySys(superuser, title=title, content=content)
     if not isSuccessed:
         return util.ctrl.infoMsg(_("发送失败，未知原因。用户：@{}").format(superuser.nickname))
@@ -61,7 +83,7 @@ def updatedb(request):
     # get mode
     mode = request.GET.get('mode')
     if not mode:
-        return util.ctrl.infoMsg(_("Mode 参数不能为空"))
+        return util.ctrl.infoMsg(_("{} 参数不能为空").format("Mode"))
     # main codes
     if 'initbadges' == mode:
         # update userPermissionBadge

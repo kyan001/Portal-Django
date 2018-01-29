@@ -217,24 +217,23 @@ def forgetUsername(request):
         username_part += '*' * (len(username) - len(username_part))  # make it full length
         username_part = username_part[:-1] + username[-1]  # last letter is shown
         # send chat
-        chat_content = _("""
-            有人正在通过邮件的方式找回您的用户名。
-            <hr/>
-            他输入的邮件是：<pre>{eml}</pre>
-            他得到的用户名是：<pre>{un}</pre>
-            <hr/>
-            若此操作不是您所为，请联系管理员 @系统消息
-        """).format(eml=email, un=username_part)
+        chat_content = "<br>".join([
+            _("有人正在通过邮件的方式找回您的用户名"),
+            "",
+            _("他输入的邮件是：") + "<pre>{}</pre>".format(email),
+            _("他得到的用户名是：") + "<pre>{}</pre>".format(username_part),
+            _("若此操作不是您所为，请联系管理员") + " @系统消息",
+        ])
         msg = Chat.objects.sendBySys(user, title=_("有人正在通过邮件的方式找回您的用户名"), content=chat_content)
         msg.save()
-        infomsg = _("""
-            出于安全考虑，您的用户名未全部显示，
-            每个 <code>*</code> 代表一个字符。
-            <hr/>
-            你的用户名是：<pre>{}</pre>
-            <hr/>
-            一封包含此次操作信息的站内信已经发送给您。
-        """).format(username_part)
+        infomsg = "<br>".join([
+            _("出于安全考虑，您的用户名未全部显示，"),
+            _("每个 <code>*</code> 代表一个字符。"),
+            "",
+            _("你的用户名是：") + "<pre>{}</pre>".format(username_part),
+            "",
+            _("一封包含此次操作信息的站内信已经发送给您。"),
+        ])
         return util.ctrl.infoMsg(infomsg, title=_('找回用户名'))
 
 
@@ -277,13 +276,29 @@ def checkLogin(request):  # POST
     has_old_msg = old_msg.exists()
     old_msg.delete()
     # send chat
-    chat_content = _("""
-        欢迎您归来，开始您的网站之旅吧！<br/>
-        <li>访问 <a href='/progress/list'>{myprogress}</a> 查看进度列表</li>
-        <li>访问 <a href='/user/profile'>{myprofile}</a> 查看您的活跃度、进度统计</li>
-        <li>访问 <a href='/chat/conversation?mode=quicknote'>{quicknote}</a> 随手记录您的想法</li>
-        <li>遇到问题或想 #提建议 ，请发消息给 @系统消息 ！</li>
-    """).format(myprogress=_("我的进度"), myprofile=_("个人信息"), quicknote=_("临时笔记"))
+    pages = [
+        {
+            "name": _("我的进度"),
+            "href": "/progress/list",
+            "desc": _("查看进度列表"),
+        },
+        {
+            "name": _("个人信息"),
+            "href": "/user/profile",
+            "desc": _("查看您的活跃度、进度统计"),
+        },
+        {
+            "name": _("临时笔记"),
+            "href": "/chat/conversation?mode=quicknote",
+            "desc": _("随手记录您的想法"),
+        },
+    ]
+    content_links = "".join(["<li><a href='{h}'>{n}</a> {d}</li>".format(h=p.get("href"), n=p.get("name"), d=p.get("desc")) for p in pages])
+    chat_content = "<br>".join([
+        _("欢迎您归来，开始您的网站之旅吧！"),
+        "{}".format(content_links),
+        "{} @系统消息".format(_("遇到问题或想 #提建议 ，请发消息给")),
+    ])
     new_msg = Chat.objects.sendBySys(user, title=msg_title, content=chat_content)
     if has_old_msg:
         new_msg.isread = True
