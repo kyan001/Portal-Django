@@ -182,7 +182,7 @@ class UserPermissionBadge(BaseModel):
         return "{self.category}: {self.isallowed}".format(self=self)
 
     def userCount(self):
-        UserPermission.objects.filter(category=self.category, isallowed=self.isallowed).count()
+        return UserPermission.objects.filter(category=self.category, isallowed=self.isallowed).count()
 
 
 class UserExp(BaseModel):
