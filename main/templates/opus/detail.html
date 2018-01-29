@@ -1,10 +1,12 @@
 {% extends "base.html" %}
+
+{% load i18n %}
 {% block title %}《{{opus.name}}》{% endblock title %}
 
 {% block css %}
     <style>
         body {
-            background-image: url('/static/img/backdrop.png');
+            background-image: url("/static/img/backdrop.png");
         }
         .panel {
             overflow: hidden;
@@ -28,21 +30,21 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div id='qrcode-col' class='col-md-4 col-sm-6 col-xs-12'>
+            <div id="qrcode-col" class="col-md-4 col-sm-6 col-xs-12">
                 <div class="panel panel-primary">
-                    <div class='panel-heading'>
+                    <div class="panel-heading">
                         当前页面的二维码
-                        <a class='btn btn-primary btn-xs pull-right' onclick='$("#qrcode-col").slideUp("slow")'>
-                            <span class='glyphicon glyphicon-remove'></span>
+                        <a class="btn btn-primary btn-xs pull-right" onclick="$('#qrcode-col').slideUp('slow')">
+                            <span class="glyphicon glyphicon-remove"></span>
                         </a>
                     </div>
-                    <div class='panel-body'>
-                        <img src='http://pan.baidu.com/share/qrcode?w=150&h=150&url={{request.build_absolute_uri}}' title='当前页面的二维码'>
-                        <a class='btn btn-success btn-block {% if cuser.id == opus.progress.userid %}disabled{% endif %}' href='/opus/importfrom?id={{ opus.id }}'>一键添加到我的进度</a>
+                    <div class="panel-body">
+                        <img src="http://pan.baidu.com/share/qrcode?w=150&h=150&url={{request.build_absolute_uri}}" title="当前页面的二维码">
+                        <a class="btn btn-success btn-block {% if cuser.id == opus.progress.userid %}disabled{% endif %}" href="/opus/importfrom?id={{ opus.id }}">一键添加到我的进度</a>
                     </div>
                 </div>
             </div>
-            <div class='col-md-4 col-sm-6 col-xs-12'>
+            <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a class="no-decoration" href="/user/public?nickname={{ item.user.nickname }}" title="查看 @{{ opus.progress.user.nickname }} 的进度">
@@ -53,37 +55,37 @@
                     <table class="table table-hover">
                         <tbody>
                             <tr>
-                                <td class='attrname'>名称</td>
+                                <td class="attrname">名称</td>
                                 <td>
                                     <b>《{{ opus.name }}》</b>
                                 </td>
                             </tr>
                             <!-- hide for privacy
                             <tr>
-                                <td class='attrname'>备注</td>
+                                <td class="attrname">备注</td>
                                 <td>{{ opus.subtitle }}</td>
                             </tr>
                             -->
                             <tr>
-                                <td class='attrname'>总共</td>
+                                <td class="attrname">总共</td>
                                 <td>{{ opus.total }}</td>
                             </tr>
                             <!-- hide for privacy
                             <tr>
-                                <td class='attrname'>当前进度</td>
+                                <td class="attrname">当前进度</td>
                                 <td>{{ opus.progress.current }} / {{ opus.total }}</td>
                             </tr>
                             -->
                             <tr>
-                                <td class='attrname'>开始时间</td>
-                                <td>{{ opus.progress.created|date:'Y-m-d H:i' }}</td>
+                                <td class="attrname">开始时间</td>
+                                <td>{{ opus.progress.created|date:"Y-m-d H:i" }}</td>
                             </tr>
                             <tr>
-                                <td class='attrname'>上次访问</td>
-                                <td>{{ opus.progress.modified|date:'Y-m-d H:i' }}</td>
+                                <td class="attrname">上次访问</td>
+                                <td>{{ opus.progress.modified|date:"Y-m-d H:i" }}</td>
                             </tr>
                             <tr>
-                                <td class='attrname'>状态</td>
+                                <td class="attrname">状态</td>
                                 <td>{{ opus.progress.status }}</td>
                             </tr>
                         </tbody>
@@ -98,7 +100,7 @@
                         </div>
                         <table class="table table-hover">
                             <tr>
-                                <td class='attrname'>
+                                <td class="attrname">
                                     <span>链接</span>
                                     <span class="glyphicon glyphicon-link"></span>
                                 </td>
@@ -107,12 +109,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class='attrname'>
+                                <td class="attrname">
                                     <span>链接</span>
                                     <span class="glyphicon glyphicon-qrcode"></span>
                                 </td>
                                 <td>
-                                    <img src='http://pan.baidu.com/share/qrcode?w=150&h=150&url={{ opus.progress.weblink }}' title='进度连接二维码'>
+                                    <img src="http://pan.baidu.com/share/qrcode?w=150&h=150&url={{ opus.progress.weblink }}" title="进度连接二维码">
                                 </td>
                             </tr>
                         </table>
