@@ -99,6 +99,6 @@ def superuser_required(func):
     def wrapper(request, *args, **kwargs):
         user = getCurrentUser(request)
         if not user.getUserpermission('superuser'):
-            return util.ctrl.infoMsg(_("您不具有 {category} 权限").format(category='superuser'))
+            return util.ctrl.infoMsg(_("您不具有{}权限").format(_("超级管理员")))
         return func(request, *args, **kwargs)
     return wrapper
