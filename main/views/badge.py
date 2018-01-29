@@ -17,11 +17,11 @@ def list(request):
 def detail(request):
     '''查看单个徽章'''
     context = {}
-    # 获得参数
+    # get inputs
     badgeid = request.GET.get('id')
     if not badgeid:
         return util.ctrl.infoMsg("需要一个徽章 id")
-    # 获得作品
+    # get opus
     badge = UserPermissionBadge.objects.get_or_404(id=badgeid)
     # render
     context['badge'] = badge

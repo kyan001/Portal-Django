@@ -15,7 +15,7 @@
 {% block nav-btn %}
     <a href="/badge/list" class="btn btn-warning btn-sm">
         <span class="glyphicon glyphicon-arrow-left"></span>
-        {% trans "回到徽章列表" %}
+        {% trans "徽章列表" %}
     </a>
 {% endblock nav-btn %}
 
@@ -42,7 +42,7 @@
                                 <td>{% trans "设计师" %}{% trans "：" %}</td>
                                 <td>
                                     <a href="/user/public?nickname={{badge.designernname}}">
-                                        @{{badge.designernname}}
+                                        @{{ badge.designernname }}
                                     </a>
                                 </td>
                             </tr>
@@ -54,7 +54,7 @@
                                 <td>{% trans "拥有人数" %}{% trans "：" %}</td>
                                 <td>
                                     <span class="glyphicon glyphicon-user"></span>
-                                    <span>{{badge.userCount}}</span>
+                                    <span>{{ badge.userCount }}</span>
                                 </td>
                             </tr>
                         </table>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="panel-body">
                     <h4 class="text-info">{{ badge.description }}</h4>
-                    <li>{{ badge.requirement|linebreaks }}</li>
+                    <li>{{ badge.requirement }}</li>
                 </div>
             </div>
         </div>
