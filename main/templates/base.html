@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load i18n %}
 <html lang="zh-CN">
     <head>
         <meta charset="UTF-8">
@@ -59,7 +60,12 @@
         {% include "messages.html" %}
         <!-- ############ NAVIGATIONS ############-->
         <div id="nav-btn-zone">
-            {% block nav-btn %}{% endblock nav-btn %}
+            {% block nav-btn %}
+                <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="history.back()">
+                    <span class="glyphicon glyphicon-arrow-left"></span>
+                    {% trans "回到上一页" %}
+                </a>
+            {% endblock nav-btn %}
             <span id="function-btn-zone">
                 {% block function-btn %}{% endblock %}
             </span>
