@@ -251,25 +251,25 @@ class ExpHistory(BaseModel):
 
 
 class OpusManager(BaseManager):
-    def getTopSubtitles(self):
-        """Count and return the top common subtitles
+    def getTopComments(self):
+        """Count and return the top common comments
 
         Returns:
-            sorted subtitle:count k-v dictionary
+            sorted comment:count k-v dictionary
         """
         records = Opus.objects.all()
         sbttl_counts = {}
         for r in records:
-            if not r.subtitle:
+            if not r.comment:
                 continue
-            count = sbttl_counts.get(r.subtitle, 0)
-            sbttl_counts[r.subtitle] = count + 1
+            count = sbttl_counts.get(r.comment, 0)
+            sbttl_counts[r.comment] = count + 1
         return sorted(sbttl_counts.items(), key=lambda itm: itm[1], reverse=True)
 
 
 class Opus(BaseModel):
     name = models.CharField(max_length=255)
-    subtitle = models.CharField(max_length=255, blank=True, default='')
+    comment = models.TextField(blank=True, default='')
     total = models.IntegerField(default=0)
     objects = OpusManager()
 
@@ -284,7 +284,7 @@ class Opus(BaseModel):
         return cached_color or None
 
     def __str__(self):
-        subtext = "({self.subtitle})".format(self=self) if self.subtitle else ""
+        subtext = "({self.comment})".format(self=self) if self.comment else ""
         total = self.total if self.total else '∞'
         return "《{self.name}》{subtext}[{total}]".format(self=self, subtext=subtext, total=total)
 

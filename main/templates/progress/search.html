@@ -151,8 +151,8 @@
                 var count = 0
                 $(".progress-card").each(function(){
                     var opusname = $(this).find(".opus-name").text().toLowerCase()
-                    var opussubtitle = $(this).find(".subtitle").text().toLowerCase()
-                    if(opusname.indexOf(kw)>=0 || opussubtitle.indexOf(kw)>=0){
+                    var opuscomment = $(this).find(".comment").text().toLowerCase()
+                    if(opusname.indexOf(kw)>=0 || opuscomment.indexOf(kw)>=0){
                         $(this).show()
                         count++
                     } else {

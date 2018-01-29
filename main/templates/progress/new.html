@@ -23,7 +23,7 @@
             font-size: 15px !important;
             width: 100%;
         }
-        #subtitle-group .dropdown-menu {
+        #comment-group .dropdown-menu {
             padding: 5px;
             width: 255px;
         }
@@ -72,12 +72,12 @@
                                 <span class="text-muted">选填：</span>
                                 <div class="row">
                                     <span class="col-xs-12">
-                                        <div id="subtitle-group" class="input-group">
+                                        <div id="comment-group" class="input-group">
                                             <span class="input-group-addon">备注</span>
                                             <input type="text"
                                                 class="form-control editable clearable"
                                                 placeholder="作品的分类或备注"
-                                                name="subtitle">
+                                                name="comment">
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn btn-default dropdown-toggle" role="button" data-toggle="dropdown">
                                                     <span class="caret"></span>
@@ -176,7 +176,7 @@
 <script>
     $(function(){
         $(".category").click(function(){
-            $("input[name='subtitle']").val($(this).text().trim())
+            $("input[name='comment']").val($(this).text().trim())
         })
         $("#barcode-input").on("change", function(e) {
             if (e.target.files && e.target.files.length) {
@@ -219,7 +219,7 @@
         },
         "submit": function(){
             var name = $("input[name='name']").val()
-            var subtitle = $("input[name='subtitle']").val()
+            var comment = $("input[name='comment']").val()
             var total = $("input[name='total']").val()
             var current = $("input[name='current']").val()
             if(name == ""){

@@ -11,9 +11,9 @@
                     {% if prg.opus.covercolor %}
                         <span class="small glyphicon glyphicon-tint" style="color: {{prg.opus.covercolor}}" title="《{{prg.opus.name}}》的封面颜色"></span>
                     {% endif %}
-                    {% if prg.opus.subtitle %}
-                        <em class="subtitle small">
-                            {{ prg.opus.subtitle|truncatechars:9 }}
+                    {% if prg.opus.comment %}
+                        <em class="comment small">
+                            {{ prg.opus.comment|truncatechars:9 }}
                         </em>
                     {% endif %}
                     {% if prg.weblink and prg.weblink|isurl %}

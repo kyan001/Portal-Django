@@ -181,7 +181,7 @@ def update(request):
     if not progressid:
         return util.ctrl.infoMsg("进度 ID 为空，请联系管理员", title="出错")
     name = request.POST.get('name')
-    subtitle = request.POST.get('subtitle')
+    comment = request.POST.get('comment')
     weblink = request.POST.get('weblink')
     total = request.POST.get('total')
     total = int(total) if total else 0
@@ -207,7 +207,7 @@ def update(request):
     # save
     progress.current = current
     opus.name = name
-    opus.subtitle = subtitle
+    opus.comment = comment
     progress.weblink = weblink
     opus.total = total
     with transaction.atomic():
@@ -318,7 +318,7 @@ def add(request):
     '''新增界面点击保存按钮'''
     # get inputs
     name = request.POST.get('name')
-    subtitle = request.POST.get('subtitle')
+    comment = request.POST.get('comment')
     weblink = request.POST.get('weblink')
     if not weblink:
         weblink = ""
@@ -338,7 +338,7 @@ def add(request):
     util.userexp.addExp(user, 'progress', 10, '新增进度《{name}》成功'.format(name=name))
     # save
     with transaction.atomic():
-        opus = Opus(name=name, subtitle=subtitle, total=total)
+        opus = Opus(name=name, comment=comment, total=total)
         opus.save()
         progress = Progress(current=current, opusid=opus.id, userid=user.id, weblink=weblink)
         if(progress.setStatusAuto()):

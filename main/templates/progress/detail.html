@@ -111,9 +111,9 @@
                         <span id="loading-icon" hidden>
                             <span class="loading circling glyphicon glyphicon-refresh"></span>
                         </span>
-                        {% if opus.subtitle %}
-                            <em class="subtitle small">
-                                {{ opus.subtitle }}
+                        {% if opus.comment %}
+                            <em class="comment small">
+                                {{ opus.comment }}
                             </em>
                         {% endif %}
                     </span>
@@ -175,11 +175,11 @@
                                                 <th>备注</th>
                                                 <td class="text-info">
                                                     <input class="editable form-control"
-                                                      name="subtitle"
+                                                      name="comment"
                                                       type="text"
-                                                      value="{{opus.subtitle}}"
-                                                      data-original="{{opus.subtitle}}"
-                                                      placeholder="{{opus.subtitle}}"
+                                                      value="{{opus.comment}}"
+                                                      data-original="{{opus.comment}}"
+                                                      placeholder="{{opus.comment}}"
                                                       autocomplete="off">
                                                 </td>
                                             </tr>
@@ -421,7 +421,7 @@
         window.inputs = {
             // 全局定义输入框，主要用于代码可读性
             name: $('input[name="name"]'),
-            subtitle: $('input[name="subtitle"]'),
+            comment: $('input[name="comment"]'),
             weblink: $('input[name="weblink"]'),
             total: $('input[name="total"]'),
             current: $('input[name="current"]')
@@ -493,7 +493,7 @@
                 'book': ['书', 'book', 'pdf', '漫画', 'comic', '文字', 'doc', 'txt', '小说', 'kindle', '小说'],
                 'movie': ['动画', 'anime', '电影', 'movie', 'mv', '电视剧', 'tv', 'show', '美剧', '英剧', '韩剧', '日剧', '公开课', '视频', '纪录片'],
             }
-            var sub = inputs.subtitle.val().toLowerCase()
+            var sub = inputs.comment.val().toLowerCase()
             if(isInSubs(sub, SUBS.book)){
                 setOpusType('book')
             } else if(isInSubs(sub, SUBS.movie)){

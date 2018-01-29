@@ -5,7 +5,7 @@ from main.models import Opus, Progress
 class OpusForm(ModelForm):
     class Meta:
         model = Opus
-        fields = ['name', 'subtitle', 'total']
+        fields = ['name', 'comment', 'total']
 
 
 class ProgressForm(ModelForm):
