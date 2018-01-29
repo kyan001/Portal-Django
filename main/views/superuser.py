@@ -83,7 +83,7 @@ def updatedb(request):
     # get mode
     mode = request.GET.get('mode')
     if not mode:
-        return util.ctrl.infoMsg(_("{} 参数不能为空").format("Mode"))
+        return util.ctrl.infoMsg(_("{} 参数不能为空").format("Mode"), title=_('错误'))
     # main codes
     if 'initbadges' == mode:
         # update userPermissionBadge
@@ -163,7 +163,7 @@ def sendbroadcast(request):
     title = request.POST.get('title')
     content = request.POST.get('content')
     if not content:
-        return util.ctrl.infoMsg("Content 参数不能为空")
+        return util.ctrl.infoMsg(_("{} 参数不能为空").format("Content"), title=_('错误'))
     # send chat
     receiver_nicknames = []
     receivers = User.objects.exclude(username='syschat')
