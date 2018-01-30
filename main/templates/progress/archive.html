@@ -29,16 +29,16 @@
             </div><!--.col-->
 
             <div class="col-xs-12 col-sm-12 col-md-4">
-                <div class="page-header" data-toggle="collapse" data-target="#list-giveup">
+                <div class="page-header" data-toggle="collapse" data-target="#list-deactivated">
                     <h5>
                         <span class="glyphicon glyphicon-chevron-up text-muted"></span>
                         {% trans "冻结中" %}
-                        <small class="prg-counts">({{ prglist.giveup|length }})</small>
+                        <small class="prg-counts">({{ prglist.deactivated|length }})</small>
                     </h5>
                 </div>
-                <div class="collapse in" id="list-giveup">
+                <div class="collapse in" id="list-deactivated">
                     <div class="row">
-                        {% for prg in prglist.giveup %}
+                        {% for prg in prglist.deactivated %}
                             {% include "progress/progresscard.html" with prg=prg size="col-xs-12" %}
                         {% empty %}
                             <div class="well">

@@ -91,68 +91,52 @@
             {% for prg in prg_timeline_this_year %}
                 {
                     progressid: {{prg.id}},
-                    name: "<span class='text-info'>{% trans '开始看' %} </span>《{{ prg.opus.name }}》",
-                    on: new Date({{prg.created.year}}, {{prg.created.month|add:-1}}, {{prg.created.day}})
+                    on: new Date({{prg.created.year}}, {{prg.created.month|add:-1}}, {{prg.created.day}}),
+                    name: "<span class='text-info'>{% trans '开始看' %} </span>《{{ prg.opus.name }}》"
                 },
-                {% if prg.status == 'done' %}
-                    {
-                        progressid: {{prg.id}},
-                        name: "<span class='text-success'>{% trans '完成了' %} </span>《{{ prg.opus.name }}》！",
-                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
-                    },
-                {% elif prg.status == 'giveup' %}
-                    {
-                        progressid: {{prg.id}},
-                        name: "<span class='text-danger'>{% trans '冻结了' %} </span>《{{ prg.opus.name }}》",
-                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
-                    },
-                {% elif prg.status == 'inprogress' %}
-                    {
-                        progressid: {{prg.id}},
-                        name: "《{{ prg.opus.name }}》<span class='text-primary'> {% trans '进行至' %} </span>{{prg.persent}}%",
-                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
-                    },
-                {% elif prg.status == 'follow' %}
-                    {
-                        progressid: {{prg.id}},
-                        name: "《{{ prg.opus.name }}》<span class='text-primary'> {% trans '追剧至' %} </span>{% trans '第' %} {{ prg.current }} {% trans '集' %}",
-                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
-                    },
-                {% endif %}
+                {
+                    progressid: {{prg.id}},
+                    on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}}),
+                    {% if prg.status == 'done' %}
+                        name: "<span class='text-success'>{% trans '完成了' %} </span>《{{ prg.opus.name }}》！"
+                    {% elif prg.status == 'deactivated' %}
+                        name: "<span class='text-danger'>{% trans '冻结了' %} </span>《{{ prg.opus.name }}》"
+                    {% elif prg.status == 'inprogress' %}
+                        name: "《{{ prg.opus.name }}》<span class='text-primary'> {% trans '进行至' %} </span>{{prg.persent}}%"
+                    {% elif prg.status == 'follow' %}
+                        name: "《{{ prg.opus.name }}》<span class='text-primary'> {% trans '追剧至' %} </span>{% trans '第' %} {{ prg.current }} {% trans '集' %}"
+                    {% elif prg.status == 'todo' %}
+                        name: "《{{ prg.opus.name }}》<span class='text-warning'> {% trans '等待中' %}</span>"
+                    {% else %}
+                        name: "《{{ prg.opus.name }}》 {% trans '出错' %}"
+                    {% endif %}
+                },
             {% endfor %}
         ];
         var last_year_events = [
             {% for prg in prg_timeline_last_year %}
                 {
                     progressid: {{prg.id}},
-                    name: "<span class='text-info'>{% trans '开始看' %} </span>《{{ prg.opus.name }}》",
-                    on: new Date({{prg.created.year}}, {{prg.created.month|add:-1}}, {{prg.created.day}})
+                    on: new Date({{prg.created.year}}, {{prg.created.month|add:-1}}, {{prg.created.day}}),
+                    name: "<span class='text-info'>{% trans '开始看' %} </span>《{{ prg.opus.name }}》"
                 },
-                {% if prg.status == 'done' %}
-                    {
-                        progressid: {{prg.id}},
-                        name: "<span class='text-success'>{% trans '完成了' %} </span>《{{ prg.opus.name }}》！",
-                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
-                    },
-                {% elif prg.status == 'giveup' %}
-                    {
-                        progressid: {{prg.id}},
-                        name: "<span class='text-danger'>{% trans '冻结了' %} </span>《{{ prg.opus.name }}》",
-                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
-                    },
-                {% elif prg.status == 'inprogress' %}
-                    {
-                        progressid: {{prg.id}},
-                        name: "《{{ prg.opus.name }}》<span class='text-primary'> {% trans '进行至' %} </span>{{prg.persent}}%",
-                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
-                    },
-                {% elif prg.status == 'follow' %}
-                    {
-                        progressid: {{prg.id}},
-                        name: "《{{ prg.opus.name }}》<span class='text-primary'> {% trans '追剧至' %} </span>{% trans '第' %} {{ prg.current }} {% trans '集' %}",
-                        on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}})
-                    },
-                {% endif %}
+                {
+                    progressid: {{prg.id}},
+                    on: new Date({{prg.modified.year}}, {{prg.modified.month|add:-1}}, {{prg.modified.day}}),
+                    {% if prg.status == 'done' %}
+                        name: "<span class='text-success'>{% trans '完成了' %} </span>《{{ prg.opus.name }}》！"
+                    {% elif prg.status == 'deactivated' %}
+                        name: "<span class='text-danger'>{% trans '冻结了' %} </span>《{{ prg.opus.name }}》"
+                    {% elif prg.status == 'inprogress' %}
+                        name: "《{{ prg.opus.name }}》<span class='text-primary'> {% trans '进行至' %} </span>{{prg.persent}}%"
+                    {% elif prg.status == 'follow' %}
+                        name: "《{{ prg.opus.name }}》<span class='text-primary'> {% trans '追剧至' %} </span>{% trans '第' %} {{ prg.current }} {% trans '集' %}"
+                    {% elif prg.status == 'todo' %}
+                        name: "《{{ prg.opus.name }}》<span class='text-warning'> {% trans '等待中' %}</span>"
+                    {% else %}
+                        name: "《{{ prg.opus.name }}》 {% trans '出错' %}"
+                    {% endif %}
+                },
             {% endfor %}
         ];
         $('#event-timeline-this-year').jqtimeline({
@@ -205,7 +189,7 @@
                             picto: '<span class="glyphicon glyphicon-ok text-success"></span>',
                             shortContent: "<span class='text-success'>{% trans '完成了' %} </span>《{{ prg.link|safe }}》",
                             forcePosition: 'right',
-                        {% elif prg.status == 'giveup' %}
+                        {% elif prg.status == 'deactivated' %}
                             picto: '<span class="glyphicon glyphicon-ban-circle text-danger"></span>',
                             shortContent: "<span class='text-danger'>{% trans '冻结了' %} </span>《{{ prg.link|safe }}》",
                             forcePosition: 'right',
@@ -219,6 +203,9 @@
                         {% elif prg.status == 'todo' %}
                             picto: '<span class="glyphicon glyphicon-plus"></span>',
                             shortContent: "《{{ prg.link|safe }}》 {% trans '加入至' %} <span class='text-info'>{% trans '待阅读' %}</span>",
+                            forcePosition: 'left',
+                        {% else %}
+                            shortContent: "《{{ prg.link|safe }}》 {% trans '出错' %}",
                             forcePosition: 'left',
                         {% endif %}
                     },

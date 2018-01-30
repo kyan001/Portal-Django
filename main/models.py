@@ -326,7 +326,7 @@ class Progress(BaseModel):
         ),
         'archive': (
             ('done', _('已完成')),
-            ('giveup', _('冻结中')),
+            ('deactivated', _('冻结中')),
         ),
     }
     userid = models.IntegerField(default=0)
@@ -379,7 +379,7 @@ class Progress(BaseModel):
 
     def setStatusAuto(self):
         opus = self.opus
-        if self.status == 'giveup':
+        if self.status == 'deactivated':
             return True
         if self.current == 0:
             self.status = 'todo'

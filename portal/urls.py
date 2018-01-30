@@ -52,8 +52,8 @@ urlpatterns = [
     url(r'^progress/add/$', main.views.progress.add),
     url(r'^progress/update/$', main.views.progress.update),
     url(r'^progress/delete/$', main.views.progress.delete),
-    url(r'^progress/giveup/$', main.views.progress.giveup),
-    url(r'^progress/reset/$', main.views.progress.reset),
+    url(r'^progress/deactivate/$', main.views.progress.deactivate),
+    url(r'^progress/reactivate/$', main.views.progress.reactivate),
     url(r'^progress/ical$', main.views.progress.ical),  # get
     url(r'^progress/setical$', main.views.progress.setical),  # post
     # OPUS

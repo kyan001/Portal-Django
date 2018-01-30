@@ -67,7 +67,7 @@
 
 {% block nav-btn %}
     <div class="btn-group">
-        {% if prg.status == 'giveup' or prg.status == 'done' %}
+        {% if prg.status == 'deactivated' or prg.status == 'done' %}
             <a class="btn btn-warning btn-sm" href="/progress/archive">
                 <span class="glyphicon glyphicon-arrow-left"></span>
                 {% trans "进度存档" %}
@@ -142,7 +142,7 @@
                                         <span>{% trans "进度信息" %}</span>
                                     </div>
                                     <div class="panel-body">
-                                        {% if prg.status == "giveup" %}
+                                        {% if prg.status == "deactivated" %}
                                             <span class="label label-danger center-block">{% trans "已冻结" %}</span>
                                         {% endif %}
                                         <table class="table table-condensed table-hover">
@@ -150,7 +150,6 @@
                                                 <th>{% trans "状态" %}</th>
                                                 <td>
                                                     {{ prg.get_status_display }}
-                                                    <span class="text-muted text-capitalize">{{ prg.status }}</span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -391,13 +390,13 @@
                                 {% trans "彻底删除" %}
                             </a>
                             <span class="pull-right">
-                                {% if prg.status == "giveup" %}
-                                    <a id="reset" class="btn btn-warning" role="button" onclick="$('#resetform').submit()">
+                                {% if prg.status == "deactivated" %}
+                                    <a id="reactivate" class="btn btn-warning" role="button" onclick="$('#reactivateform').submit()">
                                         <span class="glyphicon glyphicon-ok-circle"></span>
                                         {% trans "激活" %}
                                     </a>
                                 {% else %}
-                                    <a id="giveup" class="btn btn-warning" role="button" onclick="$('#giveupform').submit()">
+                                    <a id="deactivate" class="btn btn-warning" role="button" onclick="$('#deactivateform').submit()">
                                         <span class="glyphicon glyphicon-ban-circle"></span>
                                         {% trans "冻结" %}
                                     </a>
@@ -413,11 +412,11 @@
         {% csrf_token %}
         <input name="id" type="hidden" value="{{prg.id}}">
     </form>
-    <form id="giveupform" action="/progress/giveup/" method="post">
+    <form id="deactivateform" action="/progress/deactivate/" method="post">
         {% csrf_token %}
         <input name="id" type="hidden" value="{{prg.id}}">
     </form>
-    <form id="resetform" action="/progress/reset/" method="post">
+    <form id="reactivateform" action="/progress/reactivate/" method="post">
         {% csrf_token %}
         <input name="id" type="hidden" value="{{prg.id}}">
     </form>

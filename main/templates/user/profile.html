@@ -143,7 +143,7 @@
                     <table class="table table-condensed table-hover">
                     {% trans '出错' as t_error %}
                     {% trans "已完成" as t_done %}
-                    {% trans "冻结中" as t_giveup %}
+                    {% trans "冻结中" as t_deactivated %}
                     {% trans "进行中" as t_inprogress %}
                     {% trans "待阅读" as t_todo %}
                     {% trans "追剧中" as t_follow %}
@@ -156,7 +156,7 @@
                                     <th class="text-right">{% trans "平均花费" %}{% trans "：" %}</th>
                                     <td>{{ p.average_created_modified }}</td>
                                 {% endif %}
-                                {% if p.name == t_giveup %}
+                                {% if p.name == t_deactivated %}
                                     <th class="text-right">{% trans "平均尝试" %}{% trans "：" %}</th>
                                     <td>{{ p.average_created_modified }}</td>
                                 {% endif %}

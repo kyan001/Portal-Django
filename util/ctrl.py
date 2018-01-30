@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.core.mail import EmailMessage
 from django.template import loader
 from django.conf import settings
+from django.utils.translation import gettext as _
 
 import KyanToolKit as ktk
 
@@ -10,26 +11,26 @@ import KyanToolKit as ktk
 # Utils
 def infoMsg(content="Hi", url=None, title=None):
     context = {
-        'title': title,
-        'content': content,
-        'url': url,
+        "title": title,
+        "content": content,
+        "url": url,
     }
     if url:
-        if url == '/':
-            button_text = '回到主页'
-        elif '/user/signin' in url:
-            button_text = '前往「登入」页面'
-        elif '/user/signup' in url:
-            button_text = '前往「注册」页面'
-        elif '/progress/list' in url:
-            button_text = '前往「我的进度列表」页面'
-        elif '/chat/inbox' in url:
-            button_text = '前往「收件箱」'
-        elif '/chat/quicknote' in url:
-            button_text = '前往「临时笔记」'
+        if url == "/":
+            button_text = _("回到主页")
+        elif "/user/signin" in url:
+            button_text = _("前往「{}」页面").format(_("登入"))
+        elif "/user/signup" in url:
+            button_text = _("前往「{}」页面").format(_("注册"))
+        elif "/progress/list" in url:
+            button_text = _("前往「{}」页面").format(_("进度列表"))
+        elif "/chat/inbox" in url:
+            button_text = _("前往「{}」页面").format(_("收信箱"))
+        elif "/chat/quicknote" in url:
+            button_text = _("前往「{}」页面").format(_("临时笔记"))
         else:
             button_text = None
-        context['button'] = button_text
+        context["button"] = button_text
     return render_to_response("msg.html", context)
 
 
@@ -73,15 +74,17 @@ def calcExp(level):
     return None
 
 
-def sendEmail(word, to_email, subject='一封来自网站的邮件'):
+def sendEmail(word, to_email, subject="重要邮件"):
     if not word:
         return False
     if not to_email or to_email.find('@') <= 0:
         return False
-    subject = subject
-    content = loader.render_to_string('email.html', {'subject': subject.strip(), 'content': word.strip()})
+    content = loader.render_to_string('email.html', {
+        'subject': subject.strip(),
+        'content': word.strip(),
+    })
     msg = EmailMessage(
-        subject.strip() + ' - superfarmer.net',  # subject
+        subject.strip() + "kyan001.com",  # subject
         content,  # content
         settings.EMAIL_HOST_USER,  # from email
         [settings.EMAIL_HOST_USER, to_email.strip()]  # recipients

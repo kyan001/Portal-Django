@@ -1,0 +1,9 @@
+{% load i18n %}
+
+{{ title }}
+<br>
+<li>{% trans "请点击" %} 「<a href="/progress/new">{% trans "新增进度" %}</a>」 {% trans "按钮添加新的进度" %}</li>
+<li>{% trans "“" %}{% trans "进行中" %}{% trans "”" %}{% trans "、" %}{% trans "“" %}{% trans "追剧中" %}{% trans "”" %}{% trans "和" %}{% trans "“" %}{% trans "待阅读" %}{% trans "”" %}{% trans "的进度会存放在" %} 「<a href="/progress/list">{% trans "进度列表" %}</a>」 {% trans "页面" %}{% trans "。" %}</li>
+<li>{% trans "“" %}{% trans "已完成" %}{% trans "”" %}{% trans "和" %}{% trans "“" %}{% trans "冻结中" %}{% trans "”" %}{% trans "的进度会存放在" %} 「<a href="/progress/archive">{% trans "进度存档" %}</a>」 {% trans "页面" %}{% trans "。" %}</li>
+<br>
+{% trans "最后，祝您使用愉快！" %}
