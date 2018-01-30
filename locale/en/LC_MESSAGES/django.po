@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-30 19:13+0800\n"
+"POT-Creation-Date: 2018-01-30 19:58+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -62,6 +62,7 @@ msgstr "To Do"
 #: main/models.py:325 main/templates/progress/list.html:84
 #: main/templates/progress/timeline.html:111
 #: main/templates/progress/timeline.html:137
+#: main/templates/progress/timeline.html:208
 #: main/templates/user/profile.html:144 main/templates/user/public.html:91
 #: main/views/progress.py:420
 msgid "出错"
@@ -1656,6 +1657,10 @@ msgstr "private key is not valid"
 #: main/views/progress.py:379
 msgid "此用户尚未公开其进度日历"
 msgstr "User does not enable public progress calendar"
+
+#: main/views/progress.py:385
+msgid "进度日历"
+msgstr "Progress Calendar"
 
 #: main/views/robotalk.py:19
 msgid "在智械聊天中对话"

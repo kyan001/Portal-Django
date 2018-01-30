@@ -380,11 +380,11 @@ def ical(request):  # GET
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     cal = icalendar.Calendar()
-    cal['prodid'] = 'kyan001.com'
-    cal['version'] = '1.1'
-    cal['X-WR-CALNAME'] = '「进度日历」'
-    cal['X-WR-TIMEZONE'] = 'Asia/Shanghai'
-    cal['X-WR-CALDESC'] = 'http://www.kyan001.com/progress/list'
+    cal["prodid"] = "kyan001.com"
+    cal["version"] = "1.1"
+    cal["X-WR-CALNAME"] = "「" + _("进度日历") + "」" + "@{}".format(user.nickname)
+    cal["X-WR-TIMEZONE"] = "Asia/Shanghai"
+    cal["X-WR-CALDESC"] = "http://www.kyan001.com/progress/list"
     for prg in progresses:
         create_time = prg.created.strftime('%Y%m%dT%H%M%SZ')
         modify_time = prg.modified.strftime('%Y%m%dT%H%M%SZ')
