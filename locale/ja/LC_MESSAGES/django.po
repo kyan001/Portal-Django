@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-30 19:58+0800\n"
+"POT-Creation-Date: 2018-01-30 20:52+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: FULL NAME <EMILL@ADDRESS>\n"
 "Language-Team: Japanese <i18n@kyan001.com>\n"
@@ -53,15 +53,15 @@ msgstr ""
 
 #: main/models.py:324 main/templates/progress/list.html:58
 #: main/templates/progress/msg_welcome.html:6
-#: main/templates/progress/timeline.html:205
-#: main/templates/user/profile.html:148
+#: main/templates/progress/timeline-event.html:20
+#: main/templates/progress/timeline.html:164
+#: main/templates/user/profile.html:148 main/views/progress.py:418
 msgid "待阅读"
 msgstr ""
 
 #: main/models.py:325 main/templates/progress/list.html:84
-#: main/templates/progress/timeline.html:111
-#: main/templates/progress/timeline.html:137
-#: main/templates/progress/timeline.html:208
+#: main/templates/progress/timeline-event.html:22
+#: main/templates/progress/timeline.html:167
 #: main/templates/user/profile.html:144 main/templates/user/public.html:91
 #: main/views/progress.py:420
 msgid "出错"
@@ -842,53 +842,42 @@ msgstr ""
 msgid "语音识别错误"
 msgstr ""
 
-#: main/templates/progress/timeline.html:95
-#: main/templates/progress/timeline.html:121 main/views/progress.py:400
+#: main/templates/progress/timeline-event.html:6 main/views/progress.py:400
 msgid "开始看"
 msgstr ""
 
-#: main/templates/progress/timeline.html:101
-#: main/templates/progress/timeline.html:127
-#: main/templates/progress/timeline.html:190 main/views/progress.py:410
+#: main/templates/progress/timeline-event.html:12
+#: main/templates/progress/timeline.html:148 main/views/progress.py:410
 msgid "完成了"
 msgstr ""
 
-#: main/templates/progress/timeline.html:103
-#: main/templates/progress/timeline.html:129
-#: main/templates/progress/timeline.html:194 main/views/progress.py:412
+#: main/templates/progress/timeline-event.html:14
+#: main/templates/progress/timeline.html:152 main/views/progress.py:412
 msgid "冻结了"
 msgstr ""
 
-#: main/templates/progress/timeline.html:105
-#: main/templates/progress/timeline.html:131
-#: main/templates/progress/timeline.html:198 main/views/progress.py:414
+#: main/templates/progress/timeline-event.html:16
+#: main/templates/progress/timeline.html:156 main/views/progress.py:414
 msgid "进行至"
 msgstr ""
 
-#: main/templates/progress/timeline.html:107
-#: main/templates/progress/timeline.html:133
-#: main/templates/progress/timeline.html:201 main/views/progress.py:416
+#: main/templates/progress/timeline-event.html:18
+#: main/templates/progress/timeline.html:160 main/views/progress.py:416
 msgid "追剧至"
 msgstr ""
 
-#: main/templates/progress/timeline.html:107
-#: main/templates/progress/timeline.html:133
-#: main/templates/progress/timeline.html:201 main/views/progress.py:416
+#: main/templates/progress/timeline-event.html:18
+#: main/templates/progress/timeline.html:160 main/views/progress.py:416
 msgid "第"
 msgstr ""
 
-#: main/templates/progress/timeline.html:107
-#: main/templates/progress/timeline.html:133
-#: main/templates/progress/timeline.html:201 main/views/progress.py:416
+#: main/templates/progress/timeline-event.html:18
+#: main/templates/progress/timeline.html:160 main/views/progress.py:416
 msgid "集"
 msgstr ""
 
-#: main/templates/progress/timeline.html:109
-#: main/templates/progress/timeline.html:135 main/views/progress.py:418
-msgid "等待中"
-msgstr ""
-
-#: main/templates/progress/timeline.html:205
+#: main/templates/progress/timeline-event.html:20
+#: main/templates/progress/timeline.html:164 main/views/progress.py:418
 msgid "加入至"
 msgstr ""
 
@@ -1896,6 +1885,30 @@ msgstr ""
 #: util/ctrl.py:22 util/ctrl.py:24 util/ctrl.py:26 util/ctrl.py:28
 #: util/ctrl.py:30
 msgid "前往「{}」页面"
+msgstr ""
+
+#: util/time.py:27
+msgid "{}天"
+msgstr ""
+
+#: util/time.py:28
+msgid "{}小时"
+msgstr ""
+
+#: util/time.py:29
+msgid "{}分"
+msgstr ""
+
+#: util/time.py:30
+msgid "{}秒"
+msgstr ""
+
+#: util/time.py:45
+msgid "{}前"
+msgstr ""
+
+#: util/time.py:45
+msgid "{}后"
 msgstr ""
 
 #: util/user.py:80

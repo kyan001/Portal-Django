@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-30 19:58+0800\n"
+"POT-Creation-Date: 2018-01-30 20:52+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -54,15 +54,15 @@ msgstr "Following"
 
 #: main/models.py:324 main/templates/progress/list.html:58
 #: main/templates/progress/msg_welcome.html:6
-#: main/templates/progress/timeline.html:205
-#: main/templates/user/profile.html:148
+#: main/templates/progress/timeline-event.html:20
+#: main/templates/progress/timeline.html:164
+#: main/templates/user/profile.html:148 main/views/progress.py:418
 msgid "待阅读"
 msgstr "To Do"
 
 #: main/models.py:325 main/templates/progress/list.html:84
-#: main/templates/progress/timeline.html:111
-#: main/templates/progress/timeline.html:137
-#: main/templates/progress/timeline.html:208
+#: main/templates/progress/timeline-event.html:22
+#: main/templates/progress/timeline.html:167
 #: main/templates/user/profile.html:144 main/templates/user/public.html:91
 #: main/views/progress.py:420
 msgid "出错"
@@ -843,53 +843,42 @@ msgstr "Speech Recognize stopped"
 msgid "语音识别错误"
 msgstr "Speech Recognition Error"
 
-#: main/templates/progress/timeline.html:95
-#: main/templates/progress/timeline.html:121 main/views/progress.py:400
+#: main/templates/progress/timeline-event.html:6 main/views/progress.py:400
 msgid "开始看"
 msgstr "Started"
 
-#: main/templates/progress/timeline.html:101
-#: main/templates/progress/timeline.html:127
-#: main/templates/progress/timeline.html:190 main/views/progress.py:410
+#: main/templates/progress/timeline-event.html:12
+#: main/templates/progress/timeline.html:148 main/views/progress.py:410
 msgid "完成了"
 msgstr "Completed"
 
-#: main/templates/progress/timeline.html:103
-#: main/templates/progress/timeline.html:129
-#: main/templates/progress/timeline.html:194 main/views/progress.py:412
+#: main/templates/progress/timeline-event.html:14
+#: main/templates/progress/timeline.html:152 main/views/progress.py:412
 msgid "冻结了"
 msgstr "Deactivated"
 
-#: main/templates/progress/timeline.html:105
-#: main/templates/progress/timeline.html:131
-#: main/templates/progress/timeline.html:198 main/views/progress.py:414
+#: main/templates/progress/timeline-event.html:16
+#: main/templates/progress/timeline.html:156 main/views/progress.py:414
 msgid "进行至"
 msgstr "Proceeded to"
 
-#: main/templates/progress/timeline.html:107
-#: main/templates/progress/timeline.html:133
-#: main/templates/progress/timeline.html:201 main/views/progress.py:416
+#: main/templates/progress/timeline-event.html:18
+#: main/templates/progress/timeline.html:160 main/views/progress.py:416
 msgid "追剧至"
 msgstr "Followed to"
 
-#: main/templates/progress/timeline.html:107
-#: main/templates/progress/timeline.html:133
-#: main/templates/progress/timeline.html:201 main/views/progress.py:416
+#: main/templates/progress/timeline-event.html:18
+#: main/templates/progress/timeline.html:160 main/views/progress.py:416
 msgid "第"
 msgstr "No."
 
-#: main/templates/progress/timeline.html:107
-#: main/templates/progress/timeline.html:133
-#: main/templates/progress/timeline.html:201 main/views/progress.py:416
+#: main/templates/progress/timeline-event.html:18
+#: main/templates/progress/timeline.html:160 main/views/progress.py:416
 msgid "集"
 msgstr "episode"
 
-#: main/templates/progress/timeline.html:109
-#: main/templates/progress/timeline.html:135 main/views/progress.py:418
-msgid "等待中"
-msgstr "Waiting"
-
-#: main/templates/progress/timeline.html:205
+#: main/templates/progress/timeline-event.html:20
+#: main/templates/progress/timeline.html:164 main/views/progress.py:418
 msgid "加入至"
 msgstr "Added to"
 
@@ -1909,6 +1898,30 @@ msgstr "Back to homepage"
 msgid "前往「{}」页面"
 msgstr "Go to 「{}」 page"
 
+#: util/time.py:27
+msgid "{}天"
+msgstr "{} days"
+
+#: util/time.py:28
+msgid "{}小时"
+msgstr "{} hours"
+
+#: util/time.py:29
+msgid "{}分"
+msgstr "{} minutes"
+
+#: util/time.py:30
+msgid "{}秒"
+msgstr "{} seconds"
+
+#: util/time.py:45
+msgid "{}前"
+msgstr "{} ago"
+
+#: util/time.py:45
+msgid "{}后"
+msgstr "{} after"
+
 #: util/user.py:80
 msgid ""
 "此页面需要用户信息，\n"
@@ -1920,6 +1933,9 @@ msgstr ""
 #: util/user.py:102
 msgid "您不具有{}权限"
 msgstr "You don't have {} permission"
+
+#~ msgid "等待中"
+#~ msgstr "Waiting"
 
 #~ msgid "保存失败"
 #~ msgstr "Save failed"

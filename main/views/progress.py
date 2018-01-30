@@ -415,7 +415,7 @@ def ical(request):  # GET
         elif prg.status == 'follow':
             evnt_mdf['summary'] = OPUSNAME + " " + _("追剧至") + " " + _("第") + " {} ".format(prg.current) + _("集")
         elif prg.status == 'todo':
-            evnt_mdf['summary'] = OPUSNAME + " " + _("等待中")
+            evnt_mdf['summary'] = OPUSNAME + " " + _("加入至") + " " + _("待阅读")
         else:
             evnt_mdf['summary'] = OPUSNAME + " " + _("出错")
         cal.add_component(evnt_mdf)
