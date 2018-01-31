@@ -1,8 +1,12 @@
+import random
+
 from django.shortcuts import render, redirect
+from django.http import Http404
+from django.utils.translation import gettext as _
+
 import util.ctrl
 import util.user
 import util.userexp
-import random
 
 
 def index(request):
@@ -34,7 +38,7 @@ def settheme(request):
     else:  # 设置主题.
         theme_name = theme_name.lower()
         if theme_name not in theme_name_pool:
-            return util.ctrl.infoMsg(_("您请求的主题 {} 不存在").format(theme_name), title=_("设置主题失败"))
+            raise Http404(_("您请求的主题 {} 不存在").format(theme_name))
         oneweek = 60 * 60 * 24 * 7
         response.set_cookie(theme_key, theme_name, max_age=oneweek)
     # add exp
