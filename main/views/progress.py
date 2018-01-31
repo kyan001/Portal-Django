@@ -35,7 +35,7 @@ def list(request):
     else:
         TITLE = _("欢迎使用") + " 「" + _("我的进度") + "」"
         if not user.getChats('received').filter(senderid=Chat.objects.getSyschatUser().id, title=TITLE).exists():
-            chat_content = loader.render_to_string("progress/msg_welcome.html", {'title': TITLE})
+            chat_content = loader.render_to_string("progress/msg-welcome.html", {'title': TITLE})
             Chat.objects.sendBySys(user, title=TITLE, content=chat_content)
     # add exps
     util.userexp.addExp(user, "progress", 1, _("访问「{}」页面").format(_("进度列表")))

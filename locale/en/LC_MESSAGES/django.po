@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-30 20:52+0800\n"
+"POT-Creation-Date: 2018-01-31 11:20+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -41,19 +41,19 @@ msgid "错误类别"
 msgstr "Error Category"
 
 #: main/models.py:322 main/templates/progress/list.html:14
-#: main/templates/progress/msg_welcome.html:6
+#: main/templates/progress/msg-welcome.html:6
 #: main/templates/user/profile.html:147
 msgid "进行中"
 msgstr "In Progress"
 
 #: main/models.py:323 main/templates/progress/list.html:35
-#: main/templates/progress/msg_welcome.html:6
+#: main/templates/progress/msg-welcome.html:6
 #: main/templates/user/profile.html:149
 msgid "追剧中"
 msgstr "Following"
 
 #: main/models.py:324 main/templates/progress/list.html:58
-#: main/templates/progress/msg_welcome.html:6
+#: main/templates/progress/msg-welcome.html:6
 #: main/templates/progress/timeline-event.html:20
 #: main/templates/progress/timeline.html:164
 #: main/templates/user/profile.html:148 main/views/progress.py:418
@@ -69,13 +69,13 @@ msgid "出错"
 msgstr "Error"
 
 #: main/models.py:328 main/templates/progress/archive.html:14
-#: main/templates/progress/msg_welcome.html:7
+#: main/templates/progress/msg-welcome.html:7
 #: main/templates/user/profile.html:145
 msgid "已完成"
 msgstr "Done"
 
 #: main/models.py:329 main/templates/progress/archive.html:35
-#: main/templates/progress/msg_welcome.html:7
+#: main/templates/progress/msg-welcome.html:7
 #: main/templates/user/profile.html:146
 msgid "冻结中"
 msgstr "Deactivated"
@@ -152,7 +152,7 @@ msgid "回到上一页"
 msgstr "Back"
 
 #: main/templates/chat/chater.html:12 main/templates/index/index.html:358
-#: main/templates/index/index.html:450 main/views/chat.py:26
+#: main/templates/index/index.html:450 main/views/chat.py:27
 #: main/views/user.py:291 util/ctrl.py:30
 msgid "临时笔记"
 msgstr "QuickNote"
@@ -441,7 +441,7 @@ msgstr "QR code for progress link"
 
 #: main/templates/progress/archive.html:4
 #: main/templates/progress/detail.html:73
-#: main/templates/progress/msg_welcome.html:7
+#: main/templates/progress/msg-welcome.html:7
 #: main/templates/progress/navdropdown.html:20
 #: main/templates/progress/navlink.html:13 main/views/progress.py:60
 msgid "进度存档"
@@ -457,7 +457,7 @@ msgstr "Deactivated progresses are shown here. You can restart it anytime. "
 
 #: main/templates/progress/base-list.html:19
 #: main/templates/progress/detail.html:92
-#: main/templates/progress/msg_welcome.html:5
+#: main/templates/progress/msg-welcome.html:5
 #: main/templates/progress/new.html:5 main/templates/progress/new.html:49
 msgid "新增进度"
 msgstr "New Progress"
@@ -469,7 +469,7 @@ msgid "进度"
 msgstr "Progress"
 
 #: main/templates/progress/detail.html:78 main/templates/progress/list.html:4
-#: main/templates/progress/msg_welcome.html:6
+#: main/templates/progress/msg-welcome.html:6
 #: main/templates/progress/navdropdown.html:16
 #: main/templates/progress/navlink.html:7 main/views/progress.py:41
 #: main/views/progress.py:104 util/ctrl.py:26
@@ -671,16 +671,16 @@ msgstr "You do not have any following progress"
 msgid "您没有尚未开始的进度"
 msgstr "You do not have any to-do progress"
 
-#: main/templates/progress/msg_welcome.html:5
+#: main/templates/progress/msg-welcome.html:5
 msgid "请点击"
 msgstr "Click"
 
-#: main/templates/progress/msg_welcome.html:5
+#: main/templates/progress/msg-welcome.html:5
 msgid "按钮添加新的进度"
 msgstr "button to add a new progress"
 
-#: main/templates/progress/msg_welcome.html:6
-#: main/templates/progress/msg_welcome.html:7
+#: main/templates/progress/msg-welcome.html:6
+#: main/templates/progress/msg-welcome.html:7
 #: main/templates/user/signup.html:186 main/templates/user/signup.html:187
 #: main/templates/user/signup.html:193 main/templates/user/signup.html:244
 #: main/templates/user/signup.html:281 main/templates/user/signup.html:317
@@ -689,8 +689,8 @@ msgstr "button to add a new progress"
 msgid "“"
 msgstr " '"
 
-#: main/templates/progress/msg_welcome.html:6
-#: main/templates/progress/msg_welcome.html:7
+#: main/templates/progress/msg-welcome.html:6
+#: main/templates/progress/msg-welcome.html:7
 #: main/templates/user/signup.html:186 main/templates/user/signup.html:187
 #: main/templates/user/signup.html:193 main/templates/user/signup.html:244
 #: main/templates/user/signup.html:281 main/templates/user/signup.html:317
@@ -699,33 +699,33 @@ msgstr " '"
 msgid "”"
 msgstr "' "
 
-#: main/templates/progress/msg_welcome.html:6
+#: main/templates/progress/msg-welcome.html:6
 #: main/templates/user/signup.html:206
 msgid "、"
 msgstr ", "
 
-#: main/templates/progress/msg_welcome.html:6
-#: main/templates/progress/msg_welcome.html:7
-#: main/templates/progress/search.html:31
+#: main/templates/progress/msg-welcome.html:6
+#: main/templates/progress/msg-welcome.html:7
+#: main/templates/progress/search.html:31 main/views/opus.py:93
 msgid "和"
 msgstr " and "
 
-#: main/templates/progress/msg_welcome.html:6
-#: main/templates/progress/msg_welcome.html:7
+#: main/templates/progress/msg-welcome.html:6
+#: main/templates/progress/msg-welcome.html:7
 msgid "的进度会存放在"
 msgstr "progresses are located in"
 
-#: main/templates/progress/msg_welcome.html:6
-#: main/templates/progress/msg_welcome.html:7
+#: main/templates/progress/msg-welcome.html:6
+#: main/templates/progress/msg-welcome.html:7
 msgid "页面"
 msgstr "Page"
 
-#: main/templates/progress/msg_welcome.html:6
-#: main/templates/progress/msg_welcome.html:7
+#: main/templates/progress/msg-welcome.html:6
+#: main/templates/progress/msg-welcome.html:7
 msgid "。"
 msgstr ". "
 
-#: main/templates/progress/msg_welcome.html:9
+#: main/templates/progress/msg-welcome.html:9
 msgid "最后，祝您使用愉快！"
 msgstr "Enjoy!"
 
@@ -1438,6 +1438,7 @@ msgid "切换主题"
 msgstr "Themes"
 
 #: main/templates/userbar.html:131 main/templates/userbar.html:139
+#: main/views/index.py:42
 msgid "默认主题"
 msgstr "Default Theme"
 
@@ -1509,29 +1510,108 @@ msgstr "United"
 msgid "雪人"
 msgstr "Yeti"
 
-#: main/views/chat.py:24
+#: main/views/badge.py:23 main/views/chat.py:74 main/views/chat.py:121
+#: main/views/chat.py:124 main/views/opus.py:25 main/views/opus.py:93
+#: main/views/opus.py:123 main/views/progress.py:117 main/views/progress.py:185
+#: main/views/progress.py:234 main/views/progress.py:260
+#: main/views/progress.py:285 main/views/superuser.py:86
+#: main/views/superuser.py:166 main/views/user.py:45 main/views/user.py:58
+#: util/user.py:24 util/user.py:26
+msgid "{} 参数不能为空"
+msgstr "Argument '{}' cannot be empty"
+
+#: main/views/chat.py:25
 msgid "所有"
 msgstr "All"
 
-#: main/views/chat.py:25
+#: main/views/chat.py:26
 msgid "未读"
 msgstr "Unread"
 
-#: main/views/chat.py:27
+#: main/views/chat.py:28
 msgid "系统"
 msgstr "System"
 
-#: main/views/chat.py:28
+#: main/views/chat.py:29
 msgid "好友"
 msgstr "Friend"
 
-#: main/views/chat.py:29
+#: main/views/chat.py:30
 msgid "已发送"
 msgstr "Sent"
 
-#: main/views/chat.py:49
+#: main/views/chat.py:50
 msgid "查看收信箱"
 msgstr "Check Inbox"
+
+#: main/views/chat.py:79 main/views/chat.py:146
+msgid "只有消息的接收者可以{}消息"
+msgstr "Only the message receiver can {} this message"
+
+#: main/views/chat.py:79 main/views/progress.py:241
+msgid "删除"
+msgstr "Delete"
+
+#: main/views/chat.py:79 main/views/progress.py:230
+msgid "删除失败"
+msgstr "Delete failed"
+
+#: main/views/chat.py:82
+msgid "删除了一条来自 @{} 的消息"
+msgstr "Delete message from @{}"
+
+#: main/views/chat.py:108
+msgid "查看与 @{} 的对话"
+msgstr "See conversation with @{}"
+
+#: main/views/chat.py:131
+msgid "向 @{} 发送消息"
+msgstr "Send message to @{}"
+
+#: main/views/chat.py:144
+msgid "您查找的消息 id: {} 并不存在"
+msgstr "The message (id: {}) does not exist"
+
+#: main/views/chat.py:146 main/views/progress.py:207
+msgid "更新"
+msgstr "updated"
+
+#: main/views/chat.py:148
+msgid "阅读来自 @{} 的消息"
+msgstr "Read message from @{}"
+
+#: main/views/index.py:37
+msgid "您请求的主题 {} 不存在"
+msgstr ""
+
+#: main/views/index.py:37
+msgid "设置主题失败"
+msgstr ""
+
+#: main/views/index.py:43
+msgid "尝试主题 {}"
+msgstr ""
+
+#: main/views/opus.py:96
+msgid "{} 未被缓存"
+msgstr "{} have not cached yet"
+
+#: main/views/opus.py:127
+msgid "您已拥有该进度，请不要重复添加"
+msgstr "You are already the owner of this progress. No need to import again"
+
+#: main/views/opus.py:127
+msgid "导入失败"
+msgstr "Import failed"
+
+#: main/views/opus.py:137
+#, python-brace-format
+msgid "已从 @{u} 导入进度《{o}》的信息"
+msgstr "Progress 《{o}》 information imported from @{u}"
+
+#: main/views/opus.py:138
+msgid "请确认后点击“保存”"
+msgstr "Click “Save” when ready"
 
 #: main/views/progress.py:36
 msgid "欢迎使用"
@@ -1541,14 +1621,6 @@ msgstr "Welcome to"
 #: main/views/progress.py:80 main/views/progress.py:104
 msgid "访问「{}」页面"
 msgstr "Visit 「{}」 page"
-
-#: main/views/progress.py:117 main/views/progress.py:185
-#: main/views/progress.py:234 main/views/progress.py:260
-#: main/views/progress.py:285 main/views/superuser.py:86
-#: main/views/superuser.py:166 main/views/user.py:45 main/views/user.py:58
-#: util/user.py:24 util/user.py:26
-msgid "{} 参数不能为空"
-msgstr "Argument '{}' cannot be empty"
 
 #: main/views/progress.py:122 main/views/progress.py:207
 #: main/views/progress.py:241 main/views/progress.py:267
@@ -1575,10 +1647,6 @@ msgstr "Update failed"
 msgid "初始进度 {c} 不能大于总页数 {t}"
 msgstr "Initial 'Current' ({c}) should not be larger than 'Total' ({t})"
 
-#: main/views/progress.py:207
-msgid "更新"
-msgstr "updated"
-
 #: main/views/progress.py:209
 msgid "编辑进度《{}》成功"
 msgstr "Update progress 《{}》 success"
@@ -1590,14 +1658,6 @@ msgstr "Failed when saving progress. Might caused by 'Status'"
 #: main/views/progress.py:223
 msgid "已更新"
 msgstr "Updated"
-
-#: main/views/progress.py:230
-msgid "删除失败"
-msgstr "Delete failed"
-
-#: main/views/progress.py:241
-msgid "删除"
-msgstr "Delete"
 
 #: main/views/progress.py:247
 msgid "删除进度《{}》"
@@ -1842,24 +1902,24 @@ msgstr "A message indicates this operation is sent to you."
 
 #: main/views/user.py:249
 msgid "登入失败：用户名不能为空"
-msgstr "Log in failed. Username cannot be empty"
+msgstr "Log in failed: Username cannot be empty"
 
 #: main/views/user.py:252
 msgid "登入失败：答案不能为空"
-msgstr "Log in failed. Answer cannot be empty"
+msgstr "Log in failed: Answer cannot be empty"
 
 #: main/views/user.py:257 main/views/user.py:319
 msgid "登入失败：找不到用户名为 {} 的用户"
-msgstr "Log in failed. Cannot find user with username {}"
+msgstr "Log in failed: Cannot find user with username {}"
 
 #: main/views/user.py:260
 msgid "登入失败：您已被禁止登入，请联系管理员"
 msgstr ""
-"Log in failed. You are forbidden to log in. Please contact administrator"
+"Log in failed: You are forbidden to log in. Please contact administrator"
 
 #: main/views/user.py:265
 msgid "登入失败：用户名与答案不匹配"
-msgstr "Log in failed. Incorrect username / password combination"
+msgstr "Log in failed: Incorrect username / password combination"
 
 #: main/views/user.py:271
 msgid "登入成功"
@@ -1933,9 +1993,3 @@ msgstr ""
 #: util/user.py:102
 msgid "您不具有{}权限"
 msgstr "You don't have {} permission"
-
-#~ msgid "等待中"
-#~ msgstr "Waiting"
-
-#~ msgid "保存失败"
-#~ msgstr "Save failed"
