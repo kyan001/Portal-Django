@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-31 11:20+0800\n"
+"POT-Creation-Date: 2018-01-31 11:25+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1584,7 +1584,7 @@ msgid "设置主题失败"
 msgstr ""
 
 #: main/views/index.py:43
-msgid "尝试主题 {}"
+msgid "应用主题 {}"
 msgstr ""
 
 #: main/views/opus.py:96
