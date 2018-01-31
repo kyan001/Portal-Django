@@ -44,7 +44,7 @@ def getResponse(request):  # AJAX
         json_obj = json.loads(content)
         content = json_obj.get('content')
         if content:
-            content.replace('{br}', '<br/>')
+            content.replace('{br}', '<br>')
             content = re.sub(r'{face:[0-9]+}', '', content)
         return content
 
@@ -55,7 +55,7 @@ def getResponse(request):  # AJAX
         json_obj = json.loads(content)
         content = json_obj.get('response')
         if content:
-            content.replace('{br}', '<br/>')
+            content.replace('{br}', '<br>')
         return content
 
     def extractProgramo(content: str):
@@ -73,7 +73,7 @@ def getResponse(request):  # AJAX
         json_obj = json.loads(content)
         content = json_obj.get('text')
         if content:
-            content.replace('{br}', '<br/>')
+            content.replace('{br}', '<br>')
         return content
 
     # ROBOS list(dictionary)
@@ -142,7 +142,7 @@ def getResponse(request):  # AJAX
         return fullurl
 
     def getRoboResponse(robo):
-        """获得某个 robo 的回复
+        """获得某个 robo 的回复.
 
         Args:
             robo: ROBOS[i]
@@ -155,7 +155,7 @@ def getResponse(request):  # AJAX
         return u_resp.decode()
 
     def addResponseToResult(robo, r):
-        """将某个 robo 的回复及元数据加入到结果集中
+        """将某个 robo 的回复及元数据加入到结果集中.
 
         Args:
             robo: ROBOS[i]
@@ -178,7 +178,7 @@ def getResponse(request):  # AJAX
             r['result'][key] = value
 
     def addDisabledToResult(robo, r):
-        """将已禁用的 robo 加入到结果集中
+        """将已禁用的 robo 加入到结果集中.
 
         Args:
             robo: ROBOS[i]
@@ -203,9 +203,9 @@ def getResponse(request):  # AJAX
     else:
         for i in ROBOS:
             robo = ROBOS.get(i)
-            if robo.get('disabled'):  # disabled 的机器人加入结果的 disabled 中
+            if robo.get('disabled'):  # disabled 的机器人加入结果的 disabled 中.
                 addDisabledToResult(robo, RESULT)
-            else:  # 未 disabled 的加入结果的 result 或 failed 中
+            else:  # .未 disabled 的加入结果的 result 或 failed 中.
                 addResponseToResult(robo, RESULT)
     # render
     return util.ctrl.returnJson(RESULT)
