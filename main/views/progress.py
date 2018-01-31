@@ -114,7 +114,7 @@ def detail(request):
     user = util.user.getCurrentUser(request)
     progressid = request.GET.get('id')
     if not progressid:
-        raise Http404(_("{} 参数不能为空").format("ID"))
+        raise Http404(_("{} 参数不能为空").format("Progress ID"))
     # get progress
     progress = Progress.objects.get_or_404(id=progressid)
     # check owner
