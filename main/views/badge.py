@@ -1,9 +1,9 @@
 from django.shortcuts import render
+from django.http import Http404
+from django.utils.translation import gettext as _
+
 from main.models import UserPermissionBadge
 import util.ctrl
-
-import KyanToolKit
-ktk = KyanToolKit.KyanToolKit()
 
 
 def list(request):
@@ -20,7 +20,7 @@ def detail(request):
     # get inputs
     badgeid = request.GET.get('id')
     if not badgeid:
-        return util.ctrl.infoMsg("需要一个徽章 id")
+        raise Http404(_("{} 参数不能为空").format("Badge ID"))
     # get opus
     badge = UserPermissionBadge.objects.get_or_404(id=badgeid)
     # render
