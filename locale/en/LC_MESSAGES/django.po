@@ -1943,19 +1943,19 @@ msgstr "Go to 「{}」 page"
 
 #: util/time.py:27
 msgid "{}天"
-msgstr "{} days"
+msgstr "{}d"
 
 #: util/time.py:28
 msgid "{}小时"
-msgstr "{} hours"
+msgstr "{}h"
 
 #: util/time.py:29
 msgid "{}分"
-msgstr "{} minutes"
+msgstr "{}m"
 
 #: util/time.py:30
 msgid "{}秒"
-msgstr "{} seconds"
+msgstr "{}s"
 
 #: util/time.py:45
 msgid "{}前"
