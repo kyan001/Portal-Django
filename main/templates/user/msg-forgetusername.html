@@ -1,0 +1,11 @@
+{% load i18n %}
+{# need: email, username #}
+
+<li>{% trans "有人正在通过邮件的方式找回您的用户名" %}</li>
+<br>
+<li>{% trans "他输入的邮件是：" %}{{ email }}</li>
+<li>{% trans "他得到的用户名是：" %}{{ username }}</li>
+<br>
+<li>
+    {% trans "若此操作不是您所为，请联系管理员" %} @系统消息
+</li>

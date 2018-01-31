@@ -1,0 +1,9 @@
+{% load i18n %}
+{# need: username #}
+
+<li>{% trans "出于安全考虑，您的用户名未全部显示。" %}</li>
+<li>{% trans "每个 <code>*</code> 代表一个字符。" %}</li>
+<br>
+<li>{% trans "你的用户名是：" %}<pre>{{ username }}</pre></li>
+<br>
+<li>{% trans "一封包含此次操作信息的站内信已经发送给您。" %}</li>

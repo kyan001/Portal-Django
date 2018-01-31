@@ -1,4 +1,5 @@
 import random
+from functools import partial
 
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -6,6 +7,7 @@ from django.core.cache import cache
 from django.contrib import messages
 import django.utils.html
 from django.utils.translation import gettext as _
+from django.template import loader
 
 from main.models import User, Progress, Chat
 import util.ctrl
@@ -36,7 +38,7 @@ def exphistory(request):
     if category:
         userexp = user.getUserExp(category)
         if not userexp:
-            return util.ctrl.infoMsg(_("请求的分类（{category}）不存在").format(category=category), title=_('错误'))
+            return util.ctrl.infoMsg(_("请求的分类（{}）不存在").format(category), title=_('错误'))
         if view == 'full':
             exphistorys = userexp.getExpHistory()
         else:
@@ -63,7 +65,7 @@ def public(request):  # public
     for (k, v) in progress_statics.items():
         item = (Progress.objects.getStatusName(k), v['count'])
         progress_statics_group.append(item)
-    # add exp to 被查看人
+    # add exp to 被查看人.
     _by = request.META.get('REMOTE_HOST') or request.META.get('REMOTE_ADDR')
     util.userexp.addExp(user, 'user', 1, _('{} 访问了你的公开页').format(_by))
     # render
@@ -121,6 +123,7 @@ def signup(request):  # PUBLIC
 
 def newUser(request):  # POST
     """新用户点击提交注册按钮后"""
+    errMsg = partial(util.ctrl.infoMsg, title=_("注册失败"))
     username = request.POST.get('username')
     question = request.POST.get('question')
     answer1 = request.POST.get('answer1')
@@ -130,13 +133,13 @@ def newUser(request):  # POST
     email = request.POST.get('email')
     # check musts
     if not username:
-        return util.ctrl.infoMsg(_("“") + _("用户名") + _("”") + _("不能为空"), title=_("注册失败"))
+        return errMsg(_("“{}”不能为空").format(_("用户名")))
     if not question:
-        return util.ctrl.infoMsg(_("“") + _("问题") + _("”") + _("不能为空"), title=_("注册失败"))
+        return errMsg(_("“{}”不能为空").format(_("问题")))
     if not answer1:
-        return util.ctrl.infoMsg(_("“") + _("答案") + _("”") + _("不能为空"), title=_("注册失败"))
+        return errMsg(_("“{}”不能为空").format(_("答案")))
     if not email:
-        return util.ctrl.infoMsg(_("“") + _("邮箱") + _("”") + _("不能为空"), title=_("注册失败"))
+        return errMsg(_("“{}”不能为空").format(_("邮箱")))
     # auto fills
     if not nickname:
         nickname = util.user.getRandomName()
@@ -146,16 +149,16 @@ def newUser(request):  # POST
         tip = None
     # check conflicts
     if len(User.objects.filter(username=username)) != 0:
-        return util.ctrl.infoMsg(_("用户名 '{username}' 已存在！").format(username=username), title=_("注册失败"))
+        return errMsg(_("用户名 '{}' 已存在！").format(username))
     if len(User.objects.filter(nickname=nickname)) != 0:
-        return util.ctrl.infoMsg(_("昵称 '{nickname}' 已存在！").format(nickname=nickname), title=_("注册失败"))
+        return errMsg(_("昵称 '{}' 已存在！").format(nickname))
     if len(User.objects.filter(email=email)) != 0:
-        return util.ctrl.infoMsg(_("邮箱 '{email}' 已存在！").format(email=email), title=_("注册失败"))
+        return errMsg(_("邮箱 '{}' 已存在！").format(email))
     # check literally
     if " " in username:
-        return util.ctrl.infoMsg(_("用户名 '{username}' 只应包含数字、字母、和英文句号！").format(username=username), title=_("注册失败"))
+        return errMsg(_("用户名 '{}' 只应包含数字、字母、和英文句号！").format(username))
     if " " in nickname:
-        return util.ctrl.infoMsg(_("昵称 '{nickname}' 只应包含字母和汉字！").format(nickname=nickname), title=_("注册失败"))
+        return errMsg(_("昵称 '{}' 只应包含字母和汉字！").format(nickname))
     # create into db
     user = User(username=username, question=question, answer1=answer1, answer2=answer2, tip=tip, nickname=nickname, email=email)
     user.save()
@@ -185,7 +188,7 @@ def signin(request):
     next_ = request.GET.get("next") or ""
     current_user = util.user.getCurrentUser(request)
     if current_user:
-        return util.ctrl.infoMsg(_("您已经以 {username} 的身份登入了，请勿重复登入").format(username=current_user.username), title=_("登入失败"), url="/")
+        return util.ctrl.infoMsg(_("您已经以 {} 的身份登入了，请勿重复登入").format(current_user.username), title=_("登入失败"), url="/")
     # render
     context = {
         'request': request,
@@ -217,23 +220,14 @@ def forgetUsername(request):
         username_part += '*' * (len(username) - len(username_part))  # make it full length
         username_part = username_part[:-1] + username[-1]  # last letter is shown
         # send chat
-        chat_content = "<br>".join([
-            _("有人正在通过邮件的方式找回您的用户名"),
-            "",
-            _("他输入的邮件是：") + "<pre>{}</pre>".format(email),
-            _("他得到的用户名是：") + "<pre>{}</pre>".format(username_part),
-            _("若此操作不是您所为，请联系管理员") + " @系统消息",
-        ])
+        chat_content = loader.render_to_string("user/msg-forgetusername.html", {
+            "email": email,
+            "username": username_part,
+        })
         msg = Chat.objects.sendBySys(user, title=_("有人正在通过邮件的方式找回您的用户名"), content=chat_content)
-        msg.save()
-        infomsg = "<br>".join([
-            _("出于安全考虑，您的用户名未全部显示，"),
-            _("每个 <code>*</code> 代表一个字符。"),
-            "",
-            _("你的用户名是：") + "<pre>{}</pre>".format(username_part),
-            "",
-            _("一封包含此次操作信息的站内信已经发送给您。"),
-        ])
+        infomsg = loader.render_to_string("user/msg-retrieveusername.html", {
+            "username": username_part,
+        })
         return util.ctrl.infoMsg(infomsg, title=_('找回用户名'))
 
 
@@ -246,29 +240,29 @@ def checkLogin(request):  # POST
     next_ = request.POST.get('next') or ''
     _failto = request.META.get('HTTP_REFERER', "/user/signin")
     if not username:
-        messages.error(request, _("登入失败：用户名不能为空"))
+        messages.error(request, _("登入失败") + _("：") + _("用户名不能为空"))
         return redirect(_failto)
     if not answer:
-        messages.error(request, _("登入失败：答案不能为空"))
+        messages.error(request, _("登入失败") + _("：") + _("密码/答案不能为空"))
         return redirect(_failto)
     # check username vs. answer
     user = User.objects.get_or_none(username=username)
     if not user:
-        messages.error(request, _("登入失败：找不到用户名为 {} 的用户").format(username))
+        messages.error(request, _("登入失败") + _("：") + _("找不到用户名为 {} 的用户").format(username))
         return redirect(_failto)
     if user.getUserpermission('signin') is False:  # None is OK, True is OK, False is not OK
-        messages.error(request, _('登入失败：您已被禁止登入，请联系管理员'))
+        messages.error(request, _("登入失败") + _("：") + _("您已被禁止登入，请联系管理员"))
         return redirect(_failto)
     if util.user.checkAnswer(user, answer):
         util.user.rememberLogin(request, user)
     else:
-        messages.error(request, _("登入失败：用户名与答案不匹配"))
+        messages.error(request, _("登入失败") + _("：") + _("用户名与答案不匹配"))
         return redirect(_failto)
     # redirections
     to_ = next_ or '/'
     response = redirect(to_)
     # add exp
-    util.userexp.addExp(user, 'user', 1, _('登入成功'))
+    util.userexp.addExp(user, 'user', 1, _("登入成功"))
     # remove old msgs
     msg_title = 'Hi, @{user.nickname}'.format(user=user)
     sysuser = Chat.objects.getSyschatUser()
@@ -316,7 +310,7 @@ def getQuestionAndTip(request):  # AJAX
         return util.ctrl.returnJsonError(_("用户名不能为空"))
     user = User.objects.get_or_none(username=username)
     if not user:
-        return util.ctrl.returnJsonError(_("登入失败：找不到用户名为 {} 的用户").format(username))
+        return util.ctrl.returnJsonError(_("登入失败") + _("：") + _("找不到用户名为 {} 的用户").format(username))
     if user:
         question = user.question
         tip = user.tip
