@@ -1,0 +1,13 @@
+{% load i18n %}
+{# need: user, operations #}
+
+<li class="text-muted">@{{ user.nickname }} {% trans "执行了超级管理员的初始化。" %}</li>
+<h5>{% trans "超级管理员操作连接" %}{% trans "：" %}</h5>
+<div class="well">
+    {% for o in operations %}
+        <li><a href="{{ o.href }}">{{ o.name }}</a></li>
+        {% if o.desc %}
+            <ul><li>{{ o.desc }}</li></ul>
+        {% endif %}
+    {% endfor %}
+</div>

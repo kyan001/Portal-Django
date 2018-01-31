@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.template import loader
 from django.utils.translation import gettext as _
 
 from main.models import User, UserPermission, Chat, UserPermissionBadge
@@ -43,12 +44,10 @@ def index(request):
         },
     ]
     # generate html
-    content_links = "".join(["<li><a href='{h}'>{n}</a></li> <ul><li>{d}</li></ul>".format(h=o.get("href"), n=o.get("name"), d=o.get("desc")) for o in operations])
-    content = "".join([
-        "<li class='text-muted'>@{u} {d}</li>".format(u=user.nickname, d=_("执行了超级管理员的初始化。")),
-        "<h5>{}</h5>".format(_("超级管理员操作连接：")),
-        "<div class='well'>{}</div>".format(content_links),
-    ])
+    content = loader.render_to_string("superuser/msg-superuser.html", {
+        'user': user,
+        'operations': operations,
+    })
     # send message to suepruser
     isSuccessed = Chat.objects.sendBySys(superuser, title=title, content=content)
     if not isSuccessed:
@@ -63,7 +62,7 @@ def index(request):
 @util.user.login_required
 @util.user.superuser_required
 def broadcast(request):
-    '''su 发送给所有人的私信'''
+    """su 发送给所有人的私信"""
     context = {}
     user = util.user.getCurrentUser(request)
     # get syschat
@@ -79,7 +78,7 @@ def broadcast(request):
 @util.user.login_required
 @util.user.superuser_required
 def updatedb(request):
-    '''su 更新数据库'''
+    """su 更新数据库"""
     # get mode
     mode = request.GET.get('mode')
     if not mode:
@@ -101,7 +100,7 @@ def updatedb(request):
                 'isallowed': False,
                 'image': '/static/img/badges/signin-no.png',
                 'description': '此用户被禁止登入',
-                'requirement': '当你做了什么事被关入小黑屋的时候，这枚徽章将会自动出现。\n（然而现在并没有什么小黑屋）\n一些不准许登入的系统用户也会拥有此徽章）',
+                'requirement': '当你做了什么事被关入小黑屋的时候，这枚徽章将会自动出现。（然而现在并没有什么小黑屋）。一些不准许登入的系统用户也会拥有此徽章）',
                 'designernname': '唯笑竹',
             },
             {
@@ -157,7 +156,7 @@ def updatedb(request):
 @util.user.login_required
 @util.user.superuser_required
 def sendbroadcast(request):
-    '''点击 superuser/broadcast 界面中的发送按钮后'''
+    """点击 superuser/broadcast 界面中的发送按钮后"""
     user = util.user.getCurrentUser(request)
     # get inputs
     title = request.POST.get('title')
