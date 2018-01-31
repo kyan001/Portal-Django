@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-31 12:22+0800\n"
+"POT-Creation-Date: 2018-01-31 16:30+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -134,7 +134,7 @@ msgstr "Designer"
 #: main/templates/user/profile.html:153 main/templates/user/profile.html:156
 #: main/templates/user/profile.html:160 main/templates/user/profile.html:164
 #: main/templates/user/profile.html:168 main/templates/user/profile.html:172
-#: main/templates/user/signin.html:146 main/templates/user/signin.html:210
+#: main/templates/user/signin.html:146 main/templates/user/signin.html:219
 #: main/templates/user/signup.html:207 main/views/progress.py:376
 #: main/views/progress.py:379 main/views/superuser.py:175
 #: main/views/user.py:243 main/views/user.py:246 main/views/user.py:251
@@ -1157,29 +1157,34 @@ msgstr "Keep logged in. Do not check this option on a public computer."
 msgid "记住我"
 msgstr "Remember me"
 
-#: main/templates/user/signin.html:82 main/templates/user/signin.html:163
+#: main/templates/user/signin.html:82 main/templates/user/signin.html:172
 #: main/templates/userbar.html:44 util/ctrl.py:22
 msgid "登入"
 msgstr "Log in"
 
-#: main/templates/user/signin.html:186 main/templates/user/signin.html:194
+#: main/templates/user/signin.html:156 main/templates/user/signup.html:116
+#: main/templates/user/signup.html:413 main/templates/user/signup.html:415
+msgid "密码"
+msgstr "Password"
+
+#: main/templates/user/signin.html:195 main/templates/user/signin.html:203
 msgid "加载中 ..."
 msgstr "Loading ..."
 
-#: main/templates/user/signin.html:210
+#: main/templates/user/signin.html:219
 msgid "用户不存在"
 msgstr "User does not exist"
 
-#: main/templates/user/signin.html:221 main/views/user.py:246
+#: main/templates/user/signin.html:230 main/views/user.py:246
 msgid "密码/答案不能为空"
 msgstr "Password/Answer cannot be empty"
 
-#: main/templates/user/signin.html:226 main/views/user.py:243
+#: main/templates/user/signin.html:235 main/views/user.py:243
 #: main/views/user.py:310 main/views/user.py:361
 msgid "用户名不能为空"
 msgstr "Username cannot be empty"
 
-#: main/templates/user/signin.html:231
+#: main/templates/user/signin.html:240
 msgid "登入中 ..."
 msgstr "Logging in ..."
 
@@ -1215,11 +1220,6 @@ msgstr "Submitting"
 #: main/templates/user/signup.html:114 main/templates/user/signup.html:426
 msgid "请输入密码"
 msgstr "Please enter the password"
-
-#: main/templates/user/signup.html:116 main/templates/user/signup.html:413
-#: main/templates/user/signup.html:415
-msgid "密码"
-msgstr "Password"
 
 #: main/templates/user/signup.html:121
 msgid "传统"

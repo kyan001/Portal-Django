@@ -61,7 +61,7 @@
                         <span class="glyphicon glyphicon-credit-card"></span>
                     </span>
                     <input type="password" class="form-control clean-when-fold" name="answer" placeholder="{% trans '密码或答案' %}" autocomplete="password">
-                    <span class="input-group-addon text-muted" onmouseover="$(this).siblings('input').attr('type','text')" onmouseout="$(this).siblings('input').attr('type','password')">
+                    <span id="show-password" class="input-group-addon text-muted" onmouseover="$(this).siblings('input').attr('type','text')" onmouseout="$(this).siblings('input').attr('type','password')">
                         <span class="glyphicon glyphicon-eye-open"></span>
                     </span>
                 </div>
@@ -151,6 +151,15 @@
                         }
                         if(option == "unique"){
                             $("input[name='answer']").focus()
+                        }
+                        var is_password_cn = (result.question.indexOf("密码") > -1)
+                        var is_password_trans = (result.question.indexOf("{% trans '密码' %}") > -1)
+                        if(is_password_cn || is_password_trans){
+                            $("input[name='answer']").attr("type", "password")
+                            $("#show-password").show()
+                        } else {
+                            $("input[name='answer']").attr("type", "text")
+                            $("#show-password").hide()
                         }
                     }
                 },
