@@ -61,7 +61,7 @@ class User(BaseModel):
     headimg = models.ImageField(default='', upload_to=headimg_upload_to, blank=True)
 
     def __str__(self):
-        return "@{self.nickname}({self.username})".format(self=self, created=util.time.formatDate(self.created))
+        return "@{self.nickname}({self.username})".format(self=self)
 
     @property
     def headimg_url(self):
