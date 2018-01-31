@@ -19,10 +19,10 @@ import util.ctrl
 
 
 def detail(request):
-    '''获得作品的详情'''
+    """获得作品的详情"""
     opusid = request.GET.get('id')
     if not opusid:
-        return util.ctrl.infoMsg("作品 ID 为空，请联系管理员", title="作品 ID 为空")
+        raise Http404(_("{} 参数不能为空").format("Opus ID"))
     # get opus
     opus = Opus.objects.get_or_404(id=opusid)
     # render
@@ -85,15 +85,15 @@ def getOpusWordCloud(request):  # get # ajax
             cached_info = cached_info.decode()
         return json.loads(cached_info) if cached_info else None
 
-    opus_name = request.GET.get('name')  # 用户存的名字
+    opus_name = request.GET.get('name')  # 用户存的名字.
     opus_type = request.GET.get('type')
     height = request.GET.get('height') or "500"
     width = request.GET.get('width') or "500"
     if not (opus_name and opus_type):
-        raise Http404("opus 的参数 name 和 type 不能为空")
+        raise Http404(_("{} 参数不能为空").format("Opus Name" + _("和") + "Opus Type"))
     info = getOpusCachedInfo(opus_type, opus_name)
     if not info:
-        raise Http404("opus 的 info 不存在")
+        raise Http404(_("{} 未被缓存").format("Opus Info"))
     # check cached
     cache_key = '{typ}:{name}:{hght}x{wdth}:wordcloud'.format(typ=opus_type, name=opus_name, hght=height, wdth=width)
     cache_timeout = 60 * 60 * 24 * 30 * 2  # 2 months
@@ -120,11 +120,11 @@ def importFrom(request):
     """
     opusid = request.GET.get('id')
     if not opusid:
-        return util.ctrl.infoMsg("作品 ID 为空，请联系管理员", title="作品 ID 为空")
+        return util.ctrl.infoMsg(_("{} 参数不能为空").format("Opus ID"))
     user = util.user.getCurrentUser(request)
-    opus = Opus.objects.get_or_404(id=int(opusid))  # 获得作品
-    if opus.progress.userid == user.id:  # 判断是否是自己的进度
-        return util.ctrl.infoMsg("您已拥有该进度，请不要重复添加", title='添加失败')
+    opus = Opus.objects.get_or_404(id=int(opusid))  # 获得作品.
+    if opus.progress.userid == user.id:  # 判断是否是自己的进度.
+        return util.ctrl.infoMsg(_("您已拥有该进度，请不要重复添加"), title=_('导入失败'))
     # 生成 url
     url = '/progress/new'
     param = {
@@ -134,6 +134,6 @@ def importFrom(request):
     }
     param_encoded = urllib.parse.urlencode(param)
     url_final = url + '?' + param_encoded  # ?name=xxx&total=xxx&weblink=xxx
-    messages.success(request, '已从 @{} 导入进度《{}》的信息'.format(user.nickname, opus.name))
-    messages.warning(request, '请确认后点击“保存”')
+    messages.success(request, _("已从 @{u} 导入进度《{o}》的信息").format(u=user.nickname, o=opus.name))
+    messages.warning(request, _("请确认后点击“保存”"))
     return redirect(url_final)
