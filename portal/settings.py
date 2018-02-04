@@ -152,7 +152,7 @@ LANGUAGES = (
     ('zh-hans', 'Chinese'),
     ('en', 'English'),
     # ('ja', 'Japanese'),
-    # ('fr', 'French'),
+    ('fr', 'French'),
 )
 
 # MESSAGE MIDDLEWARE CONFIG
