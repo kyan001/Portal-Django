@@ -67,7 +67,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary hidden-xs">
                 <div class="panel-heading">
                     <div class="panel-title">
                         {% trans "智械聊天" %}
@@ -110,7 +110,13 @@
                 $("#sendbtn").click()
             }
         })
-        $("#chat-container").css("height", $(document).height() - 51 - 43 - 49 - 15 - 15)  // Userbar:51px, panel-heading:43px, input-box: 49px, padding:15px
+        var chat_container_height = $(document).height() - 51 - 43 - 20 - 34 - 15 - 25  // Userbar:51px, panel-heading:43+20px, input-box:34px, bottom:25px
+        var chat_container_height_xs =$(document).height() / 2 - 51 - 34 - 5  // Userbar:51px, input-box:34px, bottom:5px
+        if(isMobile()){
+            $("#chat-container").css("height", chat_container_height_xs)
+        } else {
+            $("#chat-container").css("height", chat_container_height)
+        }
         getResponse("你好")
     })
     function Robo(key, name, style, headimg){
