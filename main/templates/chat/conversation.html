@@ -107,7 +107,7 @@
                 {% empty %}
                     {% if receiver %}
                         <div class="well">
-                            {% trans "你与 @{{receiver.nickname}} 还没有说过话" %}
+                            {% blocktrans with nickname=receiver.nickname %}你与 @{{ nickname }} 还没有说过话{% endblocktrans %}
                         </div>
                     {% else %}
                         <div class="well">

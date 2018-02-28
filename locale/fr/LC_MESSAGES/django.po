@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-04 15:23+0800\n"
+"POT-Creation-Date: 2018-02-28 23:54+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Charles <wzhch1987@gmail.com>\n"
 "Language-Team: French <i18n@kyan001.com>\n"
@@ -203,25 +203,26 @@ msgid "消息内容"
 msgstr "Le contenu du message"
 
 #: main/templates/chat/conversation.html:110
-msgid "你与 @{{receiver.nickname}} 还没有说过话"
-msgstr "Vous n'avez pas parlé avec @{{receiver.nickname}}."
+#, python-format
+msgid "你与 @%(nickname)s 还没有说过话"
+msgstr "Vous n'avez pas parlé avec @%(nickname)s"
 
 #: main/templates/chat/conversation.html:114
 msgid "对话的历史记录会显示在这里"
-msgstr "L'historique de conversation va être affichée ici."
+msgstr "L'historique de conversation va être affichée ici"
 
 #: main/templates/chat/conversation.html:196
 msgid "错误：用户昵称不能为空"
-msgstr "Erreur: le pseudo de l'utilisateur ne peut pas être vide."
+msgstr "Erreur: le pseudo de l'utilisateur ne peut pas être vide"
 
 #: main/templates/chat/conversation.html:200
 msgid "错误：用户昵称不存在"
-msgstr "Erreur: l'utilisateur n'existe pas."
+msgstr "Erreur: l'utilisateur n'existe pas"
 
 #: main/templates/chat/conversation.html:205
 #: main/templates/superuser/broadcast.html:126
 msgid "错误：消息内容不能为空"
-msgstr "Erreur: le contenu du message ne peut pas être vide."
+msgstr "Erreur: le contenu du message ne peut pas être vide"
 
 #: main/templates/chat/inbox.html:4 main/templates/chat/inbox.html:75
 #: util/ctrl.py:28
@@ -334,11 +335,11 @@ msgstr "Musique"
 
 #: main/templates/index/index.html:604
 msgid "吉他，钢琴，声音。"
-msgstr "Guitare, Piano, Voix."
+msgstr "Guitare, Piano, Voix. "
 
 #: main/templates/index/index.html:605
 msgid "当言语渐弱，音乐响起。"
-msgstr "Quand la langue cesse, la musique va parler "
+msgstr "Quand la langue cesse, la musique va parler. "
 
 #: main/templates/index/index.html:608
 msgid "我的音乐"
@@ -350,11 +351,11 @@ msgstr "Réalisations"
 
 #: main/templates/index/index.html:620
 msgid "创造，可能，"
-msgstr "Créativité, Probabilité,"
+msgstr "Créativité, Probabilité, "
 
 #: main/templates/index/index.html:621
 msgid "热忱，意志。"
-msgstr "Passion, Intention,"
+msgstr "Passion, Intention, "
 
 #: main/templates/index/index.html:624
 msgid "我的"
@@ -366,11 +367,11 @@ msgstr "Idées"
 
 #: main/templates/index/index.html:636
 msgid "我思，"
-msgstr "Restent á penser,"
+msgstr "Restent á penser, "
 
 #: main/templates/index/index.html:637
 msgid "我酷。"
-msgstr "Restent cool."
+msgstr "Restent cool. "
 
 #: main/templates/index/index.html:641
 msgid "与我对话"
@@ -459,7 +460,7 @@ msgstr "Les progrès complets seront affichés ici"
 msgid "冻结中的进度，会自动显示在这里，可以随时再继续阅读。"
 msgstr ""
 "Les progrès désactivés seront affichés ici, vous pouvez recommencer à tout "
-"moment."
+"moment. "
 
 #: main/templates/progress/base-list.html:19
 #: main/templates/progress/detail.html:92
