@@ -8,3 +8,4 @@ django-cleanup
 tld
 jieba
 wordcloud
+django-redis
