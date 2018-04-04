@@ -86,16 +86,19 @@
                                                     <span class="caret"></span>
                                                  </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                    <span class="btn btn-default category" role="button">{% trans "书" %}</span>
-                                                    <span class="btn btn-default category" role="button">PDF</span>
-                                                    <span class="btn btn-default category" role="button">{% trans "漫画" %}</span>
-                                                    <span class="btn btn-default category" role="button">{% trans "动画" %}</span>
-                                                    <span class="btn btn-default category" role="button">{% trans "电视剧" %}</span>
-                                                    <span class="btn btn-default category" role="button">{% trans "公开课" %}</span>
-                                                    <span class="btn btn-default category" role="button">{% trans "纪录片" %}</span>
-                                                    <span class="btn btn-default category" role="button">{% trans "视频" %}</span>
-                                                    <span class="btn btn-default category" role="button">{% trans "小说" %}</span>
-                                                    <span class="btn btn-default category" role="button">Kindle</span>
+                                                    {% for commenttag in commenttags %}
+                                                        <span class="btn btn-default category" role="button">{{ commenttag }}</span>
+                                                    {% empty %}
+                                                        <span class="btn btn-default category" role="button">{% trans "书" %}</span>
+                                                        <span class="btn btn-default category" role="button">PDF</span>
+                                                        <span class="btn btn-default category" role="button">{% trans "漫画" %}</span>
+                                                        <span class="btn btn-default category" role="button">{% trans "动画" %}</span>
+                                                        <span class="btn btn-default category" role="button">{% trans "电视剧" %}</span>
+                                                        <span class="btn btn-default category" role="button">{% trans "公开课" %}</span>
+                                                        <span class="btn btn-default category" role="button">{% trans "纪录片" %}</span>
+                                                        <span class="btn btn-default category" role="button">{% trans "视频" %}</span>
+                                                        <span class="btn btn-default category" role="button">{% trans "小说" %}</span>
+                                                    {% endfor %}
                                                 </ul>
                                             </div><!-- /btn-group -->
                                         </div>

@@ -307,6 +307,11 @@ def new(request):
     name = request.GET.get("name") or ""
     total = request.GET.get("total") or ""
     weblink = request.GET.get("weblink") or ""
+    # load used comments
+    user = util.user.getCurrentUser(request)
+    progresses = Progress.objects.filter(userid=user.id)
+    opuses = [progress.opus for progress in progresses]
+    comment_tags = Opus.objects.getCommentTags(opuses)
     # add exp
     user = util.user.getCurrentUser(request)
     util.userexp.addExp(user, "progress", 2, _("尝试新增进度"))
@@ -315,6 +320,7 @@ def new(request):
         "name": name,
         "total": total,
         "weblink": weblink,
+        "commenttags": comment_tags,
     }
     return render(request, "progress/new.html", context)
 
