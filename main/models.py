@@ -1,5 +1,7 @@
 import os
 import datetime
+import re
+from collections import Counter
 
 from django.http import Http404
 from django.db import models
@@ -266,6 +268,19 @@ class OpusManager(BaseManager):
             sbttl_counts[r.comment] = count + 1
         return sorted(sbttl_counts.items(), key=lambda itm: itm[1], reverse=True)
 
+    def getCommentTags(self, opuses):
+        MAX_TAGS = 9
+        SUGGEST_COMMENTS = [_("书"), "PDF", _("漫画"), _("动画"), _("电视剧"), _("公开课"), _("纪录片"), _("视频"), _("小说")]
+        if not opuses:
+            raise Http404(_("{} 参数不能为空").format("Opuses"))
+        comments = [opus.comment for opus in opuses if opus.comment and opus.comment.strip()]
+        valid_tags = [tag for comment in comments for tag in re.split('[\s,，]+', comment) if len(tag.encode('gbk')) <= 10]
+        comment_tags = [tag for tag, count in Counter(valid_tags).most_common(MAX_TAGS) if count > 2]
+        if len(comment_tags) < MAX_TAGS:
+            comment_tags.extend([sc for sc in SUGGEST_COMMENTS if sc not in comment_tags])
+            comment_tags = comment_tags[:MAX_TAGS]
+        return comment_tags
+
 
 class Opus(BaseModel):
     name = models.CharField(max_length=255)
@@ -286,7 +301,8 @@ class Opus(BaseModel):
     def __str__(self):
         subtext = "({self.comment})".format(self=self) if self.comment else ""
         total = self.total if self.total else '∞'
-        return "《{self.name}》{subtext}[{total}]".format(self=self, subtext=subtext, total=total)
+        return "《{self.name}》{subtext}[{total}]".format(self=self,
+        subtext=subtext, total=total)
 
 
 class ProgressManager(BaseManager):
