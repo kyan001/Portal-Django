@@ -176,7 +176,7 @@ def imagecolor(request):  # AJAX #PUBLIC
 
 
 @util.user.login_required
-def update(request):
+def update(request):  # POST
     """detail页面，编辑模式的保存"""
     errMsg = partial(util.ctrl.infoMsg, title=_("更新失败"))
     # get inputs
@@ -225,7 +225,7 @@ def update(request):
 
 
 @util.user.login_required
-def delete(request):
+def delete(request):  # POST
     """detail 界面点击删除按钮"""
     errMsg = partial(util.ctrl.infoMsg, title=_("删除失败"))
     # get inputs
