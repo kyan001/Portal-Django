@@ -1,5 +1,5 @@
 /*!
- * progresscard.css v2.0.1
+ * progresscard.css v2.0.2
  */
 /* progress-card */
 .progress-card {
@@ -35,10 +35,14 @@
     line-height: inherit;
 }
 span.plus-one {
-    display: none;
     margin-left: 2px;
     margin-right: 2px;
 }
-.progress-card:hover .plus-one {
-    display: inline-block;
+@media (min-width: 768px) {
+    span.plus-one {
+        display: none;
+    }
+    .progress-card:hover .plus-one {
+        display: inline-block;
+    }
 }
