@@ -251,7 +251,33 @@ def delete(request):  # POST
 
 
 @util.user.login_required
-def deactivate(request):
+def plusone(request):  # GET
+    """list 界面点击 +1 按钮"""
+    # get inputs
+    next_ = request.META.get('HTTP_REFERER') or "/"
+    progressid = request.GET.get('id')
+    if not progressid:
+        raise Http404(_("{} 参数不能为空").format("Progress ID"))
+    # get progress and opus
+    progress = Progress.objects.get_or_404(id=progressid)
+    opus = progress.opus
+    # check owner
+    user = util.user.getCurrentUser(request)
+    if progress.userid != user.id:
+        return errMsg(_("这个进度不属于您，因此您不能{}该进度").format("+1"))
+    # check total
+    if progress.current == opus.total:
+        return errMsg(_("进度已达到最大值"))
+    # save
+    progress.current = progress.current + 1
+    progress.save()
+    # render
+    errMsg = partial(util.ctrl.infoMsg, title=_("+1 失败"))
+    return redirect(next_)
+
+
+@util.user.login_required
+def deactivate(request):  # POST
     """detail 界面点击冻结按钮"""
     errMsg = partial(util.ctrl.infoMsg, title=_("错误"))
     # get inputs

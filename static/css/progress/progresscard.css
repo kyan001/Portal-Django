@@ -31,3 +31,11 @@
 .progress-card .progress .progress-bar {
     line-height: inherit;
 }
+span.plus-one {
+    display: none;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+.progress-card:hover .plus-one {
+    display: inline-block;
+}

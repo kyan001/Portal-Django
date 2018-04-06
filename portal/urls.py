@@ -52,6 +52,7 @@ urlpatterns = [
     url(r'^progress/add/$', main.views.progress.add),
     url(r'^progress/update/$', main.views.progress.update),  # POST
     url(r'^progress/delete/$', main.views.progress.delete),  # POST
+    url(r'^progress/plusone/$', main.views.progress.plusone),  # GET
     url(r'^progress/deactivate/$', main.views.progress.deactivate),  # POST
     url(r'^progress/reactivate/$', main.views.progress.reactivate),  # POST
     url(r'^progress/ical$', main.views.progress.ical),  # GET
