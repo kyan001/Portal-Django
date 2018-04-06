@@ -35,13 +35,11 @@
     line-height: inherit;
 }
 span.plus-one {
+    /* display: none; */
     margin-left: 2px;
     margin-right: 2px;
 }
 @media (min-width: 768px) {
-    span.plus-one {
-        display: none;
-    }
     .progress-card:hover .plus-one {
         display: inline-block;
     }
