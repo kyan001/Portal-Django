@@ -271,6 +271,7 @@ def plusone(request):  # GET
     # save
     progress.current = progress.current + 1
     progress.save()
+    messages.success(request, _("进度") + " 《{}》 ".format(opus.name) + _("+1"))
     # render
     errMsg = partial(util.ctrl.infoMsg, title=_("+1 失败"))
     return redirect(next_)
