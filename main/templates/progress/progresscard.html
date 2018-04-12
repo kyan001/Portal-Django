@@ -10,7 +10,7 @@
                         《<strong>{{ prg.opus.name|truncatechars:25 }}</strong>》
                     </span>
                     {% if prg.opus.covercolor %}
-                        <span class="small glyphicon glyphicon-tint hover-shadow" style="color: {{ prg.opus.covercolor }}" title="《{{ prg.opus.name }}》 {% trans '作品代表色' %}"></span>
+                        <span class="small glyphicon glyphicon-tint" style="color: {{ prg.opus.covercolor }}" title="《{{ prg.opus.name }}》 {% trans '作品代表色' %}"></span>
                     {% endif %}
                     {% if prg.opus.comment %}
                         <em class="comment small">
