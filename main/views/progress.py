@@ -402,20 +402,45 @@ def setical(request):  # POST
 
 def ical(request):  # GET
     """生成 ical 字符串加入 google calendar"""
+    def generate_summery(status, opusname):
+        if status == 'done':
             pattern = "{act} {o}"
             params = {
                 "act": _("完成了"),
             }
         elif status == 'deactivated':
+            pattern = "{act} {o}"
+            params = {
+                "act": _("冻结了"),
+            }
+        elif status == 'inprogress':
+            pattern = "{o} {act} {crrt}/{ttl}"
+            params = {
+                "act": _("进行至"),
+                "crrt": prg.current,
+                "ttl": prg.opus.total,
             }
         elif status == 'follow':
             pattern = "{o} {act} {di} {num} {ji}"
+            params = {
+                "act": _("追剧至"),
+                "di": _("第"),
+                "num": prg.current,
                 "ji": _("集"),
             }
         elif status == 'todo':
             pattern = "{o} {act} {todo}"
             params = {
                 "act": _("加入至"),
+                "todo": _("待阅读"),
+            }
+        else:
+            pattern = "{o} {act}"
+            params = {
+                "act": _("出错"),
+            }
+        return pattern.format(o=opusname, **params)
+
     userid = request.GET.get("userid")
     privatekey = request.GET.get("private") or None
     user = User.objects.get_or_404(id=userid)
@@ -429,45 +454,37 @@ def ical(request):  # GET
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
     # construct iCalendar
     cal = icalendar.Calendar()
-    cal["prodid"] = "kyan001.com"
-    cal["X-WR-CALNAME"] = "「" + _("进度日历") + "」" + "@{}".format(user.nickname)
-    cal["X-WR-TIMEZONE"] = "Asia/Shanghai"
-    cal["X-WR-CALDESC"] = "http://www.kyan001.com/progress/list"
+    cal.update({
+        "PRODID": "-//kyan001.com//Progress Calendar//{}".format(translation.get_language().upper()),
         "VERSION": "2.0",
+        "METHOD": "PUBLISH",
+        "CALSACLE": "GREGORIAN",
+        "X-WR-CALNAME": "「{t}」@{u}".format(t=_("进度日历"), u=user.nickname),
+        "X-WR-TIMEZONE": timezone.get_current_timezone(),
+        "X-WR-CALDESC": "http://www.kyan001.com/progress/list",
     })
     for prg in progresses:
-        create_time = prg.created.strftime('%Y%m%dT%H%M%SZ')
-        modify_time = prg.modified.strftime('%Y%m%dT%H%M%SZ')
-        url = 'http://www.kyan001.com/progress/detail?id={}'.format(prg.id)
+        prg_url = "http://www.kyan001.com/progress/detail?id={}".format(prg.id)
         OPUSNAME = "《{}》".format(prg.opus.name)
         # create event create
-        evnt_crt['uid'] = 'prg:id:{}:create'.format(prg.id)
-        evnt_crt['description'] = url
-        evnt_crt['url'] = url
-        evnt_crt['dtstart'] = create_time
-        evnt_crt['dtstamp'] = create_time
-        evnt_crt['summary'] = _("开始看") + " " + OPUSNAME
+        evnt_crt = icalendar.Event({
+            "UID": 'prg:id:{}:create'.format(prg.id),
             "DESCRIPTION": prg_url,
+            "URL": prg_url,
+            "DTSTART": icalendar.vDatetime(prg.created),
+            "DTSTAMP": icalendar.vDatetime(prg.created),
+            "SUMMARY": "{act} {o}".format(act=_("开始看"), o=OPUSNAME),
+        })
         cal.add_component(evnt_crt)
         # create event modify
-        evnt_mdf = icalendar.Event()
-        evnt_mdf['uid'] = 'prg:id:{id}:{st}'.format(id=prg.id, st=prg.status)
-        evnt_mdf['description'] = url
-        evnt_mdf['url'] = url
-        evnt_mdf['dtstart'] = modify_time
-        evnt_mdf['dtstamp'] = modify_time
-        if prg.status == 'done':
-            evnt_mdf['summary'] = _("完成了") + " " + OPUSNAME
-        elif prg.status == 'deactivated':
-            evnt_mdf['summary'] = _("冻结了") + " " + OPUSNAME
-        elif prg.status == 'inprogress':
-            evnt_mdf['summary'] = OPUSNAME + " " + _("进行至") + " {c}/{t}".format(c=prg.current, t=prg.opus.total)
-        elif prg.status == 'follow':
-            evnt_mdf['summary'] = OPUSNAME + " " + _("追剧至") + " " + _("第") + " {} ".format(prg.current) + _("集")
-        elif prg.status == 'todo':
-            evnt_mdf['summary'] = OPUSNAME + " " + _("加入至") + " " + _("待阅读")
-        else:
-            evnt_mdf['summary'] = OPUSNAME + " " + _("出错")
+        evnt_mdf = icalendar.Event({
+            "UID": 'prg:id:{id}:{st}'.format(id=prg.id, st=prg.status),
+            "DESCRIPTION": prg_url,
+            "URL": prg_url,
+            "DTSTART": icalendar.vDatetime(prg.modified),
+            "DTSTAMP": icalendar.vDatetime(prg.modified),
+            "SUMMARY": generate_summery(prg.status, OPUSNAME),
+        })
         cal.add_component(evnt_mdf)
     # render
     return HttpResponse(cal.to_ical(), content_type='text/calendar')
