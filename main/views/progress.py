@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.utils import timezone
+from django.utils import translation
 from django.db import transaction
 from django.http import Http404
 from django.db.models import Q
@@ -401,6 +402,20 @@ def setical(request):  # POST
 
 def ical(request):  # GET
     """生成 ical 字符串加入 google calendar"""
+            pattern = "{act} {o}"
+            params = {
+                "act": _("完成了"),
+            }
+        elif status == 'deactivated':
+            }
+        elif status == 'follow':
+            pattern = "{o} {act} {di} {num} {ji}"
+                "ji": _("集"),
+            }
+        elif status == 'todo':
+            pattern = "{o} {act} {todo}"
+            params = {
+                "act": _("加入至"),
     userid = request.GET.get("userid")
     privatekey = request.GET.get("private") or None
     user = User.objects.get_or_404(id=userid)
@@ -412,25 +427,27 @@ def ical(request):  # GET
             raise Http404(_("获取日历失败") + _("：") + _("此用户尚未公开其进度日历"))
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
+    # construct iCalendar
     cal = icalendar.Calendar()
     cal["prodid"] = "kyan001.com"
-    cal["version"] = "1.1"
     cal["X-WR-CALNAME"] = "「" + _("进度日历") + "」" + "@{}".format(user.nickname)
     cal["X-WR-TIMEZONE"] = "Asia/Shanghai"
     cal["X-WR-CALDESC"] = "http://www.kyan001.com/progress/list"
+        "VERSION": "2.0",
+    })
     for prg in progresses:
         create_time = prg.created.strftime('%Y%m%dT%H%M%SZ')
         modify_time = prg.modified.strftime('%Y%m%dT%H%M%SZ')
         url = 'http://www.kyan001.com/progress/detail?id={}'.format(prg.id)
         OPUSNAME = "《{}》".format(prg.opus.name)
         # create event create
-        evnt_crt = icalendar.Event()
         evnt_crt['uid'] = 'prg:id:{}:create'.format(prg.id)
         evnt_crt['description'] = url
         evnt_crt['url'] = url
         evnt_crt['dtstart'] = create_time
         evnt_crt['dtstamp'] = create_time
         evnt_crt['summary'] = _("开始看") + " " + OPUSNAME
+            "DESCRIPTION": prg_url,
         cal.add_component(evnt_crt)
         # create event modify
         evnt_mdf = icalendar.Event()
