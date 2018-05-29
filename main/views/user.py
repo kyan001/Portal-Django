@@ -194,8 +194,6 @@ def signin(request):
         'request': request,
         'next': next_,
     }
-    if 'HTTP_REFERER' in request.META:
-        context['redirect'] = request.META.get('HTTP_REFERER')
     return render(request, 'user/signin.html', context)
 
 
@@ -238,7 +236,7 @@ def checkLogin(request):  # POST
     answer = request.POST.get('answer')
     rememberme = request.POST.get('rememberme') or 'off'
     next_ = request.POST.get('next') or ''
-    _failto = request.META.get('HTTP_REFERER', "/user/signin")
+    _failto = request.META.get('HTTP_REFERER') or '/user/signin?next=' + next_
     if not username:
         messages.error(request, _("登入失败") + _("：") + _("用户名不能为空"))
         return redirect(_failto)
