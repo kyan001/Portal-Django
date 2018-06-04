@@ -216,10 +216,7 @@ def update(request):  # POST
     opus.total = total
     with transaction.atomic():
         opus.save()
-        if(progress.setStatusAuto()):
-            progress.save()
-        else:
-            return errMsg(_("储存进度时失败，可能是状态导致的问题"))
+        progress.save()
     # render
     messages.success(request, _("进度") + " 《{}》 ".format(opus.name) + _("已更新"))
     return redirect("/progress/detail?id={}".format(progress.id))
@@ -272,8 +269,7 @@ def plusone(request):  # GET
         return errMsg(_("进度已达到最大值"))
     # save
     progress.current = progress.current + 1
-    if(progress.setStatusAuto()):
-        progress.save()
+    progress.save()
     messages.success(request, _("进度") + " 《{}》 ".format(opus.name) + "+1 " + _("已更新"))
     # render
     errMsg = partial(util.ctrl.infoMsg, title=_("+1 失败"))
@@ -384,10 +380,7 @@ def add(request):
         opus = Opus(name=name, comment=comment, total=total)
         opus.save()
         progress = Progress(current=current, opusid=opus.id, userid=user.id, weblink=weblink)
-        if(progress.setStatusAuto()):
-            progress.save()
-        else:
-            return errMsg(_("储存进度时失败，可能是状态导致的问题"))
+        progress.save()
     # render
     return redirect("/progress/detail?id={progress.id}".format(progress=progress))
 

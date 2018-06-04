@@ -351,6 +351,12 @@ class Progress(BaseModel):
     weblink = models.URLField(max_length=2083, blank=True, default="")
     objects = ProgressManager()
 
+    def save(self, *args, **kwargs):
+        if self.setStatusAuto():
+            super().save(*args, **kwargs)
+        else:
+            raise Http404(_("更新进度状态失败"))
+
     @property
     def persent(self):
         opus = self.opus
