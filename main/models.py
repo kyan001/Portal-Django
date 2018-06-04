@@ -439,7 +439,7 @@ class Progress(BaseModel):
         elif persent == 100:  # done
             contextual_type = 'primary'
         else:
-            raise Http404(_("上下文类型错误"))  # Contextual Type Error
+            raise Http404(_("上下文类型错误"))
         return contextual_type
 
 
