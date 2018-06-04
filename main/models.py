@@ -352,7 +352,7 @@ class Progress(BaseModel):
     objects = ProgressManager()
 
     def save(self, *args, **kwargs):
-        if self.setStatusAuto():
+        if self._setStatusAuto():
             super().save(*args, **kwargs)
         else:
             raise Http404(_("更新进度状态失败"))
@@ -398,7 +398,7 @@ class Progress(BaseModel):
         else:
             return datetime.timedelta()
 
-    def setStatusAuto(self):
+    def _setStatusAuto(self):
         opus = self.opus
         if self.status == 'deactivated':
             return True
