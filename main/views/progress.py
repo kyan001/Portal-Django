@@ -272,7 +272,8 @@ def plusone(request):  # GET
         return errMsg(_("进度已达到最大值"))
     # save
     progress.current = progress.current + 1
-    progress.save()
+    if(progress.setStatusAuto()):
+        progress.save()
     messages.success(request, _("进度") + " 《{}》 ".format(opus.name) + "+1 " + _("已更新"))
     # render
     errMsg = partial(util.ctrl.infoMsg, title=_("+1 失败"))
