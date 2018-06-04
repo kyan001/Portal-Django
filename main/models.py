@@ -301,8 +301,7 @@ class Opus(BaseModel):
     def __str__(self):
         subtext = "({self.comment})".format(self=self) if self.comment else ""
         total = self.total if self.total else '∞'
-        return "《{self.name}》{subtext}[{total}]".format(self=self,
-        subtext=subtext, total=total)
+        return "《{self.name}》{subtext}[{total}]".format(self=self, subtext=subtext, total=total)
 
 
 class ProgressManager(BaseManager):
