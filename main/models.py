@@ -379,6 +379,25 @@ class Progress(BaseModel):
     def link(self):
         return "<a href='/progress/detail?id={id}'>{name}</a>".format(id=self.id, name=self.opus.name)
 
+    @property
+    def contextual(self):
+        persent = self.persent
+        if self.current == 0:  # todo
+            contextual_type = None
+        elif persent < 30:
+            contextual_type = 'danger'
+        elif persent < 60:
+            contextual_type = 'warning'
+        elif persent < 90:
+            contextual_type = 'success'
+        elif persent < 100:
+            contextual_type = 'info'
+        elif persent == 100:  # done
+            contextual_type = 'primary'
+        else:
+            raise Http404(_("上下文类型错误"))  # Contextual Type Error
+        return contextual_type
+
     def __str__(self):
         if User.objects.filter(id=self.userid).exists():
             return "《{self.opus.name}》({self.current}/{self.opus.total}) {self.status}".format(self=self)
@@ -421,26 +440,7 @@ class Progress(BaseModel):
 
     def resetStatus(self):
         self.status = 'error'
-        return self.setStatusAuto()
-
-    # calculations
-    def getContextualType(self):
-        persent = self.persent
-        if self.current == 0:  # todo
-            contextual_type = None
-        elif persent < 30:
-            contextual_type = 'danger'
-        elif persent < 60:
-            contextual_type = 'warning'
-        elif persent < 90:
-            contextual_type = 'success'
-        elif persent < 100:
-            contextual_type = 'info'
-        elif persent == 100:  # done
-            contextual_type = 'primary'
-        else:
-            raise Http404(_("上下文类型错误"))  # Contextual Type Error
-        return contextual_type
+        return self._setStatusAuto()
 
 
 class ChatManager(BaseManager):

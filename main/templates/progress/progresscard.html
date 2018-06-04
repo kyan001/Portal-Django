@@ -3,7 +3,7 @@
 
 <div class="{{size}} progress-card ani-fast-container ani-fast" progressid="{{prg.id}}" progressname="{{ prg.opus.name }}">
     <a href="/progress/detail?id={{ prg.id }}" class="no-decoration">
-        <div class="panel panel-{{ prg.getContextualType|default:'default' }} hover-shadow">
+        <div class="panel panel-{{ prg.contextual|default:'default' }} hover-shadow">
             <div class="panel-heading no-bottom-border progress-title text-nowrap">
                 <span class="panel-title">
                     <span class="opus-name">
@@ -29,7 +29,7 @@
                     {% endif %}
                 </span>
             </div>
-            <table class="hidden-xs table table-condensed table-responsive small text-{{ prg.getContextualType|default:'muted' }}">
+            <table class="hidden-xs table table-condensed table-responsive small text-{{ prg.contextual|default:'muted' }}">
                 <tr>
                     {% if prg.current == prg.opus.total and prg.current != 0 %}
                         <td class="text-center bg-primary">
@@ -37,11 +37,11 @@
                             <span title="{% trans '完成时间' %}">{{ prg.modified|date:'Y-m-d' }}</span>
                         </td>
                     {% else %}
-                        <td class="text-left {{ prg.getContextualType|default:'active' }}">
+                        <td class="text-left {{ prg.contextual|default:'active' }}">
                             <span class="glyphicon glyphicon-play"></span>
                             <span title="{% trans '开始时间' %}">{{ prg.created|date:'Y-m-d' }}</span>
                         </td>
-                        <td class="text-right {{ prg.getContextualType|default:'active' }}">
+                        <td class="text-right {{ prg.contextual|default:'active' }}">
                             <span class="glyphicon glyphicon-pause"></span>
                             <span title="{% trans '上次更新' %}">{{ prg.modified|date:'Y-m-d' }}</span>
                         </td>
@@ -49,7 +49,7 @@
                 </tr>
             </table>
             <div class="progress text-center">
-                <div class="progress-bar progress-bar-{{ prg.getContextualType }}" style="width: {{ prg.persent }}%;">
+                <div class="progress-bar progress-bar-{{ prg.contextual }}" style="width: {{ prg.persent }}%;">
                     {% if prg.persent >= 25 %}
                         <b>{{prg.current}}</b> / <b>{% if prg.opus.total != 0 %}{{prg.opus.total}}{% else %}∞{% endif %}</b>
                     {% endif %}
