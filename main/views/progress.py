@@ -268,7 +268,7 @@ def plusone(request):  # GET
     if progress.userid != user.id:
         return errMsg(_("这个进度不属于您，因此您不能{}该进度").format("+1"))
     # check total
-    if progress.current == opus.total:
+    if opus.total > 0 and progress.current == opus.total:
         return errMsg(_("进度已达到最大值"))
     # save
     progress.current = progress.current + 1
