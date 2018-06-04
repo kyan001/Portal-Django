@@ -254,6 +254,7 @@ def delete(request):  # POST
 @util.user.login_required
 def plusone(request):  # GET
     """list 界面点击 +1 按钮"""
+    errMsg = partial(util.ctrl.infoMsg, title=_("删除失败"))
     # get inputs
     next_ = request.META.get('HTTP_REFERER') or "/"
     progressid = request.GET.get('id')
