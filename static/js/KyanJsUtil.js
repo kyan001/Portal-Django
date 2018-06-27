@@ -113,7 +113,7 @@ var OpusInfoGetter = {
                 info.api = movie_search_api_douban + "?count=1&q=" + name
                 info.type = "movie"
                 info.match = OpusInfoGetter.checkHas(name, data.subjects[0])
-                info.exist = data.subjects[0]?true:false
+                info.exist = data.subjects[0] ? true : false
                 callback(info)
             }, "json");
         }
