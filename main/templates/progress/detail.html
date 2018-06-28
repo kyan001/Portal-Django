@@ -122,11 +122,11 @@
                     </span>
                 </div>
                 <div class="progress">
-                    <div class="progress-bar progress-bar-striped active progress-bar-{{prg.contextual}}" style="width: {{prg.persent}}%; min-width: 7em;">
+                    <div class="progress-bar progress-bar-striped active progress-bar-{{ prg.contextual }}" style="width: {{ prg.persent }}%; min-width: 7em">
                         {% if opus.total == 0 %}
-                            <strong>{{prg.current}} / ∞</strong>
+                            <strong>{{ prg.current }} / ∞</strong>
                         {% else %}
-                            <strong>{{prg.current}} / {{opus.total}}</strong>
+                            <strong>{{ prg.current }} / {{ opus.total }}</strong>
                             <span class="pull-right">{{ prg.persent }}%</span>
                         {% endif %}
                     </div>
