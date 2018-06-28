@@ -22,8 +22,6 @@
     }
 }
 .progress-card .progress {
-    height: 25px;
-    line-height: 25px;
     margin-bottom: 0;
     border-radius: 0;
 }
