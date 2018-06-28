@@ -34,7 +34,7 @@
             <div class="pull-right">
                 {% if not conversation %}
                     {% if chat.senderid == cuser.id %}
-                        <a class="btn btn-primary btn-sm" href="/chat/conversation?receiver={{chat.sender.nickname}}" onclick="disableAllBtn()">
+                        <a class="btn btn-primary btn-sm" href="/chat/conversation?receiver={{chat.receiver.nickname}}" onclick="disableAllBtn()">
                             <span class="glyphicon glyphicon-envelope"></span> 查看
                         </a>
                     {% elif chat.receiverid == cuser.id %}
