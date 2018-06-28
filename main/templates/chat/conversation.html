@@ -21,6 +21,9 @@
     .chat-content {
         word-break: break-all;
     }
+    #head-img {
+        width: 1.414em;
+    }
 </style>
 {% endblock css %}
 
@@ -38,6 +41,7 @@
             <div class="page-header">
                 <h3>
                     {% if receiver %}
+                        <img id="head-img" src="{{ receiver.headimg_url }}">
                         <a href="/user/public?nickname={{ receiver.nickname }}">@{{ receiver.nickname }}</a>
                         <small><span class="glyphicon glyphicon-transfer"></span> @{{ cuser.nickname }}</small>
                     {% else %}
