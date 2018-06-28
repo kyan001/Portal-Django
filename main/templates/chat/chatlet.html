@@ -2,7 +2,7 @@
 {% load i18n %}
 
 <div class="panel panel-default {% if not chat.isread %}unread{% endif %} chat-record ani-fast hover-shadow" chatid="{{ chat.id }}" {% if chat.receiverid == cuser.id %}onclick="markread(this)"{% endif %}>
-    <div class="panel-heading ani-veryfast" data-toggle="collapse" data-target="#chat-{{chat.id}}" data-parent="{{ parent }}">
+    <div class="panel-heading" data-toggle="collapse" data-target="#chat-{{chat.id}}" data-parent="{{ parent }}">
         {% include "chat/chater.html" with sender=chat.sender receiver=chat.receiver %}
         <span>:</span>
         {% if chat.title %}

@@ -186,7 +186,7 @@
             {% for exp, exphistory in exps %}
             <div class="col-xs-12 col-sm-12 col-md-4">
                 <a class="no-decoration" href="/user/exphistory?category={{exp.category}}">
-                    <div class="panel panel-primary ani-veryfast hover-shadow">
+                    <div class="panel panel-primary ani-fast hover-shadow">
                         <div class="panel-heading">
                             <span>
                                 <b>{{ exp.get_category_display }}</b>: {{ exp.exp }}
@@ -194,9 +194,9 @@
                             <span class="pull-right">Lv.<b>{{ exp.level }}</b></span>
                         </div>
                         <div class="panel-body">
-                            <div class="progress progress-striped ani-veryfast">
-                                <div class="progress-bar active" style="width: {{exp.persent}}%; min-width:5em;">
-                                    {{exp.persent}}%
+                            <div class="progress progress-striped ani-fast">
+                                <div class="progress-bar active" style="width: {{ exp.persent }}%; min-width: 5em">
+                                    {{ exp.persent }}%
                                 </div>
                             </div>
                             <table class="table table-condensed">
