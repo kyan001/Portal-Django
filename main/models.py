@@ -66,10 +66,15 @@ class User(BaseModel):
         return "@{self.nickname}({self.username})".format(self=self)
 
     @property
+    def has_headimg(self):
+        return self.headimg and hasattr(self.headimg, 'url')
+
+    @property
     def headimg_url(self):
-        if self.headimg and hasattr(self.headimg, 'url'):
+        # if webservice does not work, use '/static/img/user/default_headimg.jpg'
+        if self.has_headimg:
             return self.headimg.url
-        return ''
+        return 'https://ui-avatars.com/api/?size=255&background=00a3e9&color=fff&font-size=0.707&length=1&name=' + self.nickname
 
     @property
     def privatekey(self):

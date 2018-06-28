@@ -56,6 +56,9 @@
             </a>
             <div class="btn-group">
                 <a type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% if cuser.has_headimg %}
+                        <img src="{{ cuser.headimg_url }}">
+                    {% endif %}
                     <span class="profile-nikename">
                         @<b>{{ cuser.nickname }}</b>
                     </span>

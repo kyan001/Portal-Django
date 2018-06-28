@@ -45,11 +45,9 @@
         <div id="gravatar" class="hidden-xs col-sm-4 col-md-3 col-md-offset-1">
             <div class="panel panel-primary ani-fast hover-shadow">
                 <div class="panel-body">
-                    {% with chead_img=cuser.headimg_url|default:'/static/img/user/default_headimg.jpg' %}
-                        <a href="javascript:;" role="button" onclick="changeHeadimg()" title="{% trans '修改头像' %}">
-                            <div id="headimg" class="img-square img-rounded" style="background-image: url('{{ chead_img }}')"></div>
-                        </a>
-                    {% endwith %}
+                    <a href="javascript:;" role="button" onclick="changeHeadimg()" title="{% trans '修改头像' %}">
+                        <div id="headimg" class="img-square img-rounded" style="background-image: url('{{ cuser.headimg_url }}')"></div>
+                    </a>
 
                     <form id="headimg-form" action="/user/headimgupdate" method="post" role="form" enctype="multipart/form-data">
                         {% csrf_token %}
