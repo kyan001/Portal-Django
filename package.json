@@ -5,7 +5,7 @@
     "dependencies": {
         "jquery": "latest",
         "jquery-lazyload": "latest",
-        "quaggaJS": "latest",
+        "quagga": "latest",
         "swiper": "latest",
         "jquery-timelineme": "latest",
         "jqtimeline": "latest"
