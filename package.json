@@ -1,0 +1,13 @@
+{
+    "name": "Portal-Django",
+    "author": "Kyan",
+    "description": "Website for kyan001.com",
+    "dependencies": {
+        "jquery": "latest",
+        "jquery-lazyload": "latest",
+        "quaggaJS": "latest",
+        "swiper": "latest",
+        "jquery-timelineme": "latest",
+        "jqtimeline": "latest"
+    }
+}
