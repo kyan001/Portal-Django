@@ -216,6 +216,10 @@
                             showLoading("off")
                             $("input[name='name']").val(result.title)
                             $("input[name='total']").val(result.pages)
+                            if($('input[name="comment"]').val() == ""){
+                                $('input[name="comment"]').val("{% trans '书' %}")
+                            }
+                            Guess.getInfo()
                         }, function(){
                             showLoading("off")
                             $.warning("{% trans '书籍' %} (ISBN:" + data.codeResult.code + ") {% trans '未找到' %}")
@@ -293,6 +297,9 @@
         'apply': function(title, pages){
             $('input[name="name"]').val(title)
             $('input[name="total"]').val(pages)
+            if($('input[name="comment"]').val() == ""){
+                $('input[name="comment"]').val("{% trans '书' %}")
+            }
         },
         'getInfo': function(){
             Guess.clear()
