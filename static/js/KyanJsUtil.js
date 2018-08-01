@@ -15,9 +15,9 @@ $(function(){
 var OpusInfoGetter = {
     /**
      * get book info from douban by isbn number
-     * @param  {string}     isbn     [isbn number]
-     * @param  {Function}   callback [call this function after got the data]
-     * @param  {Function}   callback [call this function if has a error ]
+     * @param  {String}     isbn        [isbn number]
+     * @param  {Function}   callback    [call this function after got the data]
+     * @param  {Function}   callback404 [call this function if has a error ]
      */
     "getIsbnInfo": function(isbn, callback, callback404){
         var isbn_search_api = "https://api.douban.com/v2/book/isbn/" + isbn
@@ -38,7 +38,7 @@ var OpusInfoGetter = {
     },
     /**
      * get book info from douban by the name
-     * @param  {string}     name     [book's name, full or partial]
+     * @param  {String}     name     [book's name, full or partial]
      * @param  {Function}   callback [call this function after got the data]
      */
     'getBookInfo': function(name, callback){
@@ -83,7 +83,7 @@ var OpusInfoGetter = {
     },
     /**
      * get movie info from douban by the name
-     * @param  {string}     name     [movie's name, full or partial]
+     * @param  {String}     name     [movie's name, full or partial]
      * @param  {Function}   callback [call this function after got the data]
      */
     'getMovieInfo': function(name, callback){
@@ -120,8 +120,8 @@ var OpusInfoGetter = {
     },
     /**
      * get image's primary color
-     * @param  {string}     url      [image url, if url=="", only read cache]
-     * @param  {string}     name     [the opus's title which contains the image]
+     * @param  {String}     url      [image url, if url=="", only read cache]
+     * @param  {String}     name     [the opus's title which contains the image]
      * @param  {Function}   callback [call this function after got the data]
      */
     "getImageColor": function(url, opusid, callback){
@@ -149,9 +149,9 @@ var OpusInfoGetter = {
     },
     /**
      * check if the keyword is appeared in the original name or title of a  book/movie
-     * @param  {string}     keyword     [words, mostly is short]
+     * @param  {String}     keyword     [words, mostly is short]
      * @param  {opusinfo}   bookOrMovie [the opus's info, should include a title or original_title]
-     * @return {bool}                   [if the keyword is in the opus names]
+     * @return {Boolean}                   [if the keyword is in the opus names]
      */
     "checkHas": function(keyword, bookOrMovie){
         if(!keyword || !bookOrMovie){
