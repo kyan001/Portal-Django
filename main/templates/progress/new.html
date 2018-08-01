@@ -115,7 +115,10 @@
                                                 value="{{ total }}">
                                             <span class="input-group-btn">
                                                 <span id="guess-total" class="btn btn-default" role="button" onclick="Guess.ask()">
-                                                    <span class="guess-icon glyphicon glyphicon-cloud text-muted"></span>
+                                                    <span class="guess-icon glyphicon glyphicon-cloud-upload"></span>
+                                                    <span id="loading-icon" hidden>
+                                                        <span class="loading circling glyphicon glyphicon-refresh"></span>
+                                                    </span>
                                                 </span>
                                             </span>
                                         </div>
@@ -208,10 +211,13 @@
                     src: URL.createObjectURL(e.target.files[0])
                 }, function(data){
                     if(data && data.codeResult && data.codeResult.code){
+                        showLoading("on")
                         OpusInfoGetter.getIsbnInfo(data.codeResult.code, function(result){
+                            showLoading("off")
                             $("input[name='name']").val(result.title)
                             $("input[name='total']").val(result.pages)
                         }, function(){
+                            showLoading("off")
                             $.warning("{% trans '书籍' %} (ISBN:" + data.codeResult.code + ") {% trans '未找到' %}")
                         })
                     } else {
@@ -257,8 +263,10 @@
     var Guess = {  // 根据书名猜测页数
         "bookinfo": null,
         "clear": function(){
-            $("#guess-total .guess-icon").addClass("text-muted")  // 还原图标颜色
-            $("#guess-total .guess-icon").addClass("glyphicon-cloud").removeClass("glyphicon-cloud-download")  // 还原图标
+            $("#guess-total .guess-icon")
+                .removeClass("glyphicon-cloud")
+                .removeClass("glyphicon-cloud-download")
+                .addClass("glyphicon-cloud-upload")  // 还原图标
             $("input[name='name']").attr("title", "")  // 还原名称处 title
             Guess.bookinfo = null  // 清空
         },
@@ -292,14 +300,17 @@
             if(!bookname){
                 return false
             }
+            showLoading("on")
             OpusInfoGetter.getBookInfo(bookname, function(info){
+                showLoading("off")
                 if(parseInt(info.pages) > 0){  // 不一定是精确匹配
                     Guess.bookinfo = info
-                    $('#guess-total .guess-icon').removeClass('text-muted')
+                    $('#guess-total .guess-icon').removeClass('glyphicon-cloud-upload')  // 移除旧图标
                     if(info.match){  // 精确匹配
-                        $('#guess-total .guess-icon').addClass('glyphicon-cloud-download').removeClass('glyphicon-cloud')
+                        $('#guess-total .guess-icon').addClass('glyphicon-cloud-download')
                         $("input[name='name']").attr("title", "《" + info.title + "》")
                     } else {  // 非精确匹配
+                        $('#guess-total .guess-icon').addClass('glyphicon-cloud')
                         $("input[name='name']").attr("title", "{% trans '是' %} 《" + info.title + "》 {%trans '吗？' %}")
                     }
                 }
@@ -313,6 +324,15 @@
             current.val('0')
         }
         $('input[name="current"]').val(parseInt(current.val()) + 1);
+    }
+    function showLoading(mode){
+        if(mode == "on"){
+            $('.guess-icon').hide()
+            $('#loading-icon').show()
+        } else {
+            $('#loading-icon').hide()
+            $('.guess-icon').show()
+        }
     }
 </script>
 {% endblock js %}
