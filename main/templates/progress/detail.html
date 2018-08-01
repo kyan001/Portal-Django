@@ -426,15 +426,10 @@
 {% block js %}
 <script>
     $(function(){
-        window.inputs = {
-            // 全局定义输入框，主要用于代码可读性
-            name: $('input[name="name"]'),
-            comment: $('input[name="comment"]'),
-            weblink: $('input[name="weblink"]'),
-            total: $('input[name="total"]'),
-            current: $('input[name="current"]')
+        for (k in FORM.INPUTS){  // 初始化 FORM.INPUTS
+            FORM.INPUTS[k] = $('input[name="' + k + '"]')
         }
-        OPUS.INFOSETS.original.name = inputs.name.val()  // 作品数据库名
+        OPUS.INFOSETS.original.name = FORM.INPUTS.name.val()  // 作品数据库名
         OPUS.initInfo()
         FORM.checkEditMode()
         RENDER.syncTotal()
@@ -451,17 +446,27 @@
     });
     var FORM = {
         /**
+         * 全局定义输入框，主要用于代码可读性
+         */
+        "INPUTS": {
+            name: null,
+            comment: null,
+            weblink: null,
+            total: null,
+            current: null,
+        },
+        /**
          * 在当前进度栏内，点击 + 号
          */
         "addOneCurrent": function(){
             if(!FORM.fullValidation()){
                 return false
             }
-            if(parseInt(inputs.total.val()) > 0 && parseInt(inputs.current.val()) == parseInt(inputs.total.val())){
+            if(parseInt(FORM.INPUTS.total.val()) > 0 && parseInt(FORM.INPUTS.current.val()) == parseInt(FORM.INPUTS.total.val())){
                 $.warning("{% trans '进度已达到最大值' %}");
                 return false;
             }
-            inputs.current.val(parseInt(inputs.current.val()) + 1);
+            FORM.INPUTS.current.val(parseInt(FORM.INPUTS.current.val()) + 1);
             FORM.checkEditMode()
         },
         /**
@@ -525,22 +530,22 @@
          * 验证所有输入框的合法性
          */
         'fullValidation': function(){
-            if(inputs.name.val() == ""){
+            if(FORM.INPUTS.name.val() == ""){
                 $.danger("{% trans '名称不能为空' %}")
                 return false;
             }
-            if(inputs.total.val() == '∞' || inputs.total.val() == ""){
-                inputs.total.val(0);
+            if(FORM.INPUTS.total.val() == '∞' || FORM.INPUTS.total.val() == ""){
+                FORM.INPUTS.total.val(0);
             }
-            if(inputs.current.val() == ''){
-                inputs.current.val(0)
+            if(FORM.INPUTS.current.val() == ''){
+                FORM.INPUTS.current.val(0)
             }
-            if(isNaN(inputs.current.val())){
-                $.danger("{% trans '输入的更新的进度' %} " +  inputs.current.val() + " {% trans '必须是纯数字' %}{% trans '！' %}")
+            if(isNaN(FORM.INPUTS.current.val())){
+                $.danger("{% trans '输入的更新的进度' %} " +  FORM.INPUTS.current.val() + " {% trans '必须是纯数字' %}{% trans '！' %}")
                 return false;
             }
-            if(parseInt(inputs.total.val()) > 0 && parseInt(inputs.current.val()) > parseInt(inputs.total.val())){
-                $.danger("{% trans '错误' %}{% trans '：' %}{% trans '当前进度' %} " + inputs.current.val() + " " + "{% trans '大于' %}{% trans '总共' %}" + " " + inputs.total.val())
+            if(parseInt(FORM.INPUTS.total.val()) > 0 && parseInt(FORM.INPUTS.current.val()) > parseInt(FORM.INPUTS.total.val())){
+                $.danger("{% trans '错误' %}{% trans '：' %}{% trans '当前进度' %} " + FORM.INPUTS.current.val() + " " + "{% trans '大于' %}{% trans '总共' %}" + " " + FORM.INPUTS.total.val())
                 return false;
             }
             return true
@@ -639,7 +644,7 @@
             }
 
             if(opustype == 'init'){
-                var sub = inputs.comment.val().toLowerCase()
+                var sub = FORM.INPUTS.comment.val().toLowerCase()
                 if(isInSubs(sub, OPUS.SUBS.book)){
                     OPUS.setType('book')
                 } else if(isInSubs(sub, OPUS.SUBS.movie)){
@@ -654,7 +659,7 @@
         /**
          * 获取作品信息的入口，负责分辨作品的类别
          * @see 参考印象笔记
-         * @param {INFOSET} infoset [以 original 还是 purified 为准]
+         * @param {INFOSET} infoset [以 original 还是 purified 组的作品信息们为准]
          */
         'getInfo': function(infoset){
             console.debug('OPUS.getInfo: %s @ %s', infoset.name, OPUS.INFOSETS.type)
@@ -760,10 +765,11 @@
         'judgeType': function(){
             /**
              * 先进行原名信息的判断，后进行去章节名信息的判断，判断过程没有满足特定条件则跳过，最终默认为影视
+             * @param {INFOSET} infoset [以 original 还是 purified 组的作品信息们为准]
              * @return {Boolean} [是否成功判断出了当前 infoset 的类型]
              */
             function judgeInfoType(infoset){
-                var total = inputs.total.val() || '0'
+                var total = FORM.INPUTS.total.val() || '0'
                 if(infoset.book.exist && infoset.movie.exist){  // 都存在
                     if(infoset.book.match && !infoset.movie.match){  // 书精确，电影不精确
                         OPUS.setType('book')
@@ -787,7 +793,7 @@
             }
 
             console.debug('judgeOpusType: %s', OPUS.INFOSETS.type)
-            var total = inputs.total.val() || 0
+            var total = FORM.INPUTS.total.val() || 0
             if(!judgeInfoType(OPUS.INFOSETS.original) && !judgeInfoType(OPUS.INFOSETS.purified)){  // 如果都未匹配上
                 OPUS.setType('movie')  // 默认为影视作品
             }
@@ -795,10 +801,13 @@
         },
     }
     var RENDER = {
-        "showInfo": function(infos, typ){
-            // 将全局变量中的某个作品信息显示在网页上
-            console.debug('showInfo: ' + infos[typ].title)
-            info = infos[typ]
+        /**
+         * 将全局变量中的某个作品信息显示在网页上
+         * @param {INFOSET} infoset [以 original 还是 purified 组的作品信息们为准]
+         */
+        "showInfo": function(infoset, typ){
+            console.debug('showInfo: ' + infoset[typ].title)
+            info = infoset[typ]
             $('#title-link').attr('href', info.url)
             $('#title-link').text(info.title)
             var img_container = $('<div></div>')
@@ -819,7 +828,7 @@
                 $(this).removeClass('active')
             })
             if(info.summary){
-                $('#opus-wordcloud').attr('src', '/opus/getopuswordcloud?height=100&width=500&type=' + info.type + '&name=' + infos.name)
+                $('#opus-wordcloud').attr('src', '/opus/getopuswordcloud?height=100&width=500&type=' + info.type + '&name=' + infoset.name)
             }
             $('#tag-tag').text(info.tags.join('，'))
             $('#rating-av').text(info.rating)
@@ -841,14 +850,15 @@
         },
         /**
          * 将猜测的可能的作品信息显示在网页上
+         * @param {INFOSET} infoset [以 original 还是 purified 组的作品信息们为准]
          */
-        'showGuess': function(infos, typ){
-            console.debug('showGuess:' + infos[typ].title)
-            infos.guess = infos[typ]
-            var title_a = '<a href="' + infos.guess.url + '" target="_blank">' + infos.guess.title + '</a>'
+        'showGuess': function(infoset, typ){
+            console.debug('showGuess:' + infoset[typ].title)
+            infoset.guess = infoset[typ]
+            var title_a = '<a href="' + infoset.guess.url + '" target="_blank">' + infoset.guess.title + '</a>'
             var guess_title = "《" + title_a + "》"
-            var guess_subtype = infos.guess.subtype ? "{% trans '（' %}" + infos.guess.subtype.toUpperCase() + "{% trans '）' %}" : ''
-            var apply_guess = "<span id='apply-guess' class='text-success glyphicon glyphicon-ok img-thumbnail' onclick='RENDER.applyGuess(\"" + infos.guess.title + "\")'></span>"
+            var guess_subtype = infoset.guess.subtype ? "{% trans '（' %}" + infoset.guess.subtype.toUpperCase() + "{% trans '）' %}" : ''
+            var apply_guess = "<span id='apply-guess' class='text-success glyphicon glyphicon-ok img-thumbnail' onclick='RENDER.applyGuess(\"" + infoset.guess.title + "\")'></span>"
             var content_html = "{% trans '是' %} " + guess_title + guess_subtype + " {% trans '吗？' %}" + apply_guess
             $('#name-tr').popover({
                 delay: {'show':0, 'hide':0},
@@ -862,13 +872,15 @@
         },
         /**
          * 当用户应用猜测作品信息时
+         * @param {String}  title   [需要应用的标题]
          */
         'applyGuess': function(title){
-            inputs.name.val(title)
+            FORM.INPUTS.name.val(title)
             FORM.checkEditMode()
         },
         /**
          * 显示读取中的动画
+         * @param {String}  mode    ["on" 显示动画 | "off" 停止动画]
          */
         'showLoading': function(mode){
             if(mode=="on"){
@@ -879,6 +891,7 @@
         },
         /**
          * 通过作品封面计算作品代表色，并显示在网页上
+         * @param {INFO}    info    [需要应用的作品的信息]
          */
         'showImageColor': function(info){
             OpusInfoGetter.getImageColor(info.images.small, '{{opus.id}}', function(result){
@@ -887,6 +900,8 @@
         },
         /**
          * 检查作品信息可见性
+         * @param {INFO}    info    [需要应用的作品的信息]
+         * @return {Boolean}    [是否显示整个面板]
          */
         'checkInfoVisibility': function(info){
             if(!info || !info.exist || !info.match){  // 作品不存在、未精确匹配时不显示整个面板
@@ -928,10 +943,10 @@
          */
          'syncTotal': function(){
             var target_ele = $('#total-as-feedback')
-            if(inputs.total.val() == "" || inputs.total.val() == '∞' || inputs.total.val() == '0'){
+            if(FORM.INPUTS.total.val() == "" || FORM.INPUTS.total.val() == '∞' || FORM.INPUTS.total.val() == '0'){
                 target_ele.text('∞')
             } else {
-                target_ele.text(inputs.total.val())
+                target_ele.text(FORM.INPUTS.total.val())
             }
         },
     }
