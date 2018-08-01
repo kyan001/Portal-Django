@@ -3,6 +3,7 @@
     "author": "Kyan",
     "description": "Website for kyan001.com",
     "dependencies": {
+        "bootstrap": ">=3.0.0",
         "jquery": "latest",
         "jquery-lazyload": "latest",
         "quagga": "latest",
