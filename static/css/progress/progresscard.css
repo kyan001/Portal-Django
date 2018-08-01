@@ -1,5 +1,5 @@
 /*!
- * progresscard.css v2.0.3
+ * progresscard.css v2.1.1
  */
 /* progress-card */
 .progress-card {
@@ -29,9 +29,6 @@
     border-bottom-left-radius: inherit;
     border-bottom-right-radius: inherit;
 }
-.progress-card .progress .progress-bar {
-    line-height: inherit;
-}
 .progress-card .plus-one {
     display: none;
     margin-left: 2px;
@@ -44,4 +41,7 @@
     .progress-card:hover .plus-one {
         display: inline-block;
     }
+}
+.progress-card .line-height-anti-small {
+    line-height: 167%;
 }
