@@ -133,7 +133,7 @@
                                                 placeholder="{% trans '当前页数／集数' %}"
                                                 name="current">
                                             <span class="input-group-btn">
-                                                <span class="btn btn-default" role="button" onclick="addOneCurrent()">+</span>
+                                                <span class="btn btn-default" role="button" onclick="Form.addOneCurrent()">+</span>
                                             </span>
                                         </div>
                                     </span>
@@ -191,7 +191,9 @@
             $("input[name='comment']").val($(this).text().trim())
         })
         $("#barcode-input").on("change", function(e) {
+            console.debug("#barcode-input change")
             if (e.target.files && e.target.files.length) {
+                console.debug("  Decode Start")
                 Quagga.decodeSingle({
                     inputStream: {
                         size: 800,
@@ -210,9 +212,12 @@
                     locate: true,
                     src: URL.createObjectURL(e.target.files[0])
                 }, function(data){
+                    console.debug("  Decode finished")
                     if(data && data.codeResult && data.codeResult.code){
+                        console.debug("  Decode Success: %s", data.codeResult.code)
                         showLoading("on")
                         OpusInfoGetter.getIsbnInfo(data.codeResult.code, function(result){
+                            console.debug("  ISBN Found: %s", result.title)
                             showLoading("off")
                             $("input[name='name']").val(result.title)
                             $("input[name='total']").val(result.pages)
@@ -221,10 +226,12 @@
                             }
                             Guess.getInfo()
                         }, function(){
+                            console.debug("  ISBN Not Found")
                             showLoading("off")
                             $.warning("{% trans '书籍' %} (ISBN:" + data.codeResult.code + ") {% trans '未找到' %}")
                         })
                     } else {
+                        console.debug("  Decode Failed")
                         $.warning("{% trans '未能解析条形码' %}")
                     }
                 })
@@ -233,10 +240,18 @@
     });
 
     var Form = {
+        "addOneCurrent": function(){
+            var current = $('input[name="current"]');
+            if( isNaN(current.val()) || current.val() == '' ){
+                current.val('0')
+            }
+            $('input[name="current"]').val(parseInt(current.val()) + 1);
+        },
         "clear": function(){
             $("input.form-control").val("")
         },
         "submit": function(){
+            console.debug("Submit form")
             var name = $("input[name='name']").val()
             var comment = $("input[name='comment']").val()
             var total = $("input[name='total']").val()
@@ -267,6 +282,7 @@
     var Guess = {  // 根据书名猜测页数
         "bookinfo": null,
         "clear": function(){
+            console.debug("Guess.clear")
             $("#guess-total .guess-icon")
                 .removeClass("glyphicon-cloud")
                 .removeClass("glyphicon-cloud-download")
@@ -275,6 +291,7 @@
             Guess.bookinfo = null  // 清空
         },
         'ask': function(){
+            console.debug("Guess.ask")
             if(!Guess.bookinfo){
                 var bookname = $("input[name='name']").val()
                 if(!bookname){
@@ -295,6 +312,7 @@
             }
         },
         'apply': function(title, pages){
+            console.debug("Guess.apple: %s, %s", title, pages)
             $('input[name="name"]').val(title)
             $('input[name="total"]').val(pages)
             if($('input[name="comment"]').val() == ""){
@@ -302,6 +320,7 @@
             }
         },
         'getInfo': function(){
+            console.debug("Guess.getInfo()")
             Guess.clear()
             var bookname = $('input[name="name"]').val()
             if(!bookname){
@@ -309,14 +328,17 @@
             }
             showLoading("on")
             OpusInfoGetter.getBookInfo(bookname, function(info){
+                console.debug("  getBookInfo(): %s", bookname)
                 showLoading("off")
                 if(parseInt(info.pages) > 0){  // 不一定是精确匹配
                     Guess.bookinfo = info
                     $('#guess-total .guess-icon').removeClass('glyphicon-cloud-upload')  // 移除旧图标
                     if(info.match){  // 精确匹配
+                        console.debug("  Match OK: %s", info.title)
                         $('#guess-total .guess-icon').addClass('glyphicon-cloud-download')
                         $("input[name='name']").attr("title", "《" + info.title + "》")
                     } else {  // 非精确匹配
+                        console.debug("  Match KO: %s", info.title)
                         $('#guess-total .guess-icon').addClass('glyphicon-cloud')
                         $("input[name='name']").attr("title", "{% trans '是' %} 《" + info.title + "》 {%trans '吗？' %}")
                     }
@@ -325,13 +347,6 @@
         },
     }
 
-    function addOneCurrent(){
-        var current = $('input[name="current"]');
-        if( isNaN(current.val()) || current.val() == '' ){
-            current.val('0')
-        }
-        $('input[name="current"]').val(parseInt(current.val()) + 1);
-    }
     function showLoading(mode){
         if(mode == "on"){
             $('.guess-icon').hide()
