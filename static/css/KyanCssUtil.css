@@ -1,5 +1,5 @@
 /*!
- * KyanCssUtil.css v1.4.0
+ * KyanCssUtil.css v1.5.1
  */
 
 /* a */
@@ -15,6 +15,14 @@ a.no-decoration:hover,
     width: 100% !important;
     background-size: cover !important;  /*撑开图片*/
     background-position: 50% 50% !important;
+}
+
+/* deco */
+.deco-jquote:before {
+    content: "「";
+}
+.deco-jquote:after {
+    content: "」"
 }
 
 /* shadow */
@@ -34,14 +42,29 @@ a.no-decoration:hover,
 /* blurs */
 .blur,
 .hover-notblur,
-.hover-blur:hover{
+.hover-blur:hover,
+.blur-container * {
     -webkit-filter: blur(2px);
        -moz-filter: blur(2px);
          -o-filter: blur(2px);
         -ms-filter: blur(2px);
             filter: blur(2px);
 }
-.hover-notblur:hover{
+.blur-9,
+.hover-notblur-9,
+.hover-blur-9:hover,
+.blur-9-container *,
+.hover-notblur-9-container *,
+.hover-blur-9-container:hover * {
+    -webkit-filter: blur(9px);
+       -moz-filter: blur(9px);
+         -o-filter: blur(9px);
+        -ms-filter: blur(9px);
+            filter: blur(9px);
+}
+.hover-notblur:hover,
+.hover-notblur-9:hover,
+.hover-notblur-9-container:hover * {
     -webkit-filter: blur(0);
        -moz-filter: blur(0);
          -o-filter: blur(0);
@@ -60,10 +83,15 @@ a.no-decoration:hover,
     padding-top: 100%;
     content: '';
 }
+.background-fixed {
+    background-attachment: fixed !important;
+    background-size: cover !important;
+    background-position: 50% 50% !important;
+}
 
 /* animations */
 .ani-veryfast
-.ani-veryfast-container *  {
+.ani-veryfast-container * {
     -webkit-transition: all 0.2s ease;
        -moz-transition: all 0.2s ease;
          -o-transition: all 0.2s ease;
@@ -77,14 +105,14 @@ a.no-decoration:hover,
             transition: all 0.5s ease;
 }
 .ani-normal,
-.ani-normal-container *  {
+.ani-normal-container * {
     -webkit-transition: all 1s ease;
        -moz-transition: all 1s ease;
          -o-transition: all 1s ease;
             transition: all 1s ease;
 }
 .ani-slow,
-.ani-slow-container *  {
+.ani-slow-container * {
     -webkit-transition: all 2s ease;
        -moz-transition: all 2s ease;
          -o-transition: all 2s ease;
@@ -156,8 +184,8 @@ a.no-decoration:hover,
 .gray { color: gray; }
 .darkgray { color: darkgray; }
 
-
 /* flex */
+.row-flex,
 .btn-group.btn-group-flex {
     display: flex;
 }
@@ -197,3 +225,67 @@ a.no-decoration:hover,
 .flex-12 {
     flex: 12;
 }
+
+/* delay */
+.ani-delay-500 {
+    transition-delay: 0.5s !important;
+    -o-transition-delay: 0.5s !important; /* Opera */
+    -moz-transition-delay: 0.5s !important; /* Firefox 4 */
+    -webkit-transition-delay: 0.5s !important; /* Safari 和 Chrome */
+}
+.ani-delay-1000 {
+    transition-delay: 1s !important;
+    -o-transition-delay: 1s !important; /* Opera */
+    -moz-transition-delay: 1s !important; /* Firefox 4 */
+    -webkit-transition-delay: 1s !important; /* Safari 和 Chrome */
+}
+.ani-delay-1500 {
+    transition-delay: 1.5s !important;
+    -o-transition-delay: 1.5s !important; /* Opera */
+    -moz-transition-delay: 1.5s !important; /* Firefox 4 */
+    -webkit-transition-delay: 1.5s !important; /* Safari 和 Chrome */
+}
+.ani-delay-2000 {
+    transition-delay: 2s !important;
+    -o-transition-delay: 2s !important; /* Opera */
+    -moz-transition-delay: 2s !important; /* Firefox 4 */
+    -webkit-transition-delay: 2s !important; /* Safari 和 Chrome */
+}
+.ani-delay-2500 {
+    transition-delay: 2.5s !important;
+    -o-transition-delay: 2.5s !important; /* Opera */
+    -moz-transition-delay: 2.5s !important; /* Firefox 4 */
+    -webkit-transition-delay: 2.5s !important; /* Safari 和 Chrome */
+}
+.ani-delay-3000 {
+    transition-delay: 3s !important;
+    -o-transition-delay: 3s !important; /* Opera */
+    -moz-transition-delay: 3s !important; /* Firefox 4 */
+    -webkit-transition-delay: 3s !important; /* Safari 和 Chrome */
+}
+.ani-delay-3500 {
+    transition-delay: 3.5s !important;
+    -o-transition-delay: 3.5s !important; /* Opera */
+    -moz-transition-delay: 3.5s !important; /* Firefox 4 */
+    -webkit-transition-delay: 3.5s !important; /* Safari 和 Chrome */
+}
+.ani-delay-4000 {
+    transition-delay: 4s !important;
+    -o-transition-delay: 4s !important; /* Opera */
+    -moz-transition-delay: 4s !important; /* Firefox 4 */
+    -webkit-transition-delay: 4s !important; /* Safari 和 Chrome */
+}
+.ani-delay-4500 {
+    transition-delay: 4.5s !important;
+    -o-transition-delay: 4.5s !important; /* Opera */
+    -moz-transition-delay: 4.5s !important; /* Firefox 4 */
+    -webkit-transition-delay: 4.5s !important; /* Safari 和 Chrome */
+}
+.ani-delay-5000 {
+    transition-delay: 5s !important;
+    -o-transition-delay: 5s !important; /* Opera */
+    -moz-transition-delay: 5s !important; /* Firefox 4 */
+    -webkit-transition-delay: 5s !important; /* Safari 和 Chrome */
+}
+
+
