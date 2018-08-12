@@ -95,11 +95,12 @@ def timeline(request):
     user = util.user.getCurrentUser(request)
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
+    year_earliest = Progress.objects.filter(userid=user.id).earliest('created').created.year
+    year_latest = Progress.objects.filter(userid=user.id).latest('modified').modified.year
     # add timeline info
-    now_year = timezone.now().year
-    context['prg_timeline_this_year'] = progresses.filter(Q(created__year=now_year) | Q(modified__year=now_year))  # created or modified in this year
-    last_year = timezone.now().year - 1
-    context['prg_timeline_last_year'] = progresses.filter(Q(created__year=last_year) | Q(modified__year=last_year))  # created or modified in this year
+    context['prglist_by_year'] = {}
+    for year in range(year_earliest, year_latest + 1):
+        context['prglist_by_year'][year] = progresses.filter(Q(created__year=year) | Q(modified__year=year))
     context['prglist'] = progresses
     # add exps
     util.userexp.addExp(user, 'progress', 1, _("访问「{}」页面").format(_("进度列表")))
