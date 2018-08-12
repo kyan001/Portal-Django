@@ -83,13 +83,13 @@
 {% block js %}
 <script>
     $(function(){
-        {% for year, prglist_per_year in prglist_by_year.items %}
+        {% for year, prglist_per_year in prglist_by_year %}
             var this_year_events = [
                 {% for prg in prglist_per_year %}
                     {% include "progress/timeline-event.html" with prg=prg %}
                 {% endfor %}
             ];
-            var timeline_div = $("<div></div>")
+            var timeline_div = $("<div data-year='{{ year }}'></div>")
             timeline_div.jqtimeline({
                 events: this_year_events,  // this year
                 startYear: {{ year }},

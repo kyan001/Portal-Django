@@ -98,9 +98,9 @@ def timeline(request):
     year_earliest = Progress.objects.filter(userid=user.id).earliest('created').created.year
     year_latest = Progress.objects.filter(userid=user.id).latest('modified').modified.year
     # add timeline info
-    context['prglist_by_year'] = {}
+    context['prglist_by_year'] = []
     for year in range(year_earliest, year_latest + 1):
-        context['prglist_by_year'][year] = progresses.filter(Q(created__year=year) | Q(modified__year=year))
+        context['prglist_by_year'].append([year, progresses.filter(Q(created__year=year) | Q(modified__year=year))])
     context['prglist'] = progresses
     # add exps
     util.userexp.addExp(user, 'progress', 1, _("访问「{}」页面").format(_("进度列表")))
