@@ -187,4 +187,4 @@ def migrateopus(request):
             comment=opus.comment,
             total=opus.total
         )
-    return util.ctrl.infoMsg(_("修改成功"))
+    return util.ctrl.infoMsg("修改成功")
