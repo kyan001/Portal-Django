@@ -151,7 +151,7 @@ var OpusInfoGetter = {
      * check if the keyword is appeared in the original name or title of a  book/movie
      * @param  {String}     keyword     [words, mostly is short]
      * @param  {opusinfo}   bookOrMovie [the opus's info, should include a title or original_title]
-     * @return {Boolean}                   [if the keyword is in the opus names]
+     * @return {Boolean}                [if the keyword is in the opus names]
      */
     "checkHas": function(keyword, bookOrMovie){
         if(!keyword || !bookOrMovie){
