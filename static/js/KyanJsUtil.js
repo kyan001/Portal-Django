@@ -124,16 +124,16 @@ var OpusInfoGetter = {
      * @param  {String}     name     [the opus's title which contains the image]
      * @param  {Function}   callback [call this function after got the data]
      */
-    "getImageColor": function(url, opusid, callback){
+    "getImageColor": function(url, progressid, callback){
         var request_data = {}
         if(url==""){
             request_data = {
-                "opusid": opusid,
+                "progressid": progressid,
             };
         } else {
             request_data = {
                 "url": url,
-                "opusid": opusid,
+                "progressid": progressid,
             };
         }
         $.ajax({

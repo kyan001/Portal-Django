@@ -148,9 +148,9 @@
             } else {
                 var count = 0
                 $(".progress-card").each(function(){
-                    var opusname = $(this).find(".opus-name").text().toLowerCase()
-                    var opuscomment = $(this).find(".comment").text().toLowerCase()
-                    if(opusname.indexOf(kw)>=0 || opuscomment.indexOf(kw)>=0){
+                    var prgname = $(this).find(".prg-name").text().toLowerCase()
+                    var prgcomment = $(this).find(".comment").text().toLowerCase()
+                    if(prgname.indexOf(kw)>=0 || prgcomment.indexOf(kw)>=0){
                         $(this).show()
                         count++
                     } else {

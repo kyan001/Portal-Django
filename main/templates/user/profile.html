@@ -51,7 +51,7 @@
 
                     <form id="headimg-form" action="/user/headimgupdate" method="post" role="form" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <input type="file" name="headimg" onchange="$('#headimg-form').submit();"/>
+                        <input type="file" accept="image/*" name="headimg" onchange="$('#headimg-form').submit();"/>
                     </form>
                 </div>
             </div>

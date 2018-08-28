@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% load i18n %}
-{% block title %}《{{opus.name}}》{% endblock title %}
+{% block title %}《{{progress.name}}》{% endblock title %}
 
 {% block css %}
     <style>
@@ -35,7 +35,7 @@
                         <img class="img-thumbnail" src="https://api.qrserver.com/v1/create-qr-code/?data={{request.build_absolute_uri}}&size=150x150" title="{% trans '当前页面的二维码' %}">
                     </div>
                     <div class="panel-footer">
-                        <a class="btn btn-success btn-block {% if cuser.id == opus.progress.userid %}disabled{% endif %}" href="/opus/importfrom?id={{ opus.id }}">
+                        <a class="btn btn-success btn-block {% if cuser.id == progress.userid %}disabled{% endif %}" href="/opus/importfrom?progressid={{ progress.id }}">
                             {% trans "一键添加到我的进度" %}
                         </a>
                     </div>
@@ -45,8 +45,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         {% trans "所有者" %}{% trans "：" %}
-                        <a class="no-decoration" href="/user/public?nickname={{ opus.progress.user.nickname }}">
-                            <b>@{{ opus.progress.user.nickname }}</b>
+                        <a class="no-decoration" href="/user/public?nickname={{ progress.user.nickname }}">
+                            <b>@{{ progress.user.nickname }}</b>
                         </a>
                     </div>
                     <table class="table table-hover">
@@ -54,42 +54,42 @@
                             <tr>
                                 <td class="attrname">{% trans "名称" %}</td>
                                 <td>
-                                    <b>《{{ opus.name }}》</b>
+                                    <b>《{{ progress.name }}》</b>
                                 </td>
                             </tr>
                             <!-- hide for privacy
                             <tr>
                                 <td class="attrname">{% trans "备注" %}</td>
-                                <td>{{ opus.comment }}</td>
+                                <td>{{ progress.comment }}</td>
                             </tr>
                             -->
                             <tr>
                                 <td class="attrname">{% trans "总共" %}</td>
-                                <td>{{ opus.total }}</td>
+                                <td>{{ progress.total }}</td>
                             </tr>
                             <!-- hide for privacy
                             <tr>
                                 <td class="attrname">{% trans "当前进度" %}</td>
-                                <td>{{ opus.progress.current }} / {{ opus.total }}</td>
+                                <td>{{ progress.progress.current }} / {{ progress.total }}</td>
                             </tr>
                             -->
                             <tr>
                                 <td class="attrname">{% trans "开始时间" %}</td>
-                                <td>{{ opus.progress.created|date:"Y-m-d H:i" }}</td>
+                                <td>{{ progress.created|date:"Y-m-d H:i" }}</td>
                             </tr>
                             <tr>
                                 <td class="attrname">{% trans "上次更新" %}</td>
-                                <td>{{ opus.progress.modified|date:"Y-m-d H:i" }}</td>
+                                <td>{{ progress.modified|date:"Y-m-d H:i" }}</td>
                             </tr>
                             <tr>
                                 <td class="attrname">{% trans "状态" %}</td>
-                                <td>{{ opus.progress.status }}</td>
+                                <td>{{ progress.status }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div><!--.panel-->
             </div><!--.col-->
-            {% if opus.progress.weblink %}
+            {% if progress.weblink %}
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="panel panel-default item-panel">
                         <div class="panel-heading">
@@ -102,7 +102,7 @@
                                     <span class="glyphicon glyphicon-link"></span>
                                 </td>
                                 <td>
-                                    {{ opus.progress.weblink|urlizetrunc:40 }}
+                                    {{ progress.weblink|urlizetrunc:40 }}
                                 </td>
                             </tr>
                             <tr>
@@ -111,7 +111,7 @@
                                     <span class="glyphicon glyphicon-qrcode"></span>
                                 </td>
                                 <td>
-                                    <img src="https://api.qrserver.com/v1/create-qr-code/?data={{ opus.progress.weblink }}&size=150x150" title="{% trans '进度链接二维码' %}">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?data={{ progress.weblink }}&size=150x150" title="{% trans '进度链接二维码' %}">
                                 </td>
                             </tr>
                         </table>

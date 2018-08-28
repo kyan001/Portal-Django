@@ -2,7 +2,7 @@
 {% load i18n %}
 
 
-{% block title %}{% trans "进度" %}{% trans "：" %}{{ opus.name }}{% endblock title %}
+{% block title %}{% trans "进度" %}{% trans "：" %}{{ prg.name }}{% endblock title %}
 
 
 {% load tags_url %}
@@ -58,7 +58,7 @@
             padding-right: 0;
         }
     }
-    #opus-chapinfo * {
+    #prg-chapinfo * {
         vertical-align: top;
     }
 </style>
@@ -105,28 +105,28 @@
                           data-toggle="tooltip"
                           data-placement="right"
                           data-container="body"
-                          href="/opus/detail?id={{opus.id}}"
+                          href="/opus/detail?progressid={{prg.id}}"
                           title="{% trans '分享你的进度信息' %}">
                             <span class="glyphicon glyphicon-qrcode"></span>
                         </a>
-                        《<strong id="opus-name">{{ opus.name }}</strong>》
-                        <span id="opus-chapinfo"></span>
+                        《<strong id="prg-name">{{ prg.name }}</strong>》
+                        <span id="prg-chapinfo"></span>
                         <span id="loading-icon" hidden>
                             <span class="loading circling glyphicon glyphicon-refresh"></span>
                         </span>
-                        {% if opus.comment %}
+                        {% if prg.comment %}
                             <em class="comment small">
-                                {{ opus.comment }}
+                                {{ prg.comment }}
                             </em>
                         {% endif %}
                     </span>
                 </div>
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped active progress-bar-{{ prg.contextual }}" style="width: {{ prg.persent }}%; min-width: 7em">
-                        {% if opus.total == 0 %}
+                        {% if prg.total == 0 %}
                             <strong>{{ prg.current }} / ∞</strong>
                         {% else %}
-                            <strong>{{ prg.current }} / {{ opus.total }}</strong>
+                            <strong>{{ prg.current }} / {{ prg.total }}</strong>
                             <span class="pull-right">{{ prg.persent }}%</span>
                         {% endif %}
                     </div>
@@ -164,10 +164,10 @@
                                                         <input class="editable form-control"
                                                           name="name"
                                                           type="text"
-                                                          value="{{opus.name}}"
-                                                          data-original="{{opus.name}}"
+                                                          value="{{prg.name}}"
+                                                          data-original="{{prg.name}}"
                                                           autocomplete="off"
-                                                          placeholder="{{opus.name}}"
+                                                          placeholder="{{prg.name}}"
                                                           required="required">
                                                         <span class="input-group-addon input-sm">》</span>
                                                     </div>
@@ -179,9 +179,9 @@
                                                     <input class="editable form-control"
                                                       name="comment"
                                                       type="text"
-                                                      value="{{opus.comment}}"
-                                                      data-original="{{opus.comment}}"
-                                                      placeholder="{{opus.comment}}"
+                                                      value="{{prg.comment}}"
+                                                      data-original="{{prg.comment}}"
+                                                      placeholder="{{prg.comment}}"
                                                       autocomplete="off">
                                                 </td>
                                             </tr>
@@ -192,9 +192,9 @@
                                                       name="total"
                                                       type="number"
                                                       min="0"
-                                                      placeholder="{{opus.total}}"
-                                                      value="{{opus.total}}"
-                                                      data-original="{{opus.total}}"
+                                                      placeholder="{{prg.total}}"
+                                                      value="{{prg.total}}"
+                                                      data-original="{{prg.total}}"
                                                       autocomplete="off"
                                                       oninput="RENDER.syncTotal()">
                                                 </td>
@@ -213,7 +213,7 @@
                                                               name="current"
                                                               type="number"
                                                               min="0"
-                                                              max="{{opus.total|default:''}}"
+                                                              max="{{prg.total|default:''}}"
                                                               value="{{prg.current}}"
                                                               data-original="{{prg.current}}"
                                                               onfocus="if(this.value==this.dataset.original){this.value=''}"
@@ -336,7 +336,7 @@
                                 <div class="panel-heading">
                                     <span><strong>{% trans "作品信息" %}</strong></span>
                                     <span class="pull-right">
-                                        <a id="opus-cover" class="btn btn-xs btn-primary" role="button">
+                                        <a id="prg-cover" class="btn btn-xs btn-primary" role="button">
                                             <span class="glyphicon glyphicon-picture"></span>
                                             {% trans "封面" %}
                                         </a>
@@ -346,9 +346,9 @@
                                     </span>
                                 </div>
                                 <div class="panel-body">
-                                    <div id="opus-image-row" class="row">
+                                    <div id="prg-image-row" class="row">
                                         <div class="col-xs-12">
-                                            <img id="opus-wordcloud" class="img-responsive center-block">
+                                            <img id="prg-wordcloud" class="img-responsive center-block">
                                         </div>
                                     </div>
                                     <table class="table table-condensed table-hover">
@@ -613,27 +613,27 @@
          */
         'purifyName': function(){
             console.debug('OPUS.purifyName:')
-            function extractChapInfo(opus_name, regex, prefix){
+            function extractChapInfo(prg_name, regex, prefix){
                 prefix = typeof prefix !== 'undefined' ?  prefix : ""  // 默认前缀为空
-                var matched_info = opus_name.match(regex)  // matched_info[0]: 包含符号的章节/周目信息, matched_info[1]: 干净的章节/周目信息
+                var matched_info = prg_name.match(regex)  // matched_info[0]: 包含符号的章节/周目信息, matched_info[1]: 干净的章节/周目信息
                 if(matched_info){
-                    var new_opus_name = $.trim(opus_name.replace(matched_info[0], ''))
-                    console.debug("  New:'%s', Chapinfo:'%s'", new_opus_name, matched_info[0])
-                    OPUS.INFOSETS.purified.name = new_opus_name
+                    var new_prg_name = $.trim(prg_name.replace(matched_info[0], ''))
+                    console.debug("  New:'%s', Chapinfo:'%s'", new_prg_name, matched_info[0])
+                    OPUS.INFOSETS.purified.name = new_prg_name
                     var chapinfo_chars = matched_info[1]
-                    $('#opus-name').text(new_opus_name)
-                    $('#opus-chapinfo').append($("<span class='badge'></span>").text(prefix + chapinfo_chars))
-                    return new_opus_name
+                    $('#prg-name').text(new_prg_name)
+                    $('#prg-chapinfo').append($("<span class='badge'></span>").text(prefix + chapinfo_chars))
+                    return new_prg_name
                 }
                 return null
             }
-            var opus_name = $('#opus-name').text()
+            var prg_name = $('#prg-name').text()
             var re_chapter = /[\s（\(](第*[0-9一二三四五六七八九十上下]+(季|册|卷|集|章|本|节|课))[\)）]*/i
-            opus_name = extractChapInfo(opus_name, re_chapter) || opus_name
+            prg_name = extractChapInfo(prg_name, re_chapter) || prg_name
             var re_lap = /[\s（\(](第*[0-9一二三四五六七八九十]+(周目|遍))[\)）]*/i
-            opus_name = extractChapInfo(opus_name, re_lap, "#") || opus_name
+            prg_name = extractChapInfo(prg_name, re_lap, "#") || prg_name
             var re_year = /[\s（\(]((19|20)[0-9]{2})[\)）]*$/i
-            opus_name = extractChapInfo(opus_name, re_year, "@") || opus_name
+            prg_name = extractChapInfo(prg_name, re_year, "@") || prg_name
         },
         /**
          * 设定作品的类型
@@ -826,7 +826,7 @@
             var img_container = $('<div></div>')
             var img_a = $('<a></a>').attr('href', info.images.large).attr('target', '_blank').appendTo(img_container)
             var img_sm = $('<img>').attr('src', info.images.small).width('100%').appendTo(img_a)
-            var cover_ele = $('#opus-cover')
+            var cover_ele = $('#prg-cover')
             cover_ele.tooltip({
                 html: true,
                 container: 'body',
@@ -841,7 +841,7 @@
                 $(this).removeClass('active')
             })
             if(info.summary){
-                $('#opus-wordcloud').attr('src', '/opus/getopuswordcloud?height=100&width=500&type=' + info.type + '&name=' + infoset.name)
+                $('#prg-wordcloud').attr('src', '/opus/getopuswordcloud?height=100&width=500&type=' + info.type + '&name=' + infoset.name)
             }
             $('#tag-tag').text(info.tags.join('，'))
             $('#rating-av').text(info.rating)
@@ -907,7 +907,7 @@
          * @param {INFO}    info    [需要应用的作品的信息]
          */
         'showImageColor': function(info){
-            OpusInfoGetter.getImageColor(info.images.small, '{{opus.id}}', function(result){
+            OpusInfoGetter.getImageColor(info.images.small, '{{prg.id}}', function(result){
                 $('#color-indicator').css('color', result.color)
             });
         },

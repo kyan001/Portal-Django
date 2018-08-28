@@ -44,12 +44,6 @@ class ExpHistoryAdmin(BaseModelAdmin):
     search_fields = ('operation', 'userexpid')
 
 
-@admin.register(Opus)
-class OpusAdmin(BaseModelAdmin):
-    list_display = ('id', 'name', 'comment', 'total', 'created', 'modified')
-    search_fields = ('name', 'comment', 'total')
-
-
 @admin.register(Progress)
 class ProgressAdmin(BaseModelAdmin):
     list_display = ('user', 'id', 'userid', 'name', 'comment', 'current', 'total', 'status', 'modified')

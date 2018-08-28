@@ -3,22 +3,22 @@
 {
     progressid: {{ prg.id }},
     on: new Date({{ prg.created.year }}, {{ prg.created.month|add:-1 }}, {{ prg.created.day }}),
-    name: "<span class='text-info'>{% trans '开始看' %} </span>《{{ prg.opus.name }}》"
+    name: "<span class='text-info'>{% trans '开始看' %} </span>《{{ prg.name }}》"
 },
 {
     progressid: {{ prg.id }},
     on: new Date({{ prg.modified.year }}, {{ prg.modified.month|add:-1 }}, {{ prg.modified.day }}),
     {% if prg.status == 'done' %}
-        name: "<span class='text-success'>{% trans '完成了' %} </span>《{{ prg.opus.name }}》"
+        name: "<span class='text-success'>{% trans '完成了' %} </span>《{{ prg.name }}》"
     {% elif prg.status == 'deactivated' %}
-        name: "<span class='text-danger'>{% trans '冻结了' %} </span>《{{ prg.opus.name }}》"
+        name: "<span class='text-danger'>{% trans '冻结了' %} </span>《{{ prg.name }}》"
     {% elif prg.status == 'inprogress' %}
-        name: "《{{ prg.opus.name }}》<span class='text-primary'> {% trans '进行至' %} </span>{{prg.persent}}%"
+        name: "《{{ prg.name }}》<span class='text-primary'> {% trans '进行至' %} </span>{{prg.persent}}%"
     {% elif prg.status == 'follow' %}
-        name: "《{{ prg.opus.name }}》<span class='text-primary'> {% trans '追剧至' %} </span>{% trans '第' %} {{ prg.current }} {% trans '集' %}"
+        name: "《{{ prg.name }}》<span class='text-primary'> {% trans '追剧至' %} </span>{% trans '第' %} {{ prg.current }} {% trans '集' %}"
     {% elif prg.status == 'todo' %}
-        name: "《{{ prg.opus.name }}》 {% trans '加入至' %}<span class='text-info'> {% trans '待阅读' %}</span>"
+        name: "《{{ prg.name }}》 {% trans '加入至' %}<span class='text-info'> {% trans '待阅读' %}</span>"
     {% else %}
-        name: "《{{ prg.opus.name }}》 {% trans '出错' %}"
+        name: "《{{ prg.name }}》 {% trans '出错' %}"
     {% endif %}
 },

@@ -21,7 +21,7 @@ def detail(request):
     badgeid = request.GET.get('id')
     if not badgeid:
         raise Http404(_("{} 参数不能为空").format("Badge ID"))
-    # get opus
+    # get badge
     badge = UserPermissionBadge.objects.get_or_404(id=badgeid)
     # render
     context['badge'] = badge

@@ -18,7 +18,7 @@ import util.ctrl
 import util.time
 import util.user
 import util.userexp
-from main.models import User, Opus, Progress, Chat
+from main.models import User, Progress, Chat
 import KyanToolKit
 ktk = KyanToolKit.KyanToolKit()
 
@@ -122,10 +122,8 @@ def detail(request):
     # check owner
     if progress.userid != user.id:
         return errMsg(_("这个进度不属于您，因此您不能{}该进度").format(_("查看")), url='/progress/list')
-    # get opus
-    opus = Opus.objects.get_or_404(id=progress.opusid)
     # add exp
-    util.userexp.addExp(user, "progress", 1, _("查看进度《{}》的详情").format(opus.name))
+    util.userexp.addExp(user, "progress", 1, _("查看进度《{}》的详情").format(progress.name))
     # calcs
     aux = {
         "time": {},
@@ -134,8 +132,8 @@ def detail(request):
     aux["time"]["c2n"] = util.time.formatDateToNow(progress.created, "largest")
     aux["time"]["m2n"] = util.time.formatDateToNow(progress.modified, "largest")
     aux["time"]["c2m"] = util.time.formatTimedelta(progress.getTimedelta("c2m"))
-    if opus.total and progress.current:  # 非追剧中、非待开始有预计完成时间.
-        esti_finish_timedelta = progress.getTimedelta("c2n") / progress.current * (opus.total - progress.current)
+    if progress.total and progress.current:  # 非追剧中、非待开始有预计完成时间.
+        esti_finish_timedelta = progress.getTimedelta("c2n") / progress.current * (progress.total - progress.current)
         esti_finish_date = progress.modified + esti_finish_timedelta
         aux["esti"]["finish_date"] = esti_finish_date
         aux["esti"]["finish_time"] = util.time.formatDateToNow(esti_finish_date, "largest")
@@ -145,7 +143,6 @@ def detail(request):
             aux["time"]["speed"] = util.time.formatTimedelta(speed)
     # render
     context = {}
-    context["opus"] = opus
     context["prg"] = progress
     context["aux"] = aux
     return render(request, "progress/detail.html", context)
@@ -154,25 +151,25 @@ def detail(request):
 def imagecolor(request):  # AJAX #PUBLIC
     """异步获取一个url的颜色"""
     url = request.GET.get('url')
-    opusid = request.GET.get('opusid')
+    progressid = request.GET.get('progressid')
     result = {}
-    if opusid:  # has-opusid
-        cache_key = 'opus:{}:covercolor'.format(opusid)
+    if progressid:  # has-progressid
+        cache_key = 'progress:{}:covercolor'.format(progressid)
         cache_timeout = 60 * 60 * 24 * 7 * 2  # 2 weeks
         cached_color = cache.get(cache_key)
-        if cached_color:  # has-opusid & cached
+        if cached_color:  # has-progressid & cached
             result['is_cached'] = True
             result['color'] = cached_color
             return util.ctrl.returnJson(result)
-        else:  # has-opusid & not-cached
+        else:  # has-progressid & not-cached
             result['is_cached'] = False
-    if url:  # no-opusid or not-cached
+    if url:  # no-progressid or not-cached
         try:
             color = ktk.imageToColor(url, mode='hex')
         except Exception as e:
             return util.ctrl.returnJsonError(str(e))
         result['color'] = color
-        if opusid:
+        if progressid:
             cache.set(cache_key, color, cache_timeout)
     return util.ctrl.returnJson(result)
 
@@ -200,26 +197,23 @@ def update(request):  # POST
         current = 0
     if total > 0 and current > total:
         return errMsg(_("初始进度 {c} 不能大于总页数 {t}").format(c=current, t=total))
-    # get progress and opus
+    # get progress
     progress = Progress.objects.get_or_404(id=progressid)
-    opus = progress.opus
     # check owner
     user = util.user.getCurrentUser(request)
     if progress.userid != user.id:
         return errMsg(_("这个进度不属于您，因此您不能{}该进度").format(_("更新")))
     # add exp
-    util.userexp.addExp(user, "progress", 5, _("编辑进度《{}》成功").format(opus.name))
+    util.userexp.addExp(user, "progress", 5, _("编辑进度《{}》成功").format(progress.name))
     # save
     progress.current = current
-    opus.name = name
-    opus.comment = comment
+    progress.name = name
+    progress.comment = comment
     progress.weblink = weblink
-    opus.total = total
-    with transaction.atomic():
-        opus.save()
-        progress.save()
+    progress.total = total
+    progress.save()
     # render
-    messages.success(request, _("进度") + " 《{}》 ".format(opus.name) + _("已更新"))
+    messages.success(request, _("进度") + " 《{}》 ".format(progress.name) + _("已更新"))
     return redirect("/progress/detail?id={}".format(progress.id))
 
 
@@ -231,21 +225,18 @@ def delete(request):  # POST
     progressid = request.POST.get('id')
     if not progressid:
         raise Http404(_("{} 参数不能为空").format("Progress ID"))
-    # get progress and opus
+    # get progress
     progress = Progress.objects.get_or_404(id=progressid)
-    opus = progress.opus
     # check owner
     user = util.user.getCurrentUser(request)
     if progress.userid != user.id:
         return errMsg(_("这个进度不属于您，因此您不能{}该进度").format(_("删除")))
     # save
-    with transaction.atomic():
-        progress.delete()
-        opus.delete()
+    progress.delete()
     # add exp
-    util.userexp.addExp(user, "progress", 5, _("删除进度《{}》").format(opus.name))
+    util.userexp.addExp(user, "progress", 5, _("删除进度《{}》").format(progress.name))
     # render
-    messages.success(request, _("进度") + " 《{}》 ".format(opus.name) + _("已删除"))
+    messages.success(request, _("进度") + " 《{}》 ".format(progress.name) + _("已删除"))
     return redirect("/progress/list")
 
 
@@ -258,20 +249,19 @@ def plusone(request):  # GET
     progressid = request.GET.get('id')
     if not progressid:
         raise Http404(_("{} 参数不能为空").format("Progress ID"))
-    # get progress and opus
+    # get progress
     progress = Progress.objects.get_or_404(id=progressid)
-    opus = progress.opus
     # check owner
     user = util.user.getCurrentUser(request)
     if progress.userid != user.id:
         return errMsg(_("这个进度不属于您，因此您不能{}该进度").format("+1"))
     # check total
-    if opus.total > 0 and progress.current == opus.total:
+    if progress.total > 0 and progress.current == progress.total:
         return errMsg(_("进度已达到最大值"))
     # save
     progress.current = progress.current + 1
     progress.save()
-    messages.success(request, _("进度") + " 《{}》 ".format(opus.name) + "+1 " + _("已更新"))
+    messages.success(request, _("进度") + " 《{}》 ".format(progress.name) + "+1 " + _("已更新"))
     # render
     errMsg = partial(util.ctrl.infoMsg, title=_("+1 失败"))
     return redirect(next_)
@@ -285,9 +275,8 @@ def deactivate(request):  # POST
     progressid = request.POST.get('id')
     if not progressid:
         raise Http404(_("{} 参数不能为空").format("Progress ID"))
-    # get progress and opus
+    # get progress
     progress = Progress.objects.get_or_404(id=progressid)
-    opus = progress.opus
     # check owner
     user = util.user.getCurrentUser(request)
     if progress.userid != user.id:
@@ -296,9 +285,9 @@ def deactivate(request):  # POST
     progress.status = 'deactivated'
     progress.save()
     # add exp
-    util.userexp.addExp(user, "progress", 5, _("冻结进度《{}》").format(opus.name))
+    util.userexp.addExp(user, "progress", 5, _("冻结进度《{}》").format(progress.name))
     # render
-    messages.success(request, _("进度") + " 《{}》 ".format(opus.name) + _("已冻结"))
+    messages.success(request, _("进度") + " 《{}》 ".format(progress.name) + _("已冻结"))
     return redirect("/progress/detail?id=" + str(progress.id))
 
 
@@ -310,9 +299,8 @@ def reactivate(request):
     progressid = request.POST.get('id')
     if not progressid:
         raise Http404(_("{} 参数不能为空").format("Progress ID"))
-    # get progress and opus
+    # get progress
     progress = Progress.objects.get_or_404(id=progressid)
-    opus = progress.opus
     # check owner
     user = util.user.getCurrentUser(request)
     if progress.userid != user.id:
@@ -321,9 +309,9 @@ def reactivate(request):
     progress.resetStatus()
     progress.save()
     # add exp
-    util.userexp.addExp(user, "progress", 5, _("恢复已冻结的进度《{}》").format(opus.name))
+    util.userexp.addExp(user, "progress", 5, _("恢复已冻结的进度《{}》").format(progress.name))
     # render
-    messages.success(request, _("进度") + " 《{}》 ".format(opus.name) + _("已激活"))
+    messages.success(request, _("进度") + " 《{}》 ".format(progress.name) + _("已激活"))
     return redirect("/progress/detail?id=" + str(progress.id))
 
 
@@ -337,8 +325,7 @@ def new(request):
     # load used comments
     user = util.user.getCurrentUser(request)
     progresses = Progress.objects.filter(userid=user.id)
-    opuses = [progress.opus for progress in progresses]
-    comment_tags = Opus.objects.getCommentTags(opuses)
+    comment_tags = Progress.objects.getCommentTags(progresses)
     # add exp
     user = util.user.getCurrentUser(request)
     util.userexp.addExp(user, "progress", 2, _("尝试新增进度"))
@@ -377,11 +364,8 @@ def add(request):
     user = util.user.getCurrentUser(request)
     util.userexp.addExp(user, "progress", 10, _("新增进度《{}》成功").format(name))
     # save
-    with transaction.atomic():
-        opus = Opus(name=name, comment=comment, total=total)
-        opus.save()
-        progress = Progress(current=current, opusid=opus.id, userid=user.id, weblink=weblink)
-        progress.save()
+    progress = Progress(name=name, comment=comment, total=total, current=current, userid=user.id, weblink=weblink)
+    progress.save()
     # render
     return redirect("/progress/detail?id={progress.id}".format(progress=progress))
 
@@ -398,26 +382,26 @@ def setical(request):  # POST
 
 def ical(request):  # GET
     """生成 ical 字符串加入 google calendar"""
-    def generate_summery(status, opusname):
+    def generate_summery(status, name):
         if status == 'done':
-            pattern = "{act} {o}"
+            pattern = "{act} {nm}"
             params = {
                 "act": _("完成了"),
             }
         elif status == 'deactivated':
-            pattern = "{act} {o}"
+            pattern = "{act} {nm}"
             params = {
                 "act": _("冻结了"),
             }
         elif status == 'inprogress':
-            pattern = "{o} {act} {crrt}/{ttl}"
+            pattern = "{nm} {act} {crrt}/{ttl}"
             params = {
                 "act": _("进行至"),
                 "crrt": prg.current,
-                "ttl": prg.opus.total,
+                "ttl": prg.total,
             }
         elif status == 'follow':
-            pattern = "{o} {act} {di} {num} {ji}"
+            pattern = "{nm} {act} {di} {num} {ji}"
             params = {
                 "act": _("追剧至"),
                 "di": _("第"),
@@ -425,17 +409,17 @@ def ical(request):  # GET
                 "ji": _("集"),
             }
         elif status == 'todo':
-            pattern = "{o} {act} {todo}"
+            pattern = "{nm} {act} {todo}"
             params = {
                 "act": _("加入至"),
                 "todo": _("待阅读"),
             }
         else:
-            pattern = "{o} {act}"
+            pattern = "{nm} {act}"
             params = {
                 "act": _("出错"),
             }
-        return pattern.format(o=opusname, **params)
+        return pattern.format(nm=name, **params)
 
     userid = request.GET.get("userid")
     privatekey = request.GET.get("private") or None
@@ -461,7 +445,7 @@ def ical(request):  # GET
     })
     for prg in progresses:
         prg_url = "http://www.kyan001.com/progress/detail?id={}".format(prg.id)
-        OPUSNAME = "《{}》".format(prg.opus.name)
+        PRGNAME = "《{}》".format(prg.name)
         # create event create
         evnt_crt = icalendar.Event({
             "UID": 'prg:id:{}:create'.format(prg.id),
@@ -469,7 +453,7 @@ def ical(request):  # GET
             "URL": prg_url,
             "DTSTART": icalendar.vDatetime(prg.created),
             "DTSTAMP": icalendar.vDatetime(prg.created),
-            "SUMMARY": "{act} {o}".format(act=_("开始看"), o=OPUSNAME),
+            "SUMMARY": "{act} {nm}".format(act=_("开始看"), nm=PRGNAME),
         })
         cal.add_component(evnt_crt)
         # create event modify
@@ -479,7 +463,7 @@ def ical(request):  # GET
             "URL": prg_url,
             "DTSTART": icalendar.vDatetime(prg.modified),
             "DTSTAMP": icalendar.vDatetime(prg.modified),
-            "SUMMARY": generate_summery(prg.status, OPUSNAME),
+            "SUMMARY": generate_summery(prg.status, PRGNAME),
         })
         cal.add_component(evnt_mdf)
     # render

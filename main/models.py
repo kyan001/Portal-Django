@@ -257,58 +257,6 @@ class ExpHistory(BaseModel):
             return "USER_DELETED"
 
 
-class OpusManager(BaseManager):
-    def getTopComments(self):
-        """Count and return the top common comments
-
-        Returns:
-            sorted comment:count k-v dictionary
-        """
-        records = Opus.objects.all()
-        sbttl_counts = {}
-        for r in records:
-            if not r.comment:
-                continue
-            count = sbttl_counts.get(r.comment, 0)
-            sbttl_counts[r.comment] = count + 1
-        return sorted(sbttl_counts.items(), key=lambda itm: itm[1], reverse=True)
-
-    def getCommentTags(self, opuses):
-        MAX_TAGS = 9
-        SUGGEST_COMMENTS = [_("书"), "PDF", _("漫画"), _("动画"), _("电视剧"), _("公开课"), _("纪录片"), _("视频"), _("小说")]
-        if not opuses:
-            raise Http404(_("{} 参数不能为空").format("Opuses"))
-        comments = [opus.comment for opus in opuses if opus.comment and opus.comment.strip()]
-        valid_tags = [tag for comment in comments for tag in re.split('[\s,，]+', comment) if len(tag.encode('gbk')) <= 10]
-        comment_tags = [tag for tag, count in Counter(valid_tags).most_common(MAX_TAGS) if count > 2]
-        if len(comment_tags) < MAX_TAGS:
-            comment_tags.extend([sc for sc in SUGGEST_COMMENTS if sc not in comment_tags])
-            comment_tags = comment_tags[:MAX_TAGS]
-        return comment_tags
-
-
-class Opus(BaseModel):
-    name = models.CharField(max_length=255)
-    comment = models.TextField(blank=True, default='')
-    total = models.IntegerField(default=0)
-    objects = OpusManager()
-
-    @property
-    def progress(self):
-        return Progress.objects.get_or_404(opusid=self.id)
-
-    @property
-    def covercolor(self):
-        cache_key = 'opus:{}:covercolor'.format(self.id)
-        cached_color = cache.get(cache_key)
-        return cached_color or None
-
-    def __str__(self):
-        subtext = "({self.comment})".format(self=self) if self.comment else ""
-        total = self.total if self.total else '∞'
-        return "《{self.name}》{subtext}[{total}]".format(self=self, subtext=subtext, total=total)
-
-
 class ProgressManager(BaseManager):
     def getStatusName(self, status):
         """Get a status' Chinese translation"""
@@ -365,7 +313,6 @@ class Progress(BaseModel):
     userid = models.IntegerField(default=0)
     name = models.CharField(max_length=255, blank=True, default='')
     comment = models.TextField(blank=True, default='')
-    opusid = models.IntegerField(default=0)
     current = models.IntegerField(default=0)
     total = models.IntegerField(default=0)
     status = models.CharField(max_length=50, choices=STATUSES.items())
@@ -380,17 +327,9 @@ class Progress(BaseModel):
 
     @property
     def persent(self):
-        opus = self.opus
-        if opus.total == 0:
-            total = int(self.current) + 1
-        else:
-            total = int(opus.total)
-        persent = int(self.current) / total * 100
+        total = self.current + 1 if self.total == 0 else self.total
+        persent = self.current / total * 100
         return int(persent)
-
-    @property
-    def opus(self):
-        return Opus.objects.get_or_404(id=self.opusid)
 
     @property
     def user(self):
@@ -398,11 +337,11 @@ class Progress(BaseModel):
 
     @property
     def link(self):
-        return "<a href='/progress/detail?id={id}'>{name}</a>".format(id=self.id, name=self.opus.name)
+        return "<a href='/progress/detail?id={id}'>{name}</a>".format(id=self.id, name=self.name)
 
     @property
     def covercolor(self):
-        cache_key = 'opus:{}:covercolor'.format(self.id)
+        cache_key = 'progress:{}:covercolor'.format(self.id)
         cached_color = cache.get(cache_key)
         return cached_color or None
 
@@ -445,22 +384,21 @@ class Progress(BaseModel):
             return datetime.timedelta()
 
     def _setStatusAuto(self):
-        opus = self.opus
         if self.status == 'deactivated':
             return True
         if self.current == 0:
             self.status = 'todo'
             return True
-        if opus.total == 0:
+        if self.total == 0:
             self.status = 'follow'
             return True
-        if self.current > opus.total:
+        if self.current > self.total:
             self.status = 'error'
             return True
-        if self.current == opus.total:
+        if self.current == self.total:
             self.status = 'done'
             return True
-        if self.current < opus.total:
+        if self.current < self.total:
             self.status = 'inprogress'
             return True
         return False

@@ -1,20 +1,20 @@
 {% load tags_url %}
 {% load i18n %}
 
-<div class="{{size}} progress-card ani-fast-container ani-fast" progressid="{{prg.id}}" progressname="{{ prg.opus.name }}">
+<div class="{{size}} progress-card ani-fast-container ani-fast" progressid="{{prg.id}}" progressname="{{ prg.name }}">
     <a href="/progress/detail?id={{ prg.id }}" class="no-decoration">
         <div class="panel panel-{{ prg.contextual|default:'default' }} hover-shadow">
             <div class="panel-heading no-bottom-border progress-title text-nowrap">
                 <span class="panel-title">
-                    <span class="opus-name">
-                        《<strong>{{ prg.opus.name|truncatechars:25 }}</strong>》
+                    <span class="prg-name">
+                        《<strong>{{ prg.name|truncatechars:25 }}</strong>》
                     </span>
-                    {% if prg.opus.covercolor %}
-                        <span class="small glyphicon glyphicon-tint" style="color: {{ prg.opus.covercolor }}" title="《{{ prg.opus.name }}》 {% trans '作品代表色' %}"></span>
+                    {% if prg.covercolor %}
+                        <span class="small glyphicon glyphicon-tint" style="color: {{ prg.covercolor }}" title="《{{ prg.name }}》 {% trans '作品代表色' %}"></span>
                     {% endif %}
-                    {% if prg.opus.comment %}
+                    {% if prg.comment %}
                         <em class="comment small">
-                            {{ prg.opus.comment|truncatechars:9 }}
+                            {{ prg.comment|truncatechars:9 }}
                         </em>
                     {% endif %}
                     {% if prg.weblink and prg.weblink|isurl %}
@@ -22,7 +22,7 @@
                             <span class="glyphicon glyphicon-link"></span>
                         </span>
                     {% endif %}
-                    {% if prg.opus.total <= 100 and prg.current != prg.opus.total or prg.opus.total == 0 %}
+                    {% if prg.total <= 100 and prg.current != prg.total or prg.total == 0 %}
                         <span class="plus-one innerlink pull-right badge hover-shadow" href="/progress/plusone?id={{ prg.id }}" title="+1">
                             <span>+1</span>
                         </span>
@@ -31,7 +31,7 @@
             </div>
             <table class="hidden-xs table table-condensed table-responsive small text-{{ prg.contextual|default:'muted' }}">
                 <tr>
-                    {% if prg.current == prg.opus.total and prg.current != 0 %}
+                    {% if prg.current == prg.total and prg.current != 0 %}
                         <td class="text-center bg-primary">
                             <span class="glyphicon glyphicon-ok"></span>
                             <span title="{% trans '完成时间' %}">{{ prg.modified|date:'Y-m-d' }}</span>
@@ -51,7 +51,7 @@
             <div class="progress text-center">
                 <div class="progress-bar progress-bar-{{ prg.contextual }}" style="width: {{ prg.persent }}%;">
                     {% if prg.persent >= 25 %}
-                        <b>{{prg.current}}</b> / <b>{% if prg.opus.total != 0 %}{{prg.opus.total}}{% else %}∞{% endif %}</b>
+                        <b>{{prg.current}}</b> / <b>{% if prg.total != 0 %}{{prg.total}}{% else %}∞{% endif %}</b>
                     {% endif %}
                     {% if prg.persent > 50 and prg.persent < 100 %}
                         <span class="pull-right">{{ prg.persent }}%</span>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="small line-height-anti-small">
                     {% if prg.persent < 25 %}
-                        <b>{{prg.current}}</b> / <b>{% if prg.opus.total != 0 %}{{prg.opus.total}}{% else %}∞{% endif %}</b>
+                        <b>{{prg.current}}</b> / <b>{% if prg.total != 0 %}{{prg.total}}{% else %}∞{% endif %}</b>
                     {% endif %}
                     {% if prg.persent > 0 and prg.persent < 50 %}
                         <span class="pull-left">{{ prg.persent }}%</span>

@@ -14,20 +14,20 @@ from django.utils.translation import gettext as _
 import jieba
 import wordcloud
 
-from main.models import Opus
+from main.models import Progress
 import util.ctrl
 
 
 def detail(request):
     """获得作品的详情"""
-    opusid = request.GET.get('id')
-    if not opusid:
-        raise Http404(_("{} 参数不能为空").format("Opus ID"))
-    # get opus
-    opus = Opus.objects.get_or_404(id=opusid)
+    progressid = request.GET.get('progressid')
+    if not progressid:
+        raise Http404(_("{} 参数不能为空").format("Progress ID"))
+    # get progress
+    progress = Progress.objects.get_or_404(id=progressid)
     # render
     context = {
-        'opus': opus,
+        'progress': progress,
     }
     return render(request, 'opus/detail.html', context)
 
@@ -118,22 +118,22 @@ def importFrom(request):
     Args:
         id: str，作为被导入的 opus id
     """
-    opusid = request.GET.get('id')
-    if not opusid:
-        return util.ctrl.infoMsg(_("{} 参数不能为空").format("Opus ID"))
+    progressid = request.GET.get('progressid')
+    if not progressid:
+        return util.ctrl.infoMsg(_("{} 参数不能为空").format("Progress ID"))
     user = util.user.getCurrentUser(request)
-    opus = Opus.objects.get_or_404(id=int(opusid))  # 获得作品.
-    if opus.progress.userid == user.id:  # 判断是否是自己的进度.
+    progress = Progress.objects.get_or_404(id=int(progressid))  # 获得作品.
+    if progress.userid == user.id:  # 判断是否是自己的进度.
         return util.ctrl.infoMsg(_("您已拥有该进度，请不要重复添加"), title=_('导入失败'))
     # 生成 url
     url = '/progress/new'
     param = {
-        'name': opus.name,
-        'total': opus.total,
-        'weblink': opus.progress.weblink,
+        'name': progress.name,
+        'total': progress.total,
+        'weblink': progress.weblink,
     }
     param_encoded = urllib.parse.urlencode(param)
     url_final = url + '?' + param_encoded  # ?name=xxx&total=xxx&weblink=xxx
-    messages.success(request, _("已从 @{u} 导入进度《{o}》的信息").format(u=user.nickname, o=opus.name))
+    messages.success(request, _("已从 @{u} 导入进度《{n}》的信息").format(u=user.nickname, n=progress.name))
     messages.warning(request, _("请确认后点击“保存”"))
     return redirect(url_final)
