@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.template import loader
 from django.utils.translation import gettext as _
 
-from main.models import User, UserPermission, Chat, UserPermissionBadge, Progress, Opus
+from main.models import User, UserPermission, Chat, UserPermissionBadge, Progress
 import util.ctrl
 import util.user
 
