@@ -52,9 +52,9 @@ class OpusAdmin(BaseModelAdmin):
 
 @admin.register(Progress)
 class ProgressAdmin(BaseModelAdmin):
-    list_display = ('opus', 'user', 'id', 'userid', 'opusid', 'current', 'status', 'modified')
+    list_display = ('user', 'id', 'userid', 'name', 'comment', 'current', 'total', 'status', 'modified')
     list_filter = ('status',)
-    search_fields = ('userid', 'opusid', 'weblink')
+    search_fields = ('name', 'comments', 'userid', 'weblink')
 
 
 @admin.register(Chat)

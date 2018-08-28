@@ -79,4 +79,5 @@ urlpatterns = [
     url(r'^superuser/broadcast$', main.views.superuser.broadcast),
     url(r'^superuser/sendbroadcast$', main.views.superuser.sendbroadcast),
     url(r'^superuser/updatedb$', main.views.superuser.updatedb),
+    path('superuser/migrateopus', main.views.superuser.migrateopus),
     ]

@@ -335,6 +335,19 @@ class ProgressManager(BaseManager):
             result['average_modified_now'] = util.time.formatTimedelta(temp_m2n_total / count, '%d %H %M') if count else 0
         return result
 
+    def getCommentTags(self, progresses):
+        MAX_TAGS = 9
+        SUGGEST_TAGS = [_("书"), "PDF", _("漫画"), _("动画"), _("电视剧"), _("公开课"), _("纪录片"), _("视频"), _("小说")]
+        if not progresses:
+            raise Http404(_("{} 参数不能为空").format("Progresses"))
+        comments = [prg.comment for prg in progresses if prg.comment and prg.comment.strip()]
+        valid_tags = [tag for comment in comments for tag in re.split('[\s,，]+', comment) if len(tag.encode('gbk')) <= 10]
+        comment_tags = [tag for tag, count in Counter(valid_tags).most_common(MAX_TAGS) if count > 2]
+        if len(comment_tags) < MAX_TAGS:
+            comment_tags.extend([sc for sc in SUGGEST_TAGS if sc not in comment_tags])
+            comment_tags = comment_tags[:MAX_TAGS]
+        return comment_tags
+
 
 class Progress(BaseModel):
     STATUSES = {
@@ -350,8 +363,11 @@ class Progress(BaseModel):
         ),
     }
     userid = models.IntegerField(default=0)
+    name = models.CharField(max_length=255, blank=True, default='')
+    comment = models.TextField(blank=True, default='')
     opusid = models.IntegerField(default=0)
     current = models.IntegerField(default=0)
+    total = models.IntegerField(default=0)
     status = models.CharField(max_length=50, choices=STATUSES.items())
     weblink = models.URLField(max_length=2083, blank=True, default="")
     objects = ProgressManager()
@@ -385,6 +401,12 @@ class Progress(BaseModel):
         return "<a href='/progress/detail?id={id}'>{name}</a>".format(id=self.id, name=self.opus.name)
 
     @property
+    def covercolor(self):
+        cache_key = 'opus:{}:covercolor'.format(self.id)
+        cached_color = cache.get(cache_key)
+        return cached_color or None
+
+    @property
     def contextual(self):
         persent = self.persent
         if self.current == 0:  # todo
@@ -405,7 +427,7 @@ class Progress(BaseModel):
 
     def __str__(self):
         if User.objects.filter(id=self.userid).exists():
-            return "《{self.opus.name}》({self.current}/{self.opus.total}) {self.status}".format(self=self)
+            return "《{self.name}》 {self.comment} ({self.current}/{self.total}) [{self.status}]".format(self=self)
         else:
             return "USER_DELETED"
 
