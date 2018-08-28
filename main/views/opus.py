@@ -85,17 +85,17 @@ def getOpusWordCloud(request):  # get # ajax
             cached_info = cached_info.decode()
         return json.loads(cached_info) if cached_info else None
 
-    opus_name = request.GET.get('name')  # 用户存的名字.
-    opus_type = request.GET.get('type')
+    opusname = request.GET.get('name')  # 用户存的名字.
+    opustype = request.GET.get('type')
     height = request.GET.get('height') or "500"
     width = request.GET.get('width') or "500"
-    if not (opus_name and opus_type):
+    if not (opusname and opustype):
         raise Http404(_("{} 参数不能为空").format("Opus Name" + _("和") + "Opus Type"))
-    info = getOpusCachedInfo(opus_type, opus_name)
+    info = getOpusCachedInfo(opustype, opusname)
     if not info:
         raise Http404(_("{} 未被缓存").format("Opus Info"))
     # check cached
-    cache_key = '{typ}:{name}:{hght}x{wdth}:wordcloud'.format(typ=opus_type, name=opus_name, hght=height, wdth=width)
+    cache_key = '{typ}:{name}:{hght}x{wdth}:wordcloud'.format(typ=opustype, name=opusname, hght=height, wdth=width)
     cache_timeout = 60 * 60 * 24 * 30 * 2  # 2 months
     cached_data = cache.get(cache_key)
     if cached_data:
@@ -116,7 +116,7 @@ def importFrom(request):
     """将别人的进度导入至自己的进度列表
 
     Args:
-        id: str，作为被导入的 opus id
+        progressid: str，作为被导入的 progress id
     """
     progressid = request.GET.get('progressid')
     if not progressid:
