@@ -173,18 +173,3 @@ def sendbroadcast(request):
         receiver_nicknames.append(r.nickname)
     # render
     return util.ctrl.infoMsg(_("发送成功") + _("：") + str(receiver_nicknames), url="/chat/inbox")
-
-
-@util.user.login_required
-@util.user.superuser_required
-def migrateopus(request):
-    """将 opus 信息移动至 progress 中"""
-    progresses = Progress.objects.all()
-    for prg in progresses:
-        opus = prg.opus
-        Progress.objects.filter(id=prg.id).update(
-            name=opus.name,
-            comment=opus.comment,
-            total=opus.total
-        )
-    return util.ctrl.infoMsg("修改成功")
