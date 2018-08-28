@@ -311,7 +311,7 @@ class Progress(BaseModel):
         ),
     }
     userid = models.IntegerField(default=0)
-    name = models.CharField(max_length=255, blank=True, default='')
+    name = models.CharField(max_length=255)
     comment = models.TextField(blank=True, default='')
     current = models.IntegerField(default=0)
     total = models.IntegerField(default=0)
