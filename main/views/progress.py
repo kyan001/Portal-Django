@@ -189,6 +189,7 @@ def update(request):  # POST
     total = int(total) if total else 0
     current = request.POST.get('current')
     current = int(current)
+    keep_modified = request.POST.get("keepmodified") or False
     if not name:
         return errMsg(_("名称不能为空"))
     if not weblink:
@@ -211,7 +212,7 @@ def update(request):  # POST
     progress.comment = comment
     progress.weblink = weblink
     progress.total = total
-    progress.save()
+    progress.save(keep_modified=keep_modified)
     # render
     messages.success(request, _("进度") + " 《{}》 ".format(progress.name) + _("已更新"))
     return redirect("/progress/detail?id={}".format(progress.id))

@@ -320,8 +320,12 @@ class Progress(BaseModel):
     objects = ProgressManager()
 
     def save(self, *args, **kwargs):
+        keep_modified = kwargs.pop("keep_modified", False)
         if self._setStatusAuto():
+            prev_modified = self.modified
             super().save(*args, **kwargs)
+            if keep_modified:
+                Progress.objects.filter(id=self.id).update(modified=prev_modified)
         else:
             raise Http404(_("更新进度状态失败"))
 

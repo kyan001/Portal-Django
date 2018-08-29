@@ -41,6 +41,7 @@
     }
     #saveform th {
         min-width: 6em;
+        vertical-align: middle;
     }
     #title-tr,
     #rating-tr,
@@ -263,11 +264,22 @@
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <tr class="text-warning show-when-edit" title="{{prg.weblink}}">
+                                                    <th>{% trans "保存选项" %}</th>
+                                                    <td>
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" name="keepmodified" value="1">
+                                                                <span>{% trans "不修改当前的“上次更新”时间" %}</span>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                         </table>
                                     </div><!--.panel-body-->
                                     <div id="edit-btn" class="show-when-edit">
                                         <div class="btn-group btn-group-flex">
-                                            <a id="save" class="btn flex-10 btn-success" role="button" onclick="FORM.saveEdit()">
+                                            <a id="save" class="btn flex-9 btn-success" role="button" onclick="FORM.saveEdit()">
                                                 <span class="glyphicon glyphicon-ok"></span>
                                                 {% trans "保存" %}
                                             </a>
