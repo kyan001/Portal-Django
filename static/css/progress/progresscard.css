@@ -45,3 +45,7 @@
 .progress-card .line-height-anti-small {
     line-height: 167%;
 }
+
+.overflow-x-auto {
+    overflow-x: auto;
+}
