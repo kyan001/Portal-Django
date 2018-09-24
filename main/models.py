@@ -350,6 +350,18 @@ class Progress(BaseModel):
         return cached_color or None
 
     @property
+    def is_weblink_ok(self):
+        return self.weblink and util.ctrl.isUrl(self.weblink)
+
+    @property
+    def is_plusone_ok(self):
+        if self.total == 0:
+            return True
+        if self.total <= 100 and self.current != self.total:
+            return True
+        return False
+
+    @property
     def contextual(self):
         persent = self.persent
         if self.current == 0:  # todo
