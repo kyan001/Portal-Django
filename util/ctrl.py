@@ -103,3 +103,12 @@ def isMobile(request):
     if user_agent.lower().find('mobile') < 0:
         return False
     return True
+
+
+def isUrl(url):
+    input_string = str(url)
+    protocals = ['http', 'ftp', 'https', 'file', 'magnet', 'thunder', 'ed2k']
+    for p in protocals:
+        if input_string.startswith(p + '://'):
+            return True
+    return False
