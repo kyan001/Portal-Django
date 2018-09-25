@@ -29,23 +29,17 @@
     border-bottom-left-radius: inherit;
     border-bottom-right-radius: inherit;
 }
-.progress-card .plus-one {
-    display: none;
-    margin-left: 2px;
-    margin-right: 2px;
-}
-@media (min-width: 768px) {
-    .progress-card .plus-one {
-        display: none;
-    }
-    .progress-card:hover .plus-one {
-        display: inline-block;
-    }
-}
+
 .progress-card .line-height-anti-small {
     line-height: 167%;
 }
 
 .overflow-x-auto {
     overflow-x: auto;
+}
+
+.btn-xs.btn-xs-progress {
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 0 0 4px;
 }

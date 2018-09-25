@@ -6,8 +6,8 @@
         <div class="panel panel-{{ prg.contextual|default:'default' }} hover-shadow">
             <div class="panel-heading no-bottom-border progress-title text-nowrap">
                 <span class="panel-title">
-                    <div class="row">
-                        <div class="text-nowrap overflow-x-auto col-xs-{% if not prg.is_weblink_ok and not prg.is_plusone_ok %}12{% elif prg.is_weblink_ok and prg.is_plusone_ok %}9{% else %}10{% endif %}">
+                    <div class="row-flex">
+                        <div class="text-nowrap overflow-x-auto flex-9">
                             <span class="prg-name">
                                 《<strong>{{ prg.name|truncatechars:25 }}</strong>》
                             </span>
@@ -20,18 +20,11 @@
                                 </em>
                             {% endif %}
                         </div><!--.col-->
-                        {% if prg.is_weblink_ok or prg.is_plusone_ok %}
-                            <div class="col-xs-{% if prg.is_weblink_ok and prg.is_plusone_ok %}3{% else %}2{% endif %}">
-                                {% if prg.is_weblink_ok %}
-                                    <span class="weblink innerlink pull-right badge hover-turning-container" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
-                                        <span class="glyphicon glyphicon-link"></span>
-                                    </span>
-                                {% endif %}
-                                {% if prg.is_plusone_ok %}
-                                    <span class="plus-one innerlink pull-right badge hover-shadow" href="/progress/plusone?id={{ prg.id }}" title="+1">
-                                        <span>+1</span>
-                                    </span>
-                                {% endif %}
+                        {% if prg.is_weblink_ok %}
+                            <div class="flex-1">
+                                <span class="weblink innerlink pull-right badge hover-turning-container" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
+                                    <span class="glyphicon glyphicon-link"></span>
+                                </span>
                             </div><!--.col-->
                         {% endif %}
                     </div><!--.row-->
@@ -56,24 +49,43 @@
                     {% endif %}
                 </tr>
             </table>
-            <div class="progress text-center">
-                <div class="progress-bar progress-bar-{{ prg.contextual }}" style="width: {{ prg.persent }}%;">
-                    {% if prg.persent >= 25 %}
-                        <b>{{prg.current}}</b> / <b>{% if prg.total != 0 %}{{prg.total}}{% else %}∞{% endif %}</b>
-                    {% endif %}
-                    {% if prg.persent > 50 and prg.persent < 100 %}
-                        <span class="pull-right">{{ prg.persent }}%</span>
-                    {% endif %}
-                </div>
-                <div class="small line-height-anti-small">
-                    {% if prg.persent < 25 %}
-                        <b>{{prg.current}}</b> / <b>{% if prg.total != 0 %}{{prg.total}}{% else %}∞{% endif %}</b>
-                    {% endif %}
-                    {% if prg.persent > 0 and prg.persent < 50 %}
-                        <span class="pull-left">{{ prg.persent }}%</span>
-                    {% endif %}
-                </div>
-            </div>
+            <div class="row-flex">
+                <div class="flex-7">
+                    <div class="progress text-center">
+                        <div class="progress-bar progress-bar-{{ prg.contextual }}" style="width: {{ prg.persent }}%">
+                            {% if prg.persent >= 25 %}
+                                <strong>{{ prg.current }}</strong>
+                                <span>/</span>
+                                <strong>{{ prg.total|default:"∞" }}</strong>
+                            {% endif %}
+                            {% if prg.persent >= 60 and prg.persent < 100 %}
+                                <span class="pull-right">{{ prg.persent }}%</span>
+                            {% elif prg.persent > 40 and prg.persent < 60 %}
+                                <span class="pull-right">{{ prg.persent }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="small line-height-anti-small">
+                            {% if prg.persent < 25 %}
+                                <strong>{{ prg.current }}</strong>
+                                <span>/</span>
+                                <strong>{{ prg.total|default:"∞" }}</strong>
+                            {% endif %}
+                            {% if prg.persent > 0 and prg.persent <= 40 %}
+                                <span class="pull-left">{{ prg.persent }}%</span>
+                            {% elif prg.persent > 40 and prg.persent < 60 %}
+                                <span class="pull-left">%</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div><!--.col-->
+                {% if prg.is_plusone_ok %}
+                    <div class="flex-1">
+                        <span class="innerlink btn btn-default btn-block btn-xs btn-xs-progress" href="/progress/plusone?id={{ prg.id }}" title="+1">
+                            <span>+1</span>
+                        </span>
+                    </div><!--.col-->
+                {% endif %}
+            </div><!--.row-->
         </div>
     </a>
 </div><!--col-->
