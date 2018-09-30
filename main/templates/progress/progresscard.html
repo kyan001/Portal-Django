@@ -7,9 +7,9 @@
             <div class="panel-heading no-bottom-border progress-title text-nowrap">
                 <span class="panel-title">
                     <div class="row-flex">
-                        <div class="text-nowrap overflow-x-auto flex-9">
+                        <div class="text-nowrap overflow-x-auto flex-9 no-scrollbar">
                             <span class="prg-name">
-                                《<strong>{{ prg.name|truncatechars:25 }}</strong>》
+                                《<strong>{{ prg.name }}</strong>》
                             </span>
                             {% if prg.covercolor %}
                                 <span class="small glyphicon glyphicon-tint" style="color: {{ prg.covercolor }}" title="《{{ prg.name }}》 {% trans '作品代表色' %}"></span>

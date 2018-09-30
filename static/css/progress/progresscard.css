@@ -43,3 +43,7 @@
     padding-bottom: 0;
     border-radius: 0 0 4px;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
