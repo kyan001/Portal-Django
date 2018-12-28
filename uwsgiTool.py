@@ -71,7 +71,7 @@ def get_venv_folder():
     dir_path = os.getcwd()
     venv_name = "VENV"
     venv_path = os.path.join(dir_path, venv_name)
-    return venv_path if os.path.isdit(venv_path) else None
+    return venv_path if os.path.isdir(venv_path) else None
 
 
 @cit.as_session
