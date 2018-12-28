@@ -66,5 +66,5 @@ datadump.json
 # user uploads
 static/media/*
 
-# backups
-backups/
+# Virtualenv
+VENV/
