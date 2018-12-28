@@ -99,14 +99,10 @@ if 'darwin' in sys.platform or 'win' in sys.platform:  # 测试环境下
         }
     }
 else:
-    with open(os.path.join(BASE_DIR, "mysql.pswd"), "r") as pswd_file:
-        mysql_pswd = pswd_file.read()
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'portal',
-            'USER': 'portal',
-            'PASSWORD': mysql_pswd.strip(),
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
             'HOST': 'localhost',
         }
     }

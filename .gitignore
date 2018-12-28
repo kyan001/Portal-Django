@@ -56,9 +56,8 @@ docs/_build/
 # PyBuilder
 target/
 
-# password protect
-mysql.pswd
-email.pswd
+# password/db protect
+db.sqlite3
 
 # local dev
 test.sqlite3

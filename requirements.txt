@@ -1,7 +1,6 @@
 Django
 KyanToolKit
 consoleiotools
-PyMySQL
 Pillow
 icalendar
 django-cleanup
