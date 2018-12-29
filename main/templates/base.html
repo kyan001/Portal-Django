@@ -9,7 +9,7 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="translucent">
         <meta name="referrer" content="same-origin">
         <meta name="keywords" content="SuperFarmer,Kyan">
-        <meta name="description" content="{{ tld }} is a website for Kyan (a.k.a. SuperFarmer)">
+        <meta name="description" content="{{ fld }} is a website for Kyan (a.k.a. SuperFarmer)">
         {% block icon %}
             <link rel="icon" href="/static/img/favicon.jpg">
             <link href="/static/img/favicon.jpg" rel="apple-touch-icon">
@@ -29,7 +29,7 @@
             document.addEventListener('visibilitychange', function(){
                 if(document.visibilityState == 'hidden') {
                     orginal_title = document.title
-                    document.title = orginal_title + ' - {{ tld|default:"!" }}'
+                    document.title = orginal_title + ' - {{ fld|default:"PAUSE" }}'
                 } else {
                     document.title = orginal_title
                 }

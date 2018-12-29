@@ -13,17 +13,17 @@ def loggedUser(request):
     return {'cuser': util.user.getCurrentUser(request)}
 
 
-def topLevelDomain(request):
-    """Get current top-level domain name
+def firstLevelDomain(request):
+    """Get current first-level domain
 
     Args:
         request: Django HttpRequest object
     Returns:
-        tld: current top-level domain name  # kyan001.com
+        fld: current first-level domain name  # kyan001.com
     """
     http_host = request.build_absolute_uri() or 'http://kyan001.com'
     try:
-        top_level_domain = tld.get_tld(http_host)
+        first_level_domain = tld.get_fld(http_host)
     except tld.exceptions.TldDomainNotFound:
-        top_level_domain = http_host
-    return {'tld': top_level_domain}
+        first_level_domain = http_host
+    return {'fld': first_level_domain}
