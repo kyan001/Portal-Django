@@ -33,6 +33,7 @@ def list(request):
     if len(progresses):
         for st, stzh in Progress.STATUSES.get('active'):
             prg_list[st] = progresses.filter(status=st)
+        prg_list["inprogress_and_follow"] = progresses.filter(Q(status='inprogress') | Q(status='follow'))
     else:
         TITLE = _("欢迎使用") + " 「" + _("我的进度") + "」"
         if not user.getChats('received').filter(senderid=Chat.objects.getSyschatUser().id, title=TITLE).exists():
