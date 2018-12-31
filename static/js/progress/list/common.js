@@ -12,3 +12,13 @@ $(function(){
         $(this).parent().find('.page-header').find('span.glyphicon').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up')
     })
 });
+function toggleFollowProgresses(btn){
+    $(btn).toggleClass("active").toggleClass("btn-default").toggleClass("btn-warning")
+    $(btn).find(".glyphicon").toggleClass("glyphicon-unchecked").toggleClass("glyphicon-check")
+    $("#follow-row").toggleClass("hidden")
+    $("#inprogress-and-follow-row").toggleClass("hidden")
+}
+function toggleSearchRow(btn){
+    $("#search-row").fadeToggle()
+    $(btn).toggleClass("active")
+}

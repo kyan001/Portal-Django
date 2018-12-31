@@ -3,9 +3,38 @@
 
 {% block title %}{% trans "进度列表" %}{% endblock title %}
 
+{% block function-btn %}
+    {{ block.super }}
+    <a class="btn btn-default btn-sm ani-fast" onclick="toggleSearchRow(this)">
+        <span class="glyphicon glyphicon-search"></span>
+        <span class="hidden-xs">{% trans "搜索" %}</span>
+    </a>
+{% endblock function-btn %}
+
 
 {% block content %}
     <div class="container">
+        <div id="search-row" class="row" hidden>
+            <div class="col-xs-12">
+                <form id="search-form" action="/progress/search" method="get">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <a class="btn btn-default ani-fast" onclick="toggleFollowProgresses(this)">
+                                <span class="glyphicon glyphicon-unchecked"></span>
+                                {% trans "追剧中" %}
+                            </a>
+                        </div>
+                        <input id="search-input" type="text" class="form-control" name="kw" placeholder="{% trans '进度搜索' %} … ↩︎" autocomplete="off">
+                        <input id="search-submit" type="submit" hidden>
+                        <div class="input-group-btn">
+                            <a class="btn btn-default" role="button" onclick="$('#search-submit').click()">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div><!--.col-->
+        </div><!--.row-->
         <div id="inprogress-and-follow-row" class="row">
             <div class="col-xs-12">
                 <div class="page-header" data-toggle="collapse" data-target="#list-inprogress-and-follow">
