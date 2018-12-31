@@ -6,29 +6,31 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-8 right-bordered">
-                <div class="page-header" data-toggle="collapse" data-target="#list-inprogress">
+        <div id="inprogress-and-follow-row" class="row">
+            <div class="col-xs-12">
+                <div class="page-header" data-toggle="collapse" data-target="#list-inprogress-and-follow">
                     <h5>
                         <span class="glyphicon glyphicon-chevron-up text-muted"></span>
-                        {% trans "进行中" %}
-                        <small class="prg-counts">({{ prglist.inprogress|length }})</small>
+                        {% trans "进行中" %} & {% trans "追剧中" %}
+                        <small class="prg-counts">({{ prglist.inprogress_and_follow|length }})</small>
                     </h5>
                 </div>
-                <div class="collapse in" id="list-inprogress">
+                <div class="collapse in" id="list-inprogress-and-follow">
                     <div class="row">
-                        {% for prg in prglist.inprogress %}
-                            {% include "progress/progresscard.html" with prg=prg size="col-sm-6 col-xs-12" %}
+                        {% for prg in prglist.inprogress_and_follow %}
+                            {% include "progress/progresscard.html" with prg=prg size="col-xs-12 col-sm-6 col-md-4" %}
                         {% empty %}
                             <div class="well">
                                 {% trans "您还没有任何进行中的进度" %}
                             </div>
                         {% endfor %}
                     </div><!--.row-->
-                </div><!--.col-->
-            </div><!--.row-->
+                </div>
+            </div><!--.col-->
+        </div><!--.row-->
 
-            <div class="col-xs-12 col-sm-12 col-md-4">
+         <div id="follow-row" class="row hidden">
+            <div class="col-xs-12">
                 <div class="page-header" data-toggle="collapse" data-target="#list-follow">
                     <h5>
                         <span class="glyphicon glyphicon-chevron-up text-muted"></span>
@@ -39,16 +41,16 @@
                 <div class="collapse in" id="list-follow">
                     <div class="row">
                         {% for prg in prglist.follow %}
-                            {% include "progress/progresscard.html" with prg=prg size="col-xs-12 col-sm-6 col-md-12" %}
+                            {% include "progress/progresscard.html" with prg=prg size="col-xs-12 col-sm-6 col-md-4" %}
                         {% empty %}
                             <div class="well">
                                 {% trans "您没有在追剧的进度" %}
                             </div>
                         {% endfor %}
                     </div><!--.row-->
-                </div><!--.col-->
-            </div><!--.row-->
-        </div>
+                </div>
+            </div><!--.col-->
+        </div><!--.row-->
 
         <div class="row">
             <div class="col-xs-12">
@@ -63,7 +65,7 @@
                     <div class="col-xs-12">
                         <div class="row">
                             {% for prg in prglist.todo %}
-                                {% include "progress/progresscard.html" with prg=prg size="col-md-4 col-sm-6 col-xs-12" %}
+                                {% include "progress/progresscard.html" with prg=prg size="col-xs-12 col-sm-6 col-md-4" %}
                             {% empty %}
                                 <div class="well">
                                     {% trans "您没有尚未开始的进度" %}
