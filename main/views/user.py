@@ -297,7 +297,7 @@ def checkLogin(request):  # POST
         new_msg.save()
     # set cookie
     if rememberme == 'on':
-        response = util.user.addCookieLogin(response, user=user, answer_raw=answer)
+        response = util.user.addCookieLogin(response, user=user)
     return response
 
 

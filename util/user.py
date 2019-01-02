@@ -39,33 +39,46 @@ def rememberLogin(request, user):
 def cookieLogout(response):
     """delete login info from cookie"""
     response.delete_cookie('user_id')
-    response.delete_cookie('user_answer')
+    response.delete_cookie('user_token')
     return response
 
 
-def addCookieLogin(response, user, answer_raw):
+def generateUserToken(user):
+    """generate user login token, saved in cookie"""
+    return util.ctrl.salty(str(user.id) + user.answer1)
+
+
+def checkUserToken(user, user_token):
+    """check user login token is save as user id's token"""
+    if not user or not user_token:
+        return False
+    return user_token == generateUserToken(user)
+
+
+def addCookieLogin(response, user):
     """add login info into cookie"""
     expire_time = 60 * 60 * 24 * 180  # half year
+    user_token = generateUserToken(user)
     response.set_cookie('user_id', user.id, max_age=expire_time)
-    response.set_cookie('user_answer', answer_raw, max_age=expire_time)
+    response.set_cookie('user_token', user_token, max_age=expire_time)
     return response
 
 
 def getCookieLogin(request):
     """将 cookie 中存的 user 信息存入 session 并返回"""
     user_id = request.COOKIES.get('user_id')
-    user_answer = request.COOKIES.get('user_answer')
-    if not user_id or not user_answer:
+    user_token = request.COOKIES.get('user_token')
+    if not user_id or not user_token:
         return None
     user = User.objects.get_or_none(id=user_id)
-    if user and checkAnswer(user, user_answer):
+    if user and checkUserToken(user, user_token):
         rememberLogin(request, user)
         return user
     return None
 
 
 def getRandomName():
-    """生成用户昵称"""
+    """Generate user nickname"""
     shengmu = ['a', 'i', 'u', 'e', 'o']
     yunmu = ['s', 'k', 'm', 'n', 'r', 'g', 'h', 'p', 'b', 'z', 't', 'd']
     nickname = random.choice(yunmu).upper() + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu) + random.choice(yunmu) + random.choice(shengmu)
