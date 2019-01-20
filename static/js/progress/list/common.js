@@ -19,6 +19,14 @@ function toggleFollowProgresses(btn){
     $("#inprogress-and-follow-row").toggleClass("hidden")
 }
 function toggleSearchRow(btn){
+    if (typeof prev_scrollTop == "undefined"){
+        var target_scrollTop = 0
+        prev_scrollTop = document.documentElement.scrollTop
+    } else {
+        var target_scrollTop = document.documentElement.scrollTop || prev_scrollTop
+        delete prev_scrollTop
+    }
+    $("html, body").animate({ scrollTop: target_scrollTop }, 200)
     $("#search-row").fadeToggle()
     $(btn).toggleClass("active")
 }
