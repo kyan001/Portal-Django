@@ -8,3 +8,4 @@ tld
 jieba
 wordcloud
 django-redis
+matplotlib
