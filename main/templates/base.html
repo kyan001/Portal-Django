@@ -28,14 +28,14 @@
         <link rel="stylesheet" href="/static/css/KyanCssUtil.css?version=1.5.1">
         {% block inhead %}{% endblock %}
         <script>
-            $(document).ajaxError(function(event, jqxhr, settings, exception) {
+            $(document).ajaxError(function (event, jqxhr, settings, exception) {
                 console.debug("|-- " + event.type + ", " + settings.url);
                 console.debug("    |-- status: (" + jqxhr.status + ') ' + jqxhr.statusText);
                 console.debug("    |-- readyState: " + jqxhr.readyState);
                 console.debug("    |-- setting: " + settings.dataType + ', ' + settings.type)
             })
-            document.addEventListener('visibilitychange', function(){
-                if(document.visibilityState == 'hidden') {
+            document.addEventListener('visibilitychange', function () {
+                if (document.visibilityState == 'hidden') {
                     orginal_title = document.title
                     document.title = orginal_title + ' - {{ fld|default:"PAUSE" }}'
                 } else {
