@@ -455,6 +455,9 @@
             FORM.checkEditMode()
         })
     });
+    $(document).ajaxError(function (event, jqxhr, settings, exception) {
+        RENDER.showLoading("off")
+    })
     var FORM = {
         /**
          * 全局定义输入框，主要用于代码可读性
