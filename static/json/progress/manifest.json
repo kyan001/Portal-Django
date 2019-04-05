@@ -1,0 +1,16 @@
+{
+    "short_name": "进度列表",
+    "name": "我的进度列表 by kyan001.com",
+    "icons": [
+        {
+            "src": "/static/img/Logo_List.png",
+            "type": "image/png",
+            "sizes": "200x200"
+        }
+    ],
+    "start_url": "/progress/list",
+    "background_color": "#00A3E9",
+    "theme_color": "#00A3E9",
+    "display": "standalone",
+    "orientation": "portrait"
+}

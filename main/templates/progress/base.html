@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 
+{% block inhead %}
+    {{ block.super }}
+    <link rel="manifest" href="/static/json/progress/manifest.json">
+{% endblock inhead %}
+
 {% block icon %}
     <link rel="icon" href="/static/img/Logo_List.png" />
     <link href="/static/img/Logo_List.png" rel="apple-touch-icon">
 {% endblock icon %}
+
+{% block js %}
+    {{ block.super }}
+
+{% endblock js %}
