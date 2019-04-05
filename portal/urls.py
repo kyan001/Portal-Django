@@ -1,6 +1,7 @@
 from django.conf.urls import include, url
 from django.urls import path
 from django.contrib import admin
+from django.views.generic import TemplateView
 import main.views.index
 import main.views.user
 import main.views.progress
@@ -17,6 +18,8 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', admin.site.urls),
+    # PWA
+    path('progress-service-worker.js', TemplateView.as_view(template_name='progress/service-worker.js', content_type='application/javascript')),
     # I18N
     path('i18n/', include('django.conf.urls.i18n')),
     # INDEX
