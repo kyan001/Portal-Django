@@ -188,7 +188,8 @@ def signin(request):
     next_ = request.GET.get("next") or ""
     current_user = util.user.getCurrentUser(request)
     if current_user:
-        return util.ctrl.infoMsg(_("您已经以 {} 的身份登入了，请勿重复登入").format(current_user.username), title=_("登入失败"), url="/")
+        messages.error(request, _("登入失败") + _("：") + _("您已经以 {} 的身份登入了，请勿重复登入").format(current_user.username))
+        return redirect(next_ or '/')
     # render
     context = {
         'request': request,
