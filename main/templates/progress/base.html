@@ -7,10 +7,10 @@
         function serviceWorkerRegister () {
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
-                    navigator.serviceWorker.register('/progress-service-worker.js').then(function (registration) {  // Registration was successful
-                        console.log('[Service Worker] Registration OK, Scope: ', registration.scope)
+                    navigator.serviceWorker.register('/progress/service-worker.js').then(function (registration) {  // Registration was successful
+                        console.log('[Service Worker] Registration OK, Scope:', registration.scope)
                     }, function (err) {  // registration failed :(
-                        console.log('[Service Worker] Registration KO, Error: ', err)
+                        console.log('[Service Worker] Registration KO, Error:', err)
                     })
                 })
             }

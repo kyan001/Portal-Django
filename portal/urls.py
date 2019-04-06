@@ -18,8 +18,6 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', admin.site.urls),
-    # PWA
-    path('progress-service-worker.js', TemplateView.as_view(template_name='progress/service-worker.js', content_type='application/javascript')),
     # I18N
     path('i18n/', include('django.conf.urls.i18n')),
     # INDEX
@@ -45,6 +43,7 @@ urlpatterns = [
     url(r'^user/getquestionandtip$', main.views.user.getQuestionAndTip),
     url(r'^user/setting/$', main.views.user.setting),
     # PROGRESS
+    path('progress/service-worker.js', TemplateView.as_view(template_name='progress/service-worker.js', content_type='application/javascript')),  # PWA
     url(r'^progress/list/$', main.views.progress.list),
     url(r'^progress/archive/$', main.views.progress.archive),
     url(r'^progress/search$', main.views.progress.search),  # GET

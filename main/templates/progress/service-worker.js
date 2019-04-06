@@ -1,19 +1,22 @@
-var CACHE_NAME = 'kyan001.com-progress-cache-v1'
+var CACHE_NAME = 'kyan001.com-progress-cache-v1.0.0'
 var urlsToCache = [
-    "/static/3rd/jquery/jquery-2.1.3.min.js",
-    "/static/3rd/bootstrap/js/bootstrap.min.js",
+    "/progress/list",
+    "/static/3rd/jquery/jquery-3.3.1.min.js",
+    "/static/3rd/bootstrap-3.4.1/js/bootstrap.min.js",
     "/static/js/KyanJsUtil.js?version=1.5.1",
-    "/static/3rd/bootstrap/css/bootstrap.min.css",
+    "/static/3rd/bootstrap-3.4.1/css/bootstrap.min.css",
     "/static/css/KyanCssUtil.css?version=1.5.1",
     "/static/css/progress/list/common.css?version=2.1.1",
     "/static/css/progress/progresscard.css?version=2.3.1",
     "/static/js/progress/list/common.js?version=2.1.1",
+    "/static/3rd/instant.page/instantpage-1.2.2.js",
+    "http://localhost:8000/static/3rd/bootstrap-3.4.1/fonts/glyphicons-halflings-regular.woff2",
 ]
 
 self.addEventListener('install', function (event) {  // Perform install steps
     event.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
-            console.debug('[Service Worker] Cache Opened')
+            console.debug('[Service Worker] Cache Opened:', CACHE_NAME)
             return cache.addAll(urlsToCache)  // return Promise
         })
     )
@@ -21,17 +24,17 @@ self.addEventListener('install', function (event) {  // Perform install steps
 
 self.addEventListener('fetch', function (event) {  // when fetch a request
     event.respondWith(caches.match(event.request).then(function (response) {
-        console.debug('[Service Worker] Request Fetched: ', event.request.url)
         if (response) {  // cache hit, return response
-            console.debug('[Service Worker] Request Hit: ', response.url)
+            console.debug('[Service Worker] Request Hit:', response.url)
             if (response.redirected) {
-                console.debug("[Service Worker] Response Redirected: ", response)
+                console.debug("[Service Worker] Response Redirected:", response.url)
                 return cleanResponseRedirect(response)
             }
             return response
         }
-        // return fetch(event.request)
-        /* cache all uncached response */
+        console.debug('[Service Worker] Request Miss:', event.request.url)
+        return fetch(event.request)
+        /* cache all uncached response
         var fetchRequest = event.request.clone()
         return fetch(fetchRequest).then(function (response) {
             if (!response || response.status !== 200 || response.type !=='basic') {
@@ -43,16 +46,16 @@ self.addEventListener('fetch', function (event) {  // when fetch a request
             })
             return response
         })
+        */
     }))
 })
 
 self.addEventListener('activate', function (event) {
-    var cacheWhitelist = ['v0']
     event.waitUntil(
         caches.keys().then(function (cacheNames) {
             return Promise.all(cacheNames.map(function (cacheName) {
-                if (cacheWhitelist.includes(cacheName)) {  // delete old version Service Worker caches
-                    console.debug('[Service Worker] Delete old cache: ', cacheName)
+                if (cacheName !== CACHE_NAME) {  // delete old version Service Worker caches
+                    console.debug('[Service Worker] Old Cache Deleted:', cacheName)
                     return caches.delete(cacheName);
                 }
             }))
