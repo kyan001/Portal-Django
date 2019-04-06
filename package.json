@@ -9,6 +9,7 @@
         "quagga": "latest",
         "swiper": "latest",
         "jquery-timelineme": "latest",
-        "jqtimeline": "latest"
+        "jqtimeline": "latest",
+        "instant.page": "latest"
     }
 }
