@@ -375,10 +375,10 @@ def add(request):
 @util.user.login_required
 def setical(request):  # POST
     """用户设置进度日历的界面"""
-    use_ical = request.POST.get("useical") or "off"
-    icalon = (use_ical == "on")
+    use_ical = request.POST.get("enable") or "off"
+    ical_on = (use_ical == "on")
     user = util.user.getCurrentUser(request)
-    user.setUserpermission("progressical", icalon)
+    user.setUserpermission("progressical", ical_on)
     return redirect("/user/setting")
 
 

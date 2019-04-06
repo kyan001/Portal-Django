@@ -6,7 +6,7 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-sm-offset-3">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     {% trans "进度日历设置" %}
@@ -16,11 +16,10 @@
                         {% csrf_token %}
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="useical" value="on" {%if icalon%}checked{%endif%} onchange="$('#ical-form').submit()"/>
+                                <input type="checkbox" name="enable" value="on" {% if cuser.ical_on %}checked{% endif %} onchange="$('#ical-form').submit()"/>
                                 {% trans "公开进度日历" %}
                             </label>
-                            <span class="text-muted">{% trans "（公开时私人仍可用）" %}</span>
-                            {% if icalon %}
+                            {% if cuser.ical_on %}
                                 <a class="pull-right" href="/progress/ical?userid={{ cuser.id }}">
                                     {% trans "「进度日历」地址（公开）" %}
                                 </a>

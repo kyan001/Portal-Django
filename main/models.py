@@ -107,6 +107,10 @@ class User(BaseModel):
             }
         )
 
+    @property
+    def ical_on(self):
+        return self.getUserpermission('progressical')
+
     # exps related
     def getUserExp(self, category=None):
         if category:
