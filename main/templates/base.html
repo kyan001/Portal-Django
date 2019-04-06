@@ -16,14 +16,14 @@
             <link href="/static/img/favicon.jpg" rel="apple-touch-icon">
         {% endblock icon %}
         <title>{% block title %}{% endblock %}</title>
-        <script src="/static/3rd/bootstrap/js/bootstrap.min.js"></script>
         <script src="/static/3rd/jquery/jquery-3.3.1.min.js"></script>
+        <script src="/static/3rd/bootstrap-3.4.1/js/bootstrap.min.js"></script>
         <script src="/static/js/KyanJsUtil.js?version=1.5.1"></script>
         {% block theme %}
             {% if request.COOKIES.theme %}
-                <link rel="stylesheet" href="/static/3rd/bootstrap/css/bootstrap-{{request.COOKIES.theme}}.min.css">
+                <link rel="stylesheet" href="/static/3rd/bootstrap-3.4.1/css/bootstrap-{{request.COOKIES.theme}}.min.css">
             {% else %}
-                <link rel="stylesheet" href="/static/3rd/bootstrap/css/bootstrap.min.css">
+                <link rel="stylesheet" href="/static/3rd/bootstrap-3.4.1/css/bootstrap.min.css">
             {% endif %}
         {% endblock theme %}
         <link rel="stylesheet" href="/static/css/KyanCssUtil.css?version=1.5.1">

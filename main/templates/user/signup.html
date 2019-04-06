@@ -1,14 +1,11 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-
 {% block title %}{% trans "用户注册" %}{% endblock title %}
 
-
 {% block theme %}
-    <link rel="stylesheet" href="/static/3rd/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/3rd/bootstrap-3.4.1/css/bootstrap.min.css">
 {% endblock %}
-
 
 {% block nav-btn %}
     <div id="mode-toggle" class="btn btn-warning btn-sm" mode="old" onclick="modeToggle()">
@@ -16,7 +13,6 @@
         {% trans "切换到" %}「<b id="mode-toggle-text">{% trans "问答" %}</b>」{% trans "模式" %}
     </div>
 {% endblock nav-btn %}
-
 
 {% block css %}
 <style>
