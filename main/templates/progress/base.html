@@ -4,17 +4,18 @@
     {{ block.super }}
     <link rel="manifest" href="/static/json/progress/manifest.json">
     <script>
-        /* Disabled because bugs
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/progress-service-worker.js').then(function (registration) {  // Registration was successful
-                    console.log('[Service Worker] Registration OK, Scope: ', registration.scope)
-                }, function (err) {  // registration failed :(
-                    console.log('[Service Worker] Registration KO, Error: ', err)
+        function serviceWorkerRegister () {
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/progress-service-worker.js').then(function (registration) {  // Registration was successful
+                        console.log('[Service Worker] Registration OK, Scope: ', registration.scope)
+                    }, function (err) {  // registration failed :(
+                        console.log('[Service Worker] Registration KO, Error: ', err)
+                    })
                 })
-            })
+            }
         }
-        */
+        // serviceWorkerRegister()  // Unregister will be a mess, so just keep this TODO.
     </script>
 {% endblock inhead %}
 
