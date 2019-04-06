@@ -108,6 +108,10 @@ class User(BaseModel):
         )
 
     @property
+    def serviceworker_on(self):
+        return self.getUserpermission('progressserviceworker')
+
+    @property
     def ical_on(self):
         return self.getUserpermission('progressical')
 

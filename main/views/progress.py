@@ -373,6 +373,16 @@ def add(request):
 
 
 @util.user.login_required
+def setserviceworker(request):  # POST
+    """用户设置离线缓存的界面"""
+    use_serviceworker = request.POST.get("enable") or "off"
+    serviceworker_on = (use_serviceworker == "on")
+    user = util.user.getCurrentUser(request)
+    user.setUserpermission("progressserviceworker", serviceworker_on)
+    return redirect("/user/setting")
+
+
+@util.user.login_required
 def setical(request):  # POST
     """用户设置进度日历的界面"""
     use_ical = request.POST.get("enable") or "off"
