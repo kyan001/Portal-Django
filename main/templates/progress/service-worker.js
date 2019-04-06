@@ -10,7 +10,7 @@ var urlsToCache = [
     "/static/css/progress/progresscard.css?version=2.3.1",
     "/static/js/progress/list/common.js?version=2.1.1",
     "/static/3rd/instant.page/instantpage-1.2.2.js",
-    "http://localhost:8000/static/3rd/bootstrap-3.4.1/fonts/glyphicons-halflings-regular.woff2",
+    "/static/3rd/bootstrap-3.4.1/fonts/glyphicons-halflings-regular.woff2",
 ]
 
 self.addEventListener('install', function (event) {  // Perform install steps
