@@ -6,16 +6,35 @@
     <script>
         function serviceWorkerRegister () {
             if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
+                window.addEventListener('load', function () {
                     navigator.serviceWorker.register('/progress/service-worker.js').then(function (registration) {  // Registration was successful
-                        console.log('[Service Worker] Registration OK, Scope:', registration.scope)
+                        console.debug('[Service Worker] Registration OK, Scope:', registration.scope)
                     }, function (err) {  // registration failed :(
-                        console.log('[Service Worker] Registration KO, Error:', err)
+                        console.debug('[Service Worker] Registration KO, Error:', err)
                     })
                 })
             }
         }
-        // serviceWorkerRegister()  // Unregister will be a mess, so just keep this TODO.
+        function serviceWorkerUnregister () {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                    for (let registration of registrations) {
+                        registration.unregister().then(function (isSuccess) {
+                            if (isSuccess) {
+                                console.debug('[Service Worker] Unregistration OK')
+                            } else {
+                                console.debug('[Service Worker] Unregistration KO')
+                            }
+                        })
+                    }
+                })
+            }
+        }
+        {% if cuser.serviceworker_on %}
+            serviceWorkerRegister()  // Unregister will be a mess, so just keep this TODO.
+        {% else %}
+            serviceWorkerUnregister()
+        {% endif %}
     </script>
 {% endblock inhead %}
 
