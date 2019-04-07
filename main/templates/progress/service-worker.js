@@ -46,6 +46,13 @@ self.addEventListener('fetch', function (event) {  // when fetch a request
                 return response
             }).catch(function (err) {
                 console.debug("  Cached Response Returned", "(" + err + ")")
+                self.clients.matchAll().then(function (clients) {
+                    if (clients && clients.length) {
+                        clients.forEach(function (client) {
+                            client.postMessage('offline')
+                        })
+                    }
+                })
                 return cleanResponseRedirect(cachedResponse)
             })
         }
