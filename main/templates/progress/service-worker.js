@@ -1,6 +1,5 @@
 var CACHE_NAME = 'kyan001.com-progress-cache-v1.0.0'
-var urlsToCache = [
-    "/progress/list",
+var urlsCacheFirst = [
     "/static/3rd/jquery/jquery-3.3.1.min.js",
     "/static/3rd/bootstrap-3.4.1/js/bootstrap.min.js",
     "/static/js/KyanJsUtil.js?version=1.5.1",
@@ -11,42 +10,47 @@ var urlsToCache = [
     "/static/js/progress/list/common.js?version=2.1.1",
     "/static/3rd/instant.page/instantpage-1.2.2.js",
     "/static/3rd/bootstrap-3.4.1/fonts/glyphicons-halflings-regular.woff2",
+    "/static/img/Logo_List.png",
+]
+var urlsOnlineFirst = [
+    "/progress/list",
+    "/user/getunreadcount",
 ]
 
 self.addEventListener('install', function (event) {  // Perform install steps
     event.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
             console.debug('[Service Worker] Cache Opened:', CACHE_NAME)
-            return cache.addAll(urlsToCache)  // return Promise
+            return cache.addAll(urlsCacheFirst.concat(urlsOnlineFirst))  // return Promise
         })
     )
 })
 
 self.addEventListener('fetch', function (event) {  // when fetch a request
-    event.respondWith(caches.match(event.request).then(function (response) {
-        if (response) {  // cache hit, return response
-            console.debug('[Service Worker] Request Hit:', response.url)
-            if (response.redirected) {
-                console.debug("[Service Worker] Response Redirected:", response.url)
-                return cleanResponseRedirect(response)
+    event.respondWith(caches.match(event.request).then(function (cachedResponse) {
+        if (cachedResponse) {  // cache hit, return response
+            console.debug('[Service Worker] Response Cached:', cachedResponse.url)
+            if (urlsCacheFirst.includes(removeDomainName(cachedResponse.url))) {
+                console.debug("  Strategy: Cache First")
+                return cleanResponseRedirect(cachedResponse)
             }
-            return response
-        }
-        console.debug('[Service Worker] Request Miss:', event.request.url)
-        return fetch(event.request)
-        /* cache all uncached response
-        var fetchRequest = event.request.clone()
-        return fetch(fetchRequest).then(function (response) {
-            if (!response || response.status !== 200 || response.type !=='basic') {
+            console.debug("  Strategy: Online First")
+            clonedRequest = event.request.clone()
+            return fetch(clonedRequest).then(function (response) {
+                if (!response || response.status !== 200 || response.type !=='basic') {
+                    console.debug("  Cached Response Returned")
+                    return cleanResponseRedirect(cachedResponse)
+                }
+                console.debug("  Online Response Returned")
+                responseToCache(event.request, response)
                 return response
-            }
-            var responseToCache = response.clone()
-            caches.open(CACHE_NAME).then(function (cache) {
-                cache.put(event.request, responseToCache)
+            }).catch(function (err) {
+                console.debug("  Cached Response Returned", "(" + err + ")")
+                return cleanResponseRedirect(cachedResponse)
             })
-            return response
-        })
-        */
+        }
+        console.debug('[Service Worker] Response Uncached:', event.request.url)
+        return fetch(event.request)
     }))
 })
 
@@ -54,7 +58,7 @@ self.addEventListener('activate', function (event) {
     event.waitUntil(
         caches.keys().then(function (cacheNames) {
             return Promise.all(cacheNames.map(function (cacheName) {
-                if (cacheName !== CACHE_NAME) {  // delete old version Service Worker caches
+                if (cacheName !== CACHE_NAME) {  // delete other versions of caches
                     console.debug('[Service Worker] Old Cache Deleted:', cacheName)
                     return caches.delete(cacheName);
                 }
@@ -64,6 +68,10 @@ self.addEventListener('activate', function (event) {
 })
 
 function cleanResponseRedirect (response) {
+    if (!response.redirected) {
+        return response
+    }
+    console.debug("[Service Worker] Response Redirected:", response.url)
     const clonedResponse = response.clone()
     const bodyPromise = 'body' in clonedResponse
         ? Promise.resolve(clonedResponse.body)
@@ -75,4 +83,15 @@ function cleanResponseRedirect (response) {
             statusText: clonedResponse.statusText
         })
     })
+}
+
+function responseToCache (request, response) {
+    var clonedResponse = response.clone()
+    caches.open(CACHE_NAME).then(function (cache) {
+        cache.put(request, clonedResponse)
+    })
+}
+
+function removeDomainName (url) {
+    return url.replace(/^.*\/\/[^\/]+/, '')
 }
