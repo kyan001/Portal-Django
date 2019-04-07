@@ -43,7 +43,8 @@ urlpatterns = [
     url(r'^user/getquestionandtip$', main.views.user.getQuestionAndTip),
     url(r'^user/setting/$', main.views.user.setting),
     # PROGRESS
-    path('progress/service-worker.js', TemplateView.as_view(template_name='progress/service-worker.js', content_type='application/javascript')),  # PWA
+    path('progress/service-worker.js', TemplateView.as_view(template_name='progress/service-worker.js', content_type='application/javascript')),  # PWA sw.js
+    path('progress/manifest.json', TemplateView.as_view(template_name='progress/manifest.json', content_type='application/json')),  # PWA manifest.json
     url(r'^progress/list/$', main.views.progress.list),
     url(r'^progress/archive/$', main.views.progress.archive),
     url(r'^progress/search$', main.views.progress.search),  # GET

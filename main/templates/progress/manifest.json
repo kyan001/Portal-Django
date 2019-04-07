@@ -1,6 +1,7 @@
+{% load i18n %}
 {
-    "short_name": "Progress List",
-    "name": "Progress List",
+    "short_name": "{% trans '进度列表' %}",
+    "name": "{% trans '进度列表' %}",
     "icons": [
         {
             "src": "/static/img/Logo_List.png",

@@ -11,6 +11,7 @@ var urlsCacheFirst = [
     "/static/3rd/instant.page/instantpage-1.2.2.js",
     "/static/3rd/bootstrap-3.4.1/fonts/glyphicons-halflings-regular.woff2",
     "/static/img/Logo_List.png",
+    "/progress/manifest.json",
 ]
 var urlsOnlineFirst = [
     "/progress/list",
