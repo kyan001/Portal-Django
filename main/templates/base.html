@@ -30,10 +30,7 @@
         {% block inhead %}{% endblock %}
         <script>
             $(document).ajaxError(function (event, jqxhr, settings, exception) {
-                console.debug("|-- " + event.type + ", " + settings.url);
-                console.debug("    |-- status: (" + jqxhr.status + ') ' + jqxhr.statusText);
-                console.debug("    |-- readyState: " + jqxhr.readyState);
-                console.debug("    |-- setting: " + settings.dataType + ', ' + settings.type)
+                console.debug(event.type + ":", "(" + jqxhr.status + ")", jqxhr.statusText, settings)
             })
             document.addEventListener('visibilitychange', function () {
                 if (document.visibilityState == 'hidden') {
