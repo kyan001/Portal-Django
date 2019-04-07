@@ -46,13 +46,7 @@ self.addEventListener('fetch', function (event) {  // when fetch a request
                 return response
             }).catch(function (err) {
                 console.debug("  Cached Response Returned", "(" + err + ")")
-                self.clients.matchAll().then(function (clients) {
-                    if (clients && clients.length) {
-                        clients.forEach(function (client) {
-                            client.postMessage('offline')
-                        })
-                    }
-                })
+                postMessageToClient('offline')
                 return cleanResponseRedirect(cachedResponse)
             })
         }
@@ -101,4 +95,14 @@ function responseToCache (request, response) {
 
 function removeDomainName (url) {
     return url.replace(/^.*\/\/[^\/]+/, '')
+}
+
+function postMessageToClient (messageText) {
+    self.clients.matchAll().then(function (clients) {
+        if (clients && clients.length) {
+            clients.forEach(function (client) {
+                client.postMessage(messageText)
+            })
+        }
+    })
 }

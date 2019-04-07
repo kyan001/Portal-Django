@@ -16,9 +16,9 @@
                 navigator.serviceWorker.addEventListener('message', function (event) {
                     console.debug('[Service Worker] Message received:', event.data)
                     if (event.data === 'offline') {
-                        $.warning("<span class='glyphicon glyphicon-signal'></span><span class='glyphicon glyphicon-remove'></span>")
+                        $.warning("<span class='glyphicon glyphicon-signal'></span> <span class='glyphicon glyphicon-remove'></span>")
                     }
-                });
+                })
             }
         }
         function unregisterServiceWorker () {
