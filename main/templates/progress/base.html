@@ -4,7 +4,7 @@
     {{ block.super }}
     <link rel="manifest" href="/static/json/progress/manifest.json">
     <script>
-        function serviceWorkerRegister () {
+        function registerServiceWorker () {
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function () {
                     navigator.serviceWorker.register('/progress/service-worker.js').then(function (registration) {  // Registration was successful
@@ -15,7 +15,7 @@
                 })
             }
         }
-        function serviceWorkerUnregister () {
+        function unregisterServiceWorker () {
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.getRegistrations().then(function (registrations) {
                     for (let registration of registrations) {
@@ -31,9 +31,9 @@
             }
         }
         {% if cuser.serviceworker_on %}
-            serviceWorkerRegister()  // Unregister will be a mess, so just keep this TODO.
+            registerServiceWorker()
         {% else %}
-            serviceWorkerUnregister()
+            unregisterServiceWorker()
         {% endif %}
     </script>
 {% endblock inhead %}
