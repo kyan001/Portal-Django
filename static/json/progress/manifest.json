@@ -10,7 +10,7 @@
     ],
     "start_url": "/progress/list",
     "background_color": "#00A3E9",
-    "theme_color": "#00A3E9",
+    "theme_color": "#FFFFFF",
     "display": "standalone",
     "orientation": "portrait"
 }
