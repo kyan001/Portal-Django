@@ -1,4 +1,4 @@
-var CACHE_NAME = 'kyan001.com-progress-cache-v1.0.0'
+var CACHE_NAME = 'progress-cache-v1.0.0'
 var urlsCacheFirst = [
     "/static/3rd/jquery/jquery-3.3.1.min.js",
     "/static/3rd/bootstrap-3.4.1/js/bootstrap.min.js",
