@@ -14,7 +14,9 @@ var urlsCacheFirst = [
 ]
 var urlsOnlineFirst = [
     "/progress/list",
+    "/progress/list/",
     "/user/getunreadcount",
+    "/user/getunreadcount/",
 ]
 
 self.addEventListener('install', function (event) {  // Perform install steps
