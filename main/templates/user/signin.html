@@ -7,33 +7,39 @@
     <link rel="stylesheet" href="/static/3rd/bootstrap-3.4.1/css/bootstrap.min.css">
 {% endblock %}
 
+{% block inhead %}
+    {{ block.super }}
+    <link rel="manifest" href="/progress/manifest.json">
+{% endblock inhead %}
+
 {% block css %}
-<style>
-    .container {
-        background: url("/static/img/user/signin.jpg");
-        display: table;
-    }
-    #form-wrap {
-        display: table-cell;
-        vertical-align: middle;
-    }
-    #form-div {
-        padding: 5%;
-        background-color: rgba(0,0,0,.0);
-    }
-    .one-group {
-        margin-bottom: 10px;
-    }
-    #tip-group {
-        margin-top: -9px;
-    }
-    #rememberme-content {
-        font-size: small;
-    }
-    #submit-button{
-        pointer-events: auto;
-    }
-</style>
+    {{ block.super }}
+    <style>
+        .container {
+            background: url("/static/img/user/signin.jpg");
+            display: table;
+        }
+        #form-wrap {
+            display: table-cell;
+            vertical-align: middle;
+        }
+        #form-div {
+            padding: 5%;
+            background-color: rgba(0,0,0,.0);
+        }
+        .one-group {
+            margin-bottom: 10px;
+        }
+        #tip-group {
+            margin-top: -9px;
+        }
+        #rememberme-content {
+            font-size: small;
+        }
+        #submit-button{
+            pointer-events: auto;
+        }
+    </style>
 {% endblock css %}
 
 {% block nav-btn %}
@@ -92,6 +98,7 @@
 
 
 {% block js %}
+    {{ block.super }}
     <script>
         $(function(){
             $("#rememberme").attr("data-html",true)
