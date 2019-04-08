@@ -739,7 +739,7 @@ msgstr "button to add a new progress"
 #: main/templates/user/signup.html:189 main/templates/user/signup.html:240
 #: main/templates/user/signup.html:277 main/templates/user/signup.html:313
 msgid "“"
-msgstr " '"
+msgstr " \""
 
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/progress/msg-welcome.html:7
@@ -747,7 +747,7 @@ msgstr " '"
 #: main/templates/user/signup.html:189 main/templates/user/signup.html:240
 #: main/templates/user/signup.html:277 main/templates/user/signup.html:313
 msgid "”"
-msgstr "' "
+msgstr "\" "
 
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/user/signup.html:202
