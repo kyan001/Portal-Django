@@ -3,6 +3,24 @@
 
 {% block title %}{% trans "进度列表" %}{% endblock title %}
 
+{% block inhead %}
+    {{ block.super }}
+    <!-- ############ SERVICE WORKER ############-->
+    <script>
+        function listenServiceWorker () {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.addEventListener('message', function (event) {
+                    console.debug('[Service Worker] Message received:', event.data)
+                    if (event.data === 'offline') {
+                        $("#offline-indicator").fadeIn()
+                    }
+                })
+            }
+        }
+        listenServiceWorker()
+    </script>
+{% endblock inhead %}
+
 {% block function-btn %}
     {{ block.super }}
     <a class="btn btn-default btn-sm ani-fast" onclick="toggleSearchRow(this)">

@@ -16,12 +16,6 @@
                         console.debug('[Service Worker] Registration KO, Error:', err)
                     })
                 })
-                navigator.serviceWorker.addEventListener('message', function (event) {
-                    console.debug('[Service Worker] Message received:', event.data)
-                    if (event.data === 'offline') {
-                        $("#offline-indicator").fadeIn()
-                    }
-                })
             }
         }
         function unregisterServiceWorker () {
