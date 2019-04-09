@@ -63,10 +63,10 @@
                                     {% trans "「进度日历」地址（公开）" %}
                                 </a>
                             {% else %}
-                                <a class="pull-right" href="/progress/ical?userid={{ cuser.id }}&private={{ privatekey }}">
                                     {% trans "「进度日历」地址（私人）" %}
                                 </a>
                             {% endif %}
+                                    <a class="pull-right" href="/progress/ical?userid={{ cuser.id }}&private={{ cuser.privatekey }}">
                         </div>
                     </form>
                 </div>

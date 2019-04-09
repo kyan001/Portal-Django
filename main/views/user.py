@@ -77,12 +77,7 @@ def public(request):  # public
 @util.user.login_required
 def setting(request):
     """修改用户设置"""
-    user = util.user.getCurrentUser(request)
-    icalon = user.getUserpermission('progressical')
-    context = {
-        'privatekey': user.privatekey,
-    }
-    return render(request, 'user/setting.html', context)
+    return render(request, 'user/setting.html')
 
 
 @util.user.login_required
