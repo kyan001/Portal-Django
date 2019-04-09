@@ -47,103 +47,127 @@
         <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <span class="glyphicon glyphicon-th"></span>
-                    {% trans "进度日历设置" %}
+                    <span class="glyphicon glyphicon-th-list"></span>
+                    {% trans "进度设置" %}
                 </div>
-                <div class="panel-body">
-                    <form id="ical-form" action="/progress/setical" method="post">
-                        {% csrf_token %}
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="enable" value="on" {% if cuser.ical_on %}checked{% endif %} onchange="$('#ical-form').submit()"/>
-                                {% trans "公开进度日历" %}
-                            </label>
-                            {% if cuser.ical_on %}
-                                <a class="pull-right" href="/progress/ical?userid={{ cuser.id }}">
-                                    {% trans "「进度日历」地址（公开）" %}
-                                </a>
-                            {% else %}
-                                    {% trans "「进度日历」地址（私人）" %}
-                                </a>
-                            {% endif %}
+                <form id="progress-settings-form" action="/progress/setsettings" method="post">
+                    {% csrf_token %}
+                    <div class="panel-body">
+                        <div id="public-ical-div">
+                            <h5>
+                                <span class="glyphicon glyphicon-calendar"></span>
+                                {% trans "进度日历设置" %}
+                            </h5>
+                            <div class="checkbox">
+                                <label>
+                                    <input class="onchange-submit" type="checkbox" name="publicical" value="on" {% if cuser.public_ical_on %}checked{% endif %}>
+                                    {% trans "公开进度日历" %}
+                                </label>
+                                {% if cuser.public_ical_on %}
+                                    <a class="pull-right" href="/progress/ical?userid={{ cuser.id }}">
+                                        「{% trans "进度日历" %}」{% trans "链接" %}{% trans "（" %}{% trans "公开" %}{% trans "）" %}
+                                    </a>
+                                {% else %}
                                     <a class="pull-right" href="/progress/ical?userid={{ cuser.id }}&private={{ cuser.privatekey }}">
+                                        「{% trans "进度日历" %}」{% trans "链接" %}{% trans "（" %}{% trans "私人" %}{% trans "）" %}
+                                    </a>
+                                {% endif %}
+                            </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-signal"></span>
-                    {% trans "离线缓存设置" %}
-                </div>
-                <div class="panel-body">
-                    <form id="sw-form" action="/progress/setserviceworker" method="post">
-                        {% csrf_token %}
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="enable" value="on" {% if cuser.serviceworker_on %}checked{% endif %} onchange="$('#sw-form').submit()"/>
-                                {% trans "启用进度缓存" %}
-                            </label>
-                            <a class="pull-right" href="javascript:void(0);" onclick="$('#sw-guide').slideDown()" role="button">
-                                <span class="glyphicon glyphicon-question-sign"></span>
-                            </a>
+                        <hr/>
+                        <div id="save-to-detail-div">
+                            <h5>
+                                <span class="glyphicon glyphicon-floppy-save"></span>
+                                {% trans "进度保存设置" %}
+                            </h5>
+                            <div class="checkbox">
+                                <label>
+                                    <input class="onchange-submit" type="checkbox" name="savetodetail" value="on" {% if cuser.save_to_detail %}checked{% endif %}>
+                                    {% trans "保存后留在" %}{% trans "“" %}{% trans "进度详情" %}{% trans "”" %}{% trans "页面" %}
+                                </label>
+                                <span class="text-muted pull-right">
+                                    {% trans "未勾选时则去往" %}{% trans "“" %}{% trans "进度列表" %}{% trans "”" %}{% trans "页面" %}
+                                </span>
+                            </div>
                         </div>
-                    </form>
-                    <div id="sw-guide" class="row" hidden>
-                        <div class="col-xs-12 col-md-6">
-                            <div class="well">
-                                <b>Win10 · Mac (Chrome):</b>
-                                <ol>
-                                    <li>{% trans "启动" %} Chrome</li>
-                                    <li>
-                                        {% trans "访问" %}
-                                        <a href="/progress/list" target="_blank">
-                                            <span class="glyphicon glyphicon-link"></span>
-                                            {% trans "进度列表" %}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        {% trans "请点击" %} <span class="text-primary glyphicon glyphicon-option-vertical"></span>
-                                        {% trans "（" %}{% trans "在右上角" %}{% trans "）" %}</li>
-                                    </li>
-                                    <li>
-                                        {% trans "选择" %}
-                                        <mark>{% trans "安装" %}{% trans "“" %}{% trans "进度列表" %}{% trans "”" %} ...</mark>
-                                    </li>
-                                </ol>
-                            </div><!--.well-->
-                        </div><!--.col-->
-                        <div class="col-xs-12 col-md-6">
-                            <div class="well">
-                                <b>iPhone · iPad (Safari):</b>
-                                <ol>
-                                    <li>{% trans "启动" %} Safari</li>
-                                    <li>
-                                        {% trans "访问" %}
-                                        <a href="/progress/list" target="_blank">
-                                            <span class="glyphicon glyphicon-link"></span>
-                                            {% trans "进度列表" %}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        {% trans "请点击" %} <img src="/static/img/apple-share-btn.png" alt="share button" height="21px" width="15px">
-                                        {% trans "（" %}{% trans "在底部" %} · {% trans "在右上角" %}{% trans "）" %}</li>
-                                    </li>
-                                    <li>
-                                        {% trans "选择" %}
-                                        {% trans "“" %}{% trans "添加至主屏幕" %}{% trans "”" %}
-                                    </li>
-                                </ol>
-                            </div><!--.well-->
-                        </div><!--.col-->
-                    </div><!--.row-->
-                </div>
-            </div>
-        </div>
-    </div>
+                        <hr/>
+                        <div id="service-worker-div">
+                            <h5>
+                                <span class="glyphicon glyphicon-signal"></span>
+                                {% trans "离线缓存设置" %}
+                            </h5>
+                            <div class="checkbox">
+                                <label>
+                                    <input class="onchange-submit" type="checkbox" name="serviceworker" value="on" {% if cuser.serviceworker_on %}checked{% endif %}>
+                                    {% trans "启用进度缓存" %}
+                                </label>
+                                <a class="pull-right" href="javascript:void(0);" onclick="$('#sw-guide').slideDown()" role="button">
+                                    <span class="glyphicon glyphicon-question-sign"></span>
+                                </a>
+                            </div>
+                            <div id="sw-guide" class="row" hidden>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="well">
+                                        <b>Win10 · Mac (Chrome):</b>
+                                        <ol>
+                                            <li>{% trans "启动" %} Chrome</li>
+                                            <li>
+                                                {% trans "访问" %}
+                                                <a href="/progress/list" target="_blank">
+                                                    <span class="glyphicon glyphicon-link"></span>
+                                                    {% trans "进度列表" %}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                {% trans "请点击" %} <span class="text-primary glyphicon glyphicon-option-vertical"></span>
+                                                {% trans "（" %}{% trans "在右上角" %}{% trans "）" %}</li>
+                                            </li>
+                                            <li>
+                                                {% trans "选择" %}
+                                                <mark>{% trans "安装" %}{% trans "“" %}{% trans "进度列表" %}{% trans "”" %} ...</mark>
+                                            </li>
+                                        </ol>
+                                    </div><!--.well-->
+                                </div><!--.col-->
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="well">
+                                        <b>iPhone · iPad (Safari):</b>
+                                        <ol>
+                                            <li>{% trans "启动" %} Safari</li>
+                                            <li>
+                                                {% trans "访问" %}
+                                                <a href="/progress/list" target="_blank">
+                                                    <span class="glyphicon glyphicon-link"></span>
+                                                    {% trans "进度列表" %}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                {% trans "请点击" %} <img src="/static/img/apple-share-btn.png" alt="share button" height="21px" width="15px">
+                                                {% trans "（" %}{% trans "在底部" %} · {% trans "在右上角" %}{% trans "）" %}</li>
+                                            </li>
+                                            <li>
+                                                {% trans "选择" %}
+                                                {% trans "“" %}{% trans "添加至主屏幕" %}{% trans "”" %}
+                                            </li>
+                                        </ol>
+                                    </div><!--.well-->
+                                </div><!--.col-->
+                            </div><!--.row-->
+                        </div>
+                    </div><!--.panel-body-->
+                </form>
+            </div><!--.panel-->
+        </div><!--.col-->
+    </div><!--.row-->
 </div>
 {% endblock %}
+
+{% block js %}
+<script>
+    $(function () {
+        $('input.onchange-submit').on('change', function () {
+            $(this).parents('form').submit()
+        })
+    })
+</script>
+{% endblock js %}

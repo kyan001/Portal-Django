@@ -374,22 +374,16 @@ def add(request):
 
 
 @util.user.login_required
-def setserviceworker(request):  # POST
-    """用户设置离线缓存的界面"""
-    use_serviceworker = request.POST.get("enable") or "off"
-    serviceworker_on = (use_serviceworker == "on")
-    user = util.user.getCurrentUser(request)
-    user.setUserpermission("progressserviceworker", serviceworker_on)
-    return redirect("/user/setting")
+def setsettings(request):  # POST
+    """用户设置进度设置的界面"""
+    def form_input_to_setting(input_name: str, permission_name: str):
+        user = util.user.getCurrentUser(request)
+        input_value = request.POST.get(input_name) or "off"
+        user.setUserpermission(permission_name, (input_value == "on"))
 
-
-@util.user.login_required
-def setical(request):  # POST
-    """用户设置进度日历的界面"""
-    use_ical = request.POST.get("enable") or "off"
-    ical_on = (use_ical == "on")
-    user = util.user.getCurrentUser(request)
-    user.setUserpermission("progressical", ical_on)
+    form_input_to_setting("publicical", "progress.public_ical")
+    form_input_to_setting("savetodetail", "progress.save_to_detail")
+    form_input_to_setting("serviceworker", "progress.service_worker")
     return redirect("/user/setting")
 
 

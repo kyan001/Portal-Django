@@ -59,8 +59,7 @@ urlpatterns = [
     url(r'^progress/deactivate/$', main.views.progress.deactivate),  # POST
     url(r'^progress/reactivate/$', main.views.progress.reactivate),  # POST
     url(r'^progress/ical$', main.views.progress.ical),  # GET
-    url(r'^progress/setical$', main.views.progress.setical),  # POST
-    url(r'^progress/setserviceworker$', main.views.progress.setserviceworker),  # POST
+    url(r'^progress/setsettings$', main.views.progress.setsettings),  # POST
     # OPUS
     url(r'^opus/detail$', main.views.opus.detail),  # GET
     url(r'^opus/searchopusinfo$', main.views.opus.searchOpusInfo),  # GET Ajax
