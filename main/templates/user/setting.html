@@ -54,10 +54,10 @@
                     {% csrf_token %}
                     <div class="panel-body">
                         <div id="public-ical-div">
-                            <h5>
+                            <label>
                                 <span class="glyphicon glyphicon-calendar"></span>
                                 {% trans "进度日历设置" %}
-                            </h5>
+                            </label>
                             <div class="checkbox">
                                 <label>
                                     <input class="onchange-submit" type="checkbox" name="publicical" value="on" {% if cuser.public_ical_on %}checked{% endif %}>
@@ -76,10 +76,10 @@
                         </div>
                         <hr/>
                         <div id="save-to-detail-div">
-                            <h5>
+                            <label>
                                 <span class="glyphicon glyphicon-floppy-save"></span>
                                 {% trans "进度保存设置" %}
-                            </h5>
+                            </label>
                             <div class="checkbox">
                                 <label>
                                     <input class="onchange-submit" type="checkbox" name="savetodetail" value="on" {% if cuser.save_to_detail %}checked{% endif %}>
@@ -92,10 +92,10 @@
                         </div>
                         <hr/>
                         <div id="service-worker-div">
-                            <h5>
+                            <label>
                                 <span class="glyphicon glyphicon-signal"></span>
                                 {% trans "离线缓存设置" %}
-                            </h5>
+                            </label>
                             <div class="checkbox">
                                 <label>
                                     <input class="onchange-submit" type="checkbox" name="serviceworker" value="on" {% if cuser.serviceworker_on %}checked{% endif %}>
@@ -143,11 +143,11 @@
                                             </li>
                                             <li>
                                                 {% trans "请点击" %} <img src="/static/img/apple-share-btn.png" alt="share button" height="21px" width="15px">
-                                                {% trans "（" %}{% trans "在底部" %} · {% trans "在右上角" %}{% trans "）" %}</li>
+                                                {% trans "（" %}{% trans "在底部" %} / {% trans "在右上角" %}{% trans "）" %}</li>
                                             </li>
                                             <li>
                                                 {% trans "选择" %}
-                                                {% trans "“" %}{% trans "添加至主屏幕" %}{% trans "”" %}
+                                                <mark>{% trans "添加至主屏幕" %}</mark>
                                             </li>
                                         </ol>
                                     </div><!--.well-->
