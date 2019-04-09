@@ -178,7 +178,8 @@ def imagecolor(request):  # AJAX #PUBLIC
 @util.user.login_required
 def update(request):  # POST
     """detail页面，编辑模式的保存"""
-    errMsg = partial(util.ctrl.infoMsg, title=_("更新失败"))
+    ERROR_TITLE = _("更新失败")
+    errMsg = partial(util.ctrl.infoMsg, title=ERROR_TITLE)
     # get inputs
     progressid = request.POST.get('id')
     if not progressid:
