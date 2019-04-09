@@ -217,7 +217,8 @@ def update(request):  # POST
     progress.save(keep_modified=keep_modified)
     # render
     messages.success(request, _("进度") + " 《{}》 ".format(progress.name) + _("已更新"))
-    return redirect("/progress/detail?id={}".format(progress.id))
+    next_ = "/progress/detail?id={}".format(progress.id) if user.getUserpermission("progress.save_to_detail") else "/progress/list"
+    return redirect(next_)
 
 
 @util.user.login_required
