@@ -128,7 +128,7 @@ def updatedb(request):
                 'designernname': 'Winnie',
             },
             {
-                'category': 'progressical',
+                'category': 'progress.public_ical',
                 'isallowed': True,
                 'image': '/static/img/badges/ical.png',
                 'description': '与民同乐',

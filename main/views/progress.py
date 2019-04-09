@@ -435,7 +435,7 @@ def ical(request):  # GET
         if privatekey != user.privatekey:
             raise Http404(_("获取日历失败") + _("：") + _("用户的私钥不合法"))
     else:  # public mode
-        if not user.getUserpermission("progressical"):
+        if not user.getUserpermission("progress.public_ical"):
             raise Http404(_("获取日历失败") + _("：") + _("此用户尚未公开其进度日历"))
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('-modified')
