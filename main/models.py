@@ -78,7 +78,7 @@ class User(BaseModel):
 
     @property
     def privatekey(self):
-        return util.ctrl.salty(self.created)
+        return util.ctrl.salty(str(self.created) + self.answer1)
 
     @property
     def level(self):
