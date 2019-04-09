@@ -186,7 +186,6 @@ def signin(request):
         return redirect(next_ or '/')
     # render
     context = {
-        'request': request,
         'next': next_,
     }
     return render(request, 'user/signin.html', context)
