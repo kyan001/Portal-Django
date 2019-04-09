@@ -297,7 +297,7 @@ class ProgressManager(BaseManager):
         if not progresses:
             raise Http404(_("{} 参数不能为空").format("Progresses"))
         comments = [prg.comment for prg in progresses if prg.comment and prg.comment.strip()]
-        valid_tags = [tag for comment in comments for tag in re.split('[\s,，]+', comment) if len(tag.encode('gbk')) <= 10]
+        valid_tags = [tag for comment in comments for tag in re.split(r'[\s,，]+', comment) if len(tag.encode('gbk')) <= 10]
         comment_tags = [tag for tag, count in Counter(valid_tags).most_common(MAX_TAGS) if count > 2]
         if len(comment_tags) < MAX_TAGS:
             comment_tags.extend([sc for sc in SUGGEST_TAGS if sc not in comment_tags])
