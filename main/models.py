@@ -95,11 +95,11 @@ class User(BaseModel):
 
     # permission related
     def getUserpermission(self, category):
-        up = UserPermission.objects.get_or_none(userid=self.id, category=category)
-        return up.isallowed if up else None
+        permission = UserPermission.objects.get_or_none(userid=self.id, category=category)
+        return permission.isallowed if permission else None
 
     def setUserpermission(self, category, isallowed):
-        up, iscreated = UserPermission.objects.update_or_create(
+        permission, iscreated = UserPermission.objects.update_or_create(
             userid=self.id,
             category=category,
             defaults={
@@ -109,11 +109,15 @@ class User(BaseModel):
 
     @property
     def serviceworker_on(self):
-        return self.getUserpermission('progressserviceworker')
+        return self.getUserpermission('progress.service_worker')
 
     @property
-    def ical_on(self):
-        return self.getUserpermission('progressical')
+    def public_ical_on(self):
+        return self.getUserpermission('progress.public_ical')
+
+    @property
+    def save_to_detail(self):
+        return self.getUserpermission('progress.save_to_detail')
 
     # exps related
     def getUserExp(self, category=None):
