@@ -39,7 +39,13 @@ class UserExpAdmin(BaseModelAdmin):
 
 @admin.register(ExpHistory)
 class ExpHistoryAdmin(BaseModelAdmin):
-    list_display = ('userexp', 'id', 'userexpid', 'operation', 'change', 'created', 'modified')
+    def user(self, obj):
+        return obj.userexp.user
+
+    def category(self, obj):
+        return obj.userexp.get_category_display()
+
+    list_display = ('user', 'category', 'id', 'userexpid', 'operation', 'change', 'created', 'modified')
     list_filter = ('change',)
     search_fields = ('operation', 'userexpid')
 
