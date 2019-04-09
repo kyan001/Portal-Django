@@ -6,10 +6,10 @@ $(function(){
         $(this).find('.progress').removeClass('active progress-striped');
     });
     $('.collapse').on('hide.bs.collapse', function () {
-        $(this).parent().find('.page-header').find('span.glyphicon').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down')
+        $(this).parent().find('.page-header').find('span.glyphicon').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right')
     })
     $('.collapse').on('show.bs.collapse', function () {
-        $(this).parent().find('.page-header').find('span.glyphicon').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up')
+        $(this).parent().find('.page-header').find('span.glyphicon').removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down')
     })
 });
 function toggleFollowProgresses(btn){
