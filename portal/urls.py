@@ -48,7 +48,7 @@ urlpatterns = [
     url(r'^progress/list/$', main.views.progress.list),
     url(r'^progress/archive/$', main.views.progress.archive),
     url(r'^progress/search$', main.views.progress.search),  # GET
-    url(r'^progress/timeline$', main.views.progress.timeline),  # POST
+    url(r'^progress/timeline/$', main.views.progress.timeline),  # POST
     url(r'^progress/detail$', main.views.progress.detail),  # GET
     url(r'^progress/imagecolor$', main.views.progress.imagecolor),  # GET
     url(r'^progress/new$', main.views.progress.new),  # GET
