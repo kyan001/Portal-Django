@@ -13,7 +13,7 @@ $(function(){
     })
 });
 function toggleFollowProgresses(btn){
-    $(btn).toggleClass("active").toggleClass("btn-default").toggleClass("btn-warning")
+    $(btn).toggleClass("active").children().toggleClass("text-warning")
     $(btn).find(".glyphicon").toggleClass("glyphicon-unchecked").toggleClass("glyphicon-check")
     $("#follow-row").toggleClass("hidden")
     $("#inprogress-and-follow-row").toggleClass("hidden")
@@ -27,6 +27,7 @@ function toggleSearchRow(btn){
         delete prev_scrollTop
     }
     $("html, body").animate({ scrollTop: target_scrollTop }, 200)
-    $("#search-row").fadeToggle()
+    $("#search-row").slideToggle()
+    $("#search-input").focus()
     $(btn).toggleClass("active")
 }
