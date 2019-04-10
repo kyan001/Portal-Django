@@ -10,21 +10,21 @@
 
 {% block css %}
 <style>
-    .progress-card .table {
+    .progress-panel .table {
         margin: 0;
     }
-    .progress-card .panel-heading {
+    .progress-panel .panel-heading {
         overflow-x: auto;
         overflow-y: hidden;
         word-break: keep-all;
     }
     /* progress bar */
-    .progress-card .progress {
+    .progress-panel .progress {
         height: 25px;
         line-height: 25px;
         margin-bottom: 0;
     }
-    .progress-card .progress .progress-bar {
+    .progress-panel .progress .progress-bar {
         line-height: inherit;
     }
     .editable {
@@ -98,7 +98,7 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 progress-card" progressid="{{ prg.id }}">
+        <div class="col-lg-8 col-lg-offset-2 col-xs-12 progress-panel" progressid="{{ prg.id }}">
             <div class="panel panel-primary" id="main-panel">
                 <div class="panel-heading text-nowrap">
                     <span class="panel-title">
