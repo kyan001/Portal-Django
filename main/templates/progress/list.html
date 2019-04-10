@@ -26,9 +26,13 @@
 
 {% block function-btn %}
     {{ block.super }}
-    <a class="btn btn-default btn-sm ani-fast" onclick="toggleSearchRow(this)">
+    <a class="btn btn-default btn-sm ani-fast" href="javascript:void(0);" role="button" onclick="toggleSearchRow(this)">
         <span class="glyphicon glyphicon-search"></span>
         <span class="hidden-xs">{% trans "搜索" %}</span>
+    </a>
+    <a class="btn btn-default btn-sm ani-fast"  href="javascript:void(0);" role="button" onclick="toggleFollowProgresses(this)">
+        <span class="glyphicon glyphicon-unchecked"></span>
+        <span>{% trans "追剧中" %}</span>
     </a>
 {% endblock function-btn %}
 
@@ -48,12 +52,6 @@
             <div class="col-xs-12">
                 <form id="search-form" action="/progress/search" method="get">
                     <div class="input-group">
-                        <div class="input-group-btn">
-                            <a class="btn btn-default ani-fast" onclick="toggleFollowProgresses(this)">
-                                <span class="glyphicon glyphicon-unchecked"></span>
-                                {% trans "追剧中" %}
-                            </a>
-                        </div>
                         <input id="search-input" type="text" class="form-control" name="kw" placeholder="{% trans '进度搜索' %} … ↩︎" autocomplete="off">
                         <input id="search-submit" type="submit" hidden>
                         <div class="input-group-btn">
