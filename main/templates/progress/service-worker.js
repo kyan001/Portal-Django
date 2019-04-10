@@ -1,11 +1,11 @@
-var CACHE_NAME = 'progress-cache-v1.1.2'
+var CACHE_NAME = 'progress-cache-v1.1.5'
 var urlsCacheFirst = [
     "/static/3rd/jquery/jquery-3.3.1.min.js",
     "/static/3rd/bootstrap-3.4.1/js/bootstrap.min.js",
     "/static/js/KyanJsUtil.js?version=1.5.1",
     "/static/3rd/bootstrap-3.4.1/css/bootstrap.min.css",
     "/static/css/KyanCssUtil.css?version=1.5.1",
-    "/static/css/progress/list/common.css?version=2.1.1",
+    "/static/css/progress/list/common.css?version=2.2.2",
     "/static/css/progress/progresscard.css?version=2.3.1",
     "/static/js/progress/list/common.js?version=2.2.1",
     "/static/3rd/instant.page/instantpage-1.2.2.js",
@@ -40,21 +40,24 @@ self.addEventListener('fetch', function (event) {  // when fetch a request
                 console.debug("  Strategy: Cache First")
                 return cleanResponseRedirect(cachedResponse)
             }
-            console.debug("  Strategy: Online First")
-            clonedRequest = event.request.clone()
-            return fetch(clonedRequest).then(function (response) {
-                if (!response || response.status !== 200 || response.type !=='basic') {
-                    console.debug("  Cached Response Returned")
+            if (urlsOnlineFirst.includes(removeDomainName(cachedResponse.url))) {
+                console.debug("  Strategy: Online First")
+                clonedRequest = event.request.clone()
+                return fetch(clonedRequest).then(function (response) {
+                    if (!response || response.status !== 200 || response.type !=='basic') {
+                        console.debug("  Cached Response Returned")
+                        postMessageToClient('oncache')
+                        return cleanResponseRedirect(cachedResponse)
+                    }
+                    console.debug("  Online Response Returned")
+                    responseToCache(event.request, response)
+                    return response
+                }).catch(function (err) {
+                    console.debug("  Cached Response Returned", "(" + err + ")")
+                    postMessageToClient('offline')
                     return cleanResponseRedirect(cachedResponse)
-                }
-                console.debug("  Online Response Returned")
-                responseToCache(event.request, response)
-                return response
-            }).catch(function (err) {
-                console.debug("  Cached Response Returned", "(" + err + ")")
-                postMessageToClient('offline')
-                return cleanResponseRedirect(cachedResponse)
-            })
+                })
+            }
         }
         console.debug('[Service Worker] Response Uncached:', event.request.url)
         return fetch(event.request)

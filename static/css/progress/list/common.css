@@ -1,6 +1,3 @@
-/*!
- * common.css v2.1.1
- */
 /* page-header */
 .page-header:hover .glyphicon {
     color: red;
@@ -19,4 +16,11 @@
     .right-bordered {
         border-right: 1px solid #eeeeee;
     }
+}
+#serviceworker-indicator {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99;
 }

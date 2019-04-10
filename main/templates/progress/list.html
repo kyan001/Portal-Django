@@ -14,6 +14,9 @@
                     if (event.data === 'offline') {
                         $("#offline-indicator").fadeIn()
                     }
+                    if (event.data === 'oncache') {
+                        $("oncache-indecator").fadeIn()
+                    }
                 })
             }
         }
@@ -31,6 +34,16 @@
 
 {% block content %}
     <div class="container">
+        <div id="serviceworker-indicator" class="text-left">
+            <span id="offline-indicator" class="text-danger" style="display: none;" onclick="location.reload(true)">
+                <span class='glyphicon glyphicon-signal'></span>
+                <span class='glyphicon glyphicon-remove'></span>
+            </span>
+            <span id="oncache-indicator" class="text-warning" style="display: none;" onclick="location.reload(true)">
+                <span class='glyphicon glyphicon-signal'></span>
+                <span class='glyphicon glyphicon-lock'></span>
+            </span>
+        </div>
         <div id="search-row" class="row" hidden>
             <div class="col-xs-12">
                 <form id="search-form" action="/progress/search" method="get">
