@@ -7,7 +7,7 @@ var urlsCacheFirst = [
     "/static/css/KyanCssUtil.css?version=1.5.1",
     "/static/css/progress/list/common.css?version=2.2.2",
     "/static/css/progress/progresscard.css?version=2.3.1",
-    "/static/js/progress/list/common.js?version=2.2.1",
+    "/static/js/progress/list/common.js?version=2.2.2",
     "/static/3rd/instant.page/instantpage-1.2.2.js",
     "/static/3rd/bootstrap-3.4.1/fonts/glyphicons-halflings-regular.woff2",
     "/static/img/Logo_List.png",
