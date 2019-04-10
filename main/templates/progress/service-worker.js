@@ -1,4 +1,4 @@
-var CACHE_NAME = 'progress-cache-v1.1.6'
+var CACHE_NAME = 'progress-cache-v1.1.7'
 var urlsCacheFirst = [
     "/static/3rd/jquery/jquery-3.3.1.min.js",
     "/static/3rd/bootstrap-3.4.1/js/bootstrap.min.js",
@@ -27,7 +27,7 @@ self.addEventListener('install', function (event) {  // Perform install steps
     event.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
             console.debug('[Service Worker] Cache Opened:', CACHE_NAME)
-            return cache.addAll(urlsCacheFirst)  // return Promise
+            return cache.addAll(urlsCacheFirst.concat(urlsOnlineFirst))  // return Promise
         })
     )
 })
