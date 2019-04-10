@@ -45,21 +45,21 @@ urlpatterns = [
     # PROGRESS
     path('progress/service-worker.js', TemplateView.as_view(template_name='progress/service-worker.js', content_type='application/javascript')),  # PWA sw.js
     path('progress/manifest.json', TemplateView.as_view(template_name='progress/manifest.json', content_type='application/json')),  # PWA manifest.json
-    url(r'^progress/list/$', main.views.progress.list),
-    url(r'^progress/archive/$', main.views.progress.archive),
-    url(r'^progress/search$', main.views.progress.search),  # GET
-    url(r'^progress/timeline/$', main.views.progress.timeline),  # POST
-    url(r'^progress/detail$', main.views.progress.detail),  # GET
-    url(r'^progress/imagecolor$', main.views.progress.imagecolor),  # GET
-    url(r'^progress/new$', main.views.progress.new),  # GET
-    url(r'^progress/add/$', main.views.progress.add),
-    url(r'^progress/update/$', main.views.progress.update),  # POST
-    url(r'^progress/delete/$', main.views.progress.delete),  # POST
-    url(r'^progress/plusone/$', main.views.progress.plusone),  # GET
-    url(r'^progress/deactivate/$', main.views.progress.deactivate),  # POST
-    url(r'^progress/reactivate/$', main.views.progress.reactivate),  # POST
-    url(r'^progress/ical$', main.views.progress.ical),  # GET
-    url(r'^progress/setsettings$', main.views.progress.setsettings),  # POST
+    path('progress/list/', main.views.progress.list),
+    path('progress/archive/', main.views.progress.archive),
+    path('progress/search', main.views.progress.search),  # GET
+    path('progress/timeline/', main.views.progress.timeline),  # POST
+    path('progress/detail', main.views.progress.detail),  # GET
+    path('progress/imagecolor', main.views.progress.imagecolor),  # GET
+    path('progress/new', main.views.progress.new),  # GET
+    path('progress/add/', main.views.progress.add),
+    path('progress/update/', main.views.progress.update),  # POST
+    path('progress/delete/', main.views.progress.delete),  # POST
+    path('progress/plusone/', main.views.progress.plusone),  # GET
+    path('progress/deactivate/', main.views.progress.deactivate),  # POST
+    path('progress/reactivate/', main.views.progress.reactivate),  # POST
+    path('progress/ical', main.views.progress.ical),  # GET
+    path('progress/setsettings', main.views.progress.setsettings),  # POST
     # OPUS
     url(r'^opus/detail$', main.views.opus.detail),  # GET
     url(r'^opus/searchopusinfo$', main.views.opus.searchOpusInfo),  # GET Ajax
