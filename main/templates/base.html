@@ -75,6 +75,13 @@
             <span id="function-btn-zone">
                 {% block function-btn %}{% endblock %}
             </span>
+            <div id="function-btn-zone-xs" class="btn-group hidden">
+                <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-menu-hamburger"></span>
+                </a>
+                <ul class="dropdown-menu">
+                </ul>
+            </div>
         </div>
         <style>
             #nav-btn-zone {
@@ -84,22 +91,36 @@
                 z-index: 800;
                 font-size: 15px;
             }
-            @media (max-width: 768px) {
-                #function-btn-zone {
-                    position: fixed;
-                    bottom: 66px;
-                    right: 5%;
-                    z-index: 800;
-                    font-size: 15px;
-                }
-                #function-btn-zone .btn {
-                    box-shadow: 0 2px 2px 1px rgba(0,0,0,0.3);
-                }
-            }
             #nav-btn-zone .dropdown-menu > li > a {
                 line-height: 40px;
             }
         </style>
+        <script>
+            if ($("#function-btn-zone").children().length > 1) {
+                $("#function-btn-zone").addClass("hidden-xs")
+                $("#function-btn-zone-xs").removeClass("hidden").addClass("visible-xs-inline-block")
+                $("#function-btn-zone a.btn").each(function () {
+                    var clonedLink = $(this).clone()
+                    clonedLink.removeClass("btn").removeClass("btn-sm").removeClass("btn-default").addClass("hover-pointer")
+                    clonedLink.children().removeClass("hidden-xs")
+                    classBtnToText = {
+                        "btn-default": "",
+                        "btn-success": "text-success",
+                        "btn-primary": "text-primary",
+                        "btn-warning": "text-warning",
+                        "btn-danger": "text-danger",
+                    }
+                    for (let key in classBtnToText) {
+                        if (clonedLink.hasClass(key)) {
+                            clonedLink.removeClass(key)
+                            clonedLink.children().addClass(classBtnToText[key])
+                        }
+                    }
+                    var btn = $("<li></li>").addClass("progress-dropdown-li").append(clonedLink)
+                    $("#function-btn-zone-xs ul.dropdown-menu").append(btn)
+                })
+            }
+        </script>
         <!-- ############ USER BAR ############-->
         {% block userbar %}
             {% include "userbar.html" %}
