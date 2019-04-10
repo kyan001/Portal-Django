@@ -61,9 +61,11 @@
             <div class="btn-group">
                 <a type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {% if cuser.has_headimg %}
-                        <img src="{{ cuser.headimg_url }}">
+                        <img src="{{ cuser.headimg_url }}" title="{{ cuser.nickname }}">
+                    {% else %}
+                        <span class="glyphicon glyphicon-user" title="{{ cuser.nickname }}"></span>
                     {% endif %}
-                    <span class="profile-nikename">
+                    <span class="profile-nikename hidden-xs">
                         @<b>{{ cuser.nickname }}</b>
                     </span>
                     <span class="caret"></span>
