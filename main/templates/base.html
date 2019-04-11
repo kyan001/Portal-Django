@@ -96,10 +96,8 @@
             }
         </style>
         <script>
-            if ($("#function-btn-zone").children().length > 1) {
-                $("#function-btn-zone").addClass("hidden-xs")
-                $("#function-btn-zone-xs").removeClass("hidden").addClass("visible-xs-inline-block")
-                $("#function-btn-zone a.btn").each(function () {
+            if ($("#function-btn-zone").children(".fold-xs").length > 1) {
+                $("#function-btn-zone .fold-xs").each(function () {
                     var clonedLink = $(this).clone()
                     clonedLink.removeClass("btn").removeClass("btn-sm").removeClass("btn-default").addClass("hover-pointer")
                     clonedLink.children().removeClass("hidden-xs")
@@ -119,6 +117,8 @@
                     var btn = $("<li></li>").addClass("progress-dropdown-li").append(clonedLink)
                     $("#function-btn-zone-xs ul.dropdown-menu").append(btn)
                 })
+                $("#function-btn-zone .fold-xs").addClass("hidden-xs")
+                $("#function-btn-zone-xs").removeClass("hidden").addClass("visible-xs-inline-block")
             }
         </script>
         <!-- ############ USER BAR ############-->
