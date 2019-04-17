@@ -135,7 +135,7 @@
                 <div class="panel-body second-panel-body">
                     <div class="row">
                         <div id="left-half-panel" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <form id="saveform" action="/progress/update/" method="post">
+                            <form id="saveform" action="/progress/update" method="post">
                                 {% csrf_token %}
                                 <input name="id" type="hidden" value="{{prg.id}}">
                                 <div class="panel panel-primary">
@@ -419,15 +419,15 @@
             </div><!-- .panel -->
         </div><!--col-->
     </div><!--row-->
-    <form id="deleteform" action="/progress/delete/" method="post">
+    <form id="deleteform" action="/progress/delete" method="post">
         {% csrf_token %}
         <input name="id" type="hidden" value="{{prg.id}}">
     </form>
-    <form id="deactivateform" action="/progress/deactivate/" method="post">
+    <form id="deactivateform" action="/progress/deactivate" method="post">
         {% csrf_token %}
         <input name="id" type="hidden" value="{{prg.id}}">
     </form>
-    <form id="reactivateform" action="/progress/reactivate/" method="post">
+    <form id="reactivateform" action="/progress/reactivate" method="post">
         {% csrf_token %}
         <input name="id" type="hidden" value="{{prg.id}}">
     </form>

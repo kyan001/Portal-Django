@@ -26,38 +26,38 @@ urlpatterns = [
     url(r'^index/help$', main.views.index.help),
     # USER
     url(r'^user/public$', main.views.user.public),
-    url(r'^user/profile/', main.views.user.profile),
+    url(r'^user/profile', main.views.user.profile),
     url(r'^user/exphistory$', main.views.user.exphistory),
     url(r'^user/signin$', main.views.user.signin),  # GET
     url(r'^user/signup$', main.views.user.signup),
     url(r'^user/headimgupdate$', main.views.user.headimgUpdate),  # POST
-    url(r'^user/forgetanswer/$', main.views.user.forgetAnswer),
+    url(r'^user/forgetanswer$', main.views.user.forgetAnswer),
     url(r'^user/forgetusername$', main.views.user.forgetUsername),  # POST
-    url(r'^user/checklogin/$', main.views.user.checkLogin),  # POST
-    url(r'^user/getunreadcount/$', main.views.user.getUnreadCount),
-    url(r'^user/newuser/$', main.views.user.newUser),  # POST
-    url(r'^user/logout/$', main.views.user.logout),
+    url(r'^user/checklogin$', main.views.user.checkLogin),  # POST
+    url(r'^user/getunreadcount$', main.views.user.getUnreadCount),
+    url(r'^user/newuser$', main.views.user.newUser),  # POST
+    url(r'^user/logout$', main.views.user.logout),
     url(r'^user/validateusername$', main.views.user.validateUsername),
     url(r'^user/validatenickname$', main.views.user.validateNickname),
     url(r'^user/validateemail$', main.views.user.validateEmail),
     url(r'^user/getquestionandtip$', main.views.user.getQuestionAndTip),
-    url(r'^user/setting/$', main.views.user.setting),
+    url(r'^user/setting$', main.views.user.setting),
     # PROGRESS
     path('progress/service-worker.js', TemplateView.as_view(template_name='progress/service-worker.js', content_type='application/javascript')),  # PWA sw.js
     path('progress/manifest.json', TemplateView.as_view(template_name='progress/manifest.json', content_type='application/json')),  # PWA manifest.json
-    path('progress/list/', main.views.progress.list),
-    path('progress/archive/', main.views.progress.archive),
+    path('progress/list', main.views.progress.list),
+    path('progress/archive', main.views.progress.archive),
     path('progress/search', main.views.progress.search),  # GET
-    path('progress/timeline/', main.views.progress.timeline),  # POST
+    path('progress/timeline', main.views.progress.timeline),  # POST
     path('progress/detail', main.views.progress.detail),  # GET
     path('progress/imagecolor', main.views.progress.imagecolor),  # GET
     path('progress/new', main.views.progress.new),  # GET
-    path('progress/add/', main.views.progress.add),
-    path('progress/update/', main.views.progress.update),  # POST
-    path('progress/delete/', main.views.progress.delete),  # POST
-    path('progress/plusone/', main.views.progress.plusone),  # GET
-    path('progress/deactivate/', main.views.progress.deactivate),  # POST
-    path('progress/reactivate/', main.views.progress.reactivate),  # POST
+    path('progress/add', main.views.progress.add),
+    path('progress/update', main.views.progress.update),  # POST
+    path('progress/delete', main.views.progress.delete),  # POST
+    path('progress/plusone', main.views.progress.plusone),  # GET
+    path('progress/deactivate', main.views.progress.deactivate),  # POST
+    path('progress/reactivate', main.views.progress.reactivate),  # POST
     path('progress/ical', main.views.progress.ical),  # GET
     path('progress/setsettings', main.views.progress.setsettings),  # POST
     # OPUS
@@ -72,7 +72,7 @@ urlpatterns = [
     url(r'^chat/send$', main.views.chat.send),
     url(r'^chat/conversation$', main.views.chat.conversation),
     # badge
-    url(r'^badge/list/$', main.views.badge.list),
+    url(r'^badge/list$', main.views.badge.list),
     url(r'^badge/detail$', main.views.badge.detail),  # GET
     # robo talk
     url(r'^robotalk$', main.views.robotalk.index),

@@ -15,9 +15,7 @@ var staticFileUrls = [
 ]
 var pageUrls = [
     "/progress/list",
-    "/progress/list/",
     "/progress/archive",
-    "/progress/archive/",
     "/progress/search",
 ]
 
