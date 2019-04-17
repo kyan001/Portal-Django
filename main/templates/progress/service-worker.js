@@ -1,5 +1,5 @@
-var CACHE_NAME = 'progress-cache-v1.1.7'
-var urlsCacheFirst = [
+var CACHE_NAME = 'progress-cache-v1.1.9'
+var staticFileUrls = [
     "/static/3rd/jquery/jquery-3.3.1.min.js",
     "/static/3rd/bootstrap-3.4.1/js/bootstrap.min.js",
     "/static/js/KyanJsUtil.js?version=1.5.1",
@@ -13,7 +13,7 @@ var urlsCacheFirst = [
     "/static/img/Logo_List.png",
     "/progress/manifest.json",
 ]
-var urlsOnlineFirst = [
+var pageUrls = [
     "/progress/list",
     "/progress/list/",
     "/progress/archive",
@@ -37,10 +37,13 @@ self.addEventListener('fetch', function (event) {  // when fetch a request
             console.debug('[Service Worker] Response Cached:', cachedResponse.url)
             if (urlsCacheFirst.includes(removeDomainName(cachedResponse.url))) {
                 console.debug("  Strategy: Cache First")
+            var cleanedCacheResponse = cleanResponseRedirect(cachedResponse)
+            var uri = removeDomainName(cleanedCacheResponse.url)
+            if (staticFileUrls.includes(uri)) {
                 return cleanedCacheResponse
             }
-            if (urlsOnlineFirst.includes(removeDomainName(cachedResponse.url))) {
                 console.debug("  Strategy: Online First")
+            if (pageUrls.includes(uri)) {
                 clonedRequest = event.request.clone()
                 return fetch(clonedRequest).then(function (response) {
                     if (!response || response.status !== 200 || response.type !=='basic') {
