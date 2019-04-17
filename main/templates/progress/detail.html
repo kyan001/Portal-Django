@@ -626,13 +626,13 @@
          * @global OPUS.INFOSETS.purified.name [赋值去章节名]
          */
         'purifyName': function () {
-            console.debug('OPUS.purifyName:')
+            console.groupCollapsed('[OPUS]', 'OPUS.purifyName')
             function extractChapInfo (prg_name, regex, prefix) {
                 prefix = typeof prefix !== 'undefined' ?  prefix : ""  // 默认前缀为空
                 var matched_info = prg_name.match(regex)  // matched_info[0]: 包含符号的章节/周目信息, matched_info[1]: 干净的章节/周目信息
                 if (matched_info) {
                     var new_prg_name = $.trim(prg_name.replace(matched_info[0], ''))
-                    console.debug("  New:'%s', Chapinfo:'%s'", new_prg_name, matched_info[0])
+                    console.info("New:", new_prg_name, "Chapinfo:", matched_info[0])
                     OPUS.INFOSETS.purified.name = new_prg_name
                     var chapinfo_chars = matched_info[1]
                     $('#prg-name').text(new_prg_name)
@@ -648,6 +648,7 @@
             prg_name = extractChapInfo(prg_name, re_lap, "#") || prg_name
             var re_year = /[\s（\(]((19|20)[0-9]{2})[\)）]*$/i
             prg_name = extractChapInfo(prg_name, re_year, "@") || prg_name
+            console.groupEnd()
         },
         /**
          * 设定作品的类型
@@ -655,7 +656,7 @@
          * @see OPUS.INFOSETS.type
          */
         'setType': function (opustype) {
-            console.debug('OPUS.setType: ' + opustype)
+            console.info('OPUS.setType: ' + opustype)
             /**
              * 用于判断 sub 内是否包含 subs 里的元素
              * @param {string}  sub     [作品信息的副标题]
@@ -689,7 +690,7 @@
          * @param {INFOSET} infoset [以 original 还是 purified 组的作品信息们为准]
          */
         'getInfo': function (infoset) {
-            console.debug('OPUS.getInfo: %s @ %s', infoset.name, OPUS.INFOSETS.type)
+            console.groupCollapsed('[OPUS]', 'OPUS.getInfo:', infoset.name, OPUS.INFOSETS.type)
             infoset.book = {}
             infoset.movie = {}
             infoset.guess = {}
@@ -704,16 +705,20 @@
                     OPUS.getMovieInfo(infoset)
                 }
             }
+            console.groupEnd()
         },
         /**
          * 从豆瓣获得书类的信息并存入全局变量
          */
         'getBookInfo': function (infos) {
-            console.debug('  OPUS.getBookInfo: %s @ %s', infos.name, OPUS.INFOSETS.type)
+            console.info('OPUS.getBookInfo:', infos.name, OPUS.INFOSETS.type)
             if (infos.name) {
                 OpusInfoGetter.getBookInfo(infos.name, function (info) {
-                    infos.book = info;
-                    infos.book.finish = true;
+                    infos.book = info
+                    infos.book.finish = true
+                    OPUS.manageInfo()
+                }, function () {  // when error returns
+                    infos.book.finish = true
                     OPUS.manageInfo()
                 })
             }
@@ -722,10 +727,13 @@
          * 从豆瓣获得影视类的信息并存入全局变量
          */
         'getMovieInfo': function (infos) {
-            console.debug('  getMovieInfo: %s @ %s', infos.name, OPUS.INFOSETS.type)
+            console.info('OPUS.getMovieInfo:', infos.name, OPUS.INFOSETS.type)
             if (infos.name) {
                 OpusInfoGetter.getMovieInfo(infos.name, function (info) {
                     infos.movie = info
+                    infos.movie.finish = true
+                    OPUS.manageInfo()
+                }, function () {  // when error returns
                     infos.movie.finish = true
                     OPUS.manageInfo()
                 })
@@ -747,25 +755,28 @@
              * @return {Boolean}    [对应的 set typ 信息是否已试图加载过]
              */
             function isInfoReady (set, typ) {
-                console.debug('  isInfoReady: %s @ %s', set, typ)
-                if (typ == 'book' || typ == 'movie') {  // typ 固定
-                    if (!OPUS.INFOSETS[set].name) {  // 没有名字（无法查询）
-                        return true
-                    } else if (OPUS.INFOSETS[set][typ].finish) {  // 有名字，且查询完成
-                        return true
-                    }
-                } else {  // typ == 'compare'
-                    if (isInfoReady(set, 'book') && isInfoReady(set, 'movie')) {
-                        return true
-                    }
+                console.info('isInfoReady:', set, typ)
+                if (typ === 'compare') {  // typ 不固定，不是 'book' 或 'movie'
+                    return isInfoReady(set, 'book') && isInfoReady(set, 'movie')
                 }
+                if (!OPUS.INFOSETS[set].name) {  // 没有名字（无法查询）
+                    console.info('ready')
+                    return true
+                }
+                if (OPUS.INFOSETS[set][typ].finish) {  // 有名字，且查询完成
+                    console.info('ready')
+                    return true
+                }
+                console.info('not ready')
                 return false
             }
 
-            console.count('OPUS.manageInfo')
+            console.groupCollapsed('[OPUS]', 'OPUS.manageInfo:', OPUS.INFOSETS.type)
+            console.count('OPUS.manageInfo() count')
             RENDER.showLoading("off")
             if (!isInfoReady('original', OPUS.INFOSETS.type) || !isInfoReady('purified', OPUS.INFOSETS.type)) {  // 请求尚未完成
-                console.debug('OPUS.manageInfo: not ready')
+                console.info('OPUS.manageInfo: not ready')
+                console.groupEnd()
                 return false
             }
             if (OPUS.INFOSETS.type == 'book' || OPUS.INFOSETS.type == 'movie') {
@@ -780,11 +791,13 @@
                 } else if (puri.exist && !puri.match) {  // purified 存在但不准确
                     RENDER.showGuess(OPUS.INFOSETS.purified, OPUS.INFOSETS.type)
                 } else {  // original/purified 都不存在
+                    console.groupEnd()
                     return false
                 }
             } else {  // OPUS.INFOSETS.type == 'compare'
                 OPUS.judgeType()
             }
+            console.groupEnd()
         },
         /**
          * 智能判断作品信息的类别。
@@ -819,12 +832,13 @@
                 return true
             }
 
-            console.debug('judgeOpusType: %s', OPUS.INFOSETS.type)
+            console.group('[OPUS]', 'judgeOpusType:', OPUS.INFOSETS.type)
             var total = FORM.INPUTS.total.val() || 0
             if (!judgeInfoType(OPUS.INFOSETS.original) && !judgeInfoType(OPUS.INFOSETS.purified)) {  // 如果都未匹配上
                 OPUS.setType('movie')  // 默认为影视作品
             }
             OPUS.manageInfo()
+            console.groupEnd()
         },
     }
     var RENDER = {
@@ -833,7 +847,7 @@
          * @param {INFOSET} infoset [以 original 还是 purified 组的作品信息们为准]
          */
         "showInfo": function (infoset, typ) {
-            console.debug('showInfo: ' + infoset[typ].title)
+            console.info('showInfo: ' + infoset[typ].title)
             info = infoset[typ]
             $('#title-link').attr('href', info.url)
             $('#title-link').text(info.title)
@@ -880,7 +894,7 @@
          * @param {INFOSET} infoset [以 original 还是 purified 组的作品信息们为准]
          */
         'showGuess': function (infoset, typ) {
-            console.debug('showGuess:' + infoset[typ].title)
+            console.info('showGuess:' + infoset[typ].title)
             infoset.guess = infoset[typ]
             var title_a = '<a href="' + infoset.guess.url + '" target="_blank">' + infoset.guess.title + '</a>'
             var guess_title = "《" + title_a + "》"
