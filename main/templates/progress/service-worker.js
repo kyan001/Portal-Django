@@ -33,25 +33,26 @@ self.addEventListener("fetch", function (event) {  // when fetch a request
     event.respondWith(caches.match(event.request).then(function (cachedResponse) {
         console.group("[Service Worker]", event.request.url)
         if (cachedResponse) {  // cache hit, return response
-            var cleanedCacheResponse = cleanResponseRedirect(cachedResponse)
-            var uri = removeDomainName(cleanedCacheResponse.url)
             console.info("Response Cached")
+            var uri = removeDomainName(cachedResponse.url)
             if (staticFileUrls.includes(uri)) {
                 console.info("Strategy: Cache First")
                 console.groupEnd()
-                return cleanedCacheResponse
+                return cachedResponse
             }
             if (pageUrls.includes(uri)) {
                 console.info("Strategy: Online First")
                 clonedRequest = event.request.clone()
                 return fetch(clonedRequest).then(function (response) {
-                    if (!response || response.status !== 200 || response.type !=="basic") {
+                    if (!response) {
                         postMessageToClient("oncache")
                         console.error("Cached Response Returned", response)
                         console.groupEnd()
-                        return cleanedCacheResponse
+                        return cachedResponse
                     }
-                    responseToCache(event.request, response)
+                    if (response.status !== 200 || response.type !=="basic") {
+                        responseToCache(event.request, response)
+                    }
                     console.info("Online Response Returned")
                     console.groupEnd()
                     return response
@@ -59,7 +60,7 @@ self.addEventListener("fetch", function (event) {  // when fetch a request
                     postMessageToClient("offline")
                     console.warn("Cached Response Returned", "(" + err + ")")
                     console.groupEnd()
-                    return cleanedCacheResponse
+                    return cachedResponse
                 })
             }
         }
