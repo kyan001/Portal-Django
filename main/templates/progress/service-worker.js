@@ -33,29 +33,27 @@ self.addEventListener("fetch", function (event) {  // when fetch a request
     event.respondWith(caches.match(event.request).then(function (cachedResponse) {
         console.group("[Service Worker]", event.request.url)
         if (cachedResponse) {  // cache hit, return response
-            console.info("Response Cached")
             var uri = removeDomainName(cachedResponse.url)
             if (staticFileUrls.includes(uri)) {
-                console.info("Strategy: Cache First")
+                console.info("Response Cached,", "Strategy: Cache First")
                 console.groupEnd()
                 return cachedResponse
             }
             if (pageUrls.includes(uri)) {
-                console.info("Strategy: Online First")
+                console.info("Response Cached,", "Strategy: Online First")
                 clonedRequest = event.request.clone()
                 return fetch(clonedRequest).then(function (response) {
-                    if (!response) {
-                        postMessageToClient("oncache")
-                        console.error("Cached Response Returned", response)
-                        console.groupEnd()
-                        return cachedResponse
-                    }
-                    if (response.status !== 200 || response.type !=="basic") {
+                    if (response && response.status < 400) {  // online content ready and no fault
                         responseToCache(event.request, response)
+                        console.info("Online Response Returned:", response.status, response.statusText)
+                        console.groupEnd()
+                        return response
                     }
-                    console.info("Online Response Returned")
+                    postMessageToClient("oncache")
+                    console.error("Online Response Error, Cached Response Returned", response)
                     console.groupEnd()
-                    return response
+                    return cachedResponse
+
                 }).catch(function (err) {
                     postMessageToClient("offline")
                     console.warn("Cached Response Returned", "(" + err + ")")
