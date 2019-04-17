@@ -19,8 +19,6 @@ var urlsOnlineFirst = [
     "/progress/archive",
     "/progress/archive/",
     "/progress/search",
-    "/user/getunreadcount",
-    "/user/getunreadcount/",
 ]
 
 self.addEventListener('install', function (event) {  // Perform install steps
