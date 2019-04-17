@@ -34,11 +34,10 @@ self.addEventListener('install', function (event) {  // Perform install steps
 self.addEventListener('fetch', function (event) {  // when fetch a request
     event.respondWith(caches.match(event.request).then(function (cachedResponse) {
         if (cachedResponse) {  // cache hit, return response
-            cachedResponse = cleanResponseRedirect(cachedResponse)
             console.debug('[Service Worker] Response Cached:', cachedResponse.url)
             if (urlsCacheFirst.includes(removeDomainName(cachedResponse.url))) {
                 console.debug("  Strategy: Cache First")
-                return cachedResponse
+                return cleanedCacheResponse
             }
             if (urlsOnlineFirst.includes(removeDomainName(cachedResponse.url))) {
                 console.debug("  Strategy: Online First")
@@ -47,7 +46,7 @@ self.addEventListener('fetch', function (event) {  // when fetch a request
                     if (!response || response.status !== 200 || response.type !=='basic') {
                         console.debug("  Cached Response Returned", response)
                         postMessageToClient('oncache')
-                        return cachedResponse
+                        return cleanedCacheResponse
                     }
                     console.debug("  Online Response Returned")
                     responseToCache(event.request, response)
@@ -55,7 +54,7 @@ self.addEventListener('fetch', function (event) {  // when fetch a request
                 }).catch(function (err) {
                     console.debug("  Cached Response Returned", "(" + err + ")")
                     postMessageToClient('offline')
-                    return cachedResponse
+                    return cleanedCacheResponse
                 })
             }
         }
