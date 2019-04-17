@@ -25,7 +25,8 @@ self.addEventListener('install', function (event) {  // Perform install steps
     event.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
             console.debug('[Service Worker] Cache Opened:', CACHE_NAME)
-            return cache.addAll(urlsCacheFirst.concat(urlsOnlineFirst))  // return Promise
+            cache.addAll(pageUrls)  // non-block non-raise loading
+            return cache.addAll(staticFileUrls)  // return Promise
         })
     )
 })
