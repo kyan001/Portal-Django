@@ -157,7 +157,7 @@
                                                 <th>{% trans "百分比" %}</th>
                                                 <td>{{prg.persent}}%</td>
                                             </tr>
-                                            <tr class="text-info" id="name-tr" data-toggle="popover" data-placement="top" data-container="body">
+                                            <tr class="text-info" id="name-tr">
                                                 <th>{% trans "名称" %}</th>
                                                 <td class="text-info">
                                                     <div class="input-group">
@@ -169,9 +169,20 @@
                                                           data-original="{{prg.name}}"
                                                           autocomplete="off"
                                                           placeholder="{{prg.name}}"
-                                                          required="required">
+                                                          required="required"
+                                                          onfocus="RENDER.toggleGuess()"
+                                                          onblur="RENDER.toggleGuess()">
                                                         <span class="input-group-addon input-sm">》</span>
                                                     </div>
+                                                    <li id="guess-zone" class="text-muted" style="display: none;">
+                                                        {% trans '是' %}
+                                                        《<span id="guess-title"></span>》
+                                                        <span id="guess-subtitle">{% trans '（' %}<span id="guess-subtitle-text"></span>{% trans '）' %}</span>
+                                                        {% trans '吗？' %}
+                                                        <a class="btn btn-default btn-xs" href="javascript:void(0)" role="button" onclick="RENDER.applyGuess()">
+                                                            <span class="glyphicon glyphicon-ok text-success"></span>
+                                                        </a>
+                                                    </li>
                                                 </td>
                                             </tr>
                                             <tr class="text-info">
@@ -787,9 +798,9 @@
                 } else if (puri.exist && puri.match) {  // purified 存在且准确
                     RENDER.showInfo(OPUS.INFOSETS.purified, OPUS.INFOSETS.type)
                 } else if (orig.exist && !orig.match) {  // original 存在但不准确
-                    RENDER.showGuess(OPUS.INFOSETS.original, OPUS.INFOSETS.type)
+                    RENDER.fillGuess(OPUS.INFOSETS.original, OPUS.INFOSETS.type)
                 } else if (puri.exist && !puri.match) {  // purified 存在但不准确
-                    RENDER.showGuess(OPUS.INFOSETS.purified, OPUS.INFOSETS.type)
+                    RENDER.fillGuess(OPUS.INFOSETS.purified, OPUS.INFOSETS.type)
                 } else {  // original/purified 都不存在
                     console.groupEnd()
                     return false
@@ -890,35 +901,35 @@
             RENDER.checkInfoVisibility(info)
         },
         /**
-         * 将猜测的可能的作品信息显示在网页上
+         * 将猜测的可能的作品信息填充到网页的元素上
          * @param {INFOSET} infoset [以 original 还是 purified 组的作品信息们为准]
          */
-        'showGuess': function (infoset, typ) {
-            console.info('showGuess:' + infoset[typ].title)
+        'fillGuess': function (infoset, typ) {
+            console.info('fillGuess:' + infoset[typ].title)
             infoset.guess = infoset[typ]
-            var title_a = '<a href="' + infoset.guess.url + '" target="_blank">' + infoset.guess.title + '</a>'
-            var guess_title = "《" + title_a + "》"
-            var guess_subtype = infoset.guess.subtype ? "{% trans '（' %}" + infoset.guess.subtype.toUpperCase() + "{% trans '）' %}" : ''
-            var apply_guess = "<span id='apply-guess' class='text-success glyphicon glyphicon-ok img-thumbnail' onclick='RENDER.applyGuess(\"" + infoset.guess.title + "\")'></span>"
-            var content_html = "{% trans '是' %} " + guess_title + guess_subtype + " {% trans '吗？' %}" + apply_guess
-            $('#name-tr').popover({
-                delay: {
-                    'show':0,
-                    'hide':0
-                },
-                html: true,
-                trigger: 'focus',
-                container: 'body',
-                content: function () {
-                    return content_html
-                },
-            });
+            var guess_title_ele = '<a href="' + infoset.guess.url + '" target="_blank">' + infoset.guess.title + '</a>'
+            $("#guess-title").append(guess_title_ele)
+            if (infoset.guess.subtype) {
+                $("#guess-subtitle-text").text(infoset.guess.subtype.toUpperCase())
+                $("#guess-subtitle").show()
+            } else {
+                $("#guess-subtitle").hide()
+            }
+        },
+        /**
+         * 当用户 focus/blur 在名称输入框时，切换显示猜测结果
+         */
+        'toggleGuess': function () {
+            if ($("#guess-title").text()) {
+                $("#guess-zone").slideToggle()
+            }
         },
         /**
          * 当用户应用猜测作品信息时
          * @param {String}  title   [需要应用的标题]
          */
         'applyGuess': function (title) {
+            title = title || $("#guess-title").text()
             FORM.INPUTS.name.val(title)
             FORM.checkEditMode()
         },
