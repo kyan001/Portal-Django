@@ -24,44 +24,49 @@ var pageUrls = [
 self.addEventListener('install', function (event) {  // Perform install steps
     event.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
-            console.debug('[Service Worker] Cache Opened:', CACHE_NAME)
+            console.info('[Service Worker] Cache Opened:', CACHE_NAME)
             cache.addAll(pageUrls)  // non-block non-raise loading
             return cache.addAll(staticFileUrls)  // return Promise
         })
     )
 })
 
-self.addEventListener('fetch', function (event) {  // when fetch a request
+self.addEventListener("fetch", function (event) {  // when fetch a request
     event.respondWith(caches.match(event.request).then(function (cachedResponse) {
+        console.group("[Service Worker]", event.request.url)
         if (cachedResponse) {  // cache hit, return response
-            console.debug('[Service Worker] Response Cached:', cachedResponse.url)
-            if (urlsCacheFirst.includes(removeDomainName(cachedResponse.url))) {
-                console.debug("  Strategy: Cache First")
             var cleanedCacheResponse = cleanResponseRedirect(cachedResponse)
             var uri = removeDomainName(cleanedCacheResponse.url)
+            console.info("Response Cached")
             if (staticFileUrls.includes(uri)) {
+                console.info("Strategy: Cache First")
+                console.groupEnd()
                 return cleanedCacheResponse
             }
-                console.debug("  Strategy: Online First")
             if (pageUrls.includes(uri)) {
+                console.info("Strategy: Online First")
                 clonedRequest = event.request.clone()
                 return fetch(clonedRequest).then(function (response) {
-                    if (!response || response.status !== 200 || response.type !=='basic') {
-                        console.debug("  Cached Response Returned", response)
-                        postMessageToClient('oncache')
+                    if (!response || response.status !== 200 || response.type !=="basic") {
+                        postMessageToClient("oncache")
+                        console.error("Cached Response Returned", response)
+                        console.groupEnd()
                         return cleanedCacheResponse
                     }
-                    console.debug("  Online Response Returned")
                     responseToCache(event.request, response)
+                    console.info("Online Response Returned")
+                    console.groupEnd()
                     return response
                 }).catch(function (err) {
-                    console.debug("  Cached Response Returned", "(" + err + ")")
-                    postMessageToClient('offline')
+                    postMessageToClient("offline")
+                    console.warn("Cached Response Returned", "(" + err + ")")
+                    console.groupEnd()
                     return cleanedCacheResponse
                 })
             }
         }
-        console.debug('[Service Worker] Response Uncached:', event.request.url)
+        console.info("Response Uncached")
+        console.groupEnd()
         return fetch(event.request)
     }))
 })
@@ -85,7 +90,7 @@ function cleanResponseRedirect (response) {
     if (!response.redirected) {
         return response
     }
-    console.debug("[Service Worker] Response Redirected:", response.url)
+    console.warn("[Service Worker] Response Redirected:", response.url)
     const clonedResponse = response.clone()
     const bodyPromise = 'body' in clonedResponse
         ? Promise.resolve(clonedResponse.body)
