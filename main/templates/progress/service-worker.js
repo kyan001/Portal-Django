@@ -68,11 +68,13 @@ self.addEventListener('fetch', function (event) {  // when fetch a request
 self.addEventListener('activate', function (event) {
     event.waitUntil(
         caches.keys().then(function (cacheNames) {
-            return Promise.all(cacheNames.map(function (cacheName) {
+            return Promise.all(cacheNames.filter(function (cacheName) {
                 if (cacheName !== CACHE_NAME) {  // delete other versions of caches
-                    console.debug('[Service Worker] Old Cache Deleted:', cacheName)
-                    return caches.delete(cacheName);
+                    console.info('[Service Worker] Old Cache Deleted:', cacheName)
+                    return true
                 }
+            }).map(function (cacheName) {
+                return caches.delete(cacheName)
             }))
         })
     )
