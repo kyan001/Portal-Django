@@ -1,7 +1,18 @@
 {
-    "name": "Portal-Django",
+    "name": "portal-django",
     "author": "Kyan",
+    "version": "1.0.1",
     "description": "Website for kyan001.com",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kyan001/Portal-Django.git"
+    },
+    "keywords": [
+        "kyan001.com"
+    ],
+    "bugs": {
+        "url": "https://github.com/kyan001/Portal-Django/issues"
+    },
     "dependencies": {
         "bootstrap": "^3.4.1",
         "jquery": "latest",
@@ -11,5 +22,6 @@
         "jquery-timelineme": "latest",
         "jqtimeline": "latest",
         "instant.page": "latest"
-    }
+    },
+    "homepage": "https://www.kyan001.com",
 }
