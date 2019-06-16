@@ -5,8 +5,8 @@
 
 {% block css %}
     <style>
-        .padding-top-left-15 {
-            padding-top: 15px;
+        .padding-bottom-left-15 {
+            padding-bottom: 15px;
             padding-left: 15px;
             padding-right: 0;
         }
@@ -20,7 +20,7 @@
             margin: auto;
         }
         .height-vh {
-            height: 19vh;
+            height: 29vh;
         }
         .bg-blue {
             background: #0376a5;
@@ -29,7 +29,7 @@
             background: #C73E3A;
         }
         .bg-grey {
-            background: #909090;
+            background: #787D7B;
         }
         .bg-yellow {
             background: #F7C242;
@@ -37,8 +37,11 @@
         .text-white {
             color: white;
         }
-        .text-white small {
+        .card-subtitle {
             text-transform: uppercase;
+        }
+        .img-responsive-65 {
+            max-width: 65%;
         }
     </style>
 {% endblock %}
@@ -46,42 +49,41 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row padding-right-15">
-        <div class="col-xs-12 col-sm-6 padding-top-left-15">
+        <div class="col-xs-12 padding-bottom-left-15">
             <a class="no-decoration" href="/progress/list">
                 <div class="flex-center-container height-vh img-rounded bg-blue">
                     <div class="flex-center text-center text-white">
                         <h2>{% trans "我的进度" %}</h2>
-                        <small>{% trans "管理您的进度" %}</small>
+                        <div class="card-subtitle">{% trans "管理您的进度" %}</div>
                     </div>
                 </div>
             </a>
         </div>
-        <div class="col-xs-12 col-sm-6 padding-top-left-15">
+        <div class="col-xs-6 padding-bottom-left-15">
             <a class="no-decoration" href="/chat/conversation?mode=quicknote">
                 <div class="flex-center-container height-vh img-rounded bg-grey">
                     <div class="flex-center text-center text-white">
                         <h2>{% trans "临时笔记" %}</h2>
-                        <small>{% trans "随手记录您的想法" %}</small>
+                        <div class="card-subtitle">{% trans "随手记录您的想法" %}</div>
                     </div>
                 </div>
             </a>
         </div>
-        <div class="col-xs-12 col-sm-6 padding-top-left-15">
+        <div class="col-xs-6 padding-bottom-left-15">
             <a class="no-decoration" href="//www.duetime.cn/beijingmore">
                 <div class="flex-center-container height-vh img-rounded bg-red">
                     <div class="flex-center text-center text-white">
-                        <h2>Beijing More</h2>
-                        <small>Every Street Has A Story</small>
+                        <img class="img-responsive-65" src="/static/img/index/logo_bjmore.png">
                     </div>
                 </div>
             </a>
         </div>
-        <div class="col-xs-12 col-sm-6 padding-top-left-15">
+        <div class="col-xs-12 padding-bottom-left-15">
             <a class="no-decoration" href="/robotalk">
                 <div class="flex-center-container height-vh img-rounded bg-yellow">
                     <div class="flex-center text-center text-white">
                         <h2>{% trans "智械聊天" %}</h2>
-                        <small>{% trans "快来加入我们的聊天吧" %}</small>
+                        <div class="card-subtitle">{% trans "快来加入我们的聊天吧" %}</div>
                     </div>
                 </div>
             </a>
