@@ -1,52 +1,91 @@
 {% extends "base.html" %}
-{% block title %}Welcome 欢迎{% endblock title %}
+{% load i18n %}
+
+{% block title %}{% trans "欢迎" %}{% endblock title %}
 
 {% block css %}
     <style>
-        .container-metro {
-            padding: 2px;
+        .padding-top-left-15 {
+            padding-top: 15px;
+            padding-left: 15px;
+            padding-right: 0;
         }
-        .col-12 img,
-        .col-6 img {
-            border: white solid 1px;
+        .padding-right-15 {
+            padding-right: 15px;
         }
-        .col-6 img {
-            width: 50%;
-            float: left;
+        .flex-center-container {
+            display: flex;
         }
-        .col-12 img {
-            width: 100%;
+        .flex-center {
+            margin: auto;
         }
-        .header img {
-            height: 47px;
+        .height-vh {
+            height: 19vh;
+        }
+        .bg-blue {
+            background: #0376a5;
+        }
+        .bg-red {
+            background: #C73E3A;
+        }
+        .bg-grey {
+            background: #909090;
+        }
+        .bg-yellow {
+            background: #F7C242;
+        }
+        .text-white {
+            color: white;
+        }
+        .text-white small {
+            text-transform: uppercase;
         }
     </style>
 {% endblock %}
 
 {% block content %}
-<div class="container-metro">
-    <div class="header col-12">
-        <img class="img-responsive" src="/static/img/index/m-header.jpg">
-    </div>
-    <div class="col-12">
-        <a class="no-decoration" href="/progress/list">
-            <img class="img-responsive" src="/static/img/index/m-prolist.jpg">
-        </a>
-    </div>
-    <div class="col-6">
-        <a class="no-decoration" href="/chat/conversation?mode=quicknote">
-            <img class="img-responsive" src="/static/img/index/m-quicknote.jpg">
-        </a>
-    </div>
-    <div class="col-6">
-        <a class="no-decoration" href="http://www.duetime.cn/beijingmore">
-            <img class="img-responsive" src="/static/img/index/m-bjmore.jpg">
-        </a>
-    </div>
-    <div class="col-12">
-        <a class="no-decoration" href="/robotalk">
-            <img class="img-responsive" src="/static/img/index/m-robotalk.jpg">
-        </a>
+<div class="container-fluid">
+    <div class="row padding-right-15">
+        <div class="col-xs-12 col-sm-6 padding-top-left-15">
+            <a class="no-decoration" href="/progress/list">
+                <div class="flex-center-container height-vh img-rounded bg-blue">
+                    <div class="flex-center text-center text-white">
+                        <h2>{% trans "我的进度" %}</h2>
+                        <small>{% trans "管理您的进度" %}</small>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-6 padding-top-left-15">
+            <a class="no-decoration" href="/chat/conversation?mode=quicknote">
+                <div class="flex-center-container height-vh img-rounded bg-grey">
+                    <div class="flex-center text-center text-white">
+                        <h2>{% trans "临时笔记" %}</h2>
+                        <small>{% trans "随手记录您的想法" %}</small>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-6 padding-top-left-15">
+            <a class="no-decoration" href="//www.duetime.cn/beijingmore">
+                <div class="flex-center-container height-vh img-rounded bg-red">
+                    <div class="flex-center text-center text-white">
+                        <h2>Beijing More</h2>
+                        <small>Every Street Has A Story</small>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-6 padding-top-left-15">
+            <a class="no-decoration" href="/robotalk">
+                <div class="flex-center-container height-vh img-rounded bg-yellow">
+                    <div class="flex-center text-center text-white">
+                        <h2>{% trans "智械聊天" %}</h2>
+                        <small>{% trans "快来加入我们的聊天吧" %}</small>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 {% endblock content %}
