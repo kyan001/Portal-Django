@@ -48,14 +48,17 @@ def searchOpusInfo(request):  # get # ajax
         elif opustype == 'book':
             url = 'https://douban.uieee.com/v2/book/search'  # 'https://api.douban.com/v2/book/search'
         else:
-            raise Exception('Wrong opus type')
+            raise Http404('Wrong opus type')
         param = {
             'count': count,
             'q': keyword,
         }
         param_encoded = urllib.parse.urlencode(param)
         url_final = url + '?' + param_encoded  # ?count=1&q=xxx
-        response = urllib.request.urlopen(url_final)
+        try:
+            response = urllib.request.urlopen(url_final)
+        except urllib.error.HTTPError as err:
+            raise Http404("ERROR: {err}, API_URL: {err.url}".format(err=err))
         info = response.read()
         cache.set(cache_key, info, cache_timeout)
     return HttpResponse(info, content_type='application/json')
