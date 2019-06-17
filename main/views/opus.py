@@ -44,9 +44,9 @@ def searchOpusInfo(request):  # get # ajax
         info = cached_info
     else:
         if opustype == 'movie':
-            url = 'https://api.douban.com/v2/movie/search'
+            url = 'https://douban.uieee.com/v2/movie/search'  # 'https://api.douban.com/v2/movie/search'
         elif opustype == 'book':
-            url = 'https://api.douban.com/v2/book/search'
+            url = 'https://douban.uieee.com/v2/book/search'  # 'https://api.douban.com/v2/book/search'
         else:
             raise Exception('Wrong opus type')
         param = {
