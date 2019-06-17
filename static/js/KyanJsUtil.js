@@ -19,7 +19,8 @@ var OpusInfoGetter = {
      * @param  {Function}   callback404 [call this function if has a error ]
      */
     "getIsbnInfo": function (isbn, callback, callback404) {
-        var isbn_search_api = "https://api.douban.com/v2/book/isbn/" + isbn
+        var isbn_search_url = "https://douban.uieee.com/v2/book/isbn/"  // "https://api.douban.com/v2/book/isbn/"
+        var isbn_search_api = isbn_search_url + isbn
         if (isbn !== "") {
             $.ajax({
                 type: "GET",
