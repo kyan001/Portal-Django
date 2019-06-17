@@ -92,9 +92,7 @@ def getOpusWordCloud(request):  # get # ajax
     def getOpusCachedInfo(opustype, keyword):
         cache_key = '{typ}:{kw}:info'.format(typ=opustype, kw=keyword.replace(' ', '_'))
         cached_info = cache.get(cache_key)
-        if type(cached_info) == bytes:
-            cached_info = cached_info.decode()
-        return json.loads(cached_info) if cached_info else None
+        return cached_info.get('data') if cached_info else None
 
     opusname = request.GET.get('name')  # 用户存的名字.
     opustype = request.GET.get('type')
