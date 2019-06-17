@@ -44,7 +44,6 @@ var OpusInfoGetter = {
      */
     'getBookInfo': function (name, callback, callback404) {
         var book_search_api = "/opus/searchopusinfo"
-        var book_search_api_douban = "https://api.douban.com/v2/book/search"
         if (name === "") {
             return null
         }
@@ -62,11 +61,12 @@ var OpusInfoGetter = {
                     callback404()
                 }
             },
-            success: function (data) {
+            success: function (resp) {
                 var info = {}
+                data = resp.data
                 info.exist = data.books[0] ? true : false
-                info.type = 'book'
-                info.api = book_search_api_douban + '?count=1&q=' + name
+                info.type = resp.meta.opustype
+                info.api = resp.meta.api
                 if (info.exist) {
                     info.title = data.books[0].title
                     info.origin_title = data.books[0].origin_title  // book only, optional
@@ -105,8 +105,6 @@ var OpusInfoGetter = {
      */
     'getMovieInfo': function (name, callback) {
         var movie_search_api = '/opus/searchopusinfo'
-        var movie_search_api_douban = 'https://api.douban.com/v2/movie/search'
-        var movie_info_api = 'https://api.douban.com/v2/movie/subject/'
         if (name === "") {
             return null
         }
@@ -126,7 +124,11 @@ var OpusInfoGetter = {
             },
             success: function (data) {
                 var info = {}
-                if (data.subjects[0]) {
+                data = resp.data
+                info.exist = data.subjects[0] ? true : false
+                info.type = resp.meta.opustype
+                info.api = resp.meta.api
+                if (info.exist) {
                     info.title = data.subjects[0].title
                     info.rating = data.subjects[0].rating.average
                     info.original_title = data.subjects[0].original_title  // movie only, optional
@@ -143,10 +145,7 @@ var OpusInfoGetter = {
                         info.image = data.subjects[0].images.medium
                     }
                 }
-                info.api = movie_search_api_douban + "?count=1&q=" + name
-                info.type = "movie"
                 info.match = OpusInfoGetter.checkHas(name, data.subjects[0])
-                info.exist = data.subjects[0] ? true : false
                 callback(info)
             }
         })

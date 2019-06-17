@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.core.cache import cache
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.http import Http404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
@@ -39,9 +40,9 @@ def searchOpusInfo(request):  # get # ajax
     keyword = request.GET.get('q')
     cache_key = '{typ}:{kw}:info'.format(typ=opustype, kw=keyword.replace(' ', '_'))
     cache_timeout = 60 * 60 * 24 * 7 * 2  # 2 weeks
-    cached_info = cache.get(cache_key)
-    if cached_info:
-        info = cached_info
+    cached_resp = cache.get(cache_key)
+    if cached_resp:
+        http_resp = cached_resp
     else:
         if opustype == 'movie':
             url = 'https://douban.uieee.com/v2/movie/search'  # 'https://api.douban.com/v2/movie/search'
@@ -60,8 +61,15 @@ def searchOpusInfo(request):  # get # ajax
         except urllib.error.HTTPError as err:
             raise Http404("ERROR: {err}, API_URL: {err.url}".format(err=err))
         info = response.read()
-        cache.set(cache_key, info, cache_timeout)
-    return HttpResponse(info, content_type='application/json')
+        http_resp = {
+            "meta": {
+                "opustype": opustype,
+                "api": url_final
+            },
+            "data": json.loads(info)
+        }
+        cache.set(cache_key, http_resp, cache_timeout)
+    return JsonResponse(http_resp)
 
 
 def generateWordCloud(txt, height=500, width=500):
