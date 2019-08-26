@@ -266,6 +266,8 @@ def plusone(request):  # GET
     progress.current = progress.current + 1
     progress.save()
     messages.success(request, _("进度") + " 《{}》 ".format(progress.name) + "+1 " + _("已更新"))
+    # add exp
+    util.userexp.addExp(user, "progress", 5, "{i18n_progress} 《{progress.name}》 +1".format(i18n_progress=_("进度"), progress=progress))
     # render
     errMsg = partial(util.ctrl.infoMsg, title=_("+1 失败"))
     return redirect(next_)
