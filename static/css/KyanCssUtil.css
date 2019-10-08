@@ -1,5 +1,5 @@
 /*!
- * KyanCssUtil.css v1.5.1
+ * KyanCssUtil.css v1.5.2
  */
 
 /* a */
@@ -288,4 +288,8 @@ a.no-decoration:hover,
     -webkit-transition-delay: 5s !important; /* Safari 和 Chrome */
 }
 
-
+@media (max-width: 767px) {
+    .visible-xs-block-soft {
+        display: block !important;
+    }
+}
