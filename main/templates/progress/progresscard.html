@@ -20,9 +20,17 @@
                                 </em>
                             {% endif %}
                         </div><!--.col-->
+                        {% if prg.is_plusone_ok %}
+                            <div class="flex-1">
+                                <span class="visible-xs-block plusone-btn innerlink pull-right hover-turning-container btn btn-{{ prg.contextual|default:'default' }} btn-block btn-xs" href="/progress/plusone?id={{ prg.id }}" title="+1">
+                                    <span>+1</span>
+                                </span>
+                            </div><!--.col-->
+                        {% endif %}
+                        <span class="invisible">·</span>
                         {% if prg.is_weblink_ok %}
                             <div class="flex-1">
-                                <span class="weblink innerlink pull-right badge hover-turning-container" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
+                                <span class="weblink innerlink pull-right hover-turning-container btn btn-default btn-block btn-xs" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
                                     <span class="glyphicon glyphicon-link"></span>
                                 </span>
                             </div><!--.col-->
@@ -49,8 +57,8 @@
                     {% endif %}
                 </tr>
             </table>
-            <div class="row-flex">
-                <div class="flex-7">
+            <div class="row">
+                <div class="col-xs-12">
                     <div class="progress text-center">
                         <div class="progress-bar progress-bar-{{ prg.contextual }}" style="width: {{ prg.persent }}%">
                             {% if prg.persent >= 25 %}
@@ -78,13 +86,6 @@
                         </div>
                     </div>
                 </div><!--.col-->
-                {% if prg.is_plusone_ok %}
-                    <div class="flex-1">
-                        <span class="innerlink btn btn-default btn-block btn-xs btn-xs-progress" href="/progress/plusone?id={{ prg.id }}" title="+1">
-                            <span>+1</span>
-                        </span>
-                    </div><!--.col-->
-                {% endif %}
             </div><!--.row-->
         </div>
     </a>
