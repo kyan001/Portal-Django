@@ -2,12 +2,6 @@
  * progresscard.css v2.3.2
  */
 /* progress-card */
-.progress-card {
-    opacity: 0.80;
-}
-.collapse:hover .progress-card {
-    opacity: 1;
-}
 .no-bottom-border {
     border-bottom: 0 !important;
 }
