@@ -27,7 +27,7 @@ function toggleSearchRow(btn){
         delete prev_scrollTop
     }
     $("html, body").animate({ scrollTop: target_scrollTop }, 200)
-    $("#search-row").slideToggle()
+    $("#search-row").slideToggle('fast')
     $("#search-input").focus()
     $(btn).toggleClass("active")
 }
