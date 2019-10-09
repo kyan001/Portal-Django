@@ -7,7 +7,7 @@
             <div class="panel-heading no-bottom-border progress-title text-nowrap">
                 <span class="panel-title">
                     <div class="row-flex">
-                        <div class="text-nowrap overflow-x-auto flex-9 no-scrollbar">
+                        <div class="text-nowrap overflow-x-auto flex-12 no-scrollbar">
                             <span class="prg-name">
                                 《<strong>{{ prg.name }}</strong>》
                             </span>
@@ -21,15 +21,15 @@
                             {% endif %}
                         </div><!--.col-->
                         {% if prg.is_plusone_ok %}
-                            <div class="flex-1">
-                                <span class="visible-xs-block-soft plusone-btn innerlink pull-right hover-turning-container btn btn-{{ prg.contextual|default:'default' }} btn-block btn-xs" href="/progress/plusone?id={{ prg.id }}" title="+1">
+                            <div class="flex-2 hover-flex-3">
+                                <span class="visible-xs-block-soft plusone-btn innerlink pull-right btn btn-{{ prg.contextual|default:'default' }} btn-block btn-xs" href="/progress/plusone?id={{ prg.id }}" title="+1">
                                     <span>+1</span>
                                 </span>
                             </div><!--.col-->
                         {% endif %}
                         <span class="invisible">·</span>
                         {% if prg.is_weblink_ok %}
-                            <div class="flex-1">
+                            <div class="flex-2">
                                 <span class="weblink innerlink pull-right hover-turning-container btn btn-default btn-block btn-xs" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
                                     <span class="glyphicon glyphicon-link"></span>
                                 </span>

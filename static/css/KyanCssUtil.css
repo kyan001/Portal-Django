@@ -225,6 +225,21 @@ a.no-decoration:hover,
 .flex-12 {
     flex: 12;
 }
+.hover-flex-1:hover {
+    flex: 1;
+}
+.hover-flex-2:hover {
+    flex: 2;
+}
+.hover-flex-3:hover {
+    flex: 3;
+}
+.hover-flex-7:hover {
+    flex: 7;
+}
+.hover-flex-8:hover {
+    flex: 8;
+}
 
 /* delay */
 .ani-delay-500 {
