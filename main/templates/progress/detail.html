@@ -283,6 +283,12 @@
                                                                 <span>{% trans "不修改当前的“上次更新”时间" %}</span>
                                                             </label>
                                                         </div>
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" name="savetodetail" value="on" {% if cuser.save_to_detail is True %}checked{% endif %}>
+                                                                {% trans "保存后留在" %}{% trans "当前页面" %}
+                                                            </label>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                         </table>

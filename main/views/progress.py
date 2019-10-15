@@ -191,7 +191,8 @@ def update(request):  # POST
     total = int(total) if total else 0
     current = request.POST.get('current')
     current = int(current)
-    keep_modified = request.POST.get("keepmodified") or False
+    keep_modified = request.POST.get("keepmodified") or None
+    save_to_detail = request.POST.get('savetodetail') or None
     if not name:
         return errMsg(_("名称不能为空"))
     if not weblink:
@@ -217,8 +218,11 @@ def update(request):  # POST
     progress.save(keep_modified=keep_modified)
     # render
     messages.success(request, _("进度") + " 《{}》 ".format(progress.name) + _("已更新"))
-    next_ = "/progress/detail?id={}".format(progress.id) if user.getUserpermission("progress.save_to_detail") else "/progress/list"
-    return redirect(next_)
+    if save_to_detail:
+        redirect_to = "/progress/detail?id={}".format(progress.id)
+    else:
+        redirect_to = "/progress/list"
+    return redirect(redirect_to)
 
 
 @util.user.login_required
@@ -382,7 +386,10 @@ def setsettings(request):  # POST
     def form_input_to_setting(input_name: str, permission_name: str):
         user = util.user.getCurrentUser(request)
         input_value = request.POST.get(input_name) or "off"
-        user.setUserpermission(permission_name, (input_value == "on"))
+        if input_value == "unset":
+            user.delUserpermission(permission_name)
+        else:
+            user.setUserpermission(permission_name, (input_value == "on"))
 
     form_input_to_setting("publicical", "progress.public_ical")
     form_input_to_setting("savetodetail", "progress.save_to_detail")
