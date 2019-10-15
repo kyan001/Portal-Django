@@ -123,7 +123,7 @@
                     </span>
                 </div>
                 <div class="progress">
-                    <div class="progress-bar progress-bar-striped active progress-bar-{{ prg.contextual }}" style="width: {{ prg.persent }}%; min-width: 7em">
+                    <div class="progress-bar progress-bar-striped active progress-bar-{{ prg.contextual }}" style="width: {{ prg.persent }}%; min-width: 7em;">
                         {% if prg.total == 0 %}
                             <strong>{{ prg.current }} / ∞</strong>
                         {% else %}
@@ -279,7 +279,7 @@
                                                     <td>
                                                         <div class="checkbox">
                                                             <label>
-                                                                <input type="checkbox" name="keepmodified" value="1">
+                                                                <input type="checkbox" name="keepmodified" value="on">
                                                                 <span>{% trans "不修改当前的“上次更新”时间" %}</span>
                                                             </label>
                                                         </div>
@@ -455,7 +455,7 @@
         OPUS.initInfo()
         FORM.checkEditMode()
         RENDER.syncTotal()
-        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip"]').tooltip()
         $('input.editable').keydown(function () {
             if (event.keyCode==13) {
                 $('#save').click()
@@ -465,7 +465,7 @@
         $('input.editable').on('input', function () {
             FORM.checkEditMode()
         })
-    });
+    })
     $(document).ajaxError(function (event, jqxhr, settings, exception) {
         RENDER.showLoading("off")
     })
@@ -488,10 +488,10 @@
                 return false
             }
             if (parseInt(FORM.INPUTS.total.val()) > 0 && parseInt(FORM.INPUTS.current.val()) == parseInt(FORM.INPUTS.total.val())) {
-                $.warning("{% trans '进度已达到最大值' %}");
-                return false;
+                $.warning("{% trans '进度已达到最大值' %}")
+                return false
             }
-            FORM.INPUTS.current.val(parseInt(FORM.INPUTS.current.val()) + 1);
+            FORM.INPUTS.current.val(parseInt(FORM.INPUTS.current.val()) + 1)
             FORM.checkEditMode()
         },
         /**
@@ -533,7 +533,7 @@
         'saveEdit': function () {
             if (FORM.fullValidation()) {
                 disableAllBtn()
-                $('#saveform').submit();
+                $('#saveform').submit()
                 return true
             } else {
                 return false
@@ -546,7 +546,7 @@
             var result = confirm("{% trans '确定删除此进度？' %}\n{% trans '（' %}{% trans '删除操作不可恢复' %}{% trans '）' %}")
             if (result) {
                 disableAllBtn()
-                $("#deleteform").submit();
+                $("#deleteform").submit()
             } else {
                 $.info("{% trans '删除操作已取消' %}")
             }
@@ -557,21 +557,21 @@
         'fullValidation': function () {
             if (FORM.INPUTS.name.val() == "") {
                 $.danger("{% trans '名称不能为空' %}")
-                return false;
+                return false
             }
             if (FORM.INPUTS.total.val() == '∞' || FORM.INPUTS.total.val() == "") {
-                FORM.INPUTS.total.val(0);
+                FORM.INPUTS.total.val(0)
             }
             if (FORM.INPUTS.current.val() == '') {
                 FORM.INPUTS.current.val(0)
             }
             if (isNaN(FORM.INPUTS.current.val())) {
                 $.danger("{% trans '输入的更新的进度' %} " +  FORM.INPUTS.current.val() + " {% trans '必须是纯数字' %}{% trans '！' %}")
-                return false;
+                return false
             }
             if (parseInt(FORM.INPUTS.total.val()) > 0 && parseInt(FORM.INPUTS.current.val()) > parseInt(FORM.INPUTS.total.val())) {
                 $.danger("{% trans '错误' %}{% trans '：' %}{% trans '当前进度' %} " + FORM.INPUTS.current.val() + " " + "{% trans '大于' %}{% trans '总共' %}" + " " + FORM.INPUTS.total.val())
-                return false;
+                return false
             }
             return true
         },
@@ -951,7 +951,7 @@
         'showImageColor': function (info) {
             OpusInfoGetter.getImageColor(info.images.small, '{{prg.id}}', function (result) {
                 $('#color-indicator').css('color', result.color)
-            });
+            })
         },
         /**
          * 检查作品信息可见性
