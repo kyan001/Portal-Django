@@ -51,12 +51,11 @@
     <div id="form-wrap" class="row">
         <div id="form-div" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-xs-12">
             <form id="login-form" action="/user/checklogin" method="post">
-                {% csrf_token %}
                 <div id="username-group" class="one-group input-group">
                     <span class="input-group-addon text-muted" title="{% trans '必填' %}{% trans '，' %}{% trans '只能包含“英文字母”、“数字”和“英文句号”' %}" data-toggle="tooltip" data-placement="top">
                         <span class="glyphicon glyphicon-user"></span>
                     </span>
-                    <input type="text" class="form-control" name="username" placeholder="{% trans '用户名' %}" autofocus="autofocus" onblur="validateUsername('onblur')" autocomplete="username">
+                    <input id="id_username" type="text" class="form-control" name="username" placeholder="{% trans '用户名' %}" autofocus="autofocus" onblur="validateUsername('onblur')" autocomplete="username" required>
                 </div>
                 <div id="question-group" class="one-group well well-sm">
                     <span class="glyphicon glyphicon-comment"></span>
@@ -66,7 +65,7 @@
                     <span class="input-group-addon text-muted" title="{% trans '必填' %}{% trans '，' %}{% trans '回答 “答案” 或 “备选答案” 均可正常登入' %}" data-toggle="tooltip" data-placement="top">
                         <span class="glyphicon glyphicon-asterisk"></span>
                     </span>
-                    <input type="password" class="form-control clean-when-fold" name="answer" placeholder="{% trans '密码或答案' %}" autocomplete="password">
+                    <input id="id_password" type="password" class="form-control clean-when-fold" name="answer" placeholder="{% trans '密码或答案' %}" autocomplete="current-password" required>
                     <span id="show-password" class="input-group-addon text-muted" onmouseover="$(this).siblings('input').attr('type','text')" onmouseout="$(this).siblings('input').attr('type','password')">
                         <span class="glyphicon glyphicon-eye-open"></span>
                     </span>
@@ -81,6 +80,7 @@
                     <input id="rememberme-content" type="text" class="form-control" value="{% trans '记住我' %}" readonly="readonly">
                 </div>
                 <input type="hidden" name="next" value="{{ next }}">
+                {% csrf_token %}
             </form>
             <div class="row">
                 <div class="col-xs-12">
