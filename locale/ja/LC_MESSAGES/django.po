@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 13:32+0800\n"
+"POT-Creation-Date: 2019-10-28 16:35+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: FULL NAME <EMILL@ADDRESS>\n"
 "Language-Team: Japanese <i18n@kyan001.com>\n"
@@ -21,64 +21,64 @@ msgstr ""
 #: main/models.py:29
 #, python-brace-format
 msgid "您查找的 {t} 并不存在。（查询参数 {a} {k}）"
-msgstr ""
+msgstr "あなたが探している{t} は存在しません。（パラメーター クエリ{a} {k}）"
 
 #: main/models.py:209
 msgid "进度活跃度"
-msgstr ""
+msgstr "アクティビティーの進捗"
 
 #: main/models.py:210
 msgid "用户活跃度"
-msgstr ""
+msgstr "ユーザーアクティビティ"
 
 #: main/models.py:211
 msgid "消息活跃度"
-msgstr ""
+msgstr "チャートアクティビティー"
 
 #: main/models.py:212
 msgid "错误类别"
-msgstr ""
+msgstr "カテゴリー錯誤"
 
 #: main/models.py:300 main/templates/progress/detail.html:617
 #: main/templates/progress/new.html:92 main/templates/progress/new.html:225
 #: main/templates/progress/new.html:319
 msgid "书"
-msgstr ""
+msgstr "書籍"
 
 #: main/models.py:300 main/templates/progress/detail.html:619
 #: main/templates/progress/new.html:94
 msgid "漫画"
-msgstr ""
+msgstr "漫画"
 
 #: main/models.py:300 main/templates/progress/detail.html:625
 #: main/templates/progress/new.html:95
 msgid "动画"
-msgstr ""
+msgstr "アニメ"
 
 #: main/models.py:300 main/templates/progress/detail.html:626
 #: main/templates/progress/new.html:96
 msgid "电视剧"
-msgstr ""
+msgstr "ドラマ"
 
 #: main/models.py:300 main/templates/progress/detail.html:627
 #: main/templates/progress/new.html:97
 msgid "公开课"
-msgstr ""
+msgstr "オープンクラス"
 
 #: main/models.py:300 main/templates/progress/detail.html:628
 #: main/templates/progress/new.html:98
 msgid "纪录片"
-msgstr ""
+msgstr "ドキュメンタリー"
 
 #: main/models.py:300 main/templates/progress/detail.html:629
 #: main/templates/progress/new.html:99
 msgid "视频"
-msgstr ""
+msgstr "ビデオ"
 
 #: main/models.py:300 main/templates/progress/detail.html:621
 #: main/templates/progress/new.html:100
 msgid "小说"
-msgstr ""
+msgstr "小説"
 
 #: main/models.py:302 main/views/badge.py:23 main/views/chat.py:74
 #: main/views/chat.py:121 main/views/chat.py:124 main/views/opus.py:26
@@ -89,20 +89,20 @@ msgstr ""
 #: main/views/superuser.py:165 main/views/user.py:47 main/views/user.py:60
 #: util/user.py:24 util/user.py:26
 msgid "{} 参数不能为空"
-msgstr ""
+msgstr "引数 '{}' を空にできません"
 
 #: main/models.py:315 main/templates/progress/list.html:71
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/user/profile.html:145
 msgid "进行中"
-msgstr ""
+msgstr "進捗中"
 
 #: main/models.py:316 main/templates/progress/list.html:35
 #: main/templates/progress/list.html:71 main/templates/progress/list.html:94
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/user/profile.html:147
 msgid "追剧中"
-msgstr ""
+msgstr "追いかけ中"
 
 #: main/models.py:317 main/templates/progress/list.html:117
 #: main/templates/progress/msg-welcome.html:6
@@ -110,7 +110,7 @@ msgstr ""
 #: main/templates/progress/timeline.html:152
 #: main/templates/user/profile.html:146 main/views/progress.py:432
 msgid "待阅读"
-msgstr ""
+msgstr "あとで読む"
 
 #: main/models.py:318 main/templates/progress/list.html:143
 #: main/templates/progress/timeline-event.html:22
@@ -118,19 +118,19 @@ msgstr ""
 #: main/templates/user/profile.html:142 main/templates/user/public.html:89
 #: main/views/progress.py:437
 msgid "出错"
-msgstr ""
+msgstr "エラー"
 
 #: main/models.py:321 main/templates/progress/archive.html:14
 #: main/templates/progress/msg-welcome.html:7
 #: main/templates/user/profile.html:143
 msgid "已完成"
-msgstr ""
+msgstr "完了しました"
 
 #: main/models.py:322 main/templates/progress/archive.html:35
 #: main/templates/progress/msg-welcome.html:7
 #: main/templates/user/profile.html:144
 msgid "冻结中"
-msgstr ""
+msgstr "非アクティブにされた"
 
 #: main/models.py:342
 msgid "更新进度状态失败"
@@ -142,37 +142,37 @@ msgstr ""
 
 #: main/templates/404.html:29
 msgid "你来到了一个不存在的地方"
-msgstr ""
+msgstr "あなたは実在しない場所に来ました"
 
 #: main/templates/404.html:33
 msgid "你要访问的页面不存在"
-msgstr ""
+msgstr "お探しのページは見つかりませんでした"
 
 #: main/templates/404.html:39 main/templates/500.html:38
 #: main/templates/msg.html:52
 msgid "点此回到上个页面"
-msgstr ""
+msgstr "前のページに戻る"
 
 #: main/templates/500.html:29
 msgid "服务器出现了一个小问题"
-msgstr ""
+msgstr "サーバー側に問題が発生しました"
 
 #: main/templates/500.html:33
 msgid "服务器内部错误，请联系服务器管理员"
-msgstr ""
+msgstr "内部サーバーエラー、サーバー管理担当者に連絡してください"
 
 #: main/templates/badge/detail.html:4
 msgid "徽章详情"
-msgstr ""
+msgstr "バッジ詳細"
 
 #: main/templates/badge/detail.html:18 main/templates/badge/list.html:4
 #: main/templates/userbar.html:115
 msgid "徽章列表"
-msgstr ""
+msgstr "バッジリスト"
 
 #: main/templates/badge/detail.html:42 main/templates/badge/list.html:50
 msgid "设计师"
-msgstr ""
+msgstr "デザイナー"
 
 #: main/templates/badge/detail.html:42 main/templates/badge/detail.html:50
 #: main/templates/badge/detail.html:54 main/templates/badge/list.html:50
@@ -201,311 +201,315 @@ msgstr ""
 #: main/views/user.py:243 main/views/user.py:246 main/views/user.py:251
 #: main/views/user.py:305
 msgid "："
-msgstr ""
+msgstr "："
 
 #: main/templates/badge/detail.html:50 main/templates/badge/list.html:54
 msgid "加入时间"
-msgstr ""
+msgstr "ユーザー登録日"
 
 #: main/templates/badge/detail.html:54
 msgid "拥有人数"
-msgstr ""
+msgstr "ユーザー数"
 
 #: main/templates/base.html:72
 msgid "回到上一页"
-msgstr ""
+msgstr "前のページに戻る"
 
 #: main/templates/chat/chater.html:12 main/templates/index/index-m.html:66
 #: main/templates/index/index.html:358 main/templates/index/index.html:450
 #: main/views/chat.py:27 main/views/user.py:277 util/ctrl.py:30
 msgid "临时笔记"
-msgstr ""
+msgstr "クイックノート"
 
 #: main/templates/chat/chater.html:15
 msgctxt "宾格"
 msgid "我"
-msgstr ""
+msgstr "私"
 
 #: main/templates/chat/conversation.html:4
 msgid "对话"
-msgstr ""
+msgstr "会話"
 
 #: main/templates/chat/conversation.html:33
 msgid "回到收信箱"
-msgstr ""
+msgstr "受信トレイに戻る"
 
 #: main/templates/chat/conversation.html:48
 msgid "发送消息"
-msgstr ""
+msgstr "メッセージを送信する"
 
 #: main/templates/chat/conversation.html:50
 msgid "来自"
-msgstr ""
+msgstr "From"
 
 #: main/templates/chat/conversation.html:69
 #: main/templates/superuser/broadcast.html:51
 msgid "标题（选填）"
-msgstr ""
+msgstr "タイトル（オプショナル）"
 
 #: main/templates/chat/conversation.html:79
 #: main/templates/chat/conversation.html:81
 msgid "用户昵称"
-msgstr ""
+msgstr "ユーザーニックネーム"
 
 #: main/templates/chat/conversation.html:86
 #: main/templates/robotalk/index.html:83
 #: main/templates/superuser/broadcast.html:64
 msgid "发送"
-msgstr ""
+msgstr "送信する"
 
 #: main/templates/chat/conversation.html:94
 #: main/templates/superuser/broadcast.html:72
 msgid "消息内容"
-msgstr ""
+msgstr "メッセージ詳細"
 
 #: main/templates/chat/conversation.html:114
 #, python-format
 msgid "你与 @%(nickname)s 还没有说过话"
-msgstr ""
+msgstr "あなたは@%(nickname)s とまだ話したことがない"
 
 #: main/templates/chat/conversation.html:118
 msgid "对话的历史记录会显示在这里"
-msgstr ""
+msgstr "会話履歴はここに表示されます"
 
 #: main/templates/chat/conversation.html:200
 msgid "错误：用户昵称不能为空"
-msgstr ""
+msgstr "エラー：ユーザーのニックネームは空にできません"
 
 #: main/templates/chat/conversation.html:204
 msgid "错误：用户昵称不存在"
-msgstr ""
+msgstr "エラー：ユーザーニックネームは存在しません"
 
 #: main/templates/chat/conversation.html:209
 #: main/templates/superuser/broadcast.html:126
 msgid "错误：消息内容不能为空"
-msgstr ""
+msgstr "エラー：メッセージが空きにできません"
 
 #: main/templates/chat/inbox.html:4 main/templates/chat/inbox.html:75
 #: util/ctrl.py:28
 msgid "收信箱"
-msgstr ""
+msgstr "受信トレイ"
 
 #: main/templates/chat/inbox.html:43
 msgid "发新消息"
-msgstr ""
+msgstr "メッセージを送る"
 
 #: main/templates/chat/inbox.html:54 main/templates/chat/inbox.html:82
 msgid "人"
-msgstr ""
+msgstr "人"
 
 #: main/templates/chat/inbox.html:66 main/templates/chat/inbox.html:94
 #: main/templates/progress/detail.html:405 main/templates/user/profile.html:115
 #: main/templates/user/profile.html:123 main/templates/user/profile.html:131
 msgid "无"
-msgstr ""
+msgstr "なし"
 
 #: main/templates/chat/inbox.html:145
 msgid "没有任何消息"
-msgstr ""
+msgstr "新着メッセージはありませんでした"
 
 #: main/templates/chat/inbox.html:159
 msgid "跳到最后一页/第一页"
-msgstr ""
+msgstr "最後/最初のページにジャンプする"
 
 #: main/templates/index/index-m.html:4 main/templates/index/index.html:4
 msgid "欢迎"
-msgstr ""
+msgstr "ようこそ"
 
 #: main/templates/index/index-m.html:56 main/templates/index/index.html:351
 #: main/templates/index/index.html:396
 #: main/templates/progress/navdropdown.html:26 main/templates/userbar.html:96
 #: main/views/progress.py:38 main/views/user.py:267
 msgid "我的进度"
-msgstr ""
+msgstr "私の進捗"
 
 #: main/templates/index/index-m.html:57 main/templates/index/index.html:397
 msgid "管理您的进度"
-msgstr ""
+msgstr "あなたの進捗管理を行う"
 
 #: main/templates/index/index-m.html:67 main/templates/index/index.html:451
 #: main/views/user.py:279
 msgid "随手记录您的想法"
-msgstr ""
+msgstr "いつでも思いついた時に、アイデアを書き留める"
 
 #: main/templates/index/index-m.html:85 main/templates/index/index.html:364
 #: main/templates/index/index.html:492 main/templates/robotalk/index.html:4
 #: main/templates/robotalk/index.html:64 main/templates/userbar.html:102
 msgid "智械聊天"
-msgstr ""
+msgstr "AIチャート"
 
 #: main/templates/index/index-m.html:86 main/templates/index/index.html:493
 msgid "快来加入我们的聊天吧"
-msgstr ""
+msgstr "今すぐグループチャートへ"
 
 #: main/templates/index/index.html:375
 msgid "生活的战争，并不总是为那些更强壮或更迅速的人而存在。"
 msgstr ""
+"人生の戦いは、必ずしもより強くて、より頭の回転が早い人に向いてに存在するとは"
+"限らない"
 
 #: main/templates/index/index.html:376
 msgid "但或迟或早，胜利的人"
-msgstr ""
+msgstr "でも遅かれ早かれ勝つ人は"
 
 #: main/templates/index/index.html:377
 msgid "始终坚信"
-msgstr ""
+msgstr "“必ず勝つ”と"
 
 #: main/templates/index/index.html:378
 msgid "“我会赢”。"
-msgstr ""
+msgstr "いつでも信じている"
 
 #: main/templates/index/index.html:381
 msgid "尽情享受"
-msgstr ""
+msgstr "思う存分楽しんでください"
 
 #: main/templates/index/index.html:381 main/templates/index/index.html:383
 #: main/templates/progress/detail.html:576
 msgid "！"
-msgstr ""
+msgstr "！"
 
 #: main/templates/index/index.html:382
 msgid "欢迎来到"
-msgstr ""
+msgstr "ようこそ"
 
 #: main/templates/index/index.html:383
 msgid "我要加入"
-msgstr ""
+msgstr "ゴー"
 
 #: main/templates/index/index.html:588
 msgid "网站主人，"
-msgstr ""
+msgstr "ウェブサイトオーナーは、"
 
 #: main/templates/index/index.html:589
 msgid "深沉的爱着一切美好的事物。"
-msgstr ""
+msgstr "美しいことを深く愛している"
 
 #: main/templates/index/index.html:592
 msgid "我的网站"
-msgstr ""
+msgstr "マイページ"
 
 #: main/templates/index/index.html:593
 msgid "邮件"
-msgstr ""
+msgstr "メール"
 
 #: main/templates/index/index.html:602
 msgid "音乐"
-msgstr ""
+msgstr "音楽"
 
 #: main/templates/index/index.html:604
 msgid "吉他，钢琴，声音。"
-msgstr ""
+msgstr "ギター、ピアノ、ヴォイス"
 
 #: main/templates/index/index.html:605
 msgid "当言语渐弱，音乐响起。"
-msgstr ""
+msgstr "言葉が失敗する時には、音楽が語る。"
 
 #: main/templates/index/index.html:608
 msgid "我的音乐"
-msgstr ""
+msgstr "マイミュージック"
 
 #: main/templates/index/index.html:618
 msgid "成就"
-msgstr ""
+msgstr "アチーブメント"
 
 #: main/templates/index/index.html:620
 msgid "创造，可能，"
-msgstr ""
+msgstr "創造性、可能性"
 
 #: main/templates/index/index.html:621
 msgid "热忱，意志。"
-msgstr ""
+msgstr "熱意、意志"
 
 #: main/templates/index/index.html:624
 msgid "我的"
-msgstr ""
+msgstr "マイ"
 
 #: main/templates/index/index.html:634
 msgid "想法"
-msgstr ""
+msgstr "アイディア"
 
 #: main/templates/index/index.html:636
 msgid "我思，"
-msgstr ""
+msgstr "考え続けている私は、"
 
 #: main/templates/index/index.html:637
 msgid "我酷。"
-msgstr ""
+msgstr "かっこいい。"
 
 #: main/templates/index/index.html:641
 msgid "与我对话"
-msgstr ""
+msgstr "私と会話する"
 
 #: main/templates/msg.html:5 main/templates/msg.html:32
 msgid "提示信息"
-msgstr ""
+msgstr "通知"
 
 #: main/templates/msg.html:46
 msgid "点此跳转至"
-msgstr ""
+msgstr "ジャンプ"
 
 #: main/templates/opus/detail.html:29 main/templates/opus/detail.html:35
 msgid "当前页面的二维码"
-msgstr ""
+msgstr "カレントページのバーコード"
 
 #: main/templates/opus/detail.html:39
 msgid "一键添加到我的进度"
-msgstr ""
+msgstr "ワンクリックでマイプロセスに入れる"
 
 #: main/templates/opus/detail.html:47
 msgid "所有者"
-msgstr ""
+msgstr "オーナー"
 
 #: main/templates/opus/detail.html:55 main/templates/progress/detail.html:161
 #: main/templates/progress/new.html:60 main/templates/progress/search.html:31
 msgid "名称"
-msgstr ""
+msgstr "ネーム"
 
 #: main/templates/opus/detail.html:62 main/templates/progress/detail.html:189
 #: main/templates/progress/new.html:79 main/templates/progress/search.html:31
 msgid "备注"
-msgstr ""
+msgstr "コメント"
 
 #: main/templates/opus/detail.html:67 main/templates/progress/detail.html:201
 #: main/templates/progress/detail.html:580 main/templates/progress/new.html:110
 msgid "总共"
-msgstr ""
+msgstr "トータル"
 
 #: main/templates/opus/detail.html:72 main/templates/progress/detail.html:215
 #: main/templates/progress/detail.html:580 main/templates/progress/new.html:130
 msgid "当前进度"
-msgstr ""
+msgstr "カレント"
 
 #: main/templates/opus/detail.html:77 main/templates/progress/detail.html:318
 #: main/templates/progress/progresscard.html:51
 msgid "开始时间"
-msgstr ""
+msgstr "作成時間"
 
 #: main/templates/opus/detail.html:81 main/templates/progress/detail.html:328
 #: main/templates/progress/progresscard.html:55
 msgid "上次更新"
-msgstr ""
+msgstr "ラストアップデート"
 
 #: main/templates/opus/detail.html:85 main/templates/progress/detail.html:151
 msgid "状态"
-msgstr ""
+msgstr "状態"
 
 #: main/templates/opus/detail.html:96
 msgid "进度链接"
-msgstr ""
+msgstr "プロセスリンク"
 
 #: main/templates/opus/detail.html:101 main/templates/opus/detail.html:110
 #: main/templates/progress/detail.html:243 main/templates/user/setting.html:79
 #: main/templates/user/setting.html:83
 msgid "链接"
-msgstr ""
+msgstr "・リンク"
 
 #: main/templates/opus/detail.html:114
+#, fuzzy
+#| msgid "进度连接二维码"
 msgid "进度链接二维码"
-msgstr ""
+msgstr "プロセスリンクへのバーコード"
 
 #: main/templates/progress/archive.html:4
 #: main/templates/progress/detail.html:74
@@ -513,29 +517,30 @@ msgstr ""
 #: main/templates/progress/navdropdown.html:20
 #: main/templates/progress/navlink.html:13 main/views/progress.py:62
 msgid "进度存档"
-msgstr ""
+msgstr "プロセスアーカイブ"
 
 #: main/templates/progress/archive.html:24
 msgid "进度完成后，会自动显示在这里"
-msgstr ""
+msgstr "プロセスが終了した後、ここで表示される。"
 
 #: main/templates/progress/archive.html:45
 msgid "冻结中的进度，会自动显示在这里，可以随时再继续阅读。"
 msgstr ""
+"一時停止されているプロセスがここで表示される。いつでもプロセス再開できる。"
 
 #: main/templates/progress/base-list.html:18
 #: main/templates/progress/detail.html:93
 #: main/templates/progress/msg-welcome.html:5
 #: main/templates/progress/new.html:5 main/templates/progress/new.html:49
 msgid "新增进度"
-msgstr ""
+msgstr "ニュープロセス"
 
 #: main/templates/progress/detail.html:5 main/views/progress.py:220
 #: main/views/progress.py:247 main/views/progress.py:272
 #: main/views/progress.py:274 main/views/progress.py:300
 #: main/views/progress.py:324
 msgid "进度"
-msgstr ""
+msgstr "プロセス"
 
 #: main/templates/progress/detail.html:79 main/templates/progress/list.html:4
 #: main/templates/progress/msg-welcome.html:6
@@ -545,29 +550,29 @@ msgstr ""
 #: main/templates/user/setting.html:152 main/views/progress.py:43
 #: main/views/progress.py:107 util/ctrl.py:26
 msgid "进度列表"
-msgstr ""
+msgstr "プロセスリスト"
 
 #: main/templates/progress/detail.html:110
 msgid "分享你的进度信息"
-msgstr ""
+msgstr "シェアプロセス"
 
 #: main/templates/progress/detail.html:143 main/templates/user/profile.html:69
 #: main/templates/user/public.html:57
 msgid "进度信息"
-msgstr ""
+msgstr "プロセスインフォ"
 
 #: main/templates/progress/detail.html:147 main/views/progress.py:300
 msgid "已冻结"
-msgstr ""
+msgstr "停止されている"
 
 #: main/templates/progress/detail.html:157
 msgid "百分比"
-msgstr ""
+msgstr "パーセンテージ"
 
 #: main/templates/progress/detail.html:178 main/templates/progress/new.html:343
 #: main/templates/user/signup.html:185 main/templates/user/signup.html:189
 msgid "是"
-msgstr ""
+msgstr "は"
 
 #: main/templates/progress/detail.html:180
 #: main/templates/progress/detail.html:553 main/templates/user/setting.html:79
@@ -585,11 +590,11 @@ msgstr ""
 
 #: main/templates/progress/detail.html:181 main/templates/progress/new.html:343
 msgid "吗？"
-msgstr ""
+msgstr "か"
 
 #: main/templates/progress/detail.html:252
 msgid "在新窗口打开链接"
-msgstr ""
+msgstr "リンク先を新しいウィンドウで開く"
 
 #: main/templates/progress/detail.html:278
 msgid "保存选项"
@@ -604,41 +609,43 @@ msgid "保存后留在"
 msgstr ""
 
 #: main/templates/progress/detail.html:289
+#, fuzzy
+#| msgid "当前页面的二维码"
 msgid "当前页面"
-msgstr ""
+msgstr "カレントページのバーコード"
 
 #: main/templates/progress/detail.html:300 main/templates/progress/new.html:174
 msgid "保存"
-msgstr ""
+msgstr "セーブ"
 
 #: main/templates/progress/detail.html:313
 msgid "时间信息"
-msgstr ""
+msgstr "タイムインフォ"
 
 #: main/templates/progress/detail.html:326
 #: main/templates/progress/progresscard.html:46
 msgid "完成时间"
-msgstr ""
+msgstr "完成時間"
 
 #: main/templates/progress/detail.html:337
 msgid "平均速度"
-msgstr ""
+msgstr "平均速度"
 
 #: main/templates/progress/detail.html:341
 msgid "每个"
-msgstr ""
+msgstr "一つごとに"
 
 #: main/templates/progress/detail.html:348
 msgid "用时"
-msgstr ""
+msgstr "かかる"
 
 #: main/templates/progress/detail.html:353
 msgid "预计完成"
-msgstr ""
+msgstr "完成予定時間"
 
 #: main/templates/progress/detail.html:365
 msgid "作品信息"
-msgstr ""
+msgstr "作品インフォ"
 
 #: main/templates/progress/detail.html:369
 msgid "封面"
@@ -647,53 +654,53 @@ msgstr ""
 #: main/templates/progress/detail.html:387
 #: main/templates/progress/progresscard.html:15
 msgid "作品代表色"
-msgstr ""
+msgstr "作品の色"
 
 #: main/templates/progress/detail.html:393
 msgid "豆瓣评分"
-msgstr ""
+msgstr "DOUBAN 評価"
 
 #: main/templates/progress/detail.html:404
 msgid "标签"
-msgstr ""
+msgstr "ラベル"
 
 #: main/templates/progress/detail.html:418
 msgid "彻底删除"
-msgstr ""
+msgstr "削除"
 
 #: main/templates/progress/detail.html:424 main/views/progress.py:317
 msgid "激活"
-msgstr ""
+msgstr "アクティブ化する"
 
 #: main/templates/progress/detail.html:429 main/views/progress.py:293
 msgid "冻结"
-msgstr ""
+msgstr "凍結"
 
 #: main/templates/progress/detail.html:498 main/views/progress.py:268
 msgid "进度已达到最大值"
-msgstr ""
+msgstr "進捗はマクスまで至った"
 
 #: main/templates/progress/detail.html:553
 msgid "确定删除此进度？"
-msgstr ""
+msgstr "この進捗を削除する？"
 
 #: main/templates/progress/detail.html:553
 msgid "删除操作不可恢复"
-msgstr ""
+msgstr "削除は元に戻すことはできない"
 
 #: main/templates/progress/detail.html:558
 msgid "删除操作已取消"
-msgstr ""
+msgstr "削除がキャンセルされた"
 
 #: main/templates/progress/detail.html:566 main/templates/progress/new.html:260
 #: main/templates/progress/new.html:298 main/views/progress.py:197
 #: main/views/progress.py:367
 msgid "名称不能为空"
-msgstr ""
+msgstr "名称は書いていない"
 
 #: main/templates/progress/detail.html:576
 msgid "输入的更新的进度"
-msgstr ""
+msgstr "新しく入れた進捗は"
 
 #: main/templates/progress/detail.html:576
 msgid "必须是纯数字"
@@ -704,23 +711,23 @@ msgstr ""
 #: main/views/superuser.py:165 main/views/user.py:41 main/views/user.py:47
 #: main/views/user.py:60
 msgid "错误"
-msgstr ""
+msgstr "エラー"
 
 #: main/templates/progress/detail.html:580
 msgid "大于"
-msgstr ""
+msgstr "より大きい"
 
 #: main/templates/progress/detail.html:898
 msgid "每页"
-msgstr ""
+msgstr "１ページ当たり"
 
 #: main/templates/progress/detail.html:903
 msgid "每集"
-msgstr ""
+msgstr "エピソードごとに"
 
 #: main/templates/progress/list.html:31 main/templates/progress/search.html:31
 msgid "搜索"
-msgstr ""
+msgstr "サーチ"
 
 #: main/templates/progress/list.html:55
 #: main/templates/progress/navdropdown.html:22
@@ -728,28 +735,28 @@ msgstr ""
 #: main/templates/progress/search.html:4 main/templates/progress/search.html:57
 #: main/templates/progress/search.html:160 main/views/progress.py:82
 msgid "进度搜索"
-msgstr ""
+msgstr "プロセスサーチ"
 
 #: main/templates/progress/list.html:81
 msgid "您还没有任何进行中的进度"
-msgstr ""
+msgstr "進行中の進捗は一つもいない"
 
 #: main/templates/progress/list.html:104
 msgid "您没有在追剧的进度"
-msgstr ""
+msgstr "フォローしている進捗はない"
 
 #: main/templates/progress/list.html:128
 msgid "您没有尚未开始的进度"
-msgstr ""
+msgstr "まだ始めていない進捗がない"
 
 #: main/templates/progress/msg-welcome.html:5
 #: main/templates/user/setting.html:133 main/templates/user/setting.html:156
 msgid "请点击"
-msgstr ""
+msgstr "クリック"
 
 #: main/templates/progress/msg-welcome.html:5
 msgid "按钮添加新的进度"
-msgstr ""
+msgstr "ボタンを押して新しい進捗を追加する"
 
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/progress/msg-welcome.html:7
@@ -780,18 +787,18 @@ msgstr ""
 #: main/templates/progress/msg-welcome.html:7
 #: main/templates/progress/search.html:31 main/views/opus.py:102
 msgid "和"
-msgstr ""
+msgstr "と"
 
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/progress/msg-welcome.html:7
 msgid "的进度会存放在"
-msgstr ""
+msgstr "の進捗は"
 
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/progress/msg-welcome.html:7
 #: main/templates/user/setting.html:97 main/templates/user/setting.html:100
 msgid "页面"
-msgstr ""
+msgstr "パージ"
 
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/progress/msg-welcome.html:7
@@ -800,176 +807,176 @@ msgstr ""
 
 #: main/templates/progress/msg-welcome.html:9
 msgid "最后，祝您使用愉快！"
-msgstr ""
+msgstr "エンジョイ！"
 
 #: main/templates/progress/navdropdown.html:18
 #: main/templates/user/setting.html:97
 msgid "进度详情"
-msgstr ""
+msgstr "進捗詳細"
 
 #: main/templates/progress/navdropdown.html:24
 #: main/templates/progress/navlink.html:25
 #: main/templates/progress/timeline.html:4
 msgid "进度历程"
-msgstr ""
+msgstr "進捗タイムライン"
 
 #: main/templates/progress/new.html:63
 msgid "作品名称"
-msgstr ""
+msgstr "作品名称"
 
 #: main/templates/progress/new.html:63
 msgid "进度名称"
-msgstr ""
+msgstr "進捗名称"
 
 #: main/templates/progress/new.html:75 main/templates/user/signup.html:442
 #: main/templates/user/signup.html:474 main/templates/user/signup.html:516
 msgid "选填"
-msgstr ""
+msgstr "オプション"
 
 #: main/templates/progress/new.html:82
 msgid "作品的分类或备注"
-msgstr ""
+msgstr "作品の分類或いはコメント"
 
 #: main/templates/progress/new.html:113
 msgid "总页数／总集数（追剧请填 0）"
-msgstr ""
+msgstr "総ページ数／総話数（フォロー中の場合は０を入れてください）"
 
 #: main/templates/progress/new.html:133
 msgid "当前页数／集数"
-msgstr ""
+msgstr "カレントページ／話数"
 
 #: main/templates/progress/new.html:144
 msgid "作品链接"
-msgstr ""
+msgstr "作品のリンク"
 
 #: main/templates/progress/new.html:163
 msgid "取消"
-msgstr ""
+msgstr "キャンセル"
 
 #: main/templates/progress/new.html:170
 msgid "清空"
-msgstr ""
+msgstr "クリアー"
 
 #: main/templates/progress/new.html:231 main/templates/progress/new.html:300
 msgid "书籍"
-msgstr ""
+msgstr "書籍"
 
 #: main/templates/progress/new.html:231
 msgid "未找到"
-msgstr ""
+msgstr "見つからなかった"
 
 #: main/templates/progress/new.html:235
 msgid "未能解析条形码"
-msgstr ""
+msgstr "バーコードの解析ができなかった"
 
 #: main/templates/progress/new.html:273
 msgid "初始进度不能大于总页数"
-msgstr ""
+msgstr "イニシャル進捗は総ページ数より大きくなるのはいけない"
 
 #: main/templates/progress/new.html:300
 msgid "信息未获取到"
-msgstr ""
+msgstr "インフォは見つからなかった"
 
 #: main/templates/progress/new.html:308
 msgid "页数"
-msgstr ""
+msgstr "ページ数"
 
 #: main/templates/progress/new.html:309
 msgid "书籍信息正确吗？"
-msgstr ""
+msgstr "書籍インフォは正しいのか"
 
 #: main/templates/progress/search.html:37
 msgid "需要访问 Google"
-msgstr ""
+msgstr "グーグルのアクセスが必要になる"
 
 #: main/templates/progress/search.html:50
 msgid "所有进度"
-msgstr ""
+msgstr "すべての進捗"
 
 #: main/templates/progress/search.html:60
 msgid "生成连接"
-msgstr ""
+msgstr "リンクをつくる"
 
 #: main/templates/progress/search.html:71
 msgid "您还没有进度哦，请先添加一个进度"
-msgstr ""
+msgstr "今進捗はないよ、新しい進捗を追加してください"
 
 #: main/templates/progress/search.html:102
 msgid "正在语音识别中"
-msgstr ""
+msgstr "音声認識中"
 
 #: main/templates/progress/search.html:107
 msgid "语音识别已停止"
-msgstr ""
+msgstr "音声認識は止まった"
 
 #: main/templates/progress/search.html:110
 msgid "语音识别错误"
-msgstr ""
+msgstr "音声認識エラー"
 
 #: main/templates/progress/timeline-event.html:6 main/views/progress.py:473
 msgid "开始看"
-msgstr ""
+msgstr "スタート"
 
 #: main/templates/progress/timeline-event.html:12
 #: main/templates/progress/timeline.html:136 main/views/progress.py:406
 msgid "完成了"
-msgstr ""
+msgstr "完成した"
 
 #: main/templates/progress/timeline-event.html:14
 #: main/templates/progress/timeline.html:140 main/views/progress.py:411
 msgid "冻结了"
-msgstr ""
+msgstr "凍結された"
 
 #: main/templates/progress/timeline-event.html:16
 #: main/templates/progress/timeline.html:144 main/views/progress.py:416
 msgid "进行至"
-msgstr ""
+msgstr "第"
 
 #: main/templates/progress/timeline-event.html:18
 #: main/templates/progress/timeline.html:148 main/views/progress.py:423
 msgid "追剧至"
-msgstr ""
+msgstr "話"
 
 #: main/templates/progress/timeline-event.html:18
 #: main/templates/progress/timeline.html:148 main/views/progress.py:424
 msgid "第"
-msgstr ""
+msgstr "を見ている"
 
 #: main/templates/progress/timeline-event.html:18
 #: main/templates/progress/timeline.html:148 main/views/progress.py:426
 msgid "集"
-msgstr ""
+msgstr "をフォローしている"
 
 #: main/templates/progress/timeline-event.html:20
 #: main/templates/progress/timeline.html:152 main/views/progress.py:431
 msgid "加入至"
-msgstr ""
+msgstr "追加する"
 
 #: main/templates/robotalk/index.html:65
 msgid "已运行"
-msgstr ""
+msgstr "すでに実行している"
 
 #: main/templates/robotalk/index.html:80
 msgid "说点儿什么"
-msgstr ""
+msgstr "何を話しましょうか"
 
 #: main/templates/superuser/broadcast.html:4 main/views/superuser.py:18
 #: util/user.py:115
 msgid "超级管理员"
-msgstr ""
+msgstr "スーパーユーザー"
 
 #: main/templates/superuser/broadcast.html:4 main/views/superuser.py:26
 msgid "广播系统消息"
-msgstr ""
+msgstr "ブロードキャストシステムメッセージ"
 
 #: main/templates/superuser/broadcast.html:34
 #: main/templates/superuser/broadcast.html:60
 msgid "所有人"
-msgstr ""
+msgstr "すべての人"
 
 #: main/templates/superuser/broadcast.html:87
 msgid "尚未收到任何消息"
-msgstr ""
+msgstr "メッセージが届いていない"
 
 #: main/templates/superuser/msg-superuser.html:4
 msgid "执行了超级管理员的初始化。"
@@ -1065,7 +1072,7 @@ msgstr ""
 msgid "注册信息"
 msgstr ""
 
-#: main/templates/user/profile.html:81 main/templates/user/signin.html:59
+#: main/templates/user/profile.html:81 main/templates/user/signin.html:58
 #: main/templates/user/signindropdown.html:13
 #: main/templates/user/signup.html:240 main/templates/user/signup.html:333
 #: main/templates/user/signup.html:364 main/templates/user/signup.html:366
@@ -1172,12 +1179,16 @@ msgid "进度日历"
 msgstr ""
 
 #: main/templates/user/setting.html:79
+#, fuzzy
+#| msgid "公开课"
 msgid "公开"
-msgstr ""
+msgstr "オープンクラス"
 
 #: main/templates/user/setting.html:83
+#, fuzzy
+#| msgid "人"
 msgid "私人"
-msgstr ""
+msgstr "人"
 
 #: main/templates/user/setting.html:92
 msgid "进度保存设置"
@@ -1227,7 +1238,7 @@ msgstr ""
 msgid "用户登入"
 msgstr ""
 
-#: main/templates/user/signin.html:56 main/templates/user/signin.html:66
+#: main/templates/user/signin.html:55 main/templates/user/signin.html:65
 #: main/templates/user/signup.html:362 main/templates/user/signup.html:366
 #: main/templates/user/signup.html:386 main/templates/user/signup.html:407
 #: main/templates/user/signup.html:411 main/templates/user/signup.html:438
@@ -1235,34 +1246,34 @@ msgstr ""
 msgid "必填"
 msgstr ""
 
-#: main/templates/user/signin.html:56 main/templates/user/signin.html:66
+#: main/templates/user/signin.html:55 main/templates/user/signin.html:65
 #: main/templates/user/signup.html:362 main/templates/user/signup.html:407
 #: main/templates/user/signup.html:422 main/templates/user/signup.html:438
 msgid "，"
 msgstr ""
 
-#: main/templates/user/signin.html:56 main/templates/user/signup.html:362
+#: main/templates/user/signin.html:55 main/templates/user/signup.html:362
 #: main/templates/user/signup.html:368 main/templates/user/signup.html:375
 msgid "只能包含“英文字母”、“数字”和“英文句号”"
 msgstr ""
 
-#: main/templates/user/signin.html:66 main/templates/user/signup.html:407
+#: main/templates/user/signin.html:65 main/templates/user/signup.html:407
 #: main/templates/user/signup.html:415 main/templates/user/signup.html:438
 #: main/templates/user/signup.html:444 main/templates/user/signup.html:460
 msgid "回答 “答案” 或 “备选答案” 均可正常登入"
 msgstr ""
 
-#: main/templates/user/signin.html:69
+#: main/templates/user/signin.html:68
 #: main/templates/user/signindropdown.html:19
 #: main/templates/user/signup.html:335
 msgid "密码或答案"
 msgstr ""
 
-#: main/templates/user/signin.html:78
+#: main/templates/user/signin.html:77
 msgid "下次访问免登入，公共电脑请勿勾选此项"
 msgstr ""
 
-#: main/templates/user/signin.html:81
+#: main/templates/user/signin.html:80
 msgid "记住我"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 13:32+0800\n"
+"POT-Creation-Date: 2019-10-28 16:35+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -1070,7 +1070,7 @@ msgstr "Profile"
 msgid "注册信息"
 msgstr "Account Info"
 
-#: main/templates/user/profile.html:81 main/templates/user/signin.html:59
+#: main/templates/user/profile.html:81 main/templates/user/signin.html:58
 #: main/templates/user/signindropdown.html:13
 #: main/templates/user/signup.html:240 main/templates/user/signup.html:333
 #: main/templates/user/signup.html:364 main/templates/user/signup.html:366
@@ -1232,7 +1232,7 @@ msgstr "Add to Home Screen"
 msgid "用户登入"
 msgstr "User Log In"
 
-#: main/templates/user/signin.html:56 main/templates/user/signin.html:66
+#: main/templates/user/signin.html:55 main/templates/user/signin.html:65
 #: main/templates/user/signup.html:362 main/templates/user/signup.html:366
 #: main/templates/user/signup.html:386 main/templates/user/signup.html:407
 #: main/templates/user/signup.html:411 main/templates/user/signup.html:438
@@ -1240,34 +1240,34 @@ msgstr "User Log In"
 msgid "必填"
 msgstr "Required"
 
-#: main/templates/user/signin.html:56 main/templates/user/signin.html:66
+#: main/templates/user/signin.html:55 main/templates/user/signin.html:65
 #: main/templates/user/signup.html:362 main/templates/user/signup.html:407
 #: main/templates/user/signup.html:422 main/templates/user/signup.html:438
 msgid "，"
 msgstr ", "
 
-#: main/templates/user/signin.html:56 main/templates/user/signup.html:362
+#: main/templates/user/signin.html:55 main/templates/user/signup.html:362
 #: main/templates/user/signup.html:368 main/templates/user/signup.html:375
 msgid "只能包含“英文字母”、“数字”和“英文句号”"
 msgstr "Should only contain letters, number and '.'"
 
-#: main/templates/user/signin.html:66 main/templates/user/signup.html:407
+#: main/templates/user/signin.html:65 main/templates/user/signup.html:407
 #: main/templates/user/signup.html:415 main/templates/user/signup.html:438
 #: main/templates/user/signup.html:444 main/templates/user/signup.html:460
 msgid "回答 “答案” 或 “备选答案” 均可正常登入"
 msgstr "Provide either 'Answer' or 'Alternative Answer' can log in"
 
-#: main/templates/user/signin.html:69
+#: main/templates/user/signin.html:68
 #: main/templates/user/signindropdown.html:19
 #: main/templates/user/signup.html:335
 msgid "密码或答案"
 msgstr "Password or Answer"
 
-#: main/templates/user/signin.html:78
+#: main/templates/user/signin.html:77
 msgid "下次访问免登入，公共电脑请勿勾选此项"
 msgstr "Keep logged in. Do not check this option on a public computer."
 
-#: main/templates/user/signin.html:81
+#: main/templates/user/signin.html:80
 msgid "记住我"
 msgstr "Remember me"
 
