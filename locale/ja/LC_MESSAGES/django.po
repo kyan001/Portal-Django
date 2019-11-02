@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-28 16:35+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
-"Last-Translator: FULL NAME <EMILL@ADDRESS>\n"
+"Last-Translator: Emi <i18n@kyan001.com>\n"
 "Language-Team: Japanese <i18n@kyan001.com>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,8 @@ msgstr ""
 #: main/models.py:29
 #, python-brace-format
 msgid "您查找的 {t} 并不存在。（查询参数 {a} {k}）"
-msgstr "あなたが探している{t} は存在しません。（パラメーター クエリ{a} {k}）"
+msgstr "お探しの{t} は存在しません。（パラメーター クエリ{a} {k}）"
+
 
 #: main/models.py:209
 msgid "进度活跃度"
@@ -37,7 +38,7 @@ msgstr "チャートアクティビティー"
 
 #: main/models.py:212
 msgid "错误类别"
-msgstr "カテゴリー錯誤"
+msgstr "カテゴリーエラー"
 
 #: main/models.py:300 main/templates/progress/detail.html:617
 #: main/templates/progress/new.html:92 main/templates/progress/new.html:225
@@ -95,14 +96,14 @@ msgstr "引数 '{}' を空にできません"
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/user/profile.html:145
 msgid "进行中"
-msgstr "進捗中"
+msgstr "進行中"
 
 #: main/models.py:316 main/templates/progress/list.html:35
 #: main/templates/progress/list.html:71 main/templates/progress/list.html:94
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/user/profile.html:147
 msgid "追剧中"
-msgstr "追いかけ中"
+msgstr "フォロウイング"
 
 #: main/models.py:317 main/templates/progress/list.html:117
 #: main/templates/progress/msg-welcome.html:6
@@ -110,7 +111,7 @@ msgstr "追いかけ中"
 #: main/templates/progress/timeline.html:152
 #: main/templates/user/profile.html:146 main/views/progress.py:432
 msgid "待阅读"
-msgstr "あとで読む"
+msgstr "あとで読むリスト"
 
 #: main/models.py:318 main/templates/progress/list.html:143
 #: main/templates/progress/timeline-event.html:22
@@ -134,15 +135,15 @@ msgstr "非アクティブにされた"
 
 #: main/models.py:342
 msgid "更新进度状态失败"
-msgstr ""
+msgstr "進捗状況更新失敗しまいました"
 
 #: main/models.py:392
 msgid "上下文类型错误"
-msgstr ""
+msgstr "コンテキストタイプエラー"
 
 #: main/templates/404.html:29
 msgid "你来到了一个不存在的地方"
-msgstr "あなたは実在しない場所に来ました"
+msgstr "あなたは実在しない架空の場所に来ました"
 
 #: main/templates/404.html:33
 msgid "你要访问的页面不存在"
@@ -266,7 +267,7 @@ msgstr "メッセージ詳細"
 #: main/templates/chat/conversation.html:114
 #, python-format
 msgid "你与 @%(nickname)s 还没有说过话"
-msgstr "あなたは@%(nickname)s とまだ話したことがない"
+msgstr "@%(nickname)s とまだ話したことがない"
 
 #: main/templates/chat/conversation.html:118
 msgid "对话的历史记录会显示在这里"
@@ -325,7 +326,7 @@ msgstr "私の進捗"
 
 #: main/templates/index/index-m.html:57 main/templates/index/index.html:397
 msgid "管理您的进度"
-msgstr "あなたの進捗管理を行う"
+msgstr "進捗管理"
 
 #: main/templates/index/index-m.html:67 main/templates/index/index.html:451
 #: main/views/user.py:279
@@ -350,7 +351,7 @@ msgstr ""
 
 #: main/templates/index/index.html:376
 msgid "但或迟或早，胜利的人"
-msgstr "でも遅かれ早かれ勝つ人は"
+msgstr "ところが、遅かれ早かれ勝つ人は"
 
 #: main/templates/index/index.html:377
 msgid "始终坚信"
@@ -455,7 +456,7 @@ msgstr "カレントページのバーコード"
 
 #: main/templates/opus/detail.html:39
 msgid "一键添加到我的进度"
-msgstr "ワンクリックでマイプロセスに入れる"
+msgstr "ワンクリックで私の進捗に入れる"
 
 #: main/templates/opus/detail.html:47
 msgid "所有者"
@@ -497,19 +498,17 @@ msgstr "状態"
 
 #: main/templates/opus/detail.html:96
 msgid "进度链接"
-msgstr "プロセスリンク"
+msgstr "進捗リンク"
 
 #: main/templates/opus/detail.html:101 main/templates/opus/detail.html:110
 #: main/templates/progress/detail.html:243 main/templates/user/setting.html:79
 #: main/templates/user/setting.html:83
 msgid "链接"
-msgstr "・リンク"
+msgstr "リンク"
 
 #: main/templates/opus/detail.html:114
-#, fuzzy
-#| msgid "进度连接二维码"
 msgid "进度链接二维码"
-msgstr "プロセスリンクへのバーコード"
+msgstr "進捗リンクへのバーコード"
 
 #: main/templates/progress/archive.html:4
 #: main/templates/progress/detail.html:74
@@ -517,30 +516,29 @@ msgstr "プロセスリンクへのバーコード"
 #: main/templates/progress/navdropdown.html:20
 #: main/templates/progress/navlink.html:13 main/views/progress.py:62
 msgid "进度存档"
-msgstr "プロセスアーカイブ"
+msgstr "進捗アーカイブ"
 
 #: main/templates/progress/archive.html:24
 msgid "进度完成后，会自动显示在这里"
-msgstr "プロセスが終了した後、ここで表示される。"
+msgstr "進捗が完了した後、ここで表示される。"
 
 #: main/templates/progress/archive.html:45
 msgid "冻结中的进度，会自动显示在这里，可以随时再继续阅读。"
-msgstr ""
-"一時停止されているプロセスがここで表示される。いつでもプロセス再開できる。"
+msgstr "一時停止されている進捗がここで表示される。いつでも再開できる。"
 
 #: main/templates/progress/base-list.html:18
 #: main/templates/progress/detail.html:93
 #: main/templates/progress/msg-welcome.html:5
 #: main/templates/progress/new.html:5 main/templates/progress/new.html:49
 msgid "新增进度"
-msgstr "ニュープロセス"
+msgstr "新しく追加される進捗"
 
 #: main/templates/progress/detail.html:5 main/views/progress.py:220
 #: main/views/progress.py:247 main/views/progress.py:272
 #: main/views/progress.py:274 main/views/progress.py:300
 #: main/views/progress.py:324
 msgid "进度"
-msgstr "プロセス"
+msgstr "進捗"
 
 #: main/templates/progress/detail.html:79 main/templates/progress/list.html:4
 #: main/templates/progress/msg-welcome.html:6
@@ -550,16 +548,16 @@ msgstr "プロセス"
 #: main/templates/user/setting.html:152 main/views/progress.py:43
 #: main/views/progress.py:107 util/ctrl.py:26
 msgid "进度列表"
-msgstr "プロセスリスト"
+msgstr "進捗リスト"
 
 #: main/templates/progress/detail.html:110
 msgid "分享你的进度信息"
-msgstr "シェアプロセス"
+msgstr "進捗状況をシェアする"
 
 #: main/templates/progress/detail.html:143 main/templates/user/profile.html:69
 #: main/templates/user/public.html:57
 msgid "进度信息"
-msgstr "プロセスインフォ"
+msgstr "進捗インフォ"
 
 #: main/templates/progress/detail.html:147 main/views/progress.py:300
 msgid "已冻结"
@@ -579,14 +577,14 @@ msgstr "は"
 #: main/templates/user/setting.html:83 main/templates/user/setting.html:134
 #: main/templates/user/setting.html:157
 msgid "（"
-msgstr ""
+msgstr "（"
 
 #: main/templates/progress/detail.html:180
 #: main/templates/progress/detail.html:553 main/templates/user/setting.html:79
 #: main/templates/user/setting.html:83 main/templates/user/setting.html:134
 #: main/templates/user/setting.html:157
 msgid "）"
-msgstr ""
+msgstr "）"
 
 #: main/templates/progress/detail.html:181 main/templates/progress/new.html:343
 msgid "吗？"
@@ -598,21 +596,19 @@ msgstr "リンク先を新しいウィンドウで開く"
 
 #: main/templates/progress/detail.html:278
 msgid "保存选项"
-msgstr ""
+msgstr "セーブオプション"
 
 #: main/templates/progress/detail.html:283
 msgid "不修改当前的“上次更新”时间"
-msgstr ""
+msgstr "前回更新した時間を修正しません"
 
 #: main/templates/progress/detail.html:289 main/templates/user/setting.html:97
 msgid "保存后留在"
-msgstr ""
+msgstr "セーブ後"
 
 #: main/templates/progress/detail.html:289
-#, fuzzy
-#| msgid "当前页面的二维码"
 msgid "当前页面"
-msgstr "カレントページのバーコード"
+msgstr "カレントページに戻る"
 
 #: main/templates/progress/detail.html:300 main/templates/progress/new.html:174
 msgid "保存"
@@ -649,7 +645,7 @@ msgstr "作品インフォ"
 
 #: main/templates/progress/detail.html:369
 msgid "封面"
-msgstr ""
+msgstr "カバー"
 
 #: main/templates/progress/detail.html:387
 #: main/templates/progress/progresscard.html:15
@@ -666,7 +662,7 @@ msgstr "ラベル"
 
 #: main/templates/progress/detail.html:418
 msgid "彻底删除"
-msgstr "削除"
+msgstr "完全に削除する"
 
 #: main/templates/progress/detail.html:424 main/views/progress.py:317
 msgid "激活"
@@ -686,7 +682,7 @@ msgstr "この進捗を削除する？"
 
 #: main/templates/progress/detail.html:553
 msgid "删除操作不可恢复"
-msgstr "削除は元に戻すことはできない"
+msgstr "削除されたこおとは元に戻すことができない"
 
 #: main/templates/progress/detail.html:558
 msgid "删除操作已取消"
@@ -704,7 +700,7 @@ msgstr "新しく入れた進捗は"
 
 #: main/templates/progress/detail.html:576
 msgid "必须是纯数字"
-msgstr ""
+msgstr "数字のみ入力可能"
 
 #: main/templates/progress/detail.html:580 main/views/progress.py:115
 #: main/views/progress.py:283 main/views/superuser.py:85
@@ -766,7 +762,7 @@ msgstr "ボタンを押して新しい進捗を追加する"
 #: main/templates/user/signup.html:240 main/templates/user/signup.html:277
 #: main/templates/user/signup.html:313
 msgid "“"
-msgstr ""
+msgstr "「"
 
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/progress/msg-welcome.html:7
@@ -776,12 +772,12 @@ msgstr ""
 #: main/templates/user/signup.html:240 main/templates/user/signup.html:277
 #: main/templates/user/signup.html:313
 msgid "”"
-msgstr ""
+msgstr "」"
 
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/user/signup.html:202
 msgid "、"
-msgstr ""
+msgstr ", "
 
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/progress/msg-welcome.html:7
@@ -798,12 +794,12 @@ msgstr "の進捗は"
 #: main/templates/progress/msg-welcome.html:7
 #: main/templates/user/setting.html:97 main/templates/user/setting.html:100
 msgid "页面"
-msgstr "パージ"
+msgstr "ページ"
 
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/progress/msg-welcome.html:7
 msgid "。"
-msgstr ""
+msgstr ". "
 
 #: main/templates/progress/msg-welcome.html:9
 msgid "最后，祝您使用愉快！"
@@ -831,7 +827,7 @@ msgstr "進捗名称"
 #: main/templates/progress/new.html:75 main/templates/user/signup.html:442
 #: main/templates/user/signup.html:474 main/templates/user/signup.html:516
 msgid "选填"
-msgstr "オプション"
+msgstr "オプショナル"
 
 #: main/templates/progress/new.html:82
 msgid "作品的分类或备注"
@@ -980,97 +976,101 @@ msgstr "メッセージが届いていない"
 
 #: main/templates/superuser/msg-superuser.html:4
 msgid "执行了超级管理员的初始化。"
-msgstr ""
+msgstr "スーパーユーザーが初期化された"
 
 #: main/templates/superuser/msg-superuser.html:5
 msgid "超级管理员操作连接"
-msgstr ""
+msgstr "スーパーユーザーの操作リンク"
 
 #: main/templates/user/exphistory.html:47
 #: main/templates/user/exphistory.html:49
 msgid "查看完整记录"
-msgstr ""
+msgstr "ログ確認"
 
 #: main/templates/user/forgetanswer.html:4
 #: main/templates/user/forgetanswer.html:19
 msgid "找回密码或答案"
-msgstr ""
+msgstr "パスワードや答えを探す"
 
 #: main/templates/user/forgetanswer.html:20
 msgid "请用注册邮箱发信至："
-msgstr ""
+msgstr "登録したメールアドレスでメールを: "
 
 #: main/templates/user/forgetanswer.html:22
 msgid "提供越详细的信息，找回密码或答案的机会越大"
-msgstr ""
+msgstr "提供された情報が詳しければ詳しいほどパスワードや答えを探せる確率が大きくなる"
+
 
 #: main/templates/user/forgetusername.html:4
 #: main/templates/user/forgetusername.html:57 main/views/user.py:206
 #: main/views/user.py:223
 msgid "找回用户名"
-msgstr ""
+msgstr "ユーザー名を探す"
 
 #: main/templates/user/forgetusername.html:42
 msgid "注意"
-msgstr ""
+msgstr "注意"
+
 
 #: main/templates/user/forgetusername.html:43
 msgid "找回用户名的同时，系统会向该用户发送一封站内信，告知此次找回尝试。"
-msgstr ""
+msgstr "ユーザー名を探す同時に、ユーザーのメールアドレスに通知メールを送信する"
+
 
 #: main/templates/user/forgetusername.html:49
 #: main/templates/user/forgetusername.html:51
 msgid "请输入注册时填写的邮箱"
-msgstr ""
+msgstr "登録したメールアドレスを入力してください"
+
 
 #: main/templates/user/forgetusername.html:71 main/views/user.py:375
 msgid "邮箱不能为空"
-msgstr ""
+msgstr "メールアドレスが入れていない"
 
 #: main/templates/user/msg-forgetusername.html:4 main/views/user.py:219
 msgid "有人正在通过邮件的方式找回您的用户名"
-msgstr ""
+msgstr "誰かがメールアドレスであなたのユーザー名を探している"
 
 #: main/templates/user/msg-forgetusername.html:6
 msgid "他输入的邮件是："
-msgstr ""
+msgstr "入力されたメールアドレスは："
 
 #: main/templates/user/msg-forgetusername.html:7
 msgid "他得到的用户名是："
-msgstr ""
+msgstr "得られたユーザー名は："
 
 #: main/templates/user/msg-forgetusername.html:10
 msgid "若此操作不是您所为，请联系管理员"
-msgstr ""
+msgstr "もしこの操作はご本人の行為ではない場合は、サイトの管理者に連絡していください"
 
 #: main/templates/user/msg-retrieveusername.html:4
 msgid "出于安全考虑，您的用户名未全部显示。"
-msgstr ""
+msgstr "安全のため、ユーザー名の一部が隠されている"
 
 #: main/templates/user/msg-retrieveusername.html:5
 msgid "每个 <code>*</code> 代表一个字符。"
-msgstr ""
+msgstr "<code>*</code> ごとに一つの桁を表す. "
 
 #: main/templates/user/msg-retrieveusername.html:7
 msgid "你的用户名是："
-msgstr ""
+msgstr "あなたのユーザー名は: "
 
 #: main/templates/user/msg-retrieveusername.html:9
 msgid "一封包含此次操作信息的站内信已经发送给您。"
-msgstr ""
+msgstr "今度の操作の詳細はサイト内のメールで送りました"
 
 #: main/templates/user/profile.html:48
 msgid "修改头像"
-msgstr ""
+msgstr "アイコンを更新する"
 
 #: main/templates/user/profile.html:63 main/templates/user/public.html:54
 #: main/templates/userbar.html:72 main/views/user.py:272
 msgid "个人信息"
-msgstr ""
+msgstr "個人情報"
 
 #: main/templates/user/profile.html:66
 msgid "注册信息"
-msgstr ""
+msgstr "アカウント情報"
 
 #: main/templates/user/profile.html:81 main/templates/user/signin.html:58
 #: main/templates/user/signindropdown.html:13
@@ -1078,165 +1078,161 @@ msgstr ""
 #: main/templates/user/signup.html:364 main/templates/user/signup.html:366
 #: main/views/user.py:130
 msgid "用户名"
-msgstr ""
+msgstr "ユーザー名"
 
 #: main/templates/user/profile.html:85 main/templates/user/public.html:65
 #: main/templates/user/signup.html:277 main/templates/user/signup.html:514
 #: main/templates/user/signup.html:516
 msgid "昵称"
-msgstr ""
+msgstr "ニックネーム"
 
 #: main/templates/user/profile.html:88
 msgid "我的公开页，任何人都可以查看"
-msgstr ""
+msgstr "私のパブリックページ、誰でも訪問できる"
 
 #: main/templates/user/profile.html:93 main/templates/user/signup.html:313
 #: main/templates/user/signup.html:336 main/templates/user/signup.html:494
 #: main/templates/user/signup.html:496 main/views/user.py:136
 msgid "邮箱"
-msgstr ""
+msgstr "メールアドレス"
 
 #: main/templates/user/profile.html:97 main/templates/user/public.html:75
 msgid "活跃等级"
-msgstr ""
+msgstr "アクティビティレベル"
 
 #: main/templates/user/profile.html:99
 msgid "根据“总活跃度”计算"
-msgstr ""
+msgstr "トタルアクティビティで計算する"
 
 #: main/templates/user/profile.html:107 main/templates/user/signup.html:334
 #: main/templates/user/signup.html:384 main/views/user.py:132
 msgid "问题"
-msgstr ""
+msgstr "問題"
 
 #: main/templates/user/profile.html:111
 msgid "答案1"
-msgstr ""
+msgstr "答え１"
 
 #: main/templates/user/profile.html:113 main/templates/user/profile.html:121
 msgid "[已加密]"
-msgstr ""
+msgstr "[暗号化された]"
 
 #: main/templates/user/profile.html:119
 msgid "答案2"
-msgstr ""
+msgstr "答え２"
 
 #: main/templates/user/profile.html:127 main/templates/user/signin.html:153
 msgid "提示"
-msgstr ""
+msgstr "ヒント"
 
 #: main/templates/user/profile.html:135 main/templates/user/public.html:81
 msgid "创建时间"
-msgstr ""
+msgstr "作成日時"
 
 #: main/templates/user/profile.html:154
 msgid "平均花费"
-msgstr ""
+msgstr "平均かかった時間"
 
 #: main/templates/user/profile.html:158
 msgid "平均尝试"
-msgstr ""
+msgstr "平均トライ"
 
 #: main/templates/user/profile.html:162
 msgid "平均已用"
-msgstr ""
+msgstr "平均かかった時間"
 
 #: main/templates/user/profile.html:166
 msgid "平均等待"
-msgstr ""
+msgstr "平均ウェッティング時間"
 
 #: main/templates/user/profile.html:170
 msgid "平均待更"
-msgstr ""
+msgstr "平均フォローウイング"
 
 #: main/templates/user/public.html:4
 msgid "的公开页"
-msgstr ""
+msgstr "のパブリックページ"
 
 #: main/templates/user/public.html:70
 msgid "发消息"
-msgstr ""
+msgstr "メッセージを送る"
 
 #: main/templates/user/setting.html:4 main/templates/userbar.html:77
 msgid "个人设置"
-msgstr ""
+msgstr "パーソナル設定"
 
 #: main/templates/user/setting.html:59
 msgid "进度设置"
-msgstr ""
+msgstr "進捗設定"
 
 #: main/templates/user/setting.html:70
 msgid "进度日历设置"
-msgstr ""
+msgstr "進捗カレンダー設定"
 
 #: main/templates/user/setting.html:75
 msgid "公开进度日历"
-msgstr ""
+msgstr "進捗カレンダーを公開する"
 
 #: main/templates/user/setting.html:79 main/templates/user/setting.html:83
 #: main/views/progress.py:459
 msgid "进度日历"
-msgstr ""
+msgstr "進捗カレンダー"
 
 #: main/templates/user/setting.html:79
-#, fuzzy
-#| msgid "公开课"
 msgid "公开"
-msgstr "オープンクラス"
+msgstr "パブリック"
 
 #: main/templates/user/setting.html:83
-#, fuzzy
-#| msgid "人"
 msgid "私人"
-msgstr "人"
+msgstr "パーソナル"
 
 #: main/templates/user/setting.html:92
 msgid "进度保存设置"
-msgstr ""
+msgstr "進捗保存設定"
 
 #: main/templates/user/setting.html:100
 msgid "未勾选时则去往"
-msgstr ""
+msgstr "チェックを外す場合は"
 
 #: main/templates/user/setting.html:108
 msgid "离线缓存设置"
-msgstr ""
+msgstr "オフラインキャッシュ設定"
 
 #: main/templates/user/setting.html:113
 msgid "启用进度缓存"
-msgstr ""
+msgstr "進捗キャッシュ機能を有効する"
 
 #: main/templates/user/setting.html:124 main/templates/user/setting.html:147
 msgid "启动"
-msgstr ""
+msgstr "始める"
 
 #: main/templates/user/setting.html:126 main/templates/user/setting.html:149
 msgid "访问"
-msgstr ""
+msgstr "アクセス"
 
 #: main/templates/user/setting.html:134 main/templates/user/setting.html:157
 msgid "在右上角"
-msgstr ""
+msgstr "右上にいる"
 
 #: main/templates/user/setting.html:137 main/templates/user/setting.html:160
 msgid "选择"
-msgstr ""
+msgstr "セレクト"
 
 #: main/templates/user/setting.html:138
 msgid "安装"
-msgstr ""
+msgstr "インストール"
 
 #: main/templates/user/setting.html:157
 msgid "在底部"
-msgstr ""
+msgstr "ボトムにいる"
 
 #: main/templates/user/setting.html:161
 msgid "添加至主屏幕"
-msgstr ""
+msgstr "ホームスクリーンに追加する"
 
 #: main/templates/user/signin.html:4
 msgid "用户登入"
-msgstr ""
+msgstr "ユーザーログイン"
 
 #: main/templates/user/signin.html:55 main/templates/user/signin.html:65
 #: main/templates/user/signup.html:362 main/templates/user/signup.html:366
@@ -1244,724 +1240,726 @@ msgstr ""
 #: main/templates/user/signup.html:411 main/templates/user/signup.html:438
 #: main/templates/user/signup.html:496
 msgid "必填"
-msgstr ""
+msgstr "入力必須"
 
 #: main/templates/user/signin.html:55 main/templates/user/signin.html:65
 #: main/templates/user/signup.html:362 main/templates/user/signup.html:407
 #: main/templates/user/signup.html:422 main/templates/user/signup.html:438
 msgid "，"
-msgstr ""
+msgstr ", "
 
 #: main/templates/user/signin.html:55 main/templates/user/signup.html:362
 #: main/templates/user/signup.html:368 main/templates/user/signup.html:375
 msgid "只能包含“英文字母”、“数字”和“英文句号”"
-msgstr ""
+msgstr "アルファベット、数字や英文記号のみ可"
 
 #: main/templates/user/signin.html:65 main/templates/user/signup.html:407
 #: main/templates/user/signup.html:415 main/templates/user/signup.html:438
 #: main/templates/user/signup.html:444 main/templates/user/signup.html:460
 msgid "回答 “答案” 或 “备选答案” 均可正常登入"
-msgstr ""
+msgstr "「答え」或は「備考の答え」を答えればログインできる"
 
 #: main/templates/user/signin.html:68
 #: main/templates/user/signindropdown.html:19
 #: main/templates/user/signup.html:335
 msgid "密码或答案"
-msgstr ""
+msgstr "パスワード或は答え"
 
 #: main/templates/user/signin.html:77
 msgid "下次访问免登入，公共电脑请勿勾选此项"
-msgstr ""
+msgstr "次回から自動的にログイン。公用パソコンでこの機能の使用を控えてください。"
 
 #: main/templates/user/signin.html:80
 msgid "记住我"
-msgstr ""
+msgstr "ログイン状態を保持する"
 
 #: main/templates/user/signin.html:88 main/templates/user/signin.html:179
 #: main/templates/userbar.html:44 util/ctrl.py:22
 msgid "登入"
-msgstr ""
+msgstr "ログイン"
 
 #: main/templates/user/signin.html:163 main/templates/user/signup.html:112
 #: main/templates/user/signup.html:409 main/templates/user/signup.html:411
 msgid "密码"
-msgstr ""
+msgstr "パスワード"
 
 #: main/templates/user/signin.html:202 main/templates/user/signin.html:210
 msgid "加载中 ..."
-msgstr ""
+msgstr "ローディング"
 
 #: main/templates/user/signin.html:226
 msgid "用户不存在"
-msgstr ""
+msgstr "このユーザーは存在しません"
 
 #: main/templates/user/signin.html:237 main/views/user.py:238
 msgid "密码/答案不能为空"
-msgstr ""
+msgstr "パスワード/答えを入力してください"
 
 #: main/templates/user/signin.html:242 main/views/user.py:235
 #: main/views/user.py:302 main/views/user.py:353
 msgid "用户名不能为空"
-msgstr ""
+msgstr "ユーザー名を入力してください"
 
 #: main/templates/user/signin.html:247
 msgid "登入中 ..."
-msgstr ""
+msgstr "ローディング..."
 
 #: main/templates/user/signindropdown.html:6
 msgid "我忘记了..."
-msgstr ""
+msgstr "忘れました..."
 
 #: main/templates/user/signup.html:4
 msgid "用户注册"
-msgstr ""
+msgstr "新規登録"
 
 #: main/templates/user/signup.html:13
 msgid "切换到"
-msgstr ""
+msgstr "切り替え"
 
 #: main/templates/user/signup.html:13 main/templates/user/signup.html:107
 msgid "问答"
-msgstr ""
+msgstr "Q&A"
 
 #: main/templates/user/signup.html:13
 msgid "模式"
-msgstr ""
+msgstr "モード"
 
 #: main/templates/user/signup.html:76 main/templates/user/signup.html:89
 #: main/templates/user/signup.html:536
 msgid "提交注册"
-msgstr ""
+msgstr "サブミット"
 
 #: main/templates/user/signup.html:91
 msgid "提交中"
-msgstr ""
+msgstr "サブミット中"
 
 #: main/templates/user/signup.html:110 main/templates/user/signup.html:422
 msgid "请输入密码"
-msgstr ""
+msgstr "パスワードを入れてください"
 
 #: main/templates/user/signup.html:117
 msgid "传统"
-msgstr ""
+msgstr "クラシック"
 
 #: main/templates/user/signup.html:120 main/templates/user/signup.html:411
 #: main/views/user.py:134
 msgid "答案"
-msgstr ""
+msgstr "答え"
 
 #: main/templates/user/signup.html:161
 msgid "英文字母"
-msgstr ""
+msgstr "アルファベット"
 
 #: main/templates/user/signup.html:162
 msgid "汉字"
-msgstr ""
+msgstr "漢字"
 
 #: main/templates/user/signup.html:163
 msgid "数字"
-msgstr ""
+msgstr "数字"
 
 #: main/templates/user/signup.html:176
 msgid "正数第"
-msgstr ""
+msgstr "左から第"
 
 #: main/templates/user/signup.html:176 main/templates/user/signup.html:180
 msgid "位字符"
-msgstr ""
+msgstr "桁"
 
 #: main/templates/user/signup.html:178
 msgid "最后一位字符"
-msgstr ""
+msgstr "最後の桁"
 
 #: main/templates/user/signup.html:180
 msgid "倒数第"
-msgstr ""
+msgstr "右から第"
 
 #: main/templates/user/signup.html:187
 msgid "不包含"
-msgstr ""
+msgstr "含めていない"
 
 #: main/templates/user/signup.html:187
 msgid "包含"
-msgstr ""
+msgstr "含めている"
 
 #: main/templates/user/signup.html:187
 msgid "个"
-msgstr ""
+msgstr "つ"
 
 #: main/templates/user/signup.html:190
 msgid "一共"
-msgstr ""
+msgstr "全部で"
 
 #: main/templates/user/signup.html:190
 msgid "个字符"
-msgstr ""
+msgstr "桁"
 
 #: main/templates/user/signup.html:202
 msgid "并且"
-msgstr ""
+msgstr "アンド"
 
 #: main/templates/user/signup.html:202
 msgid "且"
-msgstr ""
+msgstr "アンド"
 
 #: main/templates/user/signup.html:202
 msgid "而且"
-msgstr ""
+msgstr "それに"
 
 #: main/templates/user/signup.html:202
 msgid "同时"
-msgstr ""
+msgstr "同時に"
 
 #: main/templates/user/signup.html:203
 msgid "答案中"
-msgstr ""
+msgstr "回答の中で"
 
 #: main/templates/user/signup.html:240 main/templates/user/signup.html:277
 #: main/templates/user/signup.html:313
 msgid "已存在"
-msgstr ""
+msgstr "既に存在しています"
 
 #: main/templates/user/signup.html:327
 msgid "不能为空"
-msgstr ""
+msgstr "空きにしてはいけないです"
 
 #: main/templates/user/signup.html:367 main/templates/user/signup.html:374
 msgid "登入时的凭证之一"
-msgstr ""
+msgstr "登録するには必要なものになる"
 
 #: main/templates/user/signup.html:369 main/templates/user/signup.html:376
 msgid "不能同其他人的用户名重复"
-msgstr ""
+msgstr "ほかのユーザー名と同じになってはいけないです"
 
 #: main/templates/user/signup.html:387 main/templates/user/signup.html:399
 msgid "登入时会问您的问题"
-msgstr ""
+msgstr "登録するときに聞かれる問題"
 
 #: main/templates/user/signup.html:388
 msgid "我们用 “问题+回答” 来代替传统密码"
-msgstr ""
+msgstr "「質問＋答え」でパスワードを入れ替える"
 
 #: main/templates/user/signup.html:389
 msgid "一些常用的问题包括："
-msgstr ""
+msgstr "よくある質問"
 
 #: main/templates/user/signup.html:391
 msgid "“最常用的8位密码”"
-msgstr ""
+msgstr "よく使われる８桁パスワード"
 
 #: main/templates/user/signup.html:392
 msgid "“最想获得的超能力”"
-msgstr ""
+msgstr "最も手に入れたいスーパーパワー"
 
 #: main/templates/user/signup.html:393
 msgid "“家里保险柜的数量”"
-msgstr ""
+msgstr "家の中のセーフティボックスの数"
 
 #: main/templates/user/signup.html:400
 msgid "在这里写下问题，在下面写下答案"
-msgstr ""
+msgstr "ここで質問を、下に答えを入れてください"
 
 #: main/templates/user/signup.html:401
 msgid "尽量不要包含空格或标点符号"
-msgstr ""
+msgstr "スペースや区切り符号の使用を控えてください"
 
 #: main/templates/user/signup.html:414 main/templates/user/signup.html:429
 msgid "登入时您需要回答的内容"
-msgstr ""
+msgstr "登録用の回答内容が必要になる"
 
 #: main/templates/user/signup.html:416 main/templates/user/signup.html:430
 msgid "一般应与上面的问题相对应"
-msgstr ""
+msgstr "上の質問を答えることをおすすめします"
 
 #: main/templates/user/signup.html:417 main/templates/user/signup.html:431
 msgid "中英文、标点、数字均可"
-msgstr ""
+msgstr "の中で英文、区切り符号や数字可"
 
 #: main/templates/user/signup.html:418 main/templates/user/signup.html:432
 msgid "任何人（包括管理员）均无法查看您的回答"
-msgstr ""
+msgstr "サイトの管理者を含めて誰でもあなたの答えをチェックできない"
 
 #: main/templates/user/signup.html:420
 msgid "传统模式时："
-msgstr ""
+msgstr "クラシックモード: "
 
 #: main/templates/user/signup.html:422
 msgid "长度、字符不限"
-msgstr ""
+msgstr "長さや区切り符号の制限は一切なし"
 
 #: main/templates/user/signup.html:440 main/templates/user/signup.html:442
 msgid "备选答案"
-msgstr ""
+msgstr "備考答え"
 
 #: main/templates/user/signup.html:443 main/templates/user/signup.html:459
 msgid "同样作为正常答案生效"
-msgstr ""
+msgstr "答えとして使われる"
 
 #: main/templates/user/signup.html:445
 msgid "常见的 “答案” 与 “备选答案” 的组合有："
-msgstr ""
+msgstr "常用の「答えと備考答え」のコンビは: "
 
 #: main/templates/user/signup.html:447
 msgid "中文答案 + 英文答案"
-msgstr ""
+msgstr "日本語の答え＋英語の答え"
 
 #: main/templates/user/signup.html:448
 msgid "（北京 vs. beijing）"
-msgstr ""
+msgstr "（東京 vs. Tokyo）"
 
 #: main/templates/user/signup.html:449
 msgid "容易混淆的答案"
-msgstr ""
+msgstr "分かりにくい答え"
 
 #: main/templates/user/signup.html:450
 msgid "（8月15日 vs. 08-15）"
-msgstr ""
+msgstr "（8月15日 vs. 08-15）"
 
 #: main/templates/user/signup.html:451
 msgid "自己也拿不准的答案"
-msgstr ""
+msgstr "自分でもはっきりわからない答え"
 
 #: main/templates/user/signup.html:452
 msgid "（炸鸡 vs. 烧烤）"
-msgstr ""
+msgstr "(フライドチキン vs. バービーキュ)"
 
 #: main/templates/user/signup.html:461
 msgid "不需要与 “答案” 相同"
-msgstr ""
+msgstr "「答え」と一緒にする必要がない"
 
 #: main/templates/user/signup.html:469 main/templates/user/signup.html:474
 msgid "答案提示"
-msgstr ""
+msgstr "答えのヒント"
 
 #: main/templates/user/signup.html:470
 msgid "生成提示"
-msgstr ""
+msgstr "ヒントを使う"
 
 #: main/templates/user/signup.html:475 main/templates/user/signup.html:483
 msgid "登入时，问题答案的提示信息"
-msgstr ""
+msgstr "登録するときに、質問応答のヒント"
 
 #: main/templates/user/signup.html:476 main/templates/user/signup.html:484
 msgid "在登入界面您需要时自动显示"
-msgstr ""
+msgstr "必要に応じて登録する画面に自動的に表示される"
 
 #: main/templates/user/signup.html:477 main/templates/user/signup.html:485
 msgid "请不要将答案直接放在这里"
-msgstr ""
+msgstr "答えをここに入れるのを控えてください"
 
 #: main/templates/user/signup.html:497 main/templates/user/signup.html:504
 msgid "用于找回密码或答案"
-msgstr ""
+msgstr "パスワードや答えの探し用"
 
 #: main/templates/user/signup.html:498 main/templates/user/signup.html:505
 msgid "邮箱验证通过后方可生效"
-msgstr ""
+msgstr "メールアドレスの認証済み後に使用可"
 
 #: main/templates/user/signup.html:499 main/templates/user/signup.html:506
 msgid "邮箱验证生效前，无法找回密码或答案"
-msgstr ""
+msgstr "メールアドレスの認証済み前にパスワードや答えを探すことができない"
 
 #: main/templates/user/signup.html:517 main/templates/user/signup.html:525
 msgid "你希望他人看到的名称"
-msgstr ""
+msgstr "表示されたいニックネーム"
 
 #: main/templates/user/signup.html:518 main/templates/user/signup.html:526
 msgid "昵称只能是 “汉字” 和 “字母”"
-msgstr ""
+msgstr "ニックネームは「漢字」や「アルファベット」のみ使用可"
 
 #: main/templates/user/signup.html:519 main/templates/user/signup.html:527
 msgid "昵称不可与他人重复"
-msgstr ""
+msgstr "このニックネームは既に使用されています"
 
 #: main/templates/user/signup.html:520 main/templates/user/signup.html:528
 msgid "昵称为空时，我们将自动帮您生成"
-msgstr ""
+msgstr "ニックネームを入れていない場合はランダムに表示されます"
 
 #: main/templates/userbar.html:41 util/ctrl.py:24
 msgid "注册"
-msgstr ""
+msgstr "サインアップ"
 
 #: main/templates/userbar.html:83
 msgid "登出"
-msgstr ""
+msgstr "ログアウト"
 
 #: main/templates/userbar.html:90
 msgid "首页"
-msgstr ""
+msgstr "ホームページ"
 
 #: main/templates/userbar.html:121
 msgid "切换主题"
-msgstr ""
+msgstr "着せかえ"
 
 #: main/templates/userbar.html:136 main/templates/userbar.html:144
 #: main/views/index.py:46
 msgid "默认主题"
-msgstr ""
+msgstr "カレント着せかえ"
 
 #: main/templates/userbar.html:150
 msgid "随机主题"
-msgstr ""
+msgstr "ランダム着せかえ"
 
 #: main/templates/userbar.html:154
 msgid "蔚蓝"
-msgstr ""
+msgstr "ブルー"
 
 #: main/templates/userbar.html:155
 msgid "宇宙"
-msgstr ""
+msgstr "宇宙"
 
 #: main/templates/userbar.html:156
 msgid "半机械"
-msgstr ""
+msgstr "半機械"
 
 #: main/templates/userbar.html:157
 msgid "暗色"
-msgstr ""
+msgstr "ダーク"
 
 #: main/templates/userbar.html:158
 msgid "扁平"
-msgstr ""
+msgstr "フラット"
 
 #: main/templates/userbar.html:159
 msgid "日志"
-msgstr ""
+msgstr "日誌"
 
 #: main/templates/userbar.html:160
 msgid "流明"
-msgstr ""
+msgstr "ルーメン"
 
 #: main/templates/userbar.html:161
 msgid "纸"
-msgstr ""
+msgstr "ペーパー"
 
 #: main/templates/userbar.html:162
 msgid "易读"
-msgstr ""
+msgstr "リィーダァブル"
 
 #: main/templates/userbar.html:163
 msgid "砂岩"
-msgstr ""
+msgstr "砂岩"
 
 #: main/templates/userbar.html:164
 msgid "简约"
-msgstr ""
+msgstr "シンプル"
 
 #: main/templates/userbar.html:165
 msgid "页岩"
-msgstr ""
+msgstr "石板"
 
 #: main/templates/userbar.html:166
 msgid "空间站"
-msgstr ""
+msgstr "スペースラブ"
 
 #: main/templates/userbar.html:167
 msgid "英雄"
-msgstr ""
+msgstr "スーパーヒーロー"
 
 #: main/templates/userbar.html:168
 msgid "统一"
-msgstr ""
+msgstr "ユナイテッド"
 
 #: main/templates/userbar.html:169
 msgid "雪人"
-msgstr ""
+msgstr "イエティー"
 
 #: main/views/chat.py:25
 msgid "所有"
-msgstr ""
+msgstr "オール"
 
 #: main/views/chat.py:26
 msgid "未读"
-msgstr ""
+msgstr "未読"
 
 #: main/views/chat.py:28
 msgid "系统"
-msgstr ""
+msgstr "システム"
 
 #: main/views/chat.py:29
 msgid "好友"
-msgstr ""
+msgstr "フレンド"
 
 #: main/views/chat.py:30
 msgid "已发送"
-msgstr ""
+msgstr "送信済み"
 
 #: main/views/chat.py:50
 msgid "查看收信箱"
-msgstr ""
+msgstr "受信トレーをチェックする"
 
 #: main/views/chat.py:79 main/views/chat.py:146
 msgid "只有消息的接收者可以{}消息"
-msgstr ""
+msgstr "受信者のみ{}"
 
 #: main/views/chat.py:79 main/views/progress.py:241
 msgid "删除"
-msgstr ""
+msgstr "削除"
 
 #: main/views/chat.py:79 main/views/progress.py:231 main/views/progress.py:254
 msgid "删除失败"
-msgstr ""
+msgstr "削除失敗"
 
 #: main/views/chat.py:82
 msgid "删除了一条来自 @{} 的消息"
-msgstr ""
+msgstr " @{}からのメッセージを削除しました"
 
 #: main/views/chat.py:108
 msgid "查看与 @{} 的对话"
-msgstr ""
+msgstr "@{}との会話内容をチェックする"
 
 #: main/views/chat.py:131
 msgid "向 @{} 发送消息"
-msgstr ""
+msgstr "@{}へメッセージを送る"
 
 #: main/views/chat.py:144
 msgid "您查找的消息 id: {} 并不存在"
-msgstr ""
+msgstr "お探しの@{}は実在していません"
 
 #: main/views/chat.py:146 main/views/progress.py:209
 msgid "更新"
-msgstr ""
+msgstr "更新"
 
 #: main/views/chat.py:148
 msgid "阅读来自 @{} 的消息"
-msgstr ""
+msgstr "@{}からのメッセージをチェックする"
 
 #: main/views/index.py:41
 msgid "您请求的主题 {} 不存在"
-msgstr ""
+msgstr "お求めのテーマ{}は実在していません"
 
 #: main/views/index.py:47
 msgid "应用主题 {}"
-msgstr ""
+msgstr "テーマ{}にする"
 
 #: main/views/opus.py:105
 msgid "{} 未被缓存"
-msgstr ""
+msgstr "{}はキャッシュされていない"
 
 #: main/views/opus.py:136
 msgid "您已拥有该进度，请不要重复添加"
-msgstr ""
+msgstr "該当する進捗は既に追加されています"
 
 #: main/views/opus.py:136
 msgid "导入失败"
-msgstr ""
+msgstr "インポート失敗"
 
 #: main/views/opus.py:146
 #, python-brace-format
 msgid "已从 @{u} 导入进度《{n}》的信息"
-msgstr ""
+msgstr "@{u}から《{n}》の進捗を導入しました"
 
 #: main/views/opus.py:147
 msgid "请确认后点击“保存”"
-msgstr ""
+msgstr "ご確認したら“保存”を押してください "
 
 #: main/views/progress.py:38
 msgid "欢迎使用"
-msgstr ""
+msgstr "ウェルカム"
 
 #: main/views/progress.py:43 main/views/progress.py:62
 #: main/views/progress.py:82 main/views/progress.py:107
 msgid "访问「{}」页面"
-msgstr ""
+msgstr "「{}」ページにアクセスします"
 
 #: main/views/progress.py:125 main/views/progress.py:209
 #: main/views/progress.py:241 main/views/progress.py:265
 #: main/views/progress.py:293 main/views/progress.py:317
 msgid "这个进度不属于您，因此您不能{}该进度"
-msgstr ""
+msgstr "この進捗のオーナーではないので、この進捗を{}することができません"
+
+
 
 #: main/views/progress.py:125
 msgid "查看"
-msgstr ""
+msgstr "チェック"
 
 #: main/views/progress.py:127
 msgid "查看进度《{}》的详情"
-msgstr ""
+msgstr "'{}' の詳細をチェックする"
 
 #: main/views/progress.py:181
 msgid "更新失败"
-msgstr ""
+msgstr "更新が失敗しました"
 
 #: main/views/progress.py:203 main/views/progress.py:372
 #, python-brace-format
 msgid "初始进度 {c} 不能大于总页数 {t}"
-msgstr ""
+msgstr "総ページ数/話数 {t} より小さいイニシャル進捗 {c} を入れてください"
 
 #: main/views/progress.py:211
 msgid "编辑进度《{}》成功"
-msgstr ""
+msgstr "進捗《{}》 を編集しました"
 
 #: main/views/progress.py:220 main/views/progress.py:272
 msgid "已更新"
-msgstr ""
+msgstr "更新しました"
 
 #: main/views/progress.py:245
 msgid "删除进度《{}》"
-msgstr ""
+msgstr "進捗削除《{}》"
 
 #: main/views/progress.py:247
 msgid "已删除"
-msgstr ""
+msgstr "削除しました"
 
 #: main/views/progress.py:276
 msgid "+1 失败"
-msgstr ""
+msgstr "+1　失敗しました"
 
 #: main/views/progress.py:298
 msgid "冻结进度《{}》"
-msgstr ""
+msgstr "進捗《{}》を凍結しました"
 
 #: main/views/progress.py:307
 msgid "激活失败"
-msgstr ""
+msgstr "リアクティヴェイトゥ失敗しました"
 
 #: main/views/progress.py:322
 msgid "恢复已冻结的进度《{}》"
-msgstr ""
+msgstr "凍結された進捗《{}》を再開しました"
 
 #: main/views/progress.py:324
 msgid "已激活"
-msgstr ""
+msgstr "有効になりました"
 
 #: main/views/progress.py:341
 msgid "尝试新增进度"
-msgstr ""
+msgstr "新しい進捗を追加してみる"
 
 #: main/views/progress.py:355
 msgid "新增失败"
-msgstr ""
+msgstr "追加に失敗しました"
 
 #: main/views/progress.py:375
 msgid "新增进度《{}》成功"
-msgstr ""
+msgstr "進捗《{}》を追加しました"
 
 #: main/views/progress.py:446 main/views/progress.py:449
 msgid "获取日历失败"
-msgstr ""
+msgstr "カレンダーの引き出しが失敗しました"
 
 #: main/views/progress.py:446
 msgid "用户的私钥不合法"
-msgstr ""
+msgstr "プライベートキーは有効ではないです"
 
 #: main/views/progress.py:449
 msgid "此用户尚未公开其进度日历"
-msgstr ""
+msgstr "該当するユーザーのカレンダーが非公開にされています"
 
 #: main/views/robotalk.py:19
 msgid "在智械聊天中对话"
-msgstr ""
+msgstr "ロボットトークでチャットします"
 
 #: main/views/robotalk.py:28
 #, python-brace-format
 msgid "{d} 天 {h} 小时"
-msgstr ""
+msgstr "{d} 日 {h} 時間"
 
 #: main/views/superuser.py:18
 msgid "《{}操作手册》"
-msgstr ""
+msgstr "《{} マニュアルブック》"
 
 #: main/views/superuser.py:21
 msgid "初始化"
-msgstr ""
+msgstr "イニシャル"
 
 #: main/views/superuser.py:23
 msgid "默认设置 @{} 为超级管理员，并向其发送此邮件"
-msgstr ""
+msgstr "デフォルト設定として@{} のスーパーユーザーへ本メールを送信します"
 
 #: main/views/superuser.py:28
 msgid "查看发给系统的消息，广播消息"
-msgstr ""
+msgstr "システムへのメッセージやブロードキャスト メッセージをチェックします"
 
 #: main/views/superuser.py:31
 msgid "初始化所有徽章"
-msgstr ""
+msgstr "すべてのバッジをイニシャルします"
 
 #: main/views/superuser.py:33
 msgid "刷新数据库中徽章的信息"
-msgstr ""
+msgstr "データベースのバッジインフォを更新します"
 
 #: main/views/superuser.py:36
 msgid "分发 Betauser 徽章"
-msgstr ""
+msgstr "Betauserバッジをセットします"
 
 #: main/views/superuser.py:38
 msgid "对网站前 100 名用户添加 Betauser 徽章"
-msgstr ""
+msgstr "当ウェブサイトの先着100名のユーザーに“Betauser”バッジが追加されます "
 
 #: main/views/superuser.py:41
 msgid "分发设计师徽章"
-msgstr ""
+msgstr "デザインバッジをセットします"
 
 #: main/views/superuser.py:43
 msgid "对所有徽章的设计师添加 Designer 徽章"
-msgstr ""
+msgstr "すべてバッジのデザイナーに“Designer”バッジが追加されます"
 
 #: main/views/superuser.py:54 main/views/superuser.py:172
 msgid "发送失败，未知原因。用户：@{}"
-msgstr ""
+msgstr "送信失敗しました、原因不明です。ユーザー: @{}"
 
 #: main/views/superuser.py:58
 msgid "@{} 已设置为超级管理员"
-msgstr ""
+msgstr "@{} はスーパーユーザーにされました"
 
 #: main/views/superuser.py:59
 msgid "@{} 已是超级管理员，无需更改"
-msgstr ""
+msgstr "@{} はすでにスーパーユーザーですので、修正不要です"
 
 #: main/views/superuser.py:153
 msgid "数据库更新完毕，模式 {}"
-msgstr ""
+msgstr "データベース更新完了しました。モード '{}'"
 
 #: main/views/superuser.py:175
 msgid "发送成功"
-msgstr ""
+msgstr "送信しました"
 
 #: main/views/user.py:41
 msgid "请求的分类（{}）不存在"
-msgstr ""
+msgstr "お求めのカテゴリー({}) は実在していません"
 
 #: main/views/user.py:70
 msgid "{} 访问了你的公开页"
-msgstr ""
+msgstr "あなたのパブリックページは{}にアクセスされました"
 
 #: main/views/user.py:100
 msgid "查看用户个人信息"
-msgstr ""
+msgstr "ユーザープロファイルをチェックする"
 
 #: main/views/user.py:120
 msgid "注册失败"
-msgstr ""
+msgstr "サインアップ失敗しました"
 
 #: main/views/user.py:130 main/views/user.py:132 main/views/user.py:134
 #: main/views/user.py:136
 msgid "“{}”不能为空"
-msgstr ""
+msgstr "“{}” は入力されていないです"
 
 #: main/views/user.py:146
 msgid "用户名 '{}' 已存在！"
-msgstr ""
+msgstr "ユーザー名'{}'はすでに存在しています"
 
 #: main/views/user.py:148
 msgid "昵称 '{}' 已存在！"
-msgstr ""
+msgstr "ニックネーム'{}'はすでに存在しています"
 
 #: main/views/user.py:150
 msgid "邮箱 '{}' 已存在！"
-msgstr ""
+msgstr "メールアドレス'{}'はすでに存在しています"
 
 #: main/views/user.py:153
 msgid "用户名 '{}' 只应包含数字、字母、和英文句号！"
-msgstr ""
+msgstr "ユーザー名'{}' は数字、アルファベットや英文句点のみ使用可"
 
 #: main/views/user.py:155
 msgid "昵称 '{}' 只应包含字母和汉字！"
-msgstr ""
+msgstr "ニックネーム'{}' はアルファベットや漢字のみ使用可"
 
 #: main/views/user.py:162
 msgid "注册成功"
-msgstr ""
+msgstr "サインアップ成功しました"
 
 #: main/views/user.py:164
 #, python-brace-format
@@ -1970,108 +1968,113 @@ msgid ""
 "您是网站第 {user.id} 位用户。\n"
 "请登入以便我们记住您！"
 msgstr ""
+" {user.username} サインアップ成功しました! \n"
+"あなたは No.{user.id} ユーザーです. \n"
+"ログインして進捗管理の世界へ!"
 
 #: main/views/user.py:164
 msgid "欢迎加入"
-msgstr ""
+msgstr "ウェルカム"
 
 #: main/views/user.py:174
 msgid "修改头像成功"
-msgstr ""
+msgstr "アイコンを更新しました"
 
 #: main/views/user.py:185 main/views/user.py:235 main/views/user.py:238
 #: main/views/user.py:243 main/views/user.py:246 main/views/user.py:251
 #: main/views/user.py:305
 msgid "登入失败"
-msgstr ""
+msgstr "ログイン失敗しました"
 
 #: main/views/user.py:185
 msgid "您已经以 {} 的身份登入了，请勿重复登入"
-msgstr ""
+msgstr "すでに'{}'でログインしました"
 
 #: main/views/user.py:206
 msgid "此邮箱（{}）尚未被注册"
-msgstr ""
+msgstr "該当するメールアドレス（{}）はまだサインアップされていないです"
 
 #: main/views/user.py:243 main/views/user.py:305
 msgid "找不到用户名为 {} 的用户"
-msgstr ""
+msgstr "ユーザー名{}を見つかりませんでした"
 
 #: main/views/user.py:246
 msgid "您已被禁止登入，请联系管理员"
-msgstr ""
+msgstr "ログインが禁止されています。管理員に連絡してください"
 
 #: main/views/user.py:251
 msgid "用户名与答案不匹配"
-msgstr ""
+msgstr "ユーザー名と答えが一致していません"
 
 #: main/views/user.py:257
 msgid "登入成功"
-msgstr ""
+msgstr "ログイン成功しました"
 
 #: main/views/user.py:269
 msgid "查看进度列表"
-msgstr ""
+msgstr "進捗リストをチェックする"
 
 #: main/views/user.py:274
 msgid "查看您的活跃度、进度统计"
-msgstr ""
+msgstr "アクティビティ、進捗分析をチェックします"
 
 #: main/views/user.py:284
 msgid "欢迎您归来，开始您的网站之旅吧！"
-msgstr ""
+msgstr "ウェルカムバック！進捗管理の世界へ"
 
 #: main/views/user.py:286
 msgid "遇到问题或想 #提建议 ，请发消息给"
-msgstr ""
+msgstr "問題や#アドバイスがある場合はメールしてください"
 
 #: main/views/user.py:314
 msgid "用户未找到：{}"
-msgstr ""
+msgstr "該当するユーザーは見つかりませんでした: {}"
 
 #: main/views/user.py:365
 msgid "昵称不能为空"
-msgstr ""
+msgstr "ニックネームを入れてください"
 
 #: util/ctrl.py:20
 msgid "回到主页"
-msgstr ""
+msgstr "ホームページに戻る"
 
 #: util/ctrl.py:22 util/ctrl.py:24 util/ctrl.py:26 util/ctrl.py:28
 #: util/ctrl.py:30
 msgid "前往「{}」页面"
-msgstr ""
+msgstr "「{}」ページへ"
 
 #: util/time.py:27
 msgid "{}天"
-msgstr ""
+msgstr "{}日"
 
 #: util/time.py:28
 msgid "{}小时"
-msgstr ""
+msgstr "{}時間"
 
 #: util/time.py:29
 msgid "{}分"
-msgstr ""
+msgstr "{}分"
 
 #: util/time.py:30
 msgid "{}秒"
-msgstr ""
+msgstr "{}秒"
 
 #: util/time.py:45
 msgid "{}前"
-msgstr ""
+msgstr "{}前"
 
 #: util/time.py:45
 msgid "{}后"
-msgstr ""
+msgstr "{}後"
 
 #: util/user.py:93
 msgid ""
 "此页面需要用户信息，\n"
 "请登入/注册后再访问。"
 msgstr ""
+"カレントページにユーザー登録が必要になるので, \n"
+"新規登録/ログインしてアクセスしてください."
 
 #: util/user.py:115
 msgid "您不具有{}权限"
-msgstr ""
+msgstr "{}権限を持っていません"
