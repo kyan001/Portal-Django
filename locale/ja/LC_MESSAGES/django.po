@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-28 16:35+0800\n"
+"POT-Creation-Date: 2019-11-02 23:45+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Emi <i18n@kyan001.com>\n"
 "Language-Team: Japanese <i18n@kyan001.com>\n"
@@ -22,7 +22,6 @@ msgstr ""
 #, python-brace-format
 msgid "您查找的 {t} 并不存在。（查询参数 {a} {k}）"
 msgstr "お探しの{t} は存在しません。（パラメーター クエリ{a} {k}）"
-
 
 #: main/models.py:209
 msgid "进度活跃度"
@@ -998,8 +997,8 @@ msgstr "登録したメールアドレスでメールを: "
 
 #: main/templates/user/forgetanswer.html:22
 msgid "提供越详细的信息，找回密码或答案的机会越大"
-msgstr "提供された情報が詳しければ詳しいほどパスワードや答えを探せる確率が大きくなる"
-
+msgstr ""
+"提供された情報が詳しければ詳しいほどパスワードや答えを探せる確率が大きくなる"
 
 #: main/templates/user/forgetusername.html:4
 #: main/templates/user/forgetusername.html:57 main/views/user.py:206
@@ -1011,17 +1010,14 @@ msgstr "ユーザー名を探す"
 msgid "注意"
 msgstr "注意"
 
-
 #: main/templates/user/forgetusername.html:43
 msgid "找回用户名的同时，系统会向该用户发送一封站内信，告知此次找回尝试。"
 msgstr "ユーザー名を探す同時に、ユーザーのメールアドレスに通知メールを送信する"
-
 
 #: main/templates/user/forgetusername.html:49
 #: main/templates/user/forgetusername.html:51
 msgid "请输入注册时填写的邮箱"
 msgstr "登録したメールアドレスを入力してください"
-
 
 #: main/templates/user/forgetusername.html:71 main/views/user.py:375
 msgid "邮箱不能为空"
@@ -1041,7 +1037,8 @@ msgstr "得られたユーザー名は："
 
 #: main/templates/user/msg-forgetusername.html:10
 msgid "若此操作不是您所为，请联系管理员"
-msgstr "もしこの操作はご本人の行為ではない場合は、サイトの管理者に連絡していください"
+msgstr ""
+"もしこの操作はご本人の行為ではない場合は、サイトの管理者に連絡していください"
 
 #: main/templates/user/msg-retrieveusername.html:4
 msgid "出于安全考虑，您的用户名未全部显示。"
@@ -1267,7 +1264,8 @@ msgstr "パスワード或は答え"
 
 #: main/templates/user/signin.html:77
 msgid "下次访问免登入，公共电脑请勿勾选此项"
-msgstr "次回から自動的にログイン。公用パソコンでこの機能の使用を控えてください。"
+msgstr ""
+"次回から自動的にログイン。公用パソコンでこの機能の使用を控えてください。"
 
 #: main/templates/user/signin.html:80
 msgid "记住我"
@@ -1767,8 +1765,6 @@ msgstr "「{}」ページにアクセスします"
 #: main/views/progress.py:293 main/views/progress.py:317
 msgid "这个进度不属于您，因此您不能{}该进度"
 msgstr "この進捗のオーナーではないので、この進捗を{}することができません"
-
-
 
 #: main/views/progress.py:125
 msgid "查看"
