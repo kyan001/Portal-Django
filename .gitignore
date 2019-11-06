@@ -68,3 +68,6 @@ static/media/*
 
 # Virtualenv
 VENV/
+
+# Keep empty folders
+!**/.gitkeep
