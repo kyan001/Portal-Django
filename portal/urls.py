@@ -2,6 +2,8 @@ from django.conf.urls import include, url
 from django.urls import path
 from django.contrib import admin
 from django.views.generic import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 import main.views.index
 import main.views.user
 import main.views.progress
@@ -82,4 +84,4 @@ urlpatterns = [
     url(r'^superuser/broadcast$', main.views.superuser.broadcast),
     url(r'^superuser/sendbroadcast$', main.views.superuser.sendbroadcast),
     url(r'^superuser/updatedb$', main.views.superuser.updatedb),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # add media folder as static files
