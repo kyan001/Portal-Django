@@ -292,9 +292,9 @@ def debug_mode_detect():
 
     Django settings.DEBUG is True if DEBUG_FLAG file exists."""
     if DEBUG_FLAG and os.path.exists(DEBUG_FLAG):
-        cit.warn("Django Debug Mode: ON. (Flag exists: {})".format(DEBUG_FLAG))
+        cit.warn("Django Debug Mode: On. (Debug Flag Exists: {})".format(DEBUG_FLAG))
     else:
-        cit.info("Django Debug Mode: OFF.")
+        cit.echo("Django Debug Mode: Off.")
 
 
 if __name__ == '__main__':
