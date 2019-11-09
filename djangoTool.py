@@ -4,6 +4,7 @@ import os
 import sys
 import socket
 import webbrowser
+import getpass
 import urllib.request
 import hashlib
 import functools
@@ -13,7 +14,7 @@ import consoleiotools as cit
 from KyanToolKit import KyanToolKit as ktk
 
 
-__version__ = '1.15.6'
+__version__ = '1.16.1'
 
 
 def load_config(config_file):
@@ -22,7 +23,7 @@ def load_config(config_file):
     conf = config['DEFAULT']
     conf_dd = config['DATADUMP']
     if conf.get('version') and conf.get('version') not in __version__:
-        cit.warn("Different versions detected: {cfile} ({cver}) and djangoTool.py ({pver})".format(cfile=config_file, cver=conf.get('version'), pver=__version__))
+        cit.warn("Config version mismatch: {cfile} ({cver}) and djangoTool.py ({pver})".format(cfile=config_file, cver=conf.get('version'), pver=__version__))
     return conf, conf_dd
 
 
@@ -30,10 +31,11 @@ CONF, CONF_DD = load_config('djangoTool.ini')
 DATADUMP_FILE = CONF_DD.get('file') or 'datadump.json'
 DATADUMP_DIR = CONF_DD.get('dir') or ""
 DATADUMP_SERVER = CONF_DD.get('server') or ""
-DATADUMP_USER = CONF_DD.get('user') or os.getlogin()
+DATADUMP_USER = CONF_DD.get('user') or getpass.getuser()
 TESTS_DIR = CONF.get('testsdir') or 'main.tests'
 PIP_REQUIREMENTS = CONF.get('piprequirements') or 'requirements.txt'
 DEV_URL = CONF.get('devurl') or 'http://127.0.0.1:8000/'
+DEBUG_FLAG = CONF.get('debugflag') or 'DEBUGMODE'
 COMMANDS = {'-- Exit --': cit.bye}  # Dict of menu commands.
 
 
@@ -288,6 +290,9 @@ def compile_messages():
 if __name__ == '__main__':
     cit.echo('Django Tool: version {}'.format(__version__))
     cit.br()
+    if DEBUG_FLAG and os.path.exists(DEBUG_FLAG):
+        cit.warn("Django DEBUG is ON. (Flag exists: {})".format(DEBUG_FLAG))
+        cit.br()
     if not manage_file_exist():
         cit.err('No manage.py detected. Please run this under projects folder')
         cit.bye()

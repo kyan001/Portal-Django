@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import sys
+
 import django.contrib.messages.constants
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'wjk)lm9$j0dp%mv4699yx)a%rn#-bg3!e=iwsu%foedz+5jn8h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+if os.path.exists('DEBUGMODE'):
+    DEBUG = True
+else:
+    DEBUG = False
+
 
 ALLOWED_HOSTS = [
     '.superfarmer.net',
@@ -84,7 +90,7 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-if 'darwin' in sys.platform or 'win' in sys.platform:  # 测试环境下
+if DEBUG:  # Debug mode
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -98,7 +104,7 @@ if 'darwin' in sys.platform or 'win' in sys.platform:  # 测试环境下
             'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         }
     }
-else:
+else:  # Production Mode
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
