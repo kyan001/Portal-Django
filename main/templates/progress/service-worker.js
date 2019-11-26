@@ -1,4 +1,4 @@
-var CACHE_NAME = 'progress-cache-v1.1.12'
+var CACHE_NAME = 'progress-cache-v1.1.15'
 var staticFileUrls = [
     "/static/3rd/jquery/jquery-3.3.1.min.js",
     "/static/3rd/bootstrap-3.4.1/js/bootstrap.min.js",
@@ -17,6 +17,7 @@ var pageUrls = [
     "/progress/list",
     "/progress/archive",
     "/progress/search",
+    "/progress/new",
 ]
 
 self.addEventListener('install', function (event) {  // Perform install steps
