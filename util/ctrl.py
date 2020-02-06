@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.http import JsonResponse
 from django.core.mail import EmailMessage
 from django.template import loader
@@ -31,7 +31,7 @@ def infoMsg(content="Hi", url=None, title=None):
         else:
             button_text = None
         context["button"] = button_text
-    return render_to_response("msg.html", context)
+    return render(None, "msg.html", context)
 
 
 def returnJson(dict_input):
