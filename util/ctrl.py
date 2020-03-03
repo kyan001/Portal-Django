@@ -106,9 +106,4 @@ def isMobile(request):
 
 
 def isUrl(url):
-    input_string = str(url)
-    protocals = ['http', 'ftp', 'https', 'file', 'magnet', 'thunder', 'ed2k']
-    for p in protocals:
-        if input_string.startswith(p + '://'):
-            return True
-    return False
+    return "://" in str(url)
