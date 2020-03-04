@@ -274,8 +274,13 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <tr class="text-warning show-when-edit" title="{{prg.weblink}}">
-                                                    <th>{% trans "保存选项" %}</th>
+                                            <tr class="text-warning show-when-edit">
+                                                    <th>
+                                                        {% trans "保存选项" %}
+                                                        <a href="/user/setting" title="{% trans '个人设置' %}">
+                                                            <span class="glyphicon glyphicon-cog text-muted"></span>
+                                                        </a>
+                                                    </th>
                                                     <td>
                                                         <div class="checkbox">
                                                             <label>
@@ -286,7 +291,7 @@
                                                         <div class="checkbox">
                                                             <label>
                                                                 <input type="checkbox" name="savetodetail" value="on" {% if cuser.save_to_detail is True %}checked{% endif %}>
-                                                                {% trans "保存后留在" %}{% trans "当前页面" %}
+                                                                <span>{% trans "保存后留在" %}{% trans "当前页面" %}</span>
                                                             </label>
                                                         </div>
                                                     </td>
