@@ -2,19 +2,19 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 
 
-def formatDate(dt, mode="optimize"):
-    if mode == 'optimize':  # [2015-]12-05 11:25 am
+def formatDate(dt, mode="optimize", compact=False):
+    if mode == 'optimize':  # [2015-]12-15 11:25 am
         time_format = '%m-%d %H:%M %p'
         if dt.year != timezone.now().year:
             time_format = '%Y-' + time_format
-    elif mode == 'dateonly':  # 12-05
-        time_format = '%m-%d'
-    elif mode == 'fulldateonly':  # 2015-12-05
-        time_format = '%Y-%m-%d'
-    elif mode == 'timeonly':
-        time_format = '%H:%M:%S'
-    else:
-        time_format = '%Y-%m-%d %H:%M %p'
+    elif mode == 'dateonly':  # 12-15
+        time_format = '%m%d' if compact else '%m-%d'
+    elif mode == 'fulldateonly':  # 2015-12-15
+        time_format = '%Y%m%d' if compact else '%Y-%m-%d'
+    elif mode == 'timeonly':  # 11:25:52
+        time_format = '%H%M%S' if compact else '%H:%M:%S'
+    else:  # 2015-12-15 11:25:52 am
+        time_format = '%Y%m%d%H%M%S' if compact else '%Y-%m-%d %H:%M:%S %p'
     return dt.astimezone(timezone.get_current_timezone()).strftime(time_format)
 
 

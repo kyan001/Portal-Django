@@ -3,6 +3,7 @@ from functools import partial
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.utils import timezone
 from django.utils import translation
 from django.db import transaction
@@ -12,6 +13,7 @@ from django.core.cache import cache
 from django.contrib import messages
 from django.utils.translation import gettext as _
 from django.template import loader
+from django.utils import timezone
 import icalendar
 
 import util.ctrl
@@ -485,3 +487,20 @@ def ical(request):  # GET
         cal.add_component(evnt_mdf)
     # render
     return HttpResponse(cal.to_ical(), content_type='text/calendar')
+
+
+@util.user.login_required
+def export(request):  # GET
+    target_format = request.GET.get("format") or 'json'
+    # get all progresses
+    user = util.user.getCurrentUser(request)
+    progresses = Progress.objects.filter(userid=user.id)
+    if target_format == 'json':
+        progresses_list = [prg.toArray() for prg in progresses]
+        response = JsonResponse(progresses_list, safe=False)
+        file_name = 'Progresses-@{user.username}-{timestamp}.json'.format(user=user, timestamp=util.time.formatDate(timezone.now(), mode='fulldateonly', compact=True))
+        response['Content-Disposition'] = 'attachment; filename={}'.format(file_name)
+        # render
+        return response
+    else:
+        raise Http404(_("不支持的格式") + _("：") + target_format)

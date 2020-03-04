@@ -62,6 +62,7 @@ urlpatterns = [
     path('progress/reactivate', main.views.progress.reactivate),  # POST
     path('progress/ical', main.views.progress.ical),  # GET
     path('progress/setsettings', main.views.progress.setsettings),  # POST
+    path('progress/export', main.views.progress.export),  # GET
     # OPUS
     url(r'^opus/detail$', main.views.opus.detail),  # GET
     url(r'^opus/searchopusinfo$', main.views.opus.searchOpusInfo),  # GET Ajax
