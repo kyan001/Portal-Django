@@ -165,6 +165,18 @@
                                 </div><!--.col-->
                             </div><!--.row-->
                         </div>
+                        <hr/>
+                        <div id="progress-export-div">
+                            <label>
+                                <span class="glyphicon glyphicon-export"></span>
+                                {% trans "导出我的进度" %}
+                            </label>
+                            <div>
+                                <a class="btn btn-default" href="/progress/export?format=json">
+                                    <span class="glyphicon glyphicon-save-file"></span>
+                                    <span>{% trans "导出为" %} .json {% trans "文件" %}</span>
+                                </a>
+                            </div>
                     </div><!--.panel-body-->
                 </form>
             </div><!--.panel-->
