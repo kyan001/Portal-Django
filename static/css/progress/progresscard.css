@@ -1,5 +1,5 @@
 /*!
- * progresscard.css v2.3.2
+ * progresscard.css v2.4.0
  */
 /* progress-card */
 .no-bottom-border {
@@ -38,7 +38,10 @@
     border-radius: 0 0 4px;
 }
 
-.no-scrollbar::-webkit-scrollbar {
+.no-scrollbar {  /* Firefox */
+    scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {  /* Safari, Chrome */
     display: none;
 }
 
