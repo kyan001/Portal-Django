@@ -4,7 +4,7 @@
     "name": "{% trans '进度列表' %}",
     "icons": [
         {
-            "src": "/static/img/Logo_List.png",
+            "src": "/static/img/Logo-List.png",
             "type": "image/png",
             "sizes": "200x200"
         }
