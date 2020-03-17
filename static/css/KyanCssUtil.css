@@ -9,6 +9,10 @@ a.no-decoration:hover,
 .no-decoration-container a:hover {
     text-decoration: none !important;
 }
+.border-gradient {
+    border: 1px solid;
+    border-image: linear-gradient(to right bottom, silver, gold) 30;
+}
 
 .fullscreen {
     height: 100% !important;

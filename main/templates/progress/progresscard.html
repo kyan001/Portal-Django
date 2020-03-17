@@ -1,7 +1,7 @@
 {% load tags_url %}
 {% load i18n %}
 
-<div class="{{size}} progress-card ani-fast-container ani-fast" progressid="{{prg.id}}" progressname="{{ prg.name }}">
+<div class="{{ size }} progress-card ani-fast-container ani-fast" progressid="{{ prg.id }}" progressname="{{ prg.name }}">
     <a href="/progress/detail?id={{ prg.id }}" class="no-decoration">
         <div class="panel panel-{{ prg.contextual|default:'default' }} hover-shadow">
             <div class="panel-heading no-bottom-border progress-title text-nowrap">
@@ -29,7 +29,7 @@
                         {% endif %}
                         {% if prg.is_weblink_ok %}
                             <div class="flex-2">
-                                <span class="weblink innerlink pull-right hover-turning-container btn btn-link btn-block btn-xs" href="{{prg.weblink}}" title="{{prg.weblink}}" target="_blank">
+                                <span class="weblink innerlink pull-right hover-turning-container btn btn-link btn-block btn-xs" href="{{ prg.weblink }}" title="{{ prg.weblink }}" target="_blank">
                                     <span class="glyphicon glyphicon-link"></span>
                                 </span>
                             </div><!--.col-->
