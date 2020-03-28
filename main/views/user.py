@@ -182,7 +182,9 @@ def headimgUpdate(request):
 def signin(request):
     """点击登入后的页面，供输入用户名/密码"""
     # check if already logged in
-    next_ = request.GET.get("next") or ""
+    next_ = request.GET.get("next") or "/"
+    if '/user/signin' in next_:
+        next_ = '/'
     current_user = util.user.getCurrentUser(request)
     if current_user:
         messages.error(request, _("登入失败") + _("：") + _("您已经以 {} 的身份登入了，请勿重复登入").format(current_user.username))

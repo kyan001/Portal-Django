@@ -256,6 +256,8 @@ def plusone(request):  # GET
     errMsg = partial(util.ctrl.infoMsg, title=_("删除失败"))
     # get inputs
     next_ = request.META.get('HTTP_REFERER') or "/"
+    if "/user/signin" in next_:
+        next_ = '/progress/list'
     progressid = request.GET.get('id')
     if not progressid:
         raise Http404(_("{} 参数不能为空").format("Progress ID"))
