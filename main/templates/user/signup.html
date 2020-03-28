@@ -528,8 +528,8 @@
                     <li><em>{% trans "昵称为空时，我们将自动帮您生成" %}</em></li>
                 </span>
             </div>
-                {% if redirect %}
-                    <input type="hidden" value="{{redirect}}">
+                {% if next %}
+                    <input type="hidden" value="{{next}}">
                 {% endif %}
             </form>
             <button id="submit-button" class="btn btn-success btn-block" onclick="submitForm()">

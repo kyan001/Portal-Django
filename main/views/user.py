@@ -108,10 +108,13 @@ def profile(request):
 def signup(request):  # PUBLIC
     """点击注册按钮后页面"""
     context = {}
-    if 'redirect' in request.GET:
-        context['redirect'] = request.GET.get('redirect')
+    if 'next' in request.GET:
+        next_ = request.GET.get('next')
     elif 'HTTP_REFERER' in request.META:
-        context['redirect'] = request.META.get('HTTP_REFERER')
+        next_ = request.META.get('HTTP_REFERER')
+    context = {
+        'next': next_
+    }
     return render(request, 'user/signup.html', context)
 
 
@@ -183,7 +186,7 @@ def signin(request):
     current_user = util.user.getCurrentUser(request)
     if current_user:
         messages.error(request, _("登入失败") + _("：") + _("您已经以 {} 的身份登入了，请勿重复登入").format(current_user.username))
-        return redirect(next_ or '/')
+        return redirect(next_)
     # render
     context = {
         'next': next_,
