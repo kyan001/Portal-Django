@@ -352,7 +352,7 @@ def new(request):
 
 
 @util.user.login_required
-def add(request):
+def add(request):  # POST
     """新增界面点击保存按钮"""
     errMsg = partial(util.ctrl.infoMsg, title=_("新增失败"))
     # get inputs

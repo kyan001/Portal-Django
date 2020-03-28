@@ -54,7 +54,7 @@ urlpatterns = [
     path('progress/detail', main.views.progress.detail),  # GET
     path('progress/imagecolor', main.views.progress.imagecolor),  # GET
     path('progress/new', main.views.progress.new),  # GET
-    path('progress/add', main.views.progress.add),
+    path('progress/add', main.views.progress.add),  # POST
     path('progress/update', main.views.progress.update),  # POST
     path('progress/delete', main.views.progress.delete),  # POST
     path('progress/plusone', main.views.progress.plusone),  # GET
