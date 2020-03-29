@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-04 21:41+0800\n"
+"POT-Creation-Date: 2020-03-29 23:08+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -85,8 +85,8 @@ msgstr "Novel"
 #: main/views/chat.py:121 main/views/chat.py:124 main/views/opus.py:26
 #: main/views/opus.py:102 main/views/opus.py:132 main/views/progress.py:122
 #: main/views/progress.py:188 main/views/progress.py:237
-#: main/views/progress.py:261 main/views/progress.py:289
-#: main/views/progress.py:313 main/views/superuser.py:85
+#: main/views/progress.py:263 main/views/progress.py:291
+#: main/views/progress.py:315 main/views/superuser.py:85
 #: main/views/superuser.py:165 main/views/user.py:47 main/views/user.py:60
 #: util/user.py:24 util/user.py:26
 msgid "{} 参数不能为空"
@@ -109,7 +109,7 @@ msgstr "Following"
 #: main/templates/progress/msg-welcome.html:6
 #: main/templates/progress/timeline-event.html:20
 #: main/templates/progress/timeline.html:152
-#: main/templates/user/profile.html:146 main/views/progress.py:434
+#: main/templates/user/profile.html:146 main/views/progress.py:436
 msgid "待阅读"
 msgstr "To Do"
 
@@ -117,7 +117,7 @@ msgstr "To Do"
 #: main/templates/progress/timeline-event.html:22
 #: main/templates/progress/timeline.html:155
 #: main/templates/user/profile.html:142 main/templates/user/public.html:89
-#: main/views/progress.py:439
+#: main/views/progress.py:441
 msgid "出错"
 msgstr "Error"
 
@@ -196,11 +196,11 @@ msgstr "Designer"
 #: main/templates/user/profile.html:158 main/templates/user/profile.html:162
 #: main/templates/user/profile.html:166 main/templates/user/profile.html:170
 #: main/templates/user/signin.html:153 main/templates/user/signin.html:226
-#: main/templates/user/signup.html:203 main/views/progress.py:448
-#: main/views/progress.py:451 main/views/progress.py:506
-#: main/views/superuser.py:175 main/views/user.py:185 main/views/user.py:235
-#: main/views/user.py:238 main/views/user.py:243 main/views/user.py:246
-#: main/views/user.py:251 main/views/user.py:305
+#: main/templates/user/signup.html:203 main/views/progress.py:450
+#: main/views/progress.py:453 main/views/progress.py:508
+#: main/views/superuser.py:175 main/views/user.py:190 main/views/user.py:240
+#: main/views/user.py:243 main/views/user.py:248 main/views/user.py:251
+#: main/views/user.py:256 main/views/user.py:310
 msgid "："
 msgstr ": "
 
@@ -218,7 +218,7 @@ msgstr "Back"
 
 #: main/templates/chat/chater.html:12 main/templates/index/index-m.html:66
 #: main/templates/index/index.html:358 main/templates/index/index.html:450
-#: main/views/chat.py:27 main/views/user.py:277 util/ctrl.py:30
+#: main/views/chat.py:27 main/views/user.py:282 util/ctrl.py:30
 msgid "临时笔记"
 msgstr "QuickNote"
 
@@ -319,8 +319,8 @@ msgstr "Welcome"
 
 #: main/templates/index/index-m.html:56 main/templates/index/index.html:351
 #: main/templates/index/index.html:396
-#: main/templates/progress/navdropdown.html:26 main/templates/userbar.html:96
-#: main/views/progress.py:40 main/views/user.py:267
+#: main/templates/progress/navdropdown.html:30 main/templates/userbar.html:96
+#: main/views/progress.py:40 main/views/user.py:272
 msgid "我的进度"
 msgstr "MyProgress"
 
@@ -329,7 +329,7 @@ msgid "管理您的进度"
 msgstr "Manage your progresses"
 
 #: main/templates/index/index-m.html:67 main/templates/index/index.html:451
-#: main/views/user.py:279
+#: main/views/user.py:284
 msgid "随手记录您的想法"
 msgstr "Write down your ideas anytime"
 
@@ -511,7 +511,7 @@ msgstr "QR code for progress link"
 #: main/templates/progress/archive.html:4
 #: main/templates/progress/detail.html:74
 #: main/templates/progress/msg-welcome.html:7
-#: main/templates/progress/navdropdown.html:20
+#: main/templates/progress/navdropdown.html:24
 #: main/templates/progress/navlink.html:13 main/views/progress.py:64
 msgid "进度存档"
 msgstr "Progress Archive"
@@ -532,15 +532,16 @@ msgid "新增进度"
 msgstr "New Progress"
 
 #: main/templates/progress/detail.html:5 main/views/progress.py:222
-#: main/views/progress.py:249 main/views/progress.py:274
-#: main/views/progress.py:276 main/views/progress.py:302
-#: main/views/progress.py:326
+#: main/views/progress.py:249 main/views/progress.py:276
+#: main/views/progress.py:278 main/views/progress.py:304
+#: main/views/progress.py:328
 msgid "进度"
 msgstr "Progress"
 
 #: main/templates/progress/detail.html:79 main/templates/progress/list.html:4
 #: main/templates/progress/msg-welcome.html:6
-#: main/templates/progress/navdropdown.html:16
+#: main/templates/progress/navdropdown.html:4
+#: main/templates/progress/navdropdown.html:20
 #: main/templates/progress/navlink.html:7 main/templates/user/setting.html:100
 #: main/templates/user/setting.html:129 main/templates/user/setting.html:138
 #: main/templates/user/setting.html:152 main/views/progress.py:45
@@ -557,7 +558,7 @@ msgstr "Share your progress"
 msgid "进度信息"
 msgstr "Progress Info"
 
-#: main/templates/progress/detail.html:147 main/views/progress.py:302
+#: main/templates/progress/detail.html:147 main/views/progress.py:304
 msgid "已冻结"
 msgstr "Deactivated"
 
@@ -667,15 +668,15 @@ msgstr "Tags"
 msgid "彻底删除"
 msgstr "Delete"
 
-#: main/templates/progress/detail.html:429 main/views/progress.py:319
+#: main/templates/progress/detail.html:429 main/views/progress.py:321
 msgid "激活"
 msgstr "Reactivate"
 
-#: main/templates/progress/detail.html:434 main/views/progress.py:295
+#: main/templates/progress/detail.html:434 main/views/progress.py:297
 msgid "冻结"
 msgstr "Deactivate"
 
-#: main/templates/progress/detail.html:503 main/views/progress.py:270
+#: main/templates/progress/detail.html:503 main/views/progress.py:272
 msgid "进度已达到最大值"
 msgstr "Max of the range reached"
 
@@ -693,7 +694,7 @@ msgstr "Delete is canceled"
 
 #: main/templates/progress/detail.html:571 main/templates/progress/new.html:260
 #: main/templates/progress/new.html:298 main/views/progress.py:199
-#: main/views/progress.py:369
+#: main/views/progress.py:371
 msgid "名称不能为空"
 msgstr "Name cannot be empty"
 
@@ -706,7 +707,7 @@ msgid "必须是纯数字"
 msgstr "must be a number"
 
 #: main/templates/progress/detail.html:585 main/views/progress.py:117
-#: main/views/progress.py:285 main/views/superuser.py:85
+#: main/views/progress.py:287 main/views/superuser.py:85
 #: main/views/superuser.py:165 main/views/user.py:41 main/views/user.py:47
 #: main/views/user.py:60
 msgid "错误"
@@ -729,7 +730,7 @@ msgid "搜索"
 msgstr "Search"
 
 #: main/templates/progress/list.html:55
-#: main/templates/progress/navdropdown.html:22
+#: main/templates/progress/navdropdown.html:26
 #: main/templates/progress/navlink.html:19
 #: main/templates/progress/search.html:4 main/templates/progress/search.html:57
 #: main/templates/progress/search.html:160 main/views/progress.py:84
@@ -808,12 +809,12 @@ msgstr ". "
 msgid "最后，祝您使用愉快！"
 msgstr "Enjoy!"
 
-#: main/templates/progress/navdropdown.html:18
+#: main/templates/progress/navdropdown.html:22
 #: main/templates/user/setting.html:97
 msgid "进度详情"
 msgstr "Progress Detail"
 
-#: main/templates/progress/navdropdown.html:24
+#: main/templates/progress/navdropdown.html:28
 #: main/templates/progress/navlink.html:25
 #: main/templates/progress/timeline.html:4
 msgid "进度历程"
@@ -912,42 +913,42 @@ msgstr "Speech Recognize stopped"
 msgid "语音识别错误"
 msgstr "Speech Recognition Error"
 
-#: main/templates/progress/timeline-event.html:6 main/views/progress.py:475
+#: main/templates/progress/timeline-event.html:6 main/views/progress.py:477
 msgid "开始看"
 msgstr "Started"
 
 #: main/templates/progress/timeline-event.html:12
-#: main/templates/progress/timeline.html:136 main/views/progress.py:408
+#: main/templates/progress/timeline.html:136 main/views/progress.py:410
 msgid "完成了"
 msgstr "Completed"
 
 #: main/templates/progress/timeline-event.html:14
-#: main/templates/progress/timeline.html:140 main/views/progress.py:413
+#: main/templates/progress/timeline.html:140 main/views/progress.py:415
 msgid "冻结了"
 msgstr "Deactivated"
 
 #: main/templates/progress/timeline-event.html:16
-#: main/templates/progress/timeline.html:144 main/views/progress.py:418
+#: main/templates/progress/timeline.html:144 main/views/progress.py:420
 msgid "进行至"
 msgstr "Proceeded to"
 
 #: main/templates/progress/timeline-event.html:18
-#: main/templates/progress/timeline.html:148 main/views/progress.py:425
+#: main/templates/progress/timeline.html:148 main/views/progress.py:427
 msgid "追剧至"
 msgstr "Followed to"
 
 #: main/templates/progress/timeline-event.html:18
-#: main/templates/progress/timeline.html:148 main/views/progress.py:426
+#: main/templates/progress/timeline.html:148 main/views/progress.py:428
 msgid "第"
 msgstr "No."
 
 #: main/templates/progress/timeline-event.html:18
-#: main/templates/progress/timeline.html:148 main/views/progress.py:428
+#: main/templates/progress/timeline.html:148 main/views/progress.py:430
 msgid "集"
 msgstr "episode"
 
 #: main/templates/progress/timeline-event.html:20
-#: main/templates/progress/timeline.html:152 main/views/progress.py:433
+#: main/templates/progress/timeline.html:152 main/views/progress.py:435
 msgid "加入至"
 msgstr "Added to"
 
@@ -1006,8 +1007,8 @@ msgstr ""
 "answer"
 
 #: main/templates/user/forgetusername.html:4
-#: main/templates/user/forgetusername.html:57 main/views/user.py:206
-#: main/views/user.py:223
+#: main/templates/user/forgetusername.html:57 main/views/user.py:211
+#: main/views/user.py:228
 msgid "找回用户名"
 msgstr "Retrieve username"
 
@@ -1026,11 +1027,11 @@ msgstr ""
 msgid "请输入注册时填写的邮箱"
 msgstr "Please enter user's email"
 
-#: main/templates/user/forgetusername.html:71 main/views/user.py:375
+#: main/templates/user/forgetusername.html:71 main/views/user.py:380
 msgid "邮箱不能为空"
 msgstr "Email cannot be empty"
 
-#: main/templates/user/msg-forgetusername.html:4 main/views/user.py:219
+#: main/templates/user/msg-forgetusername.html:4 main/views/user.py:224
 msgid "有人正在通过邮件的方式找回您的用户名"
 msgstr "Someone is retrieving your username by email"
 
@@ -1067,7 +1068,7 @@ msgid "修改头像"
 msgstr "Change head image"
 
 #: main/templates/user/profile.html:63 main/templates/user/public.html:54
-#: main/templates/userbar.html:72 main/views/user.py:272
+#: main/templates/userbar.html:72 main/views/user.py:277
 msgid "个人信息"
 msgstr "Profile"
 
@@ -1079,7 +1080,7 @@ msgstr "Account Info"
 #: main/templates/user/signindropdown.html:13
 #: main/templates/user/signup.html:240 main/templates/user/signup.html:333
 #: main/templates/user/signup.html:364 main/templates/user/signup.html:366
-#: main/views/user.py:130
+#: main/views/user.py:133
 msgid "用户名"
 msgstr "Username"
 
@@ -1095,7 +1096,7 @@ msgstr "My Public Page, anyone can visit"
 
 #: main/templates/user/profile.html:93 main/templates/user/signup.html:313
 #: main/templates/user/signup.html:336 main/templates/user/signup.html:494
-#: main/templates/user/signup.html:496 main/views/user.py:136
+#: main/templates/user/signup.html:496 main/views/user.py:139
 msgid "邮箱"
 msgstr "Email"
 
@@ -1108,7 +1109,7 @@ msgid "根据“总活跃度”计算"
 msgstr "According to 'Total Activities'"
 
 #: main/templates/user/profile.html:107 main/templates/user/signup.html:334
-#: main/templates/user/signup.html:384 main/views/user.py:132
+#: main/templates/user/signup.html:384 main/views/user.py:135
 msgid "问题"
 msgstr "Question"
 
@@ -1173,7 +1174,7 @@ msgid "公开进度日历"
 msgstr "Enable Public Progress Calendar"
 
 #: main/templates/user/setting.html:79 main/templates/user/setting.html:83
-#: main/views/progress.py:461
+#: main/views/progress.py:463
 msgid "进度日历"
 msgstr "Progress Calendar"
 
@@ -1302,12 +1303,12 @@ msgstr "Loading ..."
 msgid "用户不存在"
 msgstr "User does not exist"
 
-#: main/templates/user/signin.html:237 main/views/user.py:238
+#: main/templates/user/signin.html:237 main/views/user.py:243
 msgid "密码/答案不能为空"
 msgstr "Password/Answer cannot be empty"
 
-#: main/templates/user/signin.html:242 main/views/user.py:235
-#: main/views/user.py:302 main/views/user.py:353
+#: main/templates/user/signin.html:242 main/views/user.py:240
+#: main/views/user.py:307 main/views/user.py:358
 msgid "用户名不能为空"
 msgstr "Username cannot be empty"
 
@@ -1353,7 +1354,7 @@ msgid "传统"
 msgstr "Classic"
 
 #: main/templates/user/signup.html:120 main/templates/user/signup.html:411
-#: main/views/user.py:134
+#: main/views/user.py:137
 msgid "答案"
 msgstr "Answer"
 
@@ -1774,8 +1775,8 @@ msgid "访问「{}」页面"
 msgstr "Visit 「{}」 page"
 
 #: main/views/progress.py:127 main/views/progress.py:211
-#: main/views/progress.py:243 main/views/progress.py:267
-#: main/views/progress.py:295 main/views/progress.py:319
+#: main/views/progress.py:243 main/views/progress.py:269
+#: main/views/progress.py:297 main/views/progress.py:321
 msgid "这个进度不属于您，因此您不能{}该进度"
 msgstr ""
 "You are not the owner of this progress. You are not allowed to {} this "
@@ -1793,7 +1794,7 @@ msgstr "See the progress '{}' detail"
 msgid "更新失败"
 msgstr "Update failed"
 
-#: main/views/progress.py:205 main/views/progress.py:374
+#: main/views/progress.py:205 main/views/progress.py:376
 #, python-brace-format
 msgid "初始进度 {c} 不能大于总页数 {t}"
 msgstr "Initial 'Current' ({c}) should not be larger than 'Total' ({t})"
@@ -1802,7 +1803,7 @@ msgstr "Initial 'Current' ({c}) should not be larger than 'Total' ({t})"
 msgid "编辑进度《{}》成功"
 msgstr "Update progress 《{}》 success"
 
-#: main/views/progress.py:222 main/views/progress.py:274
+#: main/views/progress.py:222 main/views/progress.py:276
 msgid "已更新"
 msgstr "Updated"
 
@@ -1814,51 +1815,51 @@ msgstr "Delete progress 《{}》"
 msgid "已删除"
 msgstr "Deleted"
 
-#: main/views/progress.py:278
+#: main/views/progress.py:280
 msgid "+1 失败"
 msgstr "+1 Failed"
 
-#: main/views/progress.py:300
+#: main/views/progress.py:302
 msgid "冻结进度《{}》"
 msgstr "Deactivated 《{}》"
 
-#: main/views/progress.py:309
+#: main/views/progress.py:311
 msgid "激活失败"
 msgstr "Reactivate failed"
 
-#: main/views/progress.py:324
+#: main/views/progress.py:326
 msgid "恢复已冻结的进度《{}》"
 msgstr "Reactivated 《{}》"
 
-#: main/views/progress.py:326
+#: main/views/progress.py:328
 msgid "已激活"
 msgstr "Reactivated"
 
-#: main/views/progress.py:343
+#: main/views/progress.py:345
 msgid "尝试新增进度"
 msgstr "Attempt to add a new progress"
 
-#: main/views/progress.py:357
+#: main/views/progress.py:359
 msgid "新增失败"
 msgstr "Add failed"
 
-#: main/views/progress.py:377
+#: main/views/progress.py:379
 msgid "新增进度《{}》成功"
 msgstr "Add progress 《{}》 success"
 
-#: main/views/progress.py:448 main/views/progress.py:451
+#: main/views/progress.py:450 main/views/progress.py:453
 msgid "获取日历失败"
 msgstr "Retrieve iCal failed"
 
-#: main/views/progress.py:448
+#: main/views/progress.py:450
 msgid "用户的私钥不合法"
 msgstr "Private key is not valid"
 
-#: main/views/progress.py:451
+#: main/views/progress.py:453
 msgid "此用户尚未公开其进度日历"
 msgstr "User does not enable public progress calendar"
 
-#: main/views/progress.py:506
+#: main/views/progress.py:508
 msgid "不支持的格式"
 msgstr "Unsupported format"
 
@@ -1943,40 +1944,40 @@ msgstr "{} visited your public page"
 msgid "查看用户个人信息"
 msgstr "View user profile"
 
-#: main/views/user.py:120
+#: main/views/user.py:123
 msgid "注册失败"
 msgstr "Sign up failed"
 
-#: main/views/user.py:130 main/views/user.py:132 main/views/user.py:134
-#: main/views/user.py:136
+#: main/views/user.py:133 main/views/user.py:135 main/views/user.py:137
+#: main/views/user.py:139
 msgid "“{}”不能为空"
 msgstr "“{}” cannot be empty"
 
-#: main/views/user.py:146
+#: main/views/user.py:149
 msgid "用户名 '{}' 已存在！"
 msgstr "Username '{}' is already taken!"
 
-#: main/views/user.py:148
+#: main/views/user.py:151
 msgid "昵称 '{}' 已存在！"
 msgstr "Nickname '{}' is already taken!"
 
-#: main/views/user.py:150
+#: main/views/user.py:153
 msgid "邮箱 '{}' 已存在！"
 msgstr "Email '{}' is already taken!"
 
-#: main/views/user.py:153
+#: main/views/user.py:156
 msgid "用户名 '{}' 只应包含数字、字母、和英文句号！"
 msgstr "Username '{}' should only contain numbers, letters and '.'!"
 
-#: main/views/user.py:155
+#: main/views/user.py:158
 msgid "昵称 '{}' 只应包含字母和汉字！"
 msgstr "Nickname '{}' should only contain letters"
 
-#: main/views/user.py:162
+#: main/views/user.py:165
 msgid "注册成功"
 msgstr "Sign up success"
 
-#: main/views/user.py:164
+#: main/views/user.py:167
 #, python-brace-format
 msgid ""
 " {user.username} 注册成功！\n"
@@ -1987,65 +1988,65 @@ msgstr ""
 "You are the No.{user.id} user. \n"
 "Please log in to let us remember you!"
 
-#: main/views/user.py:164
+#: main/views/user.py:167
 msgid "欢迎加入"
 msgstr "Welcome aboard"
 
-#: main/views/user.py:174
+#: main/views/user.py:177
 msgid "修改头像成功"
 msgstr "Change head image success"
 
-#: main/views/user.py:185 main/views/user.py:235 main/views/user.py:238
-#: main/views/user.py:243 main/views/user.py:246 main/views/user.py:251
-#: main/views/user.py:305
+#: main/views/user.py:190 main/views/user.py:240 main/views/user.py:243
+#: main/views/user.py:248 main/views/user.py:251 main/views/user.py:256
+#: main/views/user.py:310
 msgid "登录失败"
 msgstr "Log in failed"
 
-#: main/views/user.py:185
+#: main/views/user.py:190
 msgid "您已经以 {} 的身份登录了，请勿重复登录"
 msgstr "You already logged in as '{}', please do not log in again"
 
-#: main/views/user.py:206
+#: main/views/user.py:211
 msgid "此邮箱（{}）尚未被注册"
 msgstr "This email ({}) has not signed up"
 
-#: main/views/user.py:243 main/views/user.py:305
+#: main/views/user.py:248 main/views/user.py:310
 msgid "找不到用户名为 {} 的用户"
 msgstr "Cannot find user with username {}"
 
-#: main/views/user.py:246
+#: main/views/user.py:251
 msgid "您已被禁止登录，请联系管理员"
 msgstr "You are forbidden to log in. Please contact administrator"
 
-#: main/views/user.py:251
+#: main/views/user.py:256
 msgid "用户名与答案不匹配"
 msgstr "Incorrect username / password combination"
 
-#: main/views/user.py:257
+#: main/views/user.py:262
 msgid "登录成功"
 msgstr "Login success"
 
-#: main/views/user.py:269
+#: main/views/user.py:274
 msgid "查看进度列表"
 msgstr "for progress list"
 
-#: main/views/user.py:274
+#: main/views/user.py:279
 msgid "查看您的活跃度、进度统计"
 msgstr "for your activities, progress statistics"
 
-#: main/views/user.py:284
+#: main/views/user.py:289
 msgid "欢迎您归来，开始您的网站之旅吧！"
 msgstr "Welcome back. Start your surfing now! "
 
-#: main/views/user.py:286
+#: main/views/user.py:291
 msgid "遇到问题或想 #提建议 ，请发消息给"
 msgstr "If you have any problems or #suggest , please send a message to"
 
-#: main/views/user.py:314
+#: main/views/user.py:319
 msgid "用户未找到：{}"
 msgstr "Username not found: {}"
 
-#: main/views/user.py:365
+#: main/views/user.py:370
 msgid "昵称不能为空"
 msgstr "Nickname cannot be empty"
 
