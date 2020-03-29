@@ -19,7 +19,7 @@ def infoMsg(content="Hi", url=None, title=None):
         if url == "/":
             button_text = _("回到主页")
         elif "/user/signin" in url:
-            button_text = _("前往「{}」页面").format(_("登入"))
+            button_text = _("前往「{}」页面").format(_("登录"))
         elif "/user/signup" in url:
             button_text = _("前往「{}」页面").format(_("注册"))
         elif "/progress/list" in url:

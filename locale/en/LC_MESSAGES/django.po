@@ -1242,7 +1242,7 @@ msgid "文件"
 msgstr "file"
 
 #: main/templates/user/signin.html:4
-msgid "用户登入"
+msgid "用户登录"
 msgstr "User Log In"
 
 #: main/templates/user/signin.html:55 main/templates/user/signin.html:65
@@ -1267,7 +1267,7 @@ msgstr "Should only contain letters, number and '.'"
 #: main/templates/user/signin.html:65 main/templates/user/signup.html:407
 #: main/templates/user/signup.html:415 main/templates/user/signup.html:438
 #: main/templates/user/signup.html:444 main/templates/user/signup.html:460
-msgid "回答 “答案” 或 “备选答案” 均可正常登入"
+msgid "回答 “答案” 或 “备选答案” 均可正常登录"
 msgstr "Provide either 'Answer' or 'Alternative Answer' can log in"
 
 #: main/templates/user/signin.html:68
@@ -1277,7 +1277,7 @@ msgid "密码或答案"
 msgstr "Password or Answer"
 
 #: main/templates/user/signin.html:77
-msgid "下次访问免登入，公共电脑请勿勾选此项"
+msgid "下次访问免登录，公共电脑请勿勾选此项"
 msgstr "Keep logged in. Do not check this option on a public computer."
 
 #: main/templates/user/signin.html:80
@@ -1286,7 +1286,7 @@ msgstr "Remember me"
 
 #: main/templates/user/signin.html:88 main/templates/user/signin.html:179
 #: main/templates/userbar.html:44 util/ctrl.py:22
-msgid "登入"
+msgid "登录"
 msgstr "Log in"
 
 #: main/templates/user/signin.html:163 main/templates/user/signup.html:112
@@ -1312,7 +1312,7 @@ msgid "用户名不能为空"
 msgstr "Username cannot be empty"
 
 #: main/templates/user/signin.html:247
-msgid "登入中 ..."
+msgid "登录中 ..."
 msgstr "Logging in ..."
 
 #: main/templates/user/signindropdown.html:6
@@ -1435,7 +1435,7 @@ msgid "不能为空"
 msgstr "cannot be empty"
 
 #: main/templates/user/signup.html:367 main/templates/user/signup.html:374
-msgid "登入时的凭证之一"
+msgid "登录时的凭证之一"
 msgstr "Needed when logging in"
 
 #: main/templates/user/signup.html:369 main/templates/user/signup.html:376
@@ -1443,7 +1443,7 @@ msgid "不能同其他人的用户名重复"
 msgstr "Should not same as another user's username"
 
 #: main/templates/user/signup.html:387 main/templates/user/signup.html:399
-msgid "登入时会问您的问题"
+msgid "登录时会问您的问题"
 msgstr "Question will be asked when logging in"
 
 #: main/templates/user/signup.html:388
@@ -1475,7 +1475,7 @@ msgid "尽量不要包含空格或标点符号"
 msgstr "Avoid using irregular charactors"
 
 #: main/templates/user/signup.html:414 main/templates/user/signup.html:429
-msgid "登入时您需要回答的内容"
+msgid "登录时您需要回答的内容"
 msgstr "The 'answer' of the 'question' when logging in"
 
 #: main/templates/user/signup.html:416 main/templates/user/signup.html:430
@@ -1547,11 +1547,11 @@ msgid "生成提示"
 msgstr "Generate Tips"
 
 #: main/templates/user/signup.html:475 main/templates/user/signup.html:483
-msgid "登入时，问题答案的提示信息"
+msgid "登录时，问题答案的提示信息"
 msgstr "Tips for the 'answer' when logging in"
 
 #: main/templates/user/signup.html:476 main/templates/user/signup.html:484
-msgid "在登入界面您需要时自动显示"
+msgid "在登录界面您需要时自动显示"
 msgstr "Will show up automatically when logging in"
 
 #: main/templates/user/signup.html:477 main/templates/user/signup.html:485
@@ -1591,7 +1591,7 @@ msgid "注册"
 msgstr "Sign up"
 
 #: main/templates/userbar.html:83
-msgid "登出"
+msgid "注销"
 msgstr "Log out"
 
 #: main/templates/userbar.html:90
@@ -1981,7 +1981,7 @@ msgstr "Sign up success"
 msgid ""
 " {user.username} 注册成功！\n"
 "您是网站第 {user.id} 位用户。\n"
-"请登入以便我们记住您！"
+"请登录以便我们记住您！"
 msgstr ""
 " {user.username} sign up success! \n"
 "You are the No.{user.id} user. \n"
@@ -1998,11 +1998,11 @@ msgstr "Change head image success"
 #: main/views/user.py:185 main/views/user.py:235 main/views/user.py:238
 #: main/views/user.py:243 main/views/user.py:246 main/views/user.py:251
 #: main/views/user.py:305
-msgid "登入失败"
+msgid "登录失败"
 msgstr "Log in failed"
 
 #: main/views/user.py:185
-msgid "您已经以 {} 的身份登入了，请勿重复登入"
+msgid "您已经以 {} 的身份登录了，请勿重复登录"
 msgstr "You already logged in as '{}', please do not log in again"
 
 #: main/views/user.py:206
@@ -2014,7 +2014,7 @@ msgid "找不到用户名为 {} 的用户"
 msgstr "Cannot find user with username {}"
 
 #: main/views/user.py:246
-msgid "您已被禁止登入，请联系管理员"
+msgid "您已被禁止登录，请联系管理员"
 msgstr "You are forbidden to log in. Please contact administrator"
 
 #: main/views/user.py:251
@@ -2022,7 +2022,7 @@ msgid "用户名与答案不匹配"
 msgstr "Incorrect username / password combination"
 
 #: main/views/user.py:257
-msgid "登入成功"
+msgid "登录成功"
 msgstr "Login success"
 
 #: main/views/user.py:269
@@ -2085,7 +2085,7 @@ msgstr "{} after"
 #: util/user.py:93
 msgid ""
 "此页面需要用户信息，\n"
-"请登入/注册后再访问。"
+"请登录/注册后再访问。"
 msgstr ""
 "This page required user information, \n"
 "Please login/signup first."

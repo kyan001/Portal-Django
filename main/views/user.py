@@ -16,7 +16,7 @@ import util.userexp
 
 
 def logout(request):
-    """用户点击登出"""
+    """用户点击注销"""
     # clean session
     request.session[User.LOGIN_SESSION_KEY] = None
     # create response
@@ -164,7 +164,7 @@ def newUser(request):  # POST
     # add exp
     util.userexp.addExp(user, 'user', 1, _('注册成功'))
     # render
-    return util.ctrl.infoMsg(_(" {user.username} 注册成功！\n您是网站第 {user.id} 位用户。\n请登入以便我们记住您！").format(user=user), url='/user/signin', title=_("欢迎加入"))
+    return util.ctrl.infoMsg(_(" {user.username} 注册成功！\n您是网站第 {user.id} 位用户。\n请登录以便我们记住您！").format(user=user), url='/user/signin', title=_("欢迎加入"))
 
 
 @util.user.login_required
@@ -180,14 +180,14 @@ def headimgUpdate(request):
 
 # -Signin-----------------------------------------------
 def signin(request):
-    """点击登入后的页面，供输入用户名/密码"""
+    """点击登录后的页面，供输入用户名/密码"""
     # check if already logged in
     next_ = request.GET.get("next") or "/"
     if '/user/signin' in next_:
         next_ = '/'
     current_user = util.user.getCurrentUser(request)
     if current_user:
-        messages.error(request, _("登入失败") + _("：") + _("您已经以 {} 的身份登入了，请勿重复登入").format(current_user.username))
+        messages.error(request, _("登录失败") + _("：") + _("您已经以 {} 的身份登录了，请勿重复登录").format(current_user.username))
         return redirect(next_)
     # render
     context = {
@@ -197,7 +197,7 @@ def signin(request):
 
 
 def forgetAnswer(request):
-    '登入页面点击忘记回答'
+    '登录页面点击忘记回答'
     context = {}
     return render(request, 'user/forgetanswer.html', context)
 
@@ -229,7 +229,7 @@ def forgetUsername(request):
 
 
 def checkLogin(request):  # POST
-    """用户点击登入后：判断用户是否可以登入"""
+    """用户点击登录后：判断用户是否可以登录"""
     # get posts
     username = request.POST.get('username')
     answer = request.POST.get('answer')
@@ -237,29 +237,29 @@ def checkLogin(request):  # POST
     next_ = request.POST.get('next') or ''
     _failto = request.META.get('HTTP_REFERER') or '/user/signin?next=' + next_
     if not username:
-        messages.error(request, _("登入失败") + _("：") + _("用户名不能为空"))
+        messages.error(request, _("登录失败") + _("：") + _("用户名不能为空"))
         return redirect(_failto)
     if not answer:
-        messages.error(request, _("登入失败") + _("：") + _("密码/答案不能为空"))
+        messages.error(request, _("登录失败") + _("：") + _("密码/答案不能为空"))
         return redirect(_failto)
     # check username vs. answer
     user = User.objects.get_or_none(username=username)
     if not user:
-        messages.error(request, _("登入失败") + _("：") + _("找不到用户名为 {} 的用户").format(username))
+        messages.error(request, _("登录失败") + _("：") + _("找不到用户名为 {} 的用户").format(username))
         return redirect(_failto)
     if user.getUserpermission('signin') is False:  # None is OK, True is OK, False is not OK
-        messages.error(request, _("登入失败") + _("：") + _("您已被禁止登入，请联系管理员"))
+        messages.error(request, _("登录失败") + _("：") + _("您已被禁止登录，请联系管理员"))
         return redirect(_failto)
     if util.user.checkAnswer(user, answer):
         util.user.rememberLogin(request, user)
     else:
-        messages.error(request, _("登入失败") + _("：") + _("用户名与答案不匹配"))
+        messages.error(request, _("登录失败") + _("：") + _("用户名与答案不匹配"))
         return redirect(_failto)
     # redirections
     to_ = next_ or '/'
     response = redirect(to_)
     # add exp
-    util.userexp.addExp(user, 'user', 1, _("登入成功"))
+    util.userexp.addExp(user, 'user', 1, _("登录成功"))
     # remove old msgs
     msg_title = 'Hi, @{user.nickname}'.format(user=user)
     sysuser = Chat.objects.getSyschatUser()
@@ -301,13 +301,13 @@ def checkLogin(request):  # POST
 
 
 def getQuestionAndTip(request):  # AJAX
-    """登入时：通过用户名得到用户问题"""
+    """登录时：通过用户名得到用户问题"""
     username = request.GET.get('username')
     if not username:
         return util.ctrl.returnJsonError(_("用户名不能为空"))
     user = User.objects.get_or_none(username=username)
     if not user:
-        return util.ctrl.returnJsonError(_("登入失败") + _("：") + _("找不到用户名为 {} 的用户").format(username))
+        return util.ctrl.returnJsonError(_("登录失败") + _("：") + _("找不到用户名为 {} 的用户").format(username))
     if user:
         question = user.question
         tip = user.tip
@@ -351,7 +351,7 @@ def getUnreadCount(request):  # AJAX
 
 # -Validations------------------------------------------
 def validateUsername(request):  # AJAX
-    """注册/登入时：用户名是否可用"""
+    """注册/登录时：用户名是否可用"""
     username = request.GET.get('username')
     result = {}
     if not username:

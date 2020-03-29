@@ -90,7 +90,7 @@ def getRandomName():
 
 def loginToContinue(request):
     """Show a message, goto login page, and then go back to current page"""
-    messages.error(request, _('此页面需要用户信息，\n请登入/注册后再访问。'))
+    messages.error(request, _('此页面需要用户信息，\n请登录/注册后再访问。'))
     _from = request.get_full_path()
     return redirect('/user/signin?next={}'.format(_from))
 

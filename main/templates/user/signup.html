@@ -364,14 +364,14 @@
                         <input type="text" name="username" class="form-control needverify" placeholder="{% trans '用户名' %}" autofocus="autofocus" onblur="validateUsername()">
                         <span class="input-group-addon tips hidden-xs"
                             title="{% trans '用户名' %} <span class='label label-primary'>{% trans '必填' %}</span>"
-                            data-content="<li class='text-primary'>{% trans '登入时的凭证之一' %}</li>
+                            data-content="<li class='text-primary'>{% trans '登录时的凭证之一' %}</li>
                             <li class='text-danger'>{% trans '只能包含“英文字母”、“数字”和“英文句号”' %}</li>
                             <li class='text-danger'>{% trans '不能同其他人的用户名重复' %}</li>">
                             <span class="glyphicon glyphicon-question-sign"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
-                        <li><ins>{% trans "登入时的凭证之一" %}</ins></li>
+                        <li><ins>{% trans "登录时的凭证之一" %}</ins></li>
                         <li>{% trans "只能包含“英文字母”、“数字”和“英文句号”" %}</li>
                         <li>{% trans "不能同其他人的用户名重复" %}</li>
                     </span>
@@ -384,7 +384,7 @@
                         <input type="text" name="question" class="form-control" placeholder="{% trans '问题' %}">
                         <span class="input-group-addon tips hidden-xs"
                             title="问题 / Question <span class='label label-primary'>{% trans '必填' %}</span>"
-                            data-content="<li class='text-primary'>{% trans '登入时会问您的问题' %}</li>
+                            data-content="<li class='text-primary'>{% trans '登录时会问您的问题' %}</li>
                             <li class='text-success'>{% trans '我们用 “问题+回答” 来代替传统密码' %}</li>
                             <li>{% trans '一些常用的问题包括：' %}</li>
                             <ul>
@@ -396,7 +396,7 @@
                         </span>
                     </div>
                     <span class="xs-tips">
-                        <li><ins>{% trans "登入时会问您的问题" %}</ins></li>
+                        <li><ins>{% trans "登录时会问您的问题" %}</ins></li>
                         <li>{% trans "在这里写下问题，在下面写下答案" %}</li>
                         <li>{% trans "尽量不要包含空格或标点符号" %}</li>
                     </span>
@@ -404,15 +404,15 @@
                 <div id="answer1-group">
                     <div class="input-group">
                         <span class="input-group-addon text-muted">
-                            <span class="glyphicon glyphicon-asterisk" title="{% trans '必填' %}{% trans '，' %}{% trans '回答 “答案” 或 “备选答案” 均可正常登入' %}" data-toggle="tooltip" data-placement="top"></span>
+                            <span class="glyphicon glyphicon-asterisk" title="{% trans '必填' %}{% trans '，' %}{% trans '回答 “答案” 或 “备选答案” 均可正常登录' %}" data-toggle="tooltip" data-placement="top"></span>
                         </span>
                         <input type="text" name="answer1" class="form-control" placeholder="{% trans '密码' %}" onchange="generateTip()">
                         <span class="input-group-addon tips hidden-xs"
                             title="{% trans '答案' %} / {% trans '密码' %} <span class='label label-primary'>{% trans '必填' %}</span>"
                             data-content="<li>{% trans '问答模式时：</li>
                             <ul>
-                            <li class='text-primary'>{% trans '登入时您需要回答的内容' %}</li>
-                            <li class='text-danger'>{% trans '回答 “答案” 或 “备选答案” 均可正常登入' %}</li>
+                            <li class='text-primary'>{% trans '登录时您需要回答的内容' %}</li>
+                            <li class='text-danger'>{% trans '回答 “答案” 或 “备选答案” 均可正常登录' %}</li>
                             <li class='text-success'>{% trans '一般应与上面的问题相对应' %}</li>
                             <li class='text-success'>{% trans '中英文、标点、数字均可' %}</li>
                             <li class='text-warning'>{% trans '任何人（包括管理员）均无法查看您的回答' %}</li>
@@ -426,7 +426,7 @@
                         </span>
                     </div>
                     <span class="xs-tips">
-                        <li><ins>{% trans "登入时您需要回答的内容" %}</ins></li>
+                        <li><ins>{% trans "登录时您需要回答的内容" %}</ins></li>
                         <li>{% trans "一般应与上面的问题相对应" %}</li>
                         <li>{% trans "中英文、标点、数字均可" %}</li>
                         <li><em>{% trans "任何人（包括管理员）均无法查看您的回答" %}</em></li>
@@ -435,13 +435,13 @@
                 <div id="answer2-group">
                     <div class="input-group newmode">
                         <span class="input-group-addon text-muted">
-                            <span class="glyphicon glyphicon-asterisk" title="{% trans '必填' %}{% trans '，' %}{% trans '回答 “答案” 或 “备选答案” 均可正常登入' %}" data-toggle="tooltip" data-placement="top"></span>
+                            <span class="glyphicon glyphicon-asterisk" title="{% trans '必填' %}{% trans '，' %}{% trans '回答 “答案” 或 “备选答案” 均可正常登录' %}" data-toggle="tooltip" data-placement="top"></span>
                         </span>
                         <input type="text" name="answer2" class="form-control" placeholder="{% trans '备选答案' %}">
                         <span class="input-group-addon tips hidden-xs"
                             title="{% trans '备选答案' %} <span class='label label-success{% trans '选填' %}</span>"
                             data-content="<li class='text-primary'>{% trans '同样作为正常答案生效' %}</li>
-                            <li class='text-danger'>{% trans '回答 “答案” 或 “备选答案” 均可正常登入' %}</li>
+                            <li class='text-danger'>{% trans '回答 “答案” 或 “备选答案” 均可正常登录' %}</li>
                             <li>{% trans '常见的 “答案” 与 “备选答案” 的组合有：' %}</li>
                             <ul>
                             <li><span style='color:brown'>{% trans '中文答案 + 英文答案' %}</span>
@@ -457,7 +457,7 @@
                     </div>
                     <span class="xs-tips">
                         <li><ins>{% trans "同样作为正常答案生效" %}</ins></li>
-                        <li>{% trans "回答 “答案” 或 “备选答案” 均可正常登入" %}</li>
+                        <li>{% trans "回答 “答案” 或 “备选答案” 均可正常登录" %}</li>
                         <li>{% trans "不需要与 “答案” 相同" %}</li>
                     </span>
                 </div>
@@ -472,16 +472,16 @@
                         </span>
                         <span class="input-group-addon tips hidden-xs"
                             title="{% trans '答案提示' %}<span class='label label-success'>{% trans '选填' %}</span>"
-                            data-content="<li class='text-primary'>{% trans '登入时，问题答案的提示信息' %}</li>
-                            <li class='text-success'>{% trans '在登入界面您需要时自动显示' %}</li>
+                            data-content="<li class='text-primary'>{% trans '登录时，问题答案的提示信息' %}</li>
+                            <li class='text-success'>{% trans '在登录界面您需要时自动显示' %}</li>
                             <li class='text-warning'>{% trans '请不要将答案直接放在这里' %}</li>
                             ">
                             <span class="glyphicon glyphicon-question-sign"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
-                        <li><ins>{% trans "登入时，问题答案的提示信息" %}</ins></li>
-                        <li>{% trans "在登入界面您需要时自动显示" %}</li>
+                        <li><ins>{% trans "登录时，问题答案的提示信息" %}</ins></li>
+                        <li>{% trans "在登录界面您需要时自动显示" %}</li>
                         <li>{% trans "请不要将答案直接放在这里" %}</li>
                     </span>
                 </div>

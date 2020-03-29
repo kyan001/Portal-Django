@@ -99,8 +99,8 @@ def updatedb(request):
                 'category': 'signin',
                 'isallowed': False,
                 'image': '/static/img/badges/signin-no.png',
-                'description': '此用户被禁止登入',
-                'requirement': '当你做了什么事被关入小黑屋的时候，这枚徽章将会自动出现。（然而现在并没有什么小黑屋）。一些不准许登入的系统用户也会拥有此徽章）',
+                'description': '此用户被禁止登录',
+                'requirement': '当你做了什么事被关入小黑屋的时候，这枚徽章将会自动出现。（然而现在并没有什么小黑屋）。一些不准许登录的系统用户也会拥有此徽章）',
                 'designernname': '唯笑竹',
             },
             {

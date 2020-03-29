@@ -1243,7 +1243,7 @@ msgid "文件"
 msgstr ""
 
 #: main/templates/user/signin.html:4
-msgid "用户登入"
+msgid "用户登录"
 msgstr "ユーザーログイン"
 
 #: main/templates/user/signin.html:55 main/templates/user/signin.html:65
@@ -1268,7 +1268,7 @@ msgstr "アルファベット、数字や英文記号のみ可"
 #: main/templates/user/signin.html:65 main/templates/user/signup.html:407
 #: main/templates/user/signup.html:415 main/templates/user/signup.html:438
 #: main/templates/user/signup.html:444 main/templates/user/signup.html:460
-msgid "回答 “答案” 或 “备选答案” 均可正常登入"
+msgid "回答 “答案” 或 “备选答案” 均可正常登录"
 msgstr "「答え」或は「備考の答え」を答えればログインできる"
 
 #: main/templates/user/signin.html:68
@@ -1278,7 +1278,7 @@ msgid "密码或答案"
 msgstr "パスワード或は答え"
 
 #: main/templates/user/signin.html:77
-msgid "下次访问免登入，公共电脑请勿勾选此项"
+msgid "下次访问免登录，公共电脑请勿勾选此项"
 msgstr ""
 "次回から自動的にログイン。公用パソコンでこの機能の使用を控えてください。"
 
@@ -1288,7 +1288,7 @@ msgstr "ログイン状態を保持する"
 
 #: main/templates/user/signin.html:88 main/templates/user/signin.html:179
 #: main/templates/userbar.html:44 util/ctrl.py:22
-msgid "登入"
+msgid "登录"
 msgstr "ログイン"
 
 #: main/templates/user/signin.html:163 main/templates/user/signup.html:112
@@ -1314,7 +1314,7 @@ msgid "用户名不能为空"
 msgstr "ユーザー名を入力してください"
 
 #: main/templates/user/signin.html:247
-msgid "登入中 ..."
+msgid "登录中 ..."
 msgstr "ローディング..."
 
 #: main/templates/user/signindropdown.html:6
@@ -1437,7 +1437,7 @@ msgid "不能为空"
 msgstr "空きにしてはいけないです"
 
 #: main/templates/user/signup.html:367 main/templates/user/signup.html:374
-msgid "登入时的凭证之一"
+msgid "登录时的凭证之一"
 msgstr "登録するには必要なものになる"
 
 #: main/templates/user/signup.html:369 main/templates/user/signup.html:376
@@ -1445,7 +1445,7 @@ msgid "不能同其他人的用户名重复"
 msgstr "ほかのユーザー名と同じになってはいけないです"
 
 #: main/templates/user/signup.html:387 main/templates/user/signup.html:399
-msgid "登入时会问您的问题"
+msgid "登录时会问您的问题"
 msgstr "登録するときに聞かれる問題"
 
 #: main/templates/user/signup.html:388
@@ -1477,7 +1477,7 @@ msgid "尽量不要包含空格或标点符号"
 msgstr "スペースや区切り符号の使用を控えてください"
 
 #: main/templates/user/signup.html:414 main/templates/user/signup.html:429
-msgid "登入时您需要回答的内容"
+msgid "登录时您需要回答的内容"
 msgstr "登録用の回答内容が必要になる"
 
 #: main/templates/user/signup.html:416 main/templates/user/signup.html:430
@@ -1549,11 +1549,11 @@ msgid "生成提示"
 msgstr "ヒントを使う"
 
 #: main/templates/user/signup.html:475 main/templates/user/signup.html:483
-msgid "登入时，问题答案的提示信息"
+msgid "登录时，问题答案的提示信息"
 msgstr "登録するときに、質問応答のヒント"
 
 #: main/templates/user/signup.html:476 main/templates/user/signup.html:484
-msgid "在登入界面您需要时自动显示"
+msgid "在登录界面您需要时自动显示"
 msgstr "必要に応じて登録する画面に自動的に表示される"
 
 #: main/templates/user/signup.html:477 main/templates/user/signup.html:485
@@ -1593,7 +1593,7 @@ msgid "注册"
 msgstr "サインアップ"
 
 #: main/templates/userbar.html:83
-msgid "登出"
+msgid "注销"
 msgstr "ログアウト"
 
 #: main/templates/userbar.html:90
@@ -1981,7 +1981,7 @@ msgstr "サインアップ成功しました"
 msgid ""
 " {user.username} 注册成功！\n"
 "您是网站第 {user.id} 位用户。\n"
-"请登入以便我们记住您！"
+"请登录以便我们记住您！"
 msgstr ""
 " {user.username} サインアップ成功しました! \n"
 "あなたは No.{user.id} ユーザーです. \n"
@@ -1998,11 +1998,11 @@ msgstr "アイコンを更新しました"
 #: main/views/user.py:185 main/views/user.py:235 main/views/user.py:238
 #: main/views/user.py:243 main/views/user.py:246 main/views/user.py:251
 #: main/views/user.py:305
-msgid "登入失败"
+msgid "登录失败"
 msgstr "ログイン失敗しました"
 
 #: main/views/user.py:185
-msgid "您已经以 {} 的身份登入了，请勿重复登入"
+msgid "您已经以 {} 的身份登录了，请勿重复登录"
 msgstr "すでに'{}'でログインしました"
 
 #: main/views/user.py:206
@@ -2014,7 +2014,7 @@ msgid "找不到用户名为 {} 的用户"
 msgstr "ユーザー名{}を見つかりませんでした"
 
 #: main/views/user.py:246
-msgid "您已被禁止登入，请联系管理员"
+msgid "您已被禁止登录，请联系管理员"
 msgstr "ログインが禁止されています。管理員に連絡してください"
 
 #: main/views/user.py:251
@@ -2022,7 +2022,7 @@ msgid "用户名与答案不匹配"
 msgstr "ユーザー名と答えが一致していません"
 
 #: main/views/user.py:257
-msgid "登入成功"
+msgid "登录成功"
 msgstr "ログイン成功しました"
 
 #: main/views/user.py:269
@@ -2085,7 +2085,7 @@ msgstr "{}後"
 #: util/user.py:93
 msgid ""
 "此页面需要用户信息，\n"
-"请登入/注册后再访问。"
+"请登录/注册后再访问。"
 msgstr ""
 "カレントページにユーザー登録が必要になるので, \n"
 "新規登録/ログインしてアクセスしてください."
