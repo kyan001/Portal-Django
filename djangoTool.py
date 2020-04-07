@@ -14,7 +14,7 @@ import consoleiotools as cit
 from KyanToolKit import KyanToolKit as ktk
 
 
-__version__ = '1.17.1'
+__version__ = '1.18.1'
 
 
 def load_config(config_file):
@@ -32,7 +32,7 @@ DATADUMP_FILE = CONF_DD.get('file') or 'datadump.json'
 DATADUMP_DIR = CONF_DD.get('dir') or ""
 DATADUMP_SERVER = CONF_DD.get('server') or ""
 DATADUMP_USER = CONF_DD.get('user') or getpass.getuser()
-VIRTUALENV_DIR = CONF_DD.get('virtualenv') or ""
+VIRTUALENV_DIR = os.path.normpath(CONF_DD['virtualenv']) if CONF_DD.get('virtualenv') else ""
 TESTS_DIR = CONF.get('testsdir') or 'main.tests'
 PIP_REQUIREMENTS = CONF.get('piprequirements') or 'requirements.txt'
 DEV_URL = CONF.get('devurl') or 'http://127.0.0.1:8000/'
@@ -280,7 +280,7 @@ def make_messages():
     """Django i18n Make .po Messaages File"""
     cmd = 'manage.py makemessages'
     if VIRTUALENV_DIR:
-        cmd += " --ignore='{}/*'".format(os.path.normpath(VIRTUALENV_DIR))
+        cmd += " --ignore='{}/*'".format(VIRTUALENV_DIR)
     run_by_py3(cmd)
 
 
@@ -290,7 +290,7 @@ def compile_messages():
     """Django i18n Compile .po files into .mo files"""
     cmd = 'manage.py compilemessages'
     if VIRTUALENV_DIR:
-        cmd += " --ignore='{}/*'".format(os.path.normpath(VIRTUALENV_DIR))
+        cmd += " --ignore='{}/*'".format(VIRTUALENV_DIR)
     run_by_py3(cmd)
 
 
@@ -304,7 +304,22 @@ def debug_mode_status():
         cit.echo("Django Debug Mode: Off.")
 
 
-@register('Debug: Debug Mode Switch')
+def virtualenv_status():
+    """Print Virtualenv info."""
+    if not VIRTUALENV_DIR:
+        return None
+    if not os.path.isdir(VIRTUALENV_DIR):
+        cit.err("Virtualenv: Config Error. (Folder Not Exist: {}/)".format(VIRTUALENV_DIR))
+        return None
+    if "VIRTUAL_ENV" in os.environ:
+        cit.warn("Virtualenv: On.")
+        return True
+    else:
+        cit.warn("Virtualenv: Off. (Folder Exist: {}/)".format(VIRTUALENV_DIR))
+        return False
+
+
+@register('Debug: Debug Mode On/Off')
 @cit.as_session
 def debug_mode_switch():
     """Switch Django debug mode by deleting/creating debug flag file."""
@@ -318,6 +333,7 @@ def debug_mode_switch():
 if __name__ == '__main__':
     cit.echo('Django Tool: version {}'.format(__version__))
     debug_mode_status()
+    virtualenv_status()
     cit.br()
     if not manage_file_exist():
         cit.err('No manage.py detected. Please run this under projects folder')
