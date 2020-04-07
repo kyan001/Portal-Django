@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-29 23:08+0800\n"
+"POT-Creation-Date: 2020-04-07 14:02+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Kyan <kai@kyan001.com>\n"
 "Language-Team: English <i18n@kyan001.com>\n"
@@ -1613,68 +1613,76 @@ msgid "随机主题"
 msgstr "Random Theme"
 
 #: main/templates/userbar.html:154
+msgid "浅色"
+msgstr "Light"
+
+#: main/templates/userbar.html:155
 msgid "蔚蓝"
 msgstr "Cerulean"
 
-#: main/templates/userbar.html:155
+#: main/templates/userbar.html:156
 msgid "宇宙"
 msgstr "Cosmo"
 
-#: main/templates/userbar.html:156
-msgid "半机械"
-msgstr "Cyborg"
-
 #: main/templates/userbar.html:157
-msgid "暗色"
-msgstr "Darkly"
-
-#: main/templates/userbar.html:158
 msgid "扁平"
 msgstr "Flatly"
 
-#: main/templates/userbar.html:159
+#: main/templates/userbar.html:158
 msgid "日志"
 msgstr "Journal"
 
-#: main/templates/userbar.html:160
+#: main/templates/userbar.html:159
 msgid "流明"
 msgstr "Lumen"
 
-#: main/templates/userbar.html:161
+#: main/templates/userbar.html:160
 msgid "纸"
 msgstr "Paper"
 
-#: main/templates/userbar.html:162
+#: main/templates/userbar.html:161
 msgid "易读"
 msgstr "Readable"
 
-#: main/templates/userbar.html:163
+#: main/templates/userbar.html:162
 msgid "砂岩"
 msgstr "Sandstone"
 
-#: main/templates/userbar.html:164
+#: main/templates/userbar.html:163
 msgid "简约"
 msgstr "Simplex"
 
-#: main/templates/userbar.html:165
-msgid "页岩"
-msgstr "Slate"
-
-#: main/templates/userbar.html:166
+#: main/templates/userbar.html:164
 msgid "空间站"
 msgstr "Spacelab"
 
-#: main/templates/userbar.html:167
-msgid "英雄"
-msgstr "Superhero"
-
-#: main/templates/userbar.html:168
+#: main/templates/userbar.html:165
 msgid "统一"
 msgstr "United"
 
-#: main/templates/userbar.html:169
+#: main/templates/userbar.html:166
 msgid "雪人"
 msgstr "Yeti"
+
+#: main/templates/userbar.html:167
+msgid "深色"
+msgstr "Dark"
+
+#: main/templates/userbar.html:168
+msgid "半机械"
+msgstr "Cyborg"
+
+#: main/templates/userbar.html:169
+msgid "暗色"
+msgstr "Darkly"
+
+#: main/templates/userbar.html:170
+msgid "页岩"
+msgstr "Slate"
+
+#: main/templates/userbar.html:171
+msgid "英雄"
+msgstr "Superhero"
 
 #: main/views/chat.py:25
 msgid "所有"

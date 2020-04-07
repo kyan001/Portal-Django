@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-29 23:08+0800\n"
+"POT-Creation-Date: 2020-04-07 14:02+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Charles <wzhch1987@gmail.com>\n"
 "Language-Team: French <i18n@kyan001.com>\n"
@@ -1183,16 +1183,12 @@ msgid "进度日历"
 msgstr "Calendrier de progrès"
 
 #: main/templates/user/setting.html:79
-#, fuzzy
-#| msgid "公开课"
 msgid "公开"
-msgstr "Enseignement"
+msgstr ""
 
 #: main/templates/user/setting.html:83
-#, fuzzy
-#| msgid "人"
 msgid "私人"
-msgstr "Personne"
+msgstr ""
 
 #: main/templates/user/setting.html:92
 msgid "进度保存设置"
@@ -1239,10 +1235,8 @@ msgid "添加至主屏幕"
 msgstr ""
 
 #: main/templates/user/setting.html:172
-#, fuzzy
-#| msgid "我的进度"
 msgid "导出我的进度"
-msgstr "Mon progrès"
+msgstr ""
 
 #: main/templates/user/setting.html:177
 msgid "导出为"
@@ -1625,68 +1619,76 @@ msgid "随机主题"
 msgstr "Thème par hasard"
 
 #: main/templates/userbar.html:154
+msgid "浅色"
+msgstr ""
+
+#: main/templates/userbar.html:155
 msgid "蔚蓝"
 msgstr "Azure"
 
-#: main/templates/userbar.html:155
+#: main/templates/userbar.html:156
 msgid "宇宙"
 msgstr "Cosmos"
 
-#: main/templates/userbar.html:156
-msgid "半机械"
-msgstr "Cyborg"
-
 #: main/templates/userbar.html:157
-msgid "暗色"
-msgstr "Sombre"
-
-#: main/templates/userbar.html:158
 msgid "扁平"
 msgstr "Plate"
 
-#: main/templates/userbar.html:159
+#: main/templates/userbar.html:158
 msgid "日志"
 msgstr "Journal"
 
-#: main/templates/userbar.html:160
+#: main/templates/userbar.html:159
 msgid "流明"
 msgstr "Lumen"
 
-#: main/templates/userbar.html:161
+#: main/templates/userbar.html:160
 msgid "纸"
 msgstr "Papier"
 
-#: main/templates/userbar.html:162
+#: main/templates/userbar.html:161
 msgid "易读"
 msgstr "Lisible"
 
-#: main/templates/userbar.html:163
+#: main/templates/userbar.html:162
 msgid "砂岩"
 msgstr "Sablite"
 
-#: main/templates/userbar.html:164
+#: main/templates/userbar.html:163
 msgid "简约"
 msgstr "Simple"
 
-#: main/templates/userbar.html:165
-msgid "页岩"
-msgstr "Roche"
-
-#: main/templates/userbar.html:166
+#: main/templates/userbar.html:164
 msgid "空间站"
 msgstr "Station spatiale"
 
-#: main/templates/userbar.html:167
-msgid "英雄"
-msgstr "Héros supers"
-
-#: main/templates/userbar.html:168
+#: main/templates/userbar.html:165
 msgid "统一"
 msgstr "Unifié"
 
-#: main/templates/userbar.html:169
+#: main/templates/userbar.html:166
 msgid "雪人"
 msgstr "Bonhomme de neige"
+
+#: main/templates/userbar.html:167
+msgid "深色"
+msgstr ""
+
+#: main/templates/userbar.html:168
+msgid "半机械"
+msgstr "Cyborg"
+
+#: main/templates/userbar.html:169
+msgid "暗色"
+msgstr "Sombre"
+
+#: main/templates/userbar.html:170
+msgid "页岩"
+msgstr "Roche"
+
+#: main/templates/userbar.html:171
+msgid "英雄"
+msgstr "Héros supers"
 
 #: main/views/chat.py:25
 msgid "所有"

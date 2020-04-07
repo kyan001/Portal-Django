@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-29 23:08+0800\n"
+"POT-Creation-Date: 2020-04-07 14:02+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Emi <i18n@kyan001.com>\n"
 "Language-Team: Japanese <i18n@kyan001.com>\n"
@@ -1230,10 +1230,8 @@ msgid "添加至主屏幕"
 msgstr "ホームスクリーンに追加する"
 
 #: main/templates/user/setting.html:172
-#, fuzzy
-#| msgid "我的进度"
 msgid "导出我的进度"
-msgstr "私の進捗"
+msgstr ""
 
 #: main/templates/user/setting.html:177
 msgid "导出为"
@@ -1615,68 +1613,76 @@ msgid "随机主题"
 msgstr "ランダム着せかえ"
 
 #: main/templates/userbar.html:154
+msgid "浅色"
+msgstr ""
+
+#: main/templates/userbar.html:155
 msgid "蔚蓝"
 msgstr "ブルー"
 
-#: main/templates/userbar.html:155
+#: main/templates/userbar.html:156
 msgid "宇宙"
 msgstr "宇宙"
 
-#: main/templates/userbar.html:156
-msgid "半机械"
-msgstr "半機械"
-
 #: main/templates/userbar.html:157
-msgid "暗色"
-msgstr "ダーク"
-
-#: main/templates/userbar.html:158
 msgid "扁平"
 msgstr "フラット"
 
-#: main/templates/userbar.html:159
+#: main/templates/userbar.html:158
 msgid "日志"
 msgstr "日誌"
 
-#: main/templates/userbar.html:160
+#: main/templates/userbar.html:159
 msgid "流明"
 msgstr "ルーメン"
 
-#: main/templates/userbar.html:161
+#: main/templates/userbar.html:160
 msgid "纸"
 msgstr "ペーパー"
 
-#: main/templates/userbar.html:162
+#: main/templates/userbar.html:161
 msgid "易读"
 msgstr "リィーダァブル"
 
-#: main/templates/userbar.html:163
+#: main/templates/userbar.html:162
 msgid "砂岩"
 msgstr "砂岩"
 
-#: main/templates/userbar.html:164
+#: main/templates/userbar.html:163
 msgid "简约"
 msgstr "シンプル"
 
-#: main/templates/userbar.html:165
-msgid "页岩"
-msgstr "石板"
-
-#: main/templates/userbar.html:166
+#: main/templates/userbar.html:164
 msgid "空间站"
 msgstr "スペースラブ"
 
-#: main/templates/userbar.html:167
-msgid "英雄"
-msgstr "スーパーヒーロー"
-
-#: main/templates/userbar.html:168
+#: main/templates/userbar.html:165
 msgid "统一"
 msgstr "ユナイテッド"
 
-#: main/templates/userbar.html:169
+#: main/templates/userbar.html:166
 msgid "雪人"
 msgstr "イエティー"
+
+#: main/templates/userbar.html:167
+msgid "深色"
+msgstr ""
+
+#: main/templates/userbar.html:168
+msgid "半机械"
+msgstr "半機械"
+
+#: main/templates/userbar.html:169
+msgid "暗色"
+msgstr "ダーク"
+
+#: main/templates/userbar.html:170
+msgid "页岩"
+msgstr "石板"
+
+#: main/templates/userbar.html:171
+msgid "英雄"
+msgstr "スーパーヒーロー"
 
 #: main/views/chat.py:25
 msgid "所有"
