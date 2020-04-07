@@ -14,7 +14,7 @@ import consoleiotools as cit
 from KyanToolKit import KyanToolKit as ktk
 
 
-__version__ = '1.18.1'
+__version__ = '1.18.2'
 
 
 def load_config(config_file):
@@ -312,7 +312,7 @@ def virtualenv_status():
         cit.err("Virtualenv: Config Error. (Folder Not Exist: {}/)".format(VIRTUALENV_DIR))
         return None
     if "VIRTUAL_ENV" in os.environ:
-        cit.warn("Virtualenv: On.")
+        cit.info("Virtualenv: On.")
         return True
     else:
         cit.warn("Virtualenv: Off. (Folder Exist: {}/)".format(VIRTUALENV_DIR))
