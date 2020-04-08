@@ -1,5 +1,5 @@
 /*!
- * KyanCssUtil.css v1.5.2
+ * KyanCssUtil.css v1.5.5
  */
 
 /* a */
@@ -37,6 +37,14 @@ a.no-decoration:hover,
         -ms-transform: translateY(-2px);
          -o-transform: translateY(-2px);
             transform: translateY(-2px);
+}
+.hover-shadow:active {
+    box-shadow: 0 5px 9px rgba(0, 0, 0, 0.16), 0 1px 0px rgba(0, 0, 0, 0.26);
+    -webkit-transform: translateY(0);
+       -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+         -o-transform: translateY(0);
+            transform: translateY(0);
 }
 
 .hover-pointer {
