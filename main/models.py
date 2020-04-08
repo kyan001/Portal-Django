@@ -367,11 +367,7 @@ class Progress(BaseModel):
 
     @property
     def is_plusone_ok(self):
-        if self.total == 0 and self.current <= 100:
-            return True
-        if 0 < self.total <= 100 and self.current != self.total:
-            return True
-        return False
+        return (self.total == 0) or (self.current < self.total)
 
     @property
     def contextual(self):
