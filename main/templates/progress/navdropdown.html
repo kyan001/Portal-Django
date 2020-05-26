@@ -6,10 +6,35 @@
     </a>
     <a class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         {% comment %} <span class="glyphicon glyphicon-option-vertical"></span> {% endcomment %}
-        <span id="progress-dropdown-title"></span>
+        <span id="progress-dropdown-title">{% trans '进度' %}</span>
         <span class="caret"></span>
     </a>
-    {% include 'progress/navlink.html' %}
+    <ul class="dropdown-menu">
+        <li class="progress-dropdown-li">
+            <a href="/progress/list">
+                <span class="glyphicon glyphicon-th-list"></span>
+                {% trans "进度列表" %}
+            </a>
+        </li>
+        <li class="progress-dropdown-li">
+            <a href="/progress/archive">
+                <span class="glyphicon glyphicon-inbox"></span>
+                {% trans "进度存档" %}
+            </a>
+        </li>
+        <li class="progress-dropdown-li">
+            <a href="/progress/search">
+                <span class="glyphicon glyphicon-search"></span>
+                {% trans "进度搜索" %}
+            </a>
+        </li>
+        <li class="progress-dropdown-li">
+            <a href="/progress/timeline">
+                <span class="glyphicon glyphicon-time"></span>
+                {% trans "进度历程" %}
+            </a>
+        </li>
+    </ul>
 </div>
 <script>
     function getCurrentTitle(){
@@ -29,5 +54,11 @@
                 return "{% trans '我的进度' %}"
         }
     }
-    $("#progress-dropdown-title").text(getCurrentTitle)
+
+    $(function () {
+        var current_path = "{{ request.path }}".replace(/\/$/, "")
+        var current_ele = $(".progress-dropdown-li a[href='" + current_path + "']").parents(".progress-dropdown-li")
+        current_ele.addClass("active")
+        $("#progress-dropdown-title").text(getCurrentTitle)
+    })
 </script>

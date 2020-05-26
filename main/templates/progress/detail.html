@@ -66,27 +66,6 @@
 {% endblock css %}
 
 
-{% block nav-btn %}
-    <div class="btn-group">
-        {% if prg.status == 'deactivated' or prg.status == 'done' %}
-            <a class="btn btn-warning btn-sm" href="/progress/archive">
-                <span class="glyphicon glyphicon-arrow-left"></span>
-                {% trans "进度存档" %}
-            </a>
-        {% else %}
-            <a class="btn btn-warning btn-sm" href="/progress/list">
-                <span class="glyphicon glyphicon-arrow-left"></span>
-                {% trans "进度列表" %}
-            </a>
-        {% endif %}
-        <a class="btn btn-warning btn-sm dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="caret"></span>
-        </a>
-        {% include 'progress/navlink.html' %}
-    </div>
-{% endblock nav-btn %}
-
-
 {% block function-btn %}
     <a href="/progress/new" class="btn btn-success btn-sm hide-when-edit">
         <span class="glyphicon glyphicon-plus"></span>
