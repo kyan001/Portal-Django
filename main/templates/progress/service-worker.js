@@ -59,7 +59,7 @@ self.addEventListener('activate', function (event) {
 })
 
 self.addEventListener("fetch", function (event) {  // when fetch a request
-    event.respondWith(caches.match(event.request).then(function (cachedResponse) {
+    event.respondWith(caches.match(event.request, {ignoreVary: true}).then(function (cachedResponse) {
         console.group("[Service Worker]", event.request.url)
         if (cachedResponse) {  // cache hit, return response
             var uri = removeDomainName(cachedResponse.url)
@@ -70,7 +70,7 @@ self.addEventListener("fetch", function (event) {  // when fetch a request
             }
             if (pageUrls.includes(uri)) {
                 console.info("Response Cached,", "Strategy: Online First")
-                clonedRequest = event.request.clone()
+                const clonedRequest = event.request.clone()
                 return fetch(clonedRequest).then(function (response) {
                     if (response && response.status < 400) {  // online content ready and no fault
                         responseToCache(event.request, response)
