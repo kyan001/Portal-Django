@@ -52,7 +52,7 @@ h1{
 
 	.tabs .selected{
 		border-color: black;
-	}	
+	}
 
 	.tabs .selected a{
 		position: relative;
@@ -85,13 +85,10 @@ h1{
 	width: 100%;
 	border: 1px solid black;
 	border-collapse: collapse;
-}	
+}
 
 .timeline-content{
 	text-align: center;
-}
-.timeline-content h3{
-	/*text-align: center;*/
 }
 .timeline-content img{
 	height: 200px;
