@@ -10,12 +10,17 @@
         function registerServiceWorker (callback) {
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function () {
-                    navigator.serviceWorker.register('/progress/service-worker.js').then(function (registration) {  // Registration was successful
-                        console.debug('[Service Worker] Registration OK, Scope:', registration.scope)
-                        if (typeof callback !== 'undefined') return callback()
-                    }, function (err) {  // registration failed :(
-                        console.error('[Service Worker] Registration KO, Error:', err)
-                    })
+                    navigator.serviceWorker.register('/progress/service-worker.js').then(
+                        function (registration) {  // Registration was successful
+                            console.info('[Service Worker] Registration OK, Scope:', registration.scope)
+                            if (typeof callback !== 'undefined') {
+                                return callback()
+                            }
+                        },
+                        function (err) {  // registration failed :(
+                            console.error('[Service Worker] Registration KO, Error:', err)
+                        }
+                    )
                 })
             }
         }
@@ -25,8 +30,10 @@
                     for (let registration of registrations) {
                         registration.unregister().then(function (isSuccess) {
                             if (isSuccess) {
-                                console.debug('[Service Worker] Unregistration OK')
-                                if (typeof callback !== 'undefined') return callback()
+                                console.info('[Service Worker] Unregistration OK')
+                                if (typeof callback !== 'undefined') {
+                                    return callback()
+                                }
                             } else {
                                 console.error('[Service Worker] Unregistration KO')
                             }
