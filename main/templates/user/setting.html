@@ -14,7 +14,7 @@
                         console.debug('[Service Worker] Registration OK, Scope:', registration.scope)
                         if (typeof callback !== 'undefined') return callback()
                     }, function (err) {  // registration failed :(
-                        console.debug('[Service Worker] Registration KO, Error:', err)
+                        console.error('[Service Worker] Registration KO, Error:', err)
                     })
                 })
             }
@@ -28,7 +28,7 @@
                                 console.debug('[Service Worker] Unregistration OK')
                                 if (typeof callback !== 'undefined') return callback()
                             } else {
-                                console.debug('[Service Worker] Unregistration KO')
+                                console.error('[Service Worker] Unregistration KO')
                             }
                         })
                     }
