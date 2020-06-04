@@ -1,4 +1,4 @@
-var CACHE_NAME = 'progress-cache-v1.1.16'
+var CACHE_NAME = 'progress-cache-v1.1.19'
 var staticFileUrls = [
     "/static/3rd/jquery/jquery-3.3.1.min.js",
     "/static/3rd/bootstrap-3.4.1/js/bootstrap.min.js",
@@ -25,8 +25,35 @@ self.addEventListener('install', function (event) {  // Perform install steps
     event.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
             console.info('[Service Worker] Cache Opened:', CACHE_NAME)
-            cache.addAll(pageUrls)  // non-block non-raise loading
-            return cache.addAll(staticFileUrls)  // return Promise
+            const promise1 = cache.addAll(pageUrls).then(function () {
+                console.info('[Service Worker]', 'Load OK:', pageUrls)
+            }, function (err) {
+                console.error('[Service Worker]', 'Load KO:', pageUrls)
+            })
+            const promise2 = cache.addAll(staticFileUrls).then(function () {
+                console.info('[Service Worker]', 'Load OK:', staticFileUrls)
+            }, function (err) {
+                console.error('[Service Worker]', 'Load KO:', staticFileUrls)
+            })
+            return Promise.all([promise1, promise2])  // return Promise
+        }, function (err) {
+            console.error('[Service Worker] Install KO')
+        })
+    )
+})
+
+self.addEventListener('activate', function (event) {
+    console.info('[Service Worker] Activating')
+    event.waitUntil(
+        caches.keys().then(function (cacheNames) {
+            return Promise.all(cacheNames.filter(function (cacheName) {
+                if (cacheName !== CACHE_NAME) {  // delete other versions of caches
+                    console.info('[Service Worker] Old Cache Deleted:', cacheName)
+                    return true
+                }
+            }).map(function (cacheName) {
+                return caches.delete(cacheName)
+            }))
         })
     )
 })
@@ -68,22 +95,6 @@ self.addEventListener("fetch", function (event) {  // when fetch a request
         console.groupEnd()
         return fetch(event.request)
     }))
-})
-
-self.addEventListener('activate', function (event) {
-    console.info('[Service Worker] Activating')
-    event.waitUntil(
-        caches.keys().then(function (cacheNames) {
-            return Promise.all(cacheNames.filter(function (cacheName) {
-                if (cacheName !== CACHE_NAME) {  // delete other versions of caches
-                    console.info('[Service Worker] Old Cache Deleted:', cacheName)
-                    return true
-                }
-            }).map(function (cacheName) {
-                return caches.delete(cacheName)
-            }))
-        })
-    )
 })
 
 function cleanResponseRedirect (response) {
