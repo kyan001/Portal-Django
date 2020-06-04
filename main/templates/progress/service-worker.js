@@ -21,6 +21,7 @@ var pageUrls = [
 ]
 
 self.addEventListener('install', function (event) {  // Perform install steps
+    console.info('[Service Worker] Installing')
     event.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
             console.info('[Service Worker] Cache Opened:', CACHE_NAME)
@@ -70,6 +71,7 @@ self.addEventListener("fetch", function (event) {  // when fetch a request
 })
 
 self.addEventListener('activate', function (event) {
+    console.info('[Service Worker] Activating')
     event.waitUntil(
         caches.keys().then(function (cacheNames) {
             return Promise.all(cacheNames.filter(function (cacheName) {
