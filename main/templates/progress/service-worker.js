@@ -1,5 +1,5 @@
-var CACHE_NAME = 'progress-cache-v1.1.19'
-var staticFileUrls = [
+const CACHE_NAME = 'progress-cache-v1.1.19'
+const staticFileUrls = [
     "/static/3rd/jquery/jquery-3.3.1.min.js",
     "/static/3rd/bootstrap-3.4.1/js/bootstrap.min.js",
     "/static/js/KyanJsUtil.js?version=2.0.0",
@@ -13,17 +13,17 @@ var staticFileUrls = [
     "/static/img/Logo-List.png",
     "/progress/manifest.json",
 ]
-var pageUrls = [
+const pageUrls = [
     "/progress/list",
     "/progress/archive",
     "/progress/search",
     "/progress/new",
 ]
 
-self.addEventListener('install', function (event) {  // Perform install steps
+window.addEventListener('install', function (event) {  // Perform install steps
     console.info('[Service Worker] Installing')
     event.waitUntil(
-        caches.open(CACHE_NAME).then(function (cache) {
+        windows.caches.open(CACHE_NAME).then(function (cache) {
             console.info('[Service Worker] Cache Opened:', CACHE_NAME)
             const promise1 = cache.addAll(pageUrls).then(function () {
                 console.info('[Service Worker]', 'Load OK:', pageUrls)
@@ -42,27 +42,27 @@ self.addEventListener('install', function (event) {  // Perform install steps
     )
 })
 
-self.addEventListener('activate', function (event) {
+window.addEventListener('activate', function (event) {
     console.info('[Service Worker] Activating')
     event.waitUntil(
-        caches.keys().then(function (cacheNames) {
+        windows.caches.keys().then(function (cacheNames) {
             return Promise.all(cacheNames.filter(function (cacheName) {
                 if (cacheName !== CACHE_NAME) {  // delete other versions of caches
                     console.info('[Service Worker] Old Cache Deleted:', cacheName)
                     return true
                 }
             }).map(function (cacheName) {
-                return caches.delete(cacheName)
+                return windows.caches.delete(cacheName)
             }))
         })
     )
 })
 
-self.addEventListener("fetch", function (event) {  // when fetch a request
-    event.respondWith(caches.match(event.request, {ignoreVary: true}).then(function (cachedResponse) {
+window.addEventListener("fetch", function (event) {  // when fetch a request
+    event.respondWith(windows.caches.match(event.request, {ignoreVary: true}).then(function (cachedResponse) {
         console.group("[Service Worker]", event.request.url)
         if (cachedResponse) {  // cache hit, return response
-            var uri = removeDomainName(cachedResponse.url)
+            let uri = removeDomainName(cachedResponse.url)
             if (staticFileUrls.includes(uri)) {
                 console.info("Response Cached,", "Strategy: Cache First")
                 console.groupEnd()
@@ -116,8 +116,8 @@ function cleanResponseRedirect (response) {
 }
 
 function responseToCache (request, response) {
-    var clonedResponse = response.clone()
-    caches.open(CACHE_NAME).then(function (cache) {
+    const clonedResponse = response.clone()
+    windows.caches.open(CACHE_NAME).then(function (cache) {
         cache.put(request, clonedResponse)
     })
 }
