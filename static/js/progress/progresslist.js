@@ -13,21 +13,24 @@ $(function () {
     })
     // insert search input box
     let searchInputHtml = `
-        <div id="search-row" class="row" hidden>
-            <div class="col-xs-12">
-                <form id="search-form" action="/progress/search" method="get">
-                    <div class="input-group input-group-sm">
-                        <input id="search-input" type="text" class="form-control" name="kw" placeholder="…" autocomplete="off" oninput="instantProgressSearch(this.value)">
-                        <input id="search-submit" type="submit" hidden>
-                        <div class="input-group-btn">
-                            <a class="btn btn-default" role="button" onclick="$('#search-submit').click()">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </a>
+        <div id="progress-search-div" hidden>
+            <div class="row">
+                <div class="col-xs-12">
+                    <form id="search-form" action="/progress/search" method="get">
+                        <div class="input-group input-group-sm">
+                            <input id="search-input" type="text" class="form-control" name="keyword" placeholder="…" autocomplete="off" oninput="instantProgressSearch(this.value)">
+                            <input id="search-submit" type="submit" hidden>
+                            <div class="input-group-btn">
+                                <a class="btn btn-default" role="button" onclick="$('#search-submit').click()">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div><!--.col-->
-        </div><!--.row-->
+                    </form>
+                </div><!--.col-->
+            </div><!--.row-->
+            <br>
+        </div><!--#progress-search-div-->
     `
     $('.container').prepend(searchInputHtml)
 })
@@ -48,7 +51,7 @@ function toggleSearchRow (btn) {
         delete prev_scrollTop
     }
     $("html, body").animate({ scrollTop: target_scrollTop }, 200)
-    $("#search-row").slideToggle('fast')
+    $("#progress-search-div").slideToggle('fast')
     $("#search-input").focus()
     $(btn).toggleClass("active")
 }

@@ -72,14 +72,14 @@ def archive(request):
 @util.user.login_required
 def search(request):
     """进度搜索：筛选所有进度"""
-    context = {}
+    # pass searched keyword
+    keyword = request.GET.get('keyword') or ""
     # get user
     user = util.user.getCurrentUser(request)
     # get user's progresses
     progresses = Progress.objects.filter(userid=user.id).order_by('created')
-    context['prglist'] = progresses
-    # pass searched keyword
-    keyword = request.GET.get('kw') or ""
+    if keyword:
+        progresses = progresses.filter(Q(name__icontains=keyword) | Q(comment__icontains=keyword))
     # add exps
     util.userexp.addExp(user, 'progress', 1, _("访问「{}」页面").format(_("进度搜索")))
     # render

@@ -5,7 +5,7 @@
 
 {% block css %}
 <style>
-    #search-result-header {
+    #db-search-result-header {
         display: none;
     }
     .page-header {
@@ -21,45 +21,33 @@
 
 {% block content %}
     <div class="container">
-        <div class="well well-sm">
-            <div id="search-div" class="row">
-                <div class="col-sm-6 col-xs-12">
+        <div id="search-div" class="row">
+            <div class="col-sm-7 col-xs-12">
+                <form id="db-search-form" action="/progress/search" method="get">
                     <div class="input-group">
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </span>
-                        <input id="search-input" type="text" class="form-control" placeholder="{% trans '搜索' %}{% trans '名称' %}{% trans '和' %}{% trans '备注' %}" value="{{ keyword }}" autocomplete="off" oninput="searchProgress()">
-                        <span class="input-group-addon">
-                            <span id="clear-search-btn" class="hover-pointer" onclick="resetSearch()">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </span>
-                        </span>
-                        <span class="input-group-addon" title="{% trans '需要访问 Google' %}" data-toggle="tooltip" data-placement="top" data-container="body">
-                            <span id="start-speech-btn" class="hover-pointer" onclick="startSpeech()">
-                                <span class="glyphicon glyphicon-headphones"></span>
-                            </span>
-                        </span>
+                        <input id="db-search-input" type="text" class="form-control" name="keyword" placeholder="{% trans '搜索' %}{% trans '名称' %}{% trans '和' %}{% trans '备注' %}" value="{{ keyword }}" autocomplete="off">
+                        <input id="db-search-submit" type="submit" hidden>
+                        <div class="input-group-btn">
+                            <a class="btn btn-default" role="button" onclick="$('#db-search-submit').click()">
+                                <span class="glyphicon glyphicon-search"></span>
+                                <span>{% trans "进度搜索" %}</span>
+                            </a>
+                        </div>
                     </div>
-
-                </div>
-            </div>
-        </div>
+                </form>
+            </div><!-- .col -->
+        </div><!-- .row -->
         <div id="show-all-header" class="page-header">
-            <h5>
+            <span>
                 <span class="glyphicon glyphicon-th-list text-muted"></span>
-                {% trans "所有进度" %}
+                {% if keyword %}
+                    <span>{% trans "进度搜索" %}{% trans "：" %}</span>
+                    <strong>{{ keyword }}</strong>
+                {% else %}
+                    <span>{% trans "所有进度" %}</span>
+                {% endif %}
                 <small class="prg-counts">({{ prglist|length }})</small>
-            </h5>
-        </div>
-        <div id="search-result-header" class="page-header">
-            <h5>
-                <span class="glyphicon glyphicon-th-list text-muted"></span>
-                <span id="search-result-title">{% trans "进度搜索" %}{% trans "：" %}「XXX」</span>
-                <small id="search-result-count" class="prg-counts">(0)</small>
-                <small>
-                    <a id="search-result-link" class="no-decoration">({% trans "生成连接" %})</a>
-                </small>
-            </h5>
+            </span>
         </div>
         <div class="row">
             <div class="col-xs-12">
@@ -68,7 +56,7 @@
                         {% include "progress/progresscard.html" with prg=prg size="col-xs-12 col-sm-6 col-lg-4" %}
                     {% empty %}
                         <div class="well">
-                            {% trans "您还没有进度哦，请先添加一个进度" %}
+                            {% trans "没有符合条件的进度" %}
                         </div>
                     {% endfor %}
                 </div><!--.row-->
@@ -80,90 +68,8 @@
 
 {% block js %}
     <script>
-        $(function(){
-            searchProgress()
-            initSpeechRec()
+        $(function () {
             $("[data-toggle='tooltip']").tooltip()
-        });
-
-        function initSpeechRec(){
-            var speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.oSpeechRecognition || window.msSpeechRecognition
-            if(!speechRecognition){
-                $("#start-speech-btn").parent(".input-group-addon").hide()
-                return
-            }
-            recognition = new speechRecognition();
-            recognizing = false;
-            recognition.continuous = true; // stop when stop talking
-            recognition.interimResults = false; // word already recognized can not change.
-            recognition.onstart = function() {
-                recognizing = true;
-                $("#start-speech-btn").css("color", "red")
-                $.info("{% trans '正在语音识别中' %} ...")
-            };
-            recognition.onend = function() {
-                recognizing = false;
-                $("#start-speech-btn").css("color", "black")
-                $.info("{% trans '语音识别已停止' %}")
-            };
-            recognition.onerror = function(event) {
-                $.danger("{% trans '语音识别错误' %}{% trans '：' %}" + event.error)
-            };
-            recognition.onresult = function(event) {
-                var final_txt = "";
-                for (var i = event.resultIndex; i < event.results.length; ++i) {
-                    final_txt += event.results[i][0].transcript;
-                }
-                if(["取消", "停止", "cancel", "stop"].indexOf(final_txt)>=0){
-                    recognition.stop();
-                    resetSearch();
-                    return
-                }
-                $("#search-input").val(final_txt)
-                searchProgress()
-            };
-        }
-
-        function startSpeech(event) {
-            if (recognizing) {
-                recognition.stop();
-                return;
-            }
-            recognition.lang = "cmn-Hans-CN";
-            recognition.start();
-        }
-
-        function resetSearch(){
-            $("#search-input").val("")
-            $(".progress-card").show()
-            $("#clear-search-btn").parent(".input-group-addon").hide()
-            $("#show-all-header").show()
-            $("#search-result-header").hide()
-            $("#search-input").focus()
-        }
-        function searchProgress(){
-            var kw = $.trim($("#search-input").val()).toLowerCase();
-            if(kw == ""){
-                resetSearch()
-            } else {
-                var count = 0
-                $(".progress-card").each(function(){
-                    var prgname = $(this).find(".prg-name").text().toLowerCase()
-                    var prgcomment = $(this).find(".comment").text().toLowerCase()
-                    if(prgname.indexOf(kw)>=0 || prgcomment.indexOf(kw)>=0){
-                        $(this).show()
-                        count++
-                    } else {
-                        $(this).hide()
-                    }
-                })
-                $("#search-result-title").text("{% trans '进度搜索' %}{% trans '：' %}「" + kw + "」")
-                $("#search-result-link").attr("href", "/progress/search?kw=" + kw)
-                $("#search-result-count").text("(" + count + ")")
-                $("#clear-search-btn").parent(".input-group-addon").show()
-                $("#show-all-header").hide()
-                $("#search-result-header").show()
-            }
-        }
+        })
     </script>
 {% endblock %}
