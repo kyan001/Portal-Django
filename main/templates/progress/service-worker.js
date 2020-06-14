@@ -1,4 +1,4 @@
-const CACHE_NAME = 'progress-cache-v1.1.19'
+const CACHE_NAME = 'progress-cache-v1.1.21'
 const staticFileUrls = [
     "/static/3rd/jquery/jquery-3.3.1.min.js",
     "/static/3rd/bootstrap-3.4.1/js/bootstrap.min.js",
@@ -7,7 +7,7 @@ const staticFileUrls = [
     "/static/css/KyanCssUtil.css?version=1.5.5",
     "/static/css/progress/progresslist.css?version=2.2.2",
     "/static/css/progress/progresscard.css?version=2.4.0",
-    "/static/js/progress/progresslist.js?version=2.2.2",
+    "/static/js/progress/progresslist.js?version=2.3.3",
     "/static/3rd/instant.page/instantpage-1.2.2.js",
     "/static/3rd/bootstrap-3.4.1/fonts/glyphicons-halflings-regular.woff2",
     "/static/img/Logo-List.png",

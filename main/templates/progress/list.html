@@ -26,10 +26,6 @@
 
 {% block function-btn %}
     {{ block.super }}
-    <a class="btn btn-default btn-sm ani-fast fold-xs" href="javascript:void(0);" role="button" onclick="toggleSearchRow(this)">
-        <span class="glyphicon glyphicon-search"></span>
-        <span class="hidden-xs">{% trans "搜索" %}</span>
-    </a>
     <a class="btn btn-default btn-sm ani-fast fold-xs"  href="javascript:void(0);" role="button" onclick="toggleFollowProgresses(this)">
         <span class="glyphicon glyphicon-unchecked"></span>
         <span>{% trans "追剧中" %}</span>
@@ -48,21 +44,6 @@
                 <span class='glyphicon glyphicon-lock'></span>
             </span>
         </div>
-        <div id="search-row" class="row" hidden>
-            <div class="col-xs-12">
-                <form id="search-form" action="/progress/search" method="get">
-                    <div class="input-group">
-                        <input id="search-input" type="text" class="form-control" name="kw" placeholder="{% trans '进度搜索' %} … ↩︎" autocomplete="off">
-                        <input id="search-submit" type="submit" hidden>
-                        <div class="input-group-btn">
-                            <a class="btn btn-default" role="button" onclick="$('#search-submit').click()">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </a>
-                        </div>
-                    </div>
-                </form>
-            </div><!--.col-->
-        </div><!--.row-->
         <div id="inprogress-and-follow-row" class="row">
             <div class="col-xs-12">
                 <div class="page-header" data-toggle="collapse" data-target="#list-inprogress-and-follow">
