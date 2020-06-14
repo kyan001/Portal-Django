@@ -21,10 +21,16 @@
 
 {% block content %}
     <div class="container">
-        <div id="search-div" class="row">
+        <div class="row">
             <div class="col-sm-7 col-xs-12">
                 <form id="db-search-form" action="/progress/search" method="get">
                     <div class="input-group">
+                        <span class="input-group-addon">
+                            <span class="badge">
+                                <span class="glyphicon glyphicon-stats"></span>
+                                <span>{{ prglist|length }}</span>
+                            </span>
+                        </span>
                         <input id="db-search-input" type="text" class="form-control" name="keyword" placeholder="{% trans '搜索' %}{% trans '名称' %}{% trans '和' %}{% trans '备注' %}" value="{{ keyword }}" autocomplete="off">
                         <input id="db-search-submit" type="submit" hidden>
                         <div class="input-group-btn">
@@ -32,23 +38,12 @@
                                 <span class="glyphicon glyphicon-search"></span>
                                 <span>{% trans "进度搜索" %}</span>
                             </a>
-                        </div>
-                    </div>
+                        </div><!--.input-group-btn-->
+                    </div><!--.input-group-->
                 </form>
             </div><!-- .col -->
         </div><!-- .row -->
-        <div id="show-all-header" class="page-header">
-            <span>
-                <span class="glyphicon glyphicon-th-list text-muted"></span>
-                {% if keyword %}
-                    <span>{% trans "进度搜索" %}{% trans "：" %}</span>
-                    <strong>{{ keyword }}</strong>
-                {% else %}
-                    <span>{% trans "所有进度" %}</span>
-                {% endif %}
-                <small class="prg-counts">({{ prglist|length }})</small>
-            </span>
-        </div>
+        <hr>
         <div class="row">
             <div class="col-xs-12">
                 <div class="row">

@@ -42,18 +42,23 @@ function toggleFollowProgresses (btn) {
     $("#inprogress-and-follow-row").toggleClass("hidden")
 }
 
-function toggleSearchRow (btn) {
-    if (typeof prev_scrollTop == "undefined") {
-        var target_scrollTop = 0
-        prev_scrollTop = document.documentElement.scrollTop
+let prevScrollTop = 0
+function scrollTopToggle () {
+    $("html, body").animate({ scrollTop: prevScrollTop }, 200)
+    if (prevScrollTop === 0) {
+        prevScrollTop = document.documentElement.scrollTop
     } else {
-        var target_scrollTop = document.documentElement.scrollTop || prev_scrollTop
-        delete prev_scrollTop
+        prevScrollTop = 0
     }
-    $("html, body").animate({ scrollTop: target_scrollTop }, 200)
+}
+
+function toggleSearchRow (btn) {
+    scrollTopToggle()
     $("#progress-search-div").slideToggle('fast')
-    $("#search-input").focus()
     $(btn).toggleClass("active")
+    if ($(btn).hasClass("active")) {
+        $("#search-input").focus()
+    }
 }
 
 function isTextHit(text, keyword) {
