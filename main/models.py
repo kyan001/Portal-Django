@@ -361,7 +361,7 @@ class Progress(BaseModel):
         if self.episode_info:
             for info in self.episode_info:
                 title = re.sub(r'[\s\(（](' + info + r')[\)）]*', "", title).strip()
-        return title
+        return title or self.name
 
     @property
     def persent(self):

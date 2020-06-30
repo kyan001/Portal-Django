@@ -8,6 +8,12 @@
 {% load tags_url %}
 
 
+{% block inhead %}
+    {{ block.super }}
+    <link rel="stylesheet" href="/static/css/progress/progresscard.css?version=2.4.0">
+{% endblock inhead %}
+
+
 {% block css %}
 <style>
     .progress-panel .table {
@@ -61,6 +67,12 @@
     }
     #prg-episodeinfo * {
         vertical-align: top;
+    }
+    #related-progress-row {
+        opacity: 0.79;
+    }
+    #related-progress-row:hover {
+        opacity: 1;
     }
 </style>
 {% endblock css %}
@@ -418,8 +430,24 @@
                     </div><!-- .row -->
                 </div><!-- panel-footer -->
             </div><!-- .panel -->
-        </div><!--col-->
-    </div><!--row-->
+        </div><!--.col-->
+    </div><!--.row-->
+    {% if related_progresses %}
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-xs-12">
+                <div class="text-muted">
+                    <span class="glyphicon glyphicon-duplicate"></span>
+                    {% trans "相关进度" %}{% trans "：" %}
+                </div>
+                <div id="related-progress-row" class="row ani-fast">
+                    {% for rprg in related_progresses %}
+                        {% include "progress/progresscard.html" with prg=rprg size="col-xs-12 col-sm-6 col-md-4" %}
+                    {% endfor %}
+                </div><!--.row-->
+            </div><!--.col-->
+        </div><!--.row-->
+    {% endif %}
+
     <form id="deleteform" action="/progress/delete" method="post">
         {% csrf_token %}
         <input name="id" type="hidden" value="{{prg.id}}">

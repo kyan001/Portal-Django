@@ -127,6 +127,9 @@ def detail(request):
         return errMsg(_("这个进度不属于您，因此您不能{}该进度").format(_("查看")), url='/progress/list')
     # add exp
     util.userexp.addExp(user, "progress", 1, _("查看进度《{}》的详情").format(progress.name))
+    # get related progresses
+    user_progresses = Progress.objects.filter(userid=user.id)
+    related_progresses = user_progresses.filter(name__contains=progress.opus_title).exclude(id=progress.id).order_by('-modified')
     # calcs
     aux = {
         "time": {},
@@ -148,6 +151,7 @@ def detail(request):
     context = {}
     context["prg"] = progress
     context["aux"] = aux
+    context["related_progresses"] = related_progresses
     return render(request, "progress/detail.html", context)
 
 
