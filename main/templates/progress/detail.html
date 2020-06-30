@@ -59,7 +59,7 @@
             padding-right: 0;
         }
     }
-    #prg-chapinfo * {
+    #prg-episodeinfo * {
         vertical-align: top;
     }
 </style>
@@ -90,7 +90,7 @@
                             <span class="glyphicon glyphicon-qrcode"></span>
                         </a>
                         《<strong id="prg-name">{{ prg.name }}</strong>》
-                        <span id="prg-chapinfo"></span>
+                        <span id="prg-episodeinfo"></span>
                         <span id="loading-icon" hidden>
                             <span class="loading circling glyphicon glyphicon-refresh"></span>
                         </span>
@@ -629,27 +629,13 @@
          */
         'purifyName': function () {
             console.groupCollapsed('[OPUS]', 'OPUS.purifyName')
-            function extractChapInfo (prg_name, regex, prefix) {
-                prefix = typeof prefix !== 'undefined' ?  prefix : ""  // 默认前缀为空
-                var matched_info = prg_name.match(regex)  // matched_info[0]: 包含符号的章节/周目信息, matched_info[1]: 干净的章节/周目信息
-                if (matched_info) {
-                    var new_prg_name = $.trim(prg_name.replace(matched_info[0], ''))
-                    console.info("New:", new_prg_name, "Chapinfo:", matched_info[0])
-                    OPUS.INFOSETS.purified.name = new_prg_name
-                    var chapinfo_chars = matched_info[1]
-                    $('#prg-name').text(new_prg_name)
-                    $('#prg-chapinfo').append($("<span class='badge'></span>").text(prefix + chapinfo_chars))
-                    return new_prg_name
-                }
-                return null
-            }
-            var prg_name = $('#prg-name').text()
-            var re_chapter = /[\s（\(](第*[0-9一二三四五六七八九十上下]+(季|册|卷|集|章|本|节|课))[\)）]*/i
-            prg_name = extractChapInfo(prg_name, re_chapter) || prg_name
-            var re_lap = /[\s（\(](第*[0-9一二三四五六七八九十]+(周目|遍))[\)）]*/i
-            prg_name = extractChapInfo(prg_name, re_lap, "#") || prg_name
-            var re_year = /[\s（\(]((19|20)[0-9]{2})[\)）]*$/i
-            prg_name = extractChapInfo(prg_name, re_year, "@") || prg_name
+            {% if prg.opus_title != prg.name %}
+                OPUS.INFOSETS.purified.name = '{{ prg.opus_title }}'
+                $('#prg-name').text('{{ prg.opus_title }}')
+                {% for epi in prg.episode_info %}
+                    $('#prg-episodeinfo').append($("<span class='badge'>{{ epi }}</span>"))
+                {% endfor %}
+            {% endif %}
             console.groupEnd()
         },
         /**

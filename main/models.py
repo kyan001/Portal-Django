@@ -342,6 +342,28 @@ class Progress(BaseModel):
             raise Http404(_("更新进度状态失败"))
 
     @property
+    def episode_info(self):
+        patterns = {
+            'episode_cn': r'第*[0-9一二三四五六七八九十上下]+[季册卷集章本节课]',
+            'episode_en': r'[SsEe][0-9]+[Ee]*[0-9]+',
+            'repeating': r'第*[0-9一二三四五六七八九十]+[周目遍]+',
+            'air_date': r'[12][90][0-9]{2}',
+        }
+        episode_info_list = []
+        for key, pattern in patterns.items():
+            pattern_final = r'[\s\(（](' + pattern + r')[\)）]*'
+            episode_info_list += re.findall(pattern_final, self.name, flags=re.IGNORECASE)
+        return episode_info_list
+
+    @property
+    def opus_title(self):
+        title = self.name
+        if self.episode_info:
+            for info in self.episode_info:
+                title = re.sub(r'[\s\(（](' + info + r')[\)）]*', "", title).strip()
+        return title
+
+    @property
     def persent(self):
         total = self.current + 1 if self.total == 0 else self.total
         persent = self.current / total * 100
