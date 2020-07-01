@@ -77,7 +77,14 @@ def public(request):  # public
 @util.user.login_required
 def setting(request):
     """修改用户设置"""
-    return render(request, 'user/setting.html')
+    # get last backup date
+    user = util.user.getCurrentUser(request)
+    last_backup = util.userexp.getLastExpHistory(user, 'progress', _("进度备份成功"))
+    last_backup_date = last_backup.created if last_backup else _("从未")
+    context = {
+        'last_backup_date': last_backup_date
+    }
+    return render(request, 'user/setting.html', context)
 
 
 @util.user.login_required

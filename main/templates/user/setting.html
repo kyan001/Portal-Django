@@ -183,6 +183,9 @@
                                     <span class="glyphicon glyphicon-save-file"></span>
                                     <span>{% trans "导出为" %} .json {% trans "文件" %}</span>
                                 </a>
+                                <span class="text-muted pull-right">
+                                    {% trans "上次备份" %}{% trans "：" %}{{ last_backup_date }}
+                                </span>
                             </div>
                         </div>
                     </div><!--.panel-body-->

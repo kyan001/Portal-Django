@@ -12,3 +12,11 @@ def addExp(user, category, incr, operation):
     """
     userexp, created = UserExp.objects.get_or_create(userid=user.id, category=category)
     userexp.add(incr, operation)
+
+
+def getLastExpHistory(user, category, operation):
+    userexp = UserExp.objects.get(userid=user.id, category=category)
+    if not userexp:
+        return None
+    last_exphistory = userexp.getExpHistory().filter(operation=operation).first()
+    return last_exphistory

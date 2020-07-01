@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-01 00:57+0800\n"
+"POT-Creation-Date: 2020-07-01 12:28+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Emi <i18n@kyan001.com>\n"
 "Language-Team: Japanese <i18n@kyan001.com>\n"
@@ -193,12 +193,13 @@ msgstr "デザイナー"
 #: main/templates/user/profile.html:151 main/templates/user/profile.html:154
 #: main/templates/user/profile.html:158 main/templates/user/profile.html:162
 #: main/templates/user/profile.html:166 main/templates/user/profile.html:170
-#: main/templates/user/signin.html:153 main/templates/user/signin.html:226
-#: main/templates/user/signup.html:203 main/views/progress.py:454
-#: main/views/progress.py:457 main/views/progress.py:512
-#: main/views/superuser.py:175 main/views/user.py:190 main/views/user.py:240
-#: main/views/user.py:243 main/views/user.py:248 main/views/user.py:251
-#: main/views/user.py:256 main/views/user.py:310
+#: main/templates/user/setting.html:187 main/templates/user/signin.html:153
+#: main/templates/user/signin.html:226 main/templates/user/signup.html:203
+#: main/views/progress.py:454 main/views/progress.py:457
+#: main/views/progress.py:514 main/views/superuser.py:175
+#: main/views/user.py:197 main/views/user.py:247 main/views/user.py:250
+#: main/views/user.py:255 main/views/user.py:258 main/views/user.py:263
+#: main/views/user.py:317
 msgid "："
 msgstr "："
 
@@ -216,7 +217,7 @@ msgstr "前のページに戻る"
 
 #: main/templates/chat/chater.html:12 main/templates/index/index-m.html:66
 #: main/templates/index/index.html:358 main/templates/index/index.html:450
-#: main/views/chat.py:27 main/views/user.py:282 util/ctrl.py:30
+#: main/views/chat.py:27 main/views/user.py:289 util/ctrl.py:30
 msgid "临时笔记"
 msgstr "クイックノート"
 
@@ -318,7 +319,7 @@ msgstr "ようこそ"
 #: main/templates/index/index-m.html:56 main/templates/index/index.html:351
 #: main/templates/index/index.html:396
 #: main/templates/progress/navdropdown.html:55 main/templates/userbar.html:96
-#: main/views/progress.py:40 main/views/user.py:272
+#: main/views/progress.py:40 main/views/user.py:279
 msgid "我的进度"
 msgstr "私の進捗"
 
@@ -327,7 +328,7 @@ msgid "管理您的进度"
 msgstr "進捗管理"
 
 #: main/templates/index/index-m.html:67 main/templates/index/index.html:451
-#: main/views/user.py:284
+#: main/views/user.py:291
 msgid "随手记录您的想法"
 msgstr "いつでも思いついた時に、アイデアを書き留める"
 
@@ -986,8 +987,8 @@ msgstr ""
 "提供された情報が詳しければ詳しいほどパスワードや答えを探せる確率が大きくなる"
 
 #: main/templates/user/forgetusername.html:4
-#: main/templates/user/forgetusername.html:57 main/views/user.py:211
-#: main/views/user.py:228
+#: main/templates/user/forgetusername.html:57 main/views/user.py:218
+#: main/views/user.py:235
 msgid "找回用户名"
 msgstr "ユーザー名を探す"
 
@@ -1004,11 +1005,11 @@ msgstr "ユーザー名を探す同時に、ユーザーのメールアドレス
 msgid "请输入注册时填写的邮箱"
 msgstr "登録したメールアドレスを入力してください"
 
-#: main/templates/user/forgetusername.html:71 main/views/user.py:380
+#: main/templates/user/forgetusername.html:71 main/views/user.py:387
 msgid "邮箱不能为空"
 msgstr "メールアドレスが入れていない"
 
-#: main/templates/user/msg-forgetusername.html:4 main/views/user.py:224
+#: main/templates/user/msg-forgetusername.html:4 main/views/user.py:231
 msgid "有人正在通过邮件的方式找回您的用户名"
 msgstr "誰かがメールアドレスであなたのユーザー名を探している"
 
@@ -1046,7 +1047,7 @@ msgid "修改头像"
 msgstr "アイコンを更新する"
 
 #: main/templates/user/profile.html:63 main/templates/user/public.html:54
-#: main/templates/userbar.html:72 main/views/user.py:277
+#: main/templates/userbar.html:72 main/views/user.py:284
 msgid "个人信息"
 msgstr "個人情報"
 
@@ -1058,7 +1059,7 @@ msgstr "アカウント情報"
 #: main/templates/user/signindropdown.html:13
 #: main/templates/user/signup.html:240 main/templates/user/signup.html:333
 #: main/templates/user/signup.html:364 main/templates/user/signup.html:366
-#: main/views/user.py:133
+#: main/views/user.py:140
 msgid "用户名"
 msgstr "ユーザー名"
 
@@ -1074,7 +1075,7 @@ msgstr "私のパブリックページ、誰でも訪問できる"
 
 #: main/templates/user/profile.html:93 main/templates/user/signup.html:313
 #: main/templates/user/signup.html:336 main/templates/user/signup.html:494
-#: main/templates/user/signup.html:496 main/views/user.py:139
+#: main/templates/user/signup.html:496 main/views/user.py:146
 msgid "邮箱"
 msgstr "メールアドレス"
 
@@ -1087,7 +1088,7 @@ msgid "根据“总活跃度”计算"
 msgstr "トタルアクティビティで計算する"
 
 #: main/templates/user/profile.html:107 main/templates/user/signup.html:334
-#: main/templates/user/signup.html:384 main/views/user.py:135
+#: main/templates/user/signup.html:384 main/views/user.py:142
 msgid "问题"
 msgstr "問題"
 
@@ -1220,6 +1221,10 @@ msgstr ""
 msgid "文件"
 msgstr ""
 
+#: main/templates/user/setting.html:187
+msgid "上次备份"
+msgstr ""
+
 #: main/templates/user/signin.html:4
 msgid "用户登录"
 msgstr "ユーザーログイン"
@@ -1282,12 +1287,12 @@ msgstr "ローディング"
 msgid "用户不存在"
 msgstr "このユーザーは存在しません"
 
-#: main/templates/user/signin.html:237 main/views/user.py:243
+#: main/templates/user/signin.html:237 main/views/user.py:250
 msgid "密码/答案不能为空"
 msgstr "パスワード/答えを入力してください"
 
-#: main/templates/user/signin.html:242 main/views/user.py:240
-#: main/views/user.py:307 main/views/user.py:358
+#: main/templates/user/signin.html:242 main/views/user.py:247
+#: main/views/user.py:314 main/views/user.py:365
 msgid "用户名不能为空"
 msgstr "ユーザー名を入力してください"
 
@@ -1333,7 +1338,7 @@ msgid "传统"
 msgstr "クラシック"
 
 #: main/templates/user/signup.html:120 main/templates/user/signup.html:411
-#: main/views/user.py:137
+#: main/views/user.py:144
 msgid "答案"
 msgstr "答え"
 
@@ -1844,7 +1849,11 @@ msgstr "プライベートキーは有効ではないです"
 msgid "此用户尚未公开其进度日历"
 msgstr "該当するユーザーのカレンダーが非公開にされています"
 
-#: main/views/progress.py:512
+#: main/views/progress.py:510 main/views/user.py:82
+msgid "进度备份成功"
+msgstr ""
+
+#: main/views/progress.py:514
 msgid "不支持的格式"
 msgstr ""
 
@@ -1925,44 +1934,48 @@ msgstr "お求めのカテゴリー({}) は実在していません"
 msgid "{} 访问了你的公开页"
 msgstr "あなたのパブリックページは{}にアクセスされました"
 
-#: main/views/user.py:100
+#: main/views/user.py:83
+msgid "从未"
+msgstr ""
+
+#: main/views/user.py:107
 msgid "查看用户个人信息"
 msgstr "ユーザープロファイルをチェックする"
 
-#: main/views/user.py:123
+#: main/views/user.py:130
 msgid "注册失败"
 msgstr "サインアップ失敗しました"
 
-#: main/views/user.py:133 main/views/user.py:135 main/views/user.py:137
-#: main/views/user.py:139
+#: main/views/user.py:140 main/views/user.py:142 main/views/user.py:144
+#: main/views/user.py:146
 msgid "“{}”不能为空"
 msgstr "“{}” は入力されていないです"
 
-#: main/views/user.py:149
+#: main/views/user.py:156
 msgid "用户名 '{}' 已存在！"
 msgstr "ユーザー名'{}'はすでに存在しています"
 
-#: main/views/user.py:151
+#: main/views/user.py:158
 msgid "昵称 '{}' 已存在！"
 msgstr "ニックネーム'{}'はすでに存在しています"
 
-#: main/views/user.py:153
+#: main/views/user.py:160
 msgid "邮箱 '{}' 已存在！"
 msgstr "メールアドレス'{}'はすでに存在しています"
 
-#: main/views/user.py:156
+#: main/views/user.py:163
 msgid "用户名 '{}' 只应包含数字、字母、和英文句号！"
 msgstr "ユーザー名'{}' は数字、アルファベットや英文句点のみ使用可"
 
-#: main/views/user.py:158
+#: main/views/user.py:165
 msgid "昵称 '{}' 只应包含字母和汉字！"
 msgstr "ニックネーム'{}' はアルファベットや漢字のみ使用可"
 
-#: main/views/user.py:165
+#: main/views/user.py:172
 msgid "注册成功"
 msgstr "サインアップ成功しました"
 
-#: main/views/user.py:167
+#: main/views/user.py:174
 #, python-brace-format
 msgid ""
 " {user.username} 注册成功！\n"
@@ -1973,65 +1986,65 @@ msgstr ""
 "あなたは No.{user.id} ユーザーです. \n"
 "ログインして進捗管理の世界へ!"
 
-#: main/views/user.py:167
+#: main/views/user.py:174
 msgid "欢迎加入"
 msgstr "ウェルカム"
 
-#: main/views/user.py:177
+#: main/views/user.py:184
 msgid "修改头像成功"
 msgstr "アイコンを更新しました"
 
-#: main/views/user.py:190 main/views/user.py:240 main/views/user.py:243
-#: main/views/user.py:248 main/views/user.py:251 main/views/user.py:256
-#: main/views/user.py:310
+#: main/views/user.py:197 main/views/user.py:247 main/views/user.py:250
+#: main/views/user.py:255 main/views/user.py:258 main/views/user.py:263
+#: main/views/user.py:317
 msgid "登录失败"
 msgstr "ログイン失敗しました"
 
-#: main/views/user.py:190
+#: main/views/user.py:197
 msgid "您已经以 {} 的身份登录了，请勿重复登录"
 msgstr "すでに'{}'でログインしました"
 
-#: main/views/user.py:211
+#: main/views/user.py:218
 msgid "此邮箱（{}）尚未被注册"
 msgstr "該当するメールアドレス（{}）はまだサインアップされていないです"
 
-#: main/views/user.py:248 main/views/user.py:310
+#: main/views/user.py:255 main/views/user.py:317
 msgid "找不到用户名为 {} 的用户"
 msgstr "ユーザー名{}を見つかりませんでした"
 
-#: main/views/user.py:251
+#: main/views/user.py:258
 msgid "您已被禁止登录，请联系管理员"
 msgstr "ログインが禁止されています。管理員に連絡してください"
 
-#: main/views/user.py:256
+#: main/views/user.py:263
 msgid "用户名与答案不匹配"
 msgstr "ユーザー名と答えが一致していません"
 
-#: main/views/user.py:262
+#: main/views/user.py:269
 msgid "登录成功"
 msgstr "ログイン成功しました"
 
-#: main/views/user.py:274
+#: main/views/user.py:281
 msgid "查看进度列表"
 msgstr "進捗リストをチェックする"
 
-#: main/views/user.py:279
+#: main/views/user.py:286
 msgid "查看您的活跃度、进度统计"
 msgstr "アクティビティ、進捗分析をチェックします"
 
-#: main/views/user.py:289
+#: main/views/user.py:296
 msgid "欢迎您归来，开始您的网站之旅吧！"
 msgstr "ウェルカムバック！進捗管理の世界へ"
 
-#: main/views/user.py:291
+#: main/views/user.py:298
 msgid "遇到问题或想 #提建议 ，请发消息给"
 msgstr "問題や#アドバイスがある場合はメールしてください"
 
-#: main/views/user.py:319
+#: main/views/user.py:326
 msgid "用户未找到：{}"
 msgstr "該当するユーザーは見つかりませんでした: {}"
 
-#: main/views/user.py:370
+#: main/views/user.py:377
 msgid "昵称不能为空"
 msgstr "ニックネームを入れてください"
 
