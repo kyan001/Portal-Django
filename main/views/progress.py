@@ -503,7 +503,13 @@ def export(request):  # GET
     progresses = Progress.objects.filter(userid=user.id)
     if target_format == 'json':
         progresses_list = [prg.toArray() for prg in progresses]
-        response = JsonResponse(progresses_list, safe=False)
+        response = JsonResponse(
+            progresses_list,
+            safe=False,
+            json_dumps_params={
+                'ensure_ascii': False
+            }
+        )
         file_name = 'Progresses-@{user.username}-{timestamp}.json'.format(user=user, timestamp=util.time.formatDate(timezone.now(), mode='fulldateonly', compact=True))
         response['Content-Disposition'] = 'attachment; filename={}'.format(file_name)
         # add exp
