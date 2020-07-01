@@ -506,6 +506,8 @@ def export(request):  # GET
         response = JsonResponse(progresses_list, safe=False)
         file_name = 'Progresses-@{user.username}-{timestamp}.json'.format(user=user, timestamp=util.time.formatDate(timezone.now(), mode='fulldateonly', compact=True))
         response['Content-Disposition'] = 'attachment; filename={}'.format(file_name)
+        # add exp
+        util.userexp.addExp(user, "progress", 10, _("进度备份成功"))
         # render
         return response
     else:
