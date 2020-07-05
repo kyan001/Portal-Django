@@ -6,10 +6,10 @@ $(function () {
         $(this).find('.progress').removeClass('active progress-striped');
     });
     $('.collapse').on('hide.bs.collapse', function () {
-        $(this).parent().find('.page-header').find('span.glyphicon').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right')
+        $(this).parent().find('.page-header').find('span.fas').removeClass('fa-chevron-down').addClass('fa-chevron-right')
     })
     $('.collapse').on('show.bs.collapse', function () {
-        $(this).parent().find('.page-header').find('span.glyphicon').removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down')
+        $(this).parent().find('.page-header').find('span.fas').removeClass('fa-chevron-right').addClass('fa-chevron-down')
     })
     // insert search input box
     let searchInputHtml = `
@@ -22,7 +22,7 @@ $(function () {
                             <input id="search-submit" type="submit" hidden>
                             <div class="input-group-btn">
                                 <a class="btn btn-default" role="button" onclick="$('#search-submit').click()">
-                                    <span class="glyphicon glyphicon-search"></span>
+                                    <span class="fas fa-search"></span>
                                 </a>
                             </div>
                         </div>
@@ -37,7 +37,7 @@ $(function () {
 
 function toggleFollowProgresses (btn) {
     $(btn).toggleClass("active").children().toggleClass("text-warning")
-    $(btn).find(".glyphicon").toggleClass("glyphicon-unchecked").toggleClass("glyphicon-check")
+    $(btn).find(".fas").toggleClass("fa-toggle-off").toggleClass("fa-toggle-on")
     $("#follow-row").toggleClass("hidden")
     $("#inprogress-and-follow-row").toggleClass("hidden")
 }

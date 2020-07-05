@@ -26,6 +26,7 @@
                 <link rel="stylesheet" href="/static/3rd/bootstrap3/bootstrap-3.4.1/css/bootstrap.min.css">
             {% endif %}
         {% endblock theme %}
+        <link rel="stylesheet" href="/static/3rd/fontawesome/fontawesome-5.13.1/css/all.min.css">
         <link rel="stylesheet" href="/static/css/KyanCssUtil.css?version=1.5.5">
         {% block inhead %}{% endblock %}
         <script>
@@ -49,9 +50,6 @@
                 font-family: "Hiragino Sans GB", "Source Han Sans SC Regular", "微软雅黑", "Microsoft YaHei", "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial, STHeiti, sans-serif;
                 height: 100%;
             }
-            .glyphicon {
-                vertical-align: baseline;
-            }
             @media (min-width: 1400px) {
                 .container {
                     width: 1400px;
@@ -68,7 +66,7 @@
         <div id="nav-btn-zone">
             {% block nav-btn %}
                 <a href="javascript:history.back()" class="btn btn-warning btn-sm">
-                    <span class="glyphicon glyphicon-arrow-left"></span>
+                    <span class="fas fa-arrow-left"></span>
                     {% trans "回到上一页" %}
                 </a>
             {% endblock nav-btn %}
@@ -77,7 +75,7 @@
             </span>
             <div id="function-btn-zone-xs" class="btn-group hidden">
                 <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="glyphicon glyphicon-menu-hamburger"></span>
+                    <span class="fas fa-bars"></span>
                 </a>
                 <ul class="dropdown-menu">
                 </ul>

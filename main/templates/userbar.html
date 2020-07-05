@@ -36,11 +36,11 @@
     {% if not cuser %}
         <span class="pull-right">
             <a href="/" class="btn btn-info btn-sm" title="Home Page" data-toggle="tooltip" data-placement="left">
-                <span class="glyphicon glyphicon-home"></span>
+                <span class="fas fa-home"></span>
             </a>
             <a href="/user/signup" class="btn btn-primary btn-sm">{% trans "注册" %}</a>
             <a href="/user/signin" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-log-in"></span>
+                <span class="fas fa-sign-in-alt"></span>
                 {% trans "登录" %}
             </a>
             {% include "i18nbtn.html" %}
@@ -48,10 +48,10 @@
     {% else %}
         <span class="pull-right">
             <a href="/" class="btn btn-info btn-sm hidden-xs" title="Home Page" data-toggle="tooltip" data-placement="left">
-                <span class="glyphicon glyphicon-home"></span>
+                <span class="fas fa-home"></span>
             </a>
             <a id="inbox-btn" class="btn btn-default btn-sm" href="/chat/inbox">
-                <span class="glyphicon glyphicon-envelope"></span>
+                <span class="fas fa-envelope"></span>
                 <b id="unread-count"></b>
             </a>
             <div class="btn-group">
@@ -59,68 +59,68 @@
                     {% if cuser.has_headimg %}
                         <img src="{{ cuser.headimg_url }}" title="{{ cuser.nickname }}">
                     {% else %}
-                        <span class="glyphicon glyphicon-user" title="{{ cuser.nickname }}"></span>
+                        <span class="fas fa-user" title="{{ cuser.nickname }}"></span>
                     {% endif %}
                     <span class="profile-nikename hidden-xs">
                         @<b>{{ cuser.nickname }}</b>
                     </span>
-                    <span class="caret"></span>
+                    <span class="fas fa-caret-down"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li>
                         <a href="/user/profile">
-                            <span class="glyphicon glyphicon-user"></span> {% trans "个人信息" %}
+                            <span class="fas fa-id-card"></span> {% trans "个人信息" %}
                         </a>
                     </li>
                     <li>
                         <a href="/user/setting">
-                            <span class="glyphicon glyphicon-cog"></span> {% trans "个人设置" %}
+                            <span class="fas fa-user-cog"></span> {% trans "个人设置" %}
                         </a>
                     </li>
                     <li>
                         <a href="/user/logout" data-no-instant>
-                            <span class="glyphicon glyphicon-log-out"></span>
+                            <span class="fas fa-sign-out-alt"></span>
                             <span class="text-danger">{% trans "注销" %}</span>
                         </a>
                     </li>
                     <li role="separator" class="divider"></li>
                     <li class="visible-xs-block">
                         <a href="/">
-                            <span class="glyphicon glyphicon-home"></span>
+                            <span class="fas fa-home"></span>
                             <span class="text-info">{% trans "首页" %}</span>
                         </a>
                     </li>
                     <li>
                         <a href="/progress/list">
-                            <span class="glyphicon glyphicon-th-list"></span>
+                            <span class="fas fa-th-list"></span>
                             <span class="text-primary">{% trans "我的进度" %}</span>
                         </a>
                     </li>
                     <li>
                         <a href="/robotalk">
-                            <span class="glyphicon glyphicon-comment"></span>
+                            <span class="fas fa-comment-alt"></span>
                             <span>{% trans "智械聊天" %}</span>
                         </a>
                     </li>
                     <li role="separator" class="divider"></li>
                     <li>
                         <a href="javascript:void(0)" role="button" onclick="$('#i18n-btn').fadeIn()">
-                            <span class="glyphicon glyphicon-globe"></span>
+                            <span class="fas fa-globe"></span>
                             <span>Languages</span>
                         </a>
                     </li>
                     <li>
                         <a href="/badge/list">
-                            <span class="glyphicon glyphicon-tower"></span>
+                            <span class="fas fa-award"></span>
                             <span>{% trans "徽章列表" %}</span>
                         </a>
                     </li>
                     <li>
                         <a href="javascript:void(0)" role="button" onclick="$('#bootswatch-btn').fadeIn()">
-                            <span class="glyphicon glyphicon-leaf"></span>
+                            <span class="fas fa-brush"></span>
                             <span>{% trans "切换主题" %}</span>
                             <span class="btn btn-link innerlink" href="/index/settheme?mode=random">
-                                <span class="glyphicon glyphicon-random"></span>
+                                <span class="fas fa-random"></span>
                             </span>
                         </a>
                     </li>
@@ -129,24 +129,24 @@
             {% include "i18nbtn.html" with hidden=True %}
             <div id="bootswatch-btn" class="btn-group" style="display:none;">
                 <a class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" role="button">
-                    <span class="glyphicon glyphicon-leaf"></span>
+                    <span class="fas fa-brush"></span>
                     {% if request.COOKIES.theme %}
                         {{ request.COOKIES.theme|capfirst }}
                     {% else %}
                         {% trans "默认主题" %}
                     {% endif %}
-                    <span class="caret"></span>
+                    <span class="fas fa-caret-down"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li>
                         <a href="/index/settheme">
-                            <span class="glyphicon glyphicon-repeat"></span>
+                            <span class="fas fa-window-restore"></span>
                             <span>{% trans "默认主题" %}</span>
                         </a>
                     </li>
                     <li>
                         <a href="/index/settheme?mode=random">
-                            <span class="glyphicon glyphicon-random"></span>
+                            <span class="fab fa-rev"></span>
                             <span>{% trans "随机主题" %}</span>
                         </a>
                     </li>

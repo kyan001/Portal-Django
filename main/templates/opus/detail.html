@@ -28,7 +28,7 @@
                     <div class="panel-heading">
                         {% trans "当前页面的二维码" %}
                         <a class="btn btn-primary btn-xs pull-right" onclick="$('#qrcode-col').slideUp('slow')">
-                            <span class="glyphicon glyphicon-remove"></span>
+                            <span class="fas fa-window-close"></span>
                         </a>
                     </div>
                     <div class="panel-body">
@@ -99,7 +99,7 @@
                             <tr>
                                 <td class="attrname">
                                     <span>{% trans "链接" %}</span>
-                                    <span class="glyphicon glyphicon-link"></span>
+                                    <span class="fas fa-link"></span>
                                 </td>
                                 <td>
                                     {{ progress.weblink|urlizetrunc:40 }}
@@ -108,7 +108,7 @@
                             <tr>
                                 <td class="attrname">
                                     <span>{% trans "链接" %}</span>
-                                    <span class="glyphicon glyphicon-qrcode"></span>
+                                    <span class="fas fa-qrcode"></span>
                                 </td>
                                 <td>
                                     <img src="https://api.qrserver.com/v1/create-qr-code/?data={{ progress.weblink }}&size=150x150" title="{% trans '进度链接二维码' %}">

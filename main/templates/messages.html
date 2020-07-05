@@ -7,7 +7,7 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true" class="dismiss-btn">×</span>
                     </button>
-                    <span class="glyphicon glyphicon-bell"></span>
+                    <span class="fas fa-bell"></span>
                     <span>{{ msg|safe }}</span>
                 </div>
             </div>
@@ -41,7 +41,7 @@
         var msg = $("<div class='messages alert alert-dismissible fade in pull-right' role='alert'></div>").addClass("alert-" + type)
         var button = $("<button type='button' class='close' data-dismiss='alert' aria-label='Close'></button>")
         var dismiss = $("<span aria-hidden='true' class='dismiss-btn'>×</span>")
-        var icon = $("<span class='glyphicon glyphicon-bell'></span>")
+        var icon = $("<span class='fas fa-bell'></span>")
         var txt = $("<span> " + word + "</span>")
         button.append(dismiss)
         msg.append(button)

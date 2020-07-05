@@ -9,11 +9,11 @@
     {% get_available_languages as LANGUAGES %}
     {% get_language_info_list for LANGUAGES as langs %}
     <a class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" role="button">
-        <span class="glyphicon glyphicon-globe"></span>
+        <span class="fas fa-globe"></span>
         {% if hidden %}
             <span>{{ LANGUAGE_CODE|language_name_local }}</span>
         {% endif %}
-        <span class="caret"></span>
+        <span class="fas fa-caret-down"></span>
     </a>
     <ul class="dropdown-menu dropdown-menu-right">
         {% for lang in langs %}

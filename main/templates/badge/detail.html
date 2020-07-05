@@ -14,7 +14,7 @@
 
 {% block nav-btn %}
     <a href="/badge/list" class="btn btn-warning btn-sm">
-        <span class="glyphicon glyphicon-arrow-left"></span>
+        <span class="fas fa-arrow-left"></span>
         {% trans "徽章列表" %}
     </a>
 {% endblock nav-btn %}
@@ -27,7 +27,7 @@
                 <div class="panel-heading">
                     <span class="panel-title">
                         {% if not badge.isallowed %}
-                            <span class="glyphicon glyphicon-ban-circle"></span>
+                            <span class="fas fa-ban"></span>
                         {% endif %}
                         {{badge.category|upper}}
                     </span>
@@ -53,7 +53,7 @@
                             <tr>
                                 <td>{% trans "拥有人数" %}{% trans "：" %}</td>
                                 <td>
-                                    <span class="glyphicon glyphicon-user"></span>
+                                    <span class="fas fa-user"></span>
                                     <span>{{ badge.userCount }}</span>
                                 </td>
                             </tr>

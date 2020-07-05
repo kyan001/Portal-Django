@@ -3,9 +3,9 @@
 
 {% block inhead %}
     {{ block.super }}
-    <link rel="stylesheet" href="/static/css/progress/progresslist.css?version=2.2.2">
-    <link rel="stylesheet" href="/static/css/progress/progresscard.css?version=2.4.0">
-    <script src="/static/js/progress/progresslist.js?version=2.3.3"></script>
+    <link rel="stylesheet" href="/static/css/progress/progresslist.css?version=3.0.0">
+    <link rel="stylesheet" href="/static/css/progress/progresscard.css?version=3.0.0">
+    <script src="/static/js/progress/progresslist.js?version=3.0.0"></script>
 {% endblock inhead %}
 
 {% block nav-btn %}
@@ -14,11 +14,11 @@
 
 {% block function-btn %}
     <a class="btn btn-success btn-sm" href="/progress/new">
-        <span class="glyphicon glyphicon-plus"></span>
+        <span class="fas fa-plus"></span>
         <span class="hidden-xs">{% trans "新增进度" %}</span>
     </a>
     <a class="btn btn-default btn-sm ani-fast fold-xs" href="javascript:void(0);" role="button" onclick="toggleSearchRow(this)">
-        <span class="glyphicon glyphicon-search"></span>
+        <span class="fas fa-search"></span>
         <span class="hidden-xs">{% trans "搜索" %}</span>
     </a>
 {% endblock function-btn %}

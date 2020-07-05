@@ -39,7 +39,7 @@
 
 {% block function-btn %}
     <a href="/chat/conversation" class="btn btn-success btn-sm">
-        <span class="glyphicon glyphicon-plus"></span>
+        <span class="fas fa-plus"></span>
         <span class="hidden-xs">{% trans "发新消息" %}</span>
     </a>
 {% endblock function-btn %}
@@ -50,7 +50,7 @@
         <div id="chaters-list-nonmobile" class="col-xs-12 col-sm-3 hidden-xs">
             <div class="page-header">
                 <h3>
-                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="fas fa-address-book"></span>
                     {% trans "人" %}
                     <small>({{ chater_and_counts|length }})</small>
                 </h3>
@@ -71,16 +71,16 @@
         <div class="col-xs-12 col-sm-9">
             <div class="page-header">
                 <h3>
-                    <span class="glyphicon glyphicon-inbox"></span>
+                    <span class="fas fa-inbox"></span>
                     {% trans "收信箱" %}
                     <small>({{ chats.paginator.count }})</small>
                     <span id="show-by-type" class="pull-right">
                         <div id="chaters-list-mobile" class="visible-xs-inline-block">
                             <div class="btn-group">
                                 <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="fas fa-address-book"></span>
                                     {% trans "人" %}
-                                    <span class="caret"></span>
+                                    <span class="fas fa-caret-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     {% for chtr, cnt in chater_and_counts %}
@@ -99,9 +99,9 @@
                         <div id="show-by-type-mobile" class="visible-xs-inline-block">
                             <div class="btn-group">
                                 <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="glyphicon glyphicon-filter"></span>
+                                    <span class="fas fa-filter"></span>
                                     {{ msg_filters.thiszh }}
-                                    <span class="caret"></span>
+                                    <span class="fas fa-caret-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     {% for fltr_typ, fltr_name in msg_filters.all.items %}
@@ -110,7 +110,7 @@
                                         {% endif %}
                                         <li class="{% if msg_filters.this == fltr_typ %}active{% endif %}">
                                             <a href="?type={{ fltr_typ }}">
-                                                <span class="glyphicon glyphicon-filter"></span>
+                                                <span class="fas fa-filter"></span>
                                                 {{ fltr_name }}
                                             </a>
                                         </li>
@@ -127,7 +127,7 @@
                                 <div class="btn-group" role="group">
                                         {% endif %}
                                         <a class="btn btn-sm {% if msg_filters.this == fltr_typ %}btn-primary{% else %}btn-default{% endif %}" href="?type={{ fltr_typ }}">
-                                            <span class="glyphicon glyphicon-filter"></span>
+                                            <span class="fas fa-filter"></span>
                                             {{ fltr_name }}
                                         </a>
                                     {% endfor %}
@@ -151,7 +151,7 @@
                     {% if chats.has_previous %}
                         <li>
                             <a href="?type={{ msg_filters.this }}&page={{ chats.previous_page_number }}">
-                                <span class="glyphicon glyphicon-chevron-left"></span>
+                                <span class="fas fa-chevron-left"></span>
                             </a>
                         </li>
                     {% endif %}
@@ -171,7 +171,7 @@
                     {% if chats.has_next %}
                         <li>
                             <a href="?type={{ msg_filters.this }}&page={{ chats.next_page_number }}">
-                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                <span class="fas fa-chevron-right"></span>
                             </a>
                         </li>
                     {% endif %}

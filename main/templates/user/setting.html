@@ -44,12 +44,12 @@
         }
         {% if cuser.serviceworker_on %}
             registerServiceWorker(function () {
-                $("#sw-result").append("<span class='glyphicon glyphicon-plus-sign'></span>")
+                $("#sw-result").append("<span class='fas fa-plus-square'></span>")
                 $("#sw-result").fadeIn()
             })
         {% else %}
             unregisterServiceWorker(function () {
-                $("#sw-result").append("<span class='glyphicon glyphicon-minus-sign'></span>")
+                $("#sw-result").append("<span class='fas fa-minus-square'></span>")
                 $("#sw-result").fadeIn()
             })
         {% endif %}
@@ -62,10 +62,10 @@
         <div class="col-xs-12 col-md-10 col-md-offset-1">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <span class="glyphicon glyphicon-th-list"></span>
+                    <span class="fas fa-th-list"></span>
                     {% trans "进度设置" %}
                     <span id="sw-result" class="pull-right" title="Service Worker" style="display: none;">
-                        <span class='glyphicon glyphicon-signal'></span>
+                        <span class='fas fa-network-wired'></span>
                     </span>
                 </div>
                 <form id="progress-settings-form" action="/progress/setsettings" method="post">
@@ -73,7 +73,7 @@
                     <div class="panel-body">
                         <div id="public-ical-div">
                             <label>
-                                <span class="glyphicon glyphicon-calendar"></span>
+                                <span class="fas fa-calendar-alt"></span>
                                 {% trans "进度日历设置" %}
                             </label>
                             <div class="checkbox">
@@ -95,7 +95,7 @@
                         <hr/>
                         <div id="save-to-detail-div">
                             <label>
-                                <span class="glyphicon glyphicon-floppy-save"></span>
+                                <span class="fas fa-save"></span>
                                 {% trans "进度保存设置" %}
                             </label>
                             <div class="checkbox">
@@ -111,7 +111,7 @@
                         <hr/>
                         <div id="service-worker-div">
                             <label>
-                                <span class="glyphicon glyphicon-signal"></span>
+                                <span class="fas fa-network-wired"></span>
                                 {% trans "离线缓存设置" %}
                             </label>
                             <div class="checkbox">
@@ -120,7 +120,7 @@
                                     {% trans "启用进度缓存" %}
                                 </label>
                                 <a class="pull-right" href="javascript:void(0);" onclick="$('#sw-guide').slideDown()" role="button">
-                                    <span class="glyphicon glyphicon-question-sign"></span>
+                                    <span class="fas fa-question-circle"></span>
                                 </a>
                             </div>
                             <div id="sw-guide" class="row" hidden>
@@ -132,12 +132,12 @@
                                             <li>
                                                 {% trans "访问" %}
                                                 <a href="/progress/list" target="_blank">
-                                                    <span class="glyphicon glyphicon-link"></span>
+                                                    <span class="fas fa-link"></span>
                                                     {% trans "进度列表" %}
                                                 </a>
                                             </li>
                                             <li>
-                                                {% trans "请点击" %} <span class="text-primary glyphicon glyphicon-option-vertical"></span>
+                                                {% trans "请点击" %} <span class="text-primary fas fa-ellipsis-v"></span>
                                                 {% trans "（" %}{% trans "在右上角" %}{% trans "）" %}
                                             </li>
                                             <li>
@@ -155,7 +155,7 @@
                                             <li>
                                                 {% trans "访问" %}
                                                 <a href="/progress/list" target="_blank">
-                                                    <span class="glyphicon glyphicon-link"></span>
+                                                    <span class="fas fa-link"></span>
                                                     {% trans "进度列表" %}
                                                 </a>
                                             </li>
@@ -175,12 +175,12 @@
                         <hr/>
                         <div id="progress-export-div">
                             <label>
-                                <span class="glyphicon glyphicon-export"></span>
+                                <span class="fas fa-file-export"></span>
                                 {% trans "导出我的进度" %}
                             </label>
                             <div>
                                 <a class="btn btn-default" href="/progress/export?format=json">
-                                    <span class="glyphicon glyphicon-save-file"></span>
+                                    <span class="fas fa-file-download"></span>
                                     <span>{% trans "导出为" %} .json {% trans "文件" %}</span>
                                 </a>
                                 <span class="text-muted pull-right">

@@ -10,11 +10,17 @@
         {% else %}
             {{ chat.content|striptags|truncatechars:12 }}
         {% endif %}
-        <div class="pull-right text-muted hidden-xs">{{ chat.created|date:"Y-m-d H:i" }}</div>
+        <div class="pull-right text-muted hidden-xs">
+            <span class="fas fa-clock"></span>
+            {{ chat.created|date:"Y-m-d H:i" }}
+        </div>
     </div>
     <div id="chat-{{chat.id}}" class="panel-collapse collapse {% if conversation %}in{% endif %}" role="tabpanel">
         <div class="panel-body">
-            <div class="text-muted visible-xs-block">{{ chat.created|date:"Y-m-d H:i" }}</div>
+            <div class="text-muted visible-xs-block">
+                <span class="fas fa-clock"></span>
+                {{ chat.created|date:"Y-m-d H:i" }}
+            </div>
             <div class="chat-content pull-left">
                 {% if chat.sender.username == "syschat" %}
                     <p>{{ chat.content|highlightlink:"sys"|safe }}</p>
@@ -35,17 +41,17 @@
                 {% if not conversation %}
                     {% if chat.senderid == cuser.id %}
                         <a class="btn btn-primary btn-sm" href="/chat/conversation?receiver={{chat.receiver.nickname}}" onclick="disableAllBtn()">
-                            <span class="glyphicon glyphicon-envelope"></span> 查看
+                            <span class="fas fa-envelope"></span> 查看
                         </a>
                     {% elif chat.receiverid == cuser.id %}
                         <a class="btn btn-primary btn-sm" href="/chat/conversation?receiver={{chat.sender.nickname}}&title=回复：{{chat.content|truncatechars:12}}" onclick="disableAllBtn()">
-                            <span class="glyphicon glyphicon-envelope"></span> 回复
+                            <span class="fas fa-reply"></span> 回复
                         </a>
                     {% endif %}
                 {% endif %}
                 {% if chat.receiverid == cuser.id %}
-                    <a class="btn btn-default btn-sm" href="/chat/delete?id={{chat.id}}" onclick="disableAllBtn()">
-                        <span class="glyphicon glyphicon-remove"></span> 删除
+                    <a class="btn btn-danger btn-sm" href="/chat/delete?id={{chat.id}}" onclick="disableAllBtn()">
+                        <span class="fas fa-trash-alt"></span> 删除
                     </a>
                 {% endif %}
             </div>

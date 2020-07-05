@@ -10,7 +10,7 @@
 
 {% block inhead %}
     {{ block.super }}
-    <link rel="stylesheet" href="/static/css/progress/progresscard.css?version=2.4.0">
+    <link rel="stylesheet" href="/static/css/progress/progresscard.css?version=3.0.0">
 {% endblock inhead %}
 
 
@@ -80,7 +80,7 @@
 
 {% block function-btn %}
     <a href="/progress/new" class="btn btn-success btn-sm hide-when-edit">
-        <span class="glyphicon glyphicon-plus"></span>
+        <span class="fas fa-plus"></span>
         <span class="hidden-xs">{% trans "新增进度" %}</span>
     </a>
 {% endblock function-btn %}
@@ -99,12 +99,12 @@
                           data-container="body"
                           href="/opus/detail?progressid={{prg.id}}"
                           title="{% trans '分享你的进度信息' %}">
-                            <span class="glyphicon glyphicon-qrcode"></span>
+                            <span class="fas fa-qrcode"></span>
                         </a>
                         《<strong id="prg-name">{{ prg.name }}</strong>》
                         <span id="prg-episodeinfo"></span>
                         <span id="loading-icon" hidden>
-                            <span class="loading circling glyphicon glyphicon-refresh"></span>
+                            <span class="loading circling fas fa-spinner"></span>
                         </span>
                         {% if prg.comment %}
                             <em class="comment small">
@@ -171,7 +171,7 @@
                                                         <span id="guess-subtitle">{% trans '（' %}<span id="guess-subtitle-text"></span>{% trans '）' %}</span>
                                                         {% trans '吗？' %}
                                                         <a class="btn btn-default btn-xs" href="javascript:void(0)" role="button" onclick="RENDER.applyGuess()">
-                                                            <span class="glyphicon glyphicon-ok text-success"></span>
+                                                            <span class="fas fa-check text-success"></span>
                                                         </a>
                                                     </li>
                                                 </td>
@@ -209,7 +209,7 @@
                                                         <div class="input-group">
                                                             <span class="input-group-btn">
                                                                 <div class="btn btn-lg btn-default" role="button" onclick="FORM.addOneCurrent()">
-                                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                                    <span class="fas fa-plus"></span>
                                                                 </div>
                                                             </span>
                                                             <input class="editable form-control"
@@ -243,12 +243,12 @@
                                                                   title="{% trans '在新窗口打开链接' %}"
                                                                   href="{{prg.weblink}}"
                                                                   target="_blank">
-                                                                    <span class="glyphicon glyphicon-link"></span>
+                                                                    <span class="fas fa-link"></span>
                                                                 </a>
                                                             </span>
                                                         {% else %}
                                                             <span class="input-group-addon">
-                                                                <span class="glyphicon glyphicon-link"
+                                                                <span class="fas fa-link"
                                                                   data-toggle="tooltip"
                                                                   data-placement="right"
                                                                   data-container="body"
@@ -267,10 +267,7 @@
                                             </tr>
                                             <tr class="text-warning show-when-edit">
                                                     <th>
-                                                        {% trans "保存选项" %}
-                                                        <a href="/user/setting" title="{% trans '个人设置' %}">
-                                                            <span class="glyphicon glyphicon-cog text-muted"></span>
-                                                        </a>
+                                                        <span>{% trans "保存选项" %}</span>
                                                     </th>
                                                     <td>
                                                         <div class="checkbox">
@@ -283,6 +280,13 @@
                                                             <label>
                                                                 <input type="checkbox" name="savetodetail" value="on" {% if cuser.save_to_detail is True %}checked{% endif %}>
                                                                 <span>{% trans "保存后留在" %}{% trans "当前页面" %}</span>
+                                                                <span>
+                                                                    {% trans "（" %}
+                                                                    <a href="/user/setting" title="{% trans '个人设置' %}">
+                                                                        <span class="fas fa-user-cog text-muted"></span>
+                                                                    </a>
+                                                                    {% trans "）" %}
+                                                                </span>
                                                             </label>
                                                         </div>
                                                     </td>
@@ -292,11 +296,11 @@
                                     <div id="edit-btn" class="show-when-edit">
                                         <div class="btn-group btn-group-flex">
                                             <a id="save" class="btn flex-9 btn-success" role="button" onclick="FORM.saveEdit()">
-                                                <span class="glyphicon glyphicon-ok"></span>
+                                                <span class="fas fa-check"></span>
                                                 {% trans "保存" %}
                                             </a>
                                             <a id="cancel" class="btn flex-2 btn-default" role="button" onclick="FORM.cancelEdit()">
-                                                <span class="glyphicon glyphicon-remove"></span>
+                                                <span class="fas fa-times"></span>
                                             </a>
                                         </div>
                                     </div><!--#edit-btn-->
@@ -361,11 +365,11 @@
                                     <span><strong>{% trans "作品信息" %}</strong></span>
                                     <span class="pull-right">
                                         <a id="prg-cover" class="btn btn-xs btn-primary" role="button">
-                                            <span class="glyphicon glyphicon-picture"></span>
+                                            <span class="fas fa-image"></span>
                                             {% trans "封面" %}
                                         </a>
                                         <a id="opustype-a" class="btn btn-xs btn-primary" href="" target="_blank">
-                                            <span id="opustype-icon" class="glyphicon"></span>
+                                            <span id="opustype-icon" class="fas"></span>
                                         </a>
                                     </span>
                                 </div>
@@ -381,7 +385,7 @@
                                                 《<a id="title-link" href="" target="_blank"></a>》
                                                 <span class="text-muted" id="original-title"></span>
                                                 <span id="color-indicator" class="btn btn-xs btn-link pull-right" title="{% trans '作品代表色' %}" data-toggle="tooltip" data-placement="left">
-                                                    <span class="glyphicon glyphicon-tint"></span>
+                                                    <span class="fas fa-tint"></span>
                                                 </span>
                                             </td>
                                         </tr>
@@ -391,7 +395,7 @@
                                                 <strong id="rating-av"></strong>
                                                 <span class="text-muted rating-aux"> / 10</span>
                                                 <span class="text-muted small hidden">
-                                                    （<span class="glyphicon"></span>
+                                                    （<span class="fas"></span>
                                                     <span id="rate-number"></span>）
                                                 </span>
                                             </td>
@@ -410,18 +414,18 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <a class="btn btn-danger" id="delete" role="button" onclick="FORM.confirmDelete()">
-                                <span class="glyphicon glyphicon-trash"></span>
+                                <span class="fas fa-trash-alt"></span>
                                 {% trans "彻底删除" %}
                             </a>
                             <span class="pull-right">
                                 {% if prg.status == "deactivated" %}
                                     <a id="reactivate" class="btn btn-warning" role="button" onclick="$('#reactivateform').submit()">
-                                        <span class="glyphicon glyphicon-ok-circle"></span>
+                                        <span class="fas fa-fire"></span>
                                         {% trans "激活" %}
                                     </a>
                                 {% else %}
                                     <a id="deactivate" class="btn btn-warning" role="button" onclick="$('#deactivateform').submit()">
-                                        <span class="glyphicon glyphicon-ban-circle"></span>
+                                        <span class="fas fa-icicles"></span>
                                         {% trans "冻结" %}
                                     </a>
                                 {% endif %}
@@ -436,7 +440,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-xs-12">
                 <div class="text-muted">
-                    <span class="glyphicon glyphicon-duplicate"></span>
+                    <span class="fas fa-wind"></span>
                     {% trans "相关进度" %}{% trans "：" %}
                 </div>
                 <div id="related-progress-row" class="row ani-fast">
@@ -891,13 +895,13 @@
             $('#rating-av').text(info.rating)
             if (info.type == 'book') {
                 $('#original-title').text(info.origin_title)
-                $('#rate-number').text(info.numrater).siblings('.glyphicon').addClass('glyphicon-user')
-                $('#opustype-icon').addClass('glyphicon-book')
+                $('#rate-number').text(info.numrater).siblings('.fa').addClass('fa-users')
+                $('#opustype-icon').addClass('fa-book')
                 $('#speed-unit').text("{% trans '每页' %}")
             } else if (info.type == 'movie') {
                 $('#original-title').text(info.original_title)
-                $('#rate-number').text(info.stars).siblings('.glyphicon').addClass('glyphicon-star')
-                $('#opustype-icon').addClass('glyphicon-film')
+                $('#rate-number').text(info.stars).siblings('.fa').addClass('fas-star')
+                $('#opustype-icon').addClass('fa-film')
                 $('#speed-unit').text("{% trans '每集' %}")
             }
             $('#opustype-a').attr('title', info.title)

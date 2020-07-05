@@ -9,7 +9,7 @@
 
 {% block nav-btn %}
     <div id="mode-toggle" class="btn btn-warning btn-sm" mode="old" onclick="modeToggle()">
-        <span class="glyphicon glyphicon-retweet"></span>
+        <span class="fas fa-retweet"></span>
         {% trans "切换到" %}「<b id="mode-toggle-text">{% trans "问答" %}</b>」{% trans "模式" %}
     </div>
 {% endblock nav-btn %}
@@ -359,7 +359,7 @@
                 <div id="username-group">
                     <div class="input-group">
                         <span class="input-group-addon text-muted">
-                            <span class="glyphicon glyphicon-user" title="{% trans '必填' %}{% trans '，' %}{% trans '只能包含“英文字母”、“数字”和“英文句号”' %}" data-toggle="tooltip" data-placement="top"></span>
+                            <span class="fas fa-user" title="{% trans '必填' %}{% trans '，' %}{% trans '只能包含“英文字母”、“数字”和“英文句号”' %}" data-toggle="tooltip" data-placement="top"></span>
                         </span>
                         <input type="text" name="username" class="form-control needverify" placeholder="{% trans '用户名' %}" autofocus="autofocus" onblur="validateUsername()">
                         <span class="input-group-addon tips hidden-xs"
@@ -367,7 +367,7 @@
                             data-content="<li class='text-primary'>{% trans '登录时的凭证之一' %}</li>
                             <li class='text-danger'>{% trans '只能包含“英文字母”、“数字”和“英文句号”' %}</li>
                             <li class='text-danger'>{% trans '不能同其他人的用户名重复' %}</li>">
-                            <span class="glyphicon glyphicon-question-sign"></span>
+                            <span class="fas fa-question-circle"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
@@ -379,7 +379,7 @@
                 <div id="question-group">
                     <div class="input-group newmode">
                         <span class="input-group-addon text-muted">
-                            <span class="glyphicon glyphicon-comment"></span>
+                            <span class="fas fa-question"></span>
                         </span>
                         <input type="text" name="question" class="form-control" placeholder="{% trans '问题' %}">
                         <span class="input-group-addon tips hidden-xs"
@@ -392,7 +392,7 @@
                             <li>{% trans '“最想获得的超能力”' %}</li>
                             <li>{% trans '“家里保险柜的数量”' %}</li>
                             </ul>">
-                            <span class="glyphicon glyphicon-question-sign"></span>
+                            <span class="fas fa-question-circle"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
@@ -404,7 +404,7 @@
                 <div id="answer1-group">
                     <div class="input-group">
                         <span class="input-group-addon text-muted">
-                            <span class="glyphicon glyphicon-asterisk" title="{% trans '必填' %}{% trans '，' %}{% trans '回答 “答案” 或 “备选答案” 均可正常登录' %}" data-toggle="tooltip" data-placement="top"></span>
+                            <span class="fas fa-key" title="{% trans '必填' %}{% trans '，' %}{% trans '回答 “答案” 或 “备选答案” 均可正常登录' %}" data-toggle="tooltip" data-placement="top"></span>
                         </span>
                         <input type="text" name="answer1" class="form-control" placeholder="{% trans '密码' %}" onchange="generateTip()">
                         <span class="input-group-addon tips hidden-xs"
@@ -422,7 +422,7 @@
                             <li class='text-danger'>{% trans '请输入密码' %}{% trans '，' %}{% trans '长度、字符不限' %}</li>
                             </ul>
                             ">
-                            <span class="glyphicon glyphicon-question-sign"></span>
+                            <span class="fas fa-question-circle"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
@@ -435,7 +435,7 @@
                 <div id="answer2-group">
                     <div class="input-group newmode">
                         <span class="input-group-addon text-muted">
-                            <span class="glyphicon glyphicon-asterisk" title="{% trans '必填' %}{% trans '，' %}{% trans '回答 “答案” 或 “备选答案” 均可正常登录' %}" data-toggle="tooltip" data-placement="top"></span>
+                            <span class="fas fa-key" title="{% trans '必填' %}{% trans '，' %}{% trans '回答 “答案” 或 “备选答案” 均可正常登录' %}" data-toggle="tooltip" data-placement="top"></span>
                         </span>
                         <input type="text" name="answer2" class="form-control" placeholder="{% trans '备选答案' %}">
                         <span class="input-group-addon tips hidden-xs"
@@ -452,7 +452,7 @@
                             <div>{% trans '（炸鸡 vs. 烧烤）' %}</div></li>
                             </ul>
                             ">
-                            <span class="glyphicon glyphicon-question-sign"></span>
+                            <span class="fas fa-question-circle"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
@@ -464,11 +464,11 @@
                 <div id="tip-group">
                     <div class="input-group newmode">
                         <span class="input-group-addon text-muted">
-                            <span class="glyphicon glyphicon-magnet"></span>
+                            <span class="fas fa-concierge-bell"></span>
                         </span>
                         <input type="text" name="tip" class="form-control" placeholder="{% trans '答案提示' %}">
                         <span class="input-group-addon btn btn-default" onclick="generateTip()" title="{% trans '生成提示' %}">
-                            <span class="glyphicon glyphicon-refresh"></span>
+                            <span class="fas fa-sync-alt"></span>
                         </span>
                         <span class="input-group-addon tips hidden-xs"
                             title="{% trans '答案提示' %}<span class='label label-success'>{% trans '选填' %}</span>"
@@ -476,7 +476,7 @@
                             <li class='text-success'>{% trans '在登录界面您需要时自动显示' %}</li>
                             <li class='text-warning'>{% trans '请不要将答案直接放在这里' %}</li>
                             ">
-                            <span class="glyphicon glyphicon-question-sign"></span>
+                            <span class="fas fa-question-circle"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
@@ -489,7 +489,7 @@
                 <div id="email-group">
                     <div class="input-group">
                         <span class="input-group-addon text-muted">
-                            <span class="glyphicon glyphicon-envelope"></span>
+                            <span class="fas fa-envelope-square"></span>
                         </span>
                         <input type="email" name="email" class="form-control needverify" placeholder="{% trans '邮箱' %}" onblur="validateEmail()">
                         <span class="input-group-addon tips hidden-xs"
@@ -497,7 +497,7 @@
                             data-content="<li class='text-primary'>{% trans '用于找回密码或答案' %}</li>
                             <li class='text-danger'>{% trans '邮箱验证通过后方可生效' %}</li>
                             <li class='text-danger'>{% trans '邮箱验证生效前，无法找回密码或答案' %}</li>">
-                            <span class="glyphicon glyphicon-question-sign"></span>
+                            <span class="fas fa-question-circle"></span>
                         </span>
                     </div>
                     <span class="xs-tips">
@@ -509,7 +509,7 @@
                 <div id="nickname-group">
                     <div class="input-group">
                         <span class="input-group-addon text-muted">
-                            <span class="glyphicon glyphicon-music"></span>
+                            <span class="fas fa-at"></span>
                         </span>
                         <input type="text" name="nickname" class="form-control needverify" placeholder="{% trans '昵称' %}" onblur="validateNickname()">
                         <span class="input-group-addon tips hidden-xs"
@@ -518,7 +518,7 @@
                         <li class='text-danger'>{% trans '昵称只能是 “汉字” 和 “字母”' %}</li>
                         <li class='text-danger'>{% trans '昵称不可与他人重复' %}</li>
                         <li>{% trans '昵称为空时，我们将自动帮您生成' %}</li>">
-                        <span class="glyphicon glyphicon-question-sign"></span>
+                        <span class="fas fa-question-circle"></span>
                     </span>
                 </div>
                 <span class="xs-tips">

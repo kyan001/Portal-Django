@@ -45,7 +45,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <span class="panel-title">
-                        <span class="glyphicon glyphicon-plus"></span>
+                        <span class="fas fa-plus"></span>
                         {% trans "新增进度" %}
                     </span>
                 </div>
@@ -66,7 +66,7 @@
                                                 onchange="Guess.getInfo()">
                                             <span class="input-group-btn">
                                                 <span class="btn btn-default" role="button" onclick="$('#barcode-input').click()">
-                                                    <span class="glyphicon glyphicon-barcode"></span>
+                                                    <span class="fas fa-barcode"></span>
                                                 </span>
                                             </span>
                                         </div>
@@ -83,7 +83,7 @@
                                                 name="comment">
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn btn-default dropdown-toggle" role="button" data-toggle="dropdown">
-                                                    <span class="caret"></span>
+                                                    <span class="fas fa-caret-down"></span>
                                                  </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                                     {% for commenttag in commenttags %}
@@ -115,9 +115,9 @@
                                                 value="{{ total }}">
                                             <span class="input-group-btn">
                                                 <span id="guess-total" class="btn btn-default" role="button" onclick="Guess.ask()">
-                                                    <span class="guess-icon glyphicon glyphicon-cloud-upload"></span>
+                                                    <span class="guess-icon fas fa-cloud-download-alt"></span>
                                                     <span id="loading-icon" hidden>
-                                                        <span class="loading circling glyphicon glyphicon-refresh"></span>
+                                                        <span class="loading circling fas fa-spinner"></span>
                                                     </span>
                                                 </span>
                                             </span>
@@ -147,7 +147,9 @@
                                                 placeholder="http://"
                                                 name="weblink"
                                                 value="{{ weblink }}">
-                                            <span class="glyphicon glyphicon-link form-control-feedback"></span>
+                                            <span class="form-control-feedback">
+                                                <span class="fas fa-link"></span>
+                                            </span>
                                         </div>
                                     </span>
                                 </div>
@@ -159,18 +161,18 @@
                     <div class="row">
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                             <a class="btn btn-default" href="javascript:history.back()" onclick="disableAllBtn()">
-                                <span class="glyphicon glyphicon-remove"></span>
+                                <span class="fas fa-times"></span>
                                 {% trans "取消" %}
                             </a>
                         </div>
                         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 text-right">
                             <div class="text-right">
                                 <button class="btn btn-warning" role="button" onclick="Form.clear()">
-                                    <span class="glyphicon glyphicon-refresh"></span>
+                                    <span class="fas fa-snowplow"></span>
                                     {% trans "清空" %}
                                 </button>
                                 <button class="btn btn-success" role="button" onclick="Form.submit()">
-                                        <span class="glyphicon glyphicon-ok"></span>
+                                        <span class="fas fa-check"></span>
                                         {% trans "保存" %}
                                 </button>
                             </div>
@@ -284,9 +286,9 @@
         "clear": function(){
             console.debug("Guess.clear")
             $("#guess-total .guess-icon")
-                .removeClass("glyphicon-cloud")
-                .removeClass("glyphicon-cloud-download")
-                .addClass("glyphicon-cloud-upload")  // 还原图标
+                .removeClass("fa-cloud")
+                .removeClass("fa-cloud-sun")
+                .addClass("cloud-download-alt")  // 还原图标
             $("input[name='name']").attr("title", "")  // 还原名称处 title
             Guess.bookinfo = null  // 清空
         },
@@ -332,14 +334,14 @@
                 showLoading("off")
                 if(parseInt(info.pages) > 0){  // 不一定是精确匹配
                     Guess.bookinfo = info
-                    $('#guess-total .guess-icon').removeClass('glyphicon-cloud-upload')  // 移除旧图标
+                    $('#guess-total .guess-icon').removeClass('fa-cloud-download-alt')  // 移除旧图标
                     if(info.match){  // 精确匹配
                         console.debug("  Match OK: %s", info.title)
-                        $('#guess-total .guess-icon').addClass('glyphicon-cloud-download')
+                        $('#guess-total .guess-icon').addClass('fa-cloud')
                         $("input[name='name']").attr("title", "《" + info.title + "》")
                     } else {  // 非精确匹配
                         console.debug("  Match KO: %s", info.title)
-                        $('#guess-total .guess-icon').addClass('glyphicon-cloud')
+                        $('#guess-total .guess-icon').addClass('fa-cloud-sun')
                         $("input[name='name']").attr("title", "{% trans '是' %} 《" + info.title + "》 {%trans '吗？' %}")
                     }
                 }

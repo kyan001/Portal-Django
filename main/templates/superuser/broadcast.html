@@ -18,9 +18,6 @@
     .chat-content {
         word-break: break-all;
     }
-    #nickname-group .input-group-addon {
-        padding-right: 1px;
-    }
 </style>
 {% endblock css %}
 
@@ -32,7 +29,7 @@
             <div class="page-header">
                 <h3>
                     {% trans "所有人" %}
-                    <small><span class="glyphicon glyphicon-transfer"></span> @系统消息</small>
+                    <small><span class="fas fa-exchange-alt"></span> @系统消息</small>
                 </h3>
             </div>
 
@@ -60,7 +57,7 @@
                                         <input type="text" class="form-control" value="{% trans '所有人' %}" readonly>
                                         <div class="input-group-btn">
                                             <a id="send-btn" class="btn btn-success btn-block" onclick="submitSend()" disabled tabindex="4">
-                                                <span class="glyphicon glyphicon-send"></span>
+                                                <span class="fas fa-paper-plane"></span>
                                                 <span>{% trans "发送" %}</span>
                                             </a>
                                         </div>

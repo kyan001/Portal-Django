@@ -63,7 +63,7 @@
                     <div class="panel-title">
                         {% trans "智械聊天" %}
                         <span class="pull-right" title="{% trans '已运行' %} {{ runningtime }}">
-                            <span class="glyphicon glyphicon-comment"></span>
+                            <span class="fas fa-comment-alt"></span>
                             <span id="counts"></span>
                         </span>
                     </div>
@@ -75,7 +75,7 @@
             </div>
             <div id="input-box" class="input-group">
                 <span class="input-group-addon">
-                    <span id="loading-icon" class="glyphicon glyphicon-comment"></span>
+                    <span id="loading-icon" class="fas fa-comment-alt"></span>
                 </span>
                 <input type="text" name="userinput" class="form-control" placeholder="{% trans '说点儿什么' %}" autofocus="true">
                 <span class="input-group-btn">
@@ -201,12 +201,12 @@
     }
 
     function showLoading(enable){
-        $("#loading-icon").removeClass("glyphicon-refresh").removeClass("glyphicon-comment")
+        $("#loading-icon").removeClass("fa-spinner").removeClass("fa-comment")
         if(enable){
-            $("#loading-icon").addClass("glyphicon-refresh")
+            $("#loading-icon").addClass("fa-spinner")
             $("#loading-icon").addClass("loading circling text-danger")
         } else {
-            $("#loading-icon").addClass("glyphicon-comment")
+            $("#loading-icon").addClass("fa-comment")
             $("#loading-icon").removeClass("loading circling text-danger")
         }
     }

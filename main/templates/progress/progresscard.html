@@ -12,7 +12,7 @@
                                 《<strong>{{ prg.name }}</strong>》
                             </span>
                             {% if prg.covercolor %}
-                                <span class="small glyphicon glyphicon-tint" style="color: {{ prg.covercolor }}" title="《{{ prg.name }}》 {% trans '作品代表色' %}"></span>
+                                <span class="small fas fa-tint" style="color: {{ prg.covercolor }}" title="《{{ prg.name }}》 {% trans '作品代表色' %}"></span>
                             {% endif %}
                             {% if prg.comment %}
                                 <em class="comment small">
@@ -30,7 +30,7 @@
                         {% if prg.is_weblink_ok %}
                             <div class="flex-2">
                                 <span class="weblink innerlink pull-right hover-turning-container btn btn-link btn-block btn-xs" href="{{ prg.weblink }}" title="{{ prg.weblink }}" target="_blank">
-                                    <span class="glyphicon glyphicon-link"></span>
+                                    <span class="fas fa-link"></span>
                                 </span>
                             </div><!--.col-->
                         {% endif %}
@@ -41,16 +41,16 @@
                 <tr>
                     {% if prg.current == prg.total and prg.current != 0 %}
                         <td class="text-center bg-primary">
-                            <span class="glyphicon glyphicon-ok"></span>
+                            <span class="fas fa-check-circle"></span>
                             <span title="{% trans '完成时间' %}">{{ prg.modified|date:'Y-m-d' }}</span>
                         </td>
                     {% else %}
                         <td class="text-left {{ prg.contextual|default:'active' }}">
-                            <span class="glyphicon glyphicon-play"></span>
+                            <span class="fas fa-play"></span>
                             <span title="{% trans '开始时间' %}">{{ prg.created|date:'Y-m-d' }}</span>
                         </td>
                         <td class="text-right {{ prg.contextual|default:'active' }}">
-                            <span class="glyphicon glyphicon-pause"></span>
+                            <span class="fas fa-pause"></span>
                             <span title="{% trans '上次更新' %}">{{ prg.modified|date:'Y-m-d' }}</span>
                         </td>
                     {% endif %}

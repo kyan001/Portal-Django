@@ -29,7 +29,7 @@
 
 {% block nav-btn %}
     <a href="/chat/inbox" class="btn btn-warning btn-sm">
-        <span class="glyphicon glyphicon-arrow-left"></span>
+        <span class="fas fa-arrow-left"></span>
         {% trans "回到收信箱" %}
     </a>
 {% endblock nav-btn %}
@@ -43,7 +43,7 @@
                     {% if receiver %}
                         <img id="head-img" src="{{ receiver.headimg_url }}">
                         <a href="/user/public?nickname={{ receiver.nickname }}">@{{ receiver.nickname }}</a>
-                        <small><span class="glyphicon glyphicon-transfer"></span> @{{ cuser.nickname }}</small>
+                        <small><span class="fas fa-exchange-alt"></span> @{{ cuser.nickname }}</small>
                     {% else %}
                         <span>{% trans "发送消息" %}</span>
                         <small>
@@ -82,7 +82,7 @@
                                         {% endif %}
                                         <div class="input-group-btn">
                                             <a id="send-btn" class="btn btn-success btn-block" onclick="submitSend()" disabled tabindex="4">
-                                                <span class="glyphicon glyphicon-send"></span>
+                                                <span class="fas fa-paper-plane"></span>
                                                 <span>{% trans "发送" %}</span>
                                             </a>
                                         </div>
@@ -100,11 +100,11 @@
             </form>
             <hr/>
             <h3 class="text-center">
-                <span class="glyphicon glyphicon-time"></span>
+                <span class="fas fa-comments"></span>
+                <small class="text-muted">
+                    <span class="fas fa-sort-down"></span>
+                </small>
             </h3>
-            <div class="text-muted">
-                <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
-            </div>
             <div class="panel-group">
                 {% for chat in chats %}
                     {% include "chat/chatlet.html" with chat=chat conversation=True %}

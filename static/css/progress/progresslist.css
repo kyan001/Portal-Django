@@ -1,5 +1,5 @@
 /* page-header */
-.page-header:hover .glyphicon {
+.page-header:hover .fas {
     color: red;
 }
 .page-header {

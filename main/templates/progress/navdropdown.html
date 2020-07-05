@@ -2,35 +2,35 @@
 
 <div class="btn-group">
     <a class="btn btn-warning btn-sm" role="button" href="/progress/list" title="{% trans '进度列表' %}">
-        <span class="glyphicon glyphicon-list"></span>
+        <span class="fas fa-th-list"></span>
     </a>
     <a class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {% comment %} <span class="glyphicon glyphicon-option-vertical"></span> {% endcomment %}
+        {% comment %} <span class="fas fa-ellipsis-v"></span> {% endcomment %}
         <span id="progress-dropdown-title">{% trans '进度' %}</span>
-        <span class="caret"></span>
+        <span class="fas fa-caret-down"></span>
     </a>
     <ul class="dropdown-menu">
         <li class="progress-dropdown-li">
             <a href="/progress/list">
-                <span class="glyphicon glyphicon-th-list"></span>
+                <span class="fas fa-th-list"></span>
                 {% trans "进度列表" %}
             </a>
         </li>
         <li class="progress-dropdown-li">
             <a href="/progress/archive">
-                <span class="glyphicon glyphicon-inbox"></span>
+                <span class="fas fa-archive"></span>
                 {% trans "进度存档" %}
             </a>
         </li>
         <li class="progress-dropdown-li">
             <a href="/progress/search">
-                <span class="glyphicon glyphicon-search"></span>
+                <span class="fas fa-search"></span>
                 {% trans "进度搜索" %}
             </a>
         </li>
         <li class="progress-dropdown-li">
             <a href="/progress/timeline">
-                <span class="glyphicon glyphicon-time"></span>
+                <span class="fas fa-stream"></span>
                 {% trans "进度历程" %}
             </a>
         </li>

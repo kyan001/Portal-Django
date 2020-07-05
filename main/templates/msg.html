@@ -25,7 +25,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <span class="glyphicon glyphicon-info-sign"></span>
+                        <span class="fas fa-info-circle"></span>
                         {% if title %}
                             {{title}}
                         {% else %}
@@ -42,13 +42,13 @@
                             {% if button %}
                                 {{ button }}
                             {% else %}
-                                <span class="glyphicon glyphicon-arrow-right"></span>
+                                <span class="fas fa-arrow-right"></span>
                                 {% trans "点此跳转至" %} {{ url }}
                             {% endif %}
                         </a>
                     {% else %}
                         <a href="javascript:history.back()" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-arrow-left"></span>
+                            <span class="fas fa-arrow-left"></span>
                             {% trans "点此回到上个页面" %}
                         </a>
                     {% endif %}

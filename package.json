@@ -21,7 +21,8 @@
         "swiper": "latest",
         "jquery-timelineme": "latest",
         "jqtimeline": "latest",
-        "instant.page": "latest"
+        "instant.page": "latest",
+        "fontawesome": "latest"
     },
     "homepage": "https://www.kyan001.com"
 }

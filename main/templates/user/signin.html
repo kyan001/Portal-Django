@@ -53,21 +53,21 @@
             <form id="login-form" action="/user/checklogin" method="post">
                 <div id="username-group" class="one-group input-group">
                     <span class="input-group-addon text-muted" title="{% trans '必填' %}{% trans '，' %}{% trans '只能包含“英文字母”、“数字”和“英文句号”' %}" data-toggle="tooltip" data-placement="top">
-                        <span class="glyphicon glyphicon-user"></span>
+                        <span class="fas fa-user"></span>
                     </span>
                     <input id="id_username" type="text" class="form-control" name="username" placeholder="{% trans '用户名' %}" autofocus="autofocus" onblur="validateUsername('onblur')" autocomplete="username" required>
                 </div>
                 <div id="question-group" class="one-group well well-sm">
-                    <span class="glyphicon glyphicon-comment"></span>
+                    <span class="fas fa-question"></span>
                     <span id="question-content" class="clean-when-fold"></span>
                 </div>
                 <div id="answer-group" class="one-group input-group">
                     <span class="input-group-addon text-muted" title="{% trans '必填' %}{% trans '，' %}{% trans '回答 “答案” 或 “备选答案” 均可正常登录' %}" data-toggle="tooltip" data-placement="top">
-                        <span class="glyphicon glyphicon-asterisk"></span>
+                        <span class="fas fa-key"></span>
                     </span>
                     <input id="id_password" type="password" class="form-control clean-when-fold" name="answer" placeholder="{% trans '密码或答案' %}" autocomplete="current-password" required>
                     <span id="show-password" class="input-group-addon text-muted" onmouseover="$(this).siblings('input').attr('type','text')" onmouseout="$(this).siblings('input').attr('type','password')">
-                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span class="fas fa-eye"></span>
                     </span>
                 </div>
                 <div id="tip-group" class="one-group well well-sm">

@@ -342,25 +342,27 @@
 {% block nav-btn %}
 <div class="btn-group">
     <a class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="glyphicon glyphicon-th-large"></span> Apps <span class="caret"></span>
+        <span class="fas fa-cubes"></span>
+        <span>Apps</span>
+        <span class="fas fa-caret-down"></span>
     </a>
     <ul class="dropdown-menu">
         <li>
             <a href="/progress/list">
-                <span class="glyphicon glyphicon-th-list"></span>
+                <span class="fas fa-th-list"></span>
                 {% trans "我的进度" %}
             </a>
         </li>
         <li role="separator" class="divider"></li>
         <li>
             <a href="/chat/conversation?mode=quicknote">
-                <span class="glyphicon glyphicon-list-alt"></span>
+                <span class="fas fa-sticky-note"></span>
                 {% trans "临时笔记" %}
             </a>
         </li>
         <li>
             <a href="/robotalk">
-                <span class="glyphicon glyphicon-comment"></span>
+                <span class="fas fa-robot"></span>
                 {% trans "智械聊天" %}
             </a>
         </li>
@@ -659,8 +661,8 @@
             <div id="mucheng-holder">
             </div>
             <div id="mucheng-arrow" onclick="toggleMucheng()">
-                <span id="down-arrow" class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
-                <span id="up-arrow" class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                <span id="down-arrow" class="fas fa-chevron-down" aria-hidden="true"></span>
+                <span id="up-arrow" class="fas fa-chevron-up" aria-hidden="true"></span>
             </div>
             <div id="mucheng-lyrics">
                 <div class="lyrics top">

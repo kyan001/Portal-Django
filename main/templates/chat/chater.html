@@ -3,24 +3,24 @@
 {% if sender.username == "syschat" %}
     {# syschat → me #}
     <span class="text-danger">
-        <span class="glyphicon glyphicon-flag"></span>
+        <span class="fas fa-flag"></span>
         @{{ sender.nickname }}
     </span>
 {% elif sender.id == cuser.id and receiver.id == cuser.id %}
     {# me → me #}
-    <span class="glyphicon glyphicon-list-alt"></span>
+    <span class="fas fa-sticky-note"></span>
     <span class="text-muted">{% trans "临时笔记" %}</span>
 {% elif sender.id == cuser.id %}
     {# me → someone #}
     <span class="text-primary">{% trans "我" context "宾格" %}</span>
     <span class="text-muted small">
-        <span class="glyphicon glyphicon-arrow-right"></span>
+        <span class="fas fa-long-arrow-alt-right"></span>
     </span>
     <span class="text-muted">@{{ receiver.nickname }}</span>
 {% else %}
     {# someone → me #}
     <span class="text-primary">
-        <span class="glyphicon glyphicon-comment"></span>
+        <span class="fas fa-comments"></span>
         @{{ sender.nickname }}
     </span>
 {% endif %}
