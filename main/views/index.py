@@ -31,14 +31,16 @@ def settheme(request):
     # get input
     theme_name = request.GET.get('name')
     mode = request.GET.get('mode')
-    if mode == 'random':  # 随机主题.
+    if theme_name and (theme_name not in theme_name_pool):
+        raise Http404(_("您请求的主题 {} 不存在").format(theme_name))
+    if mode == 'random':  # 随机主题
         theme_name = random.choice(theme_name_pool)
-    if not theme_name:  # 清除已设置的主题.
+    if mode == 'system':  # 跟随系统主题
+        theme_name = 'system'
+    if not theme_name:  # 清除已设置的主题
         response.delete_cookie(theme_key)
     else:  # 设置主题.
         theme_name = theme_name.lower()
-        if theme_name not in theme_name_pool:
-            raise Http404(_("您请求的主题 {} 不存在").format(theme_name))
         oneweek = 60 * 60 * 24 * 7
         response.set_cookie(theme_key, theme_name, max_age=oneweek)
     # add exp

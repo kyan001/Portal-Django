@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-01 12:28+0800\n"
+"POT-Creation-Date: 2020-09-02 21:14+0800\n"
 "PO-Revision-Date: 2018-01-25 09:59+0800\n"
 "Last-Translator: Emi <i18n@kyan001.com>\n"
 "Language-Team: Japanese <i18n@kyan001.com>\n"
@@ -39,43 +39,43 @@ msgstr "チャートアクティビティー"
 msgid "错误类别"
 msgstr "カテゴリーエラー"
 
-#: main/models.py:300 main/templates/progress/detail.html:629
-#: main/templates/progress/new.html:92 main/templates/progress/new.html:225
-#: main/templates/progress/new.html:319
+#: main/models.py:300 main/templates/progress/detail.html:633
+#: main/templates/progress/new.html:92 main/templates/progress/new.html:227
+#: main/templates/progress/new.html:321
 msgid "书"
 msgstr "書籍"
 
-#: main/models.py:300 main/templates/progress/detail.html:631
+#: main/models.py:300 main/templates/progress/detail.html:635
 #: main/templates/progress/new.html:94
 msgid "漫画"
 msgstr "漫画"
 
-#: main/models.py:300 main/templates/progress/detail.html:637
+#: main/models.py:300 main/templates/progress/detail.html:641
 #: main/templates/progress/new.html:95
 msgid "动画"
 msgstr "アニメ"
 
-#: main/models.py:300 main/templates/progress/detail.html:638
+#: main/models.py:300 main/templates/progress/detail.html:642
 #: main/templates/progress/new.html:96
 msgid "电视剧"
 msgstr "ドラマ"
 
-#: main/models.py:300 main/templates/progress/detail.html:639
+#: main/models.py:300 main/templates/progress/detail.html:643
 #: main/templates/progress/new.html:97
 msgid "公开课"
 msgstr "オープンクラス"
 
-#: main/models.py:300 main/templates/progress/detail.html:640
+#: main/models.py:300 main/templates/progress/detail.html:644
 #: main/templates/progress/new.html:98
 msgid "纪录片"
 msgstr "ドキュメンタリー"
 
-#: main/models.py:300 main/templates/progress/detail.html:641
+#: main/models.py:300 main/templates/progress/detail.html:645
 #: main/templates/progress/new.html:99
 msgid "视频"
 msgstr "ビデオ"
 
-#: main/models.py:300 main/templates/progress/detail.html:633
+#: main/models.py:300 main/templates/progress/detail.html:637
 #: main/templates/progress/new.html:100
 msgid "小说"
 msgstr "小説"
@@ -179,9 +179,9 @@ msgstr "デザイナー"
 #: main/templates/badge/list.html:54 main/templates/chat/conversation.html:4
 #: main/templates/msg.html:32 main/templates/opus/detail.html:47
 #: main/templates/progress/detail.html:5
-#: main/templates/progress/detail.html:440
-#: main/templates/progress/detail.html:592 main/templates/progress/new.html:75
-#: main/templates/progress/new.html:308
+#: main/templates/progress/detail.html:444
+#: main/templates/progress/detail.html:596 main/templates/progress/new.html:75
+#: main/templates/progress/new.html:310
 #: main/templates/superuser/broadcast.html:4
 #: main/templates/superuser/msg-superuser.html:5
 #: main/templates/user/forgetusername.html:42
@@ -211,12 +211,12 @@ msgstr "ユーザー登録日"
 msgid "拥有人数"
 msgstr "ユーザー数"
 
-#: main/templates/base.html:72
+#: main/templates/base.html:75
 msgid "回到上一页"
 msgstr "前のページに戻る"
 
 #: main/templates/chat/chater.html:12 main/templates/index/index-m.html:66
-#: main/templates/index/index.html:358 main/templates/index/index.html:450
+#: main/templates/index/index.html:360 main/templates/index/index.html:452
 #: main/views/chat.py:27 main/views/user.py:289 util/ctrl.py:30
 msgid "临时笔记"
 msgstr "クイックノート"
@@ -243,7 +243,7 @@ msgid "来自"
 msgstr "From"
 
 #: main/templates/chat/conversation.html:69
-#: main/templates/superuser/broadcast.html:51
+#: main/templates/superuser/broadcast.html:48
 msgid "标题（选填）"
 msgstr "タイトル（オプショナル）"
 
@@ -254,12 +254,12 @@ msgstr "ユーザーニックネーム"
 
 #: main/templates/chat/conversation.html:86
 #: main/templates/robotalk/index.html:83
-#: main/templates/superuser/broadcast.html:64
+#: main/templates/superuser/broadcast.html:61
 msgid "发送"
 msgstr "送信する"
 
 #: main/templates/chat/conversation.html:94
-#: main/templates/superuser/broadcast.html:72
+#: main/templates/superuser/broadcast.html:69
 msgid "消息内容"
 msgstr "メッセージ詳細"
 
@@ -281,7 +281,7 @@ msgid "错误：用户昵称不存在"
 msgstr "エラー：ユーザーニックネームは存在しません"
 
 #: main/templates/chat/conversation.html:209
-#: main/templates/superuser/broadcast.html:126
+#: main/templates/superuser/broadcast.html:123
 msgid "错误：消息内容不能为空"
 msgstr "エラー：メッセージが空きにできません"
 
@@ -299,7 +299,7 @@ msgid "人"
 msgstr "人"
 
 #: main/templates/chat/inbox.html:66 main/templates/chat/inbox.html:94
-#: main/templates/progress/detail.html:401 main/templates/user/profile.html:115
+#: main/templates/progress/detail.html:405 main/templates/user/profile.html:115
 #: main/templates/user/profile.html:123 main/templates/user/profile.html:131
 msgid "无"
 msgstr "なし"
@@ -316,128 +316,128 @@ msgstr "最後/最初のページにジャンプする"
 msgid "欢迎"
 msgstr "ようこそ"
 
-#: main/templates/index/index-m.html:56 main/templates/index/index.html:351
-#: main/templates/index/index.html:396
+#: main/templates/index/index-m.html:56 main/templates/index/index.html:353
+#: main/templates/index/index.html:398
 #: main/templates/progress/navdropdown.html:55 main/templates/userbar.html:96
 #: main/views/progress.py:40 main/views/user.py:279
 msgid "我的进度"
 msgstr "私の進捗"
 
-#: main/templates/index/index-m.html:57 main/templates/index/index.html:397
+#: main/templates/index/index-m.html:57 main/templates/index/index.html:399
 msgid "管理您的进度"
 msgstr "進捗管理"
 
-#: main/templates/index/index-m.html:67 main/templates/index/index.html:451
+#: main/templates/index/index-m.html:67 main/templates/index/index.html:453
 #: main/views/user.py:291
 msgid "随手记录您的想法"
 msgstr "いつでも思いついた時に、アイデアを書き留める"
 
-#: main/templates/index/index-m.html:85 main/templates/index/index.html:364
-#: main/templates/index/index.html:492 main/templates/robotalk/index.html:4
+#: main/templates/index/index-m.html:85 main/templates/index/index.html:366
+#: main/templates/index/index.html:494 main/templates/robotalk/index.html:4
 #: main/templates/robotalk/index.html:64 main/templates/userbar.html:102
 msgid "智械聊天"
 msgstr "AIチャート"
 
-#: main/templates/index/index-m.html:86 main/templates/index/index.html:493
+#: main/templates/index/index-m.html:86 main/templates/index/index.html:495
 msgid "快来加入我们的聊天吧"
 msgstr "今すぐグループチャートへ"
 
-#: main/templates/index/index.html:375
+#: main/templates/index/index.html:377
 msgid "生活的战争，并不总是为那些更强壮或更迅速的人而存在。"
 msgstr ""
 "人生の戦いは、必ずしもより強くて、より頭の回転が早い人に向いてに存在するとは"
 "限らない"
 
-#: main/templates/index/index.html:376
+#: main/templates/index/index.html:378
 msgid "但或迟或早，胜利的人"
 msgstr "ところが、遅かれ早かれ勝つ人は"
 
-#: main/templates/index/index.html:377
+#: main/templates/index/index.html:379
 msgid "始终坚信"
 msgstr "“必ず勝つ”と"
 
-#: main/templates/index/index.html:378
+#: main/templates/index/index.html:380
 msgid "“我会赢”。"
 msgstr "いつでも信じている"
 
-#: main/templates/index/index.html:381
+#: main/templates/index/index.html:383
 msgid "尽情享受"
 msgstr "思う存分楽しんでください"
 
-#: main/templates/index/index.html:381 main/templates/index/index.html:383
-#: main/templates/progress/detail.html:588
+#: main/templates/index/index.html:383 main/templates/index/index.html:385
+#: main/templates/progress/detail.html:592
 msgid "！"
 msgstr "！"
 
-#: main/templates/index/index.html:382
+#: main/templates/index/index.html:384
 msgid "欢迎来到"
 msgstr "ようこそ"
 
-#: main/templates/index/index.html:383
+#: main/templates/index/index.html:385
 msgid "我要加入"
 msgstr "ゴー"
 
-#: main/templates/index/index.html:589
+#: main/templates/index/index.html:591
 msgid "网站主人，"
 msgstr "ウェブサイトオーナーは、"
 
-#: main/templates/index/index.html:590
+#: main/templates/index/index.html:592
 msgid "深沉的爱着一切美好的事物。"
 msgstr "美しいことを深く愛している"
 
-#: main/templates/index/index.html:593
+#: main/templates/index/index.html:595
 msgid "我的网站"
 msgstr "マイページ"
 
-#: main/templates/index/index.html:594
+#: main/templates/index/index.html:596
 msgid "邮件"
 msgstr "メール"
 
-#: main/templates/index/index.html:603
+#: main/templates/index/index.html:605
 msgid "音乐"
 msgstr "音楽"
 
-#: main/templates/index/index.html:605
+#: main/templates/index/index.html:607
 msgid "吉他，钢琴，声音。"
 msgstr "ギター、ピアノ、ヴォイス"
 
-#: main/templates/index/index.html:606
+#: main/templates/index/index.html:608
 msgid "当言语渐弱，音乐响起。"
 msgstr "言葉が失敗する時には、音楽が語る。"
 
-#: main/templates/index/index.html:609
+#: main/templates/index/index.html:611
 msgid "我的音乐"
 msgstr "マイミュージック"
 
-#: main/templates/index/index.html:619
+#: main/templates/index/index.html:621
 msgid "成就"
 msgstr "アチーブメント"
 
-#: main/templates/index/index.html:621
+#: main/templates/index/index.html:623
 msgid "创造，可能，"
 msgstr "創造性、可能性"
 
-#: main/templates/index/index.html:622
+#: main/templates/index/index.html:624
 msgid "热忱，意志。"
 msgstr "熱意、意志"
 
-#: main/templates/index/index.html:625
+#: main/templates/index/index.html:627
 msgid "我的"
 msgstr "マイ"
 
-#: main/templates/index/index.html:635
+#: main/templates/index/index.html:637
 msgid "想法"
 msgstr "アイディア"
 
-#: main/templates/index/index.html:637
+#: main/templates/index/index.html:639
 msgid "我思，"
 msgstr "考え続けている私は、"
 
-#: main/templates/index/index.html:638
+#: main/templates/index/index.html:640
 msgid "我酷。"
 msgstr "かっこいい。"
 
-#: main/templates/index/index.html:642
+#: main/templates/index/index.html:644
 msgid "与我对话"
 msgstr "私と会話する"
 
@@ -472,21 +472,21 @@ msgid "备注"
 msgstr "コメント"
 
 #: main/templates/opus/detail.html:67 main/templates/progress/detail.html:192
-#: main/templates/progress/detail.html:592 main/templates/progress/new.html:110
+#: main/templates/progress/detail.html:596 main/templates/progress/new.html:110
 msgid "总共"
 msgstr "トータル"
 
 #: main/templates/opus/detail.html:72 main/templates/progress/detail.html:206
-#: main/templates/progress/detail.html:592 main/templates/progress/new.html:130
+#: main/templates/progress/detail.html:596 main/templates/progress/new.html:130
 msgid "当前进度"
 msgstr "カレント"
 
-#: main/templates/opus/detail.html:77 main/templates/progress/detail.html:314
+#: main/templates/opus/detail.html:77 main/templates/progress/detail.html:318
 #: main/templates/progress/progresscard.html:50
 msgid "开始时间"
 msgstr "作成時間"
 
-#: main/templates/opus/detail.html:81 main/templates/progress/detail.html:324
+#: main/templates/opus/detail.html:81 main/templates/progress/detail.html:328
 #: main/templates/progress/progresscard.html:54
 msgid "上次更新"
 msgstr "ラストアップデート"
@@ -561,26 +561,28 @@ msgstr "停止されている"
 msgid "百分比"
 msgstr "パーセンテージ"
 
-#: main/templates/progress/detail.html:169 main/templates/progress/new.html:343
+#: main/templates/progress/detail.html:169 main/templates/progress/new.html:345
 #: main/templates/user/signup.html:185 main/templates/user/signup.html:189
 msgid "是"
 msgstr "は"
 
 #: main/templates/progress/detail.html:171
-#: main/templates/progress/detail.html:565 main/templates/user/setting.html:86
+#: main/templates/progress/detail.html:284
+#: main/templates/progress/detail.html:569 main/templates/user/setting.html:86
 #: main/templates/user/setting.html:90 main/templates/user/setting.html:141
 #: main/templates/user/setting.html:164
 msgid "（"
 msgstr "（"
 
 #: main/templates/progress/detail.html:171
-#: main/templates/progress/detail.html:565 main/templates/user/setting.html:86
+#: main/templates/progress/detail.html:288
+#: main/templates/progress/detail.html:569 main/templates/user/setting.html:86
 #: main/templates/user/setting.html:90 main/templates/user/setting.html:141
 #: main/templates/user/setting.html:164
 msgid "）"
 msgstr "）"
 
-#: main/templates/progress/detail.html:172 main/templates/progress/new.html:343
+#: main/templates/progress/detail.html:172 main/templates/progress/new.html:345
 msgid "吗？"
 msgstr "か"
 
@@ -592,135 +594,135 @@ msgstr "リンク先を新しいウィンドウで開く"
 msgid "保存选项"
 msgstr "セーブオプション"
 
-#: main/templates/progress/detail.html:271 main/templates/user/setting.html:4
+#: main/templates/progress/detail.html:276
+msgid "不修改当前的“上次更新”时间"
+msgstr "前回更新した時間を修正しません"
+
+#: main/templates/progress/detail.html:282 main/templates/user/setting.html:104
+msgid "保存后留在"
+msgstr "セーブ後"
+
+#: main/templates/progress/detail.html:282
+msgid "当前页面"
+msgstr "カレントページに戻る"
+
+#: main/templates/progress/detail.html:285 main/templates/user/setting.html:4
 #: main/templates/userbar.html:77
 msgid "个人设置"
 msgstr "パーソナル設定"
 
-#: main/templates/progress/detail.html:279
-msgid "不修改当前的“上次更新”时间"
-msgstr "前回更新した時間を修正しません"
-
-#: main/templates/progress/detail.html:285 main/templates/user/setting.html:104
-msgid "保存后留在"
-msgstr "セーブ後"
-
-#: main/templates/progress/detail.html:285
-msgid "当前页面"
-msgstr "カレントページに戻る"
-
-#: main/templates/progress/detail.html:296 main/templates/progress/new.html:174
+#: main/templates/progress/detail.html:300 main/templates/progress/new.html:176
 msgid "保存"
 msgstr "セーブ"
 
-#: main/templates/progress/detail.html:309
+#: main/templates/progress/detail.html:313
 msgid "时间信息"
 msgstr "タイムインフォ"
 
-#: main/templates/progress/detail.html:322
+#: main/templates/progress/detail.html:326
 #: main/templates/progress/progresscard.html:45
 msgid "完成时间"
 msgstr "完成時間"
 
-#: main/templates/progress/detail.html:333
+#: main/templates/progress/detail.html:337
 msgid "平均速度"
 msgstr "平均速度"
 
-#: main/templates/progress/detail.html:337
+#: main/templates/progress/detail.html:341
 msgid "每个"
 msgstr "一つごとに"
 
-#: main/templates/progress/detail.html:344
+#: main/templates/progress/detail.html:348
 msgid "用时"
 msgstr "かかる"
 
-#: main/templates/progress/detail.html:349
+#: main/templates/progress/detail.html:353
 msgid "预计完成"
 msgstr "完成予定時間"
 
-#: main/templates/progress/detail.html:361
+#: main/templates/progress/detail.html:365
 msgid "作品信息"
 msgstr "作品インフォ"
 
-#: main/templates/progress/detail.html:365
+#: main/templates/progress/detail.html:369
 msgid "封面"
 msgstr "カバー"
 
-#: main/templates/progress/detail.html:383
+#: main/templates/progress/detail.html:387
 #: main/templates/progress/progresscard.html:15
 msgid "作品代表色"
 msgstr "作品の色"
 
-#: main/templates/progress/detail.html:389
+#: main/templates/progress/detail.html:393
 msgid "豆瓣评分"
 msgstr "DOUBAN 評価"
 
-#: main/templates/progress/detail.html:400
+#: main/templates/progress/detail.html:404
 msgid "标签"
 msgstr "ラベル"
 
-#: main/templates/progress/detail.html:414
+#: main/templates/progress/detail.html:418
 msgid "彻底删除"
 msgstr "完全に削除する"
 
-#: main/templates/progress/detail.html:420 main/views/progress.py:325
+#: main/templates/progress/detail.html:424 main/views/progress.py:325
 msgid "激活"
 msgstr "アクティブ化する"
 
-#: main/templates/progress/detail.html:425 main/views/progress.py:301
+#: main/templates/progress/detail.html:429 main/views/progress.py:301
 msgid "冻结"
 msgstr "凍結"
 
-#: main/templates/progress/detail.html:440
+#: main/templates/progress/detail.html:444
 msgid "相关进度"
 msgstr ""
 
-#: main/templates/progress/detail.html:510 main/views/progress.py:276
+#: main/templates/progress/detail.html:514 main/views/progress.py:276
 msgid "进度已达到最大值"
 msgstr "進捗はマクスまで至った"
 
-#: main/templates/progress/detail.html:565
+#: main/templates/progress/detail.html:569
 msgid "确定删除此进度？"
 msgstr "この進捗を削除する？"
 
-#: main/templates/progress/detail.html:565
+#: main/templates/progress/detail.html:569
 msgid "删除操作不可恢复"
 msgstr "削除されたこおとは元に戻すことができない"
 
-#: main/templates/progress/detail.html:570
+#: main/templates/progress/detail.html:574
 msgid "删除操作已取消"
 msgstr "削除がキャンセルされた"
 
-#: main/templates/progress/detail.html:578 main/templates/progress/new.html:260
-#: main/templates/progress/new.html:298 main/views/progress.py:203
+#: main/templates/progress/detail.html:582 main/templates/progress/new.html:262
+#: main/templates/progress/new.html:300 main/views/progress.py:203
 #: main/views/progress.py:375
 msgid "名称不能为空"
 msgstr "名称は書いていない"
 
-#: main/templates/progress/detail.html:588
+#: main/templates/progress/detail.html:592
 msgid "输入的更新的进度"
 msgstr "新しく入れた進捗は"
 
-#: main/templates/progress/detail.html:588
+#: main/templates/progress/detail.html:592
 msgid "必须是纯数字"
 msgstr "数字のみ入力可能"
 
-#: main/templates/progress/detail.html:592 main/views/progress.py:117
+#: main/templates/progress/detail.html:596 main/views/progress.py:117
 #: main/views/progress.py:291 main/views/superuser.py:85
 #: main/views/superuser.py:165 main/views/user.py:41 main/views/user.py:47
 #: main/views/user.py:60
 msgid "错误"
 msgstr "エラー"
 
-#: main/templates/progress/detail.html:592
+#: main/templates/progress/detail.html:596
 msgid "大于"
 msgstr "より大きい"
 
-#: main/templates/progress/detail.html:896
+#: main/templates/progress/detail.html:900
 msgid "每页"
 msgstr "１ページ当たり"
 
-#: main/templates/progress/detail.html:901
+#: main/templates/progress/detail.html:905
 msgid "每集"
 msgstr "エピソードごとに"
 
@@ -854,39 +856,39 @@ msgstr "カレントページ／話数"
 msgid "作品链接"
 msgstr "作品のリンク"
 
-#: main/templates/progress/new.html:163
+#: main/templates/progress/new.html:165
 msgid "取消"
 msgstr "キャンセル"
 
-#: main/templates/progress/new.html:170
+#: main/templates/progress/new.html:172
 msgid "清空"
 msgstr "クリアー"
 
-#: main/templates/progress/new.html:231 main/templates/progress/new.html:300
+#: main/templates/progress/new.html:233 main/templates/progress/new.html:302
 msgid "书籍"
 msgstr "書籍"
 
-#: main/templates/progress/new.html:231
+#: main/templates/progress/new.html:233
 msgid "未找到"
 msgstr "見つからなかった"
 
-#: main/templates/progress/new.html:235
+#: main/templates/progress/new.html:237
 msgid "未能解析条形码"
 msgstr "バーコードの解析ができなかった"
 
-#: main/templates/progress/new.html:273
+#: main/templates/progress/new.html:275
 msgid "初始进度不能大于总页数"
 msgstr "イニシャル進捗は総ページ数より大きくなるのはいけない"
 
-#: main/templates/progress/new.html:300
+#: main/templates/progress/new.html:302
 msgid "信息未获取到"
 msgstr "インフォは見つからなかった"
 
-#: main/templates/progress/new.html:308
+#: main/templates/progress/new.html:310
 msgid "页数"
 msgstr "ページ数"
 
-#: main/templates/progress/new.html:309
+#: main/templates/progress/new.html:311
 msgid "书籍信息正确吗？"
 msgstr "書籍インフォは正しいのか"
 
@@ -950,12 +952,12 @@ msgstr "スーパーユーザー"
 msgid "广播系统消息"
 msgstr "ブロードキャストシステムメッセージ"
 
-#: main/templates/superuser/broadcast.html:34
-#: main/templates/superuser/broadcast.html:60
+#: main/templates/superuser/broadcast.html:31
+#: main/templates/superuser/broadcast.html:57
 msgid "所有人"
 msgstr "すべての人"
 
-#: main/templates/superuser/broadcast.html:87
+#: main/templates/superuser/broadcast.html:84
 msgid "尚未收到任何消息"
 msgstr "メッセージが届いていない"
 
@@ -1588,83 +1590,87 @@ msgid "切换主题"
 msgstr "着せかえ"
 
 #: main/templates/userbar.html:136 main/templates/userbar.html:144
-#: main/views/index.py:46
+#: main/views/index.py:48
 msgid "默认主题"
 msgstr "カレント着せかえ"
 
 #: main/templates/userbar.html:150
+msgid "跟随系统"
+msgstr ""
+
+#: main/templates/userbar.html:156
 msgid "随机主题"
 msgstr "ランダム着せかえ"
 
-#: main/templates/userbar.html:154
+#: main/templates/userbar.html:160
 msgid "浅色"
 msgstr ""
 
-#: main/templates/userbar.html:155
+#: main/templates/userbar.html:161
 msgid "蔚蓝"
 msgstr "ブルー"
 
-#: main/templates/userbar.html:156
+#: main/templates/userbar.html:162
 msgid "宇宙"
 msgstr "宇宙"
 
-#: main/templates/userbar.html:157
+#: main/templates/userbar.html:163
 msgid "扁平"
 msgstr "フラット"
 
-#: main/templates/userbar.html:158
+#: main/templates/userbar.html:164
 msgid "日志"
 msgstr "日誌"
 
-#: main/templates/userbar.html:159
+#: main/templates/userbar.html:165
 msgid "流明"
 msgstr "ルーメン"
 
-#: main/templates/userbar.html:160
+#: main/templates/userbar.html:166
 msgid "纸"
 msgstr "ペーパー"
 
-#: main/templates/userbar.html:161
+#: main/templates/userbar.html:167
 msgid "易读"
 msgstr "リィーダァブル"
 
-#: main/templates/userbar.html:162
+#: main/templates/userbar.html:168
 msgid "砂岩"
 msgstr "砂岩"
 
-#: main/templates/userbar.html:163
+#: main/templates/userbar.html:169
 msgid "简约"
 msgstr "シンプル"
 
-#: main/templates/userbar.html:164
+#: main/templates/userbar.html:170
 msgid "空间站"
 msgstr "スペースラブ"
 
-#: main/templates/userbar.html:165
+#: main/templates/userbar.html:171
 msgid "统一"
 msgstr "ユナイテッド"
 
-#: main/templates/userbar.html:166
+#: main/templates/userbar.html:172
 msgid "雪人"
 msgstr "イエティー"
 
-#: main/templates/userbar.html:168
+#: main/templates/userbar.html:174
 msgid "深色"
 msgstr ""
 
-#: main/templates/userbar.html:169
+#: main/templates/userbar.html:175
 msgid "半机械"
 msgstr "半機械"
 
-#: main/templates/userbar.html:170
+#: main/templates/userbar.html:176
 msgid "暗色"
 msgstr "ダーク"
 
-#: main/templates/userbar.html:171
+#: main/templates/userbar.html:177
 msgid "页岩"
 msgstr "石板"
 
-#: main/templates/userbar.html:172
+#: main/templates/userbar.html:178
 msgid "英雄"
 msgstr "スーパーヒーロー"
 
@@ -1728,11 +1734,11 @@ msgstr "更新"
 msgid "阅读来自 @{} 的消息"
 msgstr "@{}からのメッセージをチェックする"
 
-#: main/views/index.py:41
+#: main/views/index.py:35
 msgid "您请求的主题 {} 不存在"
 msgstr "お求めのテーマ{}は実在していません"
 
-#: main/views/index.py:47
+#: main/views/index.py:49
 msgid "应用主题 {}"
 msgstr "テーマ{}にする"
 
