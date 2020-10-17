@@ -14,7 +14,7 @@ import consoleiotools as cit
 from KyanToolKit import KyanToolKit as ktk
 
 
-__version__ = '1.19.0'
+__version__ = '1.19.1'
 
 
 def load_config(config_file):
@@ -330,6 +330,11 @@ def debug_mode_switch():
     debug_mode_status()
 
 
+def bye():
+    cit.info('Thanks for using. Bye bye!')
+    cit.bye(0)
+
+
 if __name__ == '__main__':
     cit.echo('Django Tool: version {}'.format(__version__))
     debug_mode_status()
@@ -341,7 +346,9 @@ if __name__ == '__main__':
     try:
         while True:
             to_run = show_menu()
-            to_run()
+            if to_run:
+                to_run()
+            else:
+                bye()
     except KeyboardInterrupt:
-        cit.info('Thanks for using. Bye bye!')
-        cit.bye(0)
+        bye()
