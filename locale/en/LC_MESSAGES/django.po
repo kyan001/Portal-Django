@@ -322,7 +322,7 @@ msgstr "Welcome"
 #: main/templates/progress/navdropdown.html:55 main/templates/userbar.html:96
 #: main/views/progress.py:40 main/views/user.py:279
 msgid "我的进度"
-msgstr "MyProgress"
+msgstr "ProgressHub"
 
 #: main/templates/index/index-m.html:57 main/templates/index/index.html:399
 msgid "管理您的进度"
@@ -454,7 +454,7 @@ msgstr "QR code for current page"
 
 #: main/templates/opus/detail.html:39
 msgid "一键添加到我的进度"
-msgstr "1-Click adding to MyProgress"
+msgstr "1-Click adding to ProgressHub"
 
 #: main/templates/opus/detail.html:47
 msgid "所有者"
