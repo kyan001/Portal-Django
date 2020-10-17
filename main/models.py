@@ -327,6 +327,7 @@ class Progress(BaseModel):
     comment = models.TextField(blank=True, default='')
     current = models.IntegerField(default=0)
     total = models.IntegerField(default=0)
+    underway = models.BooleanField(default=False)
     status = models.CharField(max_length=50, choices=STATUSES.items())
     weblink = models.URLField(max_length=2083, blank=True, default="")
     objects = ProgressManager()

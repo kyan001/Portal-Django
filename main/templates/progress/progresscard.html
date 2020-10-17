@@ -61,6 +61,9 @@
                     <div class="progress text-center">
                         <div class="progress-bar progress-bar-{{ prg.contextual }}" style="width: {{ prg.persent }}%">
                             {% if prg.persent >= 25 %}
+                                {% if prg.underway %}
+                                    <span class="fas fa-mug-hot"></span>
+                                {% endif %}
                                 <strong>{{ prg.current }}</strong>
                                 <span>/</span>
                                 <strong>{{ prg.total|default:"∞" }}</strong>

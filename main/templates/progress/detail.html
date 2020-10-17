@@ -203,7 +203,14 @@
                                                 </td>
                                             </tr>
                                             <tr class="text-info">
-                                                <th>{% trans "当前进度" %}</th>
+                                                <th>
+                                                    <span>{% trans "当前进度" %}</span>
+                                                    {% if prg.underway %}
+                                                        <span id="underway-icon" title="{{ prg.current }}½">
+                                                            <span class="fas fa-mug-hot"></span>
+                                                        </span>
+                                                    {% endif %}
+                                                </th>
                                                 <td class="text-info">
                                                     <div class="form-group form-group-lg has-feedback">
                                                         <div class="input-group">
@@ -216,12 +223,12 @@
                                                               name="current"
                                                               type="number"
                                                               min="0"
-                                                              max="{{prg.total|default:''}}"
-                                                              value="{{prg.current}}"
-                                                              data-original="{{prg.current}}"
+                                                              max="{{ prg.total|default:'' }}"
+                                                              value="{{ prg.current }}"
+                                                              data-original="{{ prg.current }}"
                                                               onfocus="if(this.value==this.dataset.original){this.value=''}"
                                                               onblur="if(this.value==''){this.value=this.dataset.original}"
-                                                              placeholder="{{prg.current}}">
+                                                              placeholder="{{ prg.current }}">
                                                             <span class="form-control-feedback" aria-hidden="true">
                                                                 <span>/</span>
                                                                 <span id="total-as-feedback"></span>
@@ -515,6 +522,7 @@
                 return false
             }
             FORM.INPUTS.current.val(parseInt(FORM.INPUTS.current.val()) + 1)
+            $('#underway-icon').fadeOut()
             FORM.checkEditMode()
         },
         /**

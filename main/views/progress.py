@@ -196,7 +196,8 @@ def update(request):  # POST
     total = request.POST.get('total')
     total = int(total) if total else 0
     current = request.POST.get('current')
-    current = int(current)
+    underway = "." in current
+    current = int(float(current))
     keep_modified = request.POST.get("keepmodified") or None
     save_to_detail = request.POST.get('savetodetail') or None
     if not name:
@@ -221,6 +222,7 @@ def update(request):  # POST
     progress.comment = comment
     progress.weblink = weblink
     progress.total = total
+    progress.underway = underway
     progress.save(keep_modified=keep_modified)
     # render
     messages.success(request, _("进度") + " 《{}》 ".format(progress.name) + _("已更新"))
@@ -276,6 +278,7 @@ def plusone(request):  # GET
         return errMsg(_("进度已达到最大值"))
     # save
     progress.current = progress.current + 1
+    progress.underway = False
     progress.save()
     messages.success(request, _("进度") + " 《{}》 ".format(progress.name) + "+1 " + _("已更新"))
     # add exp
@@ -370,7 +373,7 @@ def add(request):  # POST
     total = request.POST.get("total")
     total = int(total) if total else 0
     current = request.POST.get("current")
-    current = int(current)
+    current = int(float(current))
     if not name:
         return errMsg(_("名称不能为空"))
     # validate
