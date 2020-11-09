@@ -76,6 +76,9 @@
                         </div>
                         <div class="small line-height-anti-small">
                             {% if prg.persent < 25 %}
+                                {% if prg.underway %}
+                                    <span class="fas fa-mug-hot"></span>
+                                {% endif %}
                                 <strong>{{ prg.current }}</strong>
                                 <span>/</span>
                                 <strong>{{ prg.total|default:"∞" }}</strong>
