@@ -5,7 +5,7 @@ from django.template import loader
 from django.conf import settings
 from django.utils.translation import gettext as _
 
-import KyanToolKit as ktk
+import consolecmdtools as cct
 
 
 # Utils
@@ -59,7 +59,7 @@ def returnJsonResult(word):
 def salty(word):
     word_in_str = str(word)
     word_with_suffix = word_in_str + "superfarmer.net"
-    return ktk.KyanToolKit.md5(word_with_suffix)
+    return cct.md5(word_with_suffix)
 
 
 def calcLevel(exp):

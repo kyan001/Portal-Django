@@ -1,6 +1,6 @@
 Django
-KyanToolKit
 consoleiotools
+consolecmdtools
 Pillow
 icalendar
 django-cleanup

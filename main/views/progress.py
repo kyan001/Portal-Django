@@ -21,8 +21,8 @@ import util.time
 import util.user
 import util.userexp
 from main.models import User, Progress, Chat
-import KyanToolKit
-ktk = KyanToolKit.KyanToolKit()
+
+import consolecmdtools as cct
 
 
 @util.user.login_required
@@ -172,7 +172,7 @@ def imagecolor(request):  # AJAX #PUBLIC
             result['is_cached'] = False
     if url:  # no-progressid or not-cached
         try:
-            color = ktk.imageToColor(url, mode='hex')
+            color = cct.image_to_color(url, mode='hex')
         except Exception as e:
             return util.ctrl.returnJsonError(str(e))
         result['color'] = color
