@@ -12,6 +12,7 @@ import main.views.chat
 import main.views.badge
 import main.views.robotalk
 import main.views.superuser
+import main.views.tool
 
 
 urlpatterns = [
@@ -80,6 +81,8 @@ urlpatterns = [
     # robo talk
     url(r'^robotalk$', main.views.robotalk.index),
     url(r'^robotalk/getresponse$', main.views.robotalk.getResponse),  # GET
+    # small tools
+    path('tool/idvarify', main.views.tool.idVarify),  # GET Ajax
     # SUPERUSER
     url(r'^superuser/index$', main.views.superuser.index),
     url(r'^superuser/broadcast$', main.views.superuser.broadcast),
