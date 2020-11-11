@@ -4,9 +4,9 @@ from django.http import JsonResponse
 from django.http import Http404
 
 
-def idVarify(request):  # get, post, ajax
+def idVarify(request):  # get, ajax
     """验证身份证号是否合法"""
-    id_str = request.GET.get('id') or request.POST.get('id')
+    id_str = request.GET.get('id')
     if not id_str:
         raise Http404("ID number cannot be empty!")
     if len(id_str) != 18:
