@@ -34,8 +34,6 @@ else:
 
 
 ALLOWED_HOSTS = [
-    '.superfarmer.net',
-    '.yankai.online',
     '.kyan001.com',
     '*',
 ]
