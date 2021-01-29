@@ -172,7 +172,7 @@ def imagecolor(request):  # AJAX #PUBLIC
             result['is_cached'] = False
     if url:  # no-progressid or not-cached
         try:
-            color = cct.image_to_color(url, mode='hex')
+            color = cct.main_color(url, triplex='hex', is_url=True)
         except Exception as e:
             return util.ctrl.returnJsonError(str(e))
         result['color'] = color
