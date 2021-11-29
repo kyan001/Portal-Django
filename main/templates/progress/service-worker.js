@@ -4,7 +4,7 @@ const staticFileUrls = [
     "/static/3rd/bootstrap3/bootstrap-3.4.1/js/bootstrap.min.js",
     "/static/js/KyanJsUtil.js?version=2.0.0",
     "/static/3rd/bootstrap3/bootstrap-3.4.1/css/bootstrap.min.css",
-    "/static/css/KyanCssUtil.css?version=1.5.5",
+    "/static/css/KyanCssUtil.css?version=1.6.0",
     "/static/css/progress/progresslist.css?version=3.0.0",
     "/static/css/progress/progresscard.css?version=3.0.0",
     "/static/js/progress/progresslist.js?version=3.0.0",

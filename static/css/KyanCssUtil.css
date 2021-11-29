@@ -1,6 +1,6 @@
 /*!
- * KyanCssUtil.css v1.5.5
- */
+ * KyanCssUtil.css v1.6.0
+*/
 
 /* a */
 a.no-decoration,
@@ -255,68 +255,74 @@ a.no-decoration:hover,
 
 /* delay */
 .ani-delay-500 {
-    transition-delay: 0.5s !important;
-    -o-transition-delay: 0.5s !important; /* Opera */
-    -moz-transition-delay: 0.5s !important; /* Firefox 4 */
     -webkit-transition-delay: 0.5s !important; /* Safari 和 Chrome */
+       -moz-transition-delay: 0.5s !important; /* Firefox 4 */
+         -o-transition-delay: 0.5s !important; /* Opera */
+            transition-delay: 0.5s !important;
 }
 .ani-delay-1000 {
-    transition-delay: 1s !important;
-    -o-transition-delay: 1s !important; /* Opera */
-    -moz-transition-delay: 1s !important; /* Firefox 4 */
     -webkit-transition-delay: 1s !important; /* Safari 和 Chrome */
+       -moz-transition-delay: 1s !important; /* Firefox 4 */
+         -o-transition-delay: 1s !important; /* Opera */
+            transition-delay: 1s !important;
 }
 .ani-delay-1500 {
-    transition-delay: 1.5s !important;
-    -o-transition-delay: 1.5s !important; /* Opera */
-    -moz-transition-delay: 1.5s !important; /* Firefox 4 */
     -webkit-transition-delay: 1.5s !important; /* Safari 和 Chrome */
+       -moz-transition-delay: 1.5s !important; /* Firefox 4 */
+         -o-transition-delay: 1.5s !important; /* Opera */
+            transition-delay: 1.5s !important;
 }
 .ani-delay-2000 {
-    transition-delay: 2s !important;
-    -o-transition-delay: 2s !important; /* Opera */
-    -moz-transition-delay: 2s !important; /* Firefox 4 */
     -webkit-transition-delay: 2s !important; /* Safari 和 Chrome */
+       -moz-transition-delay: 2s !important; /* Firefox 4 */
+         -o-transition-delay: 2s !important; /* Opera */
+            transition-delay: 2s !important;
 }
 .ani-delay-2500 {
-    transition-delay: 2.5s !important;
-    -o-transition-delay: 2.5s !important; /* Opera */
-    -moz-transition-delay: 2.5s !important; /* Firefox 4 */
     -webkit-transition-delay: 2.5s !important; /* Safari 和 Chrome */
+       -moz-transition-delay: 2.5s !important; /* Firefox 4 */
+         -o-transition-delay: 2.5s !important; /* Opera */
+            transition-delay: 2.5s !important;
 }
 .ani-delay-3000 {
-    transition-delay: 3s !important;
-    -o-transition-delay: 3s !important; /* Opera */
-    -moz-transition-delay: 3s !important; /* Firefox 4 */
     -webkit-transition-delay: 3s !important; /* Safari 和 Chrome */
+       -moz-transition-delay: 3s !important; /* Firefox 4 */
+         -o-transition-delay: 3s !important; /* Opera */
+            transition-delay: 3s !important;
 }
 .ani-delay-3500 {
-    transition-delay: 3.5s !important;
-    -o-transition-delay: 3.5s !important; /* Opera */
-    -moz-transition-delay: 3.5s !important; /* Firefox 4 */
     -webkit-transition-delay: 3.5s !important; /* Safari 和 Chrome */
+       -moz-transition-delay: 3.5s !important; /* Firefox 4 */
+         -o-transition-delay: 3.5s !important; /* Opera */
+            transition-delay: 3.5s !important;
 }
 .ani-delay-4000 {
-    transition-delay: 4s !important;
-    -o-transition-delay: 4s !important; /* Opera */
-    -moz-transition-delay: 4s !important; /* Firefox 4 */
     -webkit-transition-delay: 4s !important; /* Safari 和 Chrome */
+       -moz-transition-delay: 4s !important; /* Firefox 4 */
+         -o-transition-delay: 4s !important; /* Opera */
+            transition-delay: 4s !important;
 }
 .ani-delay-4500 {
-    transition-delay: 4.5s !important;
-    -o-transition-delay: 4.5s !important; /* Opera */
-    -moz-transition-delay: 4.5s !important; /* Firefox 4 */
     -webkit-transition-delay: 4.5s !important; /* Safari 和 Chrome */
+       -moz-transition-delay: 4.5s !important; /* Firefox 4 */
+         -o-transition-delay: 4.5s !important; /* Opera */
+            transition-delay: 4.5s !important;
 }
 .ani-delay-5000 {
-    transition-delay: 5s !important;
-    -o-transition-delay: 5s !important; /* Opera */
-    -moz-transition-delay: 5s !important; /* Firefox 4 */
     -webkit-transition-delay: 5s !important; /* Safari 和 Chrome */
+       -moz-transition-delay: 5s !important; /* Firefox 4 */
+         -o-transition-delay: 5s !important; /* Opera */
+            transition-delay: 5s !important;
 }
 
 @media (max-width: 767px) {
     .visible-xs-block-soft {
         display: block !important;
     }
+}
+
+.overflow-mask {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) calc(100% - 2em), transparent);
+            mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) calc(100% - 2em), transparent);
 }

@@ -68,7 +68,7 @@ DEBUGMODE
 static/media/*
 
 # Virtualenv
-VENV/
+venv/
 
 # Keep empty folders
 !**/.gitkeep
