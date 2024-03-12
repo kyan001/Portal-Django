@@ -1,6 +1,6 @@
 const CACHE_NAME = 'progress-cache-v1.1.25'
 const staticFileUrls = [
-    "/static/3rd/jquery/jquery-3.3.1.min.js",
+    "/static/3rd/jquery/jquery-3.7.1.min.js",
     "/static/3rd/bootstrap3/bootstrap-3.4.1/js/bootstrap.min.js",
     "/static/js/KyanJsUtil.js?version=2.0.0",
     "/static/3rd/bootstrap3/bootstrap-3.4.1/css/bootstrap.min.css",
