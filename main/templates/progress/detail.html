@@ -329,11 +329,11 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            {% ifequal prg.status "done" %}
+                                            {% if prg.status == "done" %}
                                                 <th>{% trans "完成时间" %}</th>
                                             {% else %}
                                                 <th>{% trans "上次更新" %}</th>
-                                            {% endifequal %}
+                                            {% endif %}
                                             <td>
                                                 <span>{{prg.modified|date:"Y-m-d H:i" }}</span>
                                                 <small class="text-muted">{{aux.time.m2n}}</small>
