@@ -87,6 +87,7 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if DEBUG:  # Debug mode
     DATABASES = {
