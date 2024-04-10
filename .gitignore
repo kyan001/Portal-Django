@@ -69,6 +69,10 @@ static/media/*
 
 # Virtualenv
 venv/
+.venv
 
 # Keep empty folders
 !**/.gitkeep
+
+# macOS
+.DS_Store
