@@ -11,3 +11,4 @@ jieba
 wordcloud
 django-redis
 matplotlib
+uwsgi

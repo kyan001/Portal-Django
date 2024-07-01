@@ -11,4 +11,5 @@
     <processes>32</processes>
     <plugins>python3</plugins>
     <reload-on-rss>128</reload-on-rss>
+    <virtualenv>.venv</virtualenv>
 </uwsgi>
